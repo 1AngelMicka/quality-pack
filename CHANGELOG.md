@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.0 — 2026-11-07
+
+Token economy.
+
+- `qp.mjs run`: commands keep their full log on disk and return only the exit code, error lines and last lines. The audit report shows the tokens saved.
+- Incremental audits by default: only criteria that changed files (Git) can affect are re-checked; the rest is carried over. Full audit forced on the first audit, after a pack update, or after 30 days. `/qp:audit full` forces it.
+- `/qp:audit quick`: automatic checks only, no auditor agents.
+- Graphify integration: `qp.mjs graph` (status, project size, advice) and `qp.mjs graph refresh` (code-only, no LLM). Auditors, `/qp:fix` and the working method query the graph before reading files.
+- Auditor model setting (`audit_model`: inherit, sonnet, haiku) chosen at `/qp:kickoff`.
+- New `/qp:handoff` skill and session reminder, to resume long tasks without re-exploring the project.
+- `/qp:kickoff` suggests companion tools by profile and project size: Graphify, RTK (`rtk-oss`), Cloudflare security-audit, Taste Skill, reanimate.
+- Working method: rules to find code cheaply and keep reports short.
+- READMEs: French by default, new "Token economy" section by project size and time horizon.
+
 ## 0.2.0 — 2026-11-07
 
 - `/qp:kickoff`, `/qp:audit`, `/qp:fix` skills and the `qp:auditor` agent (one per group, run in parallel).

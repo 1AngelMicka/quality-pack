@@ -110,3 +110,57 @@ test("parseHead reads SEO metadata", () => {
   assert.equal(h.lang, "fr");
   assert.equal(h.h1_count, 1);
 });
+
+test("run keeps the full log on disk and returns only the signal", () => {
+  const dir = fixture();
+  const cmd = `node -e "for (let i = 0; i < 2000; i++) console.log('ok test ' + i); console.log('FAIL pay.test.ts > refunds twice'); process.exitCode = 1"`;
+  const r = qp(dir, "run", "tests", cmd);
+  assert.equal(r.exit_code, 1);
+  assert.ok(r.signal_lines.some((l) => l.includes("FAIL pay.test.ts")));
+  assert.ok(r.tokens.saved > r.tokens.returned * 10);
+  assert.ok(existsSync(join(dir, r.log)));
+});
+
+test("quick plan keeps only automatic checks", () => {
+  const dir = fixture();
+  const p = qp(dir, "plan", "quick");
+  const all = p.groups.flatMap((g) => g.domains.flatMap((d) => d.criteria));
+  assert.equal(p.mode, "quick");
+  assert.ok(all.length > 0 && all.every((c) => c.method === "auto"));
+});
+
+test("incremental audit re-checks only changes and carries the rest", () => {
+  const dir = fixture();
+  const day = (n) => new Date(Date.now() - n * 86400000).toISOString().slice(0, 10);
+  const [d1, d2, d3] = [day(2), day(1), day(0)];
+  const git = (...a) => execFileSync("git", ["-c", "user.name=t", "-c", "user.email=t@t", ...a], { cwd: dir });
+  git("init", "-q"); git("add", "-A"); git("commit", "-qm", "init");
+  const full = qp(dir, "plan", "--incremental", "--date", d1);
+  assert.equal(full.mode, "full", "first audit falls back to full");
+  const ids = full.groups.flatMap((g) => g.domains.flatMap((d) => d.criteria.map((c) => c.id)));
+  writeFileSync(join(dir, `.quality/audits/${d1}/parts/all.json`),
+    JSON.stringify({ results: Object.fromEntries(ids.map((id) => [id, { status: "pass", evidence: "ok" }])) }));
+  qp(dir, "assemble", "--date", d1);
+  git("add", "-A"); git("commit", "-qm", "audit");
+  const none = qp(dir, "plan", "--incremental", "--date", d2);
+  assert.equal(none.mode, "incremental");
+  assert.equal(none.incremental.no_changes, true);
+  writeFileSync(join(dir, "components/New.tsx"), "export const x = 1\n");
+  const inc = qp(dir, "plan", "--incremental", "--date", d3);
+  assert.deepEqual(inc.incremental.changed_files, ["components/New.tsx"]);
+  const res = Object.fromEntries(ids.map((id) => [id, { status: "carry" }]));
+  res["COD-04"] = { status: "fail", evidence: "components/New.tsx:1", fix: "x" };
+  writeFileSync(join(dir, `.quality/audits/${d3}/parts/all.json`), JSON.stringify({ results: res }));
+  const a = qp(dir, "assemble", "--date", d3);
+  assert.equal(a.mode, "incremental");
+  assert.ok(a.carried_forward > 100);
+  assert.deepEqual(a.warnings, []);
+  assert.equal(JSON.parse(readFileSync(join(dir, `.quality/audits/${d3}.json`), "utf8")).results["COD-04"].status, "fail");
+});
+
+test("graph status reports size and advice without Graphify", () => {
+  const dir = fixture();
+  const g = qp(dir, "graph");
+  assert.equal(g.project_size.tier, "small");
+  assert.equal(typeof g.advice, "string");
+});

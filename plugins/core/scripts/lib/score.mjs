@@ -63,13 +63,15 @@ const T = {
     none: "Aucun", criterion: "Critère", severity: "Sévérité", fix: "Correctif",
     sev: { blocker: "bloquant", major: "majeur", minor: "mineur" }, capped: "plafonnée",
     cappedNote: "Note plafonnée : un critère bloquant est en échec ou non vérifié.", date: "Date", sep: " : ",
-    previous: "Audit précédent", carried: "critères repris d'un audit précédent sans nouvelle vérification" },
+    mode: { full: "complet", incremental: "incrémental", scoped: "partiel", quick: "rapide" }, modeLabel: "Mode",
+    saved: "tokens évités grâce aux sorties de commandes compactes", previous: "Audit précédent", carried: "critères repris d'un audit précédent sans nouvelle vérification" },
   en: { title: "Quality audit report", global: "Overall score", profile: "Profile", domain: "Domain", score: "Score",
     trend: "Trend", blockers: "Blockers", toFix: "Fix next", unknown: "Not checked", na: "Not applicable",
     none: "None", criterion: "Criterion", severity: "Severity", fix: "Fix",
     sev: { blocker: "blocker", major: "major", minor: "minor" }, capped: "capped",
     cappedNote: "Capped score: a blocker failed or was not checked.", date: "Date", sep: ": ",
-    previous: "Previous audit", carried: "criteria carried over from a previous audit without a new check" },
+    mode: { full: "full", incremental: "incremental", scoped: "scoped", quick: "quick" }, modeLabel: "Mode",
+    saved: "tokens saved by compact command outputs", previous: "Previous audit", carried: "criteria carried over from a previous audit without a new check" },
 };
 
 export function grade(score, ref, lang) {
@@ -92,6 +94,7 @@ export function toMarkdown(report, ref, lang = "fr", previous = null) {
   if (report.global_capped) head += ` — ${t.capped}`;
   if (previous?.global != null && g != null) head += ` · ${t.trend} ${trend(g, previous.global)}`;
   L.push(head, "", `${t.profile}${t.sep}${ref.profiles[report.profile].label[lang]} · ${t.date}${t.sep}${report.date || "—"}`
+    + (report.mode ? ` · ${t.modeLabel}${t.sep}${t.mode[report.mode] || report.mode}` : "")
     + (previous ? ` · ${t.previous}${t.sep}${previous.date}` : ""), "");
   L.push(`| ${t.domain} | ${t.score} | ${t.trend} |`, "| --- | --- | --- |");
   for (const d of report.domains) {
@@ -100,6 +103,7 @@ export function toMarkdown(report, ref, lang = "fr", previous = null) {
   }
   if (report.domains.some((d) => d.capped) || report.global_capped) L.push("", `_${t.cappedNote}_`);
   if (report.carried) L.push("", `_${report.carried} ${t.carried}._`);
+  if (report.token_savings?.saved) L.push("", `_~${report.token_savings.saved.toLocaleString(lang === "fr" ? "fr-FR" : "en-US")} ${t.saved} (${report.token_savings.commands} commande(s))._`.replace("commande(s)", lang === "fr" ? "commande(s)" : "command(s)"));
   const skipped = report.domains.filter((d) => d.score == null).map((d) => d.label[lang]);
   if (skipped.length) L.push("", `_${t.na}${t.sep}${skipped.join(", ")}_`);
   const table = (rows, title) => {

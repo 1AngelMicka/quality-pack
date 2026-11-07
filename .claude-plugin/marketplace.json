@@ -9,7 +9,7 @@
     {
       "name": "qp",
       "description": "Quality pack core: 27-domain referential, scoring, build skills, /qp:kickoff, /qp:audit, /qp:fix. Socle du pack qualité : référentiel 27 domaines, notation, skills de construction, /qp:kickoff, /qp:audit, /qp:fix.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "source": "./plugins/core",
       "author": {
         "name": "Micka",
@@ -19,7 +19,7 @@
     {
       "name": "qp-nextjs",
       "description": "Quality pack module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind du pack qualité.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "source": "./plugins/stack-nextjs",
       "author": {
         "name": "Micka",
@@ -29,7 +29,7 @@
     {
       "name": "qp-node-api",
       "description": "Quality pack module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node du pack qualité.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "source": "./plugins/stack-node-api",
       "author": {
         "name": "Micka",
@@ -39,7 +39,7 @@
     {
       "name": "qp-vps",
       "description": "Quality pack module for self-hosted VPS: Docker Compose, PM2, Nginx or CloudPanel, backups. Module VPS auto-hébergé du pack qualité.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "source": "./plugins/infra-vps",
       "author": {
         "name": "Micka",

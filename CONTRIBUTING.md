@@ -17,7 +17,7 @@ For a security issue, do not open a public issue: see [SECURITY.md](SECURITY.md)
 | `plugins/core/referential/checks.yaml` | Automatic checks referenced by criteria |
 | `plugins/core/referential/slop-words.yaml` | Hollow wording list (FR/EN) |
 | `plugins/*/stack.yaml` | Stack modules: check commands and stack rules |
-| `plugins/core/skills/{workflow,kickoff,audit,fix}/` | Hand-written skills |
+| `plugins/core/skills/{workflow,kickoff,audit,fix,handoff}/` | Hand-written skills |
 | `plugins/core/agents/auditor.md` | The auditor agent |
 | `plugins/core/scripts/` | Node engine (`qp.mjs`) and hooks, no dependencies |
 | `tools/build.py` | Generates docs, JSON, build skills and manifests from the YAML |

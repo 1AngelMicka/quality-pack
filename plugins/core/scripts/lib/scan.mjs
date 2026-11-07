@@ -4,7 +4,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, extname } from "node:path";
 
 const SKIP_DIRS = new Set(["node_modules", ".git", ".next", ".nuxt", ".svelte-kit", ".output", "dist", "build", "out",
-  "coverage", ".turbo", ".vercel", ".quality", "vendor", ".cache", "public/build", "storybook-static", ".expo"]);
+  "coverage", ".turbo", ".vercel", ".quality", "graphify-out", "vendor", ".cache", "public/build", "storybook-static", ".expo"]);
 const CODE_EXT = new Set([".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".vue", ".svelte", ".astro"]);
 const TEXT_EXT = new Set([...CODE_EXT, ".html", ".md", ".mdx", ".json", ".yml", ".yaml"]);
 const MAX_SIZE = 512 * 1024;

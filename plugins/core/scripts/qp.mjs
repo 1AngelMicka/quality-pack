@@ -3,7 +3,12 @@
 //
 //   node qp.mjs detect                       Guess stacks, flags and profile for /qp:kickoff
 //   node qp.mjs stacks                       List installed qp stack modules
-//   node qp.mjs plan [scope...]              Applicable criteria for /qp:audit, written to .quality/audits/<date>/plan.json
+//   node qp.mjs plan [scope...] [--incremental]
+//                                            Applicable criteria for /qp:audit, written to .quality/audits/<date>/plan.json.
+//                                            scope: group, domain, criterion IDs, "blockers" or "quick" (automatic checks only).
+//                                            --incremental: only what changed since the last audit (git), the rest is carried over.
+//   node qp.mjs run <label> "<command>"      Run a command, keep the full log on disk, print only a compact summary
+//   node qp.mjs graph [refresh]              Graphify status (installed, fresh, recommended for this size) or code-only refresh
 //   node qp.mjs scan                         Static scans of the source (placeholder, hollow wording, debug leftovers)
 //   node qp.mjs web <url>                    HTTP checks: headers, compression, cache, SEO metadata, robots, sitemap
 //   node qp.mjs browser <url> [url...]       Playwright checks at 5 widths (uses the project's Playwright)
@@ -15,6 +20,8 @@ import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadReferential, loadProject, findStacks, qualityDir, resolveFlags, applies, today, allDomains } from "./lib/ref.mjs";
 import { compute, toMarkdown, grade } from "./lib/score.mjs";
+import { gitHead, changedSince } from "./lib/git.mjs";
+import { graphStatus } from "./lib/graph.mjs";
 
 const ref = loadReferential();
 const cwd = process.cwd();
@@ -41,7 +48,23 @@ function loadAudit(date) {
   return existsSync(f) ? JSON.parse(readFileSync(f, "utf8")) : null;
 }
 
-function plan(scope, date) {
+const FULL_EVERY_DAYS = 30;
+
+function incrementalBase(project) {
+  // Latest audit with a git commit, and whether a full re-check is due anyway.
+  const files = auditFiles();
+  if (!files.length) return { reason: "no previous audit" };
+  const prev = JSON.parse(readFileSync(join(auditsDir(), files.at(-1)), "utf8"));
+  if (!prev.git_head) return { reason: "previous audit has no git commit recorded" };
+  if (prev.pack_version !== ref.version) return { reason: `pack updated (${prev.pack_version} → ${ref.version})` };
+  const lastFull = prev.last_full || prev.date;
+  if ((Date.parse(today()) - Date.parse(lastFull)) / 86400000 > FULL_EVERY_DAYS) return { reason: `last full audit older than ${FULL_EVERY_DAYS} days (${lastFull})` };
+  const changed = changedSince(cwd, prev.git_head);
+  if (changed === null) return { reason: "git history unavailable" };
+  return { prev, changed };
+}
+
+function plan(scope, date, incremental = false) {
   const project = requireProject();
   const found = findStacks(cwd);
   const declared = project.stacks || [];
@@ -53,8 +76,19 @@ function plan(scope, date) {
   const flags = resolveFlags(project.flags, ref);
   const profile = ref.profiles[project.profile];
   const tokens = new Set(scope.map((s) => s.toLowerCase()));
-  const inScope = (g, d, c) => !tokens.size || tokens.has(g.group) || tokens.has(d.id) || tokens.has(c.id.toLowerCase())
-    || (tokens.has("blockers") && c.severity === "blocker");
+  const quick = tokens.delete("quick");
+  tokens.delete("full");
+  const inScope = (g, d, c) => (!quick || c.check.method === "auto") && (!tokens.size || tokens.has(g.group) || tokens.has(d.id)
+    || tokens.has(c.id.toLowerCase()) || (tokens.has("blockers") && c.severity === "blocker"));
+  let mode = quick ? "quick" : tokens.size ? "scoped" : "full";
+  let inc = null;
+  if (incremental && !quick) {
+    const base = incrementalBase(project);
+    if (base.prev) { mode = "incremental"; inc = { since: base.prev.date, since_commit: base.prev.git_head, changed_files: base.changed.slice(0, 300),
+      changed_count: base.changed.length, no_changes: base.changed.length === 0 }; }
+    else inc = { forced_full: base.reason };
+  }
+  const prevResults = mode === "incremental" ? (JSON.parse(readFileSync(join(auditsDir(), auditFiles().at(-1)), "utf8")).results || {}) : {};
   const qp = fileURLToPath(import.meta.url);
   const groups = [];
   let count = 0;
@@ -76,6 +110,8 @@ function plan(scope, date) {
             console_check: "browser.json", contrast_check: "browser.json (axe color-contrast)" }[c.check.tool] || "run it yourself (see verify)";
           else if (!st) item.note = "No installed stack module maps this check: find the project's equivalent command or inspect, and say so in the evidence.";
         }
+        const pr = prevResults[c.id];
+        if (pr) item.previous = { status: pr.status, evidence: String(pr.evidence || "").slice(0, 200) };
         criteria.push(item);
         count++;
       }
@@ -89,9 +125,17 @@ function plan(scope, date) {
     language: project.language || "fr", flags: [...flags].sort(), urls: project.urls || {}, scope: [...tokens],
     stacks: stacks.map((s) => ({ stack: s.stack, plugin: s.plugin })),
     missing_stack_modules: declared.filter((s) => !found.some((x) => x.stack === s)),
-    package_manager: project.package_manager || null, criteria_count: count, groups };
+    package_manager: project.package_manager || null, mode, incremental: inc, audit_model: project.audit_model || "inherit",
+    graph: graphSummary(), criteria_count: count, groups };
   writeFileSync(join(dir, "plan.json"), JSON.stringify(result, null, 2));
   return result;
+}
+
+function graphSummary() {
+  try {
+    const g = graphStatus(cwd);
+    return { installed: g.installed, graph: g.graph, stale: g.stale ?? null, project_size: g.project_size, advice: g.advice };
+  } catch { return null; }
 }
 
 function assemble() {
@@ -103,11 +147,14 @@ function assemble() {
   const known = new Map(allDomains(ref).flatMap((d) => d.criteria.map((c) => [c.id, c])));
   const results = {};
   const warnings = [];
+  const returned = new Set();
   for (const f of readdirSync(partsDir).filter((x) => x.endsWith(".json"))) {
     let part;
     try { part = JSON.parse(readFileSync(join(partsDir, f), "utf8")); } catch (e) { warnings.push(`${f}: invalid JSON (${e.message})`); continue; }
     for (const [id, r] of Object.entries(part.results || {})) {
       if (!known.has(id)) { warnings.push(`${f}: unknown criterion ${id}`); continue; }
+      returned.add(id);
+      if (r.status === "carry") continue; // unchanged since the last audit: carried over below
       if (!["pass", "partial", "fail", "unknown", "na"].includes(r.status)) { warnings.push(`${f}: ${id} has invalid status "${r.status}"`); continue; }
       if (r.status === "pass" && !String(r.evidence || "").trim()) { warnings.push(`${f}: ${id} passed without evidence, counted as unknown`); r.status = "unknown"; }
       results[id] = { status: r.status, evidence: r.evidence || "", fix: r.fix || "" };
@@ -123,10 +170,22 @@ function assemble() {
   if (base) for (const [id, r] of Object.entries(base.results || {})) {
     if (!(id in results)) { results[id] = { ...r, carried_from: r.carried_from || base.date }; carried++; }
   }
-  const audit = { date, project: project.name, profile: project.profile, flags: project.flags, pack_version: ref.version, results };
+  let planInfo = {};
+  try { planInfo = JSON.parse(readFileSync(join(dir, "plan.json"), "utf8")); } catch { /* no plan */ }
+  const planned = (planInfo.groups || []).flatMap((g) => g.domains.flatMap((d) => d.criteria.map((c) => c.id)));
+  const missing = planned.filter((id) => !returned.has(id));
+  if (missing.length && !(planInfo.incremental?.no_changes)) warnings.push(`${missing.length} planned criteria not returned by the auditors (kept from the last audit if any, otherwise not checked): ${missing.slice(0, 15).join(", ")}${missing.length > 15 ? "…" : ""}`);
+  const mode = planInfo.mode || "full";
+  const lastFull = mode === "full" ? date : (base?.last_full || base?.date || null);
+  let tokenSavings = null;
+  try { tokenSavings = JSON.parse(readFileSync(join(dir, "token-savings.json"), "utf8")); } catch { /* none */ }
+  const audit = { date, project: project.name, profile: project.profile, flags: project.flags, pack_version: ref.version,
+    mode, git_head: gitHead(cwd), last_full: lastFull, token_savings: tokenSavings, results };
   writeFileSync(join(auditsDir(), `${date}.json`), JSON.stringify(audit, null, 2));
   const lang = opt("lang", project.language || "fr");
   const report = compute(audit, ref);
+  report.mode = mode;
+  report.token_savings = tokenSavings;
   const prevReport = previous ? compute(previous, ref) : null;
   const md = toMarkdown(report, ref, lang, prevReport);
   writeFileSync(join(auditsDir(), `${date}.md`), md);
@@ -134,7 +193,7 @@ function assemble() {
   writeFileSync(join(auditsDir(), `${date}.report.json`), JSON.stringify(report, null, 2));
   out({ date, global: report.global, grade: report.global == null ? null : grade(report.global, ref, lang),
     global_capped: report.global_capped, previous_global: prevReport?.global ?? null, open_blockers: report.open_blockers,
-    carried_forward: carried, warnings, report: relative(cwd, join(qualityDir(cwd), "AUDIT.md")),
+    mode, carried_forward: carried, token_savings: tokenSavings, warnings, report: relative(cwd, join(qualityDir(cwd), "AUDIT.md")),
     top_issues: report.issues.slice(0, 10).map((i) => ({ id: i.id, severity: i.severity, status: i.status, label: i.label[lang], fix: i.fix })) });
 }
 
@@ -148,7 +207,28 @@ async function main() {
       return out(findStacks(cwd).map(({ stack, plugin, file, label }) => ({ stack, plugin, label: label?.en, file })));
     case "plan": {
       const date = opt("date", today());
-      return out(plan(rest, date));
+      const incremental = rest.includes("--incremental");
+      return out(plan(rest.filter((x) => x !== "--incremental"), date, incremental));
+    }
+    case "run": {
+      const { runCommand } = await import("./lib/run.mjs");
+      const date = opt("date", today());
+      const [label, ...cmdParts] = rest;
+      if (!label || !cmdParts.length) die('Usage: qp.mjs run <label> "<command>"');
+      const logDir = loadProject(cwd) ? join(auditsDir(), date, "logs") : join(qualityDir(cwd), "logs");
+      return out(runCommand(label, cmdParts.join(" "), { cwd, logDir }));
+    }
+    case "graph": {
+      const { graphStatus, refreshCommand } = await import("./lib/graph.mjs");
+      if (rest[0] === "refresh") {
+        const st = graphStatus(cwd);
+        if (!st.installed) die("Graphify is not installed. Install: uv tool install graphifyy (or pipx install graphifyy), then graphify install --project");
+        const { runCommand } = await import("./lib/run.mjs");
+        const { command, env } = refreshCommand(cwd);
+        const r = runCommand("graphify", command, { cwd, env, logDir: join(qualityDir(cwd), "logs") });
+        return out({ refreshed: r.exit_code === 0, ...r, status: graphStatus(cwd) });
+      }
+      return out(graphStatus(cwd));
     }
     case "scan": {
       const { scan } = await import("./lib/scan.mjs");

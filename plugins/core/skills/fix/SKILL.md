@@ -28,7 +28,7 @@ For each issue:
 1. Read the criterion (its ID is in the build skills and in `<date>/plan.json`), the evidence and the suggested fix.
 2. Load the build skill of its group and the stack rules skill, and follow the `workflow` skill.
 3. Apply the smallest complete fix.
-4. Verify it with the criterion's own check: run the command, re-read the code, or re-run `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" scan` / `web` / `browser` as relevant.
+4. Verify it with the criterion's own check: run the command through `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" run <criterion-id> "<command>"`, re-read the changed lines, or re-run `qp.mjs scan` / `web` / `browser` as relevant. To find every place a fix must reach, query the Graphify graph first if `graphify-out/graph.json` exists.
 5. Append one line to `.quality/fixes.md`: date, criterion ID, what changed (files), how it was verified.
 
 If a fix cannot be done safely (missing access, a decision only the user can make, a risk to data), stop on that issue. Say what is needed and move on to the next one.
@@ -36,4 +36,4 @@ If a fix cannot be done safely (missing access, a decision only the user can mak
 ## 3. Close
 
 Never edit audit files to mark issues as fixed: the score only changes through an audit.
-Reply with what was fixed and verified, what remains, and the command to re-score only these criteria: `/qp:audit <IDs>`. A scoped audit keeps the other results from the last audit.
+Reply with what was fixed and verified, what remains, and how to re-score: `/qp:audit` (incremental, re-checks what the fixes changed) or `/qp:audit <IDs>`.

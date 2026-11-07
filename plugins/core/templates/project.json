@@ -11,5 +11,7 @@
   "flags": ["has_ui", "has_backend", "has_auth", "has_user_data", "has_db"],
   "expected_load": { "concurrent_users": null, "notes": "" },
   "design_direction": "See DESIGN.md",
+  "audit_model": "sonnet",
+  "companions": ["graphify"],
   "urls": { "local": "http://localhost:3000", "staging": "", "production": "" }
 }
