@@ -1,0 +1,17 @@
+{
+  "name": "qp-stack-node-api",
+  "description": "Node API module (Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io). Module API Node.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Micka"
+  },
+  "license": "MIT",
+  "keywords": [
+    "quality",
+    "audit",
+    "security",
+    "accessibility",
+    "seo",
+    "qualité"
+  ]
+}

@@ -1,0 +1,123 @@
+group: integrations-payments
+label: {fr: "Intégrations, paiements et coûts", en: "Integrations, payments and costs"}
+domains:
+
+  - id: integrations
+    code: INT
+    label: {fr: "Intégrations", en: "Integrations"}
+    summary: {fr: "API, emails et services externes.", en: "APIs, emails and external services."}
+    applies_if: [has_external_api]
+    build:
+      - {fr: "Isoler chaque service externe derrière un module unique : un seul endroit à changer si le service change.", en: "Isolate each external service behind a single module: one place to change if the service changes."}
+      - {fr: "Valider les réponses des API externes comme une entrée utilisateur.", en: "Validate external API responses like user input."}
+      - {fr: "Vérifier la signature de chaque webhook et traiter chaque événement une seule fois (idempotence).", en: "Verify every webhook signature and process each event only once (idempotency)."}
+      - {fr: "Emails : domaine authentifié (SPF, DKIM, DMARC), version texte, lien de désinscription pour le marketing.", en: "Emails: authenticated domain (SPF, DKIM, DMARC), text version, unsubscribe link for marketing."}
+    criteria:
+      - id: INT-01
+        severity: blocker
+        check: {method: inspect}
+        applies_if: [has_webhooks]
+        label: {fr: "Signature des webhooks vérifiée", en: "Webhook signatures verified"}
+        verify: {fr: "Chaque handler vérifie la signature avec le corps brut avant tout traitement.", en: "Each handler verifies the signature against the raw body before any processing."}
+      - id: INT-02
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_webhooks]
+        label: {fr: "Événements de webhook traités une seule fois", en: "Webhook events processed only once"}
+        verify: {fr: "Identifiant d'événement enregistré ; un rejeu ne crée pas de doublon.", en: "Event ID stored; a replay creates no duplicate."}
+      - id: INT-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Réponses externes validées et pannes du service gérées", en: "External responses validated and service outages handled"}
+        verify: {fr: "Schéma sur les réponses ; comportement dégradé si le service est indisponible.", en: "Schema on responses; degraded behaviour when the service is down."}
+      - id: INT-04
+        severity: major
+        check: {method: auto, tool: email_auth_check}
+        applies_if: [has_email]
+        label: {fr: "Emails authentifiés (SPF, DKIM, DMARC) et non classés en spam", en: "Emails authenticated (SPF, DKIM, DMARC) and not flagged as spam"}
+        verify: {fr: "Enregistrements DNS vérifiés ; envoi de test vers Gmail et Outlook.", en: "DNS records checked; test send to Gmail and Outlook."}
+      - id: INT-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Chaque service externe isolé dans un module dédié", en: "Each external service isolated in a dedicated module"}
+        verify: {fr: "Pas d'appels directs au SDK dispersés dans le code.", en: "No direct SDK calls scattered across the code."}
+      - id: INT-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Quotas et conditions d'utilisation des API respectés", en: "API quotas and terms of use respected"}
+        verify: {fr: "Limites connues, cache des réponses, attribution exigée affichée.", en: "Known limits, response caching, required attribution shown."}
+
+  - id: payments
+    code: PAY
+    label: {fr: "Paiements", en: "Payments"}
+    summary: {fr: "Facturation, abonnements et résiliation.", en: "Billing, subscriptions and cancellation."}
+    applies_if: [has_payments]
+    build:
+      - {fr: "Utiliser une page de paiement hébergée (Stripe Checkout ou équivalent) : aucune donnée de carte ne passe par nos serveurs.", en: "Use a hosted payment page (Stripe Checkout or equivalent): no card data goes through our servers."}
+      - {fr: "L'état d'un paiement ou d'un abonnement vient du webhook du prestataire, jamais de la redirection du navigateur.", en: "Payment or subscription state comes from the provider's webhook, never from the browser redirect."}
+      - {fr: "Le prix affiché vient du serveur ou du prestataire, jamais d'une valeur envoyée par le client.", en: "The displayed and charged price comes from the server or provider, never from a client-sent value."}
+      - {fr: "La résiliation est aussi simple que la souscription et accessible depuis le compte.", en: "Cancelling is as simple as subscribing and reachable from the account."}
+      - {fr: "Tester en mode test : succès, refus, 3-D Secure, échec de renouvellement, remboursement.", en: "Test in test mode: success, decline, 3-D Secure, renewal failure, refund."}
+    criteria:
+      - id: PAY-01
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Les droits sont accordés uniquement après confirmation par webhook signé", en: "Access is granted only after confirmation by a signed webhook"}
+        verify: {fr: "Aucun accès débloqué sur la page de retour ou par un paramètre d'URL.", en: "No access unlocked on the return page or through a URL parameter."}
+      - id: PAY-02
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Le montant ne peut pas être modifié par le client", en: "The amount cannot be changed by the client"}
+        verify: {fr: "Les prix sont lus côté serveur (identifiants de prix), jamais repris de la requête.", en: "Prices are read server-side (price IDs), never taken from the request."}
+      - id: PAY-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Résiliation en libre-service, aussi simple que la souscription", en: "Self-service cancellation, as simple as subscribing"}
+        verify: {fr: "Parcours de résiliation depuis le compte, sans contact obligatoire.", en: "Cancellation flow from the account, no mandatory contact."}
+      - id: PAY-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Échecs de paiement et renouvellements gérés", en: "Payment failures and renewals handled"}
+        verify: {fr: "Carte refusée, 3-D Secure, échec de renouvellement : accès et emails cohérents.", en: "Declined card, 3-D Secure, renewal failure: consistent access and emails."}
+      - id: PAY-05
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Factures conformes émises et accessibles", en: "Compliant invoices issued and accessible"}
+        verify: {fr: "Factures avec les mentions requises par le pays, téléchargeables par le client.", en: "Invoices with the mentions required by the country, downloadable by the customer."}
+      - id: PAY-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Prix, taxes, durée d'engagement et renouvellement affichés avant paiement", en: "Price, taxes, commitment and renewal shown before payment"}
+        verify: {fr: "Récapitulatif clair avant validation.", en: "Clear summary before confirming."}
+
+  - id: costs
+    code: CST
+    label: {fr: "Coûts", en: "Costs"}
+    summary: {fr: "Maîtrise des dépenses.", en: "Spending control."}
+    build:
+      - {fr: "Tenir la liste des services payants avec leur coût mensuel et ce qui le fait grimper.", en: "Keep the list of paid services with their monthly cost and what drives it up."}
+      - {fr: "Plafond ou alerte de dépense sur chaque service facturé à l'usage (API d'IA, envoi d'emails, stockage, bande passante).", en: "Spending cap or alert on every usage-billed service (AI APIs, email sending, storage, bandwidth)."}
+      - {fr: "Tout appel à un service payant déclenché par un utilisateur est authentifié et limité.", en: "Any user-triggered call to a paid service is authenticated and rate-limited."}
+    criteria:
+      - id: CST-01
+        severity: major
+        check: {method: inspect}
+        applies_if: [uses_paid_services]
+        label: {fr: "Plafonds ou alertes de dépense sur les services facturés à l'usage", en: "Spending caps or alerts on usage-billed services"}
+        verify: {fr: "Configuration de budget ou d'alerte chez chaque prestataire.", en: "Budget or alert configured at each provider."}
+      - id: CST-02
+        severity: major
+        check: {method: inspect}
+        applies_if: [uses_paid_services]
+        label: {fr: "Aucune route publique qui déclenche un coût sans limite", en: "No public route that triggers an unlimited cost"}
+        verify: {fr: "Routes vers des API payantes : authentification, limitation, mise en cache.", en: "Routes to paid APIs: authentication, rate limiting, caching."}
+      - id: CST-03
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Inventaire des coûts tenu à jour", en: "Up-to-date cost inventory"}
+        verify: {fr: "Fichier listant services, coût, facturation, date de renouvellement.", en: "File listing services, cost, billing basis, renewal date."}
+      - id: CST-04
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Ressources inutilisées supprimées", en: "Unused resources removed"}
+        verify: {fr: "Serveurs, bases, domaines, abonnements sans usage.", en: "Servers, databases, domains, subscriptions with no use."}

@@ -1,0 +1,45 @@
+{
+  "name": "quality-pack",
+  "description": "Build and audit web projects across 27 quality domains, with scoring. Construire et auditer des projets web sur 27 domaines qualité, avec notation.",
+  "owner": {
+    "name": "Micka"
+  },
+  "plugins": [
+    {
+      "name": "qp-core",
+      "description": "Stack-agnostic quality framework: 27-domain referential, scoring, /kickoff, /audit, /fix. Socle commun : référentiel 27 domaines, barème, /kickoff, /audit, /fix.",
+      "version": "0.1.0",
+      "source": "./plugins/core",
+      "author": {
+        "name": "Micka"
+      }
+    },
+    {
+      "name": "qp-stack-nextjs",
+      "description": "Next.js, React, TypeScript and Tailwind module: maps quality checks to real commands and adds stack rules. Module Next.js / React / TypeScript / Tailwind.",
+      "version": "0.1.0",
+      "source": "./plugins/stack-nextjs",
+      "author": {
+        "name": "Micka"
+      }
+    },
+    {
+      "name": "qp-stack-node-api",
+      "description": "Node API module (Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io). Module API Node.",
+      "version": "0.1.0",
+      "source": "./plugins/stack-node-api",
+      "author": {
+        "name": "Micka"
+      }
+    },
+    {
+      "name": "qp-infra-vps",
+      "description": "Self-hosted VPS module (Docker Compose, PM2, Nginx or CloudPanel, backups). Module VPS auto-hébergé.",
+      "version": "0.1.0",
+      "source": "./plugins/infra-vps",
+      "author": {
+        "name": "Micka"
+      }
+    }
+  ]
+}

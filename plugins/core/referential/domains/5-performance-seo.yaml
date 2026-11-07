@@ -1,0 +1,129 @@
+group: performance-seo
+label: {fr: "Performance et visibilité", en: "Performance and visibility"}
+domains:
+
+  - id: performance
+    code: PRF
+    label: {fr: "Performance", en: "Performance"}
+    summary: {fr: "Compression des ressources, optimisation des requêtes et rapidité.", en: "Asset compression, query optimisation and speed."}
+    build:
+      - {fr: "Fixer un budget dès le départ : LCP sous 2,5 s, INP sous 200 ms, CLS sous 0,1 sur mobile.", en: "Set a budget from the start: LCP under 2.5 s, INP under 200 ms, CLS under 0.1 on mobile."}
+      - {fr: "Images en AVIF ou WebP, dimensionnées, chargées en différé hors de la première vue, avec dimensions réservées.", en: "Images in AVIF or WebP, sized, lazy-loaded below the fold, with reserved dimensions."}
+      - {fr: "Polices auto-hébergées, sous-ensemble utile, font-display: swap.", en: "Self-hosted fonts, useful subset, font-display: swap."}
+      - {fr: "Pas de requête en boucle (N+1) ; pagination de toute liste qui peut grandir.", en: "No query in a loop (N+1); paginate every list that can grow."}
+      - {fr: "Compression gzip ou brotli et cache HTTP sur les ressources statiques.", en: "gzip or brotli compression and HTTP caching on static assets."}
+    criteria:
+      - id: PRF-01
+        severity: major
+        check: {method: auto, tool: lighthouse}
+        applies_if: [has_ui]
+        label: {fr: "Core Web Vitals dans le budget sur mobile (LCP, INP, CLS)", en: "Core Web Vitals within budget on mobile (LCP, INP, CLS)"}
+        verify: {fr: "Lighthouse en mode mobile sur les pages principales ; données terrain si disponibles.", en: "Lighthouse mobile on main pages; field data if available."}
+      - id: PRF-02
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_db]
+        label: {fr: "Aucune requête N+1 ni liste non paginée", en: "No N+1 query or unpaginated list"}
+        verify: {fr: "Lire les accès aux données dans les boucles ; journaliser les requêtes d'une page.", en: "Read data access inside loops; log the queries of one page."}
+      - id: PRF-03
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_ui]
+        label: {fr: "Images optimisées, dimensionnées et chargées en différé", en: "Images optimised, sized and lazy-loaded"}
+        verify: {fr: "Formats modernes, srcset ou composant d'image, width et height présents.", en: "Modern formats, srcset or image component, width and height present."}
+      - id: PRF-04
+        severity: minor
+        check: {method: auto, tool: bundle_size}
+        applies_if: [has_ui]
+        label: {fr: "JavaScript envoyé au client dans le budget", en: "JavaScript shipped to the client within budget"}
+        verify: {fr: "Analyse du bundle ; dépendances lourdes remplacées ou chargées à la demande.", en: "Bundle analysis; heavy dependencies replaced or loaded on demand."}
+      - id: PRF-05
+        severity: minor
+        check: {method: auto, tool: headers_check}
+        label: {fr: "Compression et cache HTTP actifs sur les ressources statiques", en: "Compression and HTTP caching active on static assets"}
+        verify: {fr: "Headers content-encoding et cache-control sur JS, CSS, images, polices.", en: "content-encoding and cache-control headers on JS, CSS, images, fonts."}
+      - id: PRF-06
+        severity: minor
+        check: {method: inspect}
+        applies_if: [has_backend]
+        label: {fr: "Temps de réponse API mesuré et raisonnable", en: "API response time measured and reasonable"}
+        verify: {fr: "p95 des routes principales sous 500 ms en conditions normales.", en: "p95 of main routes under 500 ms under normal load."}
+
+  - id: seo
+    code: SEO
+    label: {fr: "SEO et meta", en: "SEO and meta"}
+    summary: {fr: "Référencement, indexation, métadonnées, OpenGraph et favicons.", en: "Search ranking, indexing, metadata, OpenGraph and favicons."}
+    applies_if: [public_web]
+    build:
+      - {fr: "Chaque page publique a un titre et une description uniques, une URL lisible et une balise canonique.", en: "Every public page has a unique title and description, a readable URL and a canonical tag."}
+      - {fr: "Le contenu important est dans le HTML servi (rendu serveur ou statique), pas seulement généré côté client.", en: "Important content is in the served HTML (server or static rendering), not only client-generated."}
+      - {fr: "Fournir sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons et manifest.", en: "Provide sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons and manifest."}
+      - {fr: "Les pages privées et de préproduction ne sont pas indexables.", en: "Private and staging pages are not indexable."}
+    criteria:
+      - id: SEO-01
+        severity: blocker
+        check: {method: auto, tool: seo_scan}
+        label: {fr: "Les pages publiques sont indexables et la préproduction ne l'est pas", en: "Public pages are indexable and staging is not"}
+        verify: {fr: "Pas de noindex accidentel en production ; noindex ou mot de passe en préproduction.", en: "No accidental noindex in production; noindex or password on staging."}
+      - id: SEO-02
+        severity: major
+        check: {method: auto, tool: seo_scan}
+        label: {fr: "Titre, description et canonique uniques sur chaque page publique", en: "Unique title, description and canonical on every public page"}
+        verify: {fr: "Explorer le site et détecter les doublons et manques.", en: "Crawl the site and detect duplicates and gaps."}
+      - id: SEO-03
+        severity: major
+        check: {method: auto, tool: seo_scan}
+        label: {fr: "OpenGraph et Twitter Card complets avec une image dédiée", en: "Complete OpenGraph and Twitter Card with a dedicated image"}
+        verify: {fr: "og:title, og:description, og:image (1200 × 630), og:url ; aperçu testé.", en: "og:title, og:description, og:image (1200 × 630), og:url; preview tested."}
+      - id: SEO-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Contenu principal présent dans le HTML servi", en: "Main content present in the served HTML"}
+        verify: {fr: "curl de la page : le texte principal est dans la réponse.", en: "curl the page: main text is in the response."}
+      - id: SEO-05
+        severity: minor
+        check: {method: auto, tool: seo_scan}
+        label: {fr: "sitemap.xml, robots.txt, favicons et manifest présents et valides", en: "sitemap.xml, robots.txt, favicons and manifest present and valid"}
+        verify: {fr: "Récupérer chaque fichier ; favicons en plusieurs tailles et apple-touch-icon.", en: "Fetch each file; favicons in several sizes and apple-touch-icon."}
+      - id: SEO-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Données structurées adaptées au type de site", en: "Structured data suited to the site type"}
+        verify: {fr: "JSON-LD Organization, LocalBusiness, Product ou Article selon le cas, validé.", en: "JSON-LD Organization, LocalBusiness, Product or Article as relevant, validated."}
+      - id: SEO-07
+        severity: minor
+        check: {method: inspect}
+        applies_if: [multilingual]
+        label: {fr: "Balises hreflang correctes pour les versions linguistiques", en: "Correct hreflang tags for language versions"}
+        verify: {fr: "Chaque version pointe vers les autres et vers elle-même.", en: "Each version points to the others and to itself."}
+
+  - id: scalability
+    code: SCL
+    label: {fr: "Scalabilité", en: "Scalability"}
+    summary: {fr: "Tenue en charge.", en: "Holding up under load."}
+    applies_if: [has_backend]
+    build:
+      - {fr: "Estimer la charge attendue (utilisateurs simultanés, pics) au /kickoff et dimensionner en conséquence, sans surdimensionner.", en: "Estimate expected load (concurrent users, peaks) at /kickoff and size for it, without oversizing."}
+      - {fr: "Serveur sans état en mémoire locale : sessions, files et verrous dans Redis ou la base, pour pouvoir lancer plusieurs instances.", en: "Stateless server in local memory: sessions, queues and locks in Redis or the database, so several instances can run."}
+      - {fr: "Les tâches longues passent par une file, pas par la requête HTTP.", en: "Long tasks go through a queue, not the HTTP request."}
+    criteria:
+      - id: SCL-01
+        severity: major
+        check: {method: auto, tool: load_test}
+        label: {fr: "Test de charge à la charge attendue sans erreur", en: "Load test at expected load without errors"}
+        verify: {fr: "k6 ou autocannon sur les routes principales ; taux d'erreur et p95 relevés.", en: "k6 or autocannon on main routes; error rate and p95 recorded."}
+      - id: SCL-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Aucun état critique gardé uniquement en mémoire d'une instance", en: "No critical state kept only in one instance's memory"}
+        verify: {fr: "Sessions, salons temps réel, compteurs : stockés ou synchronisés hors du processus (adaptateur Redis pour Socket.io).", en: "Sessions, real-time rooms, counters: stored or synced outside the process (Redis adapter for Socket.io)."}
+      - id: SCL-03
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Tâches longues traitées en arrière-plan", en: "Long tasks processed in the background"}
+        verify: {fr: "Envoi d'emails, traitement de fichiers, exports : file de tâches.", en: "Email sending, file processing, exports: job queue."}
+      - id: SCL-04
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Pool de connexions base de données dimensionné", en: "Database connection pool sized"}
+        verify: {fr: "Taille du pool cohérente avec le nombre d'instances et la limite de la base.", en: "Pool size consistent with instance count and database limit."}

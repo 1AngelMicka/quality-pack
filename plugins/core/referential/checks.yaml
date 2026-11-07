@@ -1,0 +1,32 @@
+# Automatic checks referenced by criteria (check.tool).
+# "core" checks are generic and shipped by the core plugin.
+# "stack" checks are mapped to real commands by each stack module (stack.yaml).
+# When no module provides a stack check, the auditor falls back to inspection and says so.
+
+checks:
+  placeholder_scan: {provider: core, fr: "Recherche de textes de remplissage et faux contenus", en: "Search for filler text and fake content"}
+  slop_wording_scan: {provider: core, fr: "Recherche des formules creuses (liste noire FR/EN)", en: "Search for hollow wording (FR/EN blacklist)"}
+  debug_leftovers_scan: {provider: core, fr: "Recherche de logs de débogage, code commenté, fichiers temporaires", en: "Search for debug logs, commented-out code, temporary files"}
+  secrets_scan: {provider: core, fr: "gitleaks sur le dépôt et l'historique, recherche de clés dans le build", en: "gitleaks on repo and history, key search in the build"}
+  headers_check: {provider: core, fr: "Lecture des headers HTTP de sécurité, compression et cache", en: "Read HTTP security, compression and caching headers"}
+  cookie_scan: {provider: core, fr: "Cookies et requêtes tierces avant consentement (Playwright)", en: "Cookies and third-party requests before consent (Playwright)"}
+  seo_scan: {provider: core, fr: "Exploration : titres, descriptions, canoniques, OpenGraph, robots, sitemap", en: "Crawl: titles, descriptions, canonicals, OpenGraph, robots, sitemap"}
+  axe: {provider: core, fr: "axe-core via Playwright sur les pages principales", en: "axe-core via Playwright on main pages"}
+  contrast_check: {provider: core, fr: "Contrastes des tokens et des pages rendues", en: "Contrast of tokens and rendered pages"}
+  viewport_screenshots: {provider: core, fr: "Captures et débordements à 360, 390, 768, 1024, 1440 px", en: "Screenshots and overflow at 360, 390, 768, 1024, 1440 px"}
+  console_check: {provider: core, fr: "Erreurs et avertissements console (Playwright)", en: "Console errors and warnings (Playwright)"}
+  email_auth_check: {provider: core, fr: "Enregistrements SPF, DKIM, DMARC", en: "SPF, DKIM, DMARC records"}
+  port_scan: {provider: core, fr: "Ports ouverts vus de l'extérieur", en: "Open ports seen from outside"}
+  spellcheck: {provider: core, fr: "Correcteur orthographique sur les textes et traductions", en: "Spell checker on copy and translations"}
+
+  typecheck: {provider: stack, fr: "Vérification des types et build", en: "Type check and build"}
+  lint: {provider: stack, fr: "Linter du projet", en: "Project linter"}
+  test_run: {provider: stack, fr: "Suite de tests", en: "Test suite"}
+  e2e: {provider: stack, fr: "Tests de bout en bout", en: "End-to-end tests"}
+  e2e_cross_browser: {provider: stack, fr: "Tests de bout en bout sur Chromium, Firefox, WebKit", en: "End-to-end tests on Chromium, Firefox, WebKit"}
+  deps_audit: {provider: stack, fr: "Audit de vulnérabilités des dépendances", en: "Dependency vulnerability audit"}
+  license_check: {provider: stack, fr: "Licences des dépendances", en: "Dependency licences"}
+  bundle_size: {provider: stack, fr: "Taille du JavaScript envoyé au client", en: "Size of JavaScript shipped to the client"}
+  lighthouse: {provider: stack, fr: "Lighthouse mobile sur les pages principales", en: "Lighthouse mobile on main pages"}
+  design_token_scan: {provider: stack, fr: "Valeurs en dur au lieu des tokens", en: "Hard-coded values instead of tokens"}
+  load_test: {provider: stack, fr: "Test de charge sur les routes principales", en: "Load test on main routes"}

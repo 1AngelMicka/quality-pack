@@ -1,0 +1,168 @@
+group: operations
+label: {fr: "Exploitation", en: "Operations"}
+domains:
+
+  - id: infra
+    code: INF
+    label: {fr: "Infra", en: "Infrastructure"}
+    summary: {fr: "Configuration serveur, gestion des processus et redémarrage automatique.", en: "Server configuration, process management and automatic restart."}
+    applies_if: [self_hosted]
+    build:
+      - {fr: "Configuration serveur décrite dans des fichiers versionnés (Docker Compose, config Nginx, ecosystem PM2), jamais seulement à la main.", en: "Server configuration described in versioned files (Docker Compose, Nginx config, PM2 ecosystem), never only by hand."}
+      - {fr: "Chaque processus redémarre automatiquement après un crash et au redémarrage du serveur.", en: "Every process restarts automatically after a crash and on server reboot."}
+      - {fr: "Pare-feu actif : seuls les ports nécessaires sont ouverts ; base de données et Redis non exposés publiquement.", en: "Firewall on: only required ports open; database and Redis not exposed publicly."}
+      - {fr: "Connexion SSH par clé uniquement, mises à jour de sécurité automatiques.", en: "SSH by key only, automatic security updates."}
+    criteria:
+      - id: INF-01
+        severity: blocker
+        check: {method: auto, tool: port_scan}
+        label: {fr: "Base de données, Redis et ports d'administration non exposés publiquement", en: "Database, Redis and admin ports not publicly exposed"}
+        verify: {fr: "Scan des ports depuis l'extérieur ; liaisons sur 127.0.0.1 ou réseau Docker interne.", en: "External port scan; bindings on 127.0.0.1 or internal Docker network."}
+      - id: INF-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Redémarrage automatique après crash et après reboot", en: "Automatic restart after crash and after reboot"}
+        verify: {fr: "restart: unless-stopped, pm2 startup et pm2 save, ou unité systemd.", en: "restart: unless-stopped, pm2 startup and pm2 save, or a systemd unit."}
+      - id: INF-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Configuration serveur versionnée et reproductible", en: "Server configuration versioned and reproducible"}
+        verify: {fr: "Recréer l'environnement à partir du dépôt et d'un .env.", en: "Rebuild the environment from the repo and a .env."}
+      - id: INF-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "HTTPS partout avec renouvellement automatique du certificat", en: "HTTPS everywhere with automatic certificate renewal"}
+        verify: {fr: "Redirection HTTP vers HTTPS ; date d'expiration et renouvellement automatique.", en: "HTTP to HTTPS redirect; expiry date and auto-renewal."}
+      - id: INF-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Accès serveur durci (SSH par clé, pare-feu, mises à jour automatiques)", en: "Hardened server access (SSH keys, firewall, automatic updates)"}
+        verify: {fr: "PasswordAuthentication no, ufw ou équivalent, unattended-upgrades.", en: "PasswordAuthentication no, ufw or equivalent, unattended-upgrades."}
+      - id: INF-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Limites de ressources et rotation des logs", en: "Resource limits and log rotation"}
+        verify: {fr: "Limite mémoire par conteneur ou processus ; logs qui ne remplissent pas le disque.", en: "Memory limit per container or process; logs that do not fill the disk."}
+
+  - id: deployment
+    code: DEP
+    label: {fr: "Déploiement", en: "Deployment"}
+    summary: {fr: "Mise en ligne et retour arrière.", en: "Release and rollback."}
+    build:
+      - {fr: "Déployer par une commande ou un pipeline unique, jamais par copie de fichiers à la main.", en: "Deploy through one command or pipeline, never by copying files by hand."}
+      - {fr: "Chaque version déployée est identifiable (tag Git, numéro de build) et la précédente reste disponible.", en: "Every deployed version is identifiable (Git tag, build number) and the previous one stays available."}
+      - {fr: "Écrire et tester la procédure de retour arrière avant d'en avoir besoin.", en: "Write and test the rollback procedure before you need it."}
+      - {fr: "Déployer d'abord en préproduction quand le changement touche aux données, aux paiements ou à l'authentification.", en: "Deploy to staging first when the change touches data, payments or authentication."}
+    criteria:
+      - id: DEP-01
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Une procédure de retour arrière existe et a été testée", en: "A rollback procedure exists and has been tested"}
+        verify: {fr: "Document de retour arrière et date du dernier essai.", en: "Rollback document and date of last trial."}
+      - id: DEP-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Déploiement automatisé et reproductible", en: "Automated and reproducible deployment"}
+        verify: {fr: "Script ou pipeline unique ; aucune étape manuelle non documentée.", en: "Single script or pipeline; no undocumented manual step."}
+      - id: DEP-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Tests et build bloquants avant mise en production", en: "Tests and build gate production releases"}
+        verify: {fr: "Le pipeline s'arrête si typecheck, lint, tests ou build échouent.", en: "The pipeline stops if typecheck, lint, tests or build fail."}
+      - id: DEP-04
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_db]
+        label: {fr: "Migrations appliquées de façon sûre au déploiement", en: "Migrations applied safely at deployment"}
+        verify: {fr: "Ordre migration et code compatible ; sauvegarde avant migration destructive.", en: "Migration and code order compatible; backup before destructive migration."}
+      - id: DEP-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Version déployée identifiable et visible", en: "Deployed version identifiable and visible"}
+        verify: {fr: "Tag Git ou hash exposé dans un endpoint de santé ou les logs.", en: "Git tag or hash exposed in a health endpoint or the logs."}
+      - id: DEP-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Environnement de préproduction séparé de la production", en: "Staging environment separate from production"}
+        verify: {fr: "Base, secrets et domaine distincts.", en: "Separate database, secrets and domain."}
+
+  - id: monitoring
+    code: MON
+    label: {fr: "Monitoring", en: "Monitoring"}
+    summary: {fr: "Surveillance, logs d'erreurs et alertes.", en: "Monitoring, error logs and alerts."}
+    applies_if: [has_backend_or_public]
+    build:
+      - {fr: "Remonter les erreurs serveur et client vers un outil (Sentry, GlitchTip…) avec la version et sans données personnelles.", en: "Send server and client errors to a tool (Sentry, GlitchTip…) with the version and no personal data."}
+      - {fr: "Exposer un endpoint de santé et le surveiller de l'extérieur (Uptime Kuma, Better Stack…).", en: "Expose a health endpoint and monitor it from outside (Uptime Kuma, Better Stack…)."}
+      - {fr: "Logs structurés (JSON) avec un niveau et un identifiant de requête.", en: "Structured logs (JSON) with a level and a request ID."}
+      - {fr: "Une alerte doit arriver sur un canal lu (email, téléphone), et seulement pour ce qui demande une action.", en: "An alert must reach a channel that is read (email, phone), and only for what needs action."}
+    criteria:
+      - id: MON-01
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Une panne du site déclenche une alerte reçue par quelqu'un", en: "A site outage triggers an alert someone receives"}
+        verify: {fr: "Surveillance externe configurée ; alerte de test reçue.", en: "External monitoring configured; test alert received."}
+      - id: MON-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Erreurs serveur et client remontées dans un outil de suivi", en: "Server and client errors reported to a tracking tool"}
+        verify: {fr: "SDK configuré, erreur de test visible avec version et trace.", en: "SDK configured, test error visible with version and trace."}
+      - id: MON-03
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_backend]
+        label: {fr: "Endpoint de santé qui vérifie les dépendances critiques", en: "Health endpoint that checks critical dependencies"}
+        verify: {fr: "/health répond et vérifie base de données et Redis.", en: "/health responds and checks database and Redis."}
+      - id: MON-04
+        severity: minor
+        check: {method: inspect}
+        applies_if: [has_backend]
+        label: {fr: "Logs structurés, horodatés et conservés une durée définie", en: "Structured, timestamped logs kept for a defined period"}
+        verify: {fr: "Format JSON, niveau, identifiant de requête, rotation.", en: "JSON format, level, request ID, rotation."}
+      - id: MON-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Alerte avant expiration du domaine et du certificat, et sur l'espace disque", en: "Alert before domain and certificate expiry, and on disk space"}
+        verify: {fr: "Surveillance des dates d'expiration et du disque.", en: "Monitoring of expiry dates and disk."}
+
+  - id: backups
+    code: BAK
+    label: {fr: "Sauvegardes", en: "Backups"}
+    summary: {fr: "Sauvegardes automatisées, restauration testée et reprise.", en: "Automated backups, tested restore and recovery."}
+    applies_if: [has_persistent_data]
+    build:
+      - {fr: "Sauvegarde automatique quotidienne de la base et des fichiers envoyés par les utilisateurs.", en: "Automatic daily backup of the database and user-uploaded files."}
+      - {fr: "Règle 3-2-1 : au moins une copie hors du serveur de production, chez un autre prestataire ou dans une autre région.", en: "3-2-1 rule: at least one copy off the production server, with another provider or region."}
+      - {fr: "Sauvegardes chiffrées et conservées selon une durée définie.", en: "Backups encrypted and kept for a defined period."}
+      - {fr: "Tester une restauration complète au moins une fois par trimestre et noter le temps nécessaire.", en: "Test a full restore at least once a quarter and record how long it takes."}
+    criteria:
+      - id: BAK-01
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Sauvegarde automatique de la base et des fichiers utilisateurs", en: "Automatic backup of the database and user files"}
+        verify: {fr: "Tâche planifiée et dernière sauvegarde datée de moins de 24 h.", en: "Scheduled job and latest backup less than 24 h old."}
+      - id: BAK-02
+        severity: blocker
+        check: {method: manual}
+        label: {fr: "Une restauration complète a été testée", en: "A full restore has been tested"}
+        verify: {fr: "Date et durée de la dernière restauration réussie sur un environnement séparé.", en: "Date and duration of the last successful restore on a separate environment."}
+      - id: BAK-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Au moins une copie hors du serveur de production", en: "At least one copy off the production server"}
+        verify: {fr: "Destination externe (stockage objet, autre serveur) vérifiée.", en: "External destination (object storage, other server) checked."}
+      - id: BAK-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Échec de sauvegarde signalé par une alerte", en: "Backup failure raises an alert"}
+        verify: {fr: "Le script de sauvegarde alerte en cas d'échec ou d'absence.", en: "The backup script alerts on failure or absence."}
+      - id: BAK-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Sauvegardes chiffrées avec durée de conservation définie", en: "Encrypted backups with a defined retention period"}
+        verify: {fr: "Chiffrement et rotation configurés.", en: "Encryption and rotation configured."}
+      - id: BAK-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Plan de reprise écrit (qui fait quoi, dans quel ordre)", en: "Written recovery plan (who does what, in which order)"}
+        verify: {fr: "Document de reprise avec objectifs de délai et de perte de données acceptables.", en: "Recovery document with acceptable downtime and data-loss targets."}

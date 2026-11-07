@@ -1,0 +1,29 @@
+# Next.js / React / TypeScript / Tailwind module.
+# Maps the referential's stack checks to commands. {pm} = the project's package manager (npm, pnpm, yarn, bun).
+stack: nextjs
+label: {fr: "Next.js, React, TypeScript, Tailwind", en: "Next.js, React, TypeScript, Tailwind"}
+detect:
+  files_any: [next.config.js, next.config.mjs, next.config.ts]
+  package_json_deps_any: [next]
+
+checks:
+  typecheck: {run: "{pm} exec tsc --noEmit && {pm} run build", pass_if: "exit code 0"}
+  lint: {run: "{pm} run lint", pass_if: "exit code 0, no errors"}
+  test_run: {run: "{pm} test", pass_if: "exit code 0, no skipped test without a written reason"}
+  e2e: {run: "{pm} exec playwright test", pass_if: "exit code 0"}
+  e2e_cross_browser: {run: "{pm} exec playwright test --project=chromium --project=firefox --project=webkit", pass_if: "exit code 0 on all three"}
+  deps_audit: {run: "{pm} audit --audit-level=high", pass_if: "no high or critical advisory"}
+  license_check: {run: "npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'", pass_if: "exit code 0"}
+  bundle_size: {run: "{pm} run build", pass_if: "First Load JS of main routes under 200 kB (read the build output table)"}
+  lighthouse: {run: "npx --yes @lhci/cli autorun --collect.url={url}", pass_if: "LCP < 2.5 s, CLS < 0.1, TBT < 200 ms on mobile"}
+  design_token_scan: {run: "grep -rnE '#[0-9a-fA-F]{3,8}\\b|\\[[0-9]+px\\]|(bg|text|border)-\\[#' app components src --include=*.tsx --include=*.ts --include=*.css", pass_if: "no match outside the token files (tailwind config, globals.css)"}
+  load_test: {run: "npx --yes autocannon -c 50 -d 30 {url}", pass_if: "0 errors, p97.5 latency under 1 s"}
+
+rules:
+  - {fr: "Composants serveur par défaut ; 'use client' seulement là où il faut de l'interactivité.", en: "Server components by default; 'use client' only where interactivity is needed."}
+  - {fr: "Valider les entrées des Server Actions et des Route Handlers avec Zod, et vérifier la session dans chacune.", en: "Validate Server Action and Route Handler inputs with Zod, and check the session in each one."}
+  - {fr: "Seules les variables NEXT_PUBLIC_ partent au client : aucun secret ne doit porter ce préfixe.", en: "Only NEXT_PUBLIC_ variables reach the client: no secret may use that prefix."}
+  - {fr: "Images avec next/image, polices avec next/font, metadata via l'API Metadata (titre, description, OpenGraph).", en: "Images with next/image, fonts with next/font, metadata through the Metadata API (title, description, OpenGraph)."}
+  - {fr: "Fichiers loading.tsx, error.tsx et not-found.tsx pour chaque segment de route qui charge des données.", en: "loading.tsx, error.tsx and not-found.tsx files for every route segment that loads data."}
+  - {fr: "Headers de sécurité et CSP dans next.config ou le middleware.", en: "Security headers and CSP in next.config or middleware."}
+  - {fr: "Tailwind : couleurs et espacements dans la configuration ou les variables CSS ; pas de valeurs arbitraires entre crochets.", en: "Tailwind: colours and spacing in the config or CSS variables; no arbitrary bracket values."}

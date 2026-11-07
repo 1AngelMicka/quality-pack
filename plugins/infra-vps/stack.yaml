@@ -1,0 +1,19 @@
+# Self-hosted VPS module: Docker Compose, PM2, Nginx or CloudPanel, backups.
+stack: infra-vps
+label: {fr: "VPS auto-hébergé (Docker Compose, PM2, Nginx ou CloudPanel)", en: "Self-hosted VPS (Docker Compose, PM2, Nginx or CloudPanel)"}
+detect:
+  files_any: [docker-compose.yml, docker-compose.yaml, compose.yml, compose.yaml, ecosystem.config.js, ecosystem.config.cjs]
+sets_flags: [self_hosted]
+
+checks:
+  port_scan: {run: "nmap -Pn --top-ports 1000 {host}", pass_if: "only 22, 80 and 443 open (or the documented list)"}
+  headers_check: {run: "curl -sI https://{host}", pass_if: "HSTS, CSP, X-Content-Type-Options, Referrer-Policy present; content-encoding on assets"}
+
+rules:
+  - {fr: "Docker Compose : restart: unless-stopped, limites mémoire, base et Redis sans ports publiés (réseau interne uniquement).", en: "Docker Compose: restart: unless-stopped, memory limits, database and Redis with no published ports (internal network only)."}
+  - {fr: "PM2 : fichier ecosystem versionné, pm2 startup puis pm2 save, rotation des logs avec pm2-logrotate.", en: "PM2: versioned ecosystem file, pm2 startup then pm2 save, log rotation with pm2-logrotate."}
+  - {fr: "Nginx ou CloudPanel : HTTPS forcé, HTTP/2, gzip ou brotli, cache long sur les fichiers statiques versionnés.", en: "Nginx or CloudPanel: forced HTTPS, HTTP/2, gzip or brotli, long caching on versioned static files."}
+  - {fr: "Serveur : SSH par clé seulement, ufw avec 22, 80 et 443, fail2ban, unattended-upgrades.", en: "Server: SSH keys only, ufw with 22, 80 and 443, fail2ban, unattended-upgrades."}
+  - {fr: "Sauvegarde quotidienne pg_dump et fichiers utilisateurs, chiffrée (restic ou borg), envoyée hors du VPS ; alerte en cas d'échec.", en: "Daily pg_dump and user-file backup, encrypted (restic or borg), sent off the VPS; alert on failure."}
+  - {fr: "Restauration testée chaque trimestre sur un environnement séparé, avec la date et la durée notées dans docs/ops.", en: "Restore tested every quarter on a separate environment, with date and duration recorded in docs/ops."}
+  - {fr: "Déploiement par script versionné (git pull, install, migrate, build, reload) et tag Git par version, pour revenir à la précédente en une commande.", en: "Deploy through a versioned script (git pull, install, migrate, build, reload) and a Git tag per release, to roll back in one command."}

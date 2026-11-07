@@ -1,0 +1,203 @@
+group: security-data
+label: {fr: "Sécurité et données", en: "Security and data"}
+domains:
+
+  - id: security
+    code: SEC
+    label: {fr: "Sécurité", en: "Security"}
+    summary: {fr: "Protection des secrets, validation des entrées, permissions, limitation des requêtes et headers sécurisés.", en: "Secret protection, input validation, permissions, rate limiting and security headers."}
+    build:
+      - {fr: "Aucun secret dans le code, le dépôt Git ou le bundle client ; variables d'environnement côté serveur uniquement.", en: "No secret in the code, the Git repo or the client bundle; server-side environment variables only."}
+      - {fr: "Valider toute entrée externe côté serveur avec un schéma (Zod, Valibot…) : corps, paramètres, query, headers, webhooks, fichiers.", en: "Validate every external input server-side with a schema (Zod, Valibot…): body, params, query, headers, webhooks, files."}
+      - {fr: "Vérifier l'autorisation à chaque requête, côté serveur, sur la ressource demandée (pas seulement la connexion).", en: "Check authorisation on every request, server-side, on the requested resource (not just login)."}
+      - {fr: "Limiter le débit sur la connexion, l'inscription, la réinitialisation de mot de passe, les formulaires et les routes coûteuses.", en: "Rate-limit login, sign-up, password reset, forms and expensive routes."}
+      - {fr: "Requêtes base de données paramétrées ou ORM ; jamais de concaténation de chaînes.", en: "Parameterised database queries or ORM; never string concatenation."}
+      - {fr: "Headers : CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.", en: "Headers: CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors."}
+    criteria:
+      - id: SEC-01
+        severity: blocker
+        check: {method: auto, tool: secrets_scan}
+        label: {fr: "Aucun secret dans le dépôt, l'historique Git ou le bundle client", en: "No secret in the repo, Git history or client bundle"}
+        verify: {fr: "gitleaks sur l'historique ; recherche de clés dans le build client ; .env ignoré par Git.", en: "gitleaks on history; search for keys in the client build; .env ignored by Git."}
+      - id: SEC-02
+        severity: blocker
+        check: {method: inspect}
+        applies_if: [has_backend]
+        label: {fr: "Toute entrée externe est validée côté serveur par un schéma", en: "Every external input is validated server-side with a schema"}
+        verify: {fr: "Lire chaque route, action serveur, handler de webhook et upload.", en: "Read every route, server action, webhook handler and upload."}
+      - id: SEC-03
+        severity: blocker
+        check: {method: inspect}
+        applies_if: [has_auth]
+        label: {fr: "Autorisation vérifiée côté serveur sur chaque ressource (pas d'IDOR)", en: "Authorisation checked server-side on every resource (no IDOR)"}
+        verify: {fr: "Pour chaque route protégée : l'utilisateur peut-il lire ou modifier la ressource d'un autre en changeant l'identifiant ?", en: "For each protected route: can a user read or change another user's resource by changing the ID?"}
+      - id: SEC-04
+        severity: blocker
+        check: {method: auto, tool: deps_audit}
+        label: {fr: "Aucune dépendance avec une vulnérabilité critique ou haute connue", en: "No dependency with a known critical or high vulnerability"}
+        verify: {fr: "npm audit, pnpm audit ou osv-scanner.", en: "npm audit, pnpm audit or osv-scanner."}
+      - id: SEC-05
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_backend]
+        label: {fr: "Limitation de débit sur les routes sensibles et coûteuses", en: "Rate limiting on sensitive and expensive routes"}
+        verify: {fr: "Connexion, inscription, mot de passe oublié, formulaires, appels à des API payantes.", en: "Login, sign-up, password reset, forms, calls to paid APIs."}
+      - id: SEC-06
+        severity: major
+        check: {method: auto, tool: headers_check}
+        label: {fr: "Headers de sécurité présents et CSP sans unsafe-inline inutile", en: "Security headers present and CSP without needless unsafe-inline"}
+        verify: {fr: "Requête sur la production ou la préproduction ; vérification de chaque header.", en: "Request against production or staging; check every header."}
+      - id: SEC-07
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_auth]
+        label: {fr: "Sessions et mots de passe gérés correctement", en: "Sessions and passwords handled correctly"}
+        verify: {fr: "Cookies HttpOnly, Secure, SameSite ; hachage argon2 ou bcrypt ; invalidation à la déconnexion ; protection CSRF.", en: "HttpOnly, Secure, SameSite cookies; argon2 or bcrypt hashing; invalidation on logout; CSRF protection."}
+      - id: SEC-08
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Pas d'injection : requêtes paramétrées, HTML échappé, pas d'exécution de commande avec une entrée utilisateur", en: "No injection: parameterised queries, escaped HTML, no command execution with user input"}
+        verify: {fr: "Rechercher $queryRaw, dangerouslySetInnerHTML, eval, exec, child_process avec entrée externe.", en: "Search for $queryRaw, dangerouslySetInnerHTML, eval, exec, child_process with external input."}
+      - id: SEC-09
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_uploads]
+        label: {fr: "Uploads limités en type et en taille, stockés hors de la racine exécutable", en: "Uploads restricted in type and size, stored outside the executable root"}
+        verify: {fr: "Vérification du type réel, taille maximale, nom de fichier régénéré.", en: "Real type check, maximum size, regenerated file name."}
+      - id: SEC-10
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Les erreurs ne révèlent pas de détails internes", en: "Errors do not leak internal details"}
+        verify: {fr: "Pas de stack trace, requête SQL ou chemin serveur dans les réponses en production.", en: "No stack trace, SQL query or server path in production responses."}
+      - id: SEC-11
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Audit de sécurité approfondi réalisé à chaque version majeure", en: "In-depth security audit run at every major release"}
+        verify: {fr: "Rapport du skill security-audit (Cloudflare) daté et suivi.", en: "Dated and tracked report from the security-audit skill (Cloudflare)."}
+
+  - id: privacy
+    code: PRV
+    label: {fr: "Confidentialité", en: "Privacy"}
+    summary: {fr: "Collecte et gestion des données personnelles (RGPD).", en: "Collection and handling of personal data (GDPR)."}
+    applies_if: [has_user_data]
+    build:
+      - {fr: "Ne collecter que les données nécessaires à la promesse ; chaque champ demandé a une raison.", en: "Collect only the data the promise needs; every requested field has a reason."}
+      - {fr: "Tenir à jour la liste des données, leur finalité, leur durée de conservation et les sous-traitants.", en: "Keep an up-to-date list of data, purpose, retention period and processors."}
+      - {fr: "Aucun cookie ou traceur non essentiel avant consentement ; refuser aussi simple qu'accepter.", en: "No non-essential cookie or tracker before consent; refusing as easy as accepting."}
+      - {fr: "Permettre à l'utilisateur d'exporter et de supprimer ses données.", en: "Let users export and delete their data."}
+      - {fr: "Ne jamais écrire de données personnelles dans les logs.", en: "Never write personal data into logs."}
+    criteria:
+      - id: PRV-01
+        severity: blocker
+        check: {method: auto, tool: cookie_scan}
+        label: {fr: "Aucun traceur non essentiel déposé avant consentement", en: "No non-essential tracker set before consent"}
+        verify: {fr: "Charger la page sans consentir : lister cookies, localStorage et requêtes vers des tiers.", en: "Load the page without consenting: list cookies, localStorage and third-party requests."}
+      - id: PRV-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Politique de confidentialité exacte et accessible", en: "Accurate and accessible privacy policy"}
+        verify: {fr: "Elle correspond aux données réellement collectées et aux sous-traitants réellement utilisés.", en: "It matches the data actually collected and the processors actually used."}
+      - id: PRV-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Collecte minimale : aucun champ ou traceur sans finalité", en: "Minimal collection: no field or tracker without a purpose"}
+        verify: {fr: "Comparer formulaires et modèles de données avec le registre des traitements.", en: "Compare forms and data models with the processing register."}
+      - id: PRV-04
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_auth]
+        label: {fr: "Suppression et export des données possibles par l'utilisateur", en: "Users can delete and export their data"}
+        verify: {fr: "Fonction de suppression de compte qui efface réellement (ou anonymise) les données liées.", en: "Account deletion that really erases (or anonymises) the linked data."}
+      - id: PRV-05
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Aucune donnée personnelle dans les logs ni les outils d'erreur", en: "No personal data in logs or error tools"}
+        verify: {fr: "Lire les appels de log et la configuration Sentry ou équivalent (masquage).", en: "Read log calls and Sentry or equivalent config (scrubbing)."}
+      - id: PRV-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Durées de conservation définies et appliquées", en: "Retention periods defined and enforced"}
+        verify: {fr: "Tâche de purge ou règle documentée pour les comptes inactifs, logs, sauvegardes.", en: "Purge job or documented rule for inactive accounts, logs, backups."}
+
+  - id: data
+    code: DAT
+    label: {fr: "Données", en: "Data"}
+    summary: {fr: "Intégrité et cohérence des données.", en: "Data integrity and consistency."}
+    applies_if: [has_db]
+    build:
+      - {fr: "Les règles métier essentielles vivent aussi dans la base : clés étrangères, NOT NULL, contraintes d'unicité, CHECK.", en: "Essential business rules also live in the database: foreign keys, NOT NULL, unique constraints, CHECK."}
+      - {fr: "Toute modification de schéma passe par une migration versionnée, relue et testée sur une copie.", en: "Every schema change goes through a versioned migration, reviewed and tested on a copy."}
+      - {fr: "Les opérations qui modifient plusieurs tables tournent dans une transaction.", en: "Operations that change several tables run in a transaction."}
+      - {fr: "Dates en UTC en base, montants en entiers (centimes) ou décimaux, jamais en flottants.", en: "Dates in UTC in the database, amounts as integers (cents) or decimals, never floats."}
+    criteria:
+      - id: DAT-01
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Les migrations sont versionnées et la base correspond au schéma", en: "Migrations are versioned and the database matches the schema"}
+        verify: {fr: "prisma migrate status (ou équivalent) sans dérive ; pas de modification manuelle en production.", en: "prisma migrate status (or equivalent) shows no drift; no manual changes in production."}
+      - id: DAT-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Contraintes d'intégrité en base (clés étrangères, unicité, NOT NULL)", en: "Integrity constraints in the database (foreign keys, unique, NOT NULL)"}
+        verify: {fr: "Lire le schéma : relations déclarées, champs obligatoires non nullables, unicités métier.", en: "Read the schema: declared relations, required fields not nullable, business uniqueness."}
+      - id: DAT-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Écritures multiples dans des transactions", en: "Multiple writes inside transactions"}
+        verify: {fr: "Rechercher les séquences d'écritures liées hors transaction.", en: "Search for related write sequences outside a transaction."}
+      - id: DAT-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Montants et dates stockés dans des types sûrs", en: "Amounts and dates stored in safe types"}
+        verify: {fr: "Pas de Float pour l'argent ; dates en UTC avec fuseau géré à l'affichage.", en: "No Float for money; dates in UTC with time zone handled on display."}
+      - id: DAT-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Les migrations destructives sont réversibles ou précédées d'une sauvegarde", en: "Destructive migrations are reversible or preceded by a backup"}
+        verify: {fr: "Suppression de colonne ou de table : plan de retour ou sauvegarde documentée.", en: "Column or table drop: rollback plan or documented backup."}
+      - id: DAT-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Index sur les colonnes filtrées et jointes", en: "Indexes on filtered and joined columns"}
+        verify: {fr: "Comparer les requêtes fréquentes avec les index déclarés.", en: "Compare frequent queries with declared indexes."}
+
+  - id: compliance
+    code: LEG
+    label: {fr: "Conformité", en: "Compliance"}
+    summary: {fr: "Obligations légales applicables et licences. Ce référentiel n'est pas un avis juridique.", en: "Applicable legal obligations and licences. This referential is not legal advice."}
+    build:
+      - {fr: "Identifier au /kickoff le pays, le type d'éditeur (particulier, entreprise) et les obligations qui en découlent ; le module compliance-fr détaille la France.", en: "At /kickoff, identify the country, the publisher type (individual, company) and the resulting obligations; the compliance-fr module details France."}
+      - {fr: "Vérifier la licence de chaque dépendance, police, image et icône avant de l'ajouter.", en: "Check the licence of every dependency, font, image and icon before adding it."}
+      - {fr: "Créditer les ressources qui l'exigent dans un fichier dédié ou en pied de page.", en: "Credit resources that require it in a dedicated file or in the footer."}
+    criteria:
+      - id: LEG-01
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Les mentions obligatoires de l'éditeur sont présentes", en: "The publisher's mandatory notices are present"}
+        verify: {fr: "Mentions légales ou imprint selon le pays (voir module de conformité du pays).", en: "Legal notice or imprint depending on the country (see the country compliance module)."}
+      - id: LEG-02
+        severity: major
+        check: {method: auto, tool: license_check}
+        label: {fr: "Licences des dépendances compatibles avec l'usage du projet", en: "Dependency licences compatible with the project's use"}
+        verify: {fr: "license-checker ou équivalent ; aucune licence GPL/AGPL incompatible ou absente.", en: "license-checker or equivalent; no incompatible or missing GPL/AGPL licence."}
+      - id: LEG-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Polices, images, icônes et sons utilisés avec une licence valable", en: "Fonts, images, icons and sounds used under a valid licence"}
+        verify: {fr: "Source et licence documentées pour chaque ressource tierce.", en: "Source and licence documented for every third-party asset."}
+      - id: LEG-04
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_accounts_or_sales]
+        label: {fr: "Conditions d'utilisation ou de vente publiées et acceptées", en: "Terms of use or sale published and accepted"}
+        verify: {fr: "CGU ou CGV accessibles ; acceptation horodatée à l'inscription ou à l'achat.", en: "Terms accessible; timestamped acceptance at sign-up or purchase."}
+      - id: LEG-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Obligations d'accessibilité légales évaluées", en: "Legal accessibility obligations assessed"}
+        verify: {fr: "Selon le pays et l'activité (ex. European Accessibility Act pour certains services) : déclaration si requise.", en: "Depending on country and activity (e.g. European Accessibility Act for some services): statement if required."}
+      - id: LEG-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Contenus et marques de tiers utilisés avec autorisation", en: "Third-party content and trademarks used with permission"}
+        verify: {fr: "Logos, extraits, API de contenu : conditions d'utilisation respectées.", en: "Logos, excerpts, content APIs: terms of use respected."}

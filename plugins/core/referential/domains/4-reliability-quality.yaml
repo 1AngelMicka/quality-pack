@@ -1,0 +1,131 @@
+group: reliability-quality
+label: {fr: "Fiabilité et qualité du code", en: "Reliability and code quality"}
+domains:
+
+  - id: reliability
+    code: REL
+    label: {fr: "Fiabilité", en: "Reliability"}
+    summary: {fr: "Erreurs, interruptions et cas limites.", en: "Errors, interruptions and edge cases."}
+    build:
+      - {fr: "Chaque appel réseau a un délai maximal, une gestion d'erreur et, s'il est idempotent, des reprises limitées.", en: "Every network call has a timeout, error handling and, if idempotent, limited retries."}
+      - {fr: "Prévoir les cas limites dès la spec : liste vide, très longue, caractères spéciaux, double clic, session expirée, réseau coupé.", en: "Plan edge cases in the spec: empty list, very long list, special characters, double click, expired session, network loss."}
+      - {fr: "Une erreur dans un composant ne fait pas tomber toute la page (error boundary ou équivalent).", en: "An error in one component does not take down the whole page (error boundary or equivalent)."}
+      - {fr: "Le serveur s'arrête proprement : il finit les requêtes en cours et ferme ses connexions.", en: "The server shuts down cleanly: it finishes in-flight requests and closes its connections."}
+    criteria:
+      - id: REL-01
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Aucune erreur non gérée qui fait planter le serveur ou l'application", en: "No unhandled error that crashes the server or the app"}
+        verify: {fr: "Rechercher les promesses sans catch, les handlers sans try/catch, l'absence d'error boundary.", en: "Search for promises without catch, handlers without try/catch, missing error boundaries."}
+      - id: REL-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Délais maximaux et gestion d'échec sur tous les appels externes", en: "Timeouts and failure handling on all external calls"}
+        verify: {fr: "fetch, clients HTTP, base de données, Redis : timeout et comportement en cas d'échec.", en: "fetch, HTTP clients, database, Redis: timeout and failure behaviour."}
+      - id: REL-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Double soumission et requêtes concurrentes sans effet indésirable", en: "Double submit and concurrent requests without side effects"}
+        verify: {fr: "Double clic sur paiement, inscription, création : un seul résultat (idempotence ou verrou).", en: "Double click on payment, sign-up, create: a single result (idempotency or lock)."}
+      - id: REL-04
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_ui]
+        label: {fr: "Comportement correct hors ligne, en réseau lent et après expiration de session", en: "Correct behaviour offline, on slow network and after session expiry"}
+        verify: {fr: "Couper le réseau, limiter le débit, expirer la session pendant un parcours.", en: "Cut the network, throttle, expire the session mid-flow."}
+      - id: REL-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Entrées extrêmes gérées (vide, très longue, emoji, caractères spéciaux)", en: "Extreme inputs handled (empty, very long, emoji, special characters)"}
+        verify: {fr: "Saisir ces valeurs dans chaque champ et vérifier affichage et enregistrement.", en: "Enter these values in each field and check display and storage."}
+      - id: REL-06
+        severity: minor
+        check: {method: inspect}
+        applies_if: [has_backend]
+        label: {fr: "Arrêt propre du serveur (SIGTERM géré)", en: "Clean server shutdown (SIGTERM handled)"}
+        verify: {fr: "Lire le point d'entrée : fermeture du serveur HTTP, des sockets et des connexions.", en: "Read the entry point: closing of the HTTP server, sockets and connections."}
+
+  - id: tests
+    code: TST
+    label: {fr: "Tests", en: "Tests"}
+    summary: {fr: "Validation et prévention des régressions.", en: "Validation and regression prevention."}
+    build:
+      - {fr: "Toute logique avec branche, boucle, calcul d'argent, parsing ou sécurité arrive avec au moins un test.", en: "Any logic with a branch, loop, money calculation, parsing or security comes with at least one test."}
+      - {fr: "Chaque bug corrigé reçoit un test qui l'aurait détecté.", en: "Every fixed bug gets a test that would have caught it."}
+      - {fr: "Les parcours principaux ont un test de bout en bout qui tourne en CI.", en: "Main flows have an end-to-end test that runs in CI."}
+      - {fr: "Ne jamais déclarer une tâche terminée sans avoir lancé les tests et lu leur résultat.", en: "Never declare a task done without running the tests and reading their output."}
+    criteria:
+      - id: TST-01
+        severity: blocker
+        check: {method: auto, tool: test_run}
+        label: {fr: "La suite de tests passe entièrement", en: "The test suite passes entirely"}
+        verify: {fr: "Lancer la commande de test du projet ; aucun test ignoré sans raison écrite.", en: "Run the project's test command; no test skipped without a written reason."}
+      - id: TST-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "La logique risquée est testée (argent, droits, calculs, parsing)", en: "Risky logic is tested (money, permissions, calculations, parsing)"}
+        verify: {fr: "Lister ces fonctions et vérifier qu'un test les couvre.", en: "List these functions and check a test covers them."}
+      - id: TST-03
+        severity: major
+        check: {method: auto, tool: e2e}
+        applies_if: [has_ui]
+        label: {fr: "Les parcours principaux ont un test de bout en bout", en: "Main flows have an end-to-end test"}
+        verify: {fr: "Tests Playwright (ou Detox, Maestro sur mobile) pour chaque parcours principal.", en: "Playwright (or Detox, Maestro on mobile) tests for each main flow."}
+      - id: TST-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Les tests tournent automatiquement avant chaque mise en production", en: "Tests run automatically before every production release"}
+        verify: {fr: "Pipeline CI qui bloque le déploiement si un test échoue.", en: "CI pipeline that blocks deployment when a test fails."}
+      - id: TST-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Les tests vérifient un comportement, pas l'implémentation", en: "Tests check behaviour, not implementation"}
+        verify: {fr: "Pas de tests qui ne font que reproduire le code ou tout simuler.", en: "No tests that merely mirror the code or mock everything."}
+
+  - id: code
+    code: COD
+    label: {fr: "Code", en: "Code"}
+    summary: {fr: "Maintenabilité, typage, linting, absence d'erreurs console et de logs de débogage inutiles.", en: "Maintainability, typing, linting, no console errors and no leftover debug logs."}
+    build:
+      - {fr: "Le code le plus simple qui résout entièrement le problème : pas d'abstraction, d'option ou de configuration non demandée.", en: "The simplest code that fully solves the problem: no unrequested abstraction, option or configuration."}
+      - {fr: "Réutiliser ce qui existe dans le projet avant d'ajouter une dépendance ou un utilitaire.", en: "Reuse what exists in the project before adding a dependency or a helper."}
+      - {fr: "Modifier seulement ce que la tâche exige ; signaler le reste au lieu de le réécrire.", en: "Change only what the task requires; flag the rest instead of rewriting it."}
+      - {fr: "Typage strict, aucun any non justifié ; lint et format automatiques avant chaque commit.", en: "Strict typing, no unjustified any; automatic lint and format before each commit."}
+      - {fr: "Aucun console.log de débogage, code commenté ou fichier temporaire laissé derrière.", en: "No debug console.log, commented-out code or temporary file left behind."}
+    criteria:
+      - id: COD-01
+        severity: blocker
+        check: {method: auto, tool: typecheck}
+        label: {fr: "Aucune erreur de typage ni de build", en: "No type or build error"}
+        verify: {fr: "Commande de typecheck et de build du module de stack.", en: "The stack module's typecheck and build commands."}
+      - id: COD-02
+        severity: major
+        check: {method: auto, tool: lint}
+        label: {fr: "Aucune erreur de lint", en: "No lint error"}
+        verify: {fr: "Commande de lint du module de stack.", en: "The stack module's lint command."}
+      - id: COD-03
+        severity: major
+        check: {method: auto, tool: console_check}
+        applies_if: [has_ui]
+        label: {fr: "Aucune erreur ni avertissement dans la console du navigateur", en: "No error or warning in the browser console"}
+        verify: {fr: "Ouvrir chaque page principale avec Playwright et relever la console.", en: "Open each main page with Playwright and collect the console."}
+      - id: COD-04
+        severity: major
+        check: {method: auto, tool: debug_leftovers_scan}
+        label: {fr: "Aucun log de débogage, code commenté ou fichier temporaire", en: "No debug log, commented-out code or temporary file"}
+        verify: {fr: "Rechercher console.log, debugger, gros blocs commentés, fichiers *.bak, *.tmp.", en: "Search for console.log, debugger, large commented blocks, *.bak, *.tmp files."}
+      - id: COD-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Typage strict et any justifiés", en: "Strict typing and justified any"}
+        verify: {fr: "strict activé ; chaque any ou ts-ignore a un commentaire d'explication.", en: "strict enabled; every any or ts-ignore has an explaining comment."}
+      - id: COD-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Pas de surconception ni de duplication", en: "No over-engineering or duplication"}
+        verify: {fr: "Abstractions à usage unique, options inutilisées, fonctions copiées-collées.", en: "Single-use abstractions, unused options, copy-pasted functions."}
+      - id: COD-07
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "README à jour : installation, lancement, variables d'environnement", en: "Up-to-date README: install, run, environment variables"}
+        verify: {fr: "Suivre le README sur une machine vierge ; .env.example complet.", en: "Follow the README on a clean machine; complete .env.example."}

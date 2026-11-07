@@ -1,0 +1,17 @@
+{
+  "name": "qp-core",
+  "description": "Stack-agnostic quality framework: 27-domain referential, scoring, /kickoff, /audit, /fix. Socle commun : référentiel 27 domaines, barème, /kickoff, /audit, /fix.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Micka"
+  },
+  "license": "MIT",
+  "keywords": [
+    "quality",
+    "audit",
+    "security",
+    "accessibility",
+    "seo",
+    "qualité"
+  ]
+}

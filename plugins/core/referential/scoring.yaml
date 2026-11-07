@@ -1,0 +1,68 @@
+# Scoring rules, project flags and usage profiles.
+# Source of truth for /audit and tools/score.py.
+
+version: 1
+
+scoring:
+  severity_weight: {blocker: 5, major: 3, minor: 1}
+  status_value: {pass: 1.0, partial: 0.5, fail: 0.0}
+  # A failed blocker caps the domain score at this value (out of 10).
+  blocker_cap: 3
+  # Any open blocker also caps the overall score: a project with an open blocker cannot be rated "good".
+  global_blocker_cap: 5.9
+  # A criterion that could not be checked counts as failed until verified.
+  unknown_counts_as: fail
+  grades:
+    - {min: 9.0, fr: "Excellent", en: "Excellent"}
+    - {min: 7.5, fr: "Bon", en: "Good"}
+    - {min: 6.0, fr: "Correct, à améliorer", en: "Fair, needs work"}
+    - {min: 4.0, fr: "Insuffisant", en: "Poor"}
+    - {min: 0.0, fr: "Critique", en: "Critical"}
+
+# Project flags, declared in .quality/project.yaml at /kickoff.
+flags:
+  has_ui: {fr: "Le projet a une interface utilisateur", en: "The project has a user interface"}
+  has_backend: {fr: "Le projet a un serveur ou une API", en: "The project has a server or API"}
+  has_auth: {fr: "Comptes utilisateurs et connexion", en: "User accounts and login"}
+  has_user_data: {fr: "Collecte de données personnelles (formulaires, comptes, analytics)", en: "Collects personal data (forms, accounts, analytics)"}
+  has_db: {fr: "Base de données", en: "Database"}
+  has_uploads: {fr: "Envoi de fichiers par les utilisateurs", en: "User file uploads"}
+  has_external_api: {fr: "Appels à des API ou services externes", en: "Calls to external APIs or services"}
+  has_webhooks: {fr: "Réception de webhooks", en: "Receives webhooks"}
+  has_email: {fr: "Envoi d'emails", en: "Sends emails"}
+  has_payments: {fr: "Paiements ou abonnements", en: "Payments or subscriptions"}
+  uses_paid_services: {fr: "Services facturés à l'usage", en: "Usage-billed services"}
+  public_web: {fr: "Pages publiques destinées à être trouvées sur le web", en: "Public pages meant to be found on the web"}
+  self_hosted: {fr: "Hébergé sur un serveur géré par l'équipe (VPS, dédié)", en: "Hosted on a team-managed server (VPS, dedicated)"}
+  multilingual: {fr: "Plusieurs langues", en: "Several languages"}
+  dark_mode: {fr: "Thème sombre", en: "Dark theme"}
+
+# Flags computed from others.
+derived_flags:
+  has_accounts_or_sales: [has_auth, has_payments]
+  has_backend_or_public: [has_backend, public_web]
+  has_persistent_data: [has_db, has_uploads]
+
+# Usage profiles: weight of each domain in the global score (0 = not counted).
+# Domains are also skipped when their applies_if flags are false.
+profiles:
+  vitrine:
+    label: {fr: "Site vitrine ou landing page", en: "Showcase site or landing page"}
+    default_flags: [has_ui, public_web]
+    weights: {product: 3, features: 2, ux: 2, content: 3, support: 1, ui: 3, ai-slop: 3, responsive: 3, accessibility: 2, compatibility: 2, security: 2, privacy: 2, data: 1, compliance: 2, reliability: 1, tests: 1, code: 1, performance: 3, seo: 3, scalability: 0, integrations: 1, payments: 0, costs: 1, infra: 1, deployment: 1, monitoring: 1, backups: 1}
+  webapp:
+    label: {fr: "Application web", en: "Web application"}
+    default_flags: [has_ui, has_backend, has_auth, has_user_data, has_db]
+    weights: {product: 3, features: 3, ux: 3, content: 2, support: 2, ui: 2, ai-slop: 2, responsive: 2, accessibility: 2, compatibility: 2, security: 3, privacy: 3, data: 3, compliance: 2, reliability: 3, tests: 3, code: 2, performance: 2, seo: 1, scalability: 1, integrations: 2, payments: 2, costs: 1, infra: 2, deployment: 2, monitoring: 2, backups: 3}
+  saas:
+    label: {fr: "SaaS payant", en: "Paid SaaS"}
+    default_flags: [has_ui, has_backend, has_auth, has_user_data, has_db, has_payments, has_email, has_webhooks, public_web]
+    weights: {product: 3, features: 3, ux: 3, content: 2, support: 3, ui: 2, ai-slop: 2, responsive: 2, accessibility: 2, compatibility: 2, security: 3, privacy: 3, data: 3, compliance: 3, reliability: 3, tests: 3, code: 2, performance: 2, seo: 2, scalability: 2, integrations: 2, payments: 3, costs: 2, infra: 2, deployment: 3, monitoring: 3, backups: 3}
+  mobile:
+    label: {fr: "Application mobile", en: "Mobile app"}
+    default_flags: [has_ui, has_backend, has_auth, has_user_data]
+    weights: {product: 3, features: 3, ux: 3, content: 2, support: 2, ui: 3, ai-slop: 2, responsive: 2, accessibility: 2, compatibility: 3, security: 3, privacy: 3, data: 2, compliance: 2, reliability: 3, tests: 3, code: 2, performance: 3, seo: 0, scalability: 1, integrations: 2, payments: 2, costs: 1, infra: 1, deployment: 2, monitoring: 2, backups: 2}
+  api:
+    label: {fr: "API ou service backend", en: "API or backend service"}
+    default_flags: [has_backend, has_db]
+    weights: {product: 2, features: 3, ux: 0, content: 0, support: 1, ui: 0, ai-slop: 0, responsive: 0, accessibility: 0, compatibility: 0, security: 3, privacy: 3, data: 3, compliance: 2, reliability: 3, tests: 3, code: 3, performance: 3, seo: 0, scalability: 3, integrations: 2, payments: 2, costs: 2, infra: 3, deployment: 3, monitoring: 3, backups: 3}

@@ -1,0 +1,182 @@
+group: product-experience
+label: {fr: "Produit et expérience", en: "Product and experience"}
+domains:
+
+  - id: product
+    code: PRD
+    label: {fr: "Produit", en: "Product"}
+    summary: {fr: "Utilité et promesse : à qui sert le projet, quel problème il règle, ce qu'il promet.", en: "Usefulness and promise: who the project serves, what problem it solves, what it promises."}
+    build:
+      - {fr: "Écrire la promesse en une phrase (pour qui, quel problème, quel résultat) avant toute ligne de code, dans .quality/project.yaml.", en: "Write the promise in one sentence (for whom, which problem, which outcome) before any code, in .quality/project.yaml."}
+      - {fr: "Lister ce que le projet ne fera pas (hors périmètre) pour éviter les fonctionnalités inutiles.", en: "List what the project will not do (out of scope) to avoid useless features."}
+      - {fr: "Chaque fonctionnalité doit servir la promesse ; sinon, elle sort du périmètre.", en: "Every feature must serve the promise; otherwise it leaves the scope."}
+    criteria:
+      - id: PRD-01
+        severity: major
+        check: {method: inspect}
+        label: {fr: "La promesse est écrite en une phrase et à jour", en: "The promise is written in one sentence and up to date"}
+        verify: {fr: "Présence et cohérence de la promesse dans .quality/project.yaml.", en: "Promise present and consistent in .quality/project.yaml."}
+      - id: PRD-02
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_ui]
+        label: {fr: "La première vue dit ce que fait le produit et pour qui, sans jargon", en: "The first screen says what the product does and for whom, without jargon"}
+        verify: {fr: "Lire l'accueil ou l'écran d'entrée : un inconnu comprend-il en 5 secondes ?", en: "Read the home or entry screen: would a stranger get it in 5 seconds?"}
+      - id: PRD-03
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_ui]
+        label: {fr: "L'action principale est évidente et accessible dès l'arrivée", en: "The main action is obvious and reachable on arrival"}
+        verify: {fr: "Un appel à l'action principal unique et visible sur l'écran d'entrée.", en: "One visible primary call to action on the entry screen."}
+      - id: PRD-04
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Les fonctionnalités présentes servent toutes la promesse", en: "Every shipped feature serves the promise"}
+        verify: {fr: "Comparer la liste des fonctionnalités avec la promesse et le hors-périmètre.", en: "Compare the feature list with the promise and the out-of-scope list."}
+      - id: PRD-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Un indicateur de succès est défini et mesurable", en: "A success metric is defined and measurable"}
+        verify: {fr: "Un indicateur (inscriptions, parties jouées, ventes…) et sa source de mesure.", en: "One metric (sign-ups, games played, sales…) and where it is measured."}
+
+  - id: features
+    code: FEA
+    label: {fr: "Fonctionnalités", en: "Features"}
+    summary: {fr: "Fonctionnement complet : chaque fonctionnalité annoncée marche de bout en bout.", en: "Complete behaviour: every announced feature works end to end."}
+    build:
+      - {fr: "Écrire une spec courte par fonctionnalité avec ses critères d'acceptation avant de coder.", en: "Write a short spec per feature with acceptance criteria before coding."}
+      - {fr: "Une fonctionnalité n'est terminée que lorsque son parcours complet a été exécuté, pas seulement compilé.", en: "A feature is done only when its full flow has been run, not just compiled."}
+      - {fr: "Pas de bouton, lien ou menu qui mène à une fonctionnalité absente.", en: "No button, link or menu leading to a missing feature."}
+    criteria:
+      - id: FEA-01
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Aucun parcours principal n'est cassé", en: "No main flow is broken"}
+        verify: {fr: "Exécuter chaque parcours principal (navigateur ou tests e2e) jusqu'au résultat attendu.", en: "Run each main flow (browser or e2e tests) to its expected result."}
+      - id: FEA-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Aucun lien mort, bouton inactif ou page « bientôt disponible » visible", en: "No dead link, inert button or visible 'coming soon' page"}
+        verify: {fr: "Parcourir l'interface et chercher les href vides, onClick vides, TODO visibles.", en: "Browse the UI and search for empty hrefs, empty onClick handlers, visible TODOs."}
+      - id: FEA-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Chaque fonctionnalité a des critères d'acceptation écrits et respectés", en: "Every feature has written acceptance criteria that are met"}
+        verify: {fr: "Specs présentes (docs/specs ou tickets) et vérifiées.", en: "Specs present (docs/specs or tickets) and checked."}
+      - id: FEA-04
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Pas de code mort ni de fonctionnalité à moitié branchée", en: "No dead code or half-wired feature"}
+        verify: {fr: "Recherche d'exports inutilisés, routes orphelines, feature flags oubliés.", en: "Search for unused exports, orphan routes, forgotten feature flags."}
+
+  - id: ux
+    code: UX
+    label: {fr: "UX", en: "UX"}
+    summary: {fr: "Parcours fluides, états vides et erreurs explicites.", en: "Smooth flows, explicit empty states and errors."}
+    applies_if: [has_ui]
+    build:
+      - {fr: "Chaque écran qui affiche des données prévoit 4 états : chargement, vide, erreur, rempli.", en: "Every screen that shows data has 4 states: loading, empty, error, filled."}
+      - {fr: "Un état vide explique la situation et propose l'action suivante.", en: "An empty state explains the situation and offers the next action."}
+      - {fr: "Un message d'erreur dit ce qui s'est passé et comment s'en sortir, sans code technique brut.", en: "An error message says what happened and how to recover, without raw technical codes."}
+      - {fr: "Toute action de plus d'une seconde montre un retour visuel ; toute action destructive demande confirmation ou permet d'annuler.", en: "Any action over one second shows feedback; any destructive action asks for confirmation or can be undone."}
+      - {fr: "Les formulaires gardent la saisie en cas d'erreur et affichent l'erreur à côté du champ.", en: "Forms keep the input on error and show the error next to the field."}
+    criteria:
+      - id: UX-01
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Chaque écran de données gère chargement, vide, erreur et rempli", en: "Every data screen handles loading, empty, error and filled"}
+        verify: {fr: "Lire chaque composant qui charge des données ; simuler liste vide et API en erreur.", en: "Read each data-loading component; simulate an empty list and a failing API."}
+      - id: UX-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Les erreurs sont explicites et proposent une sortie", en: "Errors are explicit and offer a way out"}
+        verify: {fr: "Aucun « Une erreur est survenue » seul, aucun message technique brut affiché.", en: "No bare 'Something went wrong', no raw technical message shown."}
+      - id: UX-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Les actions destructives sont confirmées ou annulables", en: "Destructive actions are confirmed or undoable"}
+        verify: {fr: "Suppression, résiliation, réinitialisation : confirmation ou annulation possible.", en: "Delete, cancel, reset: confirmation or undo available."}
+      - id: UX-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Les formulaires valident en ligne et conservent la saisie", en: "Forms validate inline and keep the input"}
+        verify: {fr: "Soumettre un formulaire invalide : erreurs près des champs, saisie conservée.", en: "Submit an invalid form: errors next to fields, input kept."}
+      - id: UX-05
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Retour visuel sur toute action de plus d'une seconde", en: "Visual feedback on any action over one second"}
+        verify: {fr: "Boutons en état de chargement, désactivés pendant l'envoi (pas de double soumission).", en: "Buttons show loading and are disabled while sending (no double submit)."}
+      - id: UX-06
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Navigation prévisible : retour arrière, liens profonds, page 404 utile", en: "Predictable navigation: back button, deep links, helpful 404"}
+        verify: {fr: "Tester le bouton retour, ouvrir une URL interne directement, visiter une URL inexistante.", en: "Test the back button, open an inner URL directly, visit a missing URL."}
+
+  - id: content
+    code: CNT
+    label: {fr: "Contenu", en: "Content"}
+    summary: {fr: "Clarté, exactitude et orthographe des textes.", en: "Clarity, accuracy and spelling of the text."}
+    applies_if: [has_ui]
+    build:
+      - {fr: "Écrire des phrases courtes, concrètes, au vocabulaire de l'utilisateur, pas à celui du code.", en: "Write short, concrete sentences in the user's vocabulary, not the code's."}
+      - {fr: "Aucun texte de remplissage (lorem ipsum, « Votre titre ici ») ni chiffre inventé en production.", en: "No filler text (lorem ipsum, 'Your title here') or invented figures in production."}
+      - {fr: "Un seul ton et une seule façon de nommer chaque chose dans tout le projet.", en: "One tone and one name for each thing across the whole project."}
+    criteria:
+      - id: CNT-01
+        severity: blocker
+        check: {method: auto, tool: placeholder_scan}
+        label: {fr: "Aucun texte de remplissage ou faux contenu en production", en: "No filler text or fake content in production"}
+        verify: {fr: "Rechercher lorem ipsum, TODO, « placeholder », faux témoignages, chiffres non sourcés.", en: "Search for lorem ipsum, TODO, 'placeholder', fake testimonials, unsourced figures."}
+      - id: CNT-02
+        severity: major
+        check: {method: auto, tool: spellcheck}
+        label: {fr: "Orthographe et grammaire correctes dans chaque langue", en: "Correct spelling and grammar in every language"}
+        verify: {fr: "Correcteur orthographique sur les textes et fichiers de traduction.", en: "Spell checker on copy and translation files."}
+      - id: CNT-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Les informations affichées sont exactes (prix, délais, caractéristiques)", en: "Displayed information is accurate (prices, delays, features)"}
+        verify: {fr: "Comparer les affirmations du site avec le comportement réel et la configuration.", en: "Compare the site's claims with actual behaviour and configuration."}
+      - id: CNT-04
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Terminologie et ton cohérents partout", en: "Consistent terminology and tone everywhere"}
+        verify: {fr: "Même mot pour la même chose, tutoiement ou vouvoiement constant.", en: "Same word for the same thing, consistent level of formality."}
+      - id: CNT-05
+        severity: minor
+        check: {method: inspect}
+        applies_if: [multilingual]
+        label: {fr: "Aucune clé de traduction manquante ou texte non traduit", en: "No missing translation key or untranslated text"}
+        verify: {fr: "Comparer les fichiers de langue ; chercher les textes en dur dans les composants.", en: "Diff locale files; search for hard-coded strings in components."}
+
+  - id: support
+    code: SUP
+    label: {fr: "Support", en: "Support"}
+    summary: {fr: "Aide et résolution des problèmes pour les utilisateurs.", en: "Help and problem resolution for users."}
+    build:
+      - {fr: "Prévoir un moyen de contact visible et un délai de réponse annoncé.", en: "Provide a visible contact channel and a stated response time."}
+      - {fr: "Les messages d'erreur importants donnent un identifiant que l'utilisateur peut transmettre au support.", en: "Important error messages give an ID the user can send to support."}
+      - {fr: "Écrire une FAQ ou une aide à partir des questions réellement posées.", en: "Write an FAQ or help page from questions actually asked."}
+    criteria:
+      - id: SUP-01
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Un moyen de contact est visible depuis toutes les pages", en: "A contact channel is reachable from every page"}
+        verify: {fr: "Lien contact ou aide dans le pied de page ou le menu.", en: "Contact or help link in the footer or menu."}
+      - id: SUP-02
+        severity: minor
+        check: {method: inspect}
+        applies_if: [has_backend]
+        label: {fr: "Les erreurs serveur affichent un identifiant de suivi relié aux logs", en: "Server errors show a reference ID linked to the logs"}
+        verify: {fr: "Provoquer une erreur 500 : un identifiant s'affiche et se retrouve dans les logs.", en: "Trigger a 500: an ID is shown and found in the logs."}
+      - id: SUP-03
+        severity: minor
+        check: {method: inspect}
+        applies_if: [has_auth]
+        label: {fr: "Les problèmes courants ont une solution en libre-service", en: "Common problems have a self-service fix"}
+        verify: {fr: "Mot de passe oublié, renvoi d'email de confirmation, suppression de compte possibles sans contacter le support.", en: "Password reset, resend confirmation email, account deletion possible without contacting support."}
+      - id: SUP-04
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Une page d'aide ou FAQ couvre les questions fréquentes", en: "A help page or FAQ covers frequent questions"}
+        verify: {fr: "Présence et pertinence de la page d'aide.", en: "Help page present and relevant."}

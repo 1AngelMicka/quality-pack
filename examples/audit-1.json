@@ -1,0 +1,781 @@
+{
+ "date": "2026-11-01",
+ "project": "exemple",
+ "profile": "webapp",
+ "flags": [
+  "has_ui",
+  "has_backend",
+  "has_auth",
+  "has_user_data",
+  "has_db",
+  "public_web",
+  "self_hosted"
+ ],
+ "results": {
+  "PRD-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PRD-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PRD-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PRD-04": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "PRD-05": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "FEA-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "FEA-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "FEA-03": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "FEA-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "UX-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "UX-02": {
+   "status": "unknown",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "UX-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "UX-04": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "UX-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "UX-06": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "CNT-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "CNT-02": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "CNT-03": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "CNT-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "CNT-05": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SUP-01": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SUP-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "SUP-03": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SUP-04": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "UI-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "UI-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "UI-03": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "UI-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "UI-05": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "UI-06": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SLP-01": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SLP-02": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SLP-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "SLP-04": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SLP-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "RSP-01": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "RSP-02": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "RSP-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "RSP-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "RSP-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "A11Y-01": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "A11Y-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "A11Y-03": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "A11Y-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "A11Y-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "A11Y-06": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "CMP-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "CMP-02": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "CMP-03": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "CMP-04": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEC-01": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEC-02": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEC-03": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEC-04": {
+   "status": "unknown",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEC-05": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEC-06": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "SEC-07": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEC-08": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEC-09": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEC-10": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEC-11": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "PRV-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PRV-02": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "PRV-03": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "PRV-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PRV-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PRV-06": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "DAT-01": {
+   "status": "unknown",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "DAT-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "DAT-03": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "DAT-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "DAT-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "DAT-06": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "LEG-01": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "LEG-02": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "LEG-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "LEG-04": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "LEG-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "LEG-06": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "REL-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "REL-02": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "REL-03": {
+   "status": "unknown",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "REL-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "REL-05": {
+   "status": "unknown",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "REL-06": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "TST-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "TST-02": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "TST-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "TST-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "TST-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "COD-01": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "COD-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "COD-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "COD-04": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "COD-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "COD-06": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "COD-07": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "PRF-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PRF-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PRF-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PRF-04": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "PRF-05": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "PRF-06": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEO-01": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEO-02": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEO-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "SEO-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "SEO-05": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SEO-06": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "SEO-07": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "SCL-01": {
+   "status": "unknown",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "SCL-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "SCL-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "SCL-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "INT-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "INT-02": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "INT-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "INT-04": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "INT-05": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "INT-06": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PAY-01": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "PAY-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PAY-03": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "PAY-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "PAY-05": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "PAY-06": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "CST-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "CST-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "CST-03": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "CST-04": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "INF-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "INF-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "INF-03": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "INF-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "INF-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "INF-06": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "DEP-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "DEP-02": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "DEP-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "DEP-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "DEP-05": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "DEP-06": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "MON-01": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "MON-02": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "MON-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "MON-04": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "MON-05": {
+   "status": "fail",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "BAK-01": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "BAK-02": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "BAK-03": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "BAK-04": {
+   "status": "partial",
+   "evidence": "exemple",
+   "fix": "Correctif d'exemple"
+  },
+  "BAK-05": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  },
+  "BAK-06": {
+   "status": "pass",
+   "evidence": "exemple",
+   "fix": ""
+  }
+ }
+}

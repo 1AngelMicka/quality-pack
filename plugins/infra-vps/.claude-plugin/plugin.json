@@ -1,0 +1,17 @@
+{
+  "name": "qp-infra-vps",
+  "description": "Self-hosted VPS module (Docker Compose, PM2, Nginx or CloudPanel, backups). Module VPS auto-hébergé.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Micka"
+  },
+  "license": "MIT",
+  "keywords": [
+    "quality",
+    "audit",
+    "security",
+    "accessibility",
+    "seo",
+    "qualité"
+  ]
+}
