@@ -1,151 +1,151 @@
 # quality-pack
 
-**English** · [Français](README.fr.md)
+**Français** · [English](README.en.md)
 
-Plugins for [Claude Code](https://claude.com/claude-code) that make Claude build your website or app properly from the start, then audit it and give it a score out of 10, domain by domain.
+Des plugins pour [Claude Code](https://claude.com/claude-code) qui font coder ton site ou ton application proprement dès le départ, puis l'auditent et lui donnent une note sur 10, domaine par domaine.
 
-- **27 domains, 153 checks**: product, UX, UI, generic "AI-made" content, accessibility, security, privacy, performance, SEO, payments, deployment, backups and more.
-- **Evidence for every check**: a file and line, a command output or a screenshot. A check claimed as passed without evidence does not count.
-- **Honest scores**: one open blocker (a leaked secret, a broken main flow) caps the score.
-- **Free, open source, no telemetry**, in English and French.
+- **27 domaines, 153 vérifications** : produit, UX, UI, contenu générique « fait par IA », accessibilité, sécurité, RGPD, performance, SEO, paiements, déploiement, sauvegardes, etc.
+- **Une preuve pour chaque vérification** : un fichier et une ligne, le résultat d'une commande ou une capture d'écran. Un point déclaré réussi sans preuve ne compte pas.
+- **Une note honnête** : un seul point bloquant ouvert (un secret qui fuit, un parcours principal cassé) plafonne la note.
+- **Gratuit, open source, sans télémétrie**, en français et en anglais.
 
-## How it works
+## Le principe
 
 ```
-/qp:kickoff  →  you code (rules apply automatically)  →  /qp:audit  →  /qp:fix  →  /qp:audit again
+/qp:kickoff  →  tu codes (les règles s'appliquent toutes seules)  →  /qp:audit  →  /qp:fix  →  /qp:audit à nouveau
 ```
 
-| Step | What happens |
+| Étape | Ce qui se passe |
 | --- | --- |
-| `/qp:kickoff` | Claude reads your project, asks a few questions (who it is for, what kind of project, what it does, the look you want) and writes `.quality/project.json` and `DESIGN.md`. |
-| While you code | Claude follows the rules of the domains it touches and of your stack. A guard blocks secrets from being written into code. |
-| `/qp:audit` | Automatic scans (code, HTTP headers, SEO, browser at 5 screen widths, accessibility), then 7 auditors in parallel. You get `.quality/AUDIT.md`: overall score, score per domain, change since last time, fixes by priority. |
-| `/qp:fix` | Fixes the issues in order, blockers first, and checks each fix. |
+| `/qp:kickoff` | Claude lit ton projet, pose quelques questions (pour qui, quel type de projet, ce qu'il fait, le style voulu) et écrit `.quality/project.json` et `DESIGN.md`. |
+| Pendant que tu codes | Claude suit les règles des domaines qu'il touche et celles de ta techno. Un garde-fou empêche d'écrire un secret dans le code. |
+| `/qp:audit` | Scans automatiques (code, en-têtes HTTP, SEO, rendu navigateur à 5 largeurs, accessibilité), puis 7 auditeurs en parallèle. Résultat : `.quality/AUDIT.md` avec la note globale, la note de chaque domaine, l'évolution depuis la dernière fois et les correctifs par priorité. |
+| `/qp:fix` | Corrige les problèmes dans l'ordre, les points bloquants d'abord, et vérifie chaque correction. |
 
-## Install
+## Installation
 
-**You need:** [Claude Code](https://claude.com/claude-code), [Node.js](https://nodejs.org) 18 or later, and `git`.
+**Il te faut :** [Claude Code](https://claude.com/claude-code), [Node.js](https://nodejs.org) 18 ou plus récent, et `git`.
 
-**1. Add the marketplace and install the core plugin.** In Claude Code, type:
+**1. Ajoute la marketplace et installe le plugin principal.** Dans Claude Code, tape :
 
 ```
 /plugin marketplace add 1AngelMicka/quality-pack
 /plugin install qp@quality-pack
 ```
 
-**2. Install the modules for your stack** (pick what you use):
+**2. Installe les modules de ta techno** (choisis ceux que tu utilises) :
 
 ```
 /plugin install qp-nextjs@quality-pack      # Next.js, React, TypeScript, Tailwind
-/plugin install qp-node-api@quality-pack    # Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io
-/plugin install qp-vps@quality-pack         # Self-hosted server: Docker Compose, PM2, Nginx or CloudPanel
+/plugin install qp-node-api@quality-pack    # Fastify ou Express, Prisma, PostgreSQL, Redis, Socket.io
+/plugin install qp-vps@quality-pack         # Serveur auto-hébergé : Docker Compose, PM2, Nginx ou CloudPanel
 ```
 
-**3. Restart Claude Code** (or run `/reload-plugins`), open your project and run:
+**3. Redémarre Claude Code** (ou tape `/reload-plugins`), ouvre ton projet et lance :
 
 ```
 /qp:kickoff
 ```
 
-**4. Optional, for the browser and accessibility checks**, in your project:
+**4. Facultatif, pour les vérifications navigateur et accessibilité**, dans ton projet :
 
 ```bash
 npm i -D @playwright/test axe-core
 npx playwright install chromium
 ```
 
-Without them the audit still runs; those checks are marked "not checked".
+Sans eux, l'audit fonctionne quand même ; ces vérifications sont marquées « non vérifiées ».
 
-### Install for a whole team
+### Installer pour toute une équipe
 
-In the project folder, run once in your terminal, then commit `.claude/settings.json`:
+Dans le dossier du projet, lance une fois dans ton terminal, puis commite `.claude/settings.json` :
 
 ```bash
 claude plugin marketplace add 1AngelMicka/quality-pack --scope project
 claude plugin install qp@quality-pack --scope project
 ```
 
-Teammates get the pack when they open the project in Claude Code and trust the folder.
+Tes collègues reçoivent le pack en ouvrant le projet dans Claude Code et en faisant confiance au dossier.
 
-### Update
+### Mettre à jour
 
-Type `/plugin marketplace update quality-pack` in Claude Code. To update automatically, open `/plugin`, go to **Marketplaces**, select **quality-pack** and choose **Enable auto-update**.
+Tape `/plugin marketplace update quality-pack` dans Claude Code. Pour les mises à jour automatiques : `/plugin` → **Marketplaces** → **quality-pack** → **Enable auto-update**.
 
-### Uninstall
+### Désinstaller
 
 ```
 /plugin uninstall qp@quality-pack
 /plugin marketplace remove quality-pack
 ```
 
-Your project keeps its `.quality/` folder; delete it if you no longer want it.
+Ton projet garde son dossier `.quality/` ; supprime-le si tu n'en veux plus.
 
-## Commands
+## Commandes
 
-| Command | Use it to |
+| Commande | Pour |
 | --- | --- |
-| `/qp:kickoff` | Set up or update the project's quality profile |
-| `/qp:audit` | Run a full audit |
-| `/qp:audit security-data` | Audit one group (`product-experience`, `design`, `security-data`, `reliability-quality`, `performance-seo`, `integrations-payments`, `operations`) |
-| `/qp:audit SEC-01 SEC-03` | Re-check specific criteria; other results are kept from the last audit |
-| `/qp:audit blockers` | Re-check only the blockers |
-| `/qp:fix` | Fix the open blockers (or the top 5 issues) |
-| `/qp:fix 10` · `/qp:fix SEC-02` | Fix the first 10 issues, or a specific one |
+| `/qp:kickoff` | Configurer ou mettre à jour le profil qualité du projet |
+| `/qp:audit` | Lancer un audit complet |
+| `/qp:audit security-data` | Auditer un groupe (`product-experience`, `design`, `security-data`, `reliability-quality`, `performance-seo`, `integrations-payments`, `operations`) |
+| `/qp:audit SEC-01 SEC-03` | Revérifier des critères précis ; les autres résultats du dernier audit sont conservés |
+| `/qp:audit blockers` | Revérifier seulement les points bloquants |
+| `/qp:fix` | Corriger les points bloquants (ou les 5 premiers problèmes) |
+| `/qp:fix 10` · `/qp:fix SEC-02` | Corriger les 10 premiers problèmes, ou un problème précis |
 
-## What it checks
+## Ce qu'il vérifie
 
-| Group | Domains |
+| Groupe | Domaines |
 | --- | --- |
-| Product and experience | Product, Features, UX, Content, Support |
-| Design and accessibility | UI, AI slop, Responsive, Accessibility, Compatibility |
-| Security and data | Security, Privacy, Data, Compliance |
-| Reliability and code quality | Reliability, Tests, Code |
-| Performance and visibility | Performance, SEO and meta, Scalability |
-| Integrations, payments and costs | Integrations, Payments, Costs |
-| Operations | Infrastructure, Deployment, Monitoring, Backups |
+| Produit et expérience | Produit, Fonctionnalités, UX, Contenu, Support |
+| Design et accessibilité | UI, AI slop, Responsive, Accessibilité, Compatibilité |
+| Sécurité et données | Sécurité, Confidentialité, Données, Conformité |
+| Fiabilité et qualité du code | Fiabilité, Tests, Code |
+| Performance et visibilité | Performance, SEO et meta, Scalabilité |
+| Intégrations, paiements et coûts | Intégrations, Paiements, Coûts |
+| Exploitation | Infra, Déploiement, Monitoring, Sauvegardes |
 
-Every rule and check is listed in [docs/en/REFERENTIAL.md](docs/en/REFERENTIAL.md).
+Toutes les règles et vérifications sont détaillées dans [docs/fr/REFERENTIEL.md](docs/fr/REFERENTIEL.md).
 
-### Scoring
+### Notation
 
-- Each check is a **blocker** (5 points), **major** (3) or **minor** (1). Passed = all points, partial = half, failed or not checked = none.
-- A failed blocker caps its domain at 3/10 and the overall score at 5.9/10.
-- The overall score weights domains by project type: `vitrine` (showcase site), `webapp`, `saas`, `mobile` or `api`. Domains that do not apply (payments on a showcase site, for example) are skipped.
+- Chaque vérification est **bloquante** (5 points), **majeure** (3) ou **mineure** (1). Réussie = tous les points, partielle = la moitié, en échec ou non vérifiée = aucun.
+- Un point bloquant en échec plafonne son domaine à 3/10 et la note globale à 5,9/10.
+- La note globale pondère les domaines selon le type de projet : `vitrine`, `webapp`, `saas`, `mobile` ou `api`. Les domaines sans objet (les paiements pour un site vitrine, par exemple) sont ignorés.
 
-## What it creates in your project
+## Ce qu'il crée dans ton projet
 
 ```
 .quality/
-  project.json          your project's profile (written by /qp:kickoff)
-  AUDIT.md              the latest audit report
-  audits/<date>.json    every audit, to follow the score over time
-  fixes.md              log of fixes made by /qp:fix
-DESIGN.md               your visual direction and design tokens
-CLAUDE.md               a short "Quality pack" section is added
+  project.json          le profil du projet (écrit par /qp:kickoff)
+  AUDIT.md              le dernier rapport d'audit
+  audits/<date>.json    chaque audit, pour suivre la note dans le temps
+  fixes.md              journal des corrections faites par /qp:fix
+DESIGN.md               la direction visuelle et les tokens de design
+CLAUDE.md               une courte section « Quality pack » y est ajoutée
 ```
 
-Commit `.quality/` to keep the score history. Screenshots (`.quality/audits/*/screens/`) are git-ignored.
+Commite `.quality/` pour garder l'historique des notes. Les captures d'écran (`.quality/audits/*/screens/`) sont ignorées par Git.
 
-## Troubleshooting
+## En cas de problème
 
-| Problem | Fix |
+| Problème | Solution |
 | --- | --- |
-| `/qp:...` commands do not appear | Restart Claude Code or run `/reload-plugins`. Check `/plugin` → **Installed** and the **Errors** tab. |
-| `node: command not found` in a hook or command | Install Node.js 18+ and make sure `node` is on your PATH. |
-| Adding the marketplace fails | Check `git` is installed. Without a GitHub SSH key, set `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` and retry. |
-| Browser checks are "not checked" | Install Playwright and axe-core in the project (step 4), and make sure the app runs locally or set a staging URL in `.quality/project.json`. |
-| A write is blocked as a secret | Move the value to an environment variable. If it really is not a secret, add `qp-allow-secret` in a comment on that line. |
+| Les commandes `/qp:...` n'apparaissent pas | Redémarre Claude Code ou tape `/reload-plugins`. Regarde `/plugin` → **Installed** et l'onglet **Errors**. |
+| `node: command not found` | Installe Node.js 18+ et vérifie que `node` est dans ton PATH. |
+| L'ajout de la marketplace échoue | Vérifie que `git` est installé. Sans clé SSH GitHub, définis `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` et réessaie. |
+| Les vérifications navigateur sont « non vérifiées » | Installe Playwright et axe-core dans le projet (étape 4), et vérifie que l'appli tourne en local ou renseigne une URL de préproduction dans `.quality/project.json`. |
+| Une écriture est bloquée comme secret | Mets la valeur dans une variable d'environnement. Si ce n'est vraiment pas un secret, ajoute `qp-allow-secret` en commentaire sur la ligne. |
 
-## Privacy and security
+## Confidentialité et sécurité
 
-The pack sends no telemetry. During an audit it only contacts the URLs of your own project. Hooks run locally and are short enough to read: [secrets guard](plugins/core/scripts/hooks/secrets-guard.mjs), [session reminder](plugins/core/scripts/hooks/session-start.mjs). To report a vulnerability, see [SECURITY.md](SECURITY.md).
+Le pack n'envoie aucune télémétrie. Pendant un audit, il ne contacte que les URL de ton propre projet. Les hooks tournent en local et sont assez courts pour être relus : [garde-fou anti-secrets](plugins/core/scripts/hooks/secrets-guard.mjs), [rappel de session](plugins/core/scripts/hooks/session-start.mjs). Pour signaler une faille, voir [SECURITY.md](SECURITY.md).
 
-This pack helps you spot legal obligations (GDPR, legal notices, licences); it is not legal advice.
+Le pack aide à repérer les obligations légales (RGPD, mentions légales, licences) ; il ne remplace pas l'avis d'un juriste.
 
-## Contributing
+## Contribuer
 
-Ideas, bugs and new stack modules are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md). Planned: Expo / React Native, Laravel, Astro, and a French compliance module.
+Idées, bugs et nouveaux modules de techno sont les bienvenus : voir [CONTRIBUTING.md](CONTRIBUTING.md). Prévus : Expo / React Native, Laravel, Astro et un module de conformité française.
 
-## Credits and licence
+## Crédits et licence
 
-Designed after studying well-known Claude Code projects, credited in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). MIT licence.
+Conçu après l'étude de projets Claude Code reconnus, crédités dans [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Licence MIT.
