@@ -1,0 +1,3 @@
+{"name":"fixture-app","language":"fr","profile":"saas","stacks":["nextjs","node-api"],"country":"FR","package_manager":"pnpm",
+ "promise":"Test","flags":["has_ui","has_backend","has_auth","has_user_data","has_db","has_payments","has_webhooks","has_email","has_external_api","public_web"],
+ "urls":{"local":"http://localhost:8765"}}

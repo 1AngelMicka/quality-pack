@@ -2,43 +2,48 @@
   "name": "quality-pack",
   "description": "Build and audit web projects across 27 quality domains, with scoring. Construire et auditer des projets web sur 27 domaines qualité, avec notation.",
   "owner": {
-    "name": "Micka"
+    "name": "Micka",
+    "url": "https://github.com/1AngelMicka"
   },
   "plugins": [
     {
-      "name": "qp-core",
-      "description": "Stack-agnostic quality framework: 27-domain referential, scoring, /kickoff, /audit, /fix. Socle commun : référentiel 27 domaines, barème, /kickoff, /audit, /fix.",
-      "version": "0.1.0",
+      "name": "qp",
+      "description": "Quality pack core: 27-domain referential, scoring, build skills, /qp:kickoff, /qp:audit, /qp:fix. Socle du pack qualité : référentiel 27 domaines, notation, skills de construction, /qp:kickoff, /qp:audit, /qp:fix.",
+      "version": "0.2.0",
       "source": "./plugins/core",
       "author": {
-        "name": "Micka"
+        "name": "Micka",
+        "url": "https://github.com/1AngelMicka"
       }
     },
     {
-      "name": "qp-stack-nextjs",
-      "description": "Next.js, React, TypeScript and Tailwind module: maps quality checks to real commands and adds stack rules. Module Next.js / React / TypeScript / Tailwind.",
-      "version": "0.1.0",
+      "name": "qp-nextjs",
+      "description": "Quality pack module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind du pack qualité.",
+      "version": "0.2.0",
       "source": "./plugins/stack-nextjs",
       "author": {
-        "name": "Micka"
+        "name": "Micka",
+        "url": "https://github.com/1AngelMicka"
       }
     },
     {
-      "name": "qp-stack-node-api",
-      "description": "Node API module (Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io). Module API Node.",
-      "version": "0.1.0",
+      "name": "qp-node-api",
+      "description": "Quality pack module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node du pack qualité.",
+      "version": "0.2.0",
       "source": "./plugins/stack-node-api",
       "author": {
-        "name": "Micka"
+        "name": "Micka",
+        "url": "https://github.com/1AngelMicka"
       }
     },
     {
-      "name": "qp-infra-vps",
-      "description": "Self-hosted VPS module (Docker Compose, PM2, Nginx or CloudPanel, backups). Module VPS auto-hébergé.",
-      "version": "0.1.0",
+      "name": "qp-vps",
+      "description": "Quality pack module for self-hosted VPS: Docker Compose, PM2, Nginx or CloudPanel, backups. Module VPS auto-hébergé du pack qualité.",
+      "version": "0.2.0",
       "source": "./plugins/infra-vps",
       "author": {
-        "name": "Micka"
+        "name": "Micka",
+        "url": "https://github.com/1AngelMicka"
       }
     }
   ]

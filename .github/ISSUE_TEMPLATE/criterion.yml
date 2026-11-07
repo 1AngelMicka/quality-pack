@@ -1,0 +1,19 @@
+name: Check to add or fix / Vérification à ajouter ou corriger
+description: A criterion is wrong, too strict, too loose or missing / Un critère est faux, trop sévère, trop laxiste ou manquant
+labels: [referential]
+body:
+  - type: input
+    id: id
+    attributes:
+      label: Criterion ID (if it exists) / ID du critère (s'il existe)
+      placeholder: SEC-05
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What should change and why? / Que faut-il changer et pourquoi ?
+    validations:
+      required: true
+  - type: textarea
+    id: verify
+    attributes:
+      label: How can it be verified? / Comment le vérifier ?

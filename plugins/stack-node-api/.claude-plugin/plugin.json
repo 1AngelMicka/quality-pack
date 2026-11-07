@@ -1,11 +1,14 @@
 {
-  "name": "qp-stack-node-api",
-  "description": "Node API module (Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io). Module API Node.",
-  "version": "0.1.0",
+  "name": "qp-node-api",
+  "description": "Quality pack module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node du pack qualité.",
+  "version": "0.2.0",
   "author": {
-    "name": "Micka"
+    "name": "Micka",
+    "url": "https://github.com/1AngelMicka"
   },
   "license": "MIT",
+  "homepage": "https://github.com/1AngelMicka/quality-pack",
+  "repository": "https://github.com/1AngelMicka/quality-pack",
   "keywords": [
     "quality",
     "audit",
@@ -13,5 +16,8 @@
     "accessibility",
     "seo",
     "qualité"
+  ],
+  "dependencies": [
+    "qp"
   ]
 }

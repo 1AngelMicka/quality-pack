@@ -1,0 +1,77 @@
+{
+ "stack": "node-api",
+ "label": {
+  "fr": "API Node (Fastify ou Express, Prisma, PostgreSQL, Redis, Socket.io)",
+  "en": "Node API (Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io)"
+ },
+ "detect": {
+  "package_json_deps_any": [
+   "fastify",
+   "express",
+   "@prisma/client",
+   "socket.io"
+  ]
+ },
+ "checks": {
+  "typecheck": {
+   "run": "{pm} exec tsc --noEmit",
+   "pass_if": "exit code 0"
+  },
+  "lint": {
+   "run": "{pm} run lint",
+   "pass_if": "exit code 0, no errors"
+  },
+  "test_run": {
+   "run": "{pm} test",
+   "pass_if": "exit code 0"
+  },
+  "e2e": {
+   "run": "{pm} run test:e2e",
+   "pass_if": "exit code 0 (API tests against a test database)"
+  },
+  "deps_audit": {
+   "run": "{pm} audit --audit-level=high",
+   "pass_if": "no high or critical advisory"
+  },
+  "license_check": {
+   "run": "npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'",
+   "pass_if": "exit code 0"
+  },
+  "load_test": {
+   "run": "npx --yes autocannon -c 100 -d 30 {url}/health",
+   "pass_if": "0 errors; then repeat on the 3 busiest routes"
+  }
+ },
+ "rules": [
+  {
+   "fr": "Schéma de validation sur chaque route (schéma JSON Fastify ou Zod) : body, params, querystring et headers utiles.",
+   "en": "Validation schema on every route (Fastify JSON schema or Zod): body, params, querystring and relevant headers."
+  },
+  {
+   "fr": "Plugins de sécurité : @fastify/helmet, @fastify/rate-limit, @fastify/cors avec une liste d'origines explicite (ou helmet, express-rate-limit, cors).",
+   "en": "Security plugins: @fastify/helmet, @fastify/rate-limit, @fastify/cors with an explicit origin list (or helmet, express-rate-limit, cors)."
+  },
+  {
+   "fr": "Socket.io : authentifier à la connexion, valider chaque événement reçu, limiter le débit par socket, adaptateur Redis dès qu'il y a plus d'une instance.",
+   "en": "Socket.io: authenticate on connection, validate every incoming event, rate-limit per socket, Redis adapter as soon as there is more than one instance."
+  },
+  {
+   "fr": "Prisma : migrations avec prisma migrate, jamais db push en production ; $queryRaw uniquement avec paramètres ; prisma.$transaction pour les écritures liées.",
+   "en": "Prisma: migrations with prisma migrate, never db push in production; $queryRaw only with parameters; prisma.$transaction for related writes."
+  },
+  {
+   "fr": "Redis : mot de passe, liaison locale, clés avec expiration pour les données temporaires.",
+   "en": "Redis: password, local binding, keys with expiry for temporary data."
+  },
+  {
+   "fr": "Logs structurés avec pino, sans données personnelles ; identifiant de requête dans chaque log.",
+   "en": "Structured logs with pino, no personal data; request ID in every log line."
+  },
+  {
+   "fr": "Route /health qui vérifie la base et Redis ; gestion de SIGTERM avec fermeture propre.",
+   "en": "/health route that checks database and Redis; SIGTERM handling with clean shutdown."
+  }
+ ],
+ "qp_stack": true,
+ "plugin": "qp-node-api"
+}

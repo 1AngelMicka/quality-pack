@@ -1,11 +1,14 @@
 {
-  "name": "qp-stack-nextjs",
-  "description": "Next.js, React, TypeScript and Tailwind module: maps quality checks to real commands and adds stack rules. Module Next.js / React / TypeScript / Tailwind.",
-  "version": "0.1.0",
+  "name": "qp-nextjs",
+  "description": "Quality pack module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind du pack qualité.",
+  "version": "0.2.0",
   "author": {
-    "name": "Micka"
+    "name": "Micka",
+    "url": "https://github.com/1AngelMicka"
   },
   "license": "MIT",
+  "homepage": "https://github.com/1AngelMicka/quality-pack",
+  "repository": "https://github.com/1AngelMicka/quality-pack",
   "keywords": [
     "quality",
     "audit",
@@ -13,5 +16,8 @@
     "accessibility",
     "seo",
     "qualité"
+  ],
+  "dependencies": [
+    "qp"
   ]
 }

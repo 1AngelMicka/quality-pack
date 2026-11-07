@@ -3,17 +3,20 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  referential:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
       - run: pip install pyyaml
-      - name: Validate referential and check generated docs are up to date
+      - name: Rebuild generated files and check they are committed
         run: |
-          python tools/referential.py docs
-          git diff --exit-code docs/
-      - name: Score the example audits
-        run: python plugins/core/scripts/score.py examples/audit-2.json --previous examples/audit-1.json
+          python tools/build.py
+          git diff --exit-code
+      - name: Tests
+        run: node --test tests/*.test.mjs

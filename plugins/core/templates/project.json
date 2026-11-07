@@ -1,0 +1,15 @@
+{
+  "name": "my-project",
+  "language": "fr",
+  "profile": "webapp",
+  "country": "FR",
+  "stacks": ["nextjs", "node-api", "infra-vps"],
+  "package_manager": "pnpm",
+  "promise": "For <whom>, <product> <does what> so that <outcome>.",
+  "out_of_scope": [],
+  "success_metric": "",
+  "flags": ["has_ui", "has_backend", "has_auth", "has_user_data", "has_db"],
+  "expected_load": { "concurrent_users": null, "notes": "" },
+  "design_direction": "See DESIGN.md",
+  "urls": { "local": "http://localhost:3000", "staging": "", "production": "" }
+}

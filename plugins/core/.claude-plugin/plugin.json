@@ -1,11 +1,14 @@
 {
-  "name": "qp-core",
-  "description": "Stack-agnostic quality framework: 27-domain referential, scoring, /kickoff, /audit, /fix. Socle commun : référentiel 27 domaines, barème, /kickoff, /audit, /fix.",
-  "version": "0.1.0",
+  "name": "qp",
+  "description": "Quality pack core: 27-domain referential, scoring, build skills, /qp:kickoff, /qp:audit, /qp:fix. Socle du pack qualité : référentiel 27 domaines, notation, skills de construction, /qp:kickoff, /qp:audit, /qp:fix.",
+  "version": "0.2.0",
   "author": {
-    "name": "Micka"
+    "name": "Micka",
+    "url": "https://github.com/1AngelMicka"
   },
   "license": "MIT",
+  "homepage": "https://github.com/1AngelMicka/quality-pack",
+  "repository": "https://github.com/1AngelMicka/quality-pack",
   "keywords": [
     "quality",
     "audit",

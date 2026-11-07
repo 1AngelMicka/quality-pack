@@ -1,11 +1,14 @@
 {
-  "name": "qp-infra-vps",
-  "description": "Self-hosted VPS module (Docker Compose, PM2, Nginx or CloudPanel, backups). Module VPS auto-hébergé.",
-  "version": "0.1.0",
+  "name": "qp-vps",
+  "description": "Quality pack module for self-hosted VPS: Docker Compose, PM2, Nginx or CloudPanel, backups. Module VPS auto-hébergé du pack qualité.",
+  "version": "0.2.0",
   "author": {
-    "name": "Micka"
+    "name": "Micka",
+    "url": "https://github.com/1AngelMicka"
   },
   "license": "MIT",
+  "homepage": "https://github.com/1AngelMicka/quality-pack",
+  "repository": "https://github.com/1AngelMicka/quality-pack",
   "keywords": [
     "quality",
     "audit",
@@ -13,5 +16,8 @@
     "accessibility",
     "seo",
     "qualité"
+  ],
+  "dependencies": [
+    "qp"
   ]
 }

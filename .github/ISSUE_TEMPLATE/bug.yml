@@ -1,0 +1,23 @@
+name: Bug
+description: Something does not work as expected / Quelque chose ne marche pas
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened? / Que s'est-il passé ?
+      description: Command used, what you expected, what you got. / Commande utilisée, résultat attendu, résultat obtenu.
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output or error / Sortie ou erreur
+      render: shell
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: "quality-pack 0.2.0, Claude Code 2.x, Node 22, macOS / Windows / Linux"
+    validations:
+      required: true
