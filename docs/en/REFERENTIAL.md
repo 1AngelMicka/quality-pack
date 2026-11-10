@@ -30,7 +30,7 @@ Usefulness and promise: who the project serves, what problem it solves, what it 
 
 **While building**
 
-- Write the promise in one sentence (for whom, which problem, which outcome) before any code, in .quality/project.yaml.
+- Write the promise in one sentence (for whom, which problem, which outcome) before any code, in .quality/project.json.
 - List what the project will not do (out of scope) to avoid useless features.
 - Every feature must serve the promise; otherwise it leaves the scope.
 
@@ -38,7 +38,7 @@ Usefulness and promise: who the project serves, what problem it solves, what it 
 
 | ID | Criterion | Severity | How to verify |
 | --- | --- | --- | --- |
-| PRD-01 | The promise is written in one sentence and up to date | Major | Promise present and consistent in .quality/project.yaml. (inspection) |
+| PRD-01 | The promise is written in one sentence and up to date | Major | Promise present and consistent in .quality/project.json. (inspection) |
 | PRD-02 | The first screen says what the product does and for whom, without jargon | Major | Read the home or entry screen: would a stranger get it in 5 seconds? (inspection) |
 | PRD-03 | The main action is obvious and reachable on arrival | Major | One visible primary call to action on the entry screen. (inspection) |
 | PRD-04 | Every shipped feature serves the promise | Minor | Compare the feature list with the promise and the out-of-scope list. (inspection) |

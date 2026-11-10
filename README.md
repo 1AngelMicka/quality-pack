@@ -10,6 +10,11 @@ Des plugins pour [Claude Code](https://claude.com/claude-code) qui font coder to
 - **Économe en tokens** : règles chargées à la demande, sorties de commandes compactes, audits incrémentaux, graphe du code avec [Graphify](https://github.com/Graphify-Labs/graphify). Voir [Économie de tokens](#économie-de-tokens).
 - **Gratuit, open source, sans télémétrie**, en français et en anglais.
 
+## Documentation en ligne et agents IA
+
+- Site de documentation : https://1angelmicka.github.io/quality-pack/
+- Tu peux aussi confier l'installation à ton assistant IA : donne-lui le lien du repo ou dis-lui « installe quality-pack en suivant https://github.com/1AngelMicka/quality-pack/blob/main/docs/AGENT_GUIDE.md ». Il trouvera [`llms.txt`](llms.txt) et le [guide pour agents](docs/AGENT_GUIDE.md).
+
 ## Le principe
 
 ```

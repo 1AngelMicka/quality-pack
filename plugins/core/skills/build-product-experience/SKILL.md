@@ -16,13 +16,13 @@ Usefulness and promise: who the project serves, what problem it solves, what it 
 
 Rules:
 
-- Write the promise in one sentence (for whom, which problem, which outcome) before any code, in .quality/project.yaml.
+- Write the promise in one sentence (for whom, which problem, which outcome) before any code, in .quality/project.json.
 - List what the project will not do (out of scope) to avoid useless features.
 - Every feature must serve the promise; otherwise it leaves the scope.
 
 Done means:
 
-- [major] PRD-01: The promise is written in one sentence and up to date. Check: Promise present and consistent in .quality/project.yaml.
+- [major] PRD-01: The promise is written in one sentence and up to date. Check: Promise present and consistent in .quality/project.json.
 - [major] PRD-02: The first screen says what the product does and for whom, without jargon (only if: has_ui). Check: Read the home or entry screen: would a stranger get it in 5 seconds?
 - [major] PRD-03: The main action is obvious and reachable on arrival (only if: has_ui). Check: One visible primary call to action on the entry screen.
 - [minor] PRD-04: Every shipped feature serves the promise. Check: Compare the feature list with the promise and the out-of-scope list.

@@ -1,0 +1,3909 @@
+{
+ "version": "0.3.1",
+ "scoring": {
+  "severity_weight": {
+   "blocker": 5,
+   "major": 3,
+   "minor": 1
+  },
+  "status_value": {
+   "pass": 1.0,
+   "partial": 0.5,
+   "fail": 0.0
+  },
+  "blocker_cap": 3,
+  "global_blocker_cap": 5.9,
+  "unknown_counts_as": "fail",
+  "grades": [
+   {
+    "min": 9.0,
+    "fr": "Excellent",
+    "en": "Excellent"
+   },
+   {
+    "min": 7.5,
+    "fr": "Bon",
+    "en": "Good"
+   },
+   {
+    "min": 6.0,
+    "fr": "Correct, à améliorer",
+    "en": "Fair, needs work"
+   },
+   {
+    "min": 4.0,
+    "fr": "Insuffisant",
+    "en": "Poor"
+   },
+   {
+    "min": 0.0,
+    "fr": "Critique",
+    "en": "Critical"
+   }
+  ]
+ },
+ "flags": {
+  "has_ui": {
+   "fr": "Le projet a une interface utilisateur",
+   "en": "The project has a user interface"
+  },
+  "has_backend": {
+   "fr": "Le projet a un serveur ou une API",
+   "en": "The project has a server or API"
+  },
+  "has_auth": {
+   "fr": "Comptes utilisateurs et connexion",
+   "en": "User accounts and login"
+  },
+  "has_user_data": {
+   "fr": "Collecte de données personnelles (formulaires, comptes, analytics)",
+   "en": "Collects personal data (forms, accounts, analytics)"
+  },
+  "has_db": {
+   "fr": "Base de données",
+   "en": "Database"
+  },
+  "has_uploads": {
+   "fr": "Envoi de fichiers par les utilisateurs",
+   "en": "User file uploads"
+  },
+  "has_external_api": {
+   "fr": "Appels à des API ou services externes",
+   "en": "Calls to external APIs or services"
+  },
+  "has_webhooks": {
+   "fr": "Réception de webhooks",
+   "en": "Receives webhooks"
+  },
+  "has_email": {
+   "fr": "Envoi d'emails",
+   "en": "Sends emails"
+  },
+  "has_payments": {
+   "fr": "Paiements ou abonnements",
+   "en": "Payments or subscriptions"
+  },
+  "uses_paid_services": {
+   "fr": "Services facturés à l'usage",
+   "en": "Usage-billed services"
+  },
+  "public_web": {
+   "fr": "Pages publiques destinées à être trouvées sur le web",
+   "en": "Public pages meant to be found on the web"
+  },
+  "self_hosted": {
+   "fr": "Hébergé sur un serveur géré par l'équipe (VPS, dédié)",
+   "en": "Hosted on a team-managed server (VPS, dedicated)"
+  },
+  "multilingual": {
+   "fr": "Plusieurs langues",
+   "en": "Several languages"
+  },
+  "dark_mode": {
+   "fr": "Thème sombre",
+   "en": "Dark theme"
+  }
+ },
+ "derived_flags": {
+  "has_accounts_or_sales": [
+   "has_auth",
+   "has_payments"
+  ],
+  "has_backend_or_public": [
+   "has_backend",
+   "public_web"
+  ],
+  "has_persistent_data": [
+   "has_db",
+   "has_uploads"
+  ]
+ },
+ "profiles": {
+  "vitrine": {
+   "label": {
+    "fr": "Site vitrine ou landing page",
+    "en": "Showcase site or landing page"
+   },
+   "default_flags": [
+    "has_ui",
+    "public_web"
+   ],
+   "weights": {
+    "product": 3,
+    "features": 2,
+    "ux": 2,
+    "content": 3,
+    "support": 1,
+    "ui": 3,
+    "ai-slop": 3,
+    "responsive": 3,
+    "accessibility": 2,
+    "compatibility": 2,
+    "security": 2,
+    "privacy": 2,
+    "data": 1,
+    "compliance": 2,
+    "reliability": 1,
+    "tests": 1,
+    "code": 1,
+    "performance": 3,
+    "seo": 3,
+    "scalability": 0,
+    "integrations": 1,
+    "payments": 0,
+    "costs": 1,
+    "infra": 1,
+    "deployment": 1,
+    "monitoring": 1,
+    "backups": 1
+   }
+  },
+  "webapp": {
+   "label": {
+    "fr": "Application web",
+    "en": "Web application"
+   },
+   "default_flags": [
+    "has_ui",
+    "has_backend",
+    "has_auth",
+    "has_user_data",
+    "has_db"
+   ],
+   "weights": {
+    "product": 3,
+    "features": 3,
+    "ux": 3,
+    "content": 2,
+    "support": 2,
+    "ui": 2,
+    "ai-slop": 2,
+    "responsive": 2,
+    "accessibility": 2,
+    "compatibility": 2,
+    "security": 3,
+    "privacy": 3,
+    "data": 3,
+    "compliance": 2,
+    "reliability": 3,
+    "tests": 3,
+    "code": 2,
+    "performance": 2,
+    "seo": 1,
+    "scalability": 1,
+    "integrations": 2,
+    "payments": 2,
+    "costs": 1,
+    "infra": 2,
+    "deployment": 2,
+    "monitoring": 2,
+    "backups": 3
+   }
+  },
+  "saas": {
+   "label": {
+    "fr": "SaaS payant",
+    "en": "Paid SaaS"
+   },
+   "default_flags": [
+    "has_ui",
+    "has_backend",
+    "has_auth",
+    "has_user_data",
+    "has_db",
+    "has_payments",
+    "has_email",
+    "has_webhooks",
+    "public_web"
+   ],
+   "weights": {
+    "product": 3,
+    "features": 3,
+    "ux": 3,
+    "content": 2,
+    "support": 3,
+    "ui": 2,
+    "ai-slop": 2,
+    "responsive": 2,
+    "accessibility": 2,
+    "compatibility": 2,
+    "security": 3,
+    "privacy": 3,
+    "data": 3,
+    "compliance": 3,
+    "reliability": 3,
+    "tests": 3,
+    "code": 2,
+    "performance": 2,
+    "seo": 2,
+    "scalability": 2,
+    "integrations": 2,
+    "payments": 3,
+    "costs": 2,
+    "infra": 2,
+    "deployment": 3,
+    "monitoring": 3,
+    "backups": 3
+   }
+  },
+  "mobile": {
+   "label": {
+    "fr": "Application mobile",
+    "en": "Mobile app"
+   },
+   "default_flags": [
+    "has_ui",
+    "has_backend",
+    "has_auth",
+    "has_user_data"
+   ],
+   "weights": {
+    "product": 3,
+    "features": 3,
+    "ux": 3,
+    "content": 2,
+    "support": 2,
+    "ui": 3,
+    "ai-slop": 2,
+    "responsive": 2,
+    "accessibility": 2,
+    "compatibility": 3,
+    "security": 3,
+    "privacy": 3,
+    "data": 2,
+    "compliance": 2,
+    "reliability": 3,
+    "tests": 3,
+    "code": 2,
+    "performance": 3,
+    "seo": 0,
+    "scalability": 1,
+    "integrations": 2,
+    "payments": 2,
+    "costs": 1,
+    "infra": 1,
+    "deployment": 2,
+    "monitoring": 2,
+    "backups": 2
+   }
+  },
+  "api": {
+   "label": {
+    "fr": "API ou service backend",
+    "en": "API or backend service"
+   },
+   "default_flags": [
+    "has_backend",
+    "has_db"
+   ],
+   "weights": {
+    "product": 2,
+    "features": 3,
+    "ux": 0,
+    "content": 0,
+    "support": 1,
+    "ui": 0,
+    "ai-slop": 0,
+    "responsive": 0,
+    "accessibility": 0,
+    "compatibility": 0,
+    "security": 3,
+    "privacy": 3,
+    "data": 3,
+    "compliance": 2,
+    "reliability": 3,
+    "tests": 3,
+    "code": 3,
+    "performance": 3,
+    "seo": 0,
+    "scalability": 3,
+    "integrations": 2,
+    "payments": 2,
+    "costs": 2,
+    "infra": 3,
+    "deployment": 3,
+    "monitoring": 3,
+    "backups": 3
+   }
+  }
+ },
+ "checks": {
+  "placeholder_scan": {
+   "provider": "core",
+   "fr": "Recherche de textes de remplissage et faux contenus",
+   "en": "Search for filler text and fake content"
+  },
+  "slop_wording_scan": {
+   "provider": "core",
+   "fr": "Recherche des formules creuses (liste noire FR/EN)",
+   "en": "Search for hollow wording (FR/EN blacklist)"
+  },
+  "debug_leftovers_scan": {
+   "provider": "core",
+   "fr": "Recherche de logs de débogage, code commenté, fichiers temporaires",
+   "en": "Search for debug logs, commented-out code, temporary files"
+  },
+  "secrets_scan": {
+   "provider": "core",
+   "fr": "gitleaks sur le dépôt et l'historique, recherche de clés dans le build",
+   "en": "gitleaks on repo and history, key search in the build"
+  },
+  "headers_check": {
+   "provider": "core",
+   "fr": "Lecture des headers HTTP de sécurité, compression et cache",
+   "en": "Read HTTP security, compression and caching headers"
+  },
+  "cookie_scan": {
+   "provider": "core",
+   "fr": "Cookies et requêtes tierces avant consentement (Playwright)",
+   "en": "Cookies and third-party requests before consent (Playwright)"
+  },
+  "seo_scan": {
+   "provider": "core",
+   "fr": "Exploration : titres, descriptions, canoniques, OpenGraph, robots, sitemap",
+   "en": "Crawl: titles, descriptions, canonicals, OpenGraph, robots, sitemap"
+  },
+  "axe": {
+   "provider": "core",
+   "fr": "axe-core via Playwright sur les pages principales",
+   "en": "axe-core via Playwright on main pages"
+  },
+  "contrast_check": {
+   "provider": "core",
+   "fr": "Contrastes des tokens et des pages rendues",
+   "en": "Contrast of tokens and rendered pages"
+  },
+  "viewport_screenshots": {
+   "provider": "core",
+   "fr": "Captures et débordements à 360, 390, 768, 1024, 1440 px",
+   "en": "Screenshots and overflow at 360, 390, 768, 1024, 1440 px"
+  },
+  "console_check": {
+   "provider": "core",
+   "fr": "Erreurs et avertissements console (Playwright)",
+   "en": "Console errors and warnings (Playwright)"
+  },
+  "email_auth_check": {
+   "provider": "core",
+   "fr": "Enregistrements SPF, DKIM, DMARC",
+   "en": "SPF, DKIM, DMARC records"
+  },
+  "port_scan": {
+   "provider": "core",
+   "fr": "Ports ouverts vus de l'extérieur",
+   "en": "Open ports seen from outside"
+  },
+  "spellcheck": {
+   "provider": "core",
+   "fr": "Correcteur orthographique sur les textes et traductions",
+   "en": "Spell checker on copy and translations"
+  },
+  "typecheck": {
+   "provider": "stack",
+   "fr": "Vérification des types et build",
+   "en": "Type check and build"
+  },
+  "lint": {
+   "provider": "stack",
+   "fr": "Linter du projet",
+   "en": "Project linter"
+  },
+  "test_run": {
+   "provider": "stack",
+   "fr": "Suite de tests",
+   "en": "Test suite"
+  },
+  "e2e": {
+   "provider": "stack",
+   "fr": "Tests de bout en bout",
+   "en": "End-to-end tests"
+  },
+  "e2e_cross_browser": {
+   "provider": "stack",
+   "fr": "Tests de bout en bout sur Chromium, Firefox, WebKit",
+   "en": "End-to-end tests on Chromium, Firefox, WebKit"
+  },
+  "deps_audit": {
+   "provider": "stack",
+   "fr": "Audit de vulnérabilités des dépendances",
+   "en": "Dependency vulnerability audit"
+  },
+  "license_check": {
+   "provider": "stack",
+   "fr": "Licences des dépendances",
+   "en": "Dependency licences"
+  },
+  "bundle_size": {
+   "provider": "stack",
+   "fr": "Taille du JavaScript envoyé au client",
+   "en": "Size of JavaScript shipped to the client"
+  },
+  "lighthouse": {
+   "provider": "stack",
+   "fr": "Lighthouse mobile sur les pages principales",
+   "en": "Lighthouse mobile on main pages"
+  },
+  "design_token_scan": {
+   "provider": "stack",
+   "fr": "Valeurs en dur au lieu des tokens",
+   "en": "Hard-coded values instead of tokens"
+  },
+  "load_test": {
+   "provider": "stack",
+   "fr": "Test de charge sur les routes principales",
+   "en": "Load test on main routes"
+  }
+ },
+ "slop_words": {
+  "fr": [
+   "révolutionn(aire|e|er)",
+   "sans (effort|friction|couture)",
+   "libére[rz]? (tout )?votre potentiel",
+   "plonge[rz]? (au cœur|dans l'univers)",
+   "au cœur de (votre|notre|l')",
+   "fluide et intuiti(f|ve)",
+   "(une )?expérience (unique|inégalée|sans pareille|inoubliable)",
+   "à portée de (main|clic)",
+   "boost(ez|er) votre",
+   "propuls(ez|er) votre",
+   "transform(ez|er) (votre|la façon)",
+   "(élev|sublim)(ez|er) votre",
+   "dans un monde en constante évolution",
+   "à l'ère (du numérique|de l'ia|digitale)",
+   "solution(s)? (innovante|clé en main|tout-en-un) (pour|qui)",
+   "nous sommes (fiers|ravis) de",
+   "n'attendez plus",
+   "rejoignez (des milliers|la communauté)",
+   "conçu(e)? (avec soin|pour vous)",
+   "le (meilleur|futur) de",
+   "game[- ]?changer",
+   "next[- ]level",
+   "de pointe",
+   "il est important de noter que",
+   "en somme,"
+  ],
+  "en": [
+   "revolutioni[sz]e",
+   "seamless(ly)?",
+   "effortless(ly)?",
+   "unlock (your|the) (full )?potential",
+   "dive (into|deep)",
+   "delve",
+   "elevate your",
+   "supercharge",
+   "empower(s|ing)? (you|your|teams)",
+   "game[- ]?changer",
+   "next[- ]level",
+   "cutting[- ]edge",
+   "state[- ]of[- ]the[- ]art",
+   "in today's (fast[- ]paced|digital) world",
+   "ever[- ]evolving",
+   "(a |an )?(unparalleled|unmatched|unforgettable) experience",
+   "at your fingertips",
+   "take (it|your \\w+) to the next level",
+   "look no further",
+   "we('re| are) (thrilled|excited|proud) to",
+   "join (thousands|the community)",
+   "crafted (with care|for you)",
+   "harness the power",
+   "it's (important|worth) (to note|noting)",
+   "robust and scalable",
+   "tapestry",
+   "testament to"
+  ]
+ },
+ "groups": [
+  {
+   "group": "product-experience",
+   "label": {
+    "fr": "Produit et expérience",
+    "en": "Product and experience"
+   },
+   "domains": [
+    {
+     "id": "product",
+     "code": "PRD",
+     "label": {
+      "fr": "Produit",
+      "en": "Product"
+     },
+     "summary": {
+      "fr": "Utilité et promesse : à qui sert le projet, quel problème il règle, ce qu'il promet.",
+      "en": "Usefulness and promise: who the project serves, what problem it solves, what it promises."
+     },
+     "build": [
+      {
+       "fr": "Écrire la promesse en une phrase (pour qui, quel problème, quel résultat) avant toute ligne de code, dans .quality/project.json.",
+       "en": "Write the promise in one sentence (for whom, which problem, which outcome) before any code, in .quality/project.json."
+      },
+      {
+       "fr": "Lister ce que le projet ne fera pas (hors périmètre) pour éviter les fonctionnalités inutiles.",
+       "en": "List what the project will not do (out of scope) to avoid useless features."
+      },
+      {
+       "fr": "Chaque fonctionnalité doit servir la promesse ; sinon, elle sort du périmètre.",
+       "en": "Every feature must serve the promise; otherwise it leaves the scope."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "PRD-01",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "La promesse est écrite en une phrase et à jour",
+        "en": "The promise is written in one sentence and up to date"
+       },
+       "verify": {
+        "fr": "Présence et cohérence de la promesse dans .quality/project.json.",
+        "en": "Promise present and consistent in .quality/project.json."
+       }
+      },
+      {
+       "id": "PRD-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_ui"
+       ],
+       "label": {
+        "fr": "La première vue dit ce que fait le produit et pour qui, sans jargon",
+        "en": "The first screen says what the product does and for whom, without jargon"
+       },
+       "verify": {
+        "fr": "Lire l'accueil ou l'écran d'entrée : un inconnu comprend-il en 5 secondes ?",
+        "en": "Read the home or entry screen: would a stranger get it in 5 seconds?"
+       }
+      },
+      {
+       "id": "PRD-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_ui"
+       ],
+       "label": {
+        "fr": "L'action principale est évidente et accessible dès l'arrivée",
+        "en": "The main action is obvious and reachable on arrival"
+       },
+       "verify": {
+        "fr": "Un appel à l'action principal unique et visible sur l'écran d'entrée.",
+        "en": "One visible primary call to action on the entry screen."
+       }
+      },
+      {
+       "id": "PRD-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les fonctionnalités présentes servent toutes la promesse",
+        "en": "Every shipped feature serves the promise"
+       },
+       "verify": {
+        "fr": "Comparer la liste des fonctionnalités avec la promesse et le hors-périmètre.",
+        "en": "Compare the feature list with the promise and the out-of-scope list."
+       }
+      },
+      {
+       "id": "PRD-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Un indicateur de succès est défini et mesurable",
+        "en": "A success metric is defined and measurable"
+       },
+       "verify": {
+        "fr": "Un indicateur (inscriptions, parties jouées, ventes…) et sa source de mesure.",
+        "en": "One metric (sign-ups, games played, sales…) and where it is measured."
+       }
+      }
+     ]
+    },
+    {
+     "id": "features",
+     "code": "FEA",
+     "label": {
+      "fr": "Fonctionnalités",
+      "en": "Features"
+     },
+     "summary": {
+      "fr": "Fonctionnement complet : chaque fonctionnalité annoncée marche de bout en bout.",
+      "en": "Complete behaviour: every announced feature works end to end."
+     },
+     "build": [
+      {
+       "fr": "Écrire une spec courte par fonctionnalité avec ses critères d'acceptation avant de coder.",
+       "en": "Write a short spec per feature with acceptance criteria before coding."
+      },
+      {
+       "fr": "Une fonctionnalité n'est terminée que lorsque son parcours complet a été exécuté, pas seulement compilé.",
+       "en": "A feature is done only when its full flow has been run, not just compiled."
+      },
+      {
+       "fr": "Pas de bouton, lien ou menu qui mène à une fonctionnalité absente.",
+       "en": "No button, link or menu leading to a missing feature."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "FEA-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Aucun parcours principal n'est cassé",
+        "en": "No main flow is broken"
+       },
+       "verify": {
+        "fr": "Exécuter chaque parcours principal (navigateur ou tests e2e) jusqu'au résultat attendu.",
+        "en": "Run each main flow (browser or e2e tests) to its expected result."
+       }
+      },
+      {
+       "id": "FEA-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Aucun lien mort, bouton inactif ou page « bientôt disponible » visible",
+        "en": "No dead link, inert button or visible 'coming soon' page"
+       },
+       "verify": {
+        "fr": "Parcourir l'interface et chercher les href vides, onClick vides, TODO visibles.",
+        "en": "Browse the UI and search for empty hrefs, empty onClick handlers, visible TODOs."
+       }
+      },
+      {
+       "id": "FEA-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Chaque fonctionnalité a des critères d'acceptation écrits et respectés",
+        "en": "Every feature has written acceptance criteria that are met"
+       },
+       "verify": {
+        "fr": "Specs présentes (docs/specs ou tickets) et vérifiées.",
+        "en": "Specs present (docs/specs or tickets) and checked."
+       }
+      },
+      {
+       "id": "FEA-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Pas de code mort ni de fonctionnalité à moitié branchée",
+        "en": "No dead code or half-wired feature"
+       },
+       "verify": {
+        "fr": "Recherche d'exports inutilisés, routes orphelines, feature flags oubliés.",
+        "en": "Search for unused exports, orphan routes, forgotten feature flags."
+       }
+      }
+     ]
+    },
+    {
+     "id": "ux",
+     "code": "UX",
+     "label": {
+      "fr": "UX",
+      "en": "UX"
+     },
+     "summary": {
+      "fr": "Parcours fluides, états vides et erreurs explicites.",
+      "en": "Smooth flows, explicit empty states and errors."
+     },
+     "applies_if": [
+      "has_ui"
+     ],
+     "build": [
+      {
+       "fr": "Chaque écran qui affiche des données prévoit 4 états : chargement, vide, erreur, rempli.",
+       "en": "Every screen that shows data has 4 states: loading, empty, error, filled."
+      },
+      {
+       "fr": "Un état vide explique la situation et propose l'action suivante.",
+       "en": "An empty state explains the situation and offers the next action."
+      },
+      {
+       "fr": "Un message d'erreur dit ce qui s'est passé et comment s'en sortir, sans code technique brut.",
+       "en": "An error message says what happened and how to recover, without raw technical codes."
+      },
+      {
+       "fr": "Toute action de plus d'une seconde montre un retour visuel ; toute action destructive demande confirmation ou permet d'annuler.",
+       "en": "Any action over one second shows feedback; any destructive action asks for confirmation or can be undone."
+      },
+      {
+       "fr": "Les formulaires gardent la saisie en cas d'erreur et affichent l'erreur à côté du champ.",
+       "en": "Forms keep the input on error and show the error next to the field."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "UX-01",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Chaque écran de données gère chargement, vide, erreur et rempli",
+        "en": "Every data screen handles loading, empty, error and filled"
+       },
+       "verify": {
+        "fr": "Lire chaque composant qui charge des données ; simuler liste vide et API en erreur.",
+        "en": "Read each data-loading component; simulate an empty list and a failing API."
+       }
+      },
+      {
+       "id": "UX-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les erreurs sont explicites et proposent une sortie",
+        "en": "Errors are explicit and offer a way out"
+       },
+       "verify": {
+        "fr": "Aucun « Une erreur est survenue » seul, aucun message technique brut affiché.",
+        "en": "No bare 'Something went wrong', no raw technical message shown."
+       }
+      },
+      {
+       "id": "UX-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les actions destructives sont confirmées ou annulables",
+        "en": "Destructive actions are confirmed or undoable"
+       },
+       "verify": {
+        "fr": "Suppression, résiliation, réinitialisation : confirmation ou annulation possible.",
+        "en": "Delete, cancel, reset: confirmation or undo available."
+       }
+      },
+      {
+       "id": "UX-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les formulaires valident en ligne et conservent la saisie",
+        "en": "Forms validate inline and keep the input"
+       },
+       "verify": {
+        "fr": "Soumettre un formulaire invalide : erreurs près des champs, saisie conservée.",
+        "en": "Submit an invalid form: errors next to fields, input kept."
+       }
+      },
+      {
+       "id": "UX-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Retour visuel sur toute action de plus d'une seconde",
+        "en": "Visual feedback on any action over one second"
+       },
+       "verify": {
+        "fr": "Boutons en état de chargement, désactivés pendant l'envoi (pas de double soumission).",
+        "en": "Buttons show loading and are disabled while sending (no double submit)."
+       }
+      },
+      {
+       "id": "UX-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Navigation prévisible : retour arrière, liens profonds, page 404 utile",
+        "en": "Predictable navigation: back button, deep links, helpful 404"
+       },
+       "verify": {
+        "fr": "Tester le bouton retour, ouvrir une URL interne directement, visiter une URL inexistante.",
+        "en": "Test the back button, open an inner URL directly, visit a missing URL."
+       }
+      }
+     ]
+    },
+    {
+     "id": "content",
+     "code": "CNT",
+     "label": {
+      "fr": "Contenu",
+      "en": "Content"
+     },
+     "summary": {
+      "fr": "Clarté, exactitude et orthographe des textes.",
+      "en": "Clarity, accuracy and spelling of the text."
+     },
+     "applies_if": [
+      "has_ui"
+     ],
+     "build": [
+      {
+       "fr": "Écrire des phrases courtes, concrètes, au vocabulaire de l'utilisateur, pas à celui du code.",
+       "en": "Write short, concrete sentences in the user's vocabulary, not the code's."
+      },
+      {
+       "fr": "Aucun texte de remplissage (lorem ipsum, « Votre titre ici ») ni chiffre inventé en production.",
+       "en": "No filler text (lorem ipsum, 'Your title here') or invented figures in production."
+      },
+      {
+       "fr": "Un seul ton et une seule façon de nommer chaque chose dans tout le projet.",
+       "en": "One tone and one name for each thing across the whole project."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "CNT-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "placeholder_scan"
+       },
+       "label": {
+        "fr": "Aucun texte de remplissage ou faux contenu en production",
+        "en": "No filler text or fake content in production"
+       },
+       "verify": {
+        "fr": "Rechercher lorem ipsum, TODO, « placeholder », faux témoignages, chiffres non sourcés.",
+        "en": "Search for lorem ipsum, TODO, 'placeholder', fake testimonials, unsourced figures."
+       }
+      },
+      {
+       "id": "CNT-02",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "spellcheck"
+       },
+       "label": {
+        "fr": "Orthographe et grammaire correctes dans chaque langue",
+        "en": "Correct spelling and grammar in every language"
+       },
+       "verify": {
+        "fr": "Correcteur orthographique sur les textes et fichiers de traduction.",
+        "en": "Spell checker on copy and translation files."
+       }
+      },
+      {
+       "id": "CNT-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les informations affichées sont exactes (prix, délais, caractéristiques)",
+        "en": "Displayed information is accurate (prices, delays, features)"
+       },
+       "verify": {
+        "fr": "Comparer les affirmations du site avec le comportement réel et la configuration.",
+        "en": "Compare the site's claims with actual behaviour and configuration."
+       }
+      },
+      {
+       "id": "CNT-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Terminologie et ton cohérents partout",
+        "en": "Consistent terminology and tone everywhere"
+       },
+       "verify": {
+        "fr": "Même mot pour la même chose, tutoiement ou vouvoiement constant.",
+        "en": "Same word for the same thing, consistent level of formality."
+       }
+      },
+      {
+       "id": "CNT-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "multilingual"
+       ],
+       "label": {
+        "fr": "Aucune clé de traduction manquante ou texte non traduit",
+        "en": "No missing translation key or untranslated text"
+       },
+       "verify": {
+        "fr": "Comparer les fichiers de langue ; chercher les textes en dur dans les composants.",
+        "en": "Diff locale files; search for hard-coded strings in components."
+       }
+      }
+     ]
+    },
+    {
+     "id": "support",
+     "code": "SUP",
+     "label": {
+      "fr": "Support",
+      "en": "Support"
+     },
+     "summary": {
+      "fr": "Aide et résolution des problèmes pour les utilisateurs.",
+      "en": "Help and problem resolution for users."
+     },
+     "build": [
+      {
+       "fr": "Prévoir un moyen de contact visible et un délai de réponse annoncé.",
+       "en": "Provide a visible contact channel and a stated response time."
+      },
+      {
+       "fr": "Les messages d'erreur importants donnent un identifiant que l'utilisateur peut transmettre au support.",
+       "en": "Important error messages give an ID the user can send to support."
+      },
+      {
+       "fr": "Écrire une FAQ ou une aide à partir des questions réellement posées.",
+       "en": "Write an FAQ or help page from questions actually asked."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "SUP-01",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Un moyen de contact est visible depuis toutes les pages",
+        "en": "A contact channel is reachable from every page"
+       },
+       "verify": {
+        "fr": "Lien contact ou aide dans le pied de page ou le menu.",
+        "en": "Contact or help link in the footer or menu."
+       }
+      },
+      {
+       "id": "SUP-02",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_backend"
+       ],
+       "label": {
+        "fr": "Les erreurs serveur affichent un identifiant de suivi relié aux logs",
+        "en": "Server errors show a reference ID linked to the logs"
+       },
+       "verify": {
+        "fr": "Provoquer une erreur 500 : un identifiant s'affiche et se retrouve dans les logs.",
+        "en": "Trigger a 500: an ID is shown and found in the logs."
+       }
+      },
+      {
+       "id": "SUP-03",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_auth"
+       ],
+       "label": {
+        "fr": "Les problèmes courants ont une solution en libre-service",
+        "en": "Common problems have a self-service fix"
+       },
+       "verify": {
+        "fr": "Mot de passe oublié, renvoi d'email de confirmation, suppression de compte possibles sans contacter le support.",
+        "en": "Password reset, resend confirmation email, account deletion possible without contacting support."
+       }
+      },
+      {
+       "id": "SUP-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Une page d'aide ou FAQ couvre les questions fréquentes",
+        "en": "A help page or FAQ covers frequent questions"
+       },
+       "verify": {
+        "fr": "Présence et pertinence de la page d'aide.",
+        "en": "Help page present and relevant."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "design",
+   "label": {
+    "fr": "Design et accessibilité",
+    "en": "Design and accessibility"
+   },
+   "domains": [
+    {
+     "id": "ui",
+     "code": "UI",
+     "label": {
+      "fr": "UI",
+      "en": "UI"
+     },
+     "summary": {
+      "fr": "Cohérence visuelle, alignements et états interactifs.",
+      "en": "Visual consistency, alignment and interactive states."
+     },
+     "applies_if": [
+      "has_ui"
+     ],
+     "build": [
+      {
+       "fr": "Définir les tokens (couleurs, typographie, espacements, rayons, ombres) avant les écrans, et n'utiliser qu'eux.",
+       "en": "Define tokens (colours, type, spacing, radius, shadows) before screens, and use only them."
+      },
+      {
+       "fr": "Une échelle d'espacement unique (ex. 4 ou 8 px) ; aucun espacement arbitraire.",
+       "en": "One spacing scale (e.g. 4 or 8 px); no arbitrary spacing."
+      },
+      {
+       "fr": "Chaque élément interactif a ses états : repos, survol, focus visible, actif, désactivé, chargement.",
+       "en": "Every interactive element has its states: rest, hover, visible focus, active, disabled, loading."
+      },
+      {
+       "fr": "Une seule bibliothèque d'icônes et deux familles de polices au maximum.",
+       "en": "One icon library and at most two font families."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "UI-01",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "design_token_scan"
+       },
+       "label": {
+        "fr": "Couleurs, tailles et espacements passent par les tokens",
+        "en": "Colours, sizes and spacing go through tokens"
+       },
+       "verify": {
+        "fr": "Rechercher les valeurs en dur (hex, px arbitraires, classes Tailwind arbitraires) dans les composants.",
+        "en": "Search for hard-coded values (hex, arbitrary px, arbitrary Tailwind classes) in components."
+       }
+      },
+      {
+       "id": "UI-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Tous les éléments interactifs ont survol, focus visible, actif et désactivé",
+        "en": "All interactive elements have hover, visible focus, active and disabled"
+       },
+       "verify": {
+        "fr": "Parcourir au clavier et à la souris les boutons, liens, champs.",
+        "en": "Go through buttons, links and fields with keyboard and mouse."
+       }
+      },
+      {
+       "id": "UI-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Alignements et grille cohérents, aucun élément qui déborde",
+        "en": "Consistent alignment and grid, nothing overflowing"
+       },
+       "verify": {
+        "fr": "Captures d'écran : bords gauche et droit égaux, pas de texte coupé ni de débordement horizontal.",
+        "en": "Screenshots: equal left and right edges, no clipped text, no horizontal overflow."
+       }
+      },
+      {
+       "id": "UI-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Hiérarchie typographique claire et limitée",
+        "en": "Clear and limited type hierarchy"
+       },
+       "verify": {
+        "fr": "Au plus 2 familles de polices et une échelle de tailles définie.",
+        "en": "At most 2 font families and a defined size scale."
+       }
+      },
+      {
+       "id": "UI-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Composants réutilisés plutôt que dupliqués avec des variations",
+        "en": "Components reused rather than duplicated with variations"
+       },
+       "verify": {
+        "fr": "Rechercher les boutons, cartes, modales réimplémentés plusieurs fois.",
+        "en": "Search for buttons, cards, modals implemented several times."
+       }
+      },
+      {
+       "id": "UI-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "dark_mode"
+       ],
+       "label": {
+        "fr": "Le mode sombre est complet et lisible",
+        "en": "Dark mode is complete and readable"
+       },
+       "verify": {
+        "fr": "Aucun composant resté clair, contrastes vérifiés dans les deux thèmes.",
+        "en": "No component left light, contrast checked in both themes."
+       }
+      }
+     ]
+    },
+    {
+     "id": "ai-slop",
+     "code": "SLP",
+     "label": {
+      "fr": "AI slop",
+      "en": "AI slop"
+     },
+     "summary": {
+      "fr": "Suppression du contenu générique, du jargon robotique et des visuels inutiles.",
+      "en": "Removal of generic content, robotic jargon and useless visuals."
+     },
+     "applies_if": [
+      "has_ui"
+     ],
+     "build": [
+      {
+       "fr": "Choisir une direction visuelle propre au projet au /kickoff (références, ambiance, contraintes), jamais un style par défaut.",
+       "en": "Pick a project-specific visual direction at /kickoff (references, mood, constraints), never a default style."
+      },
+      {
+       "fr": "Pas de dégradé violet par défaut, de cartes en verre partout, d'emoji comme icônes, de sections « Pourquoi nous choisir » à trois colonnes génériques.",
+       "en": "No default purple gradient, glass cards everywhere, emoji as icons, generic three-column 'Why choose us' sections."
+      },
+      {
+       "fr": "Bannir le vocabulaire creux : « révolutionnaire », « sans effort », « libérez votre potentiel », « plongez dans », « au cœur de », « fluide et intuitif ».",
+       "en": "Ban hollow wording: 'revolutionary', 'effortless', 'unlock your potential', 'dive into', 'seamless', 'elevate'."
+      },
+      {
+       "fr": "Chaque visuel montre le vrai produit, un vrai lieu ou une vraie donnée ; sinon, il est retiré.",
+       "en": "Every visual shows the real product, a real place or real data; otherwise it is removed."
+      },
+      {
+       "fr": "Les animations servent la compréhension ou le retour d'action, jamais la décoration seule.",
+       "en": "Animations serve understanding or feedback, never decoration alone."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "SLP-01",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "slop_wording_scan"
+       },
+       "label": {
+        "fr": "Aucune formule creuse ou jargon d'IA dans les textes",
+        "en": "No hollow phrase or AI jargon in the copy"
+       },
+       "verify": {
+        "fr": "Scanner les textes avec la liste noire FR/EN du pack ; relire les titres et accroches.",
+        "en": "Scan the copy with the pack's FR/EN blacklist; reread headings and taglines."
+       }
+      },
+      {
+       "id": "SLP-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "La direction visuelle est propre au projet et documentée",
+        "en": "The visual direction is project-specific and documented"
+       },
+       "verify": {
+        "fr": "DESIGN.md décrit les choix et ils se retrouvent à l'écran ; comparer avec les gabarits par défaut (shadcn brut, dégradé violet, verre).",
+        "en": "DESIGN.md states the choices and they show on screen; compare with default templates (raw shadcn, purple gradient, glass)."
+       }
+      },
+      {
+       "id": "SLP-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Aucun visuel décoratif sans information (illustrations génériques, blobs, icônes au hasard)",
+        "en": "No decorative visual without information (generic illustrations, blobs, random icons)"
+       },
+       "verify": {
+        "fr": "Pour chaque image ou illustration : que montre-t-elle de réel ?",
+        "en": "For each image or illustration: what real thing does it show?"
+       }
+      },
+      {
+       "id": "SLP-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les sections répondent à une question de l'utilisateur, pas à un gabarit",
+        "en": "Sections answer a user question, not a template"
+       },
+       "verify": {
+        "fr": "Chercher les blocs génériques : témoignages inventés, « Nos valeurs », grilles de 3 avantages vagues.",
+        "en": "Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits."
+       }
+      },
+      {
+       "id": "SLP-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les animations sont utiles, discrètes et respectent prefers-reduced-motion",
+        "en": "Animations are useful, subtle and respect prefers-reduced-motion"
+       },
+       "verify": {
+        "fr": "Lister les animations et leur rôle ; tester avec réduction des animations activée.",
+        "en": "List animations and their purpose; test with reduced motion enabled."
+       }
+      }
+     ]
+    },
+    {
+     "id": "responsive",
+     "code": "RSP",
+     "label": {
+      "fr": "Responsive",
+      "en": "Responsive"
+     },
+     "summary": {
+      "fr": "Adaptation mobile, tablette et PC.",
+      "en": "Adaptation to mobile, tablet and desktop."
+     },
+     "applies_if": [
+      "has_ui"
+     ],
+     "build": [
+      {
+       "fr": "Concevoir mobile d'abord, puis élargir ; tester à 360, 390, 768, 1024 et 1440 px.",
+       "en": "Design mobile first, then widen; test at 360, 390, 768, 1024 and 1440 px."
+      },
+      {
+       "fr": "Cibles tactiles d'au moins 44 × 44 px ; aucune fonction accessible uniquement au survol.",
+       "en": "Touch targets at least 44 × 44 px; no feature available only on hover."
+      },
+      {
+       "fr": "Images servies à la bonne taille (srcset ou composant d'image du framework).",
+       "en": "Images served at the right size (srcset or the framework's image component)."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "RSP-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "viewport_screenshots"
+       },
+       "label": {
+        "fr": "Aucun défilement horizontal ni contenu coupé de 360 à 1440 px",
+        "en": "No horizontal scroll or clipped content from 360 to 1440 px"
+       },
+       "verify": {
+        "fr": "Captures aux 5 largeurs de référence et mesure de scrollWidth.",
+        "en": "Screenshots at the 5 reference widths and scrollWidth check."
+       }
+      },
+      {
+       "id": "RSP-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Cibles tactiles d'au moins 44 × 44 px sur mobile",
+        "en": "Touch targets at least 44 × 44 px on mobile"
+       },
+       "verify": {
+        "fr": "Mesurer boutons, liens d'icône, cases à cocher en vue mobile.",
+        "en": "Measure buttons, icon links, checkboxes in mobile view."
+       }
+      },
+      {
+       "id": "RSP-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Aucune fonction réservée au survol",
+        "en": "No hover-only feature"
+       },
+       "verify": {
+        "fr": "Menus, infobulles et actions accessibles au toucher.",
+        "en": "Menus, tooltips and actions reachable by touch."
+       }
+      },
+      {
+       "id": "RSP-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Mise en page adaptée à chaque format, pas seulement rétrécie",
+        "en": "Layout adapted to each format, not just shrunk"
+       },
+       "verify": {
+        "fr": "Navigation, tableaux et grilles réorganisés sur mobile et tablette.",
+        "en": "Navigation, tables and grids reorganised on mobile and tablet."
+       }
+      },
+      {
+       "id": "RSP-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Zones sûres et clavier virtuel gérés sur mobile",
+        "en": "Safe areas and on-screen keyboard handled on mobile"
+       },
+       "verify": {
+        "fr": "Encoche, barre du bas iOS et champ masqué par le clavier testés.",
+        "en": "Notch, iOS bottom bar and field hidden by keyboard tested."
+       }
+      }
+     ]
+    },
+    {
+     "id": "accessibility",
+     "code": "A11Y",
+     "label": {
+      "fr": "Accessibilité",
+      "en": "Accessibility"
+     },
+     "summary": {
+      "fr": "Contrastes, navigation clavier et lecteurs d'écran (cible WCAG 2.2 AA).",
+      "en": "Contrast, keyboard navigation and screen readers (target WCAG 2.2 AA)."
+     },
+     "applies_if": [
+      "has_ui"
+     ],
+     "build": [
+      {
+       "fr": "HTML sémantique d'abord : button pour une action, a pour un lien, un seul h1, titres dans l'ordre.",
+       "en": "Semantic HTML first: button for actions, a for links, one h1, headings in order."
+      },
+      {
+       "fr": "Contraste d'au moins 4,5:1 pour le texte et 3:1 pour les composants et grands textes.",
+       "en": "Contrast at least 4.5:1 for text and 3:1 for components and large text."
+      },
+      {
+       "fr": "Tout fonctionne au clavier, avec un focus toujours visible et un ordre logique.",
+       "en": "Everything works by keyboard, with always-visible focus and a logical order."
+      },
+      {
+       "fr": "Chaque champ a un label visible ; chaque image utile a un alt ; chaque bouton icône a un nom accessible.",
+       "en": "Every field has a visible label; every meaningful image has alt text; every icon button has an accessible name."
+      },
+      {
+       "fr": "L'information ne passe jamais par la couleur seule.",
+       "en": "Information never relies on colour alone."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "A11Y-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "axe"
+       },
+       "label": {
+        "fr": "Aucune violation axe-core critique ou sérieuse sur les pages principales",
+        "en": "No critical or serious axe-core violation on main pages"
+       },
+       "verify": {
+        "fr": "axe-core (via Playwright) sur chaque page principale.",
+        "en": "axe-core (via Playwright) on each main page."
+       }
+      },
+      {
+       "id": "A11Y-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Parcours principaux réalisables entièrement au clavier, focus visible",
+        "en": "Main flows fully doable by keyboard, visible focus"
+       },
+       "verify": {
+        "fr": "Tab, Maj+Tab, Entrée, Espace, Échap sur chaque parcours ; modales qui piègent et rendent le focus.",
+        "en": "Tab, Shift+Tab, Enter, Space, Esc on each flow; modals trap and restore focus."
+       }
+      },
+      {
+       "id": "A11Y-03",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "contrast_check"
+       },
+       "label": {
+        "fr": "Contrastes conformes (4,5:1 texte, 3:1 composants)",
+        "en": "Compliant contrast (4.5:1 text, 3:1 components)"
+       },
+       "verify": {
+        "fr": "Mesure sur les tokens de couleur et les pages rendues, dans chaque thème.",
+        "en": "Measure on colour tokens and rendered pages, in every theme."
+       }
+      },
+      {
+       "id": "A11Y-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Labels, alternatives textuelles et noms accessibles présents",
+        "en": "Labels, text alternatives and accessible names present"
+       },
+       "verify": {
+        "fr": "Champs sans label, images sans alt, boutons icône sans aria-label.",
+        "en": "Fields without labels, images without alt, icon buttons without aria-label."
+       }
+      },
+      {
+       "id": "A11Y-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Structure lisible par lecteur d'écran (titres, régions, annonces)",
+        "en": "Structure readable by screen reader (headings, landmarks, announcements)"
+       },
+       "verify": {
+        "fr": "Test VoiceOver ou NVDA ; erreurs et notifications annoncées (aria-live).",
+        "en": "VoiceOver or NVDA test; errors and notifications announced (aria-live)."
+       }
+      },
+      {
+       "id": "A11Y-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Zoom à 200 % sans perte de contenu, langue de la page déclarée",
+        "en": "200% zoom without loss of content, page language declared"
+       },
+       "verify": {
+        "fr": "Zoom navigateur à 200 % ; attribut lang sur html.",
+        "en": "Browser zoom at 200%; lang attribute on html."
+       }
+      }
+     ]
+    },
+    {
+     "id": "compatibility",
+     "code": "CMP",
+     "label": {
+      "fr": "Compatibilité",
+      "en": "Compatibility"
+     },
+     "summary": {
+      "fr": "Navigateurs et appareils.",
+      "en": "Browsers and devices."
+     },
+     "applies_if": [
+      "has_ui"
+     ],
+     "build": [
+      {
+       "fr": "Déclarer les navigateurs cibles (browserslist) et s'y tenir pour le CSS et le JavaScript.",
+       "en": "Declare target browsers (browserslist) and stick to them for CSS and JavaScript."
+      },
+      {
+       "fr": "Vérifier la compatibilité d'une API récente avant de l'utiliser, avec repli si besoin.",
+       "en": "Check support for a recent API before using it, with a fallback if needed."
+      },
+      {
+       "fr": "Tester Safari iOS en plus de Chrome : c'est là que la plupart des bugs mobiles apparaissent.",
+       "en": "Test iOS Safari as well as Chrome: most mobile bugs show up there."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "CMP-01",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "e2e_cross_browser"
+       },
+       "label": {
+        "fr": "Parcours principaux testés sur Chromium, Firefox et WebKit",
+        "en": "Main flows tested on Chromium, Firefox and WebKit"
+       },
+       "verify": {
+        "fr": "Tests Playwright sur les trois moteurs.",
+        "en": "Playwright tests on all three engines."
+       }
+      },
+      {
+       "id": "CMP-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Navigateurs cibles déclarés et respectés",
+        "en": "Target browsers declared and respected"
+       },
+       "verify": {
+        "fr": "browserslist présent ; pas d'API non supportée sans repli.",
+        "en": "browserslist present; no unsupported API without fallback."
+       }
+      },
+      {
+       "id": "CMP-03",
+       "severity": "minor",
+       "check": {
+        "method": "manual"
+       },
+       "label": {
+        "fr": "Test sur au moins un vrai iPhone et un vrai Android",
+        "en": "Tested on at least one real iPhone and one real Android device"
+       },
+       "verify": {
+        "fr": "Parcours principal fait à la main sur appareil réel.",
+        "en": "Main flow run by hand on a real device."
+       }
+      },
+      {
+       "id": "CMP-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Fonctionne sans extension et avec bloqueur de publicité",
+        "en": "Works without extensions and with an ad blocker"
+       },
+       "verify": {
+        "fr": "Les scripts tiers bloqués ne cassent pas l'application.",
+        "en": "Blocked third-party scripts do not break the app."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "security-data",
+   "label": {
+    "fr": "Sécurité et données",
+    "en": "Security and data"
+   },
+   "domains": [
+    {
+     "id": "security",
+     "code": "SEC",
+     "label": {
+      "fr": "Sécurité",
+      "en": "Security"
+     },
+     "summary": {
+      "fr": "Protection des secrets, validation des entrées, permissions, limitation des requêtes et headers sécurisés.",
+      "en": "Secret protection, input validation, permissions, rate limiting and security headers."
+     },
+     "build": [
+      {
+       "fr": "Aucun secret dans le code, le dépôt Git ou le bundle client ; variables d'environnement côté serveur uniquement.",
+       "en": "No secret in the code, the Git repo or the client bundle; server-side environment variables only."
+      },
+      {
+       "fr": "Valider toute entrée externe côté serveur avec un schéma (Zod, Valibot…) : corps, paramètres, query, headers, webhooks, fichiers.",
+       "en": "Validate every external input server-side with a schema (Zod, Valibot…): body, params, query, headers, webhooks, files."
+      },
+      {
+       "fr": "Vérifier l'autorisation à chaque requête, côté serveur, sur la ressource demandée (pas seulement la connexion).",
+       "en": "Check authorisation on every request, server-side, on the requested resource (not just login)."
+      },
+      {
+       "fr": "Limiter le débit sur la connexion, l'inscription, la réinitialisation de mot de passe, les formulaires et les routes coûteuses.",
+       "en": "Rate-limit login, sign-up, password reset, forms and expensive routes."
+      },
+      {
+       "fr": "Requêtes base de données paramétrées ou ORM ; jamais de concaténation de chaînes.",
+       "en": "Parameterised database queries or ORM; never string concatenation."
+      },
+      {
+       "fr": "Headers : CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.",
+       "en": "Headers: CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "SEC-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "secrets_scan"
+       },
+       "label": {
+        "fr": "Aucun secret dans le dépôt, l'historique Git ou le bundle client",
+        "en": "No secret in the repo, Git history or client bundle"
+       },
+       "verify": {
+        "fr": "gitleaks sur l'historique ; recherche de clés dans le build client ; .env ignoré par Git.",
+        "en": "gitleaks on history; search for keys in the client build; .env ignored by Git."
+       }
+      },
+      {
+       "id": "SEC-02",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_backend"
+       ],
+       "label": {
+        "fr": "Toute entrée externe est validée côté serveur par un schéma",
+        "en": "Every external input is validated server-side with a schema"
+       },
+       "verify": {
+        "fr": "Lire chaque route, action serveur, handler de webhook et upload.",
+        "en": "Read every route, server action, webhook handler and upload."
+       }
+      },
+      {
+       "id": "SEC-03",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_auth"
+       ],
+       "label": {
+        "fr": "Autorisation vérifiée côté serveur sur chaque ressource (pas d'IDOR)",
+        "en": "Authorisation checked server-side on every resource (no IDOR)"
+       },
+       "verify": {
+        "fr": "Pour chaque route protégée : l'utilisateur peut-il lire ou modifier la ressource d'un autre en changeant l'identifiant ?",
+        "en": "For each protected route: can a user read or change another user's resource by changing the ID?"
+       }
+      },
+      {
+       "id": "SEC-04",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "deps_audit"
+       },
+       "label": {
+        "fr": "Aucune dépendance avec une vulnérabilité critique ou haute connue",
+        "en": "No dependency with a known critical or high vulnerability"
+       },
+       "verify": {
+        "fr": "npm audit, pnpm audit ou osv-scanner.",
+        "en": "npm audit, pnpm audit or osv-scanner."
+       }
+      },
+      {
+       "id": "SEC-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_backend"
+       ],
+       "label": {
+        "fr": "Limitation de débit sur les routes sensibles et coûteuses",
+        "en": "Rate limiting on sensitive and expensive routes"
+       },
+       "verify": {
+        "fr": "Connexion, inscription, mot de passe oublié, formulaires, appels à des API payantes.",
+        "en": "Login, sign-up, password reset, forms, calls to paid APIs."
+       }
+      },
+      {
+       "id": "SEC-06",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "headers_check"
+       },
+       "label": {
+        "fr": "Headers de sécurité présents et CSP sans unsafe-inline inutile",
+        "en": "Security headers present and CSP without needless unsafe-inline"
+       },
+       "verify": {
+        "fr": "Requête sur la production ou la préproduction ; vérification de chaque header.",
+        "en": "Request against production or staging; check every header."
+       }
+      },
+      {
+       "id": "SEC-07",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_auth"
+       ],
+       "label": {
+        "fr": "Sessions et mots de passe gérés correctement",
+        "en": "Sessions and passwords handled correctly"
+       },
+       "verify": {
+        "fr": "Cookies HttpOnly, Secure, SameSite ; hachage argon2 ou bcrypt ; invalidation à la déconnexion ; protection CSRF.",
+        "en": "HttpOnly, Secure, SameSite cookies; argon2 or bcrypt hashing; invalidation on logout; CSRF protection."
+       }
+      },
+      {
+       "id": "SEC-08",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Pas d'injection : requêtes paramétrées, HTML échappé, pas d'exécution de commande avec une entrée utilisateur",
+        "en": "No injection: parameterised queries, escaped HTML, no command execution with user input"
+       },
+       "verify": {
+        "fr": "Rechercher $queryRaw, dangerouslySetInnerHTML, eval, exec, child_process avec entrée externe.",
+        "en": "Search for $queryRaw, dangerouslySetInnerHTML, eval, exec, child_process with external input."
+       }
+      },
+      {
+       "id": "SEC-09",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_uploads"
+       ],
+       "label": {
+        "fr": "Uploads limités en type et en taille, stockés hors de la racine exécutable",
+        "en": "Uploads restricted in type and size, stored outside the executable root"
+       },
+       "verify": {
+        "fr": "Vérification du type réel, taille maximale, nom de fichier régénéré.",
+        "en": "Real type check, maximum size, regenerated file name."
+       }
+      },
+      {
+       "id": "SEC-10",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les erreurs ne révèlent pas de détails internes",
+        "en": "Errors do not leak internal details"
+       },
+       "verify": {
+        "fr": "Pas de stack trace, requête SQL ou chemin serveur dans les réponses en production.",
+        "en": "No stack trace, SQL query or server path in production responses."
+       }
+      },
+      {
+       "id": "SEC-11",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Audit de sécurité approfondi réalisé à chaque version majeure",
+        "en": "In-depth security audit run at every major release"
+       },
+       "verify": {
+        "fr": "Rapport du skill security-audit (Cloudflare) daté et suivi.",
+        "en": "Dated and tracked report from the security-audit skill (Cloudflare)."
+       }
+      }
+     ]
+    },
+    {
+     "id": "privacy",
+     "code": "PRV",
+     "label": {
+      "fr": "Confidentialité",
+      "en": "Privacy"
+     },
+     "summary": {
+      "fr": "Collecte et gestion des données personnelles (RGPD).",
+      "en": "Collection and handling of personal data (GDPR)."
+     },
+     "applies_if": [
+      "has_user_data"
+     ],
+     "build": [
+      {
+       "fr": "Ne collecter que les données nécessaires à la promesse ; chaque champ demandé a une raison.",
+       "en": "Collect only the data the promise needs; every requested field has a reason."
+      },
+      {
+       "fr": "Tenir à jour la liste des données, leur finalité, leur durée de conservation et les sous-traitants.",
+       "en": "Keep an up-to-date list of data, purpose, retention period and processors."
+      },
+      {
+       "fr": "Aucun cookie ou traceur non essentiel avant consentement ; refuser aussi simple qu'accepter.",
+       "en": "No non-essential cookie or tracker before consent; refusing as easy as accepting."
+      },
+      {
+       "fr": "Permettre à l'utilisateur d'exporter et de supprimer ses données.",
+       "en": "Let users export and delete their data."
+      },
+      {
+       "fr": "Ne jamais écrire de données personnelles dans les logs.",
+       "en": "Never write personal data into logs."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "PRV-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "cookie_scan"
+       },
+       "label": {
+        "fr": "Aucun traceur non essentiel déposé avant consentement",
+        "en": "No non-essential tracker set before consent"
+       },
+       "verify": {
+        "fr": "Charger la page sans consentir : lister cookies, localStorage et requêtes vers des tiers.",
+        "en": "Load the page without consenting: list cookies, localStorage and third-party requests."
+       }
+      },
+      {
+       "id": "PRV-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Politique de confidentialité exacte et accessible",
+        "en": "Accurate and accessible privacy policy"
+       },
+       "verify": {
+        "fr": "Elle correspond aux données réellement collectées et aux sous-traitants réellement utilisés.",
+        "en": "It matches the data actually collected and the processors actually used."
+       }
+      },
+      {
+       "id": "PRV-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Collecte minimale : aucun champ ou traceur sans finalité",
+        "en": "Minimal collection: no field or tracker without a purpose"
+       },
+       "verify": {
+        "fr": "Comparer formulaires et modèles de données avec le registre des traitements.",
+        "en": "Compare forms and data models with the processing register."
+       }
+      },
+      {
+       "id": "PRV-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_auth"
+       ],
+       "label": {
+        "fr": "Suppression et export des données possibles par l'utilisateur",
+        "en": "Users can delete and export their data"
+       },
+       "verify": {
+        "fr": "Fonction de suppression de compte qui efface réellement (ou anonymise) les données liées.",
+        "en": "Account deletion that really erases (or anonymises) the linked data."
+       }
+      },
+      {
+       "id": "PRV-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Aucune donnée personnelle dans les logs ni les outils d'erreur",
+        "en": "No personal data in logs or error tools"
+       },
+       "verify": {
+        "fr": "Lire les appels de log et la configuration Sentry ou équivalent (masquage).",
+        "en": "Read log calls and Sentry or equivalent config (scrubbing)."
+       }
+      },
+      {
+       "id": "PRV-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Durées de conservation définies et appliquées",
+        "en": "Retention periods defined and enforced"
+       },
+       "verify": {
+        "fr": "Tâche de purge ou règle documentée pour les comptes inactifs, logs, sauvegardes.",
+        "en": "Purge job or documented rule for inactive accounts, logs, backups."
+       }
+      }
+     ]
+    },
+    {
+     "id": "data",
+     "code": "DAT",
+     "label": {
+      "fr": "Données",
+      "en": "Data"
+     },
+     "summary": {
+      "fr": "Intégrité et cohérence des données.",
+      "en": "Data integrity and consistency."
+     },
+     "applies_if": [
+      "has_db"
+     ],
+     "build": [
+      {
+       "fr": "Les règles métier essentielles vivent aussi dans la base : clés étrangères, NOT NULL, contraintes d'unicité, CHECK.",
+       "en": "Essential business rules also live in the database: foreign keys, NOT NULL, unique constraints, CHECK."
+      },
+      {
+       "fr": "Toute modification de schéma passe par une migration versionnée, relue et testée sur une copie.",
+       "en": "Every schema change goes through a versioned migration, reviewed and tested on a copy."
+      },
+      {
+       "fr": "Les opérations qui modifient plusieurs tables tournent dans une transaction.",
+       "en": "Operations that change several tables run in a transaction."
+      },
+      {
+       "fr": "Dates en UTC en base, montants en entiers (centimes) ou décimaux, jamais en flottants.",
+       "en": "Dates in UTC in the database, amounts as integers (cents) or decimals, never floats."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "DAT-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les migrations sont versionnées et la base correspond au schéma",
+        "en": "Migrations are versioned and the database matches the schema"
+       },
+       "verify": {
+        "fr": "prisma migrate status (ou équivalent) sans dérive ; pas de modification manuelle en production.",
+        "en": "prisma migrate status (or equivalent) shows no drift; no manual changes in production."
+       }
+      },
+      {
+       "id": "DAT-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Contraintes d'intégrité en base (clés étrangères, unicité, NOT NULL)",
+        "en": "Integrity constraints in the database (foreign keys, unique, NOT NULL)"
+       },
+       "verify": {
+        "fr": "Lire le schéma : relations déclarées, champs obligatoires non nullables, unicités métier.",
+        "en": "Read the schema: declared relations, required fields not nullable, business uniqueness."
+       }
+      },
+      {
+       "id": "DAT-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Écritures multiples dans des transactions",
+        "en": "Multiple writes inside transactions"
+       },
+       "verify": {
+        "fr": "Rechercher les séquences d'écritures liées hors transaction.",
+        "en": "Search for related write sequences outside a transaction."
+       }
+      },
+      {
+       "id": "DAT-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Montants et dates stockés dans des types sûrs",
+        "en": "Amounts and dates stored in safe types"
+       },
+       "verify": {
+        "fr": "Pas de Float pour l'argent ; dates en UTC avec fuseau géré à l'affichage.",
+        "en": "No Float for money; dates in UTC with time zone handled on display."
+       }
+      },
+      {
+       "id": "DAT-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les migrations destructives sont réversibles ou précédées d'une sauvegarde",
+        "en": "Destructive migrations are reversible or preceded by a backup"
+       },
+       "verify": {
+        "fr": "Suppression de colonne ou de table : plan de retour ou sauvegarde documentée.",
+        "en": "Column or table drop: rollback plan or documented backup."
+       }
+      },
+      {
+       "id": "DAT-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Index sur les colonnes filtrées et jointes",
+        "en": "Indexes on filtered and joined columns"
+       },
+       "verify": {
+        "fr": "Comparer les requêtes fréquentes avec les index déclarés.",
+        "en": "Compare frequent queries with declared indexes."
+       }
+      }
+     ]
+    },
+    {
+     "id": "compliance",
+     "code": "LEG",
+     "label": {
+      "fr": "Conformité",
+      "en": "Compliance"
+     },
+     "summary": {
+      "fr": "Obligations légales applicables et licences. Ce référentiel n'est pas un avis juridique.",
+      "en": "Applicable legal obligations and licences. This referential is not legal advice."
+     },
+     "build": [
+      {
+       "fr": "Identifier au /kickoff le pays, le type d'éditeur (particulier, entreprise) et les obligations qui en découlent ; le module compliance-fr détaille la France.",
+       "en": "At /kickoff, identify the country, the publisher type (individual, company) and the resulting obligations; the compliance-fr module details France."
+      },
+      {
+       "fr": "Vérifier la licence de chaque dépendance, police, image et icône avant de l'ajouter.",
+       "en": "Check the licence of every dependency, font, image and icon before adding it."
+      },
+      {
+       "fr": "Créditer les ressources qui l'exigent dans un fichier dédié ou en pied de page.",
+       "en": "Credit resources that require it in a dedicated file or in the footer."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "LEG-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les mentions obligatoires de l'éditeur sont présentes",
+        "en": "The publisher's mandatory notices are present"
+       },
+       "verify": {
+        "fr": "Mentions légales ou imprint selon le pays (voir module de conformité du pays).",
+        "en": "Legal notice or imprint depending on the country (see the country compliance module)."
+       }
+      },
+      {
+       "id": "LEG-02",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "license_check"
+       },
+       "label": {
+        "fr": "Licences des dépendances compatibles avec l'usage du projet",
+        "en": "Dependency licences compatible with the project's use"
+       },
+       "verify": {
+        "fr": "license-checker ou équivalent ; aucune licence GPL/AGPL incompatible ou absente.",
+        "en": "license-checker or equivalent; no incompatible or missing GPL/AGPL licence."
+       }
+      },
+      {
+       "id": "LEG-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Polices, images, icônes et sons utilisés avec une licence valable",
+        "en": "Fonts, images, icons and sounds used under a valid licence"
+       },
+       "verify": {
+        "fr": "Source et licence documentées pour chaque ressource tierce.",
+        "en": "Source and licence documented for every third-party asset."
+       }
+      },
+      {
+       "id": "LEG-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_accounts_or_sales"
+       ],
+       "label": {
+        "fr": "Conditions d'utilisation ou de vente publiées et acceptées",
+        "en": "Terms of use or sale published and accepted"
+       },
+       "verify": {
+        "fr": "CGU ou CGV accessibles ; acceptation horodatée à l'inscription ou à l'achat.",
+        "en": "Terms accessible; timestamped acceptance at sign-up or purchase."
+       }
+      },
+      {
+       "id": "LEG-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Obligations d'accessibilité légales évaluées",
+        "en": "Legal accessibility obligations assessed"
+       },
+       "verify": {
+        "fr": "Selon le pays et l'activité (ex. European Accessibility Act pour certains services) : déclaration si requise.",
+        "en": "Depending on country and activity (e.g. European Accessibility Act for some services): statement if required."
+       }
+      },
+      {
+       "id": "LEG-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Contenus et marques de tiers utilisés avec autorisation",
+        "en": "Third-party content and trademarks used with permission"
+       },
+       "verify": {
+        "fr": "Logos, extraits, API de contenu : conditions d'utilisation respectées.",
+        "en": "Logos, excerpts, content APIs: terms of use respected."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "reliability-quality",
+   "label": {
+    "fr": "Fiabilité et qualité du code",
+    "en": "Reliability and code quality"
+   },
+   "domains": [
+    {
+     "id": "reliability",
+     "code": "REL",
+     "label": {
+      "fr": "Fiabilité",
+      "en": "Reliability"
+     },
+     "summary": {
+      "fr": "Erreurs, interruptions et cas limites.",
+      "en": "Errors, interruptions and edge cases."
+     },
+     "build": [
+      {
+       "fr": "Chaque appel réseau a un délai maximal, une gestion d'erreur et, s'il est idempotent, des reprises limitées.",
+       "en": "Every network call has a timeout, error handling and, if idempotent, limited retries."
+      },
+      {
+       "fr": "Prévoir les cas limites dès la spec : liste vide, très longue, caractères spéciaux, double clic, session expirée, réseau coupé.",
+       "en": "Plan edge cases in the spec: empty list, very long list, special characters, double click, expired session, network loss."
+      },
+      {
+       "fr": "Une erreur dans un composant ne fait pas tomber toute la page (error boundary ou équivalent).",
+       "en": "An error in one component does not take down the whole page (error boundary or equivalent)."
+      },
+      {
+       "fr": "Le serveur s'arrête proprement : il finit les requêtes en cours et ferme ses connexions.",
+       "en": "The server shuts down cleanly: it finishes in-flight requests and closes its connections."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "REL-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Aucune erreur non gérée qui fait planter le serveur ou l'application",
+        "en": "No unhandled error that crashes the server or the app"
+       },
+       "verify": {
+        "fr": "Rechercher les promesses sans catch, les handlers sans try/catch, l'absence d'error boundary.",
+        "en": "Search for promises without catch, handlers without try/catch, missing error boundaries."
+       }
+      },
+      {
+       "id": "REL-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Délais maximaux et gestion d'échec sur tous les appels externes",
+        "en": "Timeouts and failure handling on all external calls"
+       },
+       "verify": {
+        "fr": "fetch, clients HTTP, base de données, Redis : timeout et comportement en cas d'échec.",
+        "en": "fetch, HTTP clients, database, Redis: timeout and failure behaviour."
+       }
+      },
+      {
+       "id": "REL-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Double soumission et requêtes concurrentes sans effet indésirable",
+        "en": "Double submit and concurrent requests without side effects"
+       },
+       "verify": {
+        "fr": "Double clic sur paiement, inscription, création : un seul résultat (idempotence ou verrou).",
+        "en": "Double click on payment, sign-up, create: a single result (idempotency or lock)."
+       }
+      },
+      {
+       "id": "REL-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_ui"
+       ],
+       "label": {
+        "fr": "Comportement correct hors ligne, en réseau lent et après expiration de session",
+        "en": "Correct behaviour offline, on slow network and after session expiry"
+       },
+       "verify": {
+        "fr": "Couper le réseau, limiter le débit, expirer la session pendant un parcours.",
+        "en": "Cut the network, throttle, expire the session mid-flow."
+       }
+      },
+      {
+       "id": "REL-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Entrées extrêmes gérées (vide, très longue, emoji, caractères spéciaux)",
+        "en": "Extreme inputs handled (empty, very long, emoji, special characters)"
+       },
+       "verify": {
+        "fr": "Saisir ces valeurs dans chaque champ et vérifier affichage et enregistrement.",
+        "en": "Enter these values in each field and check display and storage."
+       }
+      },
+      {
+       "id": "REL-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_backend"
+       ],
+       "label": {
+        "fr": "Arrêt propre du serveur (SIGTERM géré)",
+        "en": "Clean server shutdown (SIGTERM handled)"
+       },
+       "verify": {
+        "fr": "Lire le point d'entrée : fermeture du serveur HTTP, des sockets et des connexions.",
+        "en": "Read the entry point: closing of the HTTP server, sockets and connections."
+       }
+      }
+     ]
+    },
+    {
+     "id": "tests",
+     "code": "TST",
+     "label": {
+      "fr": "Tests",
+      "en": "Tests"
+     },
+     "summary": {
+      "fr": "Validation et prévention des régressions.",
+      "en": "Validation and regression prevention."
+     },
+     "build": [
+      {
+       "fr": "Toute logique avec branche, boucle, calcul d'argent, parsing ou sécurité arrive avec au moins un test.",
+       "en": "Any logic with a branch, loop, money calculation, parsing or security comes with at least one test."
+      },
+      {
+       "fr": "Chaque bug corrigé reçoit un test qui l'aurait détecté.",
+       "en": "Every fixed bug gets a test that would have caught it."
+      },
+      {
+       "fr": "Les parcours principaux ont un test de bout en bout qui tourne en CI.",
+       "en": "Main flows have an end-to-end test that runs in CI."
+      },
+      {
+       "fr": "Ne jamais déclarer une tâche terminée sans avoir lancé les tests et lu leur résultat.",
+       "en": "Never declare a task done without running the tests and reading their output."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "TST-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "test_run"
+       },
+       "label": {
+        "fr": "La suite de tests passe entièrement",
+        "en": "The test suite passes entirely"
+       },
+       "verify": {
+        "fr": "Lancer la commande de test du projet ; aucun test ignoré sans raison écrite.",
+        "en": "Run the project's test command; no test skipped without a written reason."
+       }
+      },
+      {
+       "id": "TST-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "La logique risquée est testée (argent, droits, calculs, parsing)",
+        "en": "Risky logic is tested (money, permissions, calculations, parsing)"
+       },
+       "verify": {
+        "fr": "Lister ces fonctions et vérifier qu'un test les couvre.",
+        "en": "List these functions and check a test covers them."
+       }
+      },
+      {
+       "id": "TST-03",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "e2e"
+       },
+       "applies_if": [
+        "has_ui"
+       ],
+       "label": {
+        "fr": "Les parcours principaux ont un test de bout en bout",
+        "en": "Main flows have an end-to-end test"
+       },
+       "verify": {
+        "fr": "Tests Playwright (ou Detox, Maestro sur mobile) pour chaque parcours principal.",
+        "en": "Playwright (or Detox, Maestro on mobile) tests for each main flow."
+       }
+      },
+      {
+       "id": "TST-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les tests tournent automatiquement avant chaque mise en production",
+        "en": "Tests run automatically before every production release"
+       },
+       "verify": {
+        "fr": "Pipeline CI qui bloque le déploiement si un test échoue.",
+        "en": "CI pipeline that blocks deployment when a test fails."
+       }
+      },
+      {
+       "id": "TST-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les tests vérifient un comportement, pas l'implémentation",
+        "en": "Tests check behaviour, not implementation"
+       },
+       "verify": {
+        "fr": "Pas de tests qui ne font que reproduire le code ou tout simuler.",
+        "en": "No tests that merely mirror the code or mock everything."
+       }
+      }
+     ]
+    },
+    {
+     "id": "code",
+     "code": "COD",
+     "label": {
+      "fr": "Code",
+      "en": "Code"
+     },
+     "summary": {
+      "fr": "Maintenabilité, typage, linting, absence d'erreurs console et de logs de débogage inutiles.",
+      "en": "Maintainability, typing, linting, no console errors and no leftover debug logs."
+     },
+     "build": [
+      {
+       "fr": "Le code le plus simple qui résout entièrement le problème : pas d'abstraction, d'option ou de configuration non demandée.",
+       "en": "The simplest code that fully solves the problem: no unrequested abstraction, option or configuration."
+      },
+      {
+       "fr": "Réutiliser ce qui existe dans le projet avant d'ajouter une dépendance ou un utilitaire.",
+       "en": "Reuse what exists in the project before adding a dependency or a helper."
+      },
+      {
+       "fr": "Modifier seulement ce que la tâche exige ; signaler le reste au lieu de le réécrire.",
+       "en": "Change only what the task requires; flag the rest instead of rewriting it."
+      },
+      {
+       "fr": "Typage strict, aucun any non justifié ; lint et format automatiques avant chaque commit.",
+       "en": "Strict typing, no unjustified any; automatic lint and format before each commit."
+      },
+      {
+       "fr": "Aucun console.log de débogage, code commenté ou fichier temporaire laissé derrière.",
+       "en": "No debug console.log, commented-out code or temporary file left behind."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "COD-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "typecheck"
+       },
+       "label": {
+        "fr": "Aucune erreur de typage ni de build",
+        "en": "No type or build error"
+       },
+       "verify": {
+        "fr": "Commande de typecheck et de build du module de stack.",
+        "en": "The stack module's typecheck and build commands."
+       }
+      },
+      {
+       "id": "COD-02",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "lint"
+       },
+       "label": {
+        "fr": "Aucune erreur de lint",
+        "en": "No lint error"
+       },
+       "verify": {
+        "fr": "Commande de lint du module de stack.",
+        "en": "The stack module's lint command."
+       }
+      },
+      {
+       "id": "COD-03",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "console_check"
+       },
+       "applies_if": [
+        "has_ui"
+       ],
+       "label": {
+        "fr": "Aucune erreur ni avertissement dans la console du navigateur",
+        "en": "No error or warning in the browser console"
+       },
+       "verify": {
+        "fr": "Ouvrir chaque page principale avec Playwright et relever la console.",
+        "en": "Open each main page with Playwright and collect the console."
+       }
+      },
+      {
+       "id": "COD-04",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "debug_leftovers_scan"
+       },
+       "label": {
+        "fr": "Aucun log de débogage, code commenté ou fichier temporaire",
+        "en": "No debug log, commented-out code or temporary file"
+       },
+       "verify": {
+        "fr": "Rechercher console.log, debugger, gros blocs commentés, fichiers *.bak, *.tmp.",
+        "en": "Search for console.log, debugger, large commented blocks, *.bak, *.tmp files."
+       }
+      },
+      {
+       "id": "COD-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Typage strict et any justifiés",
+        "en": "Strict typing and justified any"
+       },
+       "verify": {
+        "fr": "strict activé ; chaque any ou ts-ignore a un commentaire d'explication.",
+        "en": "strict enabled; every any or ts-ignore has an explaining comment."
+       }
+      },
+      {
+       "id": "COD-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Pas de surconception ni de duplication",
+        "en": "No over-engineering or duplication"
+       },
+       "verify": {
+        "fr": "Abstractions à usage unique, options inutilisées, fonctions copiées-collées.",
+        "en": "Single-use abstractions, unused options, copy-pasted functions."
+       }
+      },
+      {
+       "id": "COD-07",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "README à jour : installation, lancement, variables d'environnement",
+        "en": "Up-to-date README: install, run, environment variables"
+       },
+       "verify": {
+        "fr": "Suivre le README sur une machine vierge ; .env.example complet.",
+        "en": "Follow the README on a clean machine; complete .env.example."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "performance-seo",
+   "label": {
+    "fr": "Performance et visibilité",
+    "en": "Performance and visibility"
+   },
+   "domains": [
+    {
+     "id": "performance",
+     "code": "PRF",
+     "label": {
+      "fr": "Performance",
+      "en": "Performance"
+     },
+     "summary": {
+      "fr": "Compression des ressources, optimisation des requêtes et rapidité.",
+      "en": "Asset compression, query optimisation and speed."
+     },
+     "build": [
+      {
+       "fr": "Fixer un budget dès le départ : LCP sous 2,5 s, INP sous 200 ms, CLS sous 0,1 sur mobile.",
+       "en": "Set a budget from the start: LCP under 2.5 s, INP under 200 ms, CLS under 0.1 on mobile."
+      },
+      {
+       "fr": "Images en AVIF ou WebP, dimensionnées, chargées en différé hors de la première vue, avec dimensions réservées.",
+       "en": "Images in AVIF or WebP, sized, lazy-loaded below the fold, with reserved dimensions."
+      },
+      {
+       "fr": "Polices auto-hébergées, sous-ensemble utile, font-display: swap.",
+       "en": "Self-hosted fonts, useful subset, font-display: swap."
+      },
+      {
+       "fr": "Pas de requête en boucle (N+1) ; pagination de toute liste qui peut grandir.",
+       "en": "No query in a loop (N+1); paginate every list that can grow."
+      },
+      {
+       "fr": "Compression gzip ou brotli et cache HTTP sur les ressources statiques.",
+       "en": "gzip or brotli compression and HTTP caching on static assets."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "PRF-01",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "lighthouse"
+       },
+       "applies_if": [
+        "has_ui"
+       ],
+       "label": {
+        "fr": "Core Web Vitals dans le budget sur mobile (LCP, INP, CLS)",
+        "en": "Core Web Vitals within budget on mobile (LCP, INP, CLS)"
+       },
+       "verify": {
+        "fr": "Lighthouse en mode mobile sur les pages principales ; données terrain si disponibles.",
+        "en": "Lighthouse mobile on main pages; field data if available."
+       }
+      },
+      {
+       "id": "PRF-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_db"
+       ],
+       "label": {
+        "fr": "Aucune requête N+1 ni liste non paginée",
+        "en": "No N+1 query or unpaginated list"
+       },
+       "verify": {
+        "fr": "Lire les accès aux données dans les boucles ; journaliser les requêtes d'une page.",
+        "en": "Read data access inside loops; log the queries of one page."
+       }
+      },
+      {
+       "id": "PRF-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_ui"
+       ],
+       "label": {
+        "fr": "Images optimisées, dimensionnées et chargées en différé",
+        "en": "Images optimised, sized and lazy-loaded"
+       },
+       "verify": {
+        "fr": "Formats modernes, srcset ou composant d'image, width et height présents.",
+        "en": "Modern formats, srcset or image component, width and height present."
+       }
+      },
+      {
+       "id": "PRF-04",
+       "severity": "minor",
+       "check": {
+        "method": "auto",
+        "tool": "bundle_size"
+       },
+       "applies_if": [
+        "has_ui"
+       ],
+       "label": {
+        "fr": "JavaScript envoyé au client dans le budget",
+        "en": "JavaScript shipped to the client within budget"
+       },
+       "verify": {
+        "fr": "Analyse du bundle ; dépendances lourdes remplacées ou chargées à la demande.",
+        "en": "Bundle analysis; heavy dependencies replaced or loaded on demand."
+       }
+      },
+      {
+       "id": "PRF-05",
+       "severity": "minor",
+       "check": {
+        "method": "auto",
+        "tool": "headers_check"
+       },
+       "label": {
+        "fr": "Compression et cache HTTP actifs sur les ressources statiques",
+        "en": "Compression and HTTP caching active on static assets"
+       },
+       "verify": {
+        "fr": "Headers content-encoding et cache-control sur JS, CSS, images, polices.",
+        "en": "content-encoding and cache-control headers on JS, CSS, images, fonts."
+       }
+      },
+      {
+       "id": "PRF-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_backend"
+       ],
+       "label": {
+        "fr": "Temps de réponse API mesuré et raisonnable",
+        "en": "API response time measured and reasonable"
+       },
+       "verify": {
+        "fr": "p95 des routes principales sous 500 ms en conditions normales.",
+        "en": "p95 of main routes under 500 ms under normal load."
+       }
+      }
+     ]
+    },
+    {
+     "id": "seo",
+     "code": "SEO",
+     "label": {
+      "fr": "SEO et meta",
+      "en": "SEO and meta"
+     },
+     "summary": {
+      "fr": "Référencement, indexation, métadonnées, OpenGraph et favicons.",
+      "en": "Search ranking, indexing, metadata, OpenGraph and favicons."
+     },
+     "applies_if": [
+      "public_web"
+     ],
+     "build": [
+      {
+       "fr": "Chaque page publique a un titre et une description uniques, une URL lisible et une balise canonique.",
+       "en": "Every public page has a unique title and description, a readable URL and a canonical tag."
+      },
+      {
+       "fr": "Le contenu important est dans le HTML servi (rendu serveur ou statique), pas seulement généré côté client.",
+       "en": "Important content is in the served HTML (server or static rendering), not only client-generated."
+      },
+      {
+       "fr": "Fournir sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons et manifest.",
+       "en": "Provide sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons and manifest."
+      },
+      {
+       "fr": "Les pages privées et de préproduction ne sont pas indexables.",
+       "en": "Private and staging pages are not indexable."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "SEO-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "seo_scan"
+       },
+       "label": {
+        "fr": "Les pages publiques sont indexables et la préproduction ne l'est pas",
+        "en": "Public pages are indexable and staging is not"
+       },
+       "verify": {
+        "fr": "Pas de noindex accidentel en production ; noindex ou mot de passe en préproduction.",
+        "en": "No accidental noindex in production; noindex or password on staging."
+       }
+      },
+      {
+       "id": "SEO-02",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "seo_scan"
+       },
+       "label": {
+        "fr": "Titre, description et canonique uniques sur chaque page publique",
+        "en": "Unique title, description and canonical on every public page"
+       },
+       "verify": {
+        "fr": "Explorer le site et détecter les doublons et manques.",
+        "en": "Crawl the site and detect duplicates and gaps."
+       }
+      },
+      {
+       "id": "SEO-03",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "seo_scan"
+       },
+       "label": {
+        "fr": "OpenGraph et Twitter Card complets avec une image dédiée",
+        "en": "Complete OpenGraph and Twitter Card with a dedicated image"
+       },
+       "verify": {
+        "fr": "og:title, og:description, og:image (1200 × 630), og:url ; aperçu testé.",
+        "en": "og:title, og:description, og:image (1200 × 630), og:url; preview tested."
+       }
+      },
+      {
+       "id": "SEO-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Contenu principal présent dans le HTML servi",
+        "en": "Main content present in the served HTML"
+       },
+       "verify": {
+        "fr": "curl de la page : le texte principal est dans la réponse.",
+        "en": "curl the page: main text is in the response."
+       }
+      },
+      {
+       "id": "SEO-05",
+       "severity": "minor",
+       "check": {
+        "method": "auto",
+        "tool": "seo_scan"
+       },
+       "label": {
+        "fr": "sitemap.xml, robots.txt, favicons et manifest présents et valides",
+        "en": "sitemap.xml, robots.txt, favicons and manifest present and valid"
+       },
+       "verify": {
+        "fr": "Récupérer chaque fichier ; favicons en plusieurs tailles et apple-touch-icon.",
+        "en": "Fetch each file; favicons in several sizes and apple-touch-icon."
+       }
+      },
+      {
+       "id": "SEO-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Données structurées adaptées au type de site",
+        "en": "Structured data suited to the site type"
+       },
+       "verify": {
+        "fr": "JSON-LD Organization, LocalBusiness, Product ou Article selon le cas, validé.",
+        "en": "JSON-LD Organization, LocalBusiness, Product or Article as relevant, validated."
+       }
+      },
+      {
+       "id": "SEO-07",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "multilingual"
+       ],
+       "label": {
+        "fr": "Balises hreflang correctes pour les versions linguistiques",
+        "en": "Correct hreflang tags for language versions"
+       },
+       "verify": {
+        "fr": "Chaque version pointe vers les autres et vers elle-même.",
+        "en": "Each version points to the others and to itself."
+       }
+      }
+     ]
+    },
+    {
+     "id": "scalability",
+     "code": "SCL",
+     "label": {
+      "fr": "Scalabilité",
+      "en": "Scalability"
+     },
+     "summary": {
+      "fr": "Tenue en charge.",
+      "en": "Holding up under load."
+     },
+     "applies_if": [
+      "has_backend"
+     ],
+     "build": [
+      {
+       "fr": "Estimer la charge attendue (utilisateurs simultanés, pics) au /kickoff et dimensionner en conséquence, sans surdimensionner.",
+       "en": "Estimate expected load (concurrent users, peaks) at /kickoff and size for it, without oversizing."
+      },
+      {
+       "fr": "Serveur sans état en mémoire locale : sessions, files et verrous dans Redis ou la base, pour pouvoir lancer plusieurs instances.",
+       "en": "Stateless server in local memory: sessions, queues and locks in Redis or the database, so several instances can run."
+      },
+      {
+       "fr": "Les tâches longues passent par une file, pas par la requête HTTP.",
+       "en": "Long tasks go through a queue, not the HTTP request."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "SCL-01",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "load_test"
+       },
+       "label": {
+        "fr": "Test de charge à la charge attendue sans erreur",
+        "en": "Load test at expected load without errors"
+       },
+       "verify": {
+        "fr": "k6 ou autocannon sur les routes principales ; taux d'erreur et p95 relevés.",
+        "en": "k6 or autocannon on main routes; error rate and p95 recorded."
+       }
+      },
+      {
+       "id": "SCL-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Aucun état critique gardé uniquement en mémoire d'une instance",
+        "en": "No critical state kept only in one instance's memory"
+       },
+       "verify": {
+        "fr": "Sessions, salons temps réel, compteurs : stockés ou synchronisés hors du processus (adaptateur Redis pour Socket.io).",
+        "en": "Sessions, real-time rooms, counters: stored or synced outside the process (Redis adapter for Socket.io)."
+       }
+      },
+      {
+       "id": "SCL-03",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Tâches longues traitées en arrière-plan",
+        "en": "Long tasks processed in the background"
+       },
+       "verify": {
+        "fr": "Envoi d'emails, traitement de fichiers, exports : file de tâches.",
+        "en": "Email sending, file processing, exports: job queue."
+       }
+      },
+      {
+       "id": "SCL-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Pool de connexions base de données dimensionné",
+        "en": "Database connection pool sized"
+       },
+       "verify": {
+        "fr": "Taille du pool cohérente avec le nombre d'instances et la limite de la base.",
+        "en": "Pool size consistent with instance count and database limit."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "integrations-payments",
+   "label": {
+    "fr": "Intégrations, paiements et coûts",
+    "en": "Integrations, payments and costs"
+   },
+   "domains": [
+    {
+     "id": "integrations",
+     "code": "INT",
+     "label": {
+      "fr": "Intégrations",
+      "en": "Integrations"
+     },
+     "summary": {
+      "fr": "API, emails et services externes.",
+      "en": "APIs, emails and external services."
+     },
+     "applies_if": [
+      "has_external_api"
+     ],
+     "build": [
+      {
+       "fr": "Isoler chaque service externe derrière un module unique : un seul endroit à changer si le service change.",
+       "en": "Isolate each external service behind a single module: one place to change if the service changes."
+      },
+      {
+       "fr": "Valider les réponses des API externes comme une entrée utilisateur.",
+       "en": "Validate external API responses like user input."
+      },
+      {
+       "fr": "Vérifier la signature de chaque webhook et traiter chaque événement une seule fois (idempotence).",
+       "en": "Verify every webhook signature and process each event only once (idempotency)."
+      },
+      {
+       "fr": "Emails : domaine authentifié (SPF, DKIM, DMARC), version texte, lien de désinscription pour le marketing.",
+       "en": "Emails: authenticated domain (SPF, DKIM, DMARC), text version, unsubscribe link for marketing."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "INT-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_webhooks"
+       ],
+       "label": {
+        "fr": "Signature des webhooks vérifiée",
+        "en": "Webhook signatures verified"
+       },
+       "verify": {
+        "fr": "Chaque handler vérifie la signature avec le corps brut avant tout traitement.",
+        "en": "Each handler verifies the signature against the raw body before any processing."
+       }
+      },
+      {
+       "id": "INT-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_webhooks"
+       ],
+       "label": {
+        "fr": "Événements de webhook traités une seule fois",
+        "en": "Webhook events processed only once"
+       },
+       "verify": {
+        "fr": "Identifiant d'événement enregistré ; un rejeu ne crée pas de doublon.",
+        "en": "Event ID stored; a replay creates no duplicate."
+       }
+      },
+      {
+       "id": "INT-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Réponses externes validées et pannes du service gérées",
+        "en": "External responses validated and service outages handled"
+       },
+       "verify": {
+        "fr": "Schéma sur les réponses ; comportement dégradé si le service est indisponible.",
+        "en": "Schema on responses; degraded behaviour when the service is down."
+       }
+      },
+      {
+       "id": "INT-04",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "email_auth_check"
+       },
+       "applies_if": [
+        "has_email"
+       ],
+       "label": {
+        "fr": "Emails authentifiés (SPF, DKIM, DMARC) et non classés en spam",
+        "en": "Emails authenticated (SPF, DKIM, DMARC) and not flagged as spam"
+       },
+       "verify": {
+        "fr": "Enregistrements DNS vérifiés ; envoi de test vers Gmail et Outlook.",
+        "en": "DNS records checked; test send to Gmail and Outlook."
+       }
+      },
+      {
+       "id": "INT-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Chaque service externe isolé dans un module dédié",
+        "en": "Each external service isolated in a dedicated module"
+       },
+       "verify": {
+        "fr": "Pas d'appels directs au SDK dispersés dans le code.",
+        "en": "No direct SDK calls scattered across the code."
+       }
+      },
+      {
+       "id": "INT-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Quotas et conditions d'utilisation des API respectés",
+        "en": "API quotas and terms of use respected"
+       },
+       "verify": {
+        "fr": "Limites connues, cache des réponses, attribution exigée affichée.",
+        "en": "Known limits, response caching, required attribution shown."
+       }
+      }
+     ]
+    },
+    {
+     "id": "payments",
+     "code": "PAY",
+     "label": {
+      "fr": "Paiements",
+      "en": "Payments"
+     },
+     "summary": {
+      "fr": "Facturation, abonnements et résiliation.",
+      "en": "Billing, subscriptions and cancellation."
+     },
+     "applies_if": [
+      "has_payments"
+     ],
+     "build": [
+      {
+       "fr": "Utiliser une page de paiement hébergée (Stripe Checkout ou équivalent) : aucune donnée de carte ne passe par nos serveurs.",
+       "en": "Use a hosted payment page (Stripe Checkout or equivalent): no card data goes through our servers."
+      },
+      {
+       "fr": "L'état d'un paiement ou d'un abonnement vient du webhook du prestataire, jamais de la redirection du navigateur.",
+       "en": "Payment or subscription state comes from the provider's webhook, never from the browser redirect."
+      },
+      {
+       "fr": "Le prix affiché vient du serveur ou du prestataire, jamais d'une valeur envoyée par le client.",
+       "en": "The displayed and charged price comes from the server or provider, never from a client-sent value."
+      },
+      {
+       "fr": "La résiliation est aussi simple que la souscription et accessible depuis le compte.",
+       "en": "Cancelling is as simple as subscribing and reachable from the account."
+      },
+      {
+       "fr": "Tester en mode test : succès, refus, 3-D Secure, échec de renouvellement, remboursement.",
+       "en": "Test in test mode: success, decline, 3-D Secure, renewal failure, refund."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "PAY-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les droits sont accordés uniquement après confirmation par webhook signé",
+        "en": "Access is granted only after confirmation by a signed webhook"
+       },
+       "verify": {
+        "fr": "Aucun accès débloqué sur la page de retour ou par un paramètre d'URL.",
+        "en": "No access unlocked on the return page or through a URL parameter."
+       }
+      },
+      {
+       "id": "PAY-02",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Le montant ne peut pas être modifié par le client",
+        "en": "The amount cannot be changed by the client"
+       },
+       "verify": {
+        "fr": "Les prix sont lus côté serveur (identifiants de prix), jamais repris de la requête.",
+        "en": "Prices are read server-side (price IDs), never taken from the request."
+       }
+      },
+      {
+       "id": "PAY-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Résiliation en libre-service, aussi simple que la souscription",
+        "en": "Self-service cancellation, as simple as subscribing"
+       },
+       "verify": {
+        "fr": "Parcours de résiliation depuis le compte, sans contact obligatoire.",
+        "en": "Cancellation flow from the account, no mandatory contact."
+       }
+      },
+      {
+       "id": "PAY-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Échecs de paiement et renouvellements gérés",
+        "en": "Payment failures and renewals handled"
+       },
+       "verify": {
+        "fr": "Carte refusée, 3-D Secure, échec de renouvellement : accès et emails cohérents.",
+        "en": "Declined card, 3-D Secure, renewal failure: consistent access and emails."
+       }
+      },
+      {
+       "id": "PAY-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Factures conformes émises et accessibles",
+        "en": "Compliant invoices issued and accessible"
+       },
+       "verify": {
+        "fr": "Factures avec les mentions requises par le pays, téléchargeables par le client.",
+        "en": "Invoices with the mentions required by the country, downloadable by the customer."
+       }
+      },
+      {
+       "id": "PAY-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Prix, taxes, durée d'engagement et renouvellement affichés avant paiement",
+        "en": "Price, taxes, commitment and renewal shown before payment"
+       },
+       "verify": {
+        "fr": "Récapitulatif clair avant validation.",
+        "en": "Clear summary before confirming."
+       }
+      }
+     ]
+    },
+    {
+     "id": "costs",
+     "code": "CST",
+     "label": {
+      "fr": "Coûts",
+      "en": "Costs"
+     },
+     "summary": {
+      "fr": "Maîtrise des dépenses.",
+      "en": "Spending control."
+     },
+     "build": [
+      {
+       "fr": "Tenir la liste des services payants avec leur coût mensuel et ce qui le fait grimper.",
+       "en": "Keep the list of paid services with their monthly cost and what drives it up."
+      },
+      {
+       "fr": "Plafond ou alerte de dépense sur chaque service facturé à l'usage (API d'IA, envoi d'emails, stockage, bande passante).",
+       "en": "Spending cap or alert on every usage-billed service (AI APIs, email sending, storage, bandwidth)."
+      },
+      {
+       "fr": "Tout appel à un service payant déclenché par un utilisateur est authentifié et limité.",
+       "en": "Any user-triggered call to a paid service is authenticated and rate-limited."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "CST-01",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "uses_paid_services"
+       ],
+       "label": {
+        "fr": "Plafonds ou alertes de dépense sur les services facturés à l'usage",
+        "en": "Spending caps or alerts on usage-billed services"
+       },
+       "verify": {
+        "fr": "Configuration de budget ou d'alerte chez chaque prestataire.",
+        "en": "Budget or alert configured at each provider."
+       }
+      },
+      {
+       "id": "CST-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "uses_paid_services"
+       ],
+       "label": {
+        "fr": "Aucune route publique qui déclenche un coût sans limite",
+        "en": "No public route that triggers an unlimited cost"
+       },
+       "verify": {
+        "fr": "Routes vers des API payantes : authentification, limitation, mise en cache.",
+        "en": "Routes to paid APIs: authentication, rate limiting, caching."
+       }
+      },
+      {
+       "id": "CST-03",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Inventaire des coûts tenu à jour",
+        "en": "Up-to-date cost inventory"
+       },
+       "verify": {
+        "fr": "Fichier listant services, coût, facturation, date de renouvellement.",
+        "en": "File listing services, cost, billing basis, renewal date."
+       }
+      },
+      {
+       "id": "CST-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Ressources inutilisées supprimées",
+        "en": "Unused resources removed"
+       },
+       "verify": {
+        "fr": "Serveurs, bases, domaines, abonnements sans usage.",
+        "en": "Servers, databases, domains, subscriptions with no use."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "operations",
+   "label": {
+    "fr": "Exploitation",
+    "en": "Operations"
+   },
+   "domains": [
+    {
+     "id": "infra",
+     "code": "INF",
+     "label": {
+      "fr": "Infra",
+      "en": "Infrastructure"
+     },
+     "summary": {
+      "fr": "Configuration serveur, gestion des processus et redémarrage automatique.",
+      "en": "Server configuration, process management and automatic restart."
+     },
+     "applies_if": [
+      "self_hosted"
+     ],
+     "build": [
+      {
+       "fr": "Configuration serveur décrite dans des fichiers versionnés (Docker Compose, config Nginx, ecosystem PM2), jamais seulement à la main.",
+       "en": "Server configuration described in versioned files (Docker Compose, Nginx config, PM2 ecosystem), never only by hand."
+      },
+      {
+       "fr": "Chaque processus redémarre automatiquement après un crash et au redémarrage du serveur.",
+       "en": "Every process restarts automatically after a crash and on server reboot."
+      },
+      {
+       "fr": "Pare-feu actif : seuls les ports nécessaires sont ouverts ; base de données et Redis non exposés publiquement.",
+       "en": "Firewall on: only required ports open; database and Redis not exposed publicly."
+      },
+      {
+       "fr": "Connexion SSH par clé uniquement, mises à jour de sécurité automatiques.",
+       "en": "SSH by key only, automatic security updates."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "INF-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "port_scan"
+       },
+       "label": {
+        "fr": "Base de données, Redis et ports d'administration non exposés publiquement",
+        "en": "Database, Redis and admin ports not publicly exposed"
+       },
+       "verify": {
+        "fr": "Scan des ports depuis l'extérieur ; liaisons sur 127.0.0.1 ou réseau Docker interne.",
+        "en": "External port scan; bindings on 127.0.0.1 or internal Docker network."
+       }
+      },
+      {
+       "id": "INF-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Redémarrage automatique après crash et après reboot",
+        "en": "Automatic restart after crash and after reboot"
+       },
+       "verify": {
+        "fr": "restart: unless-stopped, pm2 startup et pm2 save, ou unité systemd.",
+        "en": "restart: unless-stopped, pm2 startup and pm2 save, or a systemd unit."
+       }
+      },
+      {
+       "id": "INF-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Configuration serveur versionnée et reproductible",
+        "en": "Server configuration versioned and reproducible"
+       },
+       "verify": {
+        "fr": "Recréer l'environnement à partir du dépôt et d'un .env.",
+        "en": "Rebuild the environment from the repo and a .env."
+       }
+      },
+      {
+       "id": "INF-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "HTTPS partout avec renouvellement automatique du certificat",
+        "en": "HTTPS everywhere with automatic certificate renewal"
+       },
+       "verify": {
+        "fr": "Redirection HTTP vers HTTPS ; date d'expiration et renouvellement automatique.",
+        "en": "HTTP to HTTPS redirect; expiry date and auto-renewal."
+       }
+      },
+      {
+       "id": "INF-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Accès serveur durci (SSH par clé, pare-feu, mises à jour automatiques)",
+        "en": "Hardened server access (SSH keys, firewall, automatic updates)"
+       },
+       "verify": {
+        "fr": "PasswordAuthentication no, ufw ou équivalent, unattended-upgrades.",
+        "en": "PasswordAuthentication no, ufw or equivalent, unattended-upgrades."
+       }
+      },
+      {
+       "id": "INF-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Limites de ressources et rotation des logs",
+        "en": "Resource limits and log rotation"
+       },
+       "verify": {
+        "fr": "Limite mémoire par conteneur ou processus ; logs qui ne remplissent pas le disque.",
+        "en": "Memory limit per container or process; logs that do not fill the disk."
+       }
+      }
+     ]
+    },
+    {
+     "id": "deployment",
+     "code": "DEP",
+     "label": {
+      "fr": "Déploiement",
+      "en": "Deployment"
+     },
+     "summary": {
+      "fr": "Mise en ligne et retour arrière.",
+      "en": "Release and rollback."
+     },
+     "build": [
+      {
+       "fr": "Déployer par une commande ou un pipeline unique, jamais par copie de fichiers à la main.",
+       "en": "Deploy through one command or pipeline, never by copying files by hand."
+      },
+      {
+       "fr": "Chaque version déployée est identifiable (tag Git, numéro de build) et la précédente reste disponible.",
+       "en": "Every deployed version is identifiable (Git tag, build number) and the previous one stays available."
+      },
+      {
+       "fr": "Écrire et tester la procédure de retour arrière avant d'en avoir besoin.",
+       "en": "Write and test the rollback procedure before you need it."
+      },
+      {
+       "fr": "Déployer d'abord en préproduction quand le changement touche aux données, aux paiements ou à l'authentification.",
+       "en": "Deploy to staging first when the change touches data, payments or authentication."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "DEP-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Une procédure de retour arrière existe et a été testée",
+        "en": "A rollback procedure exists and has been tested"
+       },
+       "verify": {
+        "fr": "Document de retour arrière et date du dernier essai.",
+        "en": "Rollback document and date of last trial."
+       }
+      },
+      {
+       "id": "DEP-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Déploiement automatisé et reproductible",
+        "en": "Automated and reproducible deployment"
+       },
+       "verify": {
+        "fr": "Script ou pipeline unique ; aucune étape manuelle non documentée.",
+        "en": "Single script or pipeline; no undocumented manual step."
+       }
+      },
+      {
+       "id": "DEP-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Tests et build bloquants avant mise en production",
+        "en": "Tests and build gate production releases"
+       },
+       "verify": {
+        "fr": "Le pipeline s'arrête si typecheck, lint, tests ou build échouent.",
+        "en": "The pipeline stops if typecheck, lint, tests or build fail."
+       }
+      },
+      {
+       "id": "DEP-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_db"
+       ],
+       "label": {
+        "fr": "Migrations appliquées de façon sûre au déploiement",
+        "en": "Migrations applied safely at deployment"
+       },
+       "verify": {
+        "fr": "Ordre migration et code compatible ; sauvegarde avant migration destructive.",
+        "en": "Migration and code order compatible; backup before destructive migration."
+       }
+      },
+      {
+       "id": "DEP-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Version déployée identifiable et visible",
+        "en": "Deployed version identifiable and visible"
+       },
+       "verify": {
+        "fr": "Tag Git ou hash exposé dans un endpoint de santé ou les logs.",
+        "en": "Git tag or hash exposed in a health endpoint or the logs."
+       }
+      },
+      {
+       "id": "DEP-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Environnement de préproduction séparé de la production",
+        "en": "Staging environment separate from production"
+       },
+       "verify": {
+        "fr": "Base, secrets et domaine distincts.",
+        "en": "Separate database, secrets and domain."
+       }
+      }
+     ]
+    },
+    {
+     "id": "monitoring",
+     "code": "MON",
+     "label": {
+      "fr": "Monitoring",
+      "en": "Monitoring"
+     },
+     "summary": {
+      "fr": "Surveillance, logs d'erreurs et alertes.",
+      "en": "Monitoring, error logs and alerts."
+     },
+     "applies_if": [
+      "has_backend_or_public"
+     ],
+     "build": [
+      {
+       "fr": "Remonter les erreurs serveur et client vers un outil (Sentry, GlitchTip…) avec la version et sans données personnelles.",
+       "en": "Send server and client errors to a tool (Sentry, GlitchTip…) with the version and no personal data."
+      },
+      {
+       "fr": "Exposer un endpoint de santé et le surveiller de l'extérieur (Uptime Kuma, Better Stack…).",
+       "en": "Expose a health endpoint and monitor it from outside (Uptime Kuma, Better Stack…)."
+      },
+      {
+       "fr": "Logs structurés (JSON) avec un niveau et un identifiant de requête.",
+       "en": "Structured logs (JSON) with a level and a request ID."
+      },
+      {
+       "fr": "Une alerte doit arriver sur un canal lu (email, téléphone), et seulement pour ce qui demande une action.",
+       "en": "An alert must reach a channel that is read (email, phone), and only for what needs action."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "MON-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Une panne du site déclenche une alerte reçue par quelqu'un",
+        "en": "A site outage triggers an alert someone receives"
+       },
+       "verify": {
+        "fr": "Surveillance externe configurée ; alerte de test reçue.",
+        "en": "External monitoring configured; test alert received."
+       }
+      },
+      {
+       "id": "MON-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Erreurs serveur et client remontées dans un outil de suivi",
+        "en": "Server and client errors reported to a tracking tool"
+       },
+       "verify": {
+        "fr": "SDK configuré, erreur de test visible avec version et trace.",
+        "en": "SDK configured, test error visible with version and trace."
+       }
+      },
+      {
+       "id": "MON-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_backend"
+       ],
+       "label": {
+        "fr": "Endpoint de santé qui vérifie les dépendances critiques",
+        "en": "Health endpoint that checks critical dependencies"
+       },
+       "verify": {
+        "fr": "/health répond et vérifie base de données et Redis.",
+        "en": "/health responds and checks database and Redis."
+       }
+      },
+      {
+       "id": "MON-04",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_backend"
+       ],
+       "label": {
+        "fr": "Logs structurés, horodatés et conservés une durée définie",
+        "en": "Structured, timestamped logs kept for a defined period"
+       },
+       "verify": {
+        "fr": "Format JSON, niveau, identifiant de requête, rotation.",
+        "en": "JSON format, level, request ID, rotation."
+       }
+      },
+      {
+       "id": "MON-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Alerte avant expiration du domaine et du certificat, et sur l'espace disque",
+        "en": "Alert before domain and certificate expiry, and on disk space"
+       },
+       "verify": {
+        "fr": "Surveillance des dates d'expiration et du disque.",
+        "en": "Monitoring of expiry dates and disk."
+       }
+      }
+     ]
+    },
+    {
+     "id": "backups",
+     "code": "BAK",
+     "label": {
+      "fr": "Sauvegardes",
+      "en": "Backups"
+     },
+     "summary": {
+      "fr": "Sauvegardes automatisées, restauration testée et reprise.",
+      "en": "Automated backups, tested restore and recovery."
+     },
+     "applies_if": [
+      "has_persistent_data"
+     ],
+     "build": [
+      {
+       "fr": "Sauvegarde automatique quotidienne de la base et des fichiers envoyés par les utilisateurs.",
+       "en": "Automatic daily backup of the database and user-uploaded files."
+      },
+      {
+       "fr": "Règle 3-2-1 : au moins une copie hors du serveur de production, chez un autre prestataire ou dans une autre région.",
+       "en": "3-2-1 rule: at least one copy off the production server, with another provider or region."
+      },
+      {
+       "fr": "Sauvegardes chiffrées et conservées selon une durée définie.",
+       "en": "Backups encrypted and kept for a defined period."
+      },
+      {
+       "fr": "Tester une restauration complète au moins une fois par trimestre et noter le temps nécessaire.",
+       "en": "Test a full restore at least once a quarter and record how long it takes."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "BAK-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Sauvegarde automatique de la base et des fichiers utilisateurs",
+        "en": "Automatic backup of the database and user files"
+       },
+       "verify": {
+        "fr": "Tâche planifiée et dernière sauvegarde datée de moins de 24 h.",
+        "en": "Scheduled job and latest backup less than 24 h old."
+       }
+      },
+      {
+       "id": "BAK-02",
+       "severity": "blocker",
+       "check": {
+        "method": "manual"
+       },
+       "label": {
+        "fr": "Une restauration complète a été testée",
+        "en": "A full restore has been tested"
+       },
+       "verify": {
+        "fr": "Date et durée de la dernière restauration réussie sur un environnement séparé.",
+        "en": "Date and duration of the last successful restore on a separate environment."
+       }
+      },
+      {
+       "id": "BAK-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Au moins une copie hors du serveur de production",
+        "en": "At least one copy off the production server"
+       },
+       "verify": {
+        "fr": "Destination externe (stockage objet, autre serveur) vérifiée.",
+        "en": "External destination (object storage, other server) checked."
+       }
+      },
+      {
+       "id": "BAK-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Échec de sauvegarde signalé par une alerte",
+        "en": "Backup failure raises an alert"
+       },
+       "verify": {
+        "fr": "Le script de sauvegarde alerte en cas d'échec ou d'absence.",
+        "en": "The backup script alerts on failure or absence."
+       }
+      },
+      {
+       "id": "BAK-05",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Sauvegardes chiffrées avec durée de conservation définie",
+        "en": "Encrypted backups with a defined retention period"
+       },
+       "verify": {
+        "fr": "Chiffrement et rotation configurés.",
+        "en": "Encryption and rotation configured."
+       }
+      },
+      {
+       "id": "BAK-06",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Plan de reprise écrit (qui fait quoi, dans quel ordre)",
+        "en": "Written recovery plan (who does what, in which order)"
+       },
+       "verify": {
+        "fr": "Document de reprise avec objectifs de délai et de perte de données acceptables.",
+        "en": "Recovery document with acceptable downtime and data-loss targets."
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

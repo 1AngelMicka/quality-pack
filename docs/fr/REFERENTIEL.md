@@ -30,7 +30,7 @@ Utilité et promesse : à qui sert le projet, quel problème il règle, ce qu'il
 
 **Pendant la construction**
 
-- Écrire la promesse en une phrase (pour qui, quel problème, quel résultat) avant toute ligne de code, dans .quality/project.yaml.
+- Écrire la promesse en une phrase (pour qui, quel problème, quel résultat) avant toute ligne de code, dans .quality/project.json.
 - Lister ce que le projet ne fera pas (hors périmètre) pour éviter les fonctionnalités inutiles.
 - Chaque fonctionnalité doit servir la promesse ; sinon, elle sort du périmètre.
 
@@ -38,7 +38,7 @@ Utilité et promesse : à qui sert le projet, quel problème il règle, ce qu'il
 
 | ID | Critère | Sévérité | Vérification |
 | --- | --- | --- | --- |
-| PRD-01 | La promesse est écrite en une phrase et à jour | Majeur | Présence et cohérence de la promesse dans .quality/project.yaml. (lecture) |
+| PRD-01 | La promesse est écrite en une phrase et à jour | Majeur | Présence et cohérence de la promesse dans .quality/project.json. (lecture) |
 | PRD-02 | La première vue dit ce que fait le produit et pour qui, sans jargon | Majeur | Lire l'accueil ou l'écran d'entrée : un inconnu comprend-il en 5 secondes ? (lecture) |
 | PRD-03 | L'action principale est évidente et accessible dès l'arrivée | Majeur | Un appel à l'action principal unique et visible sur l'écran d'entrée. (lecture) |
 | PRD-04 | Les fonctionnalités présentes servent toutes la promesse | Mineur | Comparer la liste des fonctionnalités avec la promesse et le hors-périmètre. (lecture) |

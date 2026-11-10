@@ -127,6 +127,14 @@ def build_manifests():
     write(ROOT / ".claude-plugin" / "marketplace.json", json.dumps(mk, ensure_ascii=False, indent=2) + "\n")
 
 
+def build_site():
+    import shutil
+    site = ROOT / "site"
+    shutil.copyfile(REF / "referential.json", site / "referential.json")
+    shutil.copyfile(ROOT / "llms.txt", site / "llms.txt")
+    print("wrote site/referential.json, site/llms.txt")
+
+
 def main():
     errors, nd, nc = R.validate()
     if errors:
@@ -139,6 +147,7 @@ def main():
     build_group_skills(scoring, groups)
     build_stack_skills()
     build_manifests()
+    build_site()
 
 
 if __name__ == "__main__":

@@ -19,7 +19,7 @@ scoring:
     - {min: 4.0, fr: "Insuffisant", en: "Poor"}
     - {min: 0.0, fr: "Critique", en: "Critical"}
 
-# Project flags, declared in .quality/project.yaml at /kickoff.
+# Project flags, declared in .quality/project.json at /kickoff.
 flags:
   has_ui: {fr: "Le projet a une interface utilisateur", en: "The project has a user interface"}
   has_backend: {fr: "Le projet a un serveur ou une API", en: "The project has a server or API"}

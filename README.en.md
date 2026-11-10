@@ -10,6 +10,11 @@ Plugins for [Claude Code](https://claude.com/claude-code) that make Claude build
 - **Token-frugal**: rules loaded on demand, compact command outputs, incremental audits, a code graph with [Graphify](https://github.com/Graphify-Labs/graphify). See [Token economy](#token-economy).
 - **Free, open source, no telemetry**, in English and French.
 
+## Online docs and AI agents
+
+- Documentation website: https://1angelmicka.github.io/quality-pack/en/
+- You can also hand the install over to your AI assistant: give it the repository link, or say "install quality-pack by following https://github.com/1AngelMicka/quality-pack/blob/main/docs/AGENT_GUIDE.md". It will find [`llms.txt`](llms.txt) and the [agent guide](docs/AGENT_GUIDE.md).
+
 ## How it works
 
 ```

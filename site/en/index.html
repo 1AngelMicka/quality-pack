@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>quality-pack — build properly and audit your projects with Claude Code</title>
+<meta name="description" content="Claude Code plugins: build rules across 27 domains, a scored audit out of 10 with evidence for every check, and token economy. Free, open source, no telemetry.">
+<meta name="qp-root" content="..">
+<link rel="canonical" href="https://1angelmicka.github.io/quality-pack/en/">
+<link rel="alternate" hreflang="fr" href="https://1angelmicka.github.io/quality-pack/">
+<link rel="alternate" hreflang="en" href="https://1angelmicka.github.io/quality-pack/en/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="quality-pack for Claude Code">
+<meta property="og:description" content="Build properly from the start, audit with a score out of 10, spend fewer tokens.">
+<meta property="og:url" content="https://1angelmicka.github.io/quality-pack/en/">
+<meta property="og:image" content="https://1angelmicka.github.io/quality-pack/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="top">
+  <div class="top-inner">
+    <a class="brand" href="./">quality<span>-</span>pack</a>
+    <nav aria-label="Main navigation">
+      <a class="hide-sm" href="#install">Install</a>
+      <a class="hide-sm" href="#tokens">Tokens</a>
+      <a class="hide-sm" href="#referential">Referential</a>
+      <a href="https://github.com/1AngelMicka/quality-pack">GitHub</a>
+      <a class="lang" href="../" hreflang="fr" lang="fr">FR</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+<aside class="toc" aria-label="Contents">
+  <ol>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#install">Install</a></li>
+    <li><a href="#commands">Commands</a></li>
+    <li><a href="#tokens">Token economy</a></li>
+    <li><a href="#companions">Companion tools</a></li>
+    <li><a href="#scoring">Scoring</a></li>
+    <li><a href="#referential">What it checks</a></li>
+    <li><a href="#agents">For AI agents</a></li>
+    <li><a href="#files">Files created</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+  </ol>
+</aside>
+
+<main id="content">
+  <div class="hero">
+    <span class="eyebrow">Plugins for Claude Code</span>
+    <h1>Build it properly from the start, then prove it.</h1>
+    <p class="lead">quality-pack gives Claude precise rules while it codes, then audits the project and scores it out of 10, domain by domain. Every check needs evidence. All while spending as few tokens as possible.</p>
+    <ul class="facts">
+      <li><strong>27</strong> domains</li>
+      <li><strong>153</strong> verifiable checks</li>
+      <li><strong>0</strong> telemetry</li>
+      <li>EN · FR · MIT</li>
+    </ul>
+    <div class="cta">
+      <a class="btn primary" href="#install">Install</a>
+      <a class="btn" href="https://github.com/1AngelMicka/quality-pack">View on GitHub</a>
+    </div>
+  </div>
+
+  <section id="how">
+    <h2>How it works</h2>
+    <p>A coding assistant quickly produces something that roughly works. It often forgets empty states, server-side validation, accessibility, privacy or backups, and it tends to produce generic interfaces and copy. quality-pack fixes that in two steps: rules while building, then an audit that needs evidence for every point.</p>
+    <div class="flow">
+      <div><code>/qp:kickoff</code><p>Claude reads the project, asks a few questions and writes its quality profile.</p></div>
+      <div><code>you code</code><p>The rules of the domains you touch apply automatically.</p></div>
+      <div><code>/qp:audit</code><p>Automatic scans, then auditors in parallel: score, evidence, priorities.</p></div>
+      <div><code>/qp:fix</code><p>Issues are fixed in order, blockers first.</p></div>
+      <div><code>/qp:handoff</code><p>A short note to resume the task in the next session.</p></div>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2>Install</h2>
+    <p>You need <a href="https://claude.com/claude-code">Claude Code</a>, <a href="https://nodejs.org">Node.js</a> 18 or later, and <code>git</code>. Type <code>/plugin</code> commands in Claude Code (terminal or desktop app).</p>
+    <ol class="steps">
+      <li><strong>Add the marketplace and install the core plugin.</strong>
+<pre><code>/plugin marketplace add 1AngelMicka/quality-pack
+/plugin install qp@quality-pack</code></pre></li>
+      <li><strong>Install the modules for your stack</strong> (only those you use).
+<pre><code><span class="c"># Next.js, React, TypeScript, Tailwind</span>
+/plugin install qp-nextjs@quality-pack
+<span class="c"># Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io</span>
+/plugin install qp-node-api@quality-pack
+<span class="c"># Self-hosted server: Docker Compose, PM2, Nginx or CloudPanel</span>
+/plugin install qp-vps@quality-pack</code></pre></li>
+      <li><strong>Restart Claude Code</strong> (or run <code>/reload-plugins</code>), open your project and run:
+<pre><code>/qp:kickoff</code></pre></li>
+      <li><strong>Optional: browser and accessibility checks.</strong> In your project:
+<pre><code>npm i -D @playwright/test axe-core
+npx playwright install chromium</code></pre>
+      Without them the audit still runs; those checks are marked "not checked".</li>
+      <li><strong>Optional: <a href="#companions">Graphify</a></strong> to save tokens on medium and large projects. <code>/qp:kickoff</code> suggests it when it helps.</li>
+    </ol>
+    <h3>For a whole team</h3>
+    <p>In the project folder, run once in the terminal, then commit <code>.claude/settings.json</code>:</p>
+<pre><code>claude plugin marketplace add 1AngelMicka/quality-pack --scope project
+claude plugin install qp@quality-pack --scope project</code></pre>
+    <h3>Update, uninstall</h3>
+<pre><code><span class="c"># update</span>
+/plugin marketplace update quality-pack
+<span class="c"># uninstall</span>
+/plugin uninstall qp@quality-pack
+/plugin marketplace remove quality-pack</code></pre>
+    <p>For automatic updates: <code>/plugin</code> → Marketplaces → quality-pack → Enable auto-update.</p>
+  </section>
+
+  <section id="commands">
+    <h2>Commands</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col">Command</th><th scope="col">Use it to</th></tr></thead>
+      <tbody>
+        <tr><td><code>/qp:kickoff</code></td><td>Set up or update the project's quality profile.</td></tr>
+        <tr><td><code>/qp:audit</code></td><td>Incremental audit: only what changed since the last audit is checked again. Full on the first audit, after a pack update, or every 30 days.</td></tr>
+        <tr><td><code>/qp:audit quick</code></td><td>Automatic checks only, no agents: the cheapest, ideal before a release.</td></tr>
+        <tr><td><code>/qp:audit full</code></td><td>Check everything again from scratch.</td></tr>
+        <tr><td><code>/qp:audit security-data</code></td><td>One group of domains.</td></tr>
+        <tr><td><code>/qp:audit SEC-01 SEC-03</code></td><td>Specific criteria; <code>/qp:audit blockers</code> for blockers only.</td></tr>
+        <tr><td><code>/qp:fix</code></td><td>Fix the open blockers, or the top 5 issues. <code>/qp:fix 10</code> or <code>/qp:fix SEC-02</code> to choose.</td></tr>
+        <tr><td><code>/qp:handoff</code></td><td>Write <code>.quality/handoff.md</code> before stopping a long task.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="tokens">
+    <h2>Token economy</h2>
+    <p>The pack cuts three things: what is always loaded, what Claude reads, and what is redone from one time to the next.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col">Mechanism</th><th scope="col">Effect</th></tr></thead>
+      <tbody>
+        <tr><td>Rules on demand</td><td>About 1,150 tokens loaded per session. Detailed rules load only when Claude touches that domain.</td></tr>
+        <tr><td>Scans as scripts</td><td>Filler text, hollow wording, leftover logs, headers, SEO and browser checks run in Node. Claude reads a summary.</td></tr>
+        <tr><td>Compact outputs</td><td>Tests, lint and audits keep their full log on disk; Claude only reads the errors. In our test: 3,000 lines, about 14,700 tokens down to about 190.</td></tr>
+        <tr><td>Incremental audit</td><td>Only criteria that changed files can affect are checked again. Nothing changed: no auditor runs.</td></tr>
+        <tr><td>Quick mode</td><td><code>/qp:audit quick</code>: no auditor agents.</td></tr>
+        <tr><td>Auditor model</td><td>Sonnet or Haiku for the auditors; your session keeps your model.</td></tr>
+        <tr><td>Handoff</td><td><code>/qp:handoff</code> avoids exploring the project again in every new session.</td></tr>
+      </tbody>
+    </table></div>
+    <h3>By project size</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col">Size</th><th scope="col">One session</th><th scope="col">A few weeks</th><th scope="col">Life of the project</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Small</strong><br><small>under 60 source files</small></td><td>The pack is enough. Graphify adds almost nothing.</td><td>Incremental audit after each feature, quick audit before each release.</td><td>Monthly full audit, handoff for multi-day tasks.</td></tr>
+        <tr><td><strong>Medium</strong><br><small>60 to 400 files</small></td><td>Graphify: Claude queries the graph instead of re-reading. RTK for long sessions.</td><td>Incremental audits, graph kept fresh on every commit, auditors on Sonnet.</td><td>Score history, monthly full audit, handoff at the end of each session.</td></tr>
+        <tr><td><strong>Large</strong><br><small>over 400 files</small></td><td>Graphify strongly recommended, RTK recommended, read files by line ranges.</td><td>Incremental or per-group audits, Haiku for quick audits.</td><td>Full audits split by group, handoff is a must.</td></tr>
+      </tbody>
+    </table></div>
+    <p>The audit report shows the tokens saved. For a session's usage, type <code>/cost</code> or <code>/usage</code> in Claude Code.</p>
+  </section>
+
+  <section id="companions">
+    <h2>Companion tools</h2>
+    <p>Separate projects, not bundled. <code>/qp:kickoff</code> suggests the ones that fit and installs them only if you say yes.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col">Tool</th><th scope="col">When</th><th scope="col">Install</th></tr></thead>
+      <tbody>
+        <tr><td><a href="https://github.com/Graphify-Labs/graphify">Graphify</a><br><small>local code graph, no AI model</small></td><td>Medium and large projects</td><td><code>uv tool install graphifyy</code><br><code>graphify install --project</code></td></tr>
+        <tr><td><a href="https://github.com/rtk-ai/rtk">RTK</a>, <code>rtk-oss</code> edition<br><small>compressed command outputs</small></td><td>Long sessions</td><td><code>brew install rtk-ai/tap/rtk-oss</code><br><code>rtk init -g</code></td></tr>
+        <tr><td><a href="https://github.com/cloudflare/security-audit-skill">Cloudflare security-audit</a><br><small>in-depth security audit</small></td><td>Before a major release</td><td><code>npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit</code></td></tr>
+        <tr><td><a href="https://github.com/Leonxlnx/taste-skill">Taste Skill</a><br><small>anti-generic design</small></td><td>Showcase sites</td><td><code>npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"</code></td></tr>
+        <tr><td><a href="https://github.com/NiazMorshed2007/reanimate">reanimate</a><br><small>measured animations</small></td><td>On demand</td><td><code>npx skills add NiazMorshed2007/reanimate -g</code></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section id="scoring">
+    <h2>Scoring</h2>
+    <ul>
+      <li>Each check is a <strong>blocker</strong> (5 points), <strong>major</strong> (3) or <strong>minor</strong> (1). Passed: all points; partial: half; failed or not checked: none.</li>
+      <li>A check passed without evidence counts as not checked.</li>
+      <li>A failed blocker caps its domain at 3/10 and the overall score at 5.9/10.</li>
+      <li>The overall score weights domains by project type: showcase site, web app, SaaS, mobile or API. Domains that do not apply are skipped.</li>
+    </ul>
+  </section>
+
+  <section id="referential">
+    <h2>What it checks</h2>
+    <p>The 27 domains, their build rules and their 153 checks, from the same file the plugin uses.</p>
+    <div id="referential"><p>Loading… Without JavaScript, see <a href="https://github.com/1AngelMicka/quality-pack/blob/main/docs/en/REFERENTIAL.md">the referential on GitHub</a>.</p></div>
+  </section>
+
+  <section id="agents">
+    <h2>For AI agents</h2>
+    <p>You can hand the install over to your AI assistant: just give it the repository link. It will find <a href="../llms.txt"><code>llms.txt</code></a> and the <a href="https://github.com/1AngelMicka/quality-pack/blob/main/docs/AGENT_GUIDE.md">guide written for agents</a>, which covers each step, the checks and the common errors.</p>
+<pre><code>Install and set up quality-pack for this project by following
+https://github.com/1AngelMicka/quality-pack/blob/main/docs/AGENT_GUIDE.md</code></pre>
+  </section>
+
+  <section id="files">
+    <h2>Files created in your project</h2>
+<pre><code>.quality/
+  project.json          project profile (/qp:kickoff)
+  AUDIT.md              latest audit report
+  audits/&lt;date&gt;.json    every audit, to follow the score
+  audits/&lt;date&gt;/logs/   full command outputs
+  fixes.md              fix log (/qp:fix)
+  handoff.md            handoff between sessions (/qp:handoff)
+DESIGN.md               visual direction and design tokens
+CLAUDE.md               a short "Quality pack" section</code></pre>
+    <p>Commit <code>.quality/</code> to keep the history; screenshots and logs are git-ignored.</p>
+  </section>
+
+  <section id="troubleshooting">
+    <h2>Troubleshooting</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th scope="col">Problem</th><th scope="col">Fix</th></tr></thead>
+      <tbody>
+        <tr><td>"/plugin isn't available in this environment"</td><td>Type <code>/plugin</code> commands in Claude Code (terminal or desktop app), not in a web chat.</td></tr>
+        <tr><td><code>/qp:…</code> commands do not appear</td><td>Restart Claude Code or run <code>/reload-plugins</code>, then check <code>/plugin</code> → Installed and the Errors tab.</td></tr>
+        <tr><td><code>node: command not found</code></td><td>Install Node.js 18+ and make sure <code>node</code> is on your PATH.</td></tr>
+        <tr><td>Adding the marketplace fails</td><td>Check <code>git</code>. Without a GitHub SSH key: <code>CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1</code>, then retry.</td></tr>
+        <tr><td>Browser checks "not checked"</td><td>Install Playwright and axe-core, run the app locally or set a staging URL.</td></tr>
+        <tr><td>A write is blocked as a secret</td><td>Move the value to an environment variable. If it is not a secret: comment <code>qp-allow-secret</code> on that line.</td></tr>
+        <tr><td>The incremental audit redoes everything</td><td>Intended on the first audit, after a pack update, after 30 days, or outside a Git repository.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">The pack sends no telemetry and only contacts your project's URLs during an audit. It helps you spot legal obligations; it is not legal advice.</p>
+  </section>
+</main>
+</div>
+
+<footer>
+  <div class="inner">
+    <span>quality-pack · MIT licence</span>
+    <a href="https://github.com/1AngelMicka/quality-pack">GitHub</a>
+    <a href="https://github.com/1AngelMicka/quality-pack/blob/main/CHANGELOG.md">Changelog</a>
+    <a href="https://github.com/1AngelMicka/quality-pack/blob/main/THIRD_PARTY_NOTICES.md">Credits</a>
+    <a href="https://github.com/1AngelMicka/quality-pack/blob/main/SECURITY.md">Security</a>
+  </div>
+</footer>
+<script src="../app.js" defer></script>
+</body>
+</html>

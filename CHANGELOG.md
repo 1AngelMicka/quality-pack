@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 — 2026-11-10
+
+- Documentation website (FR/EN) on GitHub Pages: https://1angelmicka.github.io/quality-pack/, with the referential rendered from the same JSON as the plugin and a filter.
+- `llms.txt` and `docs/AGENT_GUIDE.md`, so an AI agent given the repository link can guide a user through install and first use.
+- Fix: the referential still mentioned `.quality/project.yaml`; the file is `.quality/project.json` since 0.2.0.
+
 ## 0.3.0 — 2026-11-07
 
 Token economy.

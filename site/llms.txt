@@ -1,0 +1,25 @@
+# quality-pack
+
+> Claude Code plugins that make Claude build websites and apps properly from the start, then audit them across 27 quality domains (153 checks, evidence required for each) and score them out of 10, while keeping token usage low. Free, MIT, no telemetry, English and French.
+
+The pack is a Claude Code plugin marketplace named `quality-pack`, hosted at https://github.com/1AngelMicka/quality-pack. It is installed from inside Claude Code with `/plugin` commands, never with npm. It requires Claude Code, Node.js 18+ and git. Commands after install: `/qp:kickoff`, `/qp:audit`, `/qp:fix`, `/qp:handoff`.
+
+## Install and use
+
+- [Agent guide](https://github.com/1AngelMicka/quality-pack/blob/main/docs/AGENT_GUIDE.md): step-by-step instructions for an AI agent helping a user install, configure and use the pack, with checks and common errors. Start here.
+- [README (English)](https://github.com/1AngelMicka/quality-pack/blob/main/README.en.md): overview, install, commands, scoring, token economy, troubleshooting.
+- [README (français)](https://github.com/1AngelMicka/quality-pack/blob/main/README.md): même contenu en français.
+- [Documentation site](https://1angelmicka.github.io/quality-pack/en/): the same content as a web page.
+
+## Reference
+
+- [Referential (English)](https://github.com/1AngelMicka/quality-pack/blob/main/docs/en/REFERENTIAL.md): all 27 domains, build rules and audit criteria with severity and how to verify.
+- [Référentiel (français)](https://github.com/1AngelMicka/quality-pack/blob/main/docs/fr/REFERENTIEL.md)
+- [Machine-readable referential](https://github.com/1AngelMicka/quality-pack/blob/main/plugins/core/referential/referential.json): the JSON the plugin uses.
+- [Changelog](https://github.com/1AngelMicka/quality-pack/blob/main/CHANGELOG.md)
+
+## Optional
+
+- [Security policy](https://github.com/1AngelMicka/quality-pack/blob/main/SECURITY.md): what the pack runs locally, how to report a vulnerability.
+- [Contributing](https://github.com/1AngelMicka/quality-pack/blob/main/CONTRIBUTING.md): repository layout, build and tests.
+- [Third-party notices](https://github.com/1AngelMicka/quality-pack/blob/main/THIRD_PARTY_NOTICES.md): projects studied and companion tools.
