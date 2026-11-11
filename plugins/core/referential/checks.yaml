@@ -14,6 +14,8 @@ checks:
   axe: {provider: core, fr: "axe-core via Playwright sur les pages principales", en: "axe-core via Playwright on main pages"}
   contrast_check: {provider: core, fr: "Contrastes des tokens et des pages rendues", en: "Contrast of tokens and rendered pages"}
   flow_run: {provider: core, fr: "Tâches clés jouées pas à pas sur téléphone et ordinateur (Playwright) : capture, axe-core et mesures d'effort à chaque étape", en: "Key tasks played step by step on phone and desktop (Playwright): screenshot, axe-core and effort measures at every step"}
+  spacing_audit: {provider: core, fr: "Audit de l'espacement et de l'alignement du rendu (qp deslop) : proximité, écarts entre frères, bords, boîtes, contrôles, débordements, à 375, 768 et 1440 px", en: "Spacing and alignment audit of the rendered page (qp deslop): proximity, sibling gaps, edges, boxes, controls, overflow, at 375, 768 and 1440 px"}
+  generic_look_scan: {provider: core, fr: "Mesure du rendu dans le navigateur : signaux de rendu générique pondérés, tailles et familles de police, rayons, longueur et interlignage des lignes, petites cibles", en: "Rendered page measured in the browser: weighted generic-look signals, font sizes and families, radii, line length and height, small targets"}
   viewport_screenshots: {provider: core, fr: "Captures et débordements à 360, 390, 768, 1024, 1440 px", en: "Screenshots and overflow at 360, 390, 768, 1024, 1440 px"}
   console_check: {provider: core, fr: "Erreurs et avertissements console (Playwright)", en: "Console errors and warnings (Playwright)"}
   email_auth_check: {provider: core, fr: "Enregistrements SPF, DKIM, DMARC", en: "SPF, DKIM, DMARC records"}

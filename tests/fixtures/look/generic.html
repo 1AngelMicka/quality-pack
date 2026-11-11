@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Generic landing page (test fixture)</title>
+<style>
+  body { margin: 0; font-family: Inter, Arial, sans-serif; background: #0b0b14; color: #eee; }
+  section { padding: 64px 24px; animation: up .6s ease both; }
+  @keyframes up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .hero { text-align: center; background: linear-gradient(135deg, #4f46e5, #9333ea); }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; background: rgba(255,255,255,.15); font-size: 12px; }
+  .grad { background: linear-gradient(90deg, #a78bfa, #60a5fa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .btn { display: inline-block; padding: 12px 20px; border-radius: 16px; background: #6d28d9; color: #fff; box-shadow: 0 0 40px rgba(124,58,237,.8); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { border-radius: 16px; padding: 24px; background: rgba(255,255,255,.06); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.1); }
+  .eyebrow { text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
+  .glass { backdrop-filter: blur(8px); border-radius: 16px; background: rgba(255,255,255,.04); padding: 16px; }
+  .alt { background: linear-gradient(180deg, #111, #1e1b4b); }
+</style>
+</head>
+<body>
+<section class="hero">
+  <span class="badge">✨ New: AI-powered</span>
+  <h1 class="grad">Unlock your potential with seamless workflows</h1>
+  <p>Our revolutionary platform lets you elevate your team effortlessly.</p>
+  <a class="btn" href="#">🚀 Get started</a>
+</section>
+<section class="alt">
+  <p class="eyebrow">Features</p>
+  <h2>Why choose us</h2>
+  <div class="cards">
+    <div class="card"><svg width="24" height="24"></svg><h3>Fast</h3><p>Blazing fast.</p></div>
+    <div class="card"><svg width="24" height="24"></svg><h3>Secure</h3><p>Bank-grade security.</p></div>
+    <div class="card"><svg width="24" height="24"></svg><h3>Simple</h3><p>Seamless setup.</p></div>
+  </div>
+</section>
+<section>
+  <p class="eyebrow">How it works</p>
+  <h2>Three simple steps</h2>
+  <div class="glass">Step one</div>
+</section>
+<section>
+  <p class="eyebrow">Pricing</p>
+  <h2>Plans for everyone</h2>
+  <a class="btn" href="#">Start free</a>
+</section>
+</body>
+</html>

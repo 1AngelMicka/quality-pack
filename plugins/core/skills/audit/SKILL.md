@@ -51,11 +51,12 @@ Run these before starting the agents, so every agent reads the same evidence ins
    - If the local app is not running and there is an obvious start script, ask the user whether to start it, and run it in the background.
 3. `qp web <url> --run <run>`, which writes `web.json`.
 4. `qp browser <url> <url>… --run <run>` with the home page and 2 to 4 main pages, which writes `browser.json` and screenshots of pages as they load.
-5. `qp flows --run <run> [--base <url>]`, which plays every key task on a phone and a desktop and writes `flows.json` and a screenshot per step in `flows/`. This is the main evidence for the interface: features, UX, ergonomics, accessibility and responsive criteria rely on it.
+5. If the project has a UI: `qp deslop <url> --run <run>` on the main work screen (spacing and alignment per element at 375, 768 and 1440 px, `deslop.json`), and `qp look <url> <url>… --run <run>` on the same pages as `browser`, which writes `look.json` (generic-look signals weighted by the project's surface mode, type sizes, line length, small targets).
+6. `qp flows --run <run> [--base <url>]`, which plays every key task on a phone and a desktop and writes `flows.json` and a screenshot per step in `flows/`. This is the main evidence for the interface: features, UX, ergonomics, accessibility and responsive criteria rely on it.
 
 If `browser` or `flows` says Playwright is not available, ask the user whether to run `qp browser-setup` (one-time download of Playwright, axe-core and Chromium into the pack's cache, never into the project). Never install them in the project.
 
-In incremental mode, skip `web`, `browser` and `flows` when no changed file can affect the pages, styles, headers or server config.
+In incremental mode, skip `web`, `browser`, `look`, `deslop` and `flows` when no changed file can affect the pages, styles, headers or server config.
 
 ## 4. Check the criteria
 
@@ -70,7 +71,7 @@ Write `<out_dir>/parts/quick.json` in the auditor format (see the `qp:auditor` a
 ```
 Audit group <group> of the quality pack in <absolute project path>. Run every command from that folder.
 Plan: <out_dir>/plan.json (use only the criteria of group <group>). Mode: <mode>. Run: <run>.
-Evidence: <out_dir>/scan.json, <out_dir>/web.json, <out_dir>/browser.json, <out_dir>/flows.json and its screenshots in <out_dir>/flows/ (some may be missing).
+Evidence: <out_dir>/scan.json, <out_dir>/web.json, <out_dir>/browser.json, <out_dir>/look.json, <out_dir>/deslop.json, <out_dir>/flows.json and its screenshots in <out_dir>/flows/ (some may be missing).
 Code graph: <"available, query it first" or "not available">.
 CLI: node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" (pass --run <run>)
 Write your results to <out_dir>/parts/<group>.json. Write "fix" in <language>.
@@ -102,6 +103,6 @@ The counter-check can only lower a result, with its own evidence; `assemble` ref
    - the counter-check: how many passes it lowered, if any;
    - the number of other issues and of criteria not checked;
    - the tokens saved by compact outputs (`token_savings.saved`), if any;
-   - `.quality/AUDIT.md` for the full report, and `/qp:fix` to fix the issues by priority.
+   - `.quality/AUDIT.md` for the full report, `.quality/report.html` to see the scores over time and the screenshots of every step of the key tasks (open it in a browser), and `/qp:fix` to fix the issues by priority.
 
 A score is only worth the evidence behind it: never mark a criterion as passed because it is probably fine.

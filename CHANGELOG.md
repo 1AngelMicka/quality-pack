@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.0 — 2026-11-11
+
+Design: the pack now helps design and advise, not only audit. Built from a research round on six topics (screen patterns, UX principles and heuristics, references to tokens, forms and WCAG 2.2, the generic AI look, existing design skills and their licences); sources in `plugins/core/SOURCES.md`.
+
+- **`design-screens` skill**: panes per window width (600 / 840 / 1200 px), three layout shells, navigation and main action rules, and recipes for 11 task types, each for phone and desktop, ending with the flow measures.
+- **`design-direction` skill**: references sorted into look and organisation, 4–5 mood words turned into testable principles, style tiles, then W3C DTCG 2025.10 tokens in three tiers (primitive, semantic, component) for light and dark, OKLCH colour scales, type, spacing, radius and motion rules, and a dated list of generic clusters.
+- **`design-review` skill** (`/qp:design-review`): measures first, two-pass heuristic review (Nielsen, Bastien and Scapin), severity 0–4 confirmed by three independent passes, two or three reorganisations with their effort gap.
+- **`qp.mjs look <url>`**: the rendered page measured in the browser — weighted generic-look signals (never one alone, strict only in `persuade` mode), font sizes and families, radii, line length and height, small targets. Evidence for UI-04 and SLP-04 (`look.json`).
+- **`qp.mjs tokens`**: DTCG format, references and cycles, units, tiers, WCAG contrast matrix per theme (never rounded), colours outside sRGB. Exit code 2 on failure.
+- **Effort in seconds**: flows report `klm_seconds` (keystroke-level model) to compare designs; a gap under 20–25 % is a tie.
+- **`qp.mjs report`** and `.quality/report.html`, written at every audit: both scores over time, screenshots of every step of the key tasks side by side (phone, desktop), the ergonomics findings, the issues.
+- **`qp.mjs record <flow-id>`**: record a key task by doing it in Playwright's recorder; it becomes a flow with robust selectors.
+- `surface` in `project.json` (persuade, operate, read), asked at `/qp:kickoff`.
+- Flow screenshots are stored relative to the project root.
+- **`deslop-ui` skill and `qp.mjs deslop`**, brought in from the author's own skill: spacing, alignment, boxes, controls, screen edges and signs of generated UI measured per element on the rendered page at 375, 768 and 1440 px, with the installed Chrome or Edge over CDP (no Playwright needed), Tauri stub and `--attach` for real windows, screenshots per width. Evidence for UI-03 (`deslop.json`). Its reference galleries are now free ones only.
+- From a batch of 57 X bookmarks on design (every link checked for licence and price, `SOURCES.md` at the root lists all of them with their status): `qp look` gains a redesign guard (`--baseline`: controls lost since an earlier look), a reduced-motion check and the share of accent colour on app screens; `design-direction` gains free reference galleries, a rule against cloning another brand's identity, the concept-from-the-product's-world step and elevation values for light and dark themes (after heydamir/unslop, CC BY 4.0); `design-review` gains rule REV-09 (a redesign keeps every control and key task); Framelink Figma MCP becomes a companion tool.
+
 ## 0.4.0 — 2026-11-11
 
 From a real audit (Scrapify): the UX scored 8.2/10 while its main screen was an endless page nobody wanted to use. The audit judged each screen's hygiene, on empty screens, and one score mixed the interface with the server.

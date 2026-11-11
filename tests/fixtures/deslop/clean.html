@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tableau de bord</title>
+<style>
+  :root { --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s6: 24px; --s8: 32px; --s12: 48px; --s16: 64px; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; background: #fff; color: #1a1a1a; }
+  .wrap { max-width: 1040px; margin-inline: auto; padding: var(--s8) var(--s4); }
+  header { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); }
+  header strong { font-size: 18px; }
+  nav { display: flex; gap: var(--s4); }
+  nav a { display: flex; align-items: center; min-height: 44px; color: inherit; }
+  h1 { margin: var(--s12) 0 var(--s2); font-size: 32px; line-height: 1.2; }
+  .lead { margin: 0 0 var(--s8); color: #555; max-width: 60ch; }
+  h2 { margin: var(--s12) 0 var(--s4); font-size: 20px; }
+  ul.items { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s2); }
+  ul.items li { display: flex; justify-content: space-between; gap: var(--s4); padding: var(--s3) var(--s4); border: 1px solid #ddd; border-radius: 8px; }
+  ul.items p { margin: 0; }
+  form { display: flex; gap: var(--s2); flex-wrap: wrap; }
+  form input { height: 44px; padding: 0 var(--s3); border: 1px solid #bbb; border-radius: 8px; font: inherit; flex: 1 1 200px; }
+  form button { height: 44px; padding: 0 var(--s4); border: 0; border-radius: 8px; background: #1a1a1a; color: #fff; font: inherit; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <strong>Atelier</strong>
+    <nav><a href="#">Commandes</a><a href="#">Clients</a></nav>
+  </header>
+  <main>
+    <h1>Commandes du jour</h1>
+    <p class="lead">Douze commandes attendent une préparation, dont deux à expédier avant midi.</p>
+    <form>
+      <input placeholder="Rechercher une commande" aria-label="Rechercher une commande">
+      <button>Rechercher</button>
+    </form>
+    <h2>À préparer</h2>
+    <ul class="items">
+      <li><p>Commande 4821</p><p>3 articles</p></li>
+      <li><p>Commande 4822</p><p>1 article</p></li>
+      <li><p>Commande 4823</p><p>5 articles</p></li>
+    </ul>
+  </main>
+</div>
+</body>
+</html>

@@ -3,7 +3,9 @@
 // (pages to scroll, controls on screen, where the main action and the result are). The audit judges the
 // interface on these states, not on the empty screen a page shows when it first loads.
 import { existsSync, mkdirSync, readdirSync } from "node:fs";
-import { join, dirname, basename, isAbsolute, resolve } from "node:path";
+import { join, dirname, basename, isAbsolute, resolve, relative } from "node:path";
+
+const rel = (root, p) => relative(root, p).split("\\").join("/");
 import { loadBrowserTools, launch } from "./browser.mjs";
 
 export const DEVICES = {
@@ -17,6 +19,27 @@ export const DEFAULT_BUDGETS = { page_screens: { mobile: 3, desktop: 2 }, contro
 
 const ACTIONS = ["goto", "click", "fill", "select", "check", "upload", "press", "hover", "wait_for", "wait", "expect", "scroll"];
 const COUNTED = new Set(["click", "fill", "select", "check", "upload", "press"]); // what the user does by hand
+
+// Keystroke-level model (Card, Moran and Newell): P point 1.1 s, B click 0.1 s, K key 0.28 s (average typist),
+// H hand to keyboard 0.4 s, M mental preparation 1.35 s before each decision. Scrolling is counted as one
+// pointing move per screen. KLM is about 21 % off on average: compare designs with it, never promise a time.
+export function klmSeconds(steps) {
+  const P = 1.1, B = 0.1, K = 0.28, H = 0.4, M = 1.35;
+  let t = 0;
+  for (const s of steps) {
+    if (s.decision) t += M;
+    t += (s.scrolled_screens || 0) * P;
+    switch (s.action) {
+      case "click": case "check": t += P + B; break;
+      case "select": t += 2 * (P + B); break;
+      case "upload": t += 2 * (P + B) + M; break;
+      case "fill": t += P + B + H + (s.chars || 0) * K + H; break;
+      case "press": t += K; break;
+      default: break;
+    }
+  }
+  return Math.round(t * 10) / 10;
+}
 const slug = (s) => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "step";
 
 // Check the flows of a project file. Returns normalised flows and readable errors; never throws.
@@ -181,6 +204,7 @@ export function summarizeRun(run, budgets) {
     actions: run.steps.filter((x) => COUNTED.has(x.action)).length,
     decisions: run.steps.filter((x) => x.decision).length,
     scroll_screens: Math.round(run.steps.reduce((t, x) => t + (x.scrolled_screens || 0), 0) * 10) / 10,
+    klm_seconds: klmSeconds(run.steps),
     max_page_screens: max("page_screens"),
     max_controls_rendered: max("controls_rendered"),
     max_controls_in_viewport: max("controls_in_viewport"),
@@ -229,6 +253,7 @@ export async function playFlows(project, { root, outDir, base, only = [], budget
           const action = Object.keys(step).find((k) => ACTIONS.includes(k));
           const target = typeof step[action] === "string" ? step[action] : step[action]?.selector || "";
           const rec = { index: i + 1, name: step.name || `${action} ${target}`.trim(), action, target, decision: !!step.decision };
+          if (action === "fill") rec.chars = String(step.fill.value ?? "").length;
           const before = action === "goto" ? null : await page.evaluate(scrollPositions).catch(() => null);
           try {
             await act(page, step, root);
@@ -250,11 +275,12 @@ export async function playFlows(project, { root, outDir, base, only = [], budget
             rec.axe = await runAxe(page, tools.axePath);
             if (shots) {
               const name = `${flow.id}-${device}${scheme === "dark" ? "-dark" : ""}-${String(i + 1).padStart(2, "0")}-${slug(rec.name)}`;
-              rec.screenshot = join(shots, `${name}.png`);
-              await page.screenshot({ path: rec.screenshot }).catch(() => { delete rec.screenshot; });
+              // Paths are stored relative to the project root, so reports and agents work on any machine.
+              const shot = join(shots, `${name}.png`);
+              if (await page.screenshot({ path: shot }).then(() => true, () => false)) rec.screenshot = rel(root, shot);
               if ((rec.metrics?.page_screens || 0) > 1.2 && rec.metrics?.scroller === "page") {
-                rec.screenshot_full = join(shots, `${name}-full.png`);
-                await page.screenshot({ path: rec.screenshot_full, fullPage: true }).catch(() => { delete rec.screenshot_full; });
+                const full = join(shots, `${name}-full.png`);
+                if (await page.screenshot({ path: full, fullPage: true }).then(() => true, () => false)) rec.screenshot_full = rel(root, full);
               }
             }
           }

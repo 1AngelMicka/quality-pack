@@ -153,8 +153,8 @@ _S'applique si : Le projet a une interface utilisateur_
 | --- | --- | --- | --- |
 | UI-01 | Couleurs, tailles et espacements passent par les tokens | Majeur | Rechercher les valeurs en dur (hex, px arbitraires, classes Tailwind arbitraires) dans les composants. (auto `design_token_scan`) |
 | UI-02 | Tous les éléments interactifs ont survol, focus visible, actif et désactivé | Majeur | Parcourir au clavier et à la souris les boutons, liens, champs. (lecture) |
-| UI-03 | Alignements et grille cohérents, aucun élément qui déborde | Majeur | Captures d'écran : bords gauche et droit égaux, pas de texte coupé ni de débordement horizontal. (lecture) |
-| UI-04 | Hiérarchie typographique claire et limitée | Mineur | Au plus 2 familles de polices et une échelle de tailles définie. (lecture) |
+| UI-03 | Alignements et grille cohérents, aucun élément qui déborde | Majeur | deslop.json : aucun constat « high » (proximité inversée, écarts inégaux, bords qui dérivent, texte collé, débordement) aux trois largeurs, quelques « med » au plus ; captures : bords gauche et droit égaux, pas de texte coupé. (lecture `spacing_audit`) |
+| UI-04 | Hiérarchie typographique claire et limitée | Mineur | Au plus 2 familles de polices et une échelle de tailles définie ; look.json : checks.font_sizes, font_families, line_length et line_height. (lecture `generic_look_scan`) |
 | UI-05 | Composants réutilisés plutôt que dupliqués avec des variations | Mineur | Rechercher les boutons, cartes, modales réimplémentés plusieurs fois. (lecture) |
 | UI-06 | Le mode sombre est complet et lisible | Mineur | Aucun composant resté clair, contrastes vérifiés dans les deux thèmes. (lecture) |
 
@@ -179,7 +179,7 @@ _S'applique si : Le projet a une interface utilisateur_
 | SLP-01 | Aucune formule creuse ou jargon d'IA dans les textes | Majeur | Scanner les textes avec la liste noire FR/EN du pack ; relire les titres et accroches. (auto `slop_wording_scan`) |
 | SLP-02 | La direction visuelle est propre au projet et documentée | Majeur | DESIGN.md décrit les choix (ambiance, couleurs, typographie) et ils se retrouvent à l'écran ; comparer avec les gabarits par défaut (shadcn brut, dégradé violet, verre). L'existence de DESIGN.md ne suffit pas ; le respect de l'organisation des références est vérifié par ERG-08. (lecture) |
 | SLP-03 | Aucun visuel décoratif sans information (illustrations génériques, blobs, icônes au hasard) | Majeur | Pour chaque image ou illustration : que montre-t-elle de réel ? (lecture) |
-| SLP-04 | Les sections répondent à une question de l'utilisateur, pas à un gabarit | Mineur | Chercher les blocs génériques : témoignages inventés, « Nos valeurs », grilles de 3 avantages vagues. (lecture) |
+| SLP-04 | Les sections répondent à une question de l'utilisateur, pas à un gabarit | Mineur | Chercher les blocs génériques : témoignages inventés, « Nos valeurs », grilles de 3 avantages vagues ; look.json : palier « strong » en mode persuade = échec, « some » = partiel, jamais sur un seul signal ; en mode operate, seuls les signaux de qualité comptent. (lecture `generic_look_scan`) |
 | SLP-05 | Les animations sont utiles, discrètes et respectent prefers-reduced-motion | Mineur | Lister les animations et leur rôle ; tester avec réduction des animations activée. (lecture) |
 
 ### Responsive (RSP)

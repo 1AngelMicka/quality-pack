@@ -153,8 +153,8 @@ _Applies if: The project has a user interface_
 | --- | --- | --- | --- |
 | UI-01 | Colours, sizes and spacing go through tokens | Major | Search for hard-coded values (hex, arbitrary px, arbitrary Tailwind classes) in components. (auto `design_token_scan`) |
 | UI-02 | All interactive elements have hover, visible focus, active and disabled | Major | Go through buttons, links and fields with keyboard and mouse. (inspection) |
-| UI-03 | Consistent alignment and grid, nothing overflowing | Major | Screenshots: equal left and right edges, no clipped text, no horizontal overflow. (inspection) |
-| UI-04 | Clear and limited type hierarchy | Minor | At most 2 font families and a defined size scale. (inspection) |
+| UI-03 | Consistent alignment and grid, nothing overflowing | Major | deslop.json: no high finding (inverted proximity, uneven gaps, drifting edges, cramped text, overflow) at the three widths, a few med at most; screenshots: equal left and right edges, no clipped text. (inspection `spacing_audit`) |
+| UI-04 | Clear and limited type hierarchy | Minor | At most 2 font families and a defined size scale; look.json: checks.font_sizes, font_families, line_length and line_height. (inspection `generic_look_scan`) |
 | UI-05 | Components reused rather than duplicated with variations | Minor | Search for buttons, cards, modals implemented several times. (inspection) |
 | UI-06 | Dark mode is complete and readable | Minor | No component left light, contrast checked in both themes. (inspection) |
 
@@ -179,7 +179,7 @@ _Applies if: The project has a user interface_
 | SLP-01 | No hollow phrase or AI jargon in the copy | Major | Scan the copy with the pack's FR/EN blacklist; reread headings and taglines. (auto `slop_wording_scan`) |
 | SLP-02 | The visual direction is project-specific and documented | Major | DESIGN.md states the choices (mood, colours, type) and they show on screen; compare with default templates (raw shadcn, purple gradient, glass). DESIGN.md existing is not enough; following how the references are organised is checked by ERG-08. (inspection) |
 | SLP-03 | No decorative visual without information (generic illustrations, blobs, random icons) | Major | For each image or illustration: what real thing does it show? (inspection) |
-| SLP-04 | Sections answer a user question, not a template | Minor | Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits. (inspection) |
+| SLP-04 | Sections answer a user question, not a template | Minor | Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits; look.json: tier "strong" in persuade mode = fail, "some" = partial, never on one signal alone; in operate mode only quality signals count. (inspection `generic_look_scan`) |
 | SLP-05 | Animations are useful, subtle and respect prefers-reduced-motion | Minor | List animations and their purpose; test with reduced motion enabled. (inspection) |
 
 ### Responsive (RSP)

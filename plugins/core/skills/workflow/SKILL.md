@@ -13,7 +13,8 @@ If `.quality/handoff.md` exists and is recent, read it first: it says where the 
 1. Restate the task in one or two sentences and list your assumptions. If something is ambiguous and a wrong guess would be costly, ask. Otherwise pick the most reasonable reading and say which one you took.
 2. For a new feature, write its acceptance criteria first (in the task, a spec file or the ticket): what the user can do, what they see in the empty, loading and error cases, what must never happen.
 3. Find every place your change must reach: callers, types, tests, fixtures, config, translations (see "Find code cheaply" below).
-4. Load the build skills of the quality pack for the domains you will touch (`build-product-experience`, `build-ergonomics`, `build-design`, `build-security-data`, `build-reliability-quality`, `build-performance-seo`, `build-integrations-payments`, `build-operations`) and the rules skill of the stack you are in.
+4. For a new or reorganised screen, use the `design-screens` skill before coding; for colours, fonts, spacing or a new look, the `design-direction` skill.
+5. Load the build skills of the quality pack for the domains you will touch (`build-product-experience`, `build-ergonomics`, `build-design`, `build-security-data`, `build-reliability-quality`, `build-performance-seo`, `build-integrations-payments`, `build-operations`) and the rules skill of the stack you are in.
 
 ## While you write code
 
@@ -33,7 +34,7 @@ If `.quality/handoff.md` exists and is recent, read it first: it says where the 
 ## Before you say it is done
 
 1. Run the project's typecheck, lint and tests (the stack rules skill lists the commands) and read the result.
-2. For UI changes, open the page (Playwright or the browser) at mobile and desktop widths, check the empty, loading and error states, and read the console. If the change touches a key task of `.quality/project.json` › `flows`, play it: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" flows <flow-id>`, then look at the screenshots of the steps you changed, on the phone and on the desktop. A screen that passes every check but makes the task long or confusing is not done.
+2. For UI changes, open the page (Playwright or the browser) at mobile and desktop widths, check the empty, loading and error states, and read the console. If the change touches a key task of `.quality/project.json` › `flows`, play it: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" flows <flow-id>`, then look at the screenshots of the steps you changed, on the phone and on the desktop. A screen that passes every check but makes the task long or confusing is not done. Before saying interface work is done, follow the `deslop-ui` skill: `qp.mjs deslop <url>`, fix the high findings, look at the screenshots.
 3. Check the "Done means" criteria of the domains you touched.
 4. Report in two or three lines: what changed, how you verified it, and anything you skipped or could not check. No recap of the steps, no restating the code. Never claim a check you did not run.
 
