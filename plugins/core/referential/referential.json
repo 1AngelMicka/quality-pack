@@ -1420,8 +1420,8 @@
      ],
      "build": [
       {
-       "fr": "Concevoir mobile d'abord, puis élargir ; tester à 360, 390, 768, 1024 et 1440 px.",
-       "en": "Design mobile first, then widen; test at 360, 390, 768, 1024 and 1440 px."
+       "fr": "Concevoir mobile d'abord, puis élargir ; tester à 360, 390, 768, 1024, 1440 et 1920 px (certaines mises en page ne cassent que sur grand écran).",
+       "en": "Design mobile first, then widen; test at 360, 390, 768, 1024, 1440 and 1920 px (some layouts only break on wide screens)."
       },
       {
        "fr": "Cibles tactiles d'au moins 44 × 44 px ; aucune fonction accessible uniquement au survol.",
