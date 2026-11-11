@@ -4,7 +4,7 @@ You are an AI agent helping a user install, configure or use quality-pack. Follo
 
 ## What it is, in one paragraph
 
-quality-pack is a set of Claude Code plugins. While the user codes, it gives Claude build rules across 27 quality domains. On demand, it audits the project (153 checks, each with evidence) and writes a report scored out of 10, with fixes by priority. It also reduces token usage. It is distributed as a Claude Code **plugin marketplace**, not as an npm package: never try `npm install quality-pack`.
+quality-pack is a set of Claude Code plugins. While the user codes, it gives Claude build rules across 28 quality domains. On demand, it audits the project (162 checks, each with evidence), plays the user's key tasks on a phone and a desktop, and writes a report with two scores out of 10 (experience; engineering and operations), with fixes by priority. It also reduces token usage. It is distributed as a Claude Code **plugin marketplace**, not as an npm package: never try `npm install quality-pack`.
 
 ## 0. Find out where the user is
 
@@ -51,15 +51,15 @@ Add `--scope project` to both to share the setup with a team through `.claude/se
 
 Offer these, explain why in one sentence each, and install only with the user's yes.
 
-- **Browser and accessibility checks**, in the project: `npm i -D @playwright/test axe-core`, then `npx playwright install chromium`. Without them, those checks are reported as "not checked".
+- **Browser checks and key tasks**: `node <plugin folder>/scripts/qp.mjs browser-setup`, once. It installs Playwright, axe-core and Chromium into the pack's cache, not into the project. `/qp:audit` offers it when needed. Without them, those checks are reported as "not checked".
 - **Graphify**, for projects with more than about 60 source files: Claude queries a local code graph instead of re-reading files, which saves tokens. Install with `uv tool install graphifyy` (or `pipx install graphifyy`), then `graphify install --project` in the project. It needs Python 3.10 or later.
 
 ## 3. First use
 
 In the project, inside Claude Code:
 
-1. `/qp:kickoff`. Claude asks about the project: who it is for, the type (showcase site, web app, SaaS, mobile, API), what it does, the visual direction. It writes `.quality/project.json`, `DESIGN.md` and a section in `CLAUDE.md`. Let the user answer; do not answer for them.
-2. `/qp:audit`. The first audit is a full one. It ends with a score and writes `.quality/AUDIT.md`.
+1. `/qp:kickoff`. Claude asks about the project: who it is for, the type (showcase site, web app, SaaS, mobile, API), what it does, the visual direction, and the 2 to 5 key tasks people come for; it writes them as flows the audit will play. It writes `.quality/project.json`, `DESIGN.md` and a section in `CLAUDE.md`. Let the user answer; do not answer for them.
+2. `/qp:audit`. The first audit is a full one. It ends with two scores and writes `.quality/AUDIT.md`.
 3. `/qp:fix`. It fixes the open blockers first and verifies each fix.
 4. Later, `/qp:audit` again. It is incremental: only what changed is checked again.
 
@@ -76,7 +76,8 @@ Cheaper options to mention:
 | Adding the marketplace fails | git is missing, or there is no GitHub SSH key: set `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` and retry. |
 | `node: command not found` in a hook | Install Node.js 18+ and make sure `node` is on the PATH, then restart Claude Code. |
 | A file write is blocked "as a secret" | Intended: the pack blocks API keys and passwords in code. Move the value to an environment variable. If it is truly not secret, add the comment `qp-allow-secret` on that line. |
-| Browser checks "not checked" | Playwright or axe-core missing, or the app is not running. Start the app locally or add a staging URL in `.quality/project.json` under `urls`. |
+| Browser checks "not checked" | Playwright or axe-core missing (`qp.mjs browser-setup`), or the app is not running. Start the app locally or add a staging URL in `.quality/project.json` under `urls`. |
+| A key task stops at a step | `flows.json` in the audit folder names the step and the error. Fix the selector in `.quality/project.json` › `flows` (`qp.mjs flows --check`), or the bug if it is real. |
 | The audit "redoes everything" | Normal on the first audit, after a pack update, after 30 days, or outside a Git repository. |
 
 ## 5. Update and uninstall

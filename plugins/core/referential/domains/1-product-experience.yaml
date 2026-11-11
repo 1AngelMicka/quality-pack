@@ -50,9 +50,9 @@ domains:
     criteria:
       - id: FEA-01
         severity: blocker
-        check: {method: inspect}
+        check: {method: auto, tool: flow_run}
         label: {fr: "Aucun parcours principal n'est cassé", en: "No main flow is broken"}
-        verify: {fr: "Exécuter chaque parcours principal (navigateur ou tests e2e) jusqu'au résultat attendu.", en: "Run each main flow (browser or e2e tests) to its expected result."}
+        verify: {fr: "flows.json : chaque tâche clé jouée jusqu'au résultat attendu sur téléphone et ordinateur ; à défaut de parcours déclarés, tests e2e ou exécution à la main, en le disant.", en: "flows.json: each key task played to its expected result on phone and desktop; without declared flows, e2e tests or a manual run, saying so."}
       - id: FEA-02
         severity: major
         check: {method: inspect}
@@ -85,7 +85,7 @@ domains:
         severity: major
         check: {method: inspect}
         label: {fr: "Chaque écran de données gère chargement, vide, erreur et rempli", en: "Every data screen handles loading, empty, error and filled"}
-        verify: {fr: "Lire chaque composant qui charge des données ; simuler liste vide et API en erreur.", en: "Read each data-loading component; simulate an empty list and a failing API."}
+        verify: {fr: "Lire chaque composant qui charge des données ; simuler liste vide et API en erreur ; regarder l'état rempli sur les captures des parcours, pas seulement l'écran vide.", en: "Read each data-loading component; simulate an empty list and a failing API; look at the filled state on the flow screenshots, not only the empty screen."}
       - id: UX-02
         severity: major
         check: {method: inspect}

@@ -26,7 +26,20 @@ export function summarize(output, { maxSignal = 40, tail = 15 } = {}) {
   return { total_lines: lines.length, signal_lines: signal, last_lines: last };
 }
 
-export function runCommand(label, command, { cwd, logDir, timeoutMs = 15 * 60 * 1000, env = {} } = {}) {
+// Running total of tokens saved in an audit run folder, shown in the report.
+export function recordSavings(dir, fullOutput, returned) {
+  const statsFile = join(dir, "token-savings.json");
+  let stats = { commands: 0, full_output: 0, returned: 0, saved: 0 };
+  try { if (existsSync(statsFile)) stats = JSON.parse(readFileSync(statsFile, "utf8")); } catch { /* reset */ }
+  stats.commands++;
+  stats.full_output += fullOutput;
+  stats.returned += returned;
+  stats.saved += Math.max(0, fullOutput - returned);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(statsFile, JSON.stringify(stats, null, 2));
+}
+
+export function runCommand(label, command, { cwd, logDir, timeoutMs = 15 * 60 * 1000, env = {}, record = true } = {}) {
   const started = Date.now();
   const r = spawnSync(command, { cwd, shell: true, encoding: "utf8", timeout: timeoutMs, maxBuffer: 256 * 1024 * 1024,
     env: { ...process.env, CI: process.env.CI || "1", FORCE_COLOR: "0", NO_COLOR: "1", ...env } });
@@ -42,14 +55,6 @@ export function runCommand(label, command, { cwd, logDir, timeoutMs = 15 * 60 * 
   };
   const returned = estimateTokens(JSON.stringify(result));
   result.tokens = { full_output: estimateTokens(output), returned, saved: Math.max(0, estimateTokens(output) - returned) };
-  // Keep a running total for the audit report.
-  const statsFile = join(logDir, "..", "token-savings.json");
-  let stats = { commands: 0, full_output: 0, returned: 0, saved: 0 };
-  try { if (existsSync(statsFile)) stats = JSON.parse(readFileSync(statsFile, "utf8")); } catch { /* reset */ }
-  stats.commands++;
-  stats.full_output += result.tokens.full_output;
-  stats.returned += result.tokens.returned;
-  stats.saved += result.tokens.saved;
-  writeFileSync(statsFile, JSON.stringify(stats, null, 2));
+  if (record) recordSavings(join(logDir, ".."), result.tokens.full_output, result.tokens.returned);
   return result;
 }

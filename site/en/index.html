@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>quality-pack — build properly and audit your projects with Claude Code</title>
-<meta name="description" content="Claude Code plugins: build rules across 27 domains, a scored audit out of 10 with evidence for every check, and token economy. Free, open source, no telemetry.">
+<meta name="description" content="Claude Code plugins: build rules across 28 domains, key tasks played on phone and desktop, two scores out of 10 (experience, engineering) with evidence for every check, and token economy. Free, open source, no telemetry.">
 <meta name="qp-root" content="..">
 <link rel="canonical" href="https://1angelmicka.github.io/quality-pack/en/">
 <link rel="alternate" hreflang="fr" href="https://1angelmicka.github.io/quality-pack/">
@@ -55,8 +55,8 @@
     <h1>Build it properly from the start, then prove it.</h1>
     <p class="lead">quality-pack gives Claude precise rules while it codes, then audits the project and scores it out of 10, domain by domain. Every check needs evidence. All while spending as few tokens as possible.</p>
     <ul class="facts">
-      <li><strong>27</strong> domains</li>
-      <li><strong>153</strong> verifiable checks</li>
+      <li><strong>28</strong> domains</li>
+      <li><strong>162</strong> verifiable checks</li>
       <li><strong>0</strong> telemetry</li>
       <li>EN · FR · MIT</li>
     </ul>
@@ -95,8 +95,7 @@
       <li><strong>Restart Claude Code</strong> (or run <code>/reload-plugins</code>), open your project and run:
 <pre><code>/qp:kickoff</code></pre></li>
       <li><strong>Optional: browser and accessibility checks.</strong> In your project:
-<pre><code>npm i -D @playwright/test axe-core
-npx playwright install chromium</code></pre>
+<pre><code>node &lt;plugin folder&gt;/scripts/qp.mjs browser-setup</code></pre>
       Without them the audit still runs; those checks are marked "not checked".</li>
       <li><strong>Optional: <a href="#companions">Graphify</a></strong> to save tokens on medium and large projects. <code>/qp:kickoff</code> suggests it when it helps.</li>
     </ol>
@@ -141,7 +140,7 @@ claude plugin install qp@quality-pack --scope project</code></pre>
         <tr><td>Compact outputs</td><td>Tests, lint and audits keep their full log on disk; Claude only reads the errors. In our test: 3,000 lines, about 14,700 tokens down to about 190.</td></tr>
         <tr><td>Incremental audit</td><td>Only criteria that changed files can affect are checked again. Nothing changed: no auditor runs.</td></tr>
         <tr><td>Quick mode</td><td><code>/qp:audit quick</code>: no auditor agents.</td></tr>
-        <tr><td>Auditor model</td><td>Sonnet or Haiku for the auditors; your session keeps your model.</td></tr>
+        <tr><td>Auditor model</td><td>Opus (recommended) or Fable: smaller models gave wrong evidence in real audits. Savings come from incremental audits and compact outputs.</td></tr>
         <tr><td>Handoff</td><td><code>/qp:handoff</code> avoids exploring the project again in every new session.</td></tr>
       </tbody>
     </table></div>
@@ -150,8 +149,8 @@ claude plugin install qp@quality-pack --scope project</code></pre>
       <thead><tr><th scope="col">Size</th><th scope="col">One session</th><th scope="col">A few weeks</th><th scope="col">Life of the project</th></tr></thead>
       <tbody>
         <tr><td><strong>Small</strong><br><small>under 60 source files</small></td><td>The pack is enough. Graphify adds almost nothing.</td><td>Incremental audit after each feature, quick audit before each release.</td><td>Monthly full audit, handoff for multi-day tasks.</td></tr>
-        <tr><td><strong>Medium</strong><br><small>60 to 400 files</small></td><td>Graphify: Claude queries the graph instead of re-reading. RTK for long sessions.</td><td>Incremental audits, graph kept fresh on every commit, auditors on Sonnet.</td><td>Score history, monthly full audit, handoff at the end of each session.</td></tr>
-        <tr><td><strong>Large</strong><br><small>over 400 files</small></td><td>Graphify strongly recommended, RTK recommended, read files by line ranges.</td><td>Incremental or per-group audits, Haiku for quick audits.</td><td>Full audits split by group, handoff is a must.</td></tr>
+        <tr><td><strong>Medium</strong><br><small>60 to 400 files</small></td><td>Graphify: Claude queries the graph instead of re-reading. RTK for long sessions.</td><td>Incremental audits, graph kept fresh on every commit.</td><td>Score history, monthly full audit, handoff at the end of each session.</td></tr>
+        <tr><td><strong>Large</strong><br><small>over 400 files</small></td><td>Graphify strongly recommended, RTK recommended, read files by line ranges.</td><td>Incremental or per-group audits, <code>/qp:audit quick</code> for fast checks.</td><td>Full audits split by group, handoff is a must.</td></tr>
       </tbody>
     </table></div>
     <p>The audit report shows the tokens saved. For a session's usage, type <code>/cost</code> or <code>/usage</code> in Claude Code.</p>
@@ -177,14 +176,16 @@ claude plugin install qp@quality-pack --scope project</code></pre>
     <ul>
       <li>Each check is a <strong>blocker</strong> (5 points), <strong>major</strong> (3) or <strong>minor</strong> (1). Passed: all points; partial: half; failed or not checked: none.</li>
       <li>A check passed without evidence counts as not checked.</li>
-      <li>A failed blocker caps its domain at 3/10 and the overall score at 5.9/10.</li>
-      <li>The overall score weights domains by project type: showcase site, web app, SaaS, mobile or API. Domains that do not apply are skipped.</li>
+      <li>Two scores: <strong>Experience</strong> (product, flows, ergonomics, interface, accessibility, speed) and <strong>Engineering and operations</strong> (security, data, code, tests, integrations, server, backups).</li>
+      <li>A failed blocker caps its domain at 3/10 and the score it belongs to at 5.9/10, not the other one.</li>
+      <li>Each score weights its domains by project type: showcase site, web app, SaaS, mobile or API. Domains that do not apply are skipped. The overall score stays in the report for history.</li>
+      <li>Key tasks are played on a phone and a desktop: the interface is judged on those states, not on the empty screen. An ergonomics review and a counter-check complete the auditors.</li>
     </ul>
   </section>
 
   <section id="referential">
     <h2>What it checks</h2>
-    <p>The 27 domains, their build rules and their 153 checks, from the same file the plugin uses.</p>
+    <p>The 28 domains, their build rules and their 162 checks, from the same file the plugin uses.</p>
     <div id="referential"><p>Loading… Without JavaScript, see <a href="https://github.com/1AngelMicka/quality-pack/blob/main/docs/en/REFERENTIAL.md">the referential on GitHub</a>.</p></div>
   </section>
 
@@ -218,7 +219,7 @@ CLAUDE.md               a short "Quality pack" section</code></pre>
         <tr><td><code>/qp:…</code> commands do not appear</td><td>Restart Claude Code or run <code>/reload-plugins</code>, then check <code>/plugin</code> → Installed and the Errors tab.</td></tr>
         <tr><td><code>node: command not found</code></td><td>Install Node.js 18+ and make sure <code>node</code> is on your PATH.</td></tr>
         <tr><td>Adding the marketplace fails</td><td>Check <code>git</code>. Without a GitHub SSH key: <code>CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1</code>, then retry.</td></tr>
-        <tr><td>Browser checks "not checked"</td><td>Install Playwright and axe-core, run the app locally or set a staging URL.</td></tr>
+        <tr><td>Browser checks "not checked"</td><td>Run <code>qp.mjs browser-setup</code>, run the app locally or set a staging URL.</td></tr>
         <tr><td>A write is blocked as a secret</td><td>Move the value to an environment variable. If it is not a secret: comment <code>qp-allow-secret</code> on that line.</td></tr>
         <tr><td>The incremental audit redoes everything</td><td>Intended on the first audit, after a pack update, after 30 days, or outside a Git repository.</td></tr>
       </tbody>

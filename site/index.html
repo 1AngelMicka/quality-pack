@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>quality-pack — coder proprement et auditer ses projets avec Claude Code</title>
-<meta name="description" content="Plugins Claude Code : règles de construction sur 27 domaines, audit noté sur 10 avec une preuve par critère, et économie de tokens. Gratuit, open source, sans télémétrie.">
+<meta name="description" content="Plugins Claude Code : règles de construction sur 28 domaines, tâches clés jouées sur téléphone et ordinateur, deux notes sur 10 (expérience, technique) avec une preuve par critère, et économie de tokens. Gratuit, open source, sans télémétrie.">
 <meta name="qp-root" content=".">
 <link rel="canonical" href="https://1angelmicka.github.io/quality-pack/">
 <link rel="alternate" hreflang="fr" href="https://1angelmicka.github.io/quality-pack/">
@@ -55,8 +55,8 @@
     <h1>Coder proprement dès le départ, puis le prouver.</h1>
     <p class="lead">quality-pack donne à Claude des règles précises pendant qu'il code, puis audite le projet et lui donne une note sur 10, domaine par domaine. Chaque critère exige une preuve. Le tout en dépensant le moins de tokens possible.</p>
     <ul class="facts">
-      <li><strong>27</strong> domaines</li>
-      <li><strong>153</strong> critères vérifiables</li>
+      <li><strong>28</strong> domaines</li>
+      <li><strong>162</strong> critères vérifiables</li>
       <li><strong>0</strong> télémétrie</li>
       <li>FR · EN · MIT</li>
     </ul>
@@ -94,10 +94,9 @@
 /plugin install qp-vps@quality-pack</code></pre></li>
       <li><strong>Redémarre Claude Code</strong> (ou tape <code>/reload-plugins</code>), ouvre ton projet et lance :
 <pre><code>/qp:kickoff</code></pre></li>
-      <li><strong>Facultatif : vérifications navigateur et accessibilité.</strong> Dans ton projet :
-<pre><code>npm i -D @playwright/test axe-core
-npx playwright install chromium</code></pre>
-      Sans eux, l'audit fonctionne ; ces critères sont marqués « non vérifiés ».</li>
+      <li><strong>Tâches clés et vérifications navigateur</strong>, une fois pour toutes (Claude te le propose au premier audit) :
+<pre><code>node &lt;dossier du plugin&gt;/scripts/qp.mjs browser-setup</code></pre>
+      Playwright, axe-core et Chromium vont dans le cache du pack, pas dans ton projet. Sans eux, l'audit fonctionne ; ces critères sont marqués « non vérifiés ».</li>
       <li><strong>Facultatif : <a href="#compagnons">Graphify</a></strong> pour économiser des tokens sur les projets moyens et gros. <code>/qp:kickoff</code> te le propose quand c'est utile.</li>
     </ol>
     <h3>Pour toute une équipe</h3>
@@ -141,7 +140,7 @@ claude plugin install qp@quality-pack --scope project</code></pre>
         <tr><td>Sorties compactes</td><td>Tests, lint et audits gardent leur log complet sur le disque ; Claude ne lit que les erreurs. Sur notre test : 3 000 lignes, environ 14 700 tokens ramenés à environ 190.</td></tr>
         <tr><td>Audit incrémental</td><td>Seuls les critères que les fichiers modifiés peuvent affecter sont revérifiés. Rien n'a changé : aucun auditeur lancé.</td></tr>
         <tr><td>Mode rapide</td><td><code>/qp:audit quick</code> : sans agents auditeurs.</td></tr>
-        <tr><td>Modèle des auditeurs</td><td>Sonnet ou Haiku au choix pour les auditeurs, ta session reste sur ton modèle.</td></tr>
+        <tr><td>Modèle des auditeurs</td><td>Opus (recommandé) ou Fable : les petits modèles ont donné de fausses preuves lors d'audits réels. L'économie vient des audits incrémentaux et des sorties compactes.</td></tr>
         <tr><td>Passage de relais</td><td><code>/qp:handoff</code> évite de réexplorer le projet à chaque nouvelle session.</td></tr>
       </tbody>
     </table></div>
@@ -150,8 +149,8 @@ claude plugin install qp@quality-pack --scope project</code></pre>
       <thead><tr><th scope="col">Taille</th><th scope="col">Une session</th><th scope="col">Quelques semaines</th><th scope="col">Vie du projet</th></tr></thead>
       <tbody>
         <tr><td><strong>Petit</strong><br><small>moins de 60 fichiers de code</small></td><td>Le pack suffit. Graphify n'apporte presque rien.</td><td>Audit incrémental après chaque fonctionnalité, rapide avant chaque mise en ligne.</td><td>Audit complet mensuel, handoff pour les tâches sur plusieurs jours.</td></tr>
-        <tr><td><strong>Moyen</strong><br><small>60 à 400 fichiers</small></td><td>Graphify : Claude interroge le graphe au lieu de relire. RTK si les sessions sont longues.</td><td>Audits incrémentaux, graphe tenu à jour à chaque commit, auditeurs sur Sonnet.</td><td>Historique des notes, audit complet mensuel, handoff en fin de session.</td></tr>
-        <tr><td><strong>Gros</strong><br><small>plus de 400 fichiers</small></td><td>Graphify fortement recommandé, RTK recommandé, lecture par plages de lignes.</td><td>Audits incrémentaux ou par groupe, Haiku pour les audits rapides.</td><td>Audits complets découpés par groupe, handoff obligatoire.</td></tr>
+        <tr><td><strong>Moyen</strong><br><small>60 à 400 fichiers</small></td><td>Graphify : Claude interroge le graphe au lieu de relire. RTK si les sessions sont longues.</td><td>Audits incrémentaux, graphe tenu à jour à chaque commit.</td><td>Historique des notes, audit complet mensuel, handoff en fin de session.</td></tr>
+        <tr><td><strong>Gros</strong><br><small>plus de 400 fichiers</small></td><td>Graphify fortement recommandé, RTK recommandé, lecture par plages de lignes.</td><td>Audits incrémentaux ou par groupe, <code>/qp:audit quick</code> pour les vérifications rapides.</td><td>Audits complets découpés par groupe, handoff obligatoire.</td></tr>
       </tbody>
     </table></div>
     <p>Le rapport d'audit affiche les tokens évités. Pour la consommation d'une session, tape <code>/cost</code> ou <code>/usage</code> dans Claude Code.</p>
@@ -177,14 +176,16 @@ claude plugin install qp@quality-pack --scope project</code></pre>
     <ul>
       <li>Chaque critère est <strong>bloquant</strong> (5 points), <strong>majeur</strong> (3) ou <strong>mineur</strong> (1). Réussi : tous les points ; partiel : la moitié ; en échec ou non vérifié : aucun.</li>
       <li>Un critère réussi sans preuve compte comme non vérifié.</li>
-      <li>Un point bloquant en échec plafonne son domaine à 3/10 et la note globale à 5,9/10.</li>
-      <li>La note globale pondère les domaines selon le type de projet : vitrine, application web, SaaS, mobile ou API. Les domaines sans objet sont ignorés.</li>
+      <li>Deux notes : <strong>Expérience</strong> (produit, parcours, ergonomie, interface, accessibilité, vitesse) et <strong>Technique et exploitation</strong> (sécurité, données, code, tests, intégrations, serveur, sauvegardes).</li>
+      <li>Un point bloquant en échec plafonne son domaine à 3/10 et la note dont il relève à 5,9/10, pas l'autre.</li>
+      <li>Chaque note pondère ses domaines selon le type de projet : vitrine, application web, SaaS, mobile ou API. Les domaines sans objet sont ignorés. La note d'ensemble reste dans le rapport pour l'historique.</li>
+      <li>Les tâches clés sont jouées sur téléphone et ordinateur : l'interface est jugée sur ces états, pas sur l'écran vide. Une revue d'ergonomie et une contre-vérification complètent les auditeurs.</li>
     </ul>
   </section>
 
   <section id="referentiel">
     <h2>Ce qu'il vérifie</h2>
-    <p>Les 27 domaines, leurs règles de construction et leurs 153 critères, tirés du même fichier que le plugin.</p>
+    <p>Les 28 domaines, leurs règles de construction et leurs 162 critères, tirés du même fichier que le plugin.</p>
     <div id="referential"><p>Chargement… Sans JavaScript, voir <a href="https://github.com/1AngelMicka/quality-pack/blob/main/docs/fr/REFERENTIEL.md">le référentiel sur GitHub</a>.</p></div>
   </section>
 
@@ -218,7 +219,7 @@ CLAUDE.md               une courte section « Quality pack »</code></pre>
         <tr><td>Les commandes <code>/qp:…</code> n'apparaissent pas</td><td>Redémarre Claude Code ou tape <code>/reload-plugins</code>, puis regarde <code>/plugin</code> → Installed et l'onglet Errors.</td></tr>
         <tr><td><code>node: command not found</code></td><td>Installe Node.js 18+ et vérifie que <code>node</code> est dans le PATH.</td></tr>
         <tr><td>L'ajout de la marketplace échoue</td><td>Vérifie <code>git</code>. Sans clé SSH GitHub : <code>CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1</code>, puis réessaie.</td></tr>
-        <tr><td>Vérifications navigateur « non vérifiées »</td><td>Installe Playwright et axe-core, lance l'appli en local ou renseigne une URL de préproduction.</td></tr>
+        <tr><td>Vérifications navigateur « non vérifiées »</td><td>Lance <code>qp.mjs browser-setup</code>, lance l'appli en local ou renseigne une URL de préproduction.</td></tr>
         <tr><td>Écriture bloquée comme secret</td><td>Mets la valeur dans une variable d'environnement. Si ce n'est pas un secret : commentaire <code>qp-allow-secret</code> sur la ligne.</td></tr>
         <tr><td>L'audit incrémental refait tout</td><td>Normal au premier audit, après une mise à jour du pack, après 30 jours, ou hors d'un dépôt Git.</td></tr>
       </tbody>

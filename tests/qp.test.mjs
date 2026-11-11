@@ -2,11 +2,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
-import { cpSync, mkdtempSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { cpSync, mkdtempSync, mkdirSync, readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { compute } from "../plugins/core/scripts/lib/score.mjs";
+import { compute, toMarkdown } from "../plugins/core/scripts/lib/score.mjs";
+import { validateFlows, expandFiles, summarizeRun, DEFAULT_BUDGETS } from "../plugins/core/scripts/lib/flows.mjs";
 import { loadReferential, allDomains } from "../plugins/core/scripts/lib/ref.mjs";
 import { parseHead } from "../plugins/core/scripts/lib/web.mjs";
 
@@ -22,11 +23,14 @@ function fixture() {
 }
 const qp = (cwd, ...args) => JSON.parse(execFileSync("node", [QP, ...args], { cwd, encoding: "utf8" }));
 
-test("referential has 27 domains and unique criterion ids", () => {
+test("referential has 28 domains, unique criterion ids, each domain in one score", () => {
   const domains = allDomains(ref);
-  assert.equal(domains.length, 27);
+  assert.equal(domains.length, 28);
   const ids = domains.flatMap((d) => d.criteria.map((c) => c.id));
   assert.equal(new Set(ids).size, ids.length);
+  const placed = Object.values(ref.score_areas).flatMap((a) => a.domains);
+  assert.deepEqual([...placed].sort(), domains.map((d) => d.id).sort());
+  assert.ok(ids.includes(ref.scoring.review.criterion));
 });
 
 test("score: all pass gives 10, a failed blocker caps domain and overall", () => {
@@ -163,4 +167,168 @@ test("graph status reports size and advice without Graphify", () => {
   const g = qp(dir, "graph");
   assert.equal(g.project_size.tier, "small");
   assert.equal(typeof g.advice, "string");
+});
+
+const allPass = () => Object.fromEntries(allDomains(ref).flatMap((d) => d.criteria.map((c) => [c.id, { status: "pass", evidence: "x" }])));
+const WEBAPP = ["has_ui", "has_backend", "has_auth", "has_user_data", "has_db", "public_web"];
+
+test("two scores: a blocker caps only the score it belongs to", () => {
+  const ops = compute({ profile: "webapp", flags: WEBAPP, results: { ...allPass(), "MON-01": { status: "fail" } } }, ref);
+  assert.equal(ops.scores.operations.score, ref.scoring.global_blocker_cap);
+  assert.equal(ops.scores.operations.capped, true);
+  assert.equal(ops.scores.experience.score, 10, "a missing uptime probe does not cap the experience score");
+  assert.equal(ops.global, ref.scoring.global_blocker_cap, "the overall score keeps its cap");
+  const ux = compute({ profile: "webapp", flags: WEBAPP, results: { ...allPass(), "FEA-01": { status: "fail" } } }, ref);
+  assert.equal(ux.scores.operations.score, 10);
+  assert.equal(ux.scores.experience.capped, true);
+  assert.equal(ux.issues[0].area, "experience");
+  const md = toMarkdown(ops, ref, "fr");
+  assert.match(md, /\*\*Expérience : 10,0\/10\*\*/);
+  assert.match(md, /\*\*Technique et exploitation : 5,9\/10\*\* \(Insuffisant\) — plafonnée/);
+  const api = compute({ profile: "api", flags: ["has_backend", "has_db"], results: allPass() }, ref);
+  assert.equal(api.domains.find((d) => d.id === "ergonomics").score, null);
+});
+
+test("a second audit the same day gets its own run and compares with the first", () => {
+  const dir = fixture();
+  const p1 = qp(dir, "plan");
+  const day = p1.run;
+  assert.match(day, /^\d{4}-\d{2}-\d{2}$/);
+  const ids = p1.groups.flatMap((g) => g.domains.flatMap((d) => d.criteria.map((c) => c.id)));
+  const res = Object.fromEntries(ids.map((id) => [id, { status: "pass", evidence: "ok" }]));
+  res["SEC-01"] = { status: "fail", evidence: "lib/a.ts:1", fix: "x" };
+  writeFileSync(join(dir, `.quality/audits/${day}/parts/all.json`), JSON.stringify({ results: res }));
+  const a1 = qp(dir, "assemble", "--run", day);
+  const planBefore = readFileSync(join(dir, `.quality/audits/${day}/plan.json`), "utf8");
+  const p2 = qp(dir, "plan", "blockers");
+  assert.equal(p2.run, `${day}-2`, "a scoped audit after a full one does not reuse its folder");
+  assert.equal(readFileSync(join(dir, `.quality/audits/${day}/plan.json`), "utf8"), planBefore, "the full audit's plan is untouched");
+  assert.equal(qp(dir, "plan", "blockers").run, `${day}-2`, "an unused run folder is reused");
+  writeFileSync(join(dir, `.quality/audits/${day}-2/parts/security-data.json`), JSON.stringify({ results: { "SEC-01": { status: "pass", evidence: "gitleaks: 0" } } }));
+  qp(dir, "scan");
+  assert.ok(existsSync(join(dir, `.quality/audits/${day}-2/scan.json`)), "later commands default to the latest run of the day");
+  const a2 = qp(dir, "assemble");
+  assert.equal(a2.run, `${day}-2`);
+  assert.equal(a2.previous_run, day);
+  assert.ok(a2.scores.operations.score > a1.scores.operations.score);
+  assert.match(readFileSync(join(dir, ".quality/AUDIT.md"), "utf8"), new RegExp(`Audit précédent : ${day}\\b`));
+  const st = qp(dir, "status", "--json");
+  assert.equal(st.run, `${day}-2`);
+  assert.ok(st.report_json.endsWith(`${day}-2.report.json`));
+  assert.ok(readFileSync(join(dir, `.quality/audits/${day}-2/token-savings.json`), "utf8").includes("saved"), "scan counts its token savings");
+});
+
+test("counter-check only lowers results; review findings cap their criterion", () => {
+  const dir = fixture();
+  const p = qp(dir, "plan", "--run", "2026-02-01");
+  const ids = p.groups.flatMap((g) => g.domains.flatMap((d) => d.criteria.map((c) => c.id)));
+  const res = Object.fromEntries(ids.map((id) => [id, { status: "pass", evidence: "ok" }]));
+  res["UX-02"] = { status: "fail", evidence: "e", fix: "f" };
+  const parts = join(dir, ".quality/audits/2026-02-01/parts");
+  writeFileSync(join(parts, "all.json"), JSON.stringify({ results: res }));
+  writeFileSync(join(parts, "ergonomics.json"), JSON.stringify({ results: {}, findings: [
+    { severity: "minor", problem: "small", fix: "a" },
+    { severity: "major", problem: "settings over 6 screens", flow: "f", device: "desktop", step: 3, fix: "tabs" }] }));
+  writeFileSync(join(parts, "challenge.json"), JSON.stringify({ results: {
+    "UX-01": { status: "partial", evidence: "flows/x.png: preview off screen", fix: "fix" },
+    "UX-02": { status: "pass", evidence: "looks fine" },
+    "UX-03": { status: "fail", evidence: "" } } }));
+  const a = qp(dir, "assemble", "--run", "2026-02-01");
+  assert.deepEqual(a.challenged, [{ id: "UX-01", from: "pass", to: "partial" }]);
+  assert.ok(a.warnings.some((w) => w.includes("UX-02") && w.includes("cannot raise")));
+  assert.ok(a.warnings.some((w) => w.includes("UX-03") && w.includes("no evidence")));
+  const audit = JSON.parse(readFileSync(join(dir, ".quality/audits/2026-02-01.json"), "utf8"));
+  assert.equal(audit.results["UX-02"].status, "fail");
+  assert.equal(audit.results["ERG-09"].status, "partial", "a major finding caps the review criterion at partial");
+  assert.deepEqual(audit.review_findings.map((f) => [f.id, f.severity]), [["ERG-R01", "major"], ["ERG-R02", "minor"]]);
+  const md = readFileSync(join(dir, ".quality/AUDIT.md"), "utf8");
+  assert.match(md, /## Revue d'ergonomie/);
+  assert.match(md, /ERG-R01 \| majeur \| settings over 6 screens \| f · desktop · #3 \| tabs/);
+  assert.match(md, /## Contre-vérification[\s\S]*UX-01 : réussi → partiel/);
+});
+
+test("scan follows .gitignore and the CLI writes at the project root from a sub-folder", () => {
+  const dir = fixture();
+  mkdirSync(join(dir, "target/debug"), { recursive: true });
+  writeFileSync(join(dir, "target/debug/gen.js"), "// lorem ipsum generated\nconsole.log(1)\n");
+  writeFileSync(join(dir, ".gitignore"), "target/\n");
+  execFileSync("git", ["init", "-q"], { cwd: dir });
+  mkdirSync(join(dir, "src-tauri"), { recursive: true });
+  const scan = JSON.parse(execFileSync("node", [QP, "scan", "--run", "2026-03-01"], { cwd: join(dir, "src-tauri"), encoding: "utf8" }));
+  assert.ok(!scan.findings.placeholder_scan.some((f) => f.file.startsWith("target/")), "ignored files are not scanned");
+  assert.ok(scan.findings.placeholder_scan.some((f) => f.file === "app/page.tsx"));
+  assert.ok(existsSync(join(dir, ".quality/audits/2026-03-01/scan.json")));
+  assert.ok(!existsSync(join(dir, "src-tauri/.quality")), "no .quality folder in the sub-folder");
+});
+
+test("detect: a UI with file input and no server is an app, not a showcase site", () => {
+  const dir = mkdtempSync(join(tmpdir(), "qp-app-"));
+  writeFileSync(join(dir, "package.json"), JSON.stringify({ name: "photo", dependencies: { react: "19.0.0", vite: "7.0.0" } }));
+  mkdirSync(join(dir, "src"));
+  writeFileSync(join(dir, "src/App.tsx"), `export default () => <input type="file" accept="image/*" multiple />;\n`);
+  const d = qp(dir, "detect");
+  assert.equal(d.profile, "webapp");
+  assert.ok(d.app_signals.some((s) => s.startsWith("file input")));
+  const site = mkdtempSync(join(tmpdir(), "qp-site-"));
+  writeFileSync(join(site, "index.html"), "<h1>Bakery</h1>");
+  assert.equal(qp(site, "detect").profile, "vitrine");
+});
+
+test("flows: validation, file patterns and effort budgets", () => {
+  assert.deepEqual(validateFlows({}).errors, []);
+  const bad = validateFlows({ flows: [{ id: "A b", steps: [{ click: "x", fill: { selector: "y", value: 1 } }, { upload: { selector: "input" } }], devices: ["watch"] }] });
+  assert.equal(bad.errors.length, 5, bad.errors.join("\n"));
+  const ok = validateFlows({ flows: [{ id: "make", name: "Make", steps: [{ goto: "/" }, { click: "text=Go" }] }] });
+  assert.deepEqual(ok.errors, []);
+  assert.deepEqual(ok.flows[0].devices, ["mobile", "desktop"]);
+  const dir = mkdtempSync(join(tmpdir(), "qp-fx-"));
+  mkdirSync(join(dir, "photos"));
+  for (const n of ["b.jpg", "a.jpg", "c.png"]) writeFileSync(join(dir, "photos", n), "x");
+  assert.deepEqual(expandFiles(dir, ["photos/*.jpg"]).map((p) => p.split(/[\\/]/).pop()), ["a.jpg", "b.jpg"]);
+  const step = (i, action, m) => ({ index: i, action, ok: true, scrolled_screens: m.scrolled || 0, metrics: { page_screens: m.page, controls_rendered: m.controls,
+    controls_in_viewport: 10, disclosure: { tablists: 0, collapsibles: 0 }, horizontal_overflow: false, preview: m.preview, primary: m.primary } });
+  const run = { device: "desktop", console: [], steps: [
+    step(1, "goto", { page: 1, controls: 10 }),
+    step(2, "click", { page: 6.4, controls: 85, scrolled: 3.5, preview: { found: true, visible_ratio: 0 }, primary: { found: true, visible_ratio: 0, center_y_ratio: 4 } }),
+  ] };
+  const r = summarizeRun(run, DEFAULT_BUDGETS);
+  assert.equal(r.summary.max_page_screens, 6.4);
+  assert.equal(r.summary.preview_visible_while_adjusting, 0);
+  assert.equal(r.summary.primary_visible, false);
+  assert.equal(r.over_budget.length, 3, r.over_budget.join("\n"));
+  const app = fixture();
+  const proj = JSON.parse(readFileSync(join(app, ".quality/project.json"), "utf8"));
+  writeFileSync(join(app, ".quality/project.json"), JSON.stringify({ ...proj, flows: [{ id: "pay", name: "Pay", steps: [{ click: "text=Pay" }] }] }));
+  assert.equal(qp(app, "flows", "--check").ok, true);
+  assert.deepEqual(qp(app, "plan").flows.declared.map((f) => f.id), ["pay"]);
+});
+
+test("flows play in a real browser when Playwright is available", async (t) => {
+  const { loadBrowserTools } = await import("../plugins/core/scripts/lib/browser.mjs");
+  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run qp.mjs browser-setup)");
+  const { createServer } = await import("node:http");
+  const { execFile } = await import("node:child_process");
+  const settings = Array.from({ length: 60 }, (_, i) => `<label>Setting ${i} <input name="s${i}"></label><br>`).join("");
+  const html = `<!doctype html><html lang="en"><title>T</title><body><main><h1>Editor</h1><div id="preview" style="height:300px">Preview</div>
+    <input type="file" id="f" aria-label="Photos"><button onclick="document.getElementById('done').hidden=false">Save</button>${settings}<p id="done" hidden>Saved</p></main></body></html>`;
+  const server = createServer((_, res) => { res.setHeader("content-type", "text/html"); res.end(html); }).listen(0);
+  try {
+    const dir = fixture();
+    mkdirSync(join(dir, ".quality/fixtures"), { recursive: true });
+    writeFileSync(join(dir, ".quality/fixtures/a.jpg"), "x");
+    const proj = JSON.parse(readFileSync(join(dir, ".quality/project.json"), "utf8"));
+    writeFileSync(join(dir, ".quality/project.json"), JSON.stringify({ ...proj, urls: { local: `http://localhost:${server.address().port}` },
+      flows: [{ id: "save", name: "Save", preview: "#preview", primary: "role=button[name=\"Save\"]", steps: [
+        { goto: "/" }, { upload: { selector: "#f", files: [".quality/fixtures/*.jpg"] } }, { fill: { selector: "[name=s59]", value: "v" } },
+        { click: "role=button[name=\"Save\"]" }, { expect: "text=Saved" }] }] }));
+    const r = await new Promise((resolve, reject) => execFile("node", [QP, "flows", "--run", "2026-04-01"], { cwd: dir, encoding: "utf8" },
+      (e, stdout) => (e ? reject(e) : resolve(JSON.parse(stdout)))));
+    assert.equal(r.summary.completed, 2, JSON.stringify(r.summary));
+    const desktop = r.runs.find((x) => x.device === "desktop");
+    assert.ok(desktop.max_controls_rendered >= 60);
+    assert.ok(desktop.over_budget.some((o) => o.includes("controls")));
+    const full = JSON.parse(readFileSync(join(dir, ".quality/audits/2026-04-01/flows.json"), "utf8"));
+    assert.ok(full.flows[0].runs[0].steps.every((s) => s.screenshot && existsSync(s.screenshot)));
+    assert.ok(readdirSync(join(dir, ".quality/audits/2026-04-01/flows")).length >= 10);
+  } finally { server.close(); }
 });

@@ -11,7 +11,25 @@
   "flags": ["has_ui", "has_backend", "has_auth", "has_user_data", "has_db"],
   "expected_load": { "concurrent_users": null, "notes": "" },
   "design_direction": "See DESIGN.md",
-  "audit_model": "sonnet",
+  "audit_model": "opus",
   "companions": ["graphify"],
-  "urls": { "local": "http://localhost:3000", "staging": "", "production": "" }
+  "urls": { "local": "http://localhost:3000", "staging": "", "production": "" },
+  "work_screens": ["The screens where the real work happens, e.g. the editor once photos are added"],
+  "flows": [
+    {
+      "id": "create-collage",
+      "name": "Make a collage from 4 photos and save it",
+      "devices": ["mobile", "desktop"],
+      "preview": "[data-testid=preview]",
+      "primary": "role=button[name=\"Save\"]",
+      "steps": [
+        { "name": "Home", "goto": "/" },
+        { "name": "Add 4 photos", "upload": { "selector": "input[type=file]", "files": [".quality/fixtures/photos/*.jpg"] } },
+        { "name": "Pick a layout", "click": "role=tab[name=\"Layout\"]", "decision": true },
+        { "name": "Type a title", "fill": { "selector": "role=textbox[name=\"Title\"]", "value": "Summer 2026" } },
+        { "name": "Save", "click": "role=button[name=\"Save\"]" },
+        { "name": "Saved", "expect": "text=Saved" }
+      ]
+    }
+  ]
 }

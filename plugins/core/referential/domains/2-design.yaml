@@ -66,7 +66,7 @@ domains:
         severity: major
         check: {method: inspect}
         label: {fr: "La direction visuelle est propre au projet et documentée", en: "The visual direction is project-specific and documented"}
-        verify: {fr: "DESIGN.md décrit les choix et ils se retrouvent à l'écran ; comparer avec les gabarits par défaut (shadcn brut, dégradé violet, verre).", en: "DESIGN.md states the choices and they show on screen; compare with default templates (raw shadcn, purple gradient, glass)."}
+        verify: {fr: "DESIGN.md décrit les choix (ambiance, couleurs, typographie) et ils se retrouvent à l'écran ; comparer avec les gabarits par défaut (shadcn brut, dégradé violet, verre). L'existence de DESIGN.md ne suffit pas ; le respect de l'organisation des références est vérifié par ERG-08.", en: "DESIGN.md states the choices (mood, colours, type) and they show on screen; compare with default templates (raw shadcn, purple gradient, glass). DESIGN.md existing is not enough; following how the references are organised is checked by ERG-08."}
       - id: SLP-03
         severity: major
         check: {method: inspect}
@@ -97,7 +97,7 @@ domains:
         severity: blocker
         check: {method: auto, tool: viewport_screenshots}
         label: {fr: "Aucun défilement horizontal ni contenu coupé de 360 à 1440 px", en: "No horizontal scroll or clipped content from 360 to 1440 px"}
-        verify: {fr: "Captures aux 5 largeurs de référence et mesure de scrollWidth.", en: "Screenshots at the 5 reference widths and scrollWidth check."}
+        verify: {fr: "Captures aux 5 largeurs de référence et mesure de scrollWidth, puis à chaque étape des parcours (horizontal_overflow dans flows.json).", en: "Screenshots at the 5 reference widths and scrollWidth check, then at every flow step (horizontal_overflow in flows.json)."}
       - id: RSP-02
         severity: major
         check: {method: inspect}
@@ -134,13 +134,13 @@ domains:
       - id: A11Y-01
         severity: blocker
         check: {method: auto, tool: axe}
-        label: {fr: "Aucune violation axe-core critique ou sérieuse sur les pages principales", en: "No critical or serious axe-core violation on main pages"}
-        verify: {fr: "axe-core (via Playwright) sur chaque page principale.", en: "axe-core (via Playwright) on each main page."}
+        label: {fr: "Aucune violation axe-core critique ou sérieuse sur les pages principales et les états des parcours", en: "No critical or serious axe-core violation on main pages and flow states"}
+        verify: {fr: "axe-core (via Playwright) sur chaque page principale et à chaque étape des tâches clés (flows.json). Un écran vide sans violation ne suffit pas à réussir.", en: "axe-core (via Playwright) on each main page and at every step of the key tasks (flows.json). An empty screen with no violation is not enough to pass."}
       - id: A11Y-02
         severity: major
         check: {method: inspect}
         label: {fr: "Parcours principaux réalisables entièrement au clavier, focus visible", en: "Main flows fully doable by keyboard, visible focus"}
-        verify: {fr: "Tab, Maj+Tab, Entrée, Espace, Échap sur chaque parcours ; modales qui piègent et rendent le focus.", en: "Tab, Shift+Tab, Enter, Space, Esc on each flow; modals trap and restore focus."}
+        verify: {fr: "Tab, Maj+Tab, Entrée, Espace, Échap sur chaque tâche clé, dans l'état rempli (données de test chargées) ; modales qui piègent et rendent le focus.", en: "Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus."}
       - id: A11Y-03
         severity: major
         check: {method: auto, tool: contrast_check}

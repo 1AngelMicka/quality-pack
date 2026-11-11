@@ -1,7 +1,7 @@
 {
   "name": "qp-nextjs",
   "description": "Quality pack module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind du pack qualité.",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

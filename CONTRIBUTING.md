@@ -12,13 +12,13 @@ For a security issue, do not open a public issue: see [SECURITY.md](SECURITY.md)
 
 | Path | Content |
 | --- | --- |
-| `plugins/core/referential/domains/*.yaml` | The 27 domains: build rules and audit criteria, in FR and EN. **Source of truth.** |
-| `plugins/core/referential/scoring.yaml` | Scoring rules, project flags, usage profiles |
+| `plugins/core/referential/domains/*.yaml` | The 28 domains: build rules and audit criteria, in FR and EN. **Source of truth.** |
+| `plugins/core/referential/scoring.yaml` | Scoring rules, the two scores (`score_areas`), flow budgets, project flags, usage profiles |
 | `plugins/core/referential/checks.yaml` | Automatic checks referenced by criteria |
 | `plugins/core/referential/slop-words.yaml` | Hollow wording list (FR/EN) |
 | `plugins/*/stack.yaml` | Stack modules: check commands and stack rules |
 | `plugins/core/skills/{workflow,kickoff,audit,fix,handoff}/` | Hand-written skills |
-| `plugins/core/agents/auditor.md` | The auditor agent |
+| `plugins/core/agents/` | The agents: `auditor` (one per group), `ergonomist` (ergonomics group and heuristic review), `challenger` (counter-check) |
 | `plugins/core/scripts/` | Node engine (`qp.mjs`) and hooks, no dependencies |
 | `tools/build.py` | Generates docs, JSON, build skills and manifests from the YAML |
 | `tests/` | Node tests |

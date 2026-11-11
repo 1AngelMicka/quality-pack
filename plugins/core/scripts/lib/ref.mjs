@@ -17,6 +17,24 @@ export function qualityDir(cwd = process.cwd()) {
   return join(cwd, ".quality");
 }
 
+// The project root is the closest folder, from start upwards, that has .quality/project.json.
+// So the CLI writes into the right .quality/ even when it is run from a sub-folder (src-tauri/, apps/web/).
+export function findProjectRoot(start = process.cwd()) {
+  let dir = resolve(start);
+  for (;;) {
+    if (existsSync(join(dir, ".quality", "project.json"))) return dir;
+    const up = dirname(dir);
+    if (up === dir) return null;
+    dir = up;
+  }
+}
+
+// Audit runs are named by day, then -2, -3… for later runs the same day: 2026-11-11, 2026-11-11-2.
+export const RUN_RE = /^(\d{4}-\d{2}-\d{2})(?:-(\d+))?$/;
+export const runKey = (run) => { const m = RUN_RE.exec(run); return m ? `${m[1]}#${String(m[2] || 1).padStart(4, "0")}` : run; };
+export const byRun = (a, b) => runKey(a).localeCompare(runKey(b));
+export const runDay = (run) => RUN_RE.exec(run)?.[1] || run;
+
 export function loadProject(cwd = process.cwd()) {
   const p = join(qualityDir(cwd), "project.json");
   if (!existsSync(p)) return null;

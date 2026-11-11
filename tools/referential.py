@@ -79,6 +79,22 @@ def validate():
         for f in prof["default_flags"]:
             if f not in scoring["flags"]:
                 errors.append(f"profile {p}: unknown flag {f}")
+    areas = scoring.get("score_areas", {})
+    placed = Counter(dom for a in areas.values() for dom in a.get("domains", []))
+    for name, a in areas.items():
+        for k in ("label", "summary"):
+            bilingual(a.get(k), f"score_areas.{name}.{k}", errors)
+    for did in domain_ids:
+        if placed[did] != 1:
+            errors.append(f"domain {did} must belong to exactly one score area (found {placed[did]})")
+    for extra in sorted(set(placed) - set(domain_ids)):
+        errors.append(f"score_areas: unknown domain {extra}")
+    review = scoring["scoring"].get("review", {}).get("criterion")
+    if review and review not in crit_ids:
+        errors.append(f"scoring.review: unknown criterion {review}")
+    for key, per in scoring["scoring"].get("flow_budgets", {}).items():
+        if set(per) != {"mobile", "desktop"}:
+            errors.append(f"flow_budgets.{key}: needs mobile and desktop")
     used = {c["check"].get("tool") for g in groups for d in g["domains"] for c in d["criteria"]}
     for unused in sorted(set(checks) - used):
         errors.append(f"check {unused} is never used")
@@ -104,8 +120,10 @@ T = {
            "cols": "| ID | Critère | Sévérité | Vérification |", "applies": "S'applique si",
            "rules": ["Chaque critère vaut 5 (bloquant), 3 (majeur) ou 1 (mineur). Réussi = 100 %, partiel = 50 %, échec ou non vérifié = 0.",
                      "Note du domaine = points obtenus / points possibles × 10.",
-                     "Un critère bloquant est réussi ou non (pas de partiel). En échec ou non vérifié, il plafonne la note du domaine à {cap}/10 et la note globale à {gcap}/10.",
-                     "Note globale = moyenne des domaines pondérée par le profil d'usage (vitrine, webapp, saas, mobile, api).",
+                     "Deux notes, chacune avec ses propres points bloquants : {areas}. Chacune est la moyenne de ses domaines pondérée par le profil d'usage (vitrine, webapp, saas, mobile, api).",
+                     "Un critère bloquant est réussi ou non (pas de partiel). En échec ou non vérifié, il plafonne la note du domaine à {cap}/10 et la note dont il relève à {gcap}/10. Un bloquant de technique ne plafonne donc pas l'expérience, et inversement.",
+                     "La note d'ensemble (moyenne de tous les domaines) est gardée pour l'historique ; elle est plafonnée à {gcap}/10 dès qu'un point bloquant est ouvert.",
+                     "Les tâches clés déclarées dans .quality/project.json › flows sont jouées pas à pas sur téléphone et sur ordinateur ; l'ergonomie, l'UX et l'accessibilité sont jugées sur ces états, pas sur l'écran vide.",
                      "Un domaine ou un critère dont les conditions ne s'appliquent pas au projet est ignoré."],
            "toc": "Domaines"},
     "en": {"title": "Quality referential", "intro": "This referential defines, for each of the {n} domains, the rules to follow while building and the {c} criteria checked at audit time. It is not legal advice.",
@@ -115,8 +133,10 @@ T = {
            "cols": "| ID | Criterion | Severity | How to verify |", "applies": "Applies if",
            "rules": ["Each criterion is worth 5 (blocker), 3 (major) or 1 (minor). Pass = 100%, partial = 50%, fail or not checked = 0.",
                      "Domain score = points earned / points possible × 10.",
-                     "A blocker is met or not (no partial). Failed or not checked, it caps the domain score at {cap}/10 and the overall score at {gcap}/10.",
-                     "Overall score = average of domains weighted by the usage profile (vitrine, webapp, saas, mobile, api).",
+                     "Two scores, each with its own blockers: {areas}. Each is the average of its domains weighted by the usage profile (vitrine, webapp, saas, mobile, api).",
+                     "A blocker is met or not (no partial). Failed or not checked, it caps the domain score at {cap}/10 and the score it belongs to at {gcap}/10. An engineering blocker does not cap the experience score, and the other way round.",
+                     "The overall score (average of every domain) is kept for history; it is capped at {gcap}/10 as soon as any blocker is open.",
+                     "Key tasks declared in .quality/project.json › flows are played step by step on a phone and a desktop; ergonomics, UX and accessibility are judged on those states, not on the empty screen.",
                      "A domain or criterion whose conditions do not apply to the project is skipped."],
            "toc": "Domains"},
 }
@@ -129,6 +149,12 @@ def flag_label(f, scoring, lang):
     return (" ou " if lang == "fr" else " or ").join(parts)
 
 
+def area_text(scoring, groups, lang):
+    names = {d["id"]: d["label"][lang] for g in groups for d in g["domains"]}
+    sep = " ; " if lang == "fr" else "; "
+    return sep.join(f"**{a['label'][lang]}** ({', '.join(names[x] for x in a['domains'])})" for a in scoring.get("score_areas", {}).values())
+
+
 def docs():
     scoring, checks, groups = load()
     n = sum(len(g["domains"]) for g in groups)
@@ -139,7 +165,7 @@ def docs():
         t = T[lang]
         L = [f"# {t['title']}", "", t["intro"].format(n=n, c=c), "",
              "<!-- Generated by tools/referential.py from plugins/core/referential. Do not edit by hand. -->", "",
-             f"## {t['scoring']}", ""] + [f"- {r.format(cap=cap, gcap=str(scoring['scoring']['global_blocker_cap']).replace('.', ',' if lang == 'fr' else '.'))}" for r in t["rules"]] + ["", f"## {t['toc']}", ""]
+             f"## {t['scoring']}", ""] + [f"- {r.format(cap=cap, gcap=str(scoring['scoring']['global_blocker_cap']).replace('.', ',' if lang == 'fr' else '.'), areas=area_text(scoring, groups, lang))}" for r in t["rules"]] + ["", f"## {t['toc']}", ""]
         for g in groups:
             L.append(f"- **{g['label'][lang]}** : " + ", ".join(d["label"][lang] for d in g["domains"]))
         for g in groups:

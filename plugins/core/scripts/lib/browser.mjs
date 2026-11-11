@@ -1,22 +1,47 @@
-// Browser checks with the project's own Playwright install (no dependency in the pack):
-// overflow at 5 widths, console errors, axe-core violations, touch targets, cookies and third-party
-// requests before consent, screenshots. If Playwright is missing, returns how to install it.
+// Browser checks: overflow at 5 widths, console errors, axe-core violations, touch targets, cookies and
+// third-party requests before consent, screenshots.
+// Playwright and axe-core come from the project if it has them, otherwise from the pack's own cache
+// (installed once by `qp.mjs browser-setup`, outside the project). The pack never adds them to the project.
 import { createRequire } from "node:module";
 import { join } from "node:path";
+import { homedir } from "node:os";
 import { mkdirSync, existsSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
 export const WIDTHS = [360, 390, 768, 1024, 1440];
 
-function resolveFrom(cwd, names) {
-  const req = createRequire(join(cwd, "package.json"));
+// Where `browser-setup` installs Playwright and axe-core. QP_CACHE_DIR wins, then the plugin data
+// folder Claude Code gives plugins, then ~/.cache/quality-pack.
+export function cacheDir() {
+  if (process.env.QP_CACHE_DIR) return process.env.QP_CACHE_DIR;
+  return join(process.env.CLAUDE_PLUGIN_DATA || join(homedir(), ".cache", "quality-pack"), "browser");
+}
+
+function resolveFrom(base, names) {
+  const req = createRequire(join(base, "package.json"));
   for (const n of names) {
     try { return { name: n, path: req.resolve(n) }; } catch { /* next */ }
   }
   return null;
 }
 
-async function launch(chromium) {
+const SETUP_HINT = "Playwright is not available. Run `node <qp.mjs> browser-setup` once (ask the user first: it downloads Playwright, axe-core and Chromium into the pack's cache, not into the project).";
+
+// Playwright's chromium and the path of axe.min.js, from the project first, then from the cache.
+export async function loadBrowserTools(cwd) {
+  for (const [source, base] of [["project", cwd], ["cache", cacheDir()]]) {
+    const pw = resolveFrom(base, ["playwright", "@playwright/test"]);
+    if (!pw) continue;
+    const mod = await import(pathToFileURL(pw.path).href);
+    const chromium = mod.chromium || mod.default?.chromium;
+    const axe = resolveFrom(cwd, ["axe-core"]) || resolveFrom(cacheDir(), ["axe-core"]);
+    const axePath = axe ? axe.path.replace(/axe(\.min)?\.js$|index\.js$/, "axe.min.js") : null;
+    return { source, playwright: pw.name, chromium, axePath: axePath && existsSync(axePath) ? axePath : null };
+  }
+  return null;
+}
+
+export async function launch(chromium) {
   try { return await chromium.launch(); } catch (first) {
     try { return await chromium.launch({ channel: "chrome" }); } catch { throw first; }
   }
@@ -25,11 +50,9 @@ async function launch(chromium) {
 const slug = (u) => u.replace(/^https?:\/\//, "").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").slice(0, 60) || "page";
 
 export async function browserChecks(urls, { cwd = process.cwd(), outDir } = {}) {
-  const pw = resolveFrom(cwd, ["playwright", "@playwright/test"]);
-  if (!pw) return { available: false, hint: "Install Playwright in the project: npm i -D @playwright/test && npx playwright install chromium" };
-  const mod = await import(pathToFileURL(pw.path).href);
-  const chromium = mod.chromium || mod.default?.chromium;
-  const axePath = (() => { const r = resolveFrom(cwd, ["axe-core"]); return r ? r.path.replace(/axe(\.min)?\.js$|index\.js$/, "axe.min.js") : null; })();
+  const tools = await loadBrowserTools(cwd);
+  if (!tools) return { available: false, hint: SETUP_HINT };
+  const { chromium, axePath } = tools;
   const browser = await launch(chromium);
   const shots = outDir ? join(outDir, "screens") : null;
   if (shots) mkdirSync(shots, { recursive: true });
@@ -84,7 +107,7 @@ export async function browserChecks(urls, { cwd = process.cwd(), outDir } = {}) 
               samples: small.slice(0, 8).map((e) => `${e.tagName.toLowerCase()} "${(e.innerText || e.getAttribute("aria-label") || "").trim().slice(0, 30)}" ${Math.round(e.getBoundingClientRect().width)}x${Math.round(e.getBoundingClientRect().height)}`) };
           });
         }
-        if (width === 1440 && axePath && existsSync(axePath)) {
+        if (width === 1440 && axePath) {
           try {
             await page.addScriptTag({ path: axePath });
             res.axe = await page.evaluate(async () => {
@@ -95,11 +118,20 @@ export async function browserChecks(urls, { cwd = process.cwd(), outDir } = {}) 
         }
         await ctx.close();
       }
-      if (!axePath) res.axe = { unavailable: "Install axe-core in the project to enable accessibility checks: npm i -D axe-core" };
+      if (!axePath) res.axe = { unavailable: "axe-core not found: run `node <qp.mjs> browser-setup` (pack cache, not the project)." };
       pages.push(res);
     }
   } finally {
     await browser.close();
   }
-  return { available: true, playwright: pw.name, widths: WIDTHS, pages };
+  return { available: true, playwright: tools.playwright, from: tools.source, widths: WIDTHS, pages,
+    note: "Only the pages as they load. What happens after the user acts (files added, tabs, dialogs) is in flows.json (`qp.mjs flows`)." };
+}
+
+// One-time install of Playwright, axe-core and Chromium into the pack's cache.
+export function setupCommands() {
+  return [
+    ["browser-setup-npm", "npm install --no-audit --no-fund --loglevel=error playwright@1 axe-core@4"],
+    ["browser-setup-chromium", "npx playwright install chromium"],
+  ];
 }
