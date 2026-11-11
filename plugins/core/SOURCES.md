@@ -47,6 +47,7 @@ The design skills (`design-screens`, `design-direction`, `design-review`) and th
 | Redesign guard: every control must survive a redesign | Nutlope/hallmark (`audit`, `redesign`) | MIT |
 | A concept from the product's own world, three directions before committing | Tobi Adonadon, "How to Stop Making your Apps Look Like AI Slop" (article, 2026) | article, no code |
 | Spacing audit engine, spacing laws, list of signs of generated UI | the author's own `deslop-ui` skill (ported, translated) | MIT, same author |
+| Scroll animation: native techniques, support table, libraries, rules | MDN, Chrome for Developers, web.dev, WebKit blog, scroll-driven-animations.style (Apache-2.0), NN/g "Scrolljacking 101" (2023) and "What Parallax Lacks" (2019), WCAG 2.2 Understanding 2.2.2, 2.3.1, 2.3.3, Val Head (A List Apart) on vestibular triggers, library READMEs and licences | facts restated; see SOURCES.md, batch 2 |
 | Shader backgrounds: still frame with reduced motion, pause off-screen | scrollshaders.com (observed behaviour) | proprietary site, idea only |
 
 Every link examined for the pack, with its status and licence: `SOURCES.md` at the root of the repository.

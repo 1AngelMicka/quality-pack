@@ -137,6 +137,15 @@ export function scoreLook(m, { mode = "persuade", slopWords = [] } = {}) {
     accent_share: { value: desk.accent_share, ok: mode === "persuade" || desk.accent_share <= 0.15,
       rule: mode === "persuade" ? "share of the first screen in a saturated colour (reported only on persuasive pages)" : "saturated colour on 15 % of the first screen or less on app and reading screens (house setting)" },
   };
+  if (m.scroll) {
+    const s = m.scroll;
+    const hijack = s.non_passive_root_listeners.length > 0 || s.smooth_scroll_libraries.length > 0 || s.root_overflow_hidden;
+    checks.scroll_hijack = { value: [...s.smooth_scroll_libraries, ...s.non_passive_root_listeners.map((t) => `non-passive ${t} listener`), ...(s.root_overflow_hidden ? ["page root not scrollable"] : [])].join(", ") || "native scrolling",
+      ok: !hijack || mode === "persuade",
+      rule: mode === "persuade" ? "scrolling replaced or intercepted: allowed on persuasive pages only if keyboard, anchors, find-in-page and reduced motion still work (test them)" : "native scrolling on app and reading screens: no smooth-scroll library, no non-passive wheel or touch listener on the page" };
+    checks.content_without_animation = { value: s.text_still_hidden, samples: s.hidden_samples, ok: s.text_still_hidden === 0,
+      rule: "with reduced motion requested and the page scrolled through, no text stays invisible (content never depends on an animation)" };
+  }
   if (m.reduced_motion) {
     const { normal, reduced } = m.reduced_motion;
     checks.reduced_motion = { value: `${normal} animated → ${reduced} with reduced motion`, ok: normal === 0 || reduced <= normal / 2,
@@ -145,6 +154,52 @@ export function scoreLook(m, { mode = "persuade", slopWords = [] } = {}) {
   return { version: LOOK_VERSION, mode, tier, points, signals: sig, counted: counted.map((s) => s.id), checks,
     reading: mode === "persuade" ? "0–1 point: low, 2–3: some generic signals, 4+: strong. One signal alone is never a defect."
       : "Operate and read modes count quality signals only: a conventional layout is right for app screens (Jakob's law)." };
+}
+
+// Injected before any page script: records wheel and touch listeners that are not passive on the page root
+// (they can cancel native scrolling, which is how scroll hijacking works).
+const SCROLL_PROBE = `(() => {
+  const roots = () => [window, document, document.documentElement, document.body];
+  window.__qpScroll = { nonPassive: [] };
+  const orig = EventTarget.prototype.addEventListener;
+  EventTarget.prototype.addEventListener = function (type, fn, opts) {
+    if (/^(wheel|mousewheel|DOMMouseScroll|touchmove)$/.test(type)) {
+      const passive = typeof opts === "object" && opts !== null && opts.passive === true;
+      if (!passive && roots().includes(this)) window.__qpScroll.nonPassive.push(type);
+    }
+    return orig.call(this, type, fn, opts);
+  };
+})();`;
+
+// Scroll from top to bottom like a reader, then report what scrolling looks like and what stays invisible.
+async function scrollThrough(page) {
+  const height = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < height; y += 600) {
+    await page.evaluate((v) => window.scrollTo(0, v), y);
+    await page.waitForTimeout(120);
+  }
+  await page.waitForTimeout(400);
+  return page.evaluate(() => {
+    const visible = (e) => { const s = getComputedStyle(e); return s.display !== "none" && !e.closest("[hidden], [aria-hidden='true'], dialog:not([open])"); };
+    const hidden = [...document.querySelectorAll("h1, h2, h3, h4, p, li, blockquote, figcaption")]
+      .filter((e) => visible(e) && e.textContent.trim().length >= 20)
+      .filter((e) => { let o = 1; for (let n = e; n && n !== document.body; n = n.parentElement) o *= Number(getComputedStyle(n).opacity); return o < 0.1 || getComputedStyle(e).visibility === "hidden"; });
+    const html = document.documentElement, body = document.body;
+    const smooth = [
+      (window.Lenis || window.lenis || html.classList.contains("lenis") || html.classList.contains("lenis-smooth")) && "Lenis",
+      (html.classList.contains("has-scroll-smooth") || document.querySelector("[data-scroll-container]")) && "Locomotive Scroll",
+      (document.querySelector("#smooth-wrapper #smooth-content") || window.ScrollSmoother) && "GSAP ScrollSmoother",
+    ].filter(Boolean);
+    const timelines = [...document.querySelectorAll("body *")].filter((e) => { const t = getComputedStyle(e).animationTimeline; return t && t !== "auto" && !/^auto(, ?auto)*$/.test(t); }).length;
+    return {
+      non_passive_root_listeners: [...new Set(window.__qpScroll?.nonPassive || [])],
+      smooth_scroll_libraries: smooth,
+      root_overflow_hidden: getComputedStyle(html).overflowY === "hidden" || getComputedStyle(body).overflowY === "hidden",
+      css_scroll_timelines: timelines,
+      text_still_hidden: hidden.length,
+      hidden_samples: hidden.slice(0, 5).map((e) => `${e.tagName.toLowerCase()} "${e.textContent.trim().slice(0, 40)}"`),
+    };
+  });
 }
 
 // Redesign guard: every control of the baseline must still exist after a redesign (by kind and visible name).
@@ -169,11 +224,14 @@ export async function lookAt(urls, { cwd, mode = "persuade", slopWords = [], bas
         await ctx.close();
       }
       if (m.error) { pages.push({ url, error: m.error }); continue; }
-      // The same page with reduced motion requested: animations should mostly stop.
+      // The same page with reduced motion requested: animations should mostly stop, and the whole content must
+      // be readable once scrolled through. Scroll listeners are recorded from the start to spot scroll hijacking.
       const rctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+      await rctx.addInitScript(SCROLL_PROBE);
       const rpage = await rctx.newPage();
       try { await rpage.goto(url, { waitUntil: "networkidle", timeout: 30000 }); } catch { /* measured as loaded */ }
       const reduced = await rpage.evaluate(() => [...document.querySelectorAll("body *")].filter((e) => getComputedStyle(e).animationName !== "none").length).catch(() => null);
+      m.scroll = await scrollThrough(rpage).catch(() => null);
       await rctx.close();
       if (reduced != null) m.reduced_motion = { normal: m.desktop.animated, reduced };
       const scored = scoreLook(m, { mode, slopWords });

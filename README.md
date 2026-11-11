@@ -138,13 +138,14 @@ Toutes les règles et vérifications sont détaillées dans [docs/fr/REFERENTIEL
 
 ## Design
 
-Quatre skills se chargent quand Claude dessine ou retouche une interface :
+Cinq skills se chargent quand Claude dessine ou retouche une interface :
 
 | Skill | Ce qu'il fait | Ce qu'il vérifie |
 | --- | --- | --- |
 | `design-screens` | Organise un écran avant de le coder : nombre de panneaux selon la largeur, coquille (liste-détail, panneau d'appoint, flux), navigation, action principale, et une recette par tâche (éditeur avec aperçu, assistant, réglages, paiement, tableau de bord, filtres, formulaire, tableau, état vide, premier lancement), séparément pour téléphone et ordinateur | Les tâches clés jouées (`qp flows`) : budgets d'effort, aperçu visible, action sous le pouce |
 | `design-direction` | Des références aimées (apparence et organisation, séparées) à 4 ou 5 mots d'ambiance, des principes testables, des style tiles, puis des tokens DTCG en OKLCH pour le clair et le sombre | `qp tokens` : contraste WCAG jamais arrondi dans chaque thème, format, couleurs hors sRGB ; `qp look` sur le rendu |
 | `deslop-ui` | Rend une interface nette avant de la dire terminée : mesure l'espacement, l'alignement, les boîtes, les contrôles et les signes d'interface générée sur le vrai rendu, avec captures, puis corrige à la racine | `qp deslop` : aucun constat « high », captures relues |
+| `scroll-animation` | Construit les animations de scroll de tous types (apparition, défilement lié, progression, parallaxe, scène épinglée, section horizontale, texte, scrollytelling, magnétisme, séquence d'images, 3D, Lottie, transitions de page, smooth scroll) : le CSS natif d'abord, une bibliothèque libre seulement si besoin, toujours avec mouvement réduit | `qp look` : défilement natif, aucun texte qui dépend d'une animation, mouvement réduit respecté |
 | `design-review` (`/qp:design-review`) | Avis sur un écran existant : mesures, revue heuristique (Nielsen, Bastien et Scapin) en deux passes, gravité de 0 à 4 confirmée par trois passes indépendantes, puis deux ou trois réorganisations avec leur écart d'effort (modèle KLM) | Le parcours rejoué avant et après |
 
 Le rendu « fait par IA » se mesure par signaux pondérés (police par défaut, violet, dégradés, trois cartes identiques, badge au-dessus du titre, émojis en guise d'icônes, formules creuses…). Un signal seul n'est jamais un défaut, et les écrans d'application (mode `operate`) ne sont jamais pénalisés parce qu'ils sont conventionnels. Les sources sont listées dans [plugins/core/SOURCES.md](plugins/core/SOURCES.md).

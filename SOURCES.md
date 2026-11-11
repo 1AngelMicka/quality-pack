@@ -125,3 +125,47 @@ Posts lus un par un. Beaucoup répètent les mêmes listes de sites (souvent pro
 Tutoriels vidéo (n0tisma, bernirov, twetsfyp, viktoroddy ×2, SilenceCaPrompt), anecdotes (cluelessdone, sonuv_dev « glass UI », samuelrizzondev portfolio), annonces de produits (Claude Design, Google Stitch), comparatif vidéo [Benjamin Code](https://youtu.be/yjAVeHeviXY) (Claude, Gemini, Codex, Kimi). Deux conseils retenus sous forme de règle : « savoir ce qui est beau avant de dire construis un site » (Aykut Üçeş, déjà au cœur de `design-direction`) et « pas de colonnes dans les menus mobiles » (Zander Whitehurst, ajouté à `design-screens`). Un fichier Figma de widgets « Live Activity » (abu_uiuxdesign) est vendu via Polar : écarté.
 
 Réseaux à connaître : Azwedo (landdding, modulify, wonderlist, fontinlogo, iconly) et le groupe ScreensDesign (supahero, appshots) se citent entre eux ; navbar.gallery et 60fps.design portent des liens d'affiliation Mobbin.
+
+## Lot 2 — animations de scroll (recherche du 2026-11-11)
+
+Quatre recherches : bibliothèques JavaScript, techniques CSS natives, ressources pour agents, UX/accessibilité/galeries. Ce qui est retenu est dans le skill `scroll-animation` (`plugins/core/skills/scroll-animation/`), avec les recettes de code et le catalogue détaillé.
+
+### Recommandés (gratuits, licence libre ou standard du web)
+
+| Lien | Rôle | Licence |
+| --- | --- | --- |
+| CSS scroll-driven animations, View Transitions, scroll snap (MDN, Chrome for Developers, web.dev, WebKit) | premier choix pour presque tous les effets (Baseline octobre 2026) | standards ; MDN code CC0 |
+| [scroll-driven-animations.style](https://scroll-driven-animations.style) | démos, visualiseurs, cours gratuit, extension DevTools | Apache-2.0 |
+| [Motion](https://motion.dev), son llms.txt et son MCP gratuit | scroll(), useScroll, inView | MIT (Motion+ payant : écarté) |
+| [GSAP](https://gsap.com) et [greensock/gsap-skills](https://github.com/greensock/gsap-skills) | ScrollTrigger, SplitText, ScrollSmoother | gratuit, licence propriétaire Webflow (interdit dans les constructeurs visuels concurrents) ; skills MIT |
+| [Lenis](https://github.com/darkroomengineering/lenis) 1.3.27+ | smooth scroll, pages vitrines seulement | MIT |
+| [Scrollama](https://github.com/russellsamora/scrollama) | scrollytelling par étapes | MIT |
+| [three.js](https://threejs.org), [drei](https://github.com/pmndrs/drei), [r3f-scroll-rig](https://github.com/14islands/r3f-scroll-rig), [pmndrs/examples](https://github.com/pmndrs/examples) | scènes 3D au scroll | MIT |
+| [dotLottie web](https://github.com/LottieFiles/dotlottie-web) | Lottie piloté par le scroll | MIT |
+| [Swup](https://swup.js.org) + plugin a11y, Astro view transitions | transitions de page accessibles | MIT |
+| VueUse, motion-v, Svelte (transitions, svelte-inview) | équivalents Vue et Svelte | MIT |
+| [emilkowalski/skills](https://github.com/emilkowalski/skills) | goût et revue du mouvement, retrait des animations en trop | MIT |
+| [github/awesome-copilot](https://github.com/github/awesome-copilot) `gsap-framer-scroll-animation` | références ScrollTrigger et Motion avec mouvement réduit | MIT |
+| [NiazMorshed2007/reanimate](https://github.com/NiazMorshed2007/reanimate) | recrée et compare une animation par position de scroll | MIT (déjà compagnon) |
+| Galeries gratuites : [Awwwards](https://www.awwwards.com) (catégorie Scrolling), [Httpster](https://httpster.net), [recent.design](https://recent.design), [Motion Atlas](https://beyond-media.ai/aiweb-design), [GSAP showcase](https://gsap.com/showcase/), [CodePen](https://codepen.io) (pens publics MIT), [One Page Love](https://onepagelove.com), [Minimal Gallery](https://minimal.gallery) | références de sites animés | accès libre |
+
+### Utilisables avec précaution
+
+simpleParallax 7, react-spring, Anime.js v4, react-scroll-parallax, Rive runtime (éditeur freemium), Taxi.js (BSD-3), Splitting.js (ajouter l'ARIA), Swiper (carrousels), scrolly-video (pré-1.0), drei ScrollControls (clavier et ancres non gérés), Spline (runtime sans licence déclarée), [Codrops](https://tympanus.net/codrops/) (démos MIT sauf mention, vérifier chaque dépôt), React Bits et Animate UI (MIT + Commons Clause : dans une app seulement, jamais redistribués), Magic UI, Cult UI, motion-primitives, Aceternity UI gratuit (souvent sans mouvement réduit), gabros20/scroll-animation-skill et MengTo/Skills (MIT, récents ou inégaux), LottieFiles/motion-design-skill (MIT, une seule ligne sur le scroll).
+
+### Écartés
+
+| Lien | Raison |
+| --- | --- |
+| fullPage.js, ScrollReveal | GPL-3.0 ou licence commerciale payante |
+| Locomotive Scroll v5 | embarque un Lenis sans mouvement réduit |
+| Theatre.js | arrêté depuis 2024 ; studio sous AGPL-3.0 |
+| AOS, Sal.js, ScrollOut, Rellax, Pageable, SplitType, ScrollMagic v2, lottie-interactivity, smooth-scrollbar | abandonnés, archivés ou faux défilement |
+| flackr/scroll-timeline (polyfill, Apache-2.0) | inutile depuis Safari 26 et Firefox 159, tourne sur le fil principal |
+| Motion+, Aceternity All-Access, Magic UI Pro, Josh W. Comeau « Whimsical Animations », cours Frontend Masters | payants |
+| scrolltide.co, motionsites.ai, jiro.build, scrollshaders.com | bibliothèques de prompts payantes |
+| oso95/scroll-world, roeea2/scroll-site-claude, nateherkai/scroll-craft | dépendent de génération vidéo payante |
+| davila7 `scroll-experience`, freshtechbro/claudedesignskills, dylantarre/animation-principles | sans mouvement réduit ou périmés |
+| LottieFiles MCP | demande un compte, rien sur le scroll de page |
+| Land-book, Mobbin, Refero, Lapa Ninja (modèles payants) | freemium |
+| Siteinspire, The FWA, SaaS Landing Page, Made in Webflow | modèle d'accès non vérifié |

@@ -13,7 +13,7 @@ If `.quality/handoff.md` exists and is recent, read it first: it says where the 
 1. Restate the task in one or two sentences and list your assumptions. If something is ambiguous and a wrong guess would be costly, ask. Otherwise pick the most reasonable reading and say which one you took.
 2. For a new feature, write its acceptance criteria first (in the task, a spec file or the ticket): what the user can do, what they see in the empty, loading and error cases, what must never happen.
 3. Find every place your change must reach: callers, types, tests, fixtures, config, translations (see "Find code cheaply" below).
-4. For a new or reorganised screen, use the `design-screens` skill before coding; for colours, fonts, spacing or a new look, the `design-direction` skill.
+4. For a new or reorganised screen, use the `design-screens` skill before coding; for colours, fonts, spacing or a new look, the `design-direction` skill; for anything that moves with scrolling, the `scroll-animation` skill.
 5. Load the build skills of the quality pack for the domains you will touch (`build-product-experience`, `build-ergonomics`, `build-design`, `build-security-data`, `build-reliability-quality`, `build-performance-seo`, `build-integrations-payments`, `build-operations`) and the rules skill of the stack you are in.
 
 ## While you write code

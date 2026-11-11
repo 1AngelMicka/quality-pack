@@ -138,13 +138,14 @@ Every rule and check is listed in [docs/en/REFERENTIAL.md](docs/en/REFERENTIAL.m
 
 ## Design
 
-Four skills load when Claude designs or changes an interface:
+Five skills load when Claude designs or changes an interface:
 
 | Skill | What it does | What it checks |
 | --- | --- | --- |
 | `design-screens` | Organises a screen before it is coded: panes per window width, shell (list-detail, supporting pane, feed), navigation, main action, and a recipe per task (editor with preview, wizard, settings, checkout, dashboard, filters, form, table, empty state, first run), separately for phone and desktop | The key tasks played (`qp flows`): effort budgets, preview visible, main action under the thumb |
 | `design-direction` | From the references a client likes (look and organisation, kept apart) to 4 or 5 mood words, testable principles, style tiles, then DTCG tokens in OKLCH for light and dark | `qp tokens`: WCAG contrast never rounded, in every theme, format, colours outside sRGB; `qp look` on the rendered page |
 | `deslop-ui` | Makes an interface clean before calling it done: measures spacing, alignment, boxes, controls and signs of generated UI on the real rendering, with screenshots, then fixes at the root | `qp deslop`: no high finding, screenshots re-read |
+| `scroll-animation` | Builds scroll animations of every kind (reveal, scrubbed, progress, parallax, pinned scene, horizontal section, text, scrollytelling, snapping, image sequence, 3D, Lottie, page transitions, smooth scroll): native CSS first, a free library only when needed, always with reduced motion | `qp look`: native scrolling, no text that depends on an animation, reduced motion respected |
 | `design-review` (`/qp:design-review`) | Advice on an existing screen: measures, a two-pass heuristic review (Nielsen, Bastien and Scapin), severity 0 to 4 confirmed by three independent passes, then two or three reorganisations with their effort gap (keystroke-level model) | The task played again before and after |
 
 The generic "AI-made" look is measured by weighted signals (default font, violet, gradients, three identical cards, a badge above the headline, emoji as icons, hollow wording…). One signal alone is never a defect, and app screens (`operate` mode) are never penalised for being conventional. Sources are listed in [plugins/core/SOURCES.md](plugins/core/SOURCES.md).

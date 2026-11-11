@@ -28,4 +28,5 @@
 - Easing: standard `cubic-bezier(0.2, 0, 0, 1)`; entering `cubic-bezier(0.05, 0.7, 0.1, 1)`; leaving `cubic-bezier(0.3, 0, 0.8, 0.15)`.
 - Motion explains a change (where something came from, what it became) or confirms an action. Not every section fades in.
 - `prefers-reduced-motion: reduce`: replace movement and scaling with a short fade; keep the feedback, remove the travel. `qp look` loads the page with reduced motion requested and flags it when most animations keep running.
+- Anything that moves with scrolling: follow the `scroll-animation` skill (native CSS first, content never hidden behind an animation, native scrolling).
 - WebGL, shader and video backgrounds: show a still frame when reduced motion is requested, and pause when off-screen or when the tab is hidden; they cost battery and distract from the content.

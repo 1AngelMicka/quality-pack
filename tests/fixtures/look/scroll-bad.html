@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Scroll page with hijacking (test fixture)</title>
+<style>
+  body { margin: 0; font-family: Georgia, serif; line-height: 1.6; }
+  section { min-height: 90vh; padding: 48px 16px; max-width: 38rem; margin: 0 auto; }
+  /* The classic bug: text is invisible until an animation runs, and the animation never runs with reduced motion. */
+  .reveal { opacity: 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal.in { animation: fade .6s forwards; }
+  }
+  @keyframes fade { to { opacity: 1; } }
+</style>
+</head>
+<body>
+<section><h1>Our story in three chapters</h1><p>Scroll down to read how the workshop started, grew and moved to the harbour.</p></section>
+<section class="reveal"><h2>Chapter one</h2><p>The workshop opened in a garage in 2009, with two benches and a borrowed lathe.</p></section>
+<section class="reveal"><h2>Chapter two</h2><p>By 2015 the team had grown to twelve people and outgrew the garage for good.</p></section>
+<script>
+  // Custom smooth scrolling that cancels native scrolling.
+  let target = 0;
+  window.addEventListener("wheel", (e) => { e.preventDefault(); target = Math.max(0, target + e.deltaY); window.scrollTo({ top: target }); }, { passive: false });
+  const io = new IntersectionObserver((entries) => entries.forEach((en) => en.isIntersecting && en.target.classList.add("in")));
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+</script>
+</body>
+</html>
