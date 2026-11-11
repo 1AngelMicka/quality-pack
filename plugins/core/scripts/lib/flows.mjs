@@ -2,7 +2,7 @@
 // and on a desktop. After every step: a screenshot, axe-core, and measures of the effort the task asks
 // (pages to scroll, controls on screen, where the main action and the result are). The audit judges the
 // interface on these states, not on the empty screen a page shows when it first loads.
-import { existsSync, mkdirSync, readdirSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync } from "node:fs";
 import { join, dirname, basename, isAbsolute, resolve, relative } from "node:path";
 
 const rel = (root, p) => relative(root, p).split("\\").join("/");
@@ -182,7 +182,9 @@ async function act(page, step, root) {
 async function runAxe(page, axePath) {
   if (!axePath) return null;
   try {
-    if (!(await page.evaluate(() => !!window.axe))) await page.addScriptTag({ path: axePath });
+    // evaluate() is not subject to the page's Content-Security-Policy, unlike addScriptTag (an inline <script>):
+    // a site with a strict CSP must still be measured, and keep its own CSP errors visible
+    if (!(await page.evaluate(() => !!window.axe))) await page.evaluate(readFileSync(axePath, "utf8"));
     const v = await page.evaluate(async () => (await window.axe.run(document, { resultTypes: ["violations"] })).violations
       .map((x) => ({ id: x.id, impact: x.impact, nodes: x.nodes.length, help: x.help, targets: x.nodes.slice(0, 3).map((n) => n.target.join(" ")) })));
     return { violations: v, critical: v.filter((x) => x.impact === "critical").length, serious: v.filter((x) => x.impact === "serious").length };

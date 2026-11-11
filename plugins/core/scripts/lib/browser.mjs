@@ -5,7 +5,7 @@
 import { createRequire } from "node:module";
 import { join } from "node:path";
 import { homedir } from "node:os";
-import { mkdirSync, existsSync } from "node:fs";
+import { mkdirSync, existsSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
 export const WIDTHS = [360, 390, 768, 1024, 1440];
@@ -109,7 +109,7 @@ export async function browserChecks(urls, { cwd = process.cwd(), outDir } = {}) 
         }
         if (width === 1440 && axePath) {
           try {
-            await page.addScriptTag({ path: axePath });
+            await page.evaluate(readFileSync(axePath, "utf8")); // not blocked by a strict CSP, unlike addScriptTag
             res.axe = await page.evaluate(async () => {
               const r = await window.axe.run(document, { resultTypes: ["violations"] });
               return r.violations.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help }));
