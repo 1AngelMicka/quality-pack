@@ -89,7 +89,7 @@ domains:
     summary: {fr: "Adaptation mobile, tablette et PC.", en: "Adaptation to mobile, tablet and desktop."}
     applies_if: [has_ui]
     build:
-      - {fr: "Concevoir mobile d'abord, puis élargir ; tester à 360, 390, 768, 1024 et 1440 px.", en: "Design mobile first, then widen; test at 360, 390, 768, 1024 and 1440 px."}
+      - {fr: "Concevoir mobile d'abord, puis élargir ; tester à 360, 390, 768, 1024, 1440 et 1920 px (certaines mises en page ne cassent que sur grand écran).", en: "Design mobile first, then widen; test at 360, 390, 768, 1024, 1440 and 1920 px (some layouts only break on wide screens)."}
       - {fr: "Cibles tactiles d'au moins 44 × 44 px ; aucune fonction accessible uniquement au survol.", en: "Touch targets at least 44 × 44 px; no feature available only on hover."}
       - {fr: "Images servies à la bonne taille (srcset ou composant d'image du framework).", en: "Images served at the right size (srcset or the framework's image component)."}
     criteria:
