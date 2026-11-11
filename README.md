@@ -28,7 +28,7 @@ Des plugins pour [Claude Code](https://claude.com/claude-code) qui font coder to
 | --- | --- |
 | `/qp:kickoff` | Claude lit ton projet, pose quelques questions (pour qui, quel type de projet, ce qu'il fait, le style voulu, les tâches clés), écrit les parcours que l'audit jouera, propose les outils compagnons utiles et écrit `.quality/project.json` et `DESIGN.md`. |
 | Pendant que tu codes | Claude suit les règles des domaines qu'il touche et celles de ta techno. Un garde-fou empêche d'écrire un secret dans le code. |
-| `/qp:audit` | Scans automatiques (code, en-têtes HTTP, SEO, rendu navigateur à 5 largeurs), tâches clés jouées sur téléphone et ordinateur, puis un auditeur par groupe de domaines en parallèle, un ergonome pour l'organisation des écrans, et une contre-vérification. Par défaut, seul ce qui a changé depuis le dernier audit est revérifié. Résultat : `.quality/AUDIT.md` avec les deux notes, la note de chaque domaine, la revue d'ergonomie, l'évolution et les correctifs par priorité. |
+| `/qp:audit` | Scans automatiques (code, en-têtes HTTP, SEO, rendu navigateur à 6 largeurs), tâches clés jouées sur téléphone et ordinateur, puis un auditeur par groupe de domaines en parallèle, un ergonome pour l'organisation des écrans, et une contre-vérification. Par défaut, seul ce qui a changé depuis le dernier audit est revérifié. Résultat : `.quality/AUDIT.md` avec les deux notes, la note de chaque domaine, la revue d'ergonomie, l'évolution et les correctifs par priorité. |
 | `/qp:fix` | Corrige les problèmes dans l'ordre, les points bloquants d'abord, et vérifie chaque correction. |
 | `/qp:handoff` | Note où en est la tâche, pour que la session suivante reprenne sans réexplorer le projet. |
 
@@ -107,7 +107,7 @@ Ton projet garde son dossier `.quality/` ; supprime-le si tu n'en veux plus.
 | `/qp:handoff` | Écrire `.quality/handoff.md` avant de couper une longue tâche |
 | `/qp:design-review [tâche ou URL]` | Avis sur un écran : effort mesuré, revue heuristique, deux ou trois réorganisations chiffrées |
 | `node qp.mjs look <url>` | Mesurer le rendu : signaux de rendu générique pondérés, tailles de police, longueur des lignes, petites cibles |
-| `node qp.mjs deslop <url>` | Mesurer l'espacement et l'alignement du rendu, élément par élément, à 375, 768 et 1440 px (Chrome ou Edge installé, rien à ajouter) |
+| `node qp.mjs deslop <url>` | Mesurer l'espacement et l'alignement du rendu, élément par élément, à 375, 768, 1440 et 1920 px (Chrome ou Edge installé, rien à ajouter) |
 | `node qp.mjs tokens` | Vérifier les design tokens : format DTCG, références, contraste dans chaque thème, couleurs hors sRGB |
 | `node qp.mjs record <id>` | Enregistrer une tâche clé en la faisant dans un navigateur, au lieu de l'écrire |
 | `node qp.mjs report` | Regénérer `.quality/report.html` : notes dans le temps, captures de chaque étape, constats de la revue |

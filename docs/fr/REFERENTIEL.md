@@ -190,7 +190,7 @@ _S'applique si : Le projet a une interface utilisateur_
 
 **Pendant la construction**
 
-- Concevoir mobile d'abord, puis élargir ; tester à 360, 390, 768, 1024 et 1440 px.
+- Concevoir mobile d'abord, puis élargir ; tester à 360, 390, 768, 1024, 1440 et 1920 px (certaines mises en page ne cassent que sur grand écran).
 - Cibles tactiles d'au moins 44 × 44 px ; aucune fonction accessible uniquement au survol.
 - Images servies à la bonne taille (srcset ou composant d'image du framework).
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- **`text-squeezed` rule in `qp deslop`** (high): a paragraph or heading wrapped into a column a few words wide (under about 20 characters per line over 3 lines or more). It never overflows, so no overflow check saw it. Seen on a real landing page: a page gutter in `vw` applied as padding inside a `max-width` box, readable at 1440 px, about 140 px wide at 1850 px. Test page `tests/fixtures/deslop/squeezed.html`.
+- **1920 px** added to the widths of `qp deslop` (375, 768, 1440, 1920) and `qp browser` (360 to 1920): some layouts only break on wide screens.
+- axe-core is injected with `page.evaluate`, which a strict Content-Security-Policy cannot block (it was silently not running on such sites).
+
 ## 0.5.0 — 2026-11-11
 
 Design: the pack now helps design and advise, not only audit. Built from a research round on six topics (screen patterns, UX principles and heuristics, references to tokens, forms and WCAG 2.2, the generic AI look, existing design skills and their licences); sources in `plugins/core/SOURCES.md`.

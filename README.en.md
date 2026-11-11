@@ -107,7 +107,7 @@ Your project keeps its `.quality/` folder; delete it if you no longer want it.
 | `/qp:handoff` | Write `.quality/handoff.md` before stopping a long task |
 | `/qp:design-review [task or URL]` | Advice on a screen: measured effort, heuristic review, two or three costed reorganisations |
 | `node qp.mjs look <url>` | Measure the rendered page: weighted generic-look signals, font sizes, line length, small targets |
-| `node qp.mjs deslop <url>` | Measure spacing and alignment on the rendered page, element by element, at 375, 768 and 1440 px (installed Chrome or Edge, nothing to add) |
+| `node qp.mjs deslop <url>` | Measure spacing and alignment on the rendered page, element by element, at 375, 768, 1440 and 1920 px (installed Chrome or Edge, nothing to add) |
 | `node qp.mjs tokens` | Check design tokens: DTCG format, references, contrast in every theme, colours outside sRGB |
 | `node qp.mjs record <id>` | Record a key task by doing it in a browser instead of writing it |
 | `node qp.mjs report` | Rewrite `.quality/report.html`: scores over time, screenshots of every step, review findings |

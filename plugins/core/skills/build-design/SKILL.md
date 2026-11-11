@@ -62,7 +62,7 @@ Applies when: The project has a user interface.
 
 Rules:
 
-- Design mobile first, then widen; test at 360, 390, 768, 1024 and 1440 px.
+- Design mobile first, then widen; test at 360, 390, 768, 1024, 1440 and 1920 px (some layouts only break on wide screens).
 - Touch targets at least 44 × 44 px; no feature available only on hover.
 - Images served at the right size (srcset or the framework's image component).
 

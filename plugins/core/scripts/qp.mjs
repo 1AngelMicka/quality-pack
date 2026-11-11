@@ -13,7 +13,7 @@
 //   node qp.mjs graph [refresh]              Graphify status (installed, fresh, recommended for this size) or code-only refresh
 //   node qp.mjs scan                         Static scans of the source (placeholder, hollow wording, debug leftovers)
 //   node qp.mjs web <url>                    HTTP checks: headers, compression, cache, SEO metadata, robots, sitemap
-//   node qp.mjs browser <url> [url...]       Playwright checks of pages as they load, at 5 widths
+//   node qp.mjs browser <url> [url...]       Playwright checks of pages as they load, at 6 widths
 //   node qp.mjs flows [flow-id...] [--base URL] [--check]
 //                                            Play the key tasks declared in project.json step by step, on a phone and a
 //                                            desktop: screenshot, axe-core and effort measures at every step (flows.json)
@@ -435,11 +435,11 @@ async function main() {
       const { spawnSync } = await import("node:child_process");
       const run = currentRun();
       const project = loadProject(cwd);
-      if (!rest.length) die('Usage: qp.mjs deslop <url|file.html> [--widths 375,768,1440] [--click "selector"] [--before file.js] [--tauri] [--dark] [--attach port]');
+      if (!rest.length) die('Usage: qp.mjs deslop <url|file.html> [--widths 375,768,1440,1920] [--click "selector"] [--before file.js] [--tauri] [--dark] [--attach port]');
       const outDir = project ? join(auditsDir(), run, "deslop") : join(qualityDir(cwd), "deslop");
       const script = fileURLToPath(new URL("./deslop/audit.mjs", import.meta.url));
       const args = [...rest];
-      if (!args.includes("--widths") && !args.includes("--attach")) args.push("--widths", "375,768,1440");
+      if (!args.includes("--widths") && !args.includes("--attach")) args.push("--widths", "375,768,1440,1920");
       const r = spawnSync(process.execPath, [script, ...args, "--out", outDir, "--json"], { cwd: here, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
       if (r.status !== 0) die((r.stderr || r.stdout || "deslop failed").trim());
       const reports = JSON.parse(r.stdout);

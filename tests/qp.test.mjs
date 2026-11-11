@@ -415,6 +415,13 @@ test("deslop: spacing audit flags the generic page and passes the clean one", (t
   assert.ok(existsSync(join(dir, s.widths[0].screenshots.fold)));
   const clean = JSON.parse(run("clean.html").stdout);
   assert.deepEqual(clean.total, { high: 0, med: 0, low: 0 });
+  // wide screens: the clean page stays clean, and text squeezed by a growing gutter is caught at 1920 only
+  const wide = (f) => JSON.parse(spawnSync("node", [QP, "deslop", page(f), "--widths", "1440,1920", "--run", "2026-07-01"], { cwd: dir, encoding: "utf8" }).stdout);
+  assert.deepEqual(wide("clean.html").total, { high: 0, med: 0, low: 0 });
+  const sq = wide("squeezed.html");
+  const squeezedAt = (w) => sq.widths.find((x) => x.width === w).findings.some((f) => f.rule === "text-squeezed");
+  assert.equal(squeezedAt(1440), false, "readable at 1440");
+  assert.equal(squeezedAt(1920), true, "squeezed at 1920");
 });
 
 test("flows: effort is estimated with the keystroke-level model", async () => {

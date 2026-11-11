@@ -8,7 +8,8 @@ import { homedir } from "node:os";
 import { mkdirSync, existsSync, readFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
-export const WIDTHS = [360, 390, 768, 1024, 1440];
+// 1920: layouts that only break on wide screens (gutters that grow with the viewport)
+export const WIDTHS = [360, 390, 768, 1024, 1440, 1920];
 
 // Where `browser-setup` installs Playwright and axe-core. QP_CACHE_DIR wins, then the plugin data
 // folder Claude Code gives plugins, then ~/.cache/quality-pack.
