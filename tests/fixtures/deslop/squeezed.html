@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Squeezed text</title>
+<style>
+  /* a real failure seen on a landing page: the page gutter (in vw) is applied as padding inside a max-width box,
+     so the text column shrinks as the screen grows; fine at 1440, a few words wide at 1920 */
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; background: #fff; color: #111; }
+  .head { max-width: 900px; padding: 0 max(24px, calc((100vw - 1200px) / 2)); }
+  h2 { font-size: 40px; line-height: 1.1; margin: 48px 0 16px; }
+  p { font-size: 18px; margin: 0 0 48px; }
+</style>
+</head>
+<body>
+  <section class="head">
+    <h2>Un style pour chaque projet, pas un modèle pour tous.</h2>
+    <p>Pubs, présentations, explications, réseaux sociaux, logos, courts métrages, plans 3D : chaque style est classé par type de projet et par ambiance.</p>
+  </section>
+</body>
+</html>

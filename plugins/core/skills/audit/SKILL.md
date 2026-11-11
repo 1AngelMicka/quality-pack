@@ -51,7 +51,7 @@ Run these before starting the agents, so every agent reads the same evidence ins
    - If the local app is not running and there is an obvious start script, ask the user whether to start it, and run it in the background.
 3. `qp web <url> --run <run>`, which writes `web.json`.
 4. `qp browser <url> <url>… --run <run>` with the home page and 2 to 4 main pages, which writes `browser.json` and screenshots of pages as they load.
-5. If the project has a UI: `qp deslop <url> --run <run>` on the main work screen (spacing and alignment per element at 375, 768 and 1440 px, `deslop.json`), and `qp look <url> <url>… --run <run>` on the same pages as `browser`, which writes `look.json` (generic-look signals weighted by the project's surface mode, type sizes, line length, small targets).
+5. If the project has a UI: `qp deslop <url> --run <run>` on the main work screen (spacing and alignment per element at 375, 768, 1440 and 1920 px, including text squeezed into a column a few words wide, `deslop.json`), and `qp look <url> <url>… --run <run>` on the same pages as `browser`, which writes `look.json` (generic-look signals weighted by the project's surface mode, type sizes, line length, small targets).
 6. `qp flows --run <run> [--base <url>]`, which plays every key task on a phone and a desktop and writes `flows.json` and a screenshot per step in `flows/`. This is the main evidence for the interface: features, UX, ergonomics, accessibility and responsive criteria rely on it.
 
 If `browser` or `flows` says Playwright is not available, ask the user whether to run `qp browser-setup` (one-time download of Playwright, axe-core and Chromium into the pack's cache, never into the project). Never install them in the project.

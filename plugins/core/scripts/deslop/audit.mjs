@@ -3,7 +3,7 @@
 // injects measure.js at several widths, saves screenshots and summarises the findings.
 // Ported from the deslop-ui skill (same author as the pack).
 //
-//   node audit.mjs <url|file.html> [--widths 375,768,1440] [--out folder] [--wait 800]
+//   node audit.mjs <url|file.html> [--widths 375,768,1440,1920] [--out folder] [--wait 800]
 //                  [--click "selector"]... [--before "code or file.js"] [--tauri] [--dark] [--json]
 //   node audit.mjs --attach 9222 [--widths 1280]   measures the current state of an already open window
 import { spawn } from 'node:child_process';
@@ -15,7 +15,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const HERE = dirname(fileURLToPath(import.meta.url));
 
 function parseArgs(argv) {
-  const opts = { widths: [375, 768, 1440], wait: 800, click: [], before: [], dark: false, json: false };
+  // 1920: some layouts only break on wide screens (gutters in vw, padding inside a max-width box)
+  const opts = { widths: [375, 768, 1440, 1920], wait: 800, click: [], before: [], dark: false, json: false };
   const rest = [...argv];
   while (rest.length) {
     const arg = rest.shift();
@@ -31,7 +32,7 @@ function parseArgs(argv) {
     else if (!opts.target) opts.target = arg;
     else throw new Error(`Unknown argument: ${arg}`);
   }
-  if (!opts.target && !opts.attach) throw new Error('Usage: node audit.mjs <url|file.html> [--widths 375,768,1440] [--out folder]');
+  if (!opts.target && !opts.attach) throw new Error('Usage: node audit.mjs <url|file.html> [--widths 375,768,1440,1920] [--out folder]');
   return opts;
 }
 

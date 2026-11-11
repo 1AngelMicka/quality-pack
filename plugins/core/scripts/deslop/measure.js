@@ -23,6 +23,7 @@
     'no-spacing-scale': ['low', "Too many different spacing values: there is no system; reduce to a scale of 6 to 8 values."],
     // Readability
     'line-length': ['low', "Line too long: keep running text to 65-80 characters (max-width in ch)."],
+    'text-squeezed': ['high', "Text squeezed into a column a few words wide: look for padding that grows with the screen inside a max-width box, or a page gutter applied to a nested block."],
     'tiny-text': ['low', "Text under 12px: raise it to 12px at least."],
     'type-sprawl': ['low', "Too many text sizes: reduce to 5 or 6 levels."],
     // Signs of generated UI
@@ -480,6 +481,14 @@
     if (size < 12) add('tiny-text', el, `${size}px`);
     const t = textRect(el);
     if (t && ownText(el).length > 120 && t.width / (size * 0.5) > 88) add('line-length', el, `about ${Math.round(t.width / (size * 0.5))} characters per line`);
+    // the opposite failure: a paragraph or heading wrapped into a column a few words wide. It never overflows, so
+    // no overflow check sees it; it often grows with the screen (a gutter in vw inside a max-width box).
+    // Display headings (over 28px) may run short lines on purpose: they are flagged only when truly cramped.
+    if (t && ownText(el).length >= 30 && !el.closest('td,th,nav,button,[role=button],figcaption')) {
+      const cpl = t.width / (size * 0.5);
+      const lines = Math.round(t.height / (px(s.lineHeight) || size * 1.2));
+      if (lines >= 3 && cpl < 20 && (size <= 28 || cpl < 12)) add('text-squeezed', el, `about ${Math.round(cpl)} characters per line over ${lines} lines, ${round(t.width)}px wide at ${W}px`);
+    }
   }
   if (fontSizes.size > 8) add('type-sprawl', null, `${fontSizes.size} sizes: ${[...fontSizes.keys()].sort((a, b) => a - b).join(', ')}`);
 
