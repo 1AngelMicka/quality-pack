@@ -1,7 +1,7 @@
 {
   "name": "qp",
-  "description": "Quality pack core: 27-domain referential, scoring, build skills, /qp:kickoff, /qp:audit, /qp:fix. Socle du pack qualité : référentiel 27 domaines, notation, skills de construction, /qp:kickoff, /qp:audit, /qp:fix.",
-  "version": "0.3.1",
+  "description": "Quality pack core: 28-domain referential, two scores (experience, engineering), key tasks played on phone and desktop, build skills, /qp:kickoff, /qp:audit, /qp:fix. Socle du pack qualité : référentiel 28 domaines, deux notes (expérience, technique), tâches clés jouées sur téléphone et ordinateur, skills de construction, /qp:kickoff, /qp:audit, /qp:fix.",
+  "version": "0.4.0",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0 — 2026-11-11
+
+From a real audit (Scrapify): the UX scored 8.2/10 while its main screen was an endless page nobody wanted to use. The audit judged each screen's hygiene, on empty screens, and one score mixed the interface with the server.
+
+- **Key tasks played on a phone and a desktop.** `/qp:kickoff` asks for 2 to 5 key tasks and writes them as `flows` in `.quality/project.json` (steps, test data in `.quality/fixtures/`, the preview and the main action). `qp.mjs flows` plays them with Playwright and, at every step, takes a screenshot, runs axe-core and measures the effort: page length in screens, controls on screen, screens scrolled, actions, whether the preview stays visible and the main action is within reach (under the thumb on a phone). Budgets in `scoring.yaml › flow_budgets`, overridable per flow. Features, UX, accessibility and responsive criteria now rely on these states, not on the empty screen.
+- **New domain "Ergonomics and information architecture"** (group `ergonomics`, 9 criteria, ERG-01 to ERG-09): effort per task, settings shown at once, preview kept visible, main action reachable, choices never overwritten by a theme or preset, settings in task order with a recommended option, DESIGN.md references followed in how they are organised (not only their palette), heuristic review. 28 domains, 162 criteria. New build skill `build-ergonomics`.
+- **Ergonomist agent** (`qp:ergonomist`) for the ergonomics group: measures from `flows.json`, screenshots reviewed on phone and desktop separately, and a heuristic review (Nielsen, Bastien and Scapin) whose findings (`ERG-R01`…) appear in the report, cap ERG-09 (critical: fail, major: partial) and are fixed by `/qp:fix`.
+- **Counter-check** (`qp:challenger`): after the auditors, re-reads the passed interface criteria on the flow screenshots ("would a user in a hurry get through?"). It can only lower a result, with evidence; `assemble` refuses anything else.
+- **Two scores**: Experience and Engineering and operations, each capped only by its own blockers. The overall score stays for history. Report, `status`, the session reminder and `/qp:fix experience|operations` use them.
+- **DESIGN.md** template: new "What we borrow (organisation)" section, per phone and desktop, checked by ERG-08; SLP-02 no longer passes just because DESIGN.md exists.
+- `/qp:kickoff` recommends `opus` (or `fable`) for auditors; `sonnet` and `haiku` are no longer offered. Detection recognises an application (state, file input, desktop shell, service worker…) instead of calling it a showcase site.
+- **Tooling**: Playwright and axe-core come from the project or from the pack's cache (`qp.mjs browser-setup`), never installed in the project. Each audit gets its own run folder (`2026-11-11`, `2026-11-11-2`…), so a scoped audit no longer overwrites a full one and same-day audits show a trend. `qp.mjs scan` follows `.gitignore` and prints a compact summary (counted in token savings). The CLI finds the project root, so running it from a sub-folder no longer creates a stray `.quality/`. `qp.mjs status --json`.
+
 ## 0.3.1 — 2026-11-10
 
 - Documentation website (FR/EN) on GitHub Pages: https://1angelmicka.github.io/quality-pack/, with the referential rendered from the same JSON as the plugin and a filter.

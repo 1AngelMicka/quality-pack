@@ -13,6 +13,7 @@ checks:
   seo_scan: {provider: core, fr: "Exploration : titres, descriptions, canoniques, OpenGraph, robots, sitemap", en: "Crawl: titles, descriptions, canonicals, OpenGraph, robots, sitemap"}
   axe: {provider: core, fr: "axe-core via Playwright sur les pages principales", en: "axe-core via Playwright on main pages"}
   contrast_check: {provider: core, fr: "Contrastes des tokens et des pages rendues", en: "Contrast of tokens and rendered pages"}
+  flow_run: {provider: core, fr: "Tâches clés jouées pas à pas sur téléphone et ordinateur (Playwright) : capture, axe-core et mesures d'effort à chaque étape", en: "Key tasks played step by step on phone and desktop (Playwright): screenshot, axe-core and effort measures at every step"}
   viewport_screenshots: {provider: core, fr: "Captures et débordements à 360, 390, 768, 1024, 1440 px", en: "Screenshots and overflow at 360, 390, 768, 1024, 1440 px"}
   console_check: {provider: core, fr: "Erreurs et avertissements console (Playwright)", en: "Console errors and warnings (Playwright)"}
   email_auth_check: {provider: core, fr: "Enregistrements SPF, DKIM, DMARC", en: "SPF, DKIM, DMARC records"}

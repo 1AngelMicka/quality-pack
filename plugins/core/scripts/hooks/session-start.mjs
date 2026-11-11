@@ -11,15 +11,23 @@ if (!existsSync(projectFile)) process.exit(0);
 let p;
 try { p = JSON.parse(readFileSync(projectFile, "utf8")); } catch { process.exit(0); }
 const audits = join(dir, ".quality", "audits");
-const last = existsSync(audits) ? readdirSync(audits).filter((f) => /^\d{4}-\d{2}-\d{2}\.report\.json$/.test(f)).sort().pop() : null;
-let lastLine = "No audit yet: suggest /qp:audit once the first features work.";
+// Runs are 2026-11-11, 2026-11-11-2…: sort by day, then by number.
+const key = (f) => { const m = /^(\d{4}-\d{2}-\d{2})(?:-(\d+))?\.report\.json$/.exec(f); return m ? `${m[1]}#${String(m[2] || 1).padStart(4, "0")}` : null; };
+const last = existsSync(audits) ? readdirSync(audits).filter(key).sort((a, b) => key(a).localeCompare(key(b))).pop() : null;
+let lastLine = "No audit yet: suggest /qp:audit once the first key task works.";
 if (last) {
   try {
     const r = JSON.parse(readFileSync(join(audits, last), "utf8"));
-    lastLine = `Last audit ${r.date}: ${r.global}/10, ${r.open_blockers} open blocker(s). Details in .quality/AUDIT.md; /qp:fix fixes them by priority.`;
+    const s = (k) => (r.scores?.[k]?.score == null ? "—" : `${r.scores[k].score}/10`);
+    lastLine = r.scores
+      ? `Last audit ${r.run || r.date}: experience ${s("experience")}, engineering and operations ${s("operations")}, ${r.open_blockers} open blocker(s)${r.review?.length ? `, ${r.review.length} ergonomics finding(s)` : ""}. Details in .quality/AUDIT.md; /qp:fix fixes them by priority.`
+      : `Last audit ${r.date}: ${r.global}/10, ${r.open_blockers} open blocker(s). Details in .quality/AUDIT.md; /qp:fix fixes them by priority.`;
   } catch { /* ignore */ }
 }
 const extra = [];
+if ((p.flags || []).includes("has_ui") && !(Array.isArray(p.flows) && p.flows.length)) {
+  extra.push("No key tasks in .quality/project.json › flows: audits can only judge the interface on screens as they load. Suggest declaring them (/qp:kickoff, step 3).");
+}
 const handoff = join(dir, ".quality", "handoff.md");
 if (existsSync(handoff)) {
   const ageDays = (Date.now() - statSync(handoff).mtimeMs) / 86400000;

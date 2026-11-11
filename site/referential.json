@@ -1,5 +1,5 @@
 {
- "version": "0.3.1",
+ "version": "0.4.0",
  "scoring": {
   "severity_weight": {
    "blocker": 5,
@@ -14,6 +14,28 @@
   "blocker_cap": 3,
   "global_blocker_cap": 5.9,
   "unknown_counts_as": "fail",
+  "flow_budgets": {
+   "page_screens": {
+    "mobile": 3,
+    "desktop": 2
+   },
+   "controls_rendered": {
+    "mobile": 30,
+    "desktop": 40
+   },
+   "scroll_screens": {
+    "mobile": 4,
+    "desktop": 2
+   },
+   "actions": {
+    "mobile": 15,
+    "desktop": 15
+   }
+  },
+  "review": {
+   "criterion": "ERG-09",
+   "prefix": "ERG-R"
+  },
   "grades": [
    {
     "min": 9.0,
@@ -132,6 +154,7 @@
     "product": 3,
     "features": 2,
     "ux": 2,
+    "ergonomics": 2,
     "content": 3,
     "support": 1,
     "ui": 3,
@@ -174,6 +197,7 @@
     "product": 3,
     "features": 3,
     "ux": 3,
+    "ergonomics": 3,
     "content": 2,
     "support": 2,
     "ui": 2,
@@ -220,6 +244,7 @@
     "product": 3,
     "features": 3,
     "ux": 3,
+    "ergonomics": 3,
     "content": 2,
     "support": 3,
     "ui": 2,
@@ -261,6 +286,7 @@
     "product": 3,
     "features": 3,
     "ux": 3,
+    "ergonomics": 3,
     "content": 2,
     "support": 2,
     "ui": 3,
@@ -300,6 +326,7 @@
     "product": 2,
     "features": 3,
     "ux": 0,
+    "ergonomics": 0,
     "content": 0,
     "support": 1,
     "ui": 0,
@@ -325,6 +352,60 @@
     "monitoring": 3,
     "backups": 3
    }
+  }
+ },
+ "score_areas": {
+  "experience": {
+   "label": {
+    "fr": "Expérience",
+    "en": "Experience"
+   },
+   "summary": {
+    "fr": "Ce que vit l'utilisateur : produit, parcours, ergonomie, interface, accessibilité, vitesse.",
+    "en": "What the user lives: product, flows, ergonomics, interface, accessibility, speed."
+   },
+   "domains": [
+    "product",
+    "features",
+    "ux",
+    "content",
+    "support",
+    "ergonomics",
+    "ui",
+    "ai-slop",
+    "responsive",
+    "accessibility",
+    "compatibility",
+    "performance"
+   ]
+  },
+  "operations": {
+   "label": {
+    "fr": "Technique et exploitation",
+    "en": "Engineering and operations"
+   },
+   "summary": {
+    "fr": "Ce qui garde le projet sûr, légal et en marche : sécurité, données, code, tests, intégrations, serveur, sauvegardes.",
+    "en": "What keeps the project safe, lawful and running: security, data, code, tests, integrations, server, backups."
+   },
+   "domains": [
+    "security",
+    "privacy",
+    "data",
+    "compliance",
+    "reliability",
+    "tests",
+    "code",
+    "seo",
+    "scalability",
+    "integrations",
+    "payments",
+    "costs",
+    "infra",
+    "deployment",
+    "monitoring",
+    "backups"
+   ]
   }
  },
  "checks": {
@@ -372,6 +453,11 @@
    "provider": "core",
    "fr": "Contrastes des tokens et des pages rendues",
    "en": "Contrast of tokens and rendered pages"
+  },
+  "flow_run": {
+   "provider": "core",
+   "fr": "Tâches clés jouées pas à pas sur téléphone et ordinateur (Playwright) : capture, axe-core et mesures d'effort à chaque étape",
+   "en": "Key tasks played step by step on phone and desktop (Playwright): screenshot, axe-core and effort measures at every step"
   },
   "viewport_screenshots": {
    "provider": "core",
@@ -659,15 +745,16 @@
        "id": "FEA-01",
        "severity": "blocker",
        "check": {
-        "method": "inspect"
+        "method": "auto",
+        "tool": "flow_run"
        },
        "label": {
         "fr": "Aucun parcours principal n'est cassé",
         "en": "No main flow is broken"
        },
        "verify": {
-        "fr": "Exécuter chaque parcours principal (navigateur ou tests e2e) jusqu'au résultat attendu.",
-        "en": "Run each main flow (browser or e2e tests) to its expected result."
+        "fr": "flows.json : chaque tâche clé jouée jusqu'au résultat attendu sur téléphone et ordinateur ; à défaut de parcours déclarés, tests e2e ou exécution à la main, en le disant.",
+        "en": "flows.json: each key task played to its expected result on phone and desktop; without declared flows, e2e tests or a manual run, saying so."
        }
       },
       {
@@ -765,8 +852,8 @@
         "en": "Every data screen handles loading, empty, error and filled"
        },
        "verify": {
-        "fr": "Lire chaque composant qui charge des données ; simuler liste vide et API en erreur.",
-        "en": "Read each data-loading component; simulate an empty list and a failing API."
+        "fr": "Lire chaque composant qui charge des données ; simuler liste vide et API en erreur ; regarder l'état rempli sur les captures des parcours, pas seulement l'écran vide.",
+        "en": "Read each data-loading component; simulate an empty list and a failing API; look at the filled state on the flow screenshots, not only the empty screen."
        }
       },
       {
@@ -1253,8 +1340,8 @@
         "en": "The visual direction is project-specific and documented"
        },
        "verify": {
-        "fr": "DESIGN.md décrit les choix et ils se retrouvent à l'écran ; comparer avec les gabarits par défaut (shadcn brut, dégradé violet, verre).",
-        "en": "DESIGN.md states the choices and they show on screen; compare with default templates (raw shadcn, purple gradient, glass)."
+        "fr": "DESIGN.md décrit les choix (ambiance, couleurs, typographie) et ils se retrouvent à l'écran ; comparer avec les gabarits par défaut (shadcn brut, dégradé violet, verre). L'existence de DESIGN.md ne suffit pas ; le respect de l'organisation des références est vérifié par ERG-08.",
+        "en": "DESIGN.md states the choices (mood, colours, type) and they show on screen; compare with default templates (raw shadcn, purple gradient, glass). DESIGN.md existing is not enough; following how the references are organised is checked by ERG-08."
        }
       },
       {
@@ -1345,8 +1432,8 @@
         "en": "No horizontal scroll or clipped content from 360 to 1440 px"
        },
        "verify": {
-        "fr": "Captures aux 5 largeurs de référence et mesure de scrollWidth.",
-        "en": "Screenshots at the 5 reference widths and scrollWidth check."
+        "fr": "Captures aux 5 largeurs de référence et mesure de scrollWidth, puis à chaque étape des parcours (horizontal_overflow dans flows.json).",
+        "en": "Screenshots at the 5 reference widths and scrollWidth check, then at every flow step (horizontal_overflow in flows.json)."
        }
       },
       {
@@ -1456,12 +1543,12 @@
         "tool": "axe"
        },
        "label": {
-        "fr": "Aucune violation axe-core critique ou sérieuse sur les pages principales",
-        "en": "No critical or serious axe-core violation on main pages"
+        "fr": "Aucune violation axe-core critique ou sérieuse sur les pages principales et les états des parcours",
+        "en": "No critical or serious axe-core violation on main pages and flow states"
        },
        "verify": {
-        "fr": "axe-core (via Playwright) sur chaque page principale.",
-        "en": "axe-core (via Playwright) on each main page."
+        "fr": "axe-core (via Playwright) sur chaque page principale et à chaque étape des tâches clés (flows.json). Un écran vide sans violation ne suffit pas à réussir.",
+        "en": "axe-core (via Playwright) on each main page and at every step of the key tasks (flows.json). An empty screen with no violation is not enough to pass."
        }
       },
       {
@@ -1475,8 +1562,8 @@
         "en": "Main flows fully doable by keyboard, visible focus"
        },
        "verify": {
-        "fr": "Tab, Maj+Tab, Entrée, Espace, Échap sur chaque parcours ; modales qui piègent et rendent le focus.",
-        "en": "Tab, Shift+Tab, Enter, Space, Esc on each flow; modals trap and restore focus."
+        "fr": "Tab, Maj+Tab, Entrée, Espace, Échap sur chaque tâche clé, dans l'état rempli (données de test chargées) ; modales qui piègent et rendent le focus.",
+        "en": "Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus."
        }
       },
       {
@@ -1630,6 +1717,206 @@
        "verify": {
         "fr": "Les scripts tiers bloqués ne cassent pas l'application.",
         "en": "Blocked third-party scripts do not break the app."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "ergonomics",
+   "label": {
+    "fr": "Ergonomie",
+    "en": "Ergonomics"
+   },
+   "domains": [
+    {
+     "id": "ergonomics",
+     "code": "ERG",
+     "label": {
+      "fr": "Ergonomie et architecture de l'information",
+      "en": "Ergonomics and information architecture"
+     },
+     "summary": {
+      "fr": "Organisation des écrans et effort demandé pour chaque tâche clé, mesurés en jouant les tâches sur téléphone et sur ordinateur, pas seulement l'hygiène de chaque écran.",
+      "en": "How screens are organised and how much effort each key task takes, measured by playing the tasks on a phone and on a desktop, not only the hygiene of each screen."
+     },
+     "applies_if": [
+      "has_ui"
+     ],
+     "build": [
+      {
+       "fr": "Lister 2 à 5 tâches clés au /qp:kickoff (project.json › flows), avec leurs données de test, et concevoir les écrans à partir d'elles.",
+       "en": "List 2 to 5 key tasks at /qp:kickoff (project.json › flows), with their test data, and design the screens from them."
+      },
+      {
+       "fr": "Au-delà d'une douzaine de réglages, les ranger en onglets, en étapes ou en sections repliables ; une page de réglages qu'on fait défiler sans fin n'est jamais une solution.",
+       "en": "Past a dozen settings, group them in tabs, steps or collapsible sections; an endlessly scrolling settings page is never the answer."
+      },
+      {
+       "fr": "Le résultat (aperçu, total, rendu) reste visible pendant qu'on règle ; sur téléphone, aperçu en haut et panneau de réglages en bas.",
+       "en": "The result (preview, total, rendering) stays visible while adjusting; on a phone, preview on top and settings panel below."
+      },
+      {
+       "fr": "L'action principale est atteignable sans défiler, et sous le pouce sur téléphone (barre d'action en bas).",
+       "en": "The main action is reachable without scrolling, and under the thumb on a phone (bottom action bar)."
+      },
+      {
+       "fr": "Les réglages suivent l'ordre de la tâche, une décision à la fois, avec une option conseillée déjà choisie ; les réglages avancés sont à part.",
+       "en": "Settings follow the order of the task, one decision at a time, with a recommended option already selected; advanced settings are set apart."
+      },
+      {
+       "fr": "Un thème, un modèle ou une valeur par défaut n'écrase jamais un choix de l'utilisateur sans le dire et sans permettre d'annuler.",
+       "en": "A theme, template or default never overwrites a user's choice without saying so and offering undo."
+      },
+      {
+       "fr": "Concevoir le téléphone et l'ordinateur séparément : chacun a sa propre organisation, pas la même page étirée ou rétrécie.",
+       "en": "Design the phone and the desktop separately: each gets its own layout, not the same page stretched or shrunk."
+      },
+      {
+       "fr": "Reprendre des références nommées dans DESIGN.md leur organisation (structure d'écran, navigation, gestes), pas seulement leurs couleurs.",
+       "en": "Take from the references named in DESIGN.md their organisation (screen structure, navigation, gestures), not only their colours."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "ERG-01",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "flow_run"
+       },
+       "label": {
+        "fr": "Les tâches clés sont déclarées et se jouent jusqu'au bout sur téléphone et sur ordinateur",
+        "en": "Key tasks are declared and play to the end on a phone and on a desktop"
+       },
+       "verify": {
+        "fr": "2 à 5 parcours dans project.json › flows, avec données de test ; flows.json : chaque exécution « completed » sur les deux appareils. Sans parcours : échec.",
+        "en": "2 to 5 flows in project.json › flows, with test data; flows.json: every run completed on both devices. No flows: fail."
+       }
+      },
+      {
+       "id": "ERG-02",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "flow_run"
+       },
+       "label": {
+        "fr": "Chaque tâche tient dans le budget d'effort : pages à faire défiler, écrans parcourus, actions",
+        "en": "Each task stays within the effort budget: pages to scroll, screens scrolled through, actions"
+       },
+       "verify": {
+        "fr": "flows.json : over_budget vide pour chaque exécution, sur téléphone et sur ordinateur (budgets dans scoring.yaml › flow_budgets ou dans le parcours). Un seul appareil dans le budget : partiel.",
+        "en": "flows.json: over_budget empty for every run, on phone and desktop (budgets in scoring.yaml › flow_budgets or in the flow). Only one device within budget: partial."
+       }
+      },
+      {
+       "id": "ERG-03",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "flow_run"
+       },
+       "label": {
+        "fr": "Peu de réglages visibles à la fois ; au-delà, onglets, étapes ou sections repliables",
+        "en": "Few settings shown at once; beyond that, tabs, steps or collapsible sections"
+       },
+       "verify": {
+        "fr": "flows.json : max_controls_rendered sous le budget à chaque étape ; s'il est dépassé, uses_disclosure doit être vrai et la capture montrer un seul groupe ouvert à la fois.",
+        "en": "flows.json: max_controls_rendered under budget at every step; if over, uses_disclosure must be true and the screenshot must show one group open at a time."
+       }
+      },
+      {
+       "id": "ERG-04",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "flow_run"
+       },
+       "label": {
+        "fr": "Le résultat reste visible pendant qu'on règle",
+        "en": "The result stays visible while adjusting"
+       },
+       "verify": {
+        "fr": "Parcours qui déclarent preview : preview_visible_while_adjusting d'au moins 0,8 sur les deux appareils. Sans résultat à montrer dans le produit : sans objet, en le justifiant.",
+        "en": "Flows that declare preview: preview_visible_while_adjusting of at least 0.8 on both devices. No result to show in the product: n/a, with the reason."
+       }
+      },
+      {
+       "id": "ERG-05",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "flow_run"
+       },
+       "label": {
+        "fr": "L'action principale est atteignable sans défiler, sous le pouce sur téléphone",
+        "en": "The main action is reachable without scrolling, under the thumb on a phone"
+       },
+       "verify": {
+        "fr": "Parcours qui déclarent primary : primary_visible vrai sur les deux appareils et primary_in_thumb_zone vrai sur téléphone.",
+        "en": "Flows that declare primary: primary_visible true on both devices and primary_in_thumb_zone true on phone."
+       }
+      },
+      {
+       "id": "ERG-06",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Un choix de l'utilisateur n'est jamais écrasé sans le dire (thème, modèle, valeur par défaut)",
+        "en": "A user's choice is never overwritten silently (theme, template, default value)"
+       },
+       "verify": {
+        "fr": "Lire le code qui applique un thème, un modèle ou un préréglage ; dans un parcours, faire un choix puis appliquer le thème : le choix reste, ou un message propose d'annuler.",
+        "en": "Read the code that applies a theme, template or preset; in a flow, make a choice then apply the theme: the choice stays, or a message offers undo."
+       }
+      },
+      {
+       "id": "ERG-07",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les réglages suivent l'ordre de la tâche, une décision à la fois, avec une option conseillée",
+        "en": "Settings follow the order of the task, one decision at a time, with a recommended option"
+       },
+       "verify": {
+        "fr": "Sur les captures des parcours : ce que l'utilisateur décide en premier vient en premier, une option conseillée est déjà choisie (ou « choisir pour moi »), les réglages avancés sont à part.",
+        "en": "On the flow screenshots: what the user decides first comes first, a recommended option is preselected (or \"choose for me\"), advanced settings are set apart."
+       }
+      },
+      {
+       "id": "ERG-08",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "L'appli reprend l'organisation des références de DESIGN.md, pas seulement leur palette",
+        "en": "The app follows how the DESIGN.md references are organised, not only their palette"
+       },
+       "verify": {
+        "fr": "Pour chaque référence de DESIGN.md › « Ce qu'on leur emprunte » : le principe (aperçu + barre d'outils, panneaux par onglet, étapes…) se voit sur les captures, sur téléphone et sur ordinateur. Pas de liste d'emprunts : échec.",
+        "en": "For each reference in DESIGN.md › \"What we borrow\": the principle (preview + toolbar, tabbed panels, steps…) shows on the screenshots, on phone and desktop. No borrow list: fail."
+       }
+      },
+      {
+       "id": "ERG-09",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Revue heuristique des tâches clés : aucun problème critique, aucun majeur ouvert",
+        "en": "Heuristic review of the key tasks: no critical problem, no open major one"
+       },
+       "verify": {
+        "fr": "Revue par l'agent ergonome (heuristiques de Nielsen, critères de Bastien et Scapin) sur les captures de chaque étape, téléphone et ordinateur séparément. Un critique : échec ; un majeur : partiel.",
+        "en": "Review by the ergonomist agent (Nielsen's heuristics, Bastien and Scapin's criteria) on the screenshot of every step, phone and desktop separately. One critical: fail; one major: partial."
        }
       }
      ]

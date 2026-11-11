@@ -40,7 +40,7 @@ Rules:
 
 Done means:
 
-- [BLOCKER] FEA-01: No main flow is broken. Check: Run each main flow (browser or e2e tests) to its expected result.
+- [BLOCKER] FEA-01: No main flow is broken. Check: flows.json: each key task played to its expected result on phone and desktop; without declared flows, e2e tests or a manual run, saying so.
 - [major] FEA-02: No dead link, inert button or visible 'coming soon' page. Check: Browse the UI and search for empty hrefs, empty onClick handlers, visible TODOs.
 - [major] FEA-03: Every feature has written acceptance criteria that are met. Check: Specs present (docs/specs or tickets) and checked.
 - [minor] FEA-04: No dead code or half-wired feature. Check: Search for unused exports, orphan routes, forgotten feature flags.
@@ -61,7 +61,7 @@ Rules:
 
 Done means:
 
-- [major] UX-01: Every data screen handles loading, empty, error and filled. Check: Read each data-loading component; simulate an empty list and a failing API.
+- [major] UX-01: Every data screen handles loading, empty, error and filled. Check: Read each data-loading component; simulate an empty list and a failing API; look at the filled state on the flow screenshots, not only the empty screen.
 - [major] UX-02: Errors are explicit and offer a way out. Check: No bare 'Something went wrong', no raw technical message shown.
 - [major] UX-03: Destructive actions are confirmed or undoable. Check: Delete, cancel, reset: confirmation or undo available.
 - [major] UX-04: Forms validate inline and keep the input. Check: Submit an invalid form: errors next to fields, input kept.

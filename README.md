@@ -4,9 +4,11 @@
 
 Des plugins pour [Claude Code](https://claude.com/claude-code) qui font coder ton site ou ton application proprement dès le départ, l'auditent avec une note sur 10 domaine par domaine, et dépensent le moins de tokens possible pour y arriver.
 
-- **27 domaines, 153 vérifications** : produit, UX, UI, contenu générique « fait par IA », accessibilité, sécurité, RGPD, performance, SEO, paiements, déploiement, sauvegardes, etc.
+- **28 domaines, 162 vérifications** : produit, UX, ergonomie, UI, contenu générique « fait par IA », accessibilité, sécurité, RGPD, performance, SEO, paiements, déploiement, sauvegardes, etc.
+- **Tes vraies tâches, jouées sur téléphone et sur ordinateur** : tu déclares 2 à 5 tâches clés (« faire un collage de 4 photos ») ; l'audit les joue pas à pas, prend une capture et lance axe-core à chaque étape, et mesure l'effort : pages à faire défiler, réglages visibles à la fois, aperçu et action principale à portée. L'interface n'est plus jugée sur un écran vide.
+- **Deux notes** : **Expérience** (ce que vit l'utilisateur) et **Technique et exploitation** (ce qui garde le projet sûr et en marche), chacune avec ses propres points bloquants. Une sonde de panne manquante ne masque plus l'état de l'interface, et inversement.
 - **Une preuve pour chaque vérification** : un fichier et une ligne, le résultat d'une commande ou une capture d'écran. Un point déclaré réussi sans preuve ne compte pas.
-- **Une note honnête** : un seul point bloquant ouvert (un secret qui fuit, un parcours principal cassé) plafonne la note.
+- **Une note honnête** : un point bloquant ouvert (un secret qui fuit, un parcours principal cassé) plafonne la note dont il relève. Un ergonome passe en revue les tâches clés et une contre-vérification relit les critères réussis sur les captures.
 - **Économe en tokens** : règles chargées à la demande, sorties de commandes compactes, audits incrémentaux, graphe du code avec [Graphify](https://github.com/Graphify-Labs/graphify). Voir [Économie de tokens](#économie-de-tokens).
 - **Gratuit, open source, sans télémétrie**, en français et en anglais.
 
@@ -23,9 +25,9 @@ Des plugins pour [Claude Code](https://claude.com/claude-code) qui font coder to
 
 | Étape | Ce qui se passe |
 | --- | --- |
-| `/qp:kickoff` | Claude lit ton projet, pose quelques questions (pour qui, quel type de projet, ce qu'il fait, le style voulu), propose les outils compagnons utiles et écrit `.quality/project.json` et `DESIGN.md`. |
+| `/qp:kickoff` | Claude lit ton projet, pose quelques questions (pour qui, quel type de projet, ce qu'il fait, le style voulu, les tâches clés), écrit les parcours que l'audit jouera, propose les outils compagnons utiles et écrit `.quality/project.json` et `DESIGN.md`. |
 | Pendant que tu codes | Claude suit les règles des domaines qu'il touche et celles de ta techno. Un garde-fou empêche d'écrire un secret dans le code. |
-| `/qp:audit` | Scans automatiques (code, en-têtes HTTP, SEO, rendu navigateur à 5 largeurs, accessibilité), puis un auditeur par groupe de domaines, en parallèle. Par défaut, seul ce qui a changé depuis le dernier audit est revérifié. Résultat : `.quality/AUDIT.md` avec la note globale, la note de chaque domaine, l'évolution et les correctifs par priorité. |
+| `/qp:audit` | Scans automatiques (code, en-têtes HTTP, SEO, rendu navigateur à 5 largeurs), tâches clés jouées sur téléphone et ordinateur, puis un auditeur par groupe de domaines en parallèle, un ergonome pour l'organisation des écrans, et une contre-vérification. Par défaut, seul ce qui a changé depuis le dernier audit est revérifié. Résultat : `.quality/AUDIT.md` avec les deux notes, la note de chaque domaine, la revue d'ergonomie, l'évolution et les correctifs par priorité. |
 | `/qp:fix` | Corrige les problèmes dans l'ordre, les points bloquants d'abord, et vérifie chaque correction. |
 | `/qp:handoff` | Note où en est la tâche, pour que la session suivante reprenne sans réexplorer le projet. |
 
@@ -54,14 +56,13 @@ Des plugins pour [Claude Code](https://claude.com/claude-code) qui font coder to
 /qp:kickoff
 ```
 
-**4. Facultatif, pour les vérifications navigateur et accessibilité**, dans ton projet :
+**4. Pour les tâches clés et les vérifications navigateur**, une fois pour toutes (Claude te le propose au premier audit) :
 
 ```bash
-npm i -D @playwright/test axe-core
-npx playwright install chromium
+node <dossier du plugin>/scripts/qp.mjs browser-setup
 ```
 
-Sans eux, l'audit fonctionne quand même ; ces vérifications sont marquées « non vérifiées ».
+Playwright, axe-core et Chromium s'installent dans le cache du pack, pas dans ton projet. Si ton projet a déjà Playwright, il est utilisé. Sans eux, l'audit fonctionne quand même ; ces vérifications sont marquées « non vérifiées ».
 
 **5. Facultatif, pour économiser des tokens sur les projets moyens et gros :** installe [Graphify](#outils-compagnons) (`/qp:kickoff` te le propose quand c'est utile).
 
@@ -97,10 +98,11 @@ Ton projet garde son dossier `.quality/` ; supprime-le si tu n'en veux plus.
 | `/qp:audit` | Audit incrémental : seul ce qui a changé depuis le dernier audit est revérifié (complet au premier audit, après une mise à jour du pack, ou si le dernier audit complet a plus de 30 jours) |
 | `/qp:audit quick` | Vérifications automatiques seulement, sans auditeurs : le moins cher, idéal avant une mise en ligne |
 | `/qp:audit full` | Tout revérifier depuis zéro |
-| `/qp:audit security-data` | Un seul groupe (`product-experience`, `design`, `security-data`, `reliability-quality`, `performance-seo`, `integrations-payments`, `operations`) |
+| `/qp:audit ergonomics` | Un seul groupe (`product-experience`, `ergonomics`, `design`, `security-data`, `reliability-quality`, `performance-seo`, `integrations-payments`, `operations`) |
 | `/qp:audit SEC-01 SEC-03` · `/qp:audit blockers` | Des critères précis, ou seulement les points bloquants |
 | `/qp:fix` | Corriger les points bloquants (ou les 5 premiers problèmes) |
-| `/qp:fix 10` · `/qp:fix SEC-02` | Corriger les 10 premiers problèmes, ou un problème précis |
+| `/qp:fix 10` · `/qp:fix SEC-02` · `/qp:fix ERG-R01` | Corriger les 10 premiers problèmes, un problème précis ou un constat de la revue d'ergonomie |
+| `/qp:fix experience` | Corriger d'abord ce qui pèse sur la note Expérience |
 | `/qp:handoff` | Écrire `.quality/handoff.md` avant de couper une longue tâche |
 
 ## Ce qu'il vérifie
@@ -108,6 +110,7 @@ Ton projet garde son dossier `.quality/` ; supprime-le si tu n'en veux plus.
 | Groupe | Domaines |
 | --- | --- |
 | Produit et expérience | Produit, Fonctionnalités, UX, Contenu, Support |
+| Ergonomie | Ergonomie et architecture de l'information : effort par tâche, réglages visibles à la fois, aperçu et action principale à portée, choix jamais écrasés, références de DESIGN.md suivies, revue heuristique |
 | Design et accessibilité | UI, AI slop, Responsive, Accessibilité, Compatibilité |
 | Sécurité et données | Sécurité, Confidentialité, Données, Conformité |
 | Fiabilité et qualité du code | Fiabilité, Tests, Code |
@@ -120,8 +123,11 @@ Toutes les règles et vérifications sont détaillées dans [docs/fr/REFERENTIEL
 ### Notation
 
 - Chaque vérification est **bloquante** (5 points), **majeure** (3) ou **mineure** (1). Réussie = tous les points, partielle = la moitié, en échec ou non vérifiée = aucun.
-- Un point bloquant en échec plafonne son domaine à 3/10 et la note globale à 5,9/10.
-- La note globale pondère les domaines selon le type de projet : `vitrine`, `webapp`, `saas`, `mobile` ou `api`. Les domaines sans objet (les paiements pour un site vitrine, par exemple) sont ignorés.
+- Deux notes : **Expérience** (produit, fonctionnalités, UX, contenu, support, ergonomie, UI, AI slop, responsive, accessibilité, compatibilité, performance) et **Technique et exploitation** (sécurité, confidentialité, données, conformité, fiabilité, tests, code, SEO, scalabilité, intégrations, paiements, coûts, infra, déploiement, monitoring, sauvegardes).
+- Un point bloquant en échec plafonne son domaine à 3/10 et la note dont il relève à 5,9/10, pas l'autre.
+- Chaque note pondère ses domaines selon le type de projet : `vitrine`, `webapp`, `saas`, `mobile` ou `api`. Les domaines sans objet (les paiements pour un site vitrine, par exemple) sont ignorés.
+- La note d'ensemble (tous les domaines) reste dans le rapport pour l'historique ; elle est plafonnée à 5,9/10 dès qu'un point bloquant est ouvert.
+- Les constats critiques de la revue d'ergonomie font échouer ERG-09, les majeurs le plafonnent à « partiel ». La contre-vérification ne peut que baisser un résultat, preuve à l'appui.
 
 ## Économie de tokens
 
@@ -139,7 +145,7 @@ Le pack réduit les tokens à trois endroits :
 | **Sorties de commandes compactes** (`qp.mjs run`) | Les tests, le lint, le typage et les audits de dépendances écrivent leur log complet sur le disque. Claude ne reçoit que le code de sortie, les lignes d'erreur et la fin du log. Sur notre test, une sortie de 3 000 lignes passe d'environ 14 700 tokens à environ 190. |
 | **Audit incrémental par défaut** | Seuls les critères que les fichiers modifiés (d'après Git) peuvent affecter sont revérifiés ; les autres sont repris du dernier audit et signalés comme tels. Si rien n'a changé, aucun auditeur n'est lancé. |
 | **Mode rapide** (`/qp:audit quick`) | Seulement les vérifications automatiques, sans agent auditeur. |
-| **Modèle moins cher pour les auditeurs** | `/qp:kickoff` propose de faire tourner les auditeurs sur Sonnet ou Haiku pendant que ta session reste sur ton modèle habituel. |
+| **Modèle des auditeurs** | `/qp:kickoff` propose Opus (recommandé) ou Fable pour les auditeurs. Les modèles plus petits ont donné de fausses preuves et sont restés sur l'écran vide lors d'audits réels : les économies se font plutôt avec les audits incrémentaux et les sorties compactes. |
 | **Passage de relais** (`/qp:handoff`) | Une note de 60 lignes maximum permet à la session suivante de reprendre une longue tâche sans réexplorer le projet. Le hook de démarrage la signale automatiquement. |
 | **Réponses courtes** | La méthode de travail demande des comptes rendus de deux ou trois lignes : pas de récapitulatif des étapes, pas de code recopié. |
 
@@ -152,8 +158,8 @@ Taille mesurée en fichiers de code : `node qp.mjs graph` l'affiche, et `/qp:kic
 | Taille du projet | Court terme : une session | Moyen terme : quelques semaines de développement | Long terme : la vie du projet |
 | --- | --- | --- | --- |
 | **Petit** (moins de 60 fichiers de code) | Le pack suffit : règles à la demande, sorties compactes. Graphify n'apporte presque rien, une recherche directe coûte déjà peu. | `/qp:audit` incrémental après chaque fonctionnalité, `/qp:audit quick` avant chaque mise en ligne. | Un `/qp:audit full` par mois (forcé automatiquement après 30 jours). `/qp:handoff` pour les tâches sur plusieurs jours. |
-| **Moyen** (60 à 400 fichiers) | Installer **Graphify** : Claude interroge le graphe du code au lieu de chercher et relire les fichiers. **RTK** si tes sessions sont longues. | Audits incrémentaux. `graphify hook install` garde le graphe à jour à chaque commit, sans tokens. Auditeurs sur Sonnet. | Historique des notes dans `.quality/`. Audit complet mensuel, `/qp:handoff` systématique en fin de session. |
-| **Gros** (plus de 400 fichiers) | **Graphify fortement recommandé**, RTK recommandé. Lecture des fichiers par plages de lignes, jamais en entier. | Audits incrémentaux ou par groupe (`/qp:audit security-data`). Auditeurs sur Sonnet, Haiku pour les audits rapides. | Audits complets découpés par groupe sur plusieurs sessions. Handoff obligatoire : sans lui, chaque session repaie l'exploration du projet. |
+| **Moyen** (60 à 400 fichiers) | Installer **Graphify** : Claude interroge le graphe du code au lieu de chercher et relire les fichiers. **RTK** si tes sessions sont longues. | Audits incrémentaux. `graphify hook install` garde le graphe à jour à chaque commit, sans tokens. | Historique des notes dans `.quality/`. Audit complet mensuel, `/qp:handoff` systématique en fin de session. |
+| **Gros** (plus de 400 fichiers) | **Graphify fortement recommandé**, RTK recommandé. Lecture des fichiers par plages de lignes, jamais en entier. | Audits incrémentaux ou par groupe (`/qp:audit security-data`). `/qp:audit quick` pour les vérifications rapides. | Audits complets découpés par groupe sur plusieurs sessions. Handoff obligatoire : sans lui, chaque session repaie l'exploration du projet. |
 
 ### Outils compagnons
 
@@ -179,15 +185,16 @@ Ces outils ne sont pas inclus dans le pack : ce sont des projets séparés, inst
 .quality/
   project.json          le profil du projet (écrit par /qp:kickoff)
   AUDIT.md              le dernier rapport d'audit
-  audits/<date>.json    chaque audit, pour suivre la note dans le temps
-  audits/<date>/logs/   les sorties complètes des commandes de l'audit
+  audits/<run>.json     chaque audit, pour suivre les notes dans le temps (2026-11-11, puis 2026-11-11-2 pour un deuxième audit le même jour)
+  audits/<run>/flows/   les captures de chaque étape des tâches clés
+  audits/<run>/logs/    les sorties complètes des commandes de l'audit
   fixes.md              journal des corrections faites par /qp:fix
   handoff.md            le passage de relais entre sessions (/qp:handoff)
 DESIGN.md               la direction visuelle et les tokens de design
 CLAUDE.md               une courte section « Quality pack » y est ajoutée
 ```
 
-Commite `.quality/` pour garder l'historique des notes. Les captures d'écran et les logs sont lourds : ajoute `.quality/audits/*/screens/` et `.quality/audits/*/logs/` à ton `.gitignore` (`/qp:kickoff` le fait).
+Commite `.quality/` pour garder l'historique des notes. Les captures d'écran et les logs sont lourds : ajoute `.quality/audits/*/screens/`, `.quality/audits/*/flows/` et `.quality/audits/*/logs/` à ton `.gitignore` (`/qp:kickoff` le fait).
 
 ## En cas de problème
 
@@ -196,7 +203,8 @@ Commite `.quality/` pour garder l'historique des notes. Les captures d'écran et
 | Les commandes `/qp:...` n'apparaissent pas | Redémarre Claude Code ou tape `/reload-plugins`. Regarde `/plugin` → **Installed** et l'onglet **Errors**. |
 | `node: command not found` | Installe Node.js 18+ et vérifie que `node` est dans ton PATH. |
 | L'ajout de la marketplace échoue | Vérifie que `git` est installé. Sans clé SSH GitHub, définis `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` et réessaie. |
-| Les vérifications navigateur sont « non vérifiées » | Installe Playwright et axe-core dans le projet (étape 4), et vérifie que l'appli tourne en local ou renseigne une URL de préproduction dans `.quality/project.json`. |
+| Les vérifications navigateur sont « non vérifiées » | Lance `qp.mjs browser-setup` (étape 4), et vérifie que l'appli tourne en local ou renseigne une URL de préproduction dans `.quality/project.json`. |
+| Une tâche clé s'arrête à une étape | `flows.json` donne l'étape et l'erreur. Corrige le sélecteur dans `.quality/project.json` › `flows` (`qp.mjs flows --check` le valide), ou corrige le bug s'il est réel. |
 | Une écriture est bloquée comme secret | Mets la valeur dans une variable d'environnement. Si ce n'est vraiment pas un secret, ajoute `qp-allow-secret` en commentaire sur la ligne. |
 | L'audit incrémental refait tout | C'est voulu au premier audit, après une mise à jour du pack, si le dernier audit complet a plus de 30 jours, ou hors d'un dépôt Git. |
 | Graphify n'est pas utilisé | Vérifie `graphify --version`, puis `node <chemin du plugin>/scripts/qp.mjs graph` dans ton projet. |

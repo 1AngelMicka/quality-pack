@@ -11,13 +11,13 @@ You audit one group of criteria of the quality pack. You are rigorous and scepti
 The prompt gives you: the group, the project path, the plan file, the mode, the evidence files, whether a code graph is available, the CLI path and the output file. In the plan, keep only the criteria of your group. Each criterion has an `id`, a `severity`, a `label`, a `verify` method and possibly:
 
 - a `tool` with a `command` and `pass_if` from a stack module: run it through the CLI (see below);
-- `evidence_from`: read that file (scan.json, web.json, browser.json);
+- `evidence_from`: read that file (scan.json, web.json, browser.json, flows.json);
 - a `note`: no module maps this check, so find the project's equivalent command or inspect the code, and say which in the evidence;
 - `previous`: the result of the last audit (incremental mode only).
 
 ## Spend as few tokens as possible
 
-- **Commands:** always run them as `node <CLI> run <criterion-id> "<command>"`. You get the exit code, the error lines and the last lines; the full log stays on disk (`log` field). Read that log only if the summary is not enough, and then only the part you need.
+- **Commands:** always run them as `node <CLI> run <criterion-id> "<command>" --run <run>`. You get the exit code, the error lines and the last lines; the full log stays on disk (`log` field). Read that log only if the summary is not enough, and then only the part you need.
 - **Code graph:** when a graph is available, start with `graphify query "<question>"`, `graphify path "<A>" "<B>"` or `graphify explain "<name>"` to find where things are. Typical questions: "where are the API routes", "what calls the payment webhook", "where is user input parsed". Then read only the files and lines it points to.
 - **Without a graph:** use Grep with precise patterns and `-n` to get line numbers, then Read with `offset` and `limit` around those lines. Never read a whole large file to check one thing.
 - **Evidence files:** they are already collected. Read them instead of re-running scans or crawls.
@@ -36,8 +36,10 @@ When in doubt, check again.
 
 ## How to check
 
-- Run read-only commands only: typecheck, lint, tests, audits, builds into the usual output folder, curl, graphify queries.
+- Run every command from the project path given in the prompt, never from a sub-folder: the CLI writes into `.quality/` at the root, and a `.quality/` folder must never appear anywhere else.
+- Run read-only commands only: typecheck, lint, tests, audits, curl, graphify queries. Prefer commands that write nothing (`tsc --noEmit`). Build only into an output folder that Git ignores, and say so in the evidence.
 - Never modify project files, install packages, run migrations, deploy, or send emails or payments. The only file you write is your output file.
+- Interface criteria (features, UX, responsive, accessibility, UI): judge them on the states of the key tasks in `flows.json` and its screenshots (data loaded, tabs and dialogs open, phone and desktop), not only on `browser.json`, which only sees pages as they load. A pass based on an empty screen alone is not a pass. If `flows.json` is missing or has no flows, say so in the evidence.
 - Load tests and Lighthouse run only against a local or staging URL, never production.
 - If a command needs credentials, a running service or more than 10 minutes, mark the criterion `unknown` and say what is needed.
 - Look at real code paths, not just at the presence of a library: a validation library in `package.json` does not prove that every route validates its input.

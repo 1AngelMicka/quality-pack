@@ -1,10 +1,12 @@
 // Static scans of the project source: placeholder content, hollow wording, debug leftovers.
 // Findings are signals for the auditor, who judges the context before failing a criterion.
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, relative, extname } from "node:path";
+import { spawnSync } from "node:child_process";
 
 const SKIP_DIRS = new Set(["node_modules", ".git", ".next", ".nuxt", ".svelte-kit", ".output", "dist", "build", "out",
-  "coverage", ".turbo", ".vercel", ".quality", "graphify-out", "vendor", ".cache", "public/build", "storybook-static", ".expo"]);
+  "coverage", ".turbo", ".vercel", ".quality", "graphify-out", "vendor", ".cache", "public/build", "storybook-static", ".expo",
+  "target", ".venv", "venv", "__pycache__", "Pods", ".gradle", "DerivedData", "test-results", "playwright-report"]);
 const CODE_EXT = new Set([".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".vue", ".svelte", ".astro"]);
 const TEXT_EXT = new Set([...CODE_EXT, ".html", ".md", ".mdx", ".json", ".yml", ".yaml"]);
 const MAX_SIZE = 512 * 1024;
@@ -14,7 +16,20 @@ const isConfigOrScript = (p) => /(^|\/)(scripts?|bin|tools)\/|\.config\.[a-z]+$|
 const isDocPath = (p) => /(^|\/)(docs?|\.github)\/|^(README|CHANGELOG|CONTRIBUTING|LICENSE|CLAUDE|AGENTS|DESIGN)[^/]*$/i.test(p);
 const isLockOrGenerated = (p) => /(package-lock\.json|pnpm-lock\.yaml|yarn\.lock|bun\.lockb|\.min\.[a-z]+|\.map)$/.test(p) || /(^|\/)tsconfig.*\.json$/.test(p);
 
+// Files of the project. Inside a Git work tree, Git decides (tracked files plus untracked ones that
+// .gitignore does not exclude), so build outputs and dependencies are never read. Elsewhere, or when
+// Git lists nothing (the folder itself is ignored by a parent repository), walk the tree and skip SKIP_DIRS.
 export function listFiles(root) {
+  const skipped = (rel) => rel.split("/").some((seg, i, all) => SKIP_DIRS.has(seg) || SKIP_DIRS.has(all.slice(0, i + 1).join("/")));
+  const git = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], { cwd: root, encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
+  if (git.status === 0 && git.stdout) {
+    const files = git.stdout.split("\0").filter((f) => f && !skipped(f) && existsSync(join(root, f)));
+    if (files.length) return files;
+  }
+  return walkFiles(root);
+}
+
+export function walkFiles(root) {
   const out = [];
   const walk = (dir) => {
     let entries = [];
@@ -105,5 +120,11 @@ export function scan(root, ref) {
   }
   return { root, files_scanned: files.length, findings,
     summary: Object.fromEntries(Object.entries(findings).map(([k, v]) => [k, v.length])) };
+}
+
+// What the CLI prints: counts and the first findings of each kind. The full list stays in scan.json.
+export function compactScan(result, perKind = 8) {
+  return { summary: result.summary, files_scanned: result.files_scanned, full_list: "scan.json",
+    findings: Object.fromEntries(Object.entries(result.findings).map(([k, v]) => [k, v.slice(0, perKind)])) };
 }
 

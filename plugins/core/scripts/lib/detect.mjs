@@ -1,6 +1,37 @@
 // Guess stacks, flags and profile from an existing project. Suggestions only: /qp:kickoff confirms them with the user.
-import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { join, extname } from "node:path";
+import { listFiles } from "./scan.mjs";
+
+// Signs that the UI is an application (it keeps state or takes files), not a showcase site.
+const APP_DEPS = ["zustand", "redux", "@reduxjs/toolkit", "jotai", "valtio", "mobx", "pinia", "vuex", "xstate", "@tanstack/react-query",
+  "swr", "dexie", "idb", "idb-keyval", "localforage", "vite-plugin-pwa", "workbox-*", "@tauri-apps/*", "electron", "@capacitor/*",
+  "react-dropzone", "fabric", "konva", "react-konva", "pdf-lib", "jszip", "html2canvas", "html-to-image"];
+const APP_CODE = [
+  [/type\s*=\s*["'{]?\s*["']?file\b/, "file input"],
+  [/\bshowOpenFilePicker\b|\bshowDirectoryPicker\b|\bwebkitdirectory\b/, "file or folder picker"],
+  [/\bnew FileReader\b|\bcreateObjectURL\b/, "reads user files"],
+  [/\bonDrop\b|addEventListener\(\s*["']drop["']/, "drag and drop"],
+  [/\bindexedDB\b|\blocalStorage\.setItem\b/, "stores data in the browser"],
+  [/\bnavigator\.serviceWorker\.register\b/, "service worker (installable app)"],
+  [/\.getContext\(\s*["']2d["']|\.toBlob\(/, "draws or exports images"],
+];
+const CODE_EXT = new Set([".js", ".jsx", ".ts", ".tsx", ".mjs", ".vue", ".svelte", ".astro", ".html"]);
+
+function appSignals(cwd, deps, file) {
+  const out = [];
+  for (const n of APP_DEPS) if (has(deps, [n])) out.push(`dependency ${n}`);
+  if (file("src-tauri")) out.push("desktop app (src-tauri)");
+  const seen = new Set();
+  const files = listFiles(cwd).filter((f) => CODE_EXT.has(extname(f).toLowerCase()) && !/(^|\/)(tests?|e2e|__tests__|scripts?)\//.test(f)).slice(0, 600);
+  for (const f of files) {
+    let text = "";
+    try { if (statSync(join(cwd, f)).size > 400 * 1024) continue; text = readFileSync(join(cwd, f), "utf8"); } catch { continue; }
+    for (const [re, label] of APP_CODE) if (!seen.has(label) && re.test(text)) { seen.add(label); out.push(`${label} (${f})`); }
+    if (seen.size === APP_CODE.length) break;
+  }
+  return out;
+}
 
 const has = (deps, names) => names.some((n) => n.endsWith("*") ? Object.keys(deps).some((d) => d.startsWith(n.slice(0, -1))) : n in deps);
 
@@ -33,12 +64,17 @@ export function detect(cwd, stacks) {
   if (flags.has("has_auth") || flags.has("has_email") || flags.has("has_payments")) add("has_user_data", "accounts, emails or payments imply personal data");
   if (has(deps, ["next", "astro", "nuxt", "@remix-run/*", "gatsby"])) add("public_web", "server-rendered web framework (confirm the site is public)");
 
+  const signals = flags.has("has_ui") ? appSignals(cwd, deps, file) : [];
   let profile = "webapp";
-  if (has(deps, ["expo", "react-native"])) profile = "mobile";
-  else if (flags.has("has_payments")) profile = "saas";
-  else if (!flags.has("has_ui") && flags.has("has_backend")) profile = "api";
-  else if (flags.has("has_ui") && !flags.has("has_backend") && !flags.has("has_db") && !flags.has("has_auth")) profile = "vitrine";
+  let profileWhy = "UI with a server, a database or accounts";
+  if (has(deps, ["expo", "react-native", "@capacitor/*"])) { profile = "mobile"; profileWhy = "React Native, Expo or Capacitor"; }
+  else if (flags.has("has_payments")) { profile = "saas"; profileWhy = "payment SDK"; }
+  else if (!flags.has("has_ui") && flags.has("has_backend")) { profile = "api"; profileWhy = "server without UI"; }
+  else if (flags.has("has_ui") && !flags.has("has_backend") && !flags.has("has_db") && !flags.has("has_auth")) {
+    if (signals.length) { profile = "webapp"; profileWhy = "no server, but the UI is an application: it keeps state or takes files (see app_signals)"; }
+    else { profile = "vitrine"; profileWhy = "UI without server, database, accounts, state or file input"; }
+  }
 
-  return { package_manager: pm, name: pkg?.name || null, stacks: matched, flags: [...flags].sort(), why, profile,
-    scripts: pkg?.scripts || {}, is_new_project: !pkg && !file(".git") };
+  return { package_manager: pm, name: pkg?.name || null, stacks: matched, flags: [...flags].sort(), why, profile, profile_why: profileWhy,
+    app_signals: signals, scripts: pkg?.scripts || {}, is_new_project: !pkg && !file(".git") };
 }

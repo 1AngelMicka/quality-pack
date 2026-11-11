@@ -49,7 +49,7 @@ Rules:
 Done means:
 
 - [major] SLP-01: No hollow phrase or AI jargon in the copy. Check: Scan the copy with the pack's FR/EN blacklist; reread headings and taglines.
-- [major] SLP-02: The visual direction is project-specific and documented. Check: DESIGN.md states the choices and they show on screen; compare with default templates (raw shadcn, purple gradient, glass).
+- [major] SLP-02: The visual direction is project-specific and documented. Check: DESIGN.md states the choices (mood, colours, type) and they show on screen; compare with default templates (raw shadcn, purple gradient, glass). DESIGN.md existing is not enough; following how the references are organised is checked by ERG-08.
 - [major] SLP-03: No decorative visual without information (generic illustrations, blobs, random icons). Check: For each image or illustration: what real thing does it show?
 - [minor] SLP-04: Sections answer a user question, not a template. Check: Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits.
 - [minor] SLP-05: Animations are useful, subtle and respect prefers-reduced-motion. Check: List animations and their purpose; test with reduced motion enabled.
@@ -68,7 +68,7 @@ Rules:
 
 Done means:
 
-- [BLOCKER] RSP-01: No horizontal scroll or clipped content from 360 to 1440 px. Check: Screenshots at the 5 reference widths and scrollWidth check.
+- [BLOCKER] RSP-01: No horizontal scroll or clipped content from 360 to 1440 px. Check: Screenshots at the 5 reference widths and scrollWidth check, then at every flow step (horizontal_overflow in flows.json).
 - [major] RSP-02: Touch targets at least 44 × 44 px on mobile. Check: Measure buttons, icon links, checkboxes in mobile view.
 - [major] RSP-03: No hover-only feature. Check: Menus, tooltips and actions reachable by touch.
 - [minor] RSP-04: Layout adapted to each format, not just shrunk. Check: Navigation, tables and grids reorganised on mobile and tablet.
@@ -90,8 +90,8 @@ Rules:
 
 Done means:
 
-- [BLOCKER] A11Y-01: No critical or serious axe-core violation on main pages. Check: axe-core (via Playwright) on each main page.
-- [major] A11Y-02: Main flows fully doable by keyboard, visible focus. Check: Tab, Shift+Tab, Enter, Space, Esc on each flow; modals trap and restore focus.
+- [BLOCKER] A11Y-01: No critical or serious axe-core violation on main pages and flow states. Check: axe-core (via Playwright) on each main page and at every step of the key tasks (flows.json). An empty screen with no violation is not enough to pass.
+- [major] A11Y-02: Main flows fully doable by keyboard, visible focus. Check: Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus.
 - [major] A11Y-03: Compliant contrast (4.5:1 text, 3:1 components). Check: Measure on colour tokens and rendered pages, in every theme.
 - [major] A11Y-04: Labels, text alternatives and accessible names present. Check: Fields without labels, images without alt, icon buttons without aria-label.
 - [minor] A11Y-05: Structure readable by screen reader (headings, landmarks, announcements). Check: VoiceOver or NVDA test; errors and notifications announced (aria-live).
