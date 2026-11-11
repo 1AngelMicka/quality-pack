@@ -17,9 +17,10 @@ For a security issue, do not open a public issue: see [SECURITY.md](SECURITY.md)
 | `plugins/core/referential/checks.yaml` | Automatic checks referenced by criteria |
 | `plugins/core/referential/slop-words.yaml` | Hollow wording list (FR/EN) |
 | `plugins/*/stack.yaml` | Stack modules: check commands and stack rules |
-| `plugins/core/skills/{workflow,kickoff,audit,fix,handoff}/` | Hand-written skills |
+| `plugins/core/skills/{workflow,kickoff,audit,fix,handoff,design-screens,design-direction,design-review,deslop-ui}/` | Hand-written skills (design skills have `references/` loaded on demand) |
+| `plugins/core/SOURCES.md` | Sources of the design skills and measures, by rule |
 | `plugins/core/agents/` | The agents: `auditor` (one per group), `ergonomist` (ergonomics group and heuristic review), `challenger` (counter-check) |
-| `plugins/core/scripts/` | Node engine (`qp.mjs`) and hooks, no dependencies |
+| `plugins/core/scripts/` | Node engine (`qp.mjs`) and hooks, no dependencies; `scripts/deslop/` is the spacing audit (CDP, installed Chrome or Edge) |
 | `tools/build.py` | Generates docs, JSON, build skills and manifests from the YAML |
 | `tests/` | Node tests |
 

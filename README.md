@@ -8,6 +8,7 @@ Des plugins pour [Claude Code](https://claude.com/claude-code) qui font coder to
 - **Tes vraies tâches, jouées sur téléphone et sur ordinateur** : tu déclares 2 à 5 tâches clés (« faire un collage de 4 photos ») ; l'audit les joue pas à pas, prend une capture et lance axe-core à chaque étape, et mesure l'effort : pages à faire défiler, réglages visibles à la fois, aperçu et action principale à portée. L'interface n'est plus jugée sur un écran vide.
 - **Deux notes** : **Expérience** (ce que vit l'utilisateur) et **Technique et exploitation** (ce qui garde le projet sûr et en marche), chacune avec ses propres points bloquants. Une sonde de panne manquante ne masque plus l'état de l'interface, et inversement.
 - **Une preuve pour chaque vérification** : un fichier et une ligne, le résultat d'une commande ou une capture d'écran. Un point déclaré réussi sans preuve ne compte pas.
+- **Concevoir, pas seulement auditer** : trois skills design. Le premier organise un écran (modèles par type de tâche, téléphone et ordinateur). Le deuxième passe des références aimées à des tokens vérifiés (OKLCH, format DTCG, contraste dans chaque thème). Le troisième conseille sur un écran existant (`/qp:design-review`). Chaque conseil se termine par une mesure.
 - **Une note honnête** : un point bloquant ouvert (un secret qui fuit, un parcours principal cassé) plafonne la note dont il relève. Un ergonome passe en revue les tâches clés et une contre-vérification relit les critères réussis sur les captures.
 - **Économe en tokens** : règles chargées à la demande, sorties de commandes compactes, audits incrémentaux, graphe du code avec [Graphify](https://github.com/Graphify-Labs/graphify). Voir [Économie de tokens](#économie-de-tokens).
 - **Gratuit, open source, sans télémétrie**, en français et en anglais.
@@ -104,6 +105,12 @@ Ton projet garde son dossier `.quality/` ; supprime-le si tu n'en veux plus.
 | `/qp:fix 10` · `/qp:fix SEC-02` · `/qp:fix ERG-R01` | Corriger les 10 premiers problèmes, un problème précis ou un constat de la revue d'ergonomie |
 | `/qp:fix experience` | Corriger d'abord ce qui pèse sur la note Expérience |
 | `/qp:handoff` | Écrire `.quality/handoff.md` avant de couper une longue tâche |
+| `/qp:design-review [tâche ou URL]` | Avis sur un écran : effort mesuré, revue heuristique, deux ou trois réorganisations chiffrées |
+| `node qp.mjs look <url>` | Mesurer le rendu : signaux de rendu générique pondérés, tailles de police, longueur des lignes, petites cibles |
+| `node qp.mjs deslop <url>` | Mesurer l'espacement et l'alignement du rendu, élément par élément, à 375, 768 et 1440 px (Chrome ou Edge installé, rien à ajouter) |
+| `node qp.mjs tokens` | Vérifier les design tokens : format DTCG, références, contraste dans chaque thème, couleurs hors sRGB |
+| `node qp.mjs record <id>` | Enregistrer une tâche clé en la faisant dans un navigateur, au lieu de l'écrire |
+| `node qp.mjs report` | Regénérer `.quality/report.html` : notes dans le temps, captures de chaque étape, constats de la revue |
 
 ## Ce qu'il vérifie
 
@@ -128,6 +135,19 @@ Toutes les règles et vérifications sont détaillées dans [docs/fr/REFERENTIEL
 - Chaque note pondère ses domaines selon le type de projet : `vitrine`, `webapp`, `saas`, `mobile` ou `api`. Les domaines sans objet (les paiements pour un site vitrine, par exemple) sont ignorés.
 - La note d'ensemble (tous les domaines) reste dans le rapport pour l'historique ; elle est plafonnée à 5,9/10 dès qu'un point bloquant est ouvert.
 - Les constats critiques de la revue d'ergonomie font échouer ERG-09, les majeurs le plafonnent à « partiel ». La contre-vérification ne peut que baisser un résultat, preuve à l'appui.
+
+## Design
+
+Quatre skills se chargent quand Claude dessine ou retouche une interface :
+
+| Skill | Ce qu'il fait | Ce qu'il vérifie |
+| --- | --- | --- |
+| `design-screens` | Organise un écran avant de le coder : nombre de panneaux selon la largeur, coquille (liste-détail, panneau d'appoint, flux), navigation, action principale, et une recette par tâche (éditeur avec aperçu, assistant, réglages, paiement, tableau de bord, filtres, formulaire, tableau, état vide, premier lancement), séparément pour téléphone et ordinateur | Les tâches clés jouées (`qp flows`) : budgets d'effort, aperçu visible, action sous le pouce |
+| `design-direction` | Des références aimées (apparence et organisation, séparées) à 4 ou 5 mots d'ambiance, des principes testables, des style tiles, puis des tokens DTCG en OKLCH pour le clair et le sombre | `qp tokens` : contraste WCAG jamais arrondi dans chaque thème, format, couleurs hors sRGB ; `qp look` sur le rendu |
+| `deslop-ui` | Rend une interface nette avant de la dire terminée : mesure l'espacement, l'alignement, les boîtes, les contrôles et les signes d'interface générée sur le vrai rendu, avec captures, puis corrige à la racine | `qp deslop` : aucun constat « high », captures relues |
+| `design-review` (`/qp:design-review`) | Avis sur un écran existant : mesures, revue heuristique (Nielsen, Bastien et Scapin) en deux passes, gravité de 0 à 4 confirmée par trois passes indépendantes, puis deux ou trois réorganisations avec leur écart d'effort (modèle KLM) | Le parcours rejoué avant et après |
+
+Le rendu « fait par IA » se mesure par signaux pondérés (police par défaut, violet, dégradés, trois cartes identiques, badge au-dessus du titre, émojis en guise d'icônes, formules creuses…). Un signal seul n'est jamais un défaut, et les écrans d'application (mode `operate`) ne sont jamais pénalisés parce qu'ils sont conventionnels. Les sources sont listées dans [plugins/core/SOURCES.md](plugins/core/SOURCES.md).
 
 ## Économie de tokens
 
@@ -185,6 +205,7 @@ Ces outils ne sont pas inclus dans le pack : ce sont des projets séparés, inst
 .quality/
   project.json          le profil du projet (écrit par /qp:kickoff)
   AUDIT.md              le dernier rapport d'audit
+  report.html           le même rapport à ouvrir dans un navigateur, avec les captures des tâches clés
   audits/<run>.json     chaque audit, pour suivre les notes dans le temps (2026-11-11, puis 2026-11-11-2 pour un deuxième audit le même jour)
   audits/<run>/flows/   les captures de chaque étape des tâches clés
   audits/<run>/logs/    les sorties complètes des commandes de l'audit

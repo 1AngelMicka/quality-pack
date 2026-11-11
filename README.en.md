@@ -8,6 +8,7 @@ Plugins for [Claude Code](https://claude.com/claude-code) that make Claude build
 - **Your real tasks, played on a phone and a desktop**: you declare 2 to 5 key tasks ("make a collage from 4 photos"); the audit plays them step by step, takes a screenshot and runs axe-core at every step, and measures the effort: pages to scroll, settings shown at once, preview and main action within reach. The interface is no longer judged on an empty screen.
 - **Two scores**: **Experience** (what the user lives) and **Engineering and operations** (what keeps the project safe and running), each with its own blockers. A missing uptime probe no longer hides how the interface fares, and the other way round.
 - **Evidence for every check**: a file and line, a command output or a screenshot. A check claimed as passed without evidence does not count.
+- **Design, not only audit**: three design skills. One organises a screen (patterns per task, phone and desktop). One turns the references a client likes into checked tokens (OKLCH, DTCG format, contrast in every theme). One advises on an existing screen (`/qp:design-review`). Every piece of advice ends with a measure.
 - **Honest scores**: an open blocker (a leaked secret, a broken main flow) caps the score it belongs to. An ergonomist reviews the key tasks and a counter-check re-reads the passed criteria on the screenshots.
 - **Token-frugal**: rules loaded on demand, compact command outputs, incremental audits, a code graph with [Graphify](https://github.com/Graphify-Labs/graphify). See [Token economy](#token-economy).
 - **Free, open source, no telemetry**, in English and French.
@@ -104,6 +105,12 @@ Your project keeps its `.quality/` folder; delete it if you no longer want it.
 | `/qp:fix 10` · `/qp:fix SEC-02` · `/qp:fix ERG-R01` | Fix the first 10 issues, a specific one, or a finding of the ergonomics review |
 | `/qp:fix experience` | Fix first what weighs on the Experience score |
 | `/qp:handoff` | Write `.quality/handoff.md` before stopping a long task |
+| `/qp:design-review [task or URL]` | Advice on a screen: measured effort, heuristic review, two or three costed reorganisations |
+| `node qp.mjs look <url>` | Measure the rendered page: weighted generic-look signals, font sizes, line length, small targets |
+| `node qp.mjs deslop <url>` | Measure spacing and alignment on the rendered page, element by element, at 375, 768 and 1440 px (installed Chrome or Edge, nothing to add) |
+| `node qp.mjs tokens` | Check design tokens: DTCG format, references, contrast in every theme, colours outside sRGB |
+| `node qp.mjs record <id>` | Record a key task by doing it in a browser instead of writing it |
+| `node qp.mjs report` | Rewrite `.quality/report.html`: scores over time, screenshots of every step, review findings |
 
 ## What it checks
 
@@ -128,6 +135,19 @@ Every rule and check is listed in [docs/en/REFERENTIAL.md](docs/en/REFERENTIAL.m
 - Each score weights its domains by project type: `vitrine` (showcase site), `webapp`, `saas`, `mobile` or `api`. Domains that do not apply (payments on a showcase site, for example) are skipped.
 - The overall score (every domain) stays in the report for history; it is capped at 5.9/10 as soon as any blocker is open.
 - Critical findings of the ergonomics review fail ERG-09, major ones cap it at partial. The counter-check can only lower a result, with evidence.
+
+## Design
+
+Four skills load when Claude designs or changes an interface:
+
+| Skill | What it does | What it checks |
+| --- | --- | --- |
+| `design-screens` | Organises a screen before it is coded: panes per window width, shell (list-detail, supporting pane, feed), navigation, main action, and a recipe per task (editor with preview, wizard, settings, checkout, dashboard, filters, form, table, empty state, first run), separately for phone and desktop | The key tasks played (`qp flows`): effort budgets, preview visible, main action under the thumb |
+| `design-direction` | From the references a client likes (look and organisation, kept apart) to 4 or 5 mood words, testable principles, style tiles, then DTCG tokens in OKLCH for light and dark | `qp tokens`: WCAG contrast never rounded, in every theme, format, colours outside sRGB; `qp look` on the rendered page |
+| `deslop-ui` | Makes an interface clean before calling it done: measures spacing, alignment, boxes, controls and signs of generated UI on the real rendering, with screenshots, then fixes at the root | `qp deslop`: no high finding, screenshots re-read |
+| `design-review` (`/qp:design-review`) | Advice on an existing screen: measures, a two-pass heuristic review (Nielsen, Bastien and Scapin), severity 0 to 4 confirmed by three independent passes, then two or three reorganisations with their effort gap (keystroke-level model) | The task played again before and after |
+
+The generic "AI-made" look is measured by weighted signals (default font, violet, gradients, three identical cards, a badge above the headline, emoji as icons, hollow wording…). One signal alone is never a defect, and app screens (`operate` mode) are never penalised for being conventional. Sources are listed in [plugins/core/SOURCES.md](plugins/core/SOURCES.md).
 
 ## Token economy
 
@@ -185,6 +205,7 @@ These tools are not part of the pack: they are separate projects, installed sepa
 .quality/
   project.json          your project's profile (written by /qp:kickoff)
   AUDIT.md              the latest audit report
+  report.html           the same report to open in a browser, with the screenshots of the key tasks
   audits/<run>.json     every audit, to follow the scores over time (2026-11-11, then 2026-11-11-2 for a second audit the same day)
   audits/<run>/flows/   screenshots of every step of the key tasks
   audits/<run>/logs/    full outputs of the audit's commands

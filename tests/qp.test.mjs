@@ -5,7 +5,7 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { cpSync, mkdtempSync, mkdirSync, readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { compute, toMarkdown } from "../plugins/core/scripts/lib/score.mjs";
 import { validateFlows, expandFiles, summarizeRun, DEFAULT_BUDGETS } from "../plugins/core/scripts/lib/flows.mjs";
 import { loadReferential, allDomains } from "../plugins/core/scripts/lib/ref.mjs";
@@ -303,6 +303,148 @@ test("flows: validation, file patterns and effort budgets", () => {
   assert.deepEqual(qp(app, "plan").flows.declared.map((f) => f.id), ["pay"]);
 });
 
+test("record: Playwright codegen output becomes flow steps", async () => {
+  const { parseCodegen } = await import("../plugins/core/scripts/lib/record.mjs");
+  const code = `import { test, expect } from '@playwright/test';
+test('test', async ({ page }) => {
+  await page.goto('http://localhost:5173/');
+  await page.getByRole('button', { name: 'Add photos' }).click();
+  await page.getByLabel('Photos').setInputFiles(['beach.jpg', 'C:\\\\Users\\\\me\\\\dog.jpg']);
+  await page.getByRole('tab', { name: 'Layout', exact: true }).click();
+  await page.getByPlaceholder('Title').click();
+  await page.getByPlaceholder('Title').fill('Summer');
+  await page.getByPlaceholder('Title').fill('Summer 2026');
+  await page.getByPlaceholder('Title').press('Enter');
+  await page.getByRole('dialog').getByRole('button', { name: 'Save' }).first().click();
+  await page.getByTestId('size').selectOption('large');
+  await expect(page.getByText('Saved')).toBeVisible();
+  await page.keyboard.press('Escape');
+  const page1Promise = page.waitForEvent('popup');
+  await page1.close();
+});`;
+  const { steps, warnings } = parseCodegen(code, { base: "http://localhost:5173" });
+  assert.deepEqual(steps, [
+    { goto: "/" },
+    { click: 'role=button[name="Add photos"]' },
+    { upload: { selector: 'internal:label="Photos"i', files: [".quality/fixtures/beach.jpg", ".quality/fixtures/dog.jpg"] } },
+    { click: 'role=tab[name="Layout"s]' },
+    { click: 'internal:attr=[placeholder="Title"i]' },
+    { fill: { selector: 'internal:attr=[placeholder="Title"i]', value: "Summer 2026" } },
+    { press: { selector: 'internal:attr=[placeholder="Title"i]', key: "Enter" } },
+    { click: 'role=dialog >> role=button[name="Save"] >> nth=0' },
+    { select: { selector: 'internal:testid=[data-testid="size"s]', value: "large" } },
+    { expect: "text=Saved" },
+    { press: "Escape" },
+  ]);
+  assert.ok(warnings.some((w) => w.includes("fixtures")));
+  const dir = fixture();
+  const rec = join(dir, "rec.js");
+  writeFileSync(rec, code);
+  const r = qp(dir, "record", "make-collage", "--name", "Make a collage", "--from", rec);
+  assert.deepEqual(r.errors, []);
+  const proj = JSON.parse(readFileSync(join(dir, ".quality/project.json"), "utf8"));
+  assert.equal(proj.flows.find((f) => f.id === "make-collage").steps.length, 11);
+  assert.ok(existsSync(join(dir, ".quality/recordings/make-collage.js")));
+});
+
+test("assemble writes a local HTML report with both scores", () => {
+  const dir = fixture();
+  const p = qp(dir, "plan", "--run", "2026-06-01");
+  const ids = p.groups.flatMap((g) => g.domains.flatMap((d) => d.criteria.map((c) => c.id)));
+  writeFileSync(join(dir, ".quality/audits/2026-06-01/parts/all.json"),
+    JSON.stringify({ results: Object.fromEntries(ids.map((id) => [id, { status: "pass", evidence: "ok" }])), findings: [{ severity: "major", problem: "Endless <page>", fix: "Tabs" }] }));
+  const a = qp(dir, "assemble", "--run", "2026-06-01");
+  assert.equal(a.html_report.split(/[\\/]/).join("/"), ".quality/report.html");
+  const html = readFileSync(join(dir, ".quality/report.html"), "utf8");
+  assert.match(html, /<html lang="fr">/);
+  assert.match(html, /Expérience/);
+  assert.match(html, /Technique et exploitation/);
+  assert.match(html, /Endless &lt;page&gt;/, "findings are escaped");
+  assert.match(html, /Aucune tâche clé jouée/);
+  assert.equal(qp(dir, "report").run, "2026-06-01");
+});
+
+test("tokens: DTCG references, units, tiers, contrast per theme and gamut", async () => {
+  const { checkTokens, contrast, parseColor } = await import("../plugins/core/scripts/lib/tokens.mjs");
+  assert.equal(contrast(parseColor("#fff"), parseColor("#000")), 21);
+  assert.equal(contrast(parseColor("#777777"), parseColor("#ffffff")), 4.47, "4.48 is truncated, never rounded up to pass");
+  assert.deepEqual(parseColor("oklch(1 0 0)").map((x) => Math.round(x * 1000) / 1000), [1, 1, 1]);
+  const doc = {
+    primitive: { $type: "color", gray: { 1: { $value: { colorSpace: "oklch", components: [0.99, 0, 0] } }, 11: { $value: "#6f6f6f" }, 12: { $value: "oklch(0.2 0 0)" } }, green: { $value: "oklch(0.7 0.3 145)" } },
+    light: { $type: "color", bg: { $value: "{primitive.gray.1}" }, text: { $value: "{primitive.gray.12}" }, border: { $value: "#e5e5e5" } },
+    dark: { $type: "color", bg: { $value: "{primitive.gray.12}" }, text: { $value: "{primitive.gray.1}" } },
+    space: { $type: "dimension", 2: { $value: { value: 8, unit: "px" } }, bad: { $value: "8px" } },
+    component: { button: { $type: "color", bg: { $value: "{light.text}" }, oops: { $value: "{missing.x}" } } },
+    loop: { a: { $type: "color", $value: "{loop.b}" }, b: { $type: "color", $value: "{loop.a}" } },
+  };
+  const r = checkTokens(doc);
+  assert.ok(r.errors.some((e) => e.includes("unresolved reference {missing.x}")));
+  assert.ok(r.errors.some((e) => e.startsWith("circular reference")));
+  assert.ok(r.errors.some((e) => e.startsWith("space.bad")));
+  assert.deepEqual(r.out_of_srgb, ["primitive.green"]);
+  assert.equal(r.contrast.pairs, 3);
+  assert.deepEqual(r.contrast.rows.filter((x) => !x.ok).map((x) => [x.theme, x.fg, x.need]), [["light", "light.border", 3]]);
+  const dir = mkdtempSync(join(tmpdir(), "qp-tok-"));
+  mkdirSync(join(dir, ".quality"));
+  writeFileSync(join(dir, ".quality/project.json"), JSON.stringify({ name: "t", profile: "webapp", flags: ["has_ui"] }));
+  writeFileSync(join(dir, "colors.tokens.json"), JSON.stringify({ light: doc.light, primitive: doc.primitive }));
+  const cli = spawnSync("node", [QP, "tokens"], { cwd: dir, encoding: "utf8" });
+  assert.equal(cli.status, 2, "a failing contrast pair exits with code 2");
+  assert.deepEqual(JSON.parse(cli.stdout).files, ["colors.tokens.json"]);
+});
+
+test("look: the redesign guard lists controls lost since the baseline", async () => {
+  const { compareInventory } = await import("../plugins/core/scripts/lib/look.mjs");
+  const r = compareInventory(["button: Save", "link: Help", "field: Title"], ["button: Save", "field: Title", "button: Share"]);
+  assert.deepEqual(r.missing, ["link: Help"]);
+  assert.equal(r.added, 1);
+});
+
+test("deslop: spacing audit flags the generic page and passes the clean one", (t) => {
+  const dir = fixture();
+  const page = (f) => join(ROOT, "tests/fixtures/deslop", f);
+  const run = (f) => spawnSync("node", [QP, "deslop", page(f), "--widths", "375,1440", "--run", "2026-07-01"], { cwd: dir, encoding: "utf8" });
+  const slop = run("slop.html");
+  if (slop.status !== 0 && /Chrome or Edge not found/.test(slop.stderr)) return t.skip("no Chrome or Edge installed");
+  assert.equal(slop.status, 0, slop.stderr);
+  const s = JSON.parse(slop.stdout);
+  assert.ok(s.total.high > 0);
+  const rules = new Set(s.widths.flatMap((w) => w.findings.map((f) => f.rule)));
+  for (const r of ["gradient-text", "emoji-icons", "glow-shadow", "nested-cards", "placeholder-copy", "off-scale"]) assert.ok(rules.has(r), `${r} found`);
+  assert.ok(existsSync(join(dir, ".quality/audits/2026-07-01/deslop.json")));
+  assert.ok(existsSync(join(dir, s.widths[0].screenshots.fold)));
+  const clean = JSON.parse(run("clean.html").stdout);
+  assert.deepEqual(clean.total, { high: 0, med: 0, low: 0 });
+});
+
+test("flows: effort is estimated with the keystroke-level model", async () => {
+  const { klmSeconds } = await import("../plugins/core/scripts/lib/flows.mjs");
+  assert.equal(klmSeconds([{ action: "click" }]), 1.2);
+  assert.equal(klmSeconds([{ action: "click", decision: true, scrolled_screens: 2 }]), 4.8);
+  assert.equal(klmSeconds([{ action: "fill", chars: 10 }]), 4.8);
+});
+
+test("look: weighted generic signals, strict only on persuasive pages", async (t) => {
+  const { loadBrowserTools } = await import("../plugins/core/scripts/lib/browser.mjs");
+  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run qp.mjs browser-setup)");
+  const url = (f) => pathToFileURL(join(ROOT, "tests/fixtures/look", f)).href;
+  const look = (f, mode) => new Promise((resolve, reject) => import("node:child_process").then(({ execFile }) =>
+    execFile("node", [QP, "look", url(f), "--mode", mode], { cwd: ROOT, encoding: "utf8" }, (e, out) => (e ? reject(e) : resolve(JSON.parse(out).pages[0])))));
+  const generic = await look("generic.html", "persuade");
+  assert.equal(generic.tier, "strong");
+  for (const id of ["LOOK-FONT", "LOOK-VIOLET", "LOOK-GRADTEXT", "LOOK-TRIPLETS", "LOOK-BADGE", "LOOK-EYEBROWS", "LOOK-EMOJI", "LOOK-COPY"]) {
+    assert.ok(generic.signals.some((s) => s.id === id), `${id} detected`);
+  }
+  const operate = await look("generic.html", "operate");
+  assert.ok(operate.counted.every((id) => operate.signals.find((s) => s.id === id).kind === "quality"), "operate mode ignores layout conventions");
+  assert.equal(operate.checks.accent_share.ok, false, "a violet gradient hero is too much accent for an app screen");
+  assert.equal(operate.checks.reduced_motion.ok, false, "animations that ignore reduced motion are caught");
+  const plain = await look("plain.html", "persuade");
+  assert.equal(plain.tier, "low", JSON.stringify(plain.signals));
+  assert.equal(plain.checks.line_length.ok, true);
+  assert.equal(plain.checks.targets_24.ok, true);
+});
+
 test("flows play in a real browser when Playwright is available", async (t) => {
   const { loadBrowserTools } = await import("../plugins/core/scripts/lib/browser.mjs");
   if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run qp.mjs browser-setup)");
@@ -319,7 +461,7 @@ test("flows play in a real browser when Playwright is available", async (t) => {
     const proj = JSON.parse(readFileSync(join(dir, ".quality/project.json"), "utf8"));
     writeFileSync(join(dir, ".quality/project.json"), JSON.stringify({ ...proj, urls: { local: `http://localhost:${server.address().port}` },
       flows: [{ id: "save", name: "Save", preview: "#preview", primary: "role=button[name=\"Save\"]", steps: [
-        { goto: "/" }, { upload: { selector: "#f", files: [".quality/fixtures/*.jpg"] } }, { fill: { selector: "[name=s59]", value: "v" } },
+        { goto: "/" }, { upload: { selector: "#f", files: [".quality/fixtures/*.jpg"] } }, { fill: { selector: "internal:label=\"Setting 59\"i", value: "v" } },
         { click: "role=button[name=\"Save\"]" }, { expect: "text=Saved" }] }] }));
     const r = await new Promise((resolve, reject) => execFile("node", [QP, "flows", "--run", "2026-04-01"], { cwd: dir, encoding: "utf8" },
       (e, stdout) => (e ? reject(e) : resolve(JSON.parse(stdout)))));
@@ -328,7 +470,7 @@ test("flows play in a real browser when Playwright is available", async (t) => {
     assert.ok(desktop.max_controls_rendered >= 60);
     assert.ok(desktop.over_budget.some((o) => o.includes("controls")));
     const full = JSON.parse(readFileSync(join(dir, ".quality/audits/2026-04-01/flows.json"), "utf8"));
-    assert.ok(full.flows[0].runs[0].steps.every((s) => s.screenshot && existsSync(s.screenshot)));
+    assert.ok(full.flows[0].runs[0].steps.every((s) => s.screenshot && !/^[A-Z]:|^\//.test(s.screenshot) && existsSync(join(dir, s.screenshot))));
     assert.ok(readdirSync(join(dir, ".quality/audits/2026-04-01/flows")).length >= 10);
   } finally { server.close(); }
 });

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EmberAI</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #12082e; color: #e8e2ff; }
+  .app { display: flex; min-height: 100vh; }
+  .side { width: 300px; padding: 17px 13px; background: #170b3a; border-right: 1px solid #33206b; }
+  .side a { display: block; color: inherit; text-decoration: none; font-size: 15px; }
+  .side a.a1 { margin: 0 0 16px; padding-left: 12px; }
+  .side a.a2 { margin: 0 0 27px; padding-left: 15px; }
+  .side a.a3 { margin: 0 0 21px; padding-left: 11px; }
+  .side a.a4 { margin: 0 0 35px; padding-left: 16px; }
+  .side a.a5 { margin: 0; padding-left: 13px; }
+  .side .active { background: linear-gradient(90deg, #7c3aed, #2563eb); box-shadow: 0 8px 28px rgba(124, 58, 237, .6); border-radius: 12px; padding: 13px 12px; margin-bottom: 19px; }
+  .main { flex: 1; padding: 29px 23px; }
+  .eyebrow { margin: 0; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #a78bfa; }
+  h1 { margin: 2px 0 37px; font-size: 42px; background: linear-gradient(90deg, #f0abfc, #818cf8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { margin: 0 0 40px; }
+  h2 { margin: 9px 0 33px; font-size: 19px; }
+  .cards { display: flex; gap: 22px; align-items: flex-start; }
+  .card { flex: 1; padding: 7px 18px 26px 31px; border-radius: 20px; background: #1f1250; border: 1px solid #4c35a0; box-shadow: 0 10px 30px rgba(124, 58, 237, .45); backdrop-filter: blur(12px); }
+  .card.tall { min-height: 150px; }
+  .inner { margin-top: 26px; padding: 5px; border-radius: 28px; background: #2a1a66; border: 1px solid #5b45b0; }
+  .inner .deep { padding: 3px; background: #362080; border: 1px solid #6b55c0; border-radius: 10px; }
+  .tile { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: #3b2a8c; }
+  .num { font-size: 13px; color: #a78bfa; }
+  .note { border-left: 3px solid #22c55e; border-radius: 8px; padding: 13px 15px; background: #16123a; margin-top: 23px; }
+  .row { display: flex; gap: 11px; margin-top: 29px; }
+  .row input { height: 37px; padding: 0 9px; }
+  .row button { height: 44px; padding: 13px 5px; background: linear-gradient(90deg, #7c3aed, #2563eb); border: 0; color: #fff; border-radius: 10px; }
+  .long { max-width: none; font-size: 13px; }
+  .tiny { font-size: 10px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="side">
+    <a class="active" href="#">🏠 Overview</a>
+    <a class="a1" href="#">📥 Inbox</a>
+    <a class="a2" href="#">🚀 Projects</a>
+    <a class="a3" href="#">👥 Customers</a>
+    <a class="a4" href="#">💸 Invoices</a>
+    <a class="a5" href="#">📊 Reports</a>
+  </nav>
+  <main class="main">
+    <p class="sub">Your workspace at a glance</p>
+    <p class="eyebrow">Dashboard</p>
+    <h1>Welcome back, Alex!</h1>
+    <h2>This month</h2>
+    <div class="cards">
+      <div class="card tall">
+        <div class="tile"><svg width="20" height="20"><circle cx="10" cy="10" r="8" fill="#fff"/></svg></div>
+        <p class="num">01</p>
+        <p>$48,210</p>
+      </div>
+      <div class="card">
+        <div class="tile"><svg width="20" height="20"><circle cx="10" cy="10" r="8" fill="#fff"/></svg></div>
+        <p class="num">02</p>
+        <div class="inner"><div class="deep"><p>Nested stats</p></div></div>
+      </div>
+      <div class="card">
+        <div class="tile"><svg width="20" height="20"><circle cx="10" cy="10" r="8" fill="#fff"/></svg></div>
+        <p class="num">03</p>
+        <p class="tiny">Lorem ipsum dolor sit amet</p>
+      </div>
+    </div>
+    <div class="note">Your plan renews soon.</div>
+    <div class="row">
+      <input placeholder="Search anything">
+      <button>Upgrade now →</button>
+    </div>
+    <p class="long">This paragraph runs across the whole width of the main column, which makes it unpleasant to read because the eye loses its place when it returns to the start of the next line, and that happens on nearly every generated dashboard page that nobody took the time to look at in a real browser at a real size.</p>
+  </main>
+</div>
+</body>
+</html>

@@ -36,7 +36,7 @@ export async function loadBrowserTools(cwd) {
     const chromium = mod.chromium || mod.default?.chromium;
     const axe = resolveFrom(cwd, ["axe-core"]) || resolveFrom(cacheDir(), ["axe-core"]);
     const axePath = axe ? axe.path.replace(/axe(\.min)?\.js$|index\.js$/, "axe.min.js") : null;
-    return { source, playwright: pw.name, chromium, axePath: axePath && existsSync(axePath) ? axePath : null };
+    return { source, playwright: pw.name, path: pw.path, chromium, axePath: axePath && existsSync(axePath) ? axePath : null };
   }
   return null;
 }

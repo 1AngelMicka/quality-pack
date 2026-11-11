@@ -1,0 +1,188 @@
+// How a page looks, measured in the browser (computed styles and DOM, no LLM): signals of the generic
+// "AI-made" look, the type system actually used, line length and line height of prose, small targets.
+// Signals are weighted and read together: one signal alone never fails a page. In "operate" mode
+// (app screens, dashboards, forms), a conventional layout is not a defect: only quality signals count.
+import { loadBrowserTools, launch } from "./browser.mjs";
+
+export const LOOK_VERSION = "2026-11";
+export const MODES = ["persuade", "operate", "read"];
+
+// Runs in the page. Returns raw measures; scoring happens in Node.
+function measurePage() {
+  const vw = innerWidth;
+  const visible = (e) => { const r = e.getBoundingClientRect(); const s = getComputedStyle(e); return r.width > 0 && r.height > 0 && s.visibility !== "hidden" && s.display !== "none" && Number(s.opacity) > 0; };
+  const all = [...document.querySelectorAll("body *")].filter(visible);
+  const ownText = (e) => [...e.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join("").trim();
+  const textEls = all.filter((e) => ownText(e).length > 0);
+  const tally = (arr) => arr.reduce((m, k) => (m[k] = (m[k] || 0) + 1, m), {});
+  const fam = {}, sizes = {}, weights = {};
+  for (const e of textEls) {
+    const s = getComputedStyle(e), len = ownText(e).length;
+    const f = s.fontFamily.split(",")[0].replace(/["']/g, "").trim().toLowerCase();
+    fam[f] = (fam[f] || 0) + len;
+    sizes[Math.round(parseFloat(s.fontSize))] = (sizes[Math.round(parseFloat(s.fontSize))] || 0) + 1;
+    weights[s.fontWeight] = (weights[s.fontWeight] || 0) + 1;
+  }
+  const totalText = Object.values(fam).reduce((a, b) => a + b, 0) || 1;
+  const families = Object.entries(fam).sort((a, b) => b[1] - a[1]).map(([name, n]) => ({ name, share: Math.round((n / totalText) * 100) / 100 }));
+  const boxes = all.filter((e) => { const s = getComputedStyle(e); return s.backgroundColor !== "rgba(0, 0, 0, 0)" || parseFloat(s.borderTopWidth) > 0 || s.boxShadow !== "none"; });
+  const radii = tally(boxes.map((e) => Math.round(parseFloat(getComputedStyle(e).borderTopLeftRadius))).filter((r) => r > 0 && r < 999));
+  const gradients = all.filter((e) => /gradient\(/.test(getComputedStyle(e).backgroundImage));
+  const gradientText = gradients.filter((e) => { const s = getComputedStyle(e); return /text/.test(s.backgroundClip || s.webkitBackgroundClip || "") || s.webkitTextFillColor === "rgba(0, 0, 0, 0)"; }).length;
+  const glass = all.filter((e) => /blur\(/.test(getComputedStyle(e).backdropFilter || "")).length;
+  const rgb = (c) => (c.match(/[\d.]+/g) || []).map(Number);
+  const hsl = ([r, g, b]) => { r /= 255; g /= 255; b /= 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn, l = (mx + mn) / 2;
+    if (!d) return { h: 0, s: 0, l }; const s = d / (1 - Math.abs(2 * l - 1)); let h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h = (h * 60 + 360) % 360; return { h: Math.round(h), s: Math.round(s * 100) / 100, l: Math.round(l * 100) / 100 }; };
+  const glows = all.filter((e) => { const sh = getComputedStyle(e).boxShadow; if (sh === "none") return false; const m = sh.match(/rgba?\([^)]*\)[^,]*?(\d+)px\s+(\d+)px\s+(\d+)px/); if (!m) return false; const c = hsl(rgb(sh.match(/rgba?\([^)]*\)/)[0])); return Number(m[3]) >= 20 && c.s > 0.4; }).length;
+  const buttons = all.filter((e) => e.matches("button, [role=button], a[class*=btn], a[class*=button], input[type=submit]") && getComputedStyle(e).backgroundColor !== "rgba(0, 0, 0, 0)");
+  const btnColors = tally(buttons.map((e) => getComputedStyle(e).backgroundColor));
+  const primary = Object.entries(btnColors).sort((a, b) => b[1] - a[1])[0];
+  const primaryHsl = primary ? hsl(rgb(primary[0])) : null;
+  const EMOJI = /\p{Extended_Pictographic}/u;
+  const emojiUi = all.filter((e) => e.matches("h1, h2, h3, h4, button, nav a, [role=tab], [role=button], li > a, a[class*=btn], a[class*=button], [class*=badge], [class*=chip], [class*=pill]") && EMOJI.test(e.textContent)).slice(0, 10).map((e) => `${e.tagName.toLowerCase()} "${e.textContent.trim().slice(0, 40)}"`);
+  const headings = [...document.querySelectorAll("h1, h2, h3")].filter(visible);
+  const eyebrows = headings.filter((h) => { const p = h.previousElementSibling; if (!p || !visible(p)) return false; const s = getComputedStyle(p);
+    return s.textTransform === "uppercase" && parseFloat(s.fontSize) <= 14 && p.textContent.trim().length < 40; }).length;
+  const h1 = document.querySelector("h1");
+  const pill = (e) => { if (!e || !visible(e)) return false; const r = e.getBoundingClientRect(); const s = getComputedStyle(e); return r.height < 40 && parseFloat(s.borderTopLeftRadius) >= r.height / 2 - 1 && e.textContent.trim().length < 60; };
+  const badgeBeforeH1 = !!h1 && (pill(h1.previousElementSibling) || pill(h1.parentElement?.previousElementSibling));
+  // Groups of exactly 3 siblings built the same way (same tag and classes), each with an icon or image and a heading.
+  let cardTriplets = 0;
+  for (const p of new Set(all.map((e) => e.parentElement).filter(Boolean))) {
+    const kids = [...p.children].filter(visible);
+    if (kids.length !== 3) continue;
+    const sig = (k) => `${k.tagName}.${typeof k.className === "string" ? k.className : ""}`;
+    if (new Set(kids.map(sig)).size === 1 && kids.every((k) => k.querySelector("svg, img") && k.querySelector("h2, h3, h4, strong"))) cardTriplets++;
+  }
+  const sections = [...document.querySelectorAll("section, main > div")].filter(visible);
+  const animated = all.filter((e) => getComputedStyle(e).animationName !== "none").length;
+  const prose = [...document.querySelectorAll("p, li")].filter((e) => visible(e) && e.textContent.trim().length > 120);
+  const longLines = [], tightLines = [];
+  for (const p of prose) {
+    const s = getComputedStyle(p), fs = parseFloat(s.fontSize), lh = s.lineHeight === "normal" ? fs * 1.2 : parseFloat(s.lineHeight);
+    const lines = Math.max(1, Math.round(p.getBoundingClientRect().height / lh));
+    const perLine = Math.round(p.textContent.trim().length / lines);
+    if (lines > 1 && perLine > 80) longLines.push(perLine);
+    if (lh / fs < 1.45) tightLines.push(Math.round((lh / fs) * 100) / 100);
+  }
+  const interactive = all.filter((e) => e.matches("a[href], button, input:not([type=hidden]), select, textarea, [role=button], [role=tab], [role=checkbox], [role=switch]"));
+  const inProse = (e) => e.tagName === "A" && e.closest("p, li") && !e.closest("nav");
+  const small = (min) => interactive.filter((e) => { const r = e.getBoundingClientRect(); return !inProse(e) && (r.width < min || r.height < min); });
+  // Share of the first screen painted in a saturated colour, sampled on a 40 × 24 grid (accent should stay rare on app screens).
+  const bgOf = (e) => {
+    for (let n = e; n && n !== document.documentElement; n = n.parentElement) {
+      const s = getComputedStyle(n);
+      if (/gradient\(/.test(s.backgroundImage)) { const stop = s.backgroundImage.match(/rgba?\([^)]*\)/); if (stop) return stop[0]; }
+      if (!/rgba\(0, 0, 0, 0\)|transparent/.test(s.backgroundColor)) return s.backgroundColor;
+    }
+    return getComputedStyle(document.body).backgroundColor;
+  };
+  let hits = 0, samples = 0;
+  for (let i = 0; i < 40; i++) for (let j = 0; j < 24; j++) {
+    const e = document.elementFromPoint(((i + 0.5) * vw) / 40, ((j + 0.5) * innerHeight) / 24);
+    if (!e) continue;
+    samples++;
+    const c = hsl(rgb(bgOf(e)));
+    if (c.s > 0.45 && c.l > 0.15 && c.l < 0.85) hits++;
+  }
+  // What a user can act on, by visible name: a redesign must keep all of it (compared with --baseline).
+  const nameOf = (e) => (e.getAttribute("aria-label") || e.innerText || e.getAttribute("placeholder") || e.getAttribute("title") || e.getAttribute("name") || "").trim().replace(/\s+/g, " ").slice(0, 60);
+  const inventory = [...new Set(interactive.map((e) => `${e.tagName === "A" ? "link" : e.tagName === "INPUT" || e.tagName === "SELECT" || e.tagName === "TEXTAREA" ? "field" : "button"}: ${nameOf(e) || (e.getAttribute("href") || "?")}`))].slice(0, 300);
+  return { width: vw, accent_share: samples ? Math.round((hits / samples) * 100) / 100 : 0, inventory, families, font_sizes: Object.keys(sizes).map(Number).sort((a, b) => a - b), font_weights: Object.keys(weights).sort(),
+    radii: Object.entries(radii).sort((a, b) => b[1] - a[1]).map(([r, n]) => ({ px: Number(r), count: n })), boxes: boxes.length,
+    gradients: gradients.length, gradient_text: gradientText, glass, glows, primary_button: primaryHsl, emoji_in_ui: emojiUi,
+    eyebrows, badge_before_h1: badgeBeforeH1, card_triplets: cardTriplets, sections: sections.length, animated,
+    prose_blocks: prose.length, long_lines: longLines.length, long_line_max: longLines.length ? Math.max(...longLines) : 0, tight_line_height: tightLines.length,
+    targets_under_24: small(24).slice(0, 8).map((e) => `${e.tagName.toLowerCase()} "${(e.textContent || e.getAttribute("aria-label") || "").trim().slice(0, 24)}" ${Math.round(e.getBoundingClientRect().width)}x${Math.round(e.getBoundingClientRect().height)}`),
+    targets_under_44: small(44).length, interactive: interactive.length,
+    visible_text: headings.map((h) => h.textContent).concat([...document.querySelectorAll("button, p")].slice(0, 200).map((e) => e.textContent)).join("\n").slice(0, 20000) };
+}
+
+const GENERIC_FONTS = ["inter", "geist", "roboto", "open sans", "lato", "arial", "helvetica", "system-ui", "-apple-system", "segoe ui", "poppins", "montserrat"];
+
+// Turn raw measures into weighted signals. Thresholds are house settings (no published validation), dated LOOK_VERSION.
+export function scoreLook(m, { mode = "persuade", slopWords = [] } = {}) {
+  const desk = m.desktop || m.mobile, mob = m.mobile || m.desktop;
+  const sig = [];
+  const add = (id, kind, weight, evidence) => sig.push({ id, kind, weight, evidence });
+  const top = desk.families[0];
+  if (top && GENERIC_FONTS.includes(top.name) && top.share > 0.6) add("LOOK-FONT", "generic", 1, `${top.name} sets ${Math.round(top.share * 100)} % of the text`);
+  const p = desk.primary_button;
+  if (p && p.h >= 240 && p.h <= 290 && p.s > 0.4) add("LOOK-VIOLET", "generic", 1, `primary buttons hue ${p.h}°, saturation ${p.s}`);
+  if (desk.gradient_text) add("LOOK-GRADTEXT", "quality", 1, `${desk.gradient_text} element(s) with gradient text`);
+  if (desk.gradients > 2) add("LOOK-GRADIENTS", "generic", 1, `${desk.gradients} gradient backgrounds`);
+  if (desk.glass > 1) add("LOOK-GLASS", "generic", 1, `${desk.glass} element(s) with backdrop blur`);
+  if (desk.glows > 1) add("LOOK-GLOW", "generic", 1, `${desk.glows} coloured glow shadow(s)`);
+  const r0 = desk.radii[0];
+  if (r0 && r0.px >= 12 && r0.px <= 24 && desk.boxes >= 6 && r0.count / desk.boxes > 0.7) add("LOOK-RADIUS", "generic", 1, `${Math.round((r0.count / desk.boxes) * 100)} % of boxes share a ${r0.px}px radius`);
+  if (desk.card_triplets) add("LOOK-TRIPLETS", "generic", 1, `${desk.card_triplets} group(s) of three identical icon cards`);
+  if (desk.badge_before_h1) add("LOOK-BADGE", "generic", 1, "pill badge right above the h1");
+  if (desk.eyebrows >= 3) add("LOOK-EYEBROWS", "generic", 1, `${desk.eyebrows} uppercase eyebrow labels above headings`);
+  if (desk.emoji_in_ui.length) add("LOOK-EMOJI", "quality", 1, `emoji used as icons: ${desk.emoji_in_ui.slice(0, 3).join(", ")}`);
+  if (desk.sections >= 4 && desk.animated >= desk.sections) add("LOOK-ANIMATE-ALL", "quality", 1, `${desk.animated} animated elements for ${desk.sections} sections`);
+  const words = slopWords.map((w) => new RegExp(w, "i")).filter((re) => re.test(desk.visible_text)).map((re) => desk.visible_text.match(re)[0]);
+  if (words.length) add("LOOK-COPY", "quality", Math.min(2, words.length), `hollow wording: ${[...new Set(words)].slice(0, 5).join(", ")}`);
+  const counted = sig.filter((s) => mode === "persuade" || s.kind === "quality");
+  const points = counted.reduce((t, s) => t + s.weight, 0);
+  const tier = points >= 4 ? "strong" : points >= 2 ? "some" : "low";
+  // Execution checks that hold in every mode.
+  const checks = {
+    font_sizes: { value: desk.font_sizes.length, sizes: desk.font_sizes, ok: desk.font_sizes.length <= 8, rule: "8 font sizes or fewer per page (house setting)" },
+    font_families: { value: desk.families.filter((f) => f.share > 0.02).length, ok: desk.families.filter((f) => f.share > 0.02).length <= 2, rule: "2 families or fewer, plus monospace if needed" },
+    radii: { value: desk.radii.length, ok: desk.radii.length <= 5, rule: "5 distinct radii or fewer (house setting)" },
+    line_length: { value: desk.long_line_max, ok: desk.long_lines === 0, rule: "prose lines of 80 characters or fewer (WCAG 1.4.8)" },
+    line_height: { value: desk.tight_line_height, ok: desk.tight_line_height === 0, rule: "prose line height at least 1.5 (WCAG 1.4.8 / 1.4.12)" },
+    targets_24: { value: mob.targets_under_24.length, samples: mob.targets_under_24, ok: mob.targets_under_24.length === 0, rule: "no target under 24×24 px on phone (WCAG 2.5.8)" },
+    targets_44: { value: mob.targets_under_44, ok: mob.interactive === 0 || mob.targets_under_44 / mob.interactive <= 0.2, rule: "primary controls 44×44 px on phone; at most 20 % of controls under 44 px (house setting)" },
+    accent_share: { value: desk.accent_share, ok: mode === "persuade" || desk.accent_share <= 0.15,
+      rule: mode === "persuade" ? "share of the first screen in a saturated colour (reported only on persuasive pages)" : "saturated colour on 15 % of the first screen or less on app and reading screens (house setting)" },
+  };
+  if (m.reduced_motion) {
+    const { normal, reduced } = m.reduced_motion;
+    checks.reduced_motion = { value: `${normal} animated → ${reduced} with reduced motion`, ok: normal === 0 || reduced <= normal / 2,
+      rule: "with prefers-reduced-motion: reduce, most animations stop or become fades (house setting: at least half of them)" };
+  }
+  return { version: LOOK_VERSION, mode, tier, points, signals: sig, counted: counted.map((s) => s.id), checks,
+    reading: mode === "persuade" ? "0–1 point: low, 2–3: some generic signals, 4+: strong. One signal alone is never a defect."
+      : "Operate and read modes count quality signals only: a conventional layout is right for app screens (Jakob's law)." };
+}
+
+// Redesign guard: every control of the baseline must still exist after a redesign (by kind and visible name).
+export function compareInventory(before = [], after = []) {
+  const now = new Set(after);
+  return { missing: before.filter((x) => !now.has(x)), added: after.filter((x) => !before.includes(x)).length, before: before.length, after: after.length };
+}
+
+export async function lookAt(urls, { cwd, mode = "persuade", slopWords = [], baseline = null } = {}) {
+  const tools = await loadBrowserTools(cwd);
+  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <qp.mjs> browser-setup` once (pack cache, not the project)." };
+  const browser = await launch(tools.chromium);
+  const pages = [];
+  try {
+    for (const url of urls) {
+      const m = {};
+      for (const [k, vp] of [["mobile", { width: 390, height: 844, isMobile: true, hasTouch: true }], ["desktop", { width: 1440, height: 900 }]]) {
+        const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, isMobile: !!vp.isMobile, hasTouch: !!vp.hasTouch });
+        const page = await ctx.newPage();
+        try { await page.goto(url, { waitUntil: "networkidle", timeout: 30000 }); } catch (e) { if (!/Timeout/i.test(e.message)) { m.error = String(e.message).slice(0, 200); await ctx.close(); break; } }
+        m[k] = await page.evaluate(measurePage);
+        await ctx.close();
+      }
+      if (m.error) { pages.push({ url, error: m.error }); continue; }
+      // The same page with reduced motion requested: animations should mostly stop.
+      const rctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+      const rpage = await rctx.newPage();
+      try { await rpage.goto(url, { waitUntil: "networkidle", timeout: 30000 }); } catch { /* measured as loaded */ }
+      const reduced = await rpage.evaluate(() => [...document.querySelectorAll("body *")].filter((e) => getComputedStyle(e).animationName !== "none").length).catch(() => null);
+      await rctx.close();
+      if (reduced != null) m.reduced_motion = { normal: m.desktop.animated, reduced };
+      const scored = scoreLook(m, { mode, slopWords });
+      for (const k of ["mobile", "desktop"]) delete m[k].visible_text;
+      const page = { url, ...scored, measures: m };
+      const base = baseline?.pages?.find((p) => p.url === url) || (baseline?.pages?.length === 1 && urls.length === 1 ? baseline.pages[0] : null);
+      if (base?.measures?.desktop?.inventory) page.redesign_guard = compareInventory(base.measures.desktop.inventory, m.desktop.inventory);
+      pages.push(page);
+    }
+  } finally { await browser.close(); }
+  return { available: true, version: LOOK_VERSION, mode, pages };
+}

@@ -1,5 +1,5 @@
 {
- "version": "0.4.0",
+ "version": "0.5.0",
  "scoring": {
   "severity_weight": {
    "blocker": 5,
@@ -458,6 +458,16 @@
    "provider": "core",
    "fr": "Tâches clés jouées pas à pas sur téléphone et ordinateur (Playwright) : capture, axe-core et mesures d'effort à chaque étape",
    "en": "Key tasks played step by step on phone and desktop (Playwright): screenshot, axe-core and effort measures at every step"
+  },
+  "spacing_audit": {
+   "provider": "core",
+   "fr": "Audit de l'espacement et de l'alignement du rendu (qp deslop) : proximité, écarts entre frères, bords, boîtes, contrôles, débordements, à 375, 768 et 1440 px",
+   "en": "Spacing and alignment audit of the rendered page (qp deslop): proximity, sibling gaps, edges, boxes, controls, overflow, at 375, 768 and 1440 px"
+  },
+  "generic_look_scan": {
+   "provider": "core",
+   "fr": "Mesure du rendu dans le navigateur : signaux de rendu générique pondérés, tailles et familles de police, rayons, longueur et interlignage des lignes, petites cibles",
+   "en": "Rendered page measured in the browser: weighted generic-look signals, font sizes and families, radii, line length and height, small targets"
   },
   "viewport_screenshots": {
    "provider": "core",
@@ -1215,30 +1225,32 @@
        "id": "UI-03",
        "severity": "major",
        "check": {
-        "method": "inspect"
+        "method": "inspect",
+        "tool": "spacing_audit"
        },
        "label": {
         "fr": "Alignements et grille cohérents, aucun élément qui déborde",
         "en": "Consistent alignment and grid, nothing overflowing"
        },
        "verify": {
-        "fr": "Captures d'écran : bords gauche et droit égaux, pas de texte coupé ni de débordement horizontal.",
-        "en": "Screenshots: equal left and right edges, no clipped text, no horizontal overflow."
+        "fr": "deslop.json : aucun constat « high » (proximité inversée, écarts inégaux, bords qui dérivent, texte collé, débordement) aux trois largeurs, quelques « med » au plus ; captures : bords gauche et droit égaux, pas de texte coupé.",
+        "en": "deslop.json: no high finding (inverted proximity, uneven gaps, drifting edges, cramped text, overflow) at the three widths, a few med at most; screenshots: equal left and right edges, no clipped text."
        }
       },
       {
        "id": "UI-04",
        "severity": "minor",
        "check": {
-        "method": "inspect"
+        "method": "inspect",
+        "tool": "generic_look_scan"
        },
        "label": {
         "fr": "Hiérarchie typographique claire et limitée",
         "en": "Clear and limited type hierarchy"
        },
        "verify": {
-        "fr": "Au plus 2 familles de polices et une échelle de tailles définie.",
-        "en": "At most 2 font families and a defined size scale."
+        "fr": "Au plus 2 familles de polices et une échelle de tailles définie ; look.json : checks.font_sizes, font_families, line_length et line_height.",
+        "en": "At most 2 font families and a defined size scale; look.json: checks.font_sizes, font_families, line_length and line_height."
        }
       },
       {
@@ -1363,15 +1375,16 @@
        "id": "SLP-04",
        "severity": "minor",
        "check": {
-        "method": "inspect"
+        "method": "inspect",
+        "tool": "generic_look_scan"
        },
        "label": {
         "fr": "Les sections répondent à une question de l'utilisateur, pas à un gabarit",
         "en": "Sections answer a user question, not a template"
        },
        "verify": {
-        "fr": "Chercher les blocs génériques : témoignages inventés, « Nos valeurs », grilles de 3 avantages vagues.",
-        "en": "Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits."
+        "fr": "Chercher les blocs génériques : témoignages inventés, « Nos valeurs », grilles de 3 avantages vagues ; look.json : palier « strong » en mode persuade = échec, « some » = partiel, jamais sur un seul signal ; en mode operate, seuls les signaux de qualité comptent.",
+        "en": "Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits; look.json: tier \"strong\" in persuade mode = fail, \"some\" = partial, never on one signal alone; in operate mode only quality signals count."
        }
       },
       {

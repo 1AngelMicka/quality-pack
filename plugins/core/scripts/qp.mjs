@@ -17,14 +17,25 @@
 //   node qp.mjs flows [flow-id...] [--base URL] [--check]
 //                                            Play the key tasks declared in project.json step by step, on a phone and a
 //                                            desktop: screenshot, axe-core and effort measures at every step (flows.json)
+//   node qp.mjs record <flow-id> [--name "…"] [--start /path] [--device desktop|mobile] [--from recorded.js]
+//                                            Record a key task by doing it in a browser; saves it as a flow in project.json
+//   node qp.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]
+//                                            How the page looks, measured: generic "AI-made" signals (weighted, never one alone),
+//                                            font sizes and families, radii, line length and height, small targets, accent share,
+//                                            reduced motion (look.json). --baseline: controls lost since an earlier look.json (redesign guard)
+//   node qp.mjs deslop <url|file.html> [--widths …] [--click sel] [--before file.js] [--tauri] [--dark] [--attach port]
+//                                            Spacing, alignment and execution audit of the rendered page, with installed
+//                                            Chrome or Edge (deslop.json, screenshots per width)
+//   node qp.mjs tokens [file.tokens.json...] Check design tokens (DTCG 2025.10): references, units, tiers, contrast per theme, sRGB gamut
 //   node qp.mjs browser-setup                Install Playwright, axe-core and Chromium once, in the pack's cache (not the project)
-//   node qp.mjs assemble                     Merge agent results, score, write .quality/AUDIT.md
+//   node qp.mjs assemble                     Merge agent results, score, write .quality/AUDIT.md and .quality/report.html
+//   node qp.mjs report [--run R]             Rewrite .quality/report.html: scores over time, key-task screenshots, review findings
 //   node qp.mjs score <audit.json> [--previous old.json] [--lang fr|en]
 //   node qp.mjs status [--json]              Summary of the latest audit
 //
 // Commands that write audit files take --run <run> (or --date <run>); by default, the latest run of today.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import { join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadReferential, loadProject, findStacks, qualityDir, resolveFlags, applies, today, allDomains,
   findProjectRoot, RUN_RE, byRun, runDay } from "./lib/ref.mjs";
@@ -103,7 +114,7 @@ function incrementalBase() {
 const EVIDENCE = { placeholder_scan: "scan.json", slop_wording_scan: "scan.json", debug_leftovers_scan: "scan.json",
   headers_check: "web.json", seo_scan: "web.json", cookie_scan: "browser.json", axe: "browser.json + flows.json (every step of every flow)",
   viewport_screenshots: "browser.json + flows.json (horizontal_overflow at every step)", console_check: "browser.json + flows.json (console per run)",
-  contrast_check: "browser.json + flows.json (axe color-contrast)", flow_run: "flows.json (summary, over_budget, screenshots in flows/)" };
+  contrast_check: "browser.json + flows.json (axe color-contrast)", flow_run: "flows.json (summary, over_budget, screenshots in flows/)", generic_look_scan: "look.json", spacing_audit: "deslop.json (findings per width, screenshots in deslop/)" };
 const AGENTS = { ergonomics: "qp:ergonomist" };
 
 async function plan(scope, run, incremental = false) {
@@ -186,7 +197,7 @@ const STATUSES = ["pass", "partial", "fail", "unknown", "na"];
 // How good a status is, to make sure the counter-check only ever lowers a result.
 const RANK = { na: 4, pass: 4, partial: 2, unknown: 1, fail: 0 };
 
-function assemble() {
+async function assemble() {
   const project = requireProject();
   const run = currentRun();
   const dir = join(auditsDir(), run);
@@ -259,12 +270,29 @@ function assemble() {
   writeFileSync(join(auditsDir(), `${run}.md`), md);
   writeFileSync(join(qualityDir(cwd), "AUDIT.md"), md);
   writeFileSync(join(auditsDir(), `${run}.report.json`), JSON.stringify(report, null, 2));
-  out({ run, date: runDay(run), scores: report.scores, global: report.global, grade: report.global == null ? null : grade(report.global, ref, lang),
+  const html = await writeHtmlReport(run, report, lang, project);
+  out({ run, date: runDay(run), html_report: html, scores: report.scores, global: report.global, grade: report.global == null ? null : grade(report.global, ref, lang),
     global_capped: report.global_capped, previous_run: previous?.run || previous?.date || null, previous_scores: prevReport?.scores ?? null,
     previous_global: prevReport?.global ?? null, open_blockers: report.open_blockers, mode, carried_forward: carried,
     challenged, review_findings: reviewFindings ? reviewFindings.length : null, token_savings: tokenSavings, warnings,
     report: relative(cwd, join(qualityDir(cwd), "AUDIT.md")),
     top_issues: report.issues.slice(0, 10).map((i) => ({ id: i.id, severity: i.severity, status: i.status, area: i.area, label: i.label[lang], fix: i.fix })) });
+}
+
+// .quality/report.html: the two scores over time, the screenshots of the key tasks, the review findings.
+async function writeHtmlReport(run, report, lang, project) {
+  const { renderReport } = await import("./lib/report.mjs");
+  const runs = auditRuns().filter((r) => byRun(r, run) <= 0);
+  const history = runs.map((r) => { try { const c = compute(loadAudit(r), ref); return { run: r, scores: c.scores, global: c.global }; } catch { return null; } }).filter(Boolean);
+  // Flows of this run, or of the latest run that played them (an incremental audit may have skipped them).
+  let flows = null;
+  for (const r of [...runs].reverse()) {
+    const f = join(auditsDir(), r, "flows.json");
+    if (existsSync(f)) { try { flows = JSON.parse(readFileSync(f, "utf8")); } catch { /* unreadable */ } break; }
+  }
+  const file = join(qualityDir(cwd), "report.html");
+  writeFileSync(file, renderReport({ report, history, flows, ref, lang, project }));
+  return relative(cwd, file);
 }
 
 const SEV = { critical: 0, major: 1, minor: 2 };
@@ -382,6 +410,105 @@ async function main() {
     }
     case "assemble":
       return assemble();
+    case "look": {
+      const { lookAt, MODES } = await import("./lib/look.mjs");
+      const project = loadProject(cwd);
+      const run = currentRun();
+      const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
+      if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
+      if (!rest.length) die("Usage: qp.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]");
+      const baselinePath = opt("baseline");
+      const baseline = baselinePath ? JSON.parse(readFileSync(resolve(here, baselinePath), "utf8")) : null;
+      const result = await lookAt(rest, { cwd, mode, baseline, slopWords: [...(ref.slop_words.fr || []), ...(ref.slop_words.en || [])] });
+      if (project && result.pages) {
+        const d = join(auditsDir(), run);
+        mkdirSync(d, { recursive: true });
+        writeFileSync(join(d, "look.json"), JSON.stringify(result, null, 2));
+      }
+      return out(result.pages ? { mode, version: result.version, full_report: "look.json", pages: result.pages.map(({ measures, ...p }) => ({ ...p,
+        checks: Object.fromEntries(Object.entries(p.checks || {}).map(([k, c]) => [k, { value: c.value, ok: c.ok, rule: c.rule }])) })) } : result);
+    }
+    case "deslop": {
+      // Spacing, alignment and execution audit of a rendered page (scripts/deslop, driven over CDP with the
+      // installed Chrome or Edge, no Playwright needed). Options are passed through: --widths, --click, --before,
+      // --tauri, --dark, --attach, --wait.
+      const { spawnSync } = await import("node:child_process");
+      const run = currentRun();
+      const project = loadProject(cwd);
+      if (!rest.length) die('Usage: qp.mjs deslop <url|file.html> [--widths 375,768,1440] [--click "selector"] [--before file.js] [--tauri] [--dark] [--attach port]');
+      const outDir = project ? join(auditsDir(), run, "deslop") : join(qualityDir(cwd), "deslop");
+      const script = fileURLToPath(new URL("./deslop/audit.mjs", import.meta.url));
+      const args = [...rest];
+      if (!args.includes("--widths") && !args.includes("--attach")) args.push("--widths", "375,768,1440");
+      const r = spawnSync(process.execPath, [script, ...args, "--out", outDir, "--json"], { cwd: here, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+      if (r.status !== 0) die((r.stderr || r.stdout || "deslop failed").trim());
+      const reports = JSON.parse(r.stdout);
+      const result = { widths: reports.map((x) => ({ width: x.viewport.width, counts: x.counts, text_length: x.textLength, js_errors: x.errors.length,
+        screenshots: { fold: relative(cwd, x.screenshots.fold), full: relative(cwd, x.screenshots.full) },
+        findings: x.findings.map((f) => ({ rule: f.rule, severity: f.severity, count: f.count, fix: f.fix, examples: f.examples.slice(0, 3) })),
+        system: { spacing_values: x.stats.spacing.distinct, off_scale_percent: x.stats.spacing.offScaleShare, font_sizes: x.stats.fontSizes.map(([v]) => v).sort((a, b) => a - b) } })) };
+      result.total = result.widths.reduce((t, w) => ({ high: t.high + w.counts.high, med: t.med + w.counts.med, low: t.low + w.counts.low }), { high: 0, med: 0, low: 0 });
+      result.warnings = result.widths.filter((w) => w.text_length < 40).map((w) => `${w.width}px: page almost empty — the intended state was not reached (use --click or --before)`);
+      if (project) {
+        writeFileSync(join(auditsDir(), run, "deslop.json"), JSON.stringify(result, null, 2));
+        recordSavings(join(auditsDir(), run), estimateTokens(r.stdout), estimateTokens(JSON.stringify(result)));
+      }
+      return out({ ...result, full_report: relative(cwd, join(outDir, "report.json")) });
+    }
+    case "tokens": {
+      const { checkTokens } = await import("./lib/tokens.mjs");
+      const { listFiles } = await import("./lib/scan.mjs");
+      const files = rest.length ? rest : listFiles(cwd).filter((f) => /\.tokens\.json$/.test(f));
+      if (!files.length) die("No design token files (*.tokens.json). Pass the files, or write them with the qp:design-direction skill.");
+      // Several files are merged in order (primitives first, then semantic, then themes).
+      const merge = (a, b) => { for (const [k, v] of Object.entries(b)) a[k] = v && typeof v === "object" && !Array.isArray(v) && !("$value" in v) && a[k] && typeof a[k] === "object" ? merge(a[k], v) : v; return a; };
+      const doc = files.reduce((acc, f) => merge(acc, JSON.parse(readFileSync(rest.length ? resolve(here, f) : join(cwd, f), "utf8"))), {});
+      const r = checkTokens(doc);
+      out({ files, ok: !r.errors.length && !r.contrast.failing, ...r });
+      if (r.errors.length || r.contrast.failing) process.exitCode = 2;
+      return;
+    }
+    case "report": {
+      const project = requireProject();
+      const run = opt("run") || opt("date") || auditRuns().at(-1);
+      if (!run || !loadAudit(run)) die("No assembled audit yet: run /qp:audit first.");
+      const report = compute(loadAudit(run), ref);
+      report.mode = loadAudit(run).mode;
+      return out({ run, html_report: await writeHtmlReport(run, report, opt("lang", project.language || "fr"), project) });
+    }
+    case "record": {
+      const { parseCodegen, playwrightCli, runRecorder } = await import("./lib/record.mjs");
+      const { validateFlows } = await import("./lib/flows.mjs");
+      const project = requireProject();
+      const name = opt("name"), from = opt("from"), device = opt("device", "desktop"), start = opt("start", "/");
+      const base = opt("base") || project.urls?.local || project.urls?.staging || project.urls?.production;
+      const id = rest[0];
+      if (!id || !/^[a-z0-9][a-z0-9-]*$/.test(id)) die('Usage: qp.mjs record <flow-id> [--name "the task in the user\'s words"] [--start /path] [--device desktop|mobile] [--base URL] [--from recorded.js]');
+      let code;
+      if (from) code = readFileSync(from, "utf8");
+      else {
+        if (!base) die("No URL: pass --base <url> or set urls.local in .quality/project.json.");
+        const { loadBrowserTools } = await import("./lib/browser.mjs");
+        const tools = await loadBrowserTools(cwd);
+        if (!tools) die("Playwright is not available: run `qp.mjs browser-setup` first (it installs into the pack's cache).");
+        const cli = playwrightCli(tools.path);
+        if (!cli) die("Could not find Playwright's command line next to " + tools.path);
+        process.stderr.write("A browser opens: do the task as a user would, then close the window.\n");
+        code = runRecorder(cli, new URL(start, base).href, { device });
+      }
+      const { steps, warnings } = parseCodegen(code, { base });
+      if (!steps.length) die("Nothing was recorded.");
+      const flows = Array.isArray(project.flows) ? project.flows : [];
+      const old = flows.find((f) => f.id === id) || {};
+      const flow = { ...old, id, name: name || old.name || id, devices: old.devices || ["mobile", "desktop"], steps };
+      const next = { ...project, flows: [...flows.filter((f) => f.id !== id), flow] };
+      const check = validateFlows(next);
+      mkdirSync(join(qualityDir(cwd), "recordings"), { recursive: true });
+      writeFileSync(join(qualityDir(cwd), "recordings", `${id}.js`), code);
+      writeFileSync(join(qualityDir(cwd), "project.json"), JSON.stringify(next, null, 2) + "\n");
+      return out({ saved: ".quality/project.json", flow, warnings, errors: check.errors,
+        next: "Mark the steps where the user decides with \"decision\": true, set \"preview\" and \"primary\" if the task has them, then run `qp.mjs flows " + id + "`." });
+    }
     case "score": {
       if (!rest[0]) die("Usage: qp.mjs score <audit.json> [--previous old.json] [--lang fr|en]");
       const lang = opt("lang", "fr");

@@ -27,8 +27,8 @@ Done means:
 
 - [major] UI-01: Colours, sizes and spacing go through tokens. Check: Search for hard-coded values (hex, arbitrary px, arbitrary Tailwind classes) in components.
 - [major] UI-02: All interactive elements have hover, visible focus, active and disabled. Check: Go through buttons, links and fields with keyboard and mouse.
-- [major] UI-03: Consistent alignment and grid, nothing overflowing. Check: Screenshots: equal left and right edges, no clipped text, no horizontal overflow.
-- [minor] UI-04: Clear and limited type hierarchy. Check: At most 2 font families and a defined size scale.
+- [major] UI-03: Consistent alignment and grid, nothing overflowing. Check: deslop.json: no high finding (inverted proximity, uneven gaps, drifting edges, cramped text, overflow) at the three widths, a few med at most; screenshots: equal left and right edges, no clipped text.
+- [minor] UI-04: Clear and limited type hierarchy. Check: At most 2 font families and a defined size scale; look.json: checks.font_sizes, font_families, line_length and line_height.
 - [minor] UI-05: Components reused rather than duplicated with variations. Check: Search for buttons, cards, modals implemented several times.
 - [minor] UI-06: Dark mode is complete and readable (only if: dark_mode). Check: No component left light, contrast checked in both themes.
 
@@ -51,7 +51,7 @@ Done means:
 - [major] SLP-01: No hollow phrase or AI jargon in the copy. Check: Scan the copy with the pack's FR/EN blacklist; reread headings and taglines.
 - [major] SLP-02: The visual direction is project-specific and documented. Check: DESIGN.md states the choices (mood, colours, type) and they show on screen; compare with default templates (raw shadcn, purple gradient, glass). DESIGN.md existing is not enough; following how the references are organised is checked by ERG-08.
 - [major] SLP-03: No decorative visual without information (generic illustrations, blobs, random icons). Check: For each image or illustration: what real thing does it show?
-- [minor] SLP-04: Sections answer a user question, not a template. Check: Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits.
+- [minor] SLP-04: Sections answer a user question, not a template. Check: Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits; look.json: tier "strong" in persuade mode = fail, "some" = partial, never on one signal alone; in operate mode only quality signals count.
 - [minor] SLP-05: Animations are useful, subtle and respect prefers-reduced-motion. Check: List animations and their purpose; test with reduced motion enabled.
 
 ## Responsive (RSP)

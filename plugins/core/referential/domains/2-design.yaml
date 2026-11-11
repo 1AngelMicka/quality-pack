@@ -25,14 +25,14 @@ domains:
         verify: {fr: "Parcourir au clavier et à la souris les boutons, liens, champs.", en: "Go through buttons, links and fields with keyboard and mouse."}
       - id: UI-03
         severity: major
-        check: {method: inspect}
+        check: {method: inspect, tool: spacing_audit}
         label: {fr: "Alignements et grille cohérents, aucun élément qui déborde", en: "Consistent alignment and grid, nothing overflowing"}
-        verify: {fr: "Captures d'écran : bords gauche et droit égaux, pas de texte coupé ni de débordement horizontal.", en: "Screenshots: equal left and right edges, no clipped text, no horizontal overflow."}
+        verify: {fr: "deslop.json : aucun constat « high » (proximité inversée, écarts inégaux, bords qui dérivent, texte collé, débordement) aux trois largeurs, quelques « med » au plus ; captures : bords gauche et droit égaux, pas de texte coupé.", en: "deslop.json: no high finding (inverted proximity, uneven gaps, drifting edges, cramped text, overflow) at the three widths, a few med at most; screenshots: equal left and right edges, no clipped text."}
       - id: UI-04
         severity: minor
-        check: {method: inspect}
+        check: {method: inspect, tool: generic_look_scan}
         label: {fr: "Hiérarchie typographique claire et limitée", en: "Clear and limited type hierarchy"}
-        verify: {fr: "Au plus 2 familles de polices et une échelle de tailles définie.", en: "At most 2 font families and a defined size scale."}
+        verify: {fr: "Au plus 2 familles de polices et une échelle de tailles définie ; look.json : checks.font_sizes, font_families, line_length et line_height.", en: "At most 2 font families and a defined size scale; look.json: checks.font_sizes, font_families, line_length and line_height."}
       - id: UI-05
         severity: minor
         check: {method: inspect}
@@ -74,9 +74,9 @@ domains:
         verify: {fr: "Pour chaque image ou illustration : que montre-t-elle de réel ?", en: "For each image or illustration: what real thing does it show?"}
       - id: SLP-04
         severity: minor
-        check: {method: inspect}
+        check: {method: inspect, tool: generic_look_scan}
         label: {fr: "Les sections répondent à une question de l'utilisateur, pas à un gabarit", en: "Sections answer a user question, not a template"}
-        verify: {fr: "Chercher les blocs génériques : témoignages inventés, « Nos valeurs », grilles de 3 avantages vagues.", en: "Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits."}
+        verify: {fr: "Chercher les blocs génériques : témoignages inventés, « Nos valeurs », grilles de 3 avantages vagues ; look.json : palier « strong » en mode persuade = échec, « some » = partiel, jamais sur un seul signal ; en mode operate, seuls les signaux de qualité comptent.", en: "Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits; look.json: tier \"strong\" in persuade mode = fail, \"some\" = partial, never on one signal alone; in operate mode only quality signals count."}
       - id: SLP-05
         severity: minor
         check: {method: inspect}
