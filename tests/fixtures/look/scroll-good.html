@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Scroll page done right (test fixture)</title>
+<style>
+  body { margin: 0; font-family: Georgia, serif; line-height: 1.6; }
+  section { min-height: 90vh; padding: 48px 16px; max-width: 38rem; margin: 0 auto; }
+  /* Content is visible by default; the scroll-driven reveal is an enhancement, only when motion is welcome. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .reveal { animation: rise linear both; animation-timeline: view(); animation-range: entry 0% cover 30%; }
+    }
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } }
+</style>
+</head>
+<body>
+<section><h1>Our story in three chapters</h1><p>Scroll down to read how the workshop started, grew and moved to the harbour.</p></section>
+<section class="reveal"><h2>Chapter one</h2><p>The workshop opened in a garage in 2009, with two benches and a borrowed lathe.</p></section>
+<section class="reveal"><h2>Chapter two</h2><p>By 2015 the team had grown to twelve people and outgrew the garage for good.</p></section>
+</body>
+</html>

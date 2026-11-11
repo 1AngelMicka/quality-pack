@@ -439,6 +439,12 @@ test("look: weighted generic signals, strict only on persuasive pages", async (t
   assert.ok(operate.counted.every((id) => operate.signals.find((s) => s.id === id).kind === "quality"), "operate mode ignores layout conventions");
   assert.equal(operate.checks.accent_share.ok, false, "a violet gradient hero is too much accent for an app screen");
   assert.equal(operate.checks.reduced_motion.ok, false, "animations that ignore reduced motion are caught");
+  const bad = await look("scroll-bad.html", "read");
+  assert.equal(bad.checks.scroll_hijack.ok, false, "a non-passive wheel listener hijacks scrolling");
+  assert.equal(bad.checks.content_without_animation.ok, false, "text that only appears through an animation stays hidden with reduced motion");
+  const good = await look("scroll-good.html", "read");
+  assert.equal(good.checks.scroll_hijack.ok, true);
+  assert.equal(good.checks.content_without_animation.ok, true);
   const plain = await look("plain.html", "persuade");
   assert.equal(plain.tier, "low", JSON.stringify(plain.signals));
   assert.equal(plain.checks.line_length.ok, true);
