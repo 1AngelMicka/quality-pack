@@ -12,11 +12,13 @@ jobs:
           python-version: "3.12"
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
       - run: pip install pyyaml
       - name: Rebuild generated files and check they are committed
         run: |
           python tools/build.py
           git diff --exit-code
+      - name: Install Playwright, axe-core and Chromium in the pack cache
+        run: node plugins/core/scripts/qp.mjs browser-setup
       - name: Tests
         run: node --test tests/*.test.mjs

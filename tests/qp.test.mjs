@@ -406,6 +406,7 @@ test("deslop: spacing audit flags the generic page and passes the clean one", (t
   const run = (f) => spawnSync("node", [QP, "deslop", page(f), "--widths", "375,1440", "--run", "2026-07-01"], { cwd: dir, encoding: "utf8" });
   const slop = run("slop.html");
   if (slop.status !== 0 && /Chrome or Edge not found/.test(slop.stderr)) return t.skip("no Chrome or Edge installed");
+  if (slop.status !== 0 && /needs Node 22/.test(slop.stderr)) return t.skip("Node 22 or later needed for qp deslop");
   assert.equal(slop.status, 0, slop.stderr);
   const s = JSON.parse(slop.stdout);
   assert.ok(s.total.high > 0);

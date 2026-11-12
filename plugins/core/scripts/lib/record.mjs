@@ -3,8 +3,11 @@
 // Writing selectors by hand was the main friction of flows; codegen picks robust ones (roles, labels, test ids).
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync, mkdtempSync } from "node:fs";
-import { join, dirname, basename } from "node:path";
+import { join, dirname } from "node:path";
 import { tmpdir } from "node:os";
+
+// File name of a recorded path, whatever the system it was recorded on (path.basename ignores "\" on Linux).
+const basename = (f) => String(f).split(/[\\/]/).pop();
 
 // A JavaScript string literal at the start of s ('…', "…" or `…`): its value and its length.
 function literal(s) {

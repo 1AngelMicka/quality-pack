@@ -46,7 +46,7 @@ Run the audit on the real page:
 node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" deslop http://localhost:5173/ --widths 375,768,1440,1920
 ```
 
-It takes a URL or a local HTML file and uses the installed Chrome or Edge, with nothing to install (set `CHROME_PATH` if neither is found). It returns the findings per width, the spacing and type system actually used, and screenshots at each width. In a project with `.quality/project.json`, results go to the current audit run (`deslop.json`, screenshots in `deslop/`); otherwise to `.quality/deslop/`. Each run overwrites the previous one in the same folder: copy the JSON aside before a fix if you want a before/after.
+It takes a URL or a local HTML file and uses the installed Chrome or Edge, with nothing to install (set `CHROME_PATH` if neither is found; needs Node 22 or later). It returns the findings per width, the spacing and type system actually used, and screenshots at each width. In a project with `.quality/project.json`, results go to the current audit run (`deslop.json`, screenshots in `deslop/`); otherwise to `.quality/deslop/`. Each run overwrites the previous one in the same folder: copy the JSON aside before a fix if you want a before/after.
 
 For how generic the page looks, the type scale, line length, accent share and reduced motion, also run `qp look <url>`. The audit does not measure contrast, keyboard focus, hover states or baselines: check those separately (axe in `qp browser` and `qp flows`).
 
