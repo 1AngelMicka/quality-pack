@@ -52,11 +52,20 @@ Run these before starting the agents, so every agent reads the same evidence ins
 3. `qp web <url> --run <run>`, which writes `web.json`.
 4. `qp browser <url> <url>… --run <run>` with the home page and 2 to 4 main pages, which writes `browser.json` and screenshots of pages as they load.
 5. If the project has a UI: `qp deslop <url> --run <run>` on the main work screen (spacing and alignment per element at 375, 768, 1440 and 1920 px, including text squeezed into a column a few words wide, `deslop.json`), and `qp look <url> <url>… --run <run>` on the same pages as `browser`, which writes `look.json` (generic-look signals weighted by the project's surface mode, type sizes, line length, small targets).
-6. `qp flows --run <run> [--base <url>]`, which plays every key task on a phone and a desktop and writes `flows.json` and a screenshot per step in `flows/`. This is the main evidence for the interface: features, UX, ergonomics, accessibility and responsive criteria rely on it.
+6. If the project has a UI: `qp craft <url> <url>… --run <run>` on one page of each kind (landing, a work screen with data, a form, a table), which writes `craft.json`: typography details, focus and hover states, transitions, images, icons, site icon, share image and 404 page, as "must" and "should".
+7. Security evidence, according to the flags:
+   - always: `qp supply --run <run>` (`supply.json`: lockfile, release cooldown, install scripts, pinned CI actions, env files) and, with has_backend, `qp threats` (the threat model in `.quality/threats.json`);
+   - has_auth and an `access` block: `qp access --run <run>` on local or staging (`access.json`). It refuses production: only pass `--allow-production` if the user agreed in this conversation, and never when a check writes. With no `access` block, say so in the report: access control was only read, not played;
+   - has_auth and an `auth_probe` block, on local or staging only: `qp auth --run <run>` (`auth.json`). It sends failed logins and may lock the test account; tell the user before running it;
+   - has_backend or public_web: `qp dast <url> --run <run>` (`zap.json`, passive scan with OWASP ZAP in Docker). If Docker is missing or its image is not there (about 2 GB), ask the user before pulling it; if they decline, the criterion is "unknown" with that reason.
+8. native_app: `qp mobile check --run <run>` (`mobile-check.json`, read from the project) and, when an emulator, simulator or device runs with the app installed, `qp mobile flows --run <run>` (`mobile.json`). If Maestro is not installed, the flow files are still written: ask the user before installing it, and otherwise mark MUX-01 "unknown" with that reason. Say which platforms were played.
+9. `qp flows --run <run> [--base <url>]`, which plays every key task on a phone and a desktop and writes `flows.json` and a screenshot per step in `flows/`. This is the main evidence for the interface: features, UX, ergonomics, accessibility and responsive criteria rely on it.
 
 If `browser` or `flows` says Playwright is not available, ask the user whether to run `qp browser-setup` (one-time download of Playwright, axe-core and Chromium into the pack's cache, never into the project). Never install them in the project.
 
-In incremental mode, skip `web`, `browser`, `look`, `deslop` and `flows` when no changed file can affect the pages, styles, headers or server config.
+In incremental mode, skip `web`, `browser`, `look`, `deslop`, `craft`, `dast` and `flows` when no changed file can affect the pages, styles, headers or server config; skip `access` and `auth` only when no route, middleware, data-access or auth file changed.
+
+A check that could not run is "unknown" with the reason, never "pass". A clean security result is written as "nothing found by these checks", never as "secure".
 
 ## 4. Check the criteria
 

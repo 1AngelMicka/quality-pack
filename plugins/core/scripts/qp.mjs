@@ -17,12 +17,30 @@
 //   node qp.mjs flows [flow-id...] [--base URL] [--check]
 //                                            Play the key tasks declared in project.json step by step, on a phone and a
 //                                            desktop: screenshot, axe-core and effort measures at every step (flows.json)
+//   node qp.mjs access [--base URL] [--check] [--allow-production]
+//                                            Access control played for real: each resource declared in project.json › access is
+//                                            requested by its owner, then by the accounts that must not reach it (access.json)
+//   node qp.mjs dast [url] [--minutes N] [--allow-production]
+//                                            Passive security scan of the running app with OWASP ZAP's baseline, in Docker (zap.json)
+//   node qp.mjs auth [--base URL]            Login of the running app: same answer for known and unknown accounts, wrong passwords
+//                                            slowed or refused (auth.json). Sends failed logins: local or staging only
+//   node qp.mjs supply                       Supply chain read from the repository: lockfile, release cooldown, install scripts,
+//                                            pinned CI actions, env files (supply.json)
+//   node qp.mjs threats [--check]            Check the threat model (.quality/threats.json): every entry point has an abuse
+//                                            case, every abuse case a response and a test
+//   node qp.mjs mobile flows [flow-id...]    Installed app: turn project.json › mobile.flows into Maestro flows (.maestro/qp/)
+//                                            and play them on the running emulator, simulator or device (mobile.json)
+//   node qp.mjs mobile check                 Installed app: release blockers read from the project (target API, debuggable,
+//                                            cleartext, privacy manifest, WebView, link files, deletion page) (mobile-check.json)
 //   node qp.mjs record <flow-id> [--name "…"] [--start /path] [--device desktop|mobile] [--from recorded.js]
 //                                            Record a key task by doing it in a browser; saves it as a flow in project.json
 //   node qp.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]
 //                                            How the page looks, measured: generic "AI-made" signals (weighted, never one alone),
 //                                            font sizes and families, radii, line length and height, small targets, accent share,
 //                                            reduced motion (look.json). --baseline: controls lost since an earlier look.json (redesign guard)
+//   node qp.mjs craft <url> [url...] [--mode persuade|operate|read]
+//                                            Finish of the rendered page, measured: typography details, focus and hover states,
+//                                            transitions, images, icons, site icon, share image, 404 page (craft.json)
 //   node qp.mjs deslop <url|file.html> [--widths …] [--click sel] [--before file.js] [--tauri] [--dark] [--attach port]
 //                                            Spacing, alignment and execution audit of the rendered page, with installed
 //                                            Chrome or Edge (deslop.json, screenshots per width)
@@ -36,7 +54,7 @@
 // Commands that write audit files take --run <run> (or --date <run>); by default, the latest run of today.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { loadReferential, loadProject, findStacks, qualityDir, resolveFlags, applies, today, allDomains,
   findProjectRoot, RUN_RE, byRun, runDay } from "./lib/ref.mjs";
 import { compute, toMarkdown, grade, reviewCap } from "./lib/score.mjs";
@@ -114,7 +132,12 @@ function incrementalBase() {
 const EVIDENCE = { placeholder_scan: "scan.json", slop_wording_scan: "scan.json", debug_leftovers_scan: "scan.json",
   headers_check: "web.json", seo_scan: "web.json", cookie_scan: "browser.json", axe: "browser.json + flows.json (every step of every flow)",
   viewport_screenshots: "browser.json + flows.json (horizontal_overflow at every step)", console_check: "browser.json + flows.json (console per run)",
-  contrast_check: "browser.json + flows.json (axe color-contrast)", flow_run: "flows.json (summary, over_budget, screenshots in flows/)", generic_look_scan: "look.json", spacing_audit: "deslop.json (findings per width, screenshots in deslop/)" };
+  contrast_check: "browser.json + flows.json (axe color-contrast)", flow_run: "flows.json (summary, over_budget, screenshots in flows/)", generic_look_scan: "look.json", spacing_audit: "deslop.json (findings per width, screenshots in deslop/)",
+  access_run: "access.json (summary.leaks, unclear, setup_errors)", dast_scan: "zap.json (summary by risk, alerts)",
+  craft_scan: "craft.json (summary.must_failed, should_failed, checks with samples)",
+  auth_probe: "auth.json (summary.must_failed, checks)", supply_scan: "supply.json (summary.must_failed, should_failed, checks)",
+  threat_model: "node qp.mjs threats (errors, open_before_launch)", mobile_flow_run: "mobile.json (summary, screenshots in mobile/)",
+  mobile_release_scan: "mobile-check.json (summary.must_failed, should_failed, not_covered)" };
 const AGENTS = { ergonomics: "qp:ergonomist" };
 
 async function plan(scope, run, incremental = false) {
@@ -393,6 +416,96 @@ async function main() {
       }
       return out(short);
     }
+    case "access": {
+      const { runAccess, compactAccess, validateAccess } = await import("./lib/access.mjs");
+      const project = requireProject();
+      if (flag("check")) {
+        const v = validateAccess(project);
+        return out({ ok: !v.errors.length, errors: v.errors, accounts: Object.keys(v.accounts), checks: v.checks.map((c) => ({ id: c.id, request: `${c.method} ${c.path}`, owner: c.owner, denied_to: c.denied_to })) });
+      }
+      const run = currentRun();
+      const result = await runAccess(project, { root: cwd, base: opt("base"), allowProduction: flag("allow-production") });
+      if (result.checks) {
+        const d = join(auditsDir(), run);
+        mkdirSync(d, { recursive: true });
+        writeFileSync(join(d, "access.json"), JSON.stringify(result, null, 2));
+      }
+      out(compactAccess(result));
+      // 2: a resource leaked or a check could not be set up; the audit must not read this as a pass.
+      if (result.errors?.length || result.summary?.leaks.length || result.summary?.setup_errors.length) process.exitCode = 2;
+      return;
+    }
+    case "dast": {
+      const { runZap, compactZap } = await import("./lib/dast.mjs");
+      const project = loadProject(cwd);
+      const run = currentRun();
+      const minutes = Number(opt("minutes", "1")) || 1;
+      const allowProduction = flag("allow-production");
+      const target = rest[0] || project?.urls?.local || project?.urls?.staging;
+      if (!target) die("Usage: qp.mjs dast <url> (or set urls.local or urls.staging in .quality/project.json)");
+      const d = project ? join(auditsDir(), run) : join(qualityDir(cwd), "dast");
+      mkdirSync(d, { recursive: true });
+      const result = runZap(target, { outDir: d, production: project?.urls?.production, allowProduction, minutes });
+      if (result.alerts) writeFileSync(join(d, "zap.json"), JSON.stringify(result, null, 2));
+      out(compactZap(result));
+      if (result.errors?.length || result.summary?.high) process.exitCode = 2;
+      return;
+    }
+    case "auth": {
+      const { authProbe } = await import("./lib/security.mjs");
+      const project = requireProject();
+      const run = currentRun();
+      const result = await authProbe(project, { base: opt("base") });
+      if (result.checks) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "auth.json"), JSON.stringify(result, null, 2)); }
+      out(result);
+      if (result.errors?.length || result.summary?.must_failed.length) process.exitCode = 2;
+      return;
+    }
+    case "supply": {
+      const { supplyChecks } = await import("./lib/security.mjs");
+      const run = currentRun();
+      const result = supplyChecks(cwd);
+      if (loadProject(cwd)) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "supply.json"), JSON.stringify(result, null, 2)); }
+      out({ summary: result.summary, failed: Object.fromEntries(Object.entries(result.checks).filter(([, c]) => !c.ok)), passed: Object.entries(result.checks).filter(([, c]) => c.ok).map(([k]) => k), note: result.note });
+      if (result.summary.must_failed.length) process.exitCode = 2;
+      return;
+    }
+    case "threats": {
+      const { validateThreats } = await import("./lib/security.mjs");
+      flag("check");
+      const file = join(qualityDir(cwd), "threats.json");
+      let model = null;
+      try { model = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : null; } catch (e) { die(`.quality/threats.json is not valid JSON: ${e.message}`); }
+      const result = validateThreats(model);
+      out({ file: relative(cwd, file).split("\\").join("/"), ...result });
+      if (!result.ok || result.summary?.open_before_launch.length) process.exitCode = 2;
+      return;
+    }
+    case "mobile": {
+      const { playMobileFlows, mobileChecks, validateMobile } = await import("./lib/mobile.mjs");
+      const project = requireProject();
+      const run = currentRun();
+      const [sub, ...ids] = rest;
+      const d = join(auditsDir(), run);
+      if (sub === "check") {
+        const result = await mobileChecks(project, cwd);
+        mkdirSync(d, { recursive: true });
+        writeFileSync(join(d, "mobile-check.json"), JSON.stringify(result, null, 2));
+        out({ approach: result.approach, platforms: result.platforms, summary: result.summary, failed: Object.fromEntries(Object.entries(result.checks).filter(([, c]) => !c.ok)),
+          passed: Object.entries(result.checks).filter(([, c]) => c.ok).map(([k]) => k), not_covered: result.not_covered, note: result.note });
+        if (result.summary.must_failed.length) process.exitCode = 2;
+        return;
+      }
+      if (sub === "flows") {
+        if (flag("check")) { const v = validateMobile(project); return out({ ok: !v.errors.length, errors: v.errors, flows: v.flows.map((f) => ({ id: f.id, name: f.name, steps: f.steps.length })) }); }
+        const result = playMobileFlows(project, { root: cwd, outDir: d, only: ids });
+        if (result.flows) { mkdirSync(d, { recursive: true }); writeFileSync(join(d, "mobile.json"), JSON.stringify(result, null, 2)); }
+        out(result);
+        if (result.errors?.length || result.summary?.failed.length) process.exitCode = 2;
+        return;
+      }
+      die("Usage: qp.mjs mobile flows [flow-id...] [--check] | qp.mjs mobile check");
+    }
     case "browser-setup": {
       const { cacheDir, setupCommands } = await import("./lib/browser.mjs");
       const { runCommand } = await import("./lib/run.mjs");
@@ -427,6 +540,23 @@ async function main() {
       }
       return out(result.pages ? { mode, version: result.version, full_report: "look.json", pages: result.pages.map(({ measures, ...p }) => ({ ...p,
         checks: Object.fromEntries(Object.entries(p.checks || {}).map(([k, c]) => [k, { value: c.value, ok: c.ok, rule: c.rule }])) })) } : result);
+    }
+    case "craft": {
+      const { craftAt, compactCraft } = await import("./lib/craft.mjs");
+      const { MODES } = await import("./lib/look.mjs");
+      const project = loadProject(cwd);
+      const run = currentRun();
+      const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
+      if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
+      if (!rest.length) die("Usage: qp.mjs craft <url> [url...] [--mode persuade|operate|read]");
+      const urls = rest.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href);
+      const result = await craftAt(urls, { cwd, mode });
+      if (project && result.pages) {
+        const d = join(auditsDir(), run);
+        mkdirSync(d, { recursive: true });
+        writeFileSync(join(d, "craft.json"), JSON.stringify(result, null, 2));
+      }
+      return out(compactCraft(result));
     }
     case "deslop": {
       // Spacing, alignment and execution audit of a rendered page (scripts/deslop, driven over CDP with the

@@ -1,0 +1,85 @@
+{
+ "stack": "capacitor",
+ "label": {
+  "fr": "Capacitor (webapp livrée en app iOS et Android)",
+  "en": "Capacitor (web app shipped as an iOS and Android app)"
+ },
+ "detect": {
+  "package_json_deps_any": [
+   "@capacitor/core"
+  ],
+  "files_any": [
+   "capacitor.config.ts",
+   "capacitor.config.json"
+  ]
+ },
+ "sets_flags": [
+  "native_app"
+ ],
+ "checks": {
+  "typecheck": {
+   "run": "{pm} exec tsc --noEmit",
+   "pass_if": "exit code 0"
+  },
+  "lint": {
+   "run": "{pm} run lint",
+   "pass_if": "exit code 0, no errors"
+  },
+  "test_run": {
+   "run": "{pm} test",
+   "pass_if": "exit code 0"
+  },
+  "deps_audit": {
+   "run": "{pm} audit --audit-level=high",
+   "pass_if": "no high or critical advisory; then `npx cap doctor` reports matching versions"
+  },
+  "license_check": {
+   "run": "npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'",
+   "pass_if": "exit code 0"
+  }
+ },
+ "rules": [
+  {
+   "fr": "L'app livrée charge ses fichiers embarqués : server.url ne sert qu'en développement. Une simple enveloppe d'un site en ligne est refusée par Apple (règle 4.2).",
+   "en": "The shipped app loads its bundled files: server.url is for development only. A bare wrapper around a live site is refused by Apple (guideline 4.2)."
+  },
+  {
+   "fr": "Apporter ce qu'un site ne fait pas : notifications, hors-ligne, partage natif, caméra ou biométrie selon le produit.",
+   "en": "Bring what a site cannot: notifications, offline, native share, camera or biometrics depending on the product."
+  },
+  {
+   "fr": "server.allowNavigation limité aux origines de l'app, jamais \"*\" ; cleartext désactivé. Le pont natif est exposé à toute page chargée dans la WebView.",
+   "en": "server.allowNavigation limited to the app's origins, never \"*\"; cleartext off. The native bridge is exposed to every page loaded in the WebView."
+  },
+  {
+   "fr": "Jetons de session dans un stockage sûr natif (trousseau, Keystore) via un plugin, jamais dans localStorage ni Preferences.",
+   "en": "Session tokens in native secure storage (Keychain, Keystore) through a plugin, never in localStorage or Preferences."
+  },
+  {
+   "fr": "Zones sûres : viewport-fit=cover et env(safe-area-inset-*) sur les barres fixes ; hauteur en dvh, pas 100vh.",
+   "en": "Safe areas: viewport-fit=cover and env(safe-area-inset-*) on fixed bars; height in dvh, not 100vh."
+  },
+  {
+   "fr": "Clavier : plugin Keyboard réglé pour que le champ et l'action principale restent visibles ; champs à 16 px ou plus.",
+   "en": "Keyboard: Keyboard plugin set so the field and the main action stay visible; fields at 16 px or more."
+  },
+  {
+   "fr": "Bouton retour Android géré (App.addListener('backButton')) : il ramène à l'écran précédent et ne ferme l'app que depuis l'accueil.",
+   "en": "Android back button handled (App.addListener('backButton')): it returns to the previous screen and only closes the app from home."
+  },
+  {
+   "fr": "Pas de survol comme seul moyen d'agir ; retours tactiles sous 100 ms ; pas de délai de 300 ms (touch-action: manipulation).",
+   "en": "No hover as the only way to act; touch feedback under 100 ms; no 300 ms delay (touch-action: manipulation)."
+  },
+  {
+   "fr": "Lancer `npx cap sync` après tout changement de plugin et commiter les dossiers android/ et ios/.",
+   "en": "Run `npx cap sync` after any plugin change and commit the android/ and ios/ folders."
+  },
+  {
+   "fr": "Les mêmes tâches clés sont jouées dans le navigateur (qp flows) et sur appareil (qp mobile flows).",
+   "en": "The same key tasks are played in the browser (qp flows) and on a device (qp mobile flows)."
+  }
+ ],
+ "qp_stack": true,
+ "plugin": "qp-capacitor"
+}

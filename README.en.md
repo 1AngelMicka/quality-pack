@@ -4,11 +4,14 @@
 
 Plugins for [Claude Code](https://claude.com/claude-code) that make Claude build your website or app properly from the start, audit it with a score out of 10 domain by domain, and spend as few tokens as possible doing it.
 
-- **28 domains, 162 checks**: product, UX, ergonomics, UI, generic "AI-made" content, accessibility, security, privacy, performance, SEO, payments, deployment, backups and more.
+- **35 domains, 226 checks**: product, UX, ergonomics, UI, generic "AI-made" content, accessibility, security, privacy, performance, SEO, payments, the accounts and subscriptions of a SaaS, mobile apps, finish, identity, deployment, backups and more.
 - **Your real tasks, played on a phone and a desktop**: you declare 2 to 5 key tasks ("make a collage from 4 photos"); the audit plays them step by step, takes a screenshot and runs axe-core at every step, and measures the effort: pages to scroll, settings shown at once, preview and main action within reach. The interface is no longer judged on an empty screen.
 - **Two scores**: **Experience** (what the user lives) and **Engineering and operations** (what keeps the project safe and running), each with its own blockers. A missing uptime probe no longer hides how the interface fares, and the other way round.
 - **Evidence for every check**: a file and line, a command output or a screenshot. A check claimed as passed without evidence does not count.
 - **Design, not only audit**: three design skills. One organises a screen (patterns per task, phone and desktop). One turns the references a client likes into checked tokens (OKLCH, DTCG format, contrast in every theme). One advises on an existing screen (`/qp:design-review`). Every piece of advice ends with a measure.
+- **Security tried, not only read**: the audit plays access control with two accounts (can one customer read another's data?), probes the login, runs a passive OWASP ZAP scan and reads the repository's supply chain. A threat model is written at kickoff.
+- **From zero to launch**: the `from-zero` skill gives the stages of a SaaS or web app and what must be true before moving on; `saas-foundations` builds what is costly to add late (isolation between customers, roles, subscriptions, service emails); `mobile-app` covers the iOS and Android app up to the store blockers.
+- **Finish, measured**: `qp craft` checks in a real browser what separates a cared-for product from a first draft (keyboard focus, hover, typography, images, 404 page, share image…), and the referential refuses any invented testimonial, figure or customer logo.
 - **Honest scores**: an open blocker (a leaked secret, a broken main flow) caps the score it belongs to. An ergonomist reviews the key tasks and a counter-check re-reads the passed criteria on the screenshots.
 - **Token-frugal**: rules loaded on demand, compact command outputs, incremental audits, a code graph with [Graphify](https://github.com/Graphify-Labs/graphify). See [Token economy](#token-economy).
 - **Free, open source, no telemetry**, in English and French.
@@ -49,6 +52,8 @@ Plugins for [Claude Code](https://claude.com/claude-code) that make Claude build
 /plugin install qp-nextjs@quality-pack      # Next.js, React, TypeScript, Tailwind
 /plugin install qp-node-api@quality-pack    # Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io
 /plugin install qp-vps@quality-pack         # Self-hosted server: Docker Compose, PM2, Nginx or CloudPanel
+/plugin install qp-expo@quality-pack        # Expo or React Native mobile app (iOS, Android)
+/plugin install qp-capacitor@quality-pack   # Web app shipped as an iOS and Android app with Capacitor
 ```
 
 **3. Restart Claude Code** (or run `/reload-plugins`), open your project and run:
@@ -99,7 +104,7 @@ Your project keeps its `.quality/` folder; delete it if you no longer want it.
 | `/qp:audit` | Incremental audit: only what changed since the last audit is checked again (full on the first audit, after a pack update, or when the last full audit is older than 30 days) |
 | `/qp:audit quick` | Automatic checks only, no auditors: the cheapest, ideal before a release |
 | `/qp:audit full` | Check everything again from scratch |
-| `/qp:audit ergonomics` | One group (`product-experience`, `ergonomics`, `design`, `security-data`, `reliability-quality`, `performance-seo`, `integrations-payments`, `operations`) |
+| `/qp:audit ergonomics` | One group (`product-experience`, `ergonomics`, `design`, `security-data`, `reliability-quality`, `performance-seo`, `integrations-payments`, `saas`, `mobile`, `operations`) |
 | `/qp:audit SEC-01 SEC-03` · `/qp:audit blockers` | Specific criteria, or only the blockers |
 | `/qp:fix` | Fix the open blockers (or the top 5 issues) |
 | `/qp:fix 10` · `/qp:fix SEC-02` · `/qp:fix ERG-R01` | Fix the first 10 issues, a specific one, or a finding of the ergonomics review |
@@ -108,6 +113,13 @@ Your project keeps its `.quality/` folder; delete it if you no longer want it.
 | `/qp:design-review [task or URL]` | Advice on a screen: measured effort, heuristic review, two or three costed reorganisations |
 | `node qp.mjs look <url>` | Measure the rendered page: weighted generic-look signals, font sizes, line length, small targets |
 | `node qp.mjs deslop <url>` | Measure spacing and alignment on the rendered page, element by element, at 375, 768, 1440 and 1920 px (installed Chrome or Edge, nothing to add) |
+| `node qp.mjs craft <url>` | Measure the finish of the rendered page: typography details, focus and hover, transitions, images, icons, site icon, share image, 404 page |
+| `node qp.mjs access` | Play access control: each declared resource is requested by its owner, then by the accounts that must not reach it. Exit code 2 on a leak |
+| `node qp.mjs auth` | Probe the login (local or staging only): same answer for a known and an unknown account, wrong passwords in a row slowed or refused |
+| `node qp.mjs dast [url]` | Passive scan of the running app with OWASP ZAP in Docker: headers, cookies, information leaks, vulnerable libraries |
+| `node qp.mjs supply` | Read the repository's supply chain: lockfile, release cooldown, install scripts, pinned CI actions, .env files |
+| `node qp.mjs threats` | Check the threat model (`.quality/threats.json`): entry points covered, a response and a test for each abuse case |
+| `node qp.mjs mobile flows` · `mobile check` | Installed app: play the key tasks with Maestro on an emulator or device; read from the project what blocks a release |
 | `node qp.mjs tokens` | Check design tokens: DTCG format, references, contrast in every theme, colours outside sRGB |
 | `node qp.mjs record <id>` | Record a key task by doing it in a browser instead of writing it |
 | `node qp.mjs report` | Rewrite `.quality/report.html`: scores over time, screenshots of every step, review findings |
@@ -118,11 +130,13 @@ Your project keeps its `.quality/` folder; delete it if you no longer want it.
 | --- | --- |
 | Product and experience | Product, Features, UX, Content, Support |
 | Ergonomics | Ergonomics and information architecture: effort per task, settings shown at once, preview and main action within reach, choices never overwritten, DESIGN.md references followed, heuristic review |
-| Design and accessibility | UI, AI slop, Responsive, Accessibility, Compatibility |
+| Design and accessibility | UI, AI slop, Responsive, Accessibility, Compatibility, Craft, Identity and true content |
 | Security and data | Security, Privacy, Data, Compliance |
 | Reliability and code quality | Reliability, Tests, Code |
 | Performance and visibility | Performance, SEO and meta, Scalability |
 | Integrations, payments and costs | Integrations, Payments, Costs |
+| SaaS | Accounts, teams and access (isolation between customers, roles, invitations); Subscriptions (trial, limits, failed payment, cancellation, invoices); Activation and customer relationship |
+| Installed mobile app | Native mobile experience (tasks played on a device, platform rules, offline); Store release and mobile security |
 | Operations | Infrastructure, Deployment, Monitoring, Backups |
 
 Every rule and check is listed in [docs/en/REFERENTIAL.md](docs/en/REFERENTIAL.md).
@@ -130,7 +144,7 @@ Every rule and check is listed in [docs/en/REFERENTIAL.md](docs/en/REFERENTIAL.m
 ### Scoring
 
 - Each check is a **blocker** (5 points), **major** (3) or **minor** (1). Passed = all points, partial = half, failed or not checked = none.
-- Two scores: **Experience** (product, features, UX, content, support, ergonomics, UI, AI slop, responsive, accessibility, compatibility, performance) and **Engineering and operations** (security, privacy, data, compliance, reliability, tests, code, SEO, scalability, integrations, payments, costs, infrastructure, deployment, monitoring, backups).
+- Two scores: **Experience** (product, features, UX, content, support, ergonomics, UI, AI slop, responsive, accessibility, compatibility, craft, identity, performance, activation, mobile experience) and **Engineering and operations** (accounts and access, subscriptions, mobile release, security, privacy, data, compliance, reliability, tests, code, SEO, scalability, integrations, payments, costs, infrastructure, deployment, monitoring, backups).
 - A failed blocker caps its domain at 3/10 and the score it belongs to at 5.9/10, not the other one.
 - Each score weights its domains by project type: `vitrine` (showcase site), `webapp`, `saas`, `mobile` or `api`. Domains that do not apply (payments on a showcase site, for example) are skipped.
 - The overall score (every domain) stays in the report for history; it is capped at 5.9/10 as soon as any blocker is open.
@@ -138,7 +152,7 @@ Every rule and check is listed in [docs/en/REFERENTIAL.md](docs/en/REFERENTIAL.m
 
 ## Design
 
-Five skills load when Claude designs or changes an interface:
+Six skills load when Claude designs or changes an interface:
 
 | Skill | What it does | What it checks |
 | --- | --- | --- |
@@ -146,9 +160,22 @@ Five skills load when Claude designs or changes an interface:
 | `design-direction` | From the references a client likes (look and organisation, kept apart) to 4 or 5 mood words, testable principles, style tiles, then DTCG tokens in OKLCH for light and dark | `qp tokens`: WCAG contrast never rounded, in every theme, format, colours outside sRGB; `qp look` on the rendered page |
 | `deslop-ui` | Makes an interface clean before calling it done: measures spacing, alignment, boxes, controls and signs of generated UI on the real rendering, with screenshots, then fixes at the root | `qp deslop`: no high finding, screenshots re-read |
 | `scroll-animation` | Builds scroll animations of every kind (reveal, scrubbed, progress, parallax, pinned scene, horizontal section, text, scrollytelling, snapping, image sequence, 3D, Lottie, page transitions, smooth scroll): native CSS first, a free library only when needed, always with reduced motion | `qp look`: native scrolling, no text that depends on an animation, reduced motion respected |
+| `premium-craft` | Finishes a screen so that nothing gives away a quick or generated job: every state of every control, fine typography, shadows and radii, waiting without flicker, undo, a built dark theme, an identity of its own (fonts, icons, imagery, logo), specific copy and checkable facts | `qp craft`: no failed "must"; each "should" fixed or justified in DESIGN.md |
 | `design-review` (`/qp:design-review`) | Advice on an existing screen: measures, a two-pass heuristic review (Nielsen, Bastien and Scapin), severity 0 to 4 confirmed by three independent passes, then two or three reorganisations with their effort gap (keystroke-level model) | The task played again before and after |
 
 The generic "AI-made" look is measured by weighted signals (default font, violet, gradients, three identical cards, a badge above the headline, emoji as icons, hollow wording…). One signal alone is never a defect, and app screens (`operate` mode) are never penalised for being conventional. Sources are listed in [plugins/core/SOURCES.md](plugins/core/SOURCES.md).
+
+## SaaS, security and mobile app
+
+| Skill | What it does | What it checks |
+| --- | --- | --- |
+| `from-zero` | Gives the path from an idea to a launched product, in stages with a gate each, and says which skill to use at each stage | The gate of each stage, shown by a command or a deliverable |
+| `saas-foundations` | Builds the base of a SaaS in the right order: customer model and data isolation, accounts, roles and invitations, subscriptions (trial, limits, failed payment, cancellation, invoices and VAT), service emails, first session, export and deletion | `qp access` with no leak, `qp auth`, a fresh-account flow up to activation |
+| `security-testing` | Tests the security of your own app, on local or staging: threat model, access control played with two accounts, login, passive scan, supply chain, and what remains for a human | `qp threats`, `qp access`, `qp auth`, `qp dast`, `qp supply` |
+| `mobile-app` | Chooses the approach (PWA, Capacitor, Expo, Flutter), applies the iOS and Android rules, plays the key tasks on a device and lists what blocks a store release | `qp mobile flows`, `qp mobile check` |
+| `user-testing` | Prepares a test with five real people from the audience and turns the notes into ranked fixes | The dated report (criterion ACT-06) |
+
+Three things stay human, and the pack says so: knowing whether anyone wants the product, watching real people use it, and an independent penetration test before the first paying customers. Active tests (wrong passwords, writes) never target production.
 
 ## Token economy
 

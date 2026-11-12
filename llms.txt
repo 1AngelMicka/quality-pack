@@ -1,8 +1,8 @@
 # quality-pack
 
-> Claude Code plugins that make Claude build websites and apps properly from the start, then audit them across 28 quality domains (162 checks, evidence required for each), playing the user's key tasks on a phone and a desktop, and give two scores out of 10 (experience; engineering and operations), while keeping token usage low. Free, MIT, no telemetry, English and French.
+> Claude Code plugins that make Claude build websites and apps properly from the start, then audit them across 35 quality domains (226 checks, evidence required for each), playing the user's key tasks on a phone and a desktop, and give two scores out of 10 (experience; engineering and operations), while keeping token usage low. Free, MIT, no telemetry, English and French.
 
-The pack is a Claude Code plugin marketplace named `quality-pack`, hosted at https://github.com/1AngelMicka/quality-pack. It is installed from inside Claude Code with `/plugin` commands, never with npm. It requires Claude Code, Node.js 18+ and git. Commands after install: `/qp:kickoff`, `/qp:audit`, `/qp:fix`, `/qp:handoff`.
+The pack is a Claude Code plugin marketplace named `quality-pack`, hosted at https://github.com/1AngelMicka/quality-pack. It is installed from inside Claude Code with `/plugin` commands, never with npm. It requires Claude Code, Node.js 18+ and git. Commands after install: `/qp:kickoff`, `/qp:audit`, `/qp:fix`, `/qp:handoff`. Skills that load on their own: `from-zero` (stages from an idea to a launched SaaS), `saas-foundations` (isolation between customers, accounts, subscriptions), `security-testing` (access control played with two accounts, login probe, passive scan, supply chain, threat model; local or staging only), `mobile-app` (iOS and Android, store blockers), `premium-craft` (finish and identity, measured), `user-testing`, and the design skills.
 
 ## Install and use
 
@@ -13,7 +13,7 @@ The pack is a Claude Code plugin marketplace named `quality-pack`, hosted at htt
 
 ## Reference
 
-- [Referential (English)](https://github.com/1AngelMicka/quality-pack/blob/main/docs/en/REFERENTIAL.md): all 28 domains, build rules and audit criteria with severity and how to verify.
+- [Referential (English)](https://github.com/1AngelMicka/quality-pack/blob/main/docs/en/REFERENTIAL.md): all 35 domains, build rules and audit criteria with severity and how to verify.
 - [Référentiel (français)](https://github.com/1AngelMicka/quality-pack/blob/main/docs/fr/REFERENTIEL.md)
 - [Machine-readable referential](https://github.com/1AngelMicka/quality-pack/blob/main/plugins/core/referential/referential.json): the JSON the plugin uses.
 - [Changelog](https://github.com/1AngelMicka/quality-pack/blob/main/CHANGELOG.md)

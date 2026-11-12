@@ -1,0 +1,127 @@
+group: mobile
+label: {fr: "Application mobile installée", en: "Installed mobile app"}
+domains:
+
+  - id: mobile-ux
+    code: MUX
+    label: {fr: "Expérience mobile native", en: "Native mobile experience"}
+    summary: {fr: "Tâches clés jouées sur appareil, règles des plateformes, clavier, zones sûres, hors-ligne, notifications.", en: "Key tasks played on a device, platform rules, keyboard, safe areas, offline, notifications."}
+    applies_if: [native_app]
+    build:
+      - {fr: "Choisir l'approche avant le code et l'écrire : PWA, Capacitor (enveloppe de la webapp), Expo/React Native, Flutter. Une simple enveloppe de site est refusée par Apple.", en: "Choose the approach before the code and write it down: PWA, Capacitor (wrapping the web app), Expo/React Native, Flutter. A bare website wrapper is refused by Apple."}
+      - {fr: "Donner un identifiant stable (testID, accessibilityIdentifier, resource-id) à chaque élément touché par une tâche clé : les tests et les lecteurs d'écran en dépendent.", en: "Give a stable identifier (testID, accessibilityIdentifier, resource-id) to every element a key task touches: tests and screen readers depend on it."}
+      - {fr: "Cibles tactiles : 44 × 44 pt sur iOS, 48 × 48 dp espacées de 8 dp sur Android.", en: "Touch targets: 44 × 44 pt on iOS, 48 × 48 dp spaced by 8 dp on Android."}
+      - {fr: "Respecter les zones sûres et le plein écran bord à bord (obligatoire sur Android en ciblant l'API 36) ; le champ en cours de saisie et l'action principale restent visibles clavier ouvert.", en: "Respect safe areas and edge-to-edge display (mandatory on Android when targeting API 36); the focused field and the main action stay visible with the keyboard open."}
+      - {fr: "Suivre les habitudes de la plateforme : retour (geste iOS, bouton Android avec retour prédictif), barre d'onglets pour naviguer et non pour agir, feuilles que l'on ferme en glissant.", en: "Follow the platform's habits: back (iOS gesture, Android button with predictive back), tab bar for navigation and not for actions, sheets dismissed by swiping."}
+      - {fr: "Texte agrandi jusqu'à 200 %, thème sombre, rotation et tablette : rien n'est coupé ni superposé.", en: "Text enlarged up to 200 %, dark theme, rotation and tablet: nothing is clipped or overlapping."}
+      - {fr: "Hors-ligne : écrire, par type de donnée, ce qui se lit sans réseau et ce que devient une écriture (refusée, mise en file, synchronisée plus tard avec règle de conflit).", en: "Offline: write down, per kind of data, what can be read without network and what happens to a write (refused, queued, synced later with a conflict rule)."}
+      - {fr: "Notifications : ne jamais demander la permission au premier lancement ; la demander après une action de l'utilisateur, avec un écran qui dit pourquoi.", en: "Notifications: never ask for permission on first launch; ask after a user action, with a screen that says why."}
+    criteria:
+      - id: MUX-01
+        severity: blocker
+        check: {method: auto, tool: mobile_flow_run}
+        label: {fr: "Chaque tâche clé va au bout sur un appareil ou un émulateur", en: "Every key task completes on a device or an emulator"}
+        verify: {fr: "mobile.json : tous les flows de project.json › mobile.flows terminés, sur Android et, si un Mac est disponible, sur iOS. Dire quelles plateformes ont été jouées.", en: "mobile.json: every flow of project.json › mobile.flows completed, on Android and, when a Mac is available, on iOS. Say which platforms were played."}
+      - id: MUX-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Cibles tactiles aux tailles des plateformes", en: "Touch targets at platform sizes"}
+        verify: {fr: "Sur les captures des flows : aucune cible sous 44 × 44 pt (iOS) ou 48 × 48 dp (Android) parmi les actions des tâches clés.", en: "On the flow screenshots: no target under 44 × 44 pt (iOS) or 48 × 48 dp (Android) among the key-task actions."}
+      - id: MUX-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Clavier, zones sûres et bord à bord", en: "Keyboard, safe areas and edge-to-edge"}
+        verify: {fr: "Captures clavier ouvert : champ et bouton d'envoi visibles. Aucun contrôle sous la barre d'état, l'encoche, l'indicateur d'accueil ou la barre de gestes.", en: "Screenshots with the keyboard open: field and submit button visible. No control under the status bar, the notch, the home indicator or the gesture bar."}
+      - id: MUX-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Retour, onglets et feuilles suivent la plateforme", en: "Back, tabs and sheets follow the platform"}
+        verify: {fr: "Le retour ramène à l'écran précédent et ne perd aucune saisie sans prévenir ; la barre d'onglets sert à naviguer, sans onglet « Plus » de débordement ; une feuille se ferme en glissant.", en: "Back returns to the previous screen and loses no input without warning; the tab bar is for navigation, with no overflow \"More\" tab; a sheet closes by swiping."}
+      - id: MUX-05
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Texte à 200 %, thème sombre et tablette sans casse", en: "Text at 200 %, dark theme and tablet without breakage"}
+        verify: {fr: "Captures à la taille de police maximale, en thème sombre et sur un écran de 600 dp ou plus : pas de texte coupé, pas de surface blanche en dur, pas de portrait forcé.", en: "Screenshots at the largest font size, in dark theme and on a screen of 600 dp or more: no clipped text, no hard-coded white surface, no forced portrait."}
+      - id: MUX-06
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Comportement hors-ligne écrit et tenu", en: "Offline behaviour written and kept"}
+        verify: {fr: "Un flow passe hors-ligne (étape offline) : contenu en cache lisible, message clair, aucune donnée perdue après fermeture et réouverture de l'app en ligne.", en: "A flow goes offline (offline step): cached content readable, clear message, no data lost after closing and reopening the app online."}
+      - id: MUX-07
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Permissions demandées au bon moment", en: "Permissions asked at the right time"}
+        verify: {fr: "Aucune demande au premier lancement ; chaque demande suit une action et un écran d'explication ; un refus ne bloque pas l'app ; réglage par type de notification.", en: "No request on first launch; each request follows an action and an explanation screen; a refusal does not block the app; one setting per kind of notification."}
+      - id: MUX-08
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Chaque élément a un nom pour VoiceOver et TalkBack", en: "Every element has a name for VoiceOver and TalkBack"}
+        verify: {fr: "Contrôles des tâches clés : nom accessible, rôle et état exposés ; images décoratives masquées ; tout geste a une alternative au simple toucher.", en: "Key-task controls: accessible name, role and state exposed; decorative images hidden; every gesture has a single-tap alternative."}
+      - id: MUX-09
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Démarrage à froid sous 2 secondes sur un appareil moyen", en: "Cold start under 2 seconds on a mid-range device"}
+        verify: {fr: "Android : `adb shell am start -S -W` (TotalTime). 5 secondes ou plus est la limite « excessif » de Google Play : échec.", en: "Android: `adb shell am start -S -W` (TotalTime). 5 seconds or more is Google Play's \"excessive\" line: fail."}
+
+  - id: mobile-release
+    code: MRL
+    label: {fr: "Publication sur les stores et sécurité mobile", en: "Store release and mobile security"}
+    summary: {fr: "Ce qui bloque une publication : niveaux d'API, vie privée, suppression de compte, règles de paiement, stockage sûr.", en: "What blocks a release: API levels, privacy, account deletion, payment rules, safe storage."}
+    applies_if: [native_app]
+    build:
+      - {fr: "Écrire dès le cadrage le modèle de vente et les boutiques visées : vente aux particuliers dans l'app (achat intégré obligatoire, sauf États-Unis), vente aux entreprises hors de l'app (pas d'achat intégré, et aucun lien d'achat dans l'app), ou app compagnon sans achat.", en: "Write down at kickoff the sales model and the target storefronts: consumer sales in the app (in-app purchase required, except the United States), sales to organisations outside the app (no in-app purchase, and no purchase link in the app), or companion app without purchase."}
+      - {fr: "Suppression du compte : un chemin dans l'app (Apple et Google) et une page web publique (Google).", en: "Account deletion: a path inside the app (Apple and Google) and a public web page (Google)."}
+      - {fr: "Jetons et secrets dans le trousseau (iOS) ou le Keystore (Android) ; jamais dans AsyncStorage, SharedPreferences, localStorage ou un fichier.", en: "Tokens and secrets in the Keychain (iOS) or the Keystore (Android); never in AsyncStorage, SharedPreferences, localStorage or a file."}
+      - {fr: "Aucun secret dans l'app livrée : seules des clés publiques. Tout ce qui est dans le paquet peut être lu.", en: "No secret in the shipped app: public keys only. Everything in the package can be read."}
+      - {fr: "TLS uniquement, sans exception ; liens vérifiés en https pour l'authentification (pas de schéma d'URL sur mesure) ; WebView limitée aux origines de l'app.", en: "TLS only, without exception; verified https links for authentication (no custom URL scheme); WebView restricted to the app's own origins."}
+      - {fr: "Mises à jour à distance : corrections et contenu seulement ; une nouvelle fonction, permission ou voie de paiement passe par le store.", en: "Over-the-air updates: fixes and content only; a new feature, permission or payment path goes through the store."}
+      - {fr: "Tenir à jour la liste des SDK embarqués : elle alimente la fiche Sécurité des données (Google) et les étiquettes de confidentialité (Apple).", en: "Keep the list of embedded SDKs up to date: it feeds the Data safety form (Google) and the privacy labels (Apple)."}
+    criteria:
+      - id: MRL-01
+        severity: blocker
+        check: {method: auto, tool: mobile_release_scan}
+        label: {fr: "Aucun blocage de publication lisible dans le projet", en: "No release blocker readable in the project"}
+        verify: {fr: "mobile-check.json : aucun « must » en échec (niveau d'API cible, build débogable, trafic en clair, manifeste de confidentialité, textes de permission, WebView, page de suppression).", en: "mobile-check.json: no failed \"must\" (target API level, debuggable build, cleartext traffic, privacy manifest, permission texts, WebView, deletion page)."}
+      - id: MRL-02
+        severity: blocker
+        check: {method: inspect}
+        applies_if: [has_auth]
+        label: {fr: "Suppression du compte possible dans l'app", en: "Account deletion possible inside the app"}
+        verify: {fr: "Chemin trouvé depuis les réglages ; il supprime le compte et ses données (pas une simple désactivation), annonce le délai et confirme ; les abonnements du store sont signalés.", en: "Path found from the settings; it deletes the account and its data (not a mere deactivation), states the delay and confirms; store subscriptions are flagged."}
+      - id: MRL-03
+        severity: blocker
+        check: {method: inspect}
+        applies_if: [has_payments]
+        label: {fr: "Règles de paiement des stores respectées pour le modèle de vente déclaré", en: "Store payment rules met for the declared sales model"}
+        verify: {fr: "project.json › mobile.monetisation et storefronts comparés aux écrans : achat intégré là où il est exigé ; aucun prix, bouton d'abonnement ou lien d'achat externe là où il est interdit.", en: "project.json › mobile.monetisation and storefronts compared with the screens: in-app purchase where required; no price, subscribe button or external purchase link where forbidden."}
+      - id: MRL-04
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Jetons en stockage sûr, aucun secret dans l'app livrée", en: "Tokens in safe storage, no secret in the shipped app"}
+        verify: {fr: "Recherche des API de stockage dans le code ; recherche de clés dans le paquet construit (apkleaks, ou décompression et recherche) ; gitleaks sur le dépôt.", en: "Search for storage APIs in the code; search for keys in the built package (apkleaks, or unzip and search); gitleaks on the repository."}
+      - id: MRL-05
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Fiches de confidentialité des stores exactes", en: "Store privacy forms accurate"}
+        verify: {fr: "Liste des SDK embarqués comparée à la fiche Sécurité des données (Google) et aux étiquettes de confidentialité (Apple) ; lien vers la politique de confidentialité.", en: "List of embedded SDKs compared with the Data safety form (Google) and the privacy labels (Apple); privacy policy link."}
+      - id: MRL-06
+        severity: major
+        check: {method: inspect}
+        applies_if: [has_auth]
+        label: {fr: "Connexion par un tiers accompagnée d'une option respectueuse de la vie privée (iOS)", en: "Third-party login comes with a privacy-preserving option (iOS)"}
+        verify: {fr: "Si l'app propose Google, Facebook ou autre : une option équivalente qui se limite au nom et à l'email et permet de masquer l'email (Sign in with Apple y répond).", en: "If the app offers Google, Facebook or another: an equivalent option limited to name and email that lets users hide their email (Sign in with Apple qualifies)."}
+      - id: MRL-07
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Liens vers l'app vérifiés", en: "Links into the app verified"}
+        verify: {fr: "Android : `adb shell pm get-app-links <paquet>` affiche « verified » pour chaque domaine. iOS : le fichier d'association répond sans redirection et contient l'identifiant de l'app.", en: "Android: `adb shell pm get-app-links <package>` shows \"verified\" for each domain. iOS: the association file answers without redirect and contains the app identifier."}
+      - id: MRL-08
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Plantages suivis, publication progressive et retour arrière prévus", en: "Crashes tracked, staged rollout and rollback planned"}
+        verify: {fr: "Outil de suivi des plantages branché ; publication par paliers ; procédure de retour arrière pour les mises à jour à distance. Limites Google Play : 1,09 % de plantages, 0,47 % de blocages (ANR).", en: "Crash reporting wired in; staged rollout; rollback procedure for over-the-air updates. Google Play lines: 1.09 % crashes, 0.47 % freezes (ANR)."}
+      - id: MRL-09
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Mises à jour à distance limitées aux corrections", en: "Over-the-air updates limited to fixes"}
+        verify: {fr: "Aucune mise à jour à distance n'ajoute de fonction, de permission ou de voie de paiement ; règle écrite dans le dépôt.", en: "No over-the-air update adds a feature, a permission or a payment path; rule written in the repository."}

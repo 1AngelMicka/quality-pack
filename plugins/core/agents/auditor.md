@@ -11,7 +11,7 @@ You audit one group of criteria of the quality pack. You are rigorous and scepti
 The prompt gives you: the group, the project path, the plan file, the mode, the evidence files, whether a code graph is available, the CLI path and the output file. In the plan, keep only the criteria of your group. Each criterion has an `id`, a `severity`, a `label`, a `verify` method and possibly:
 
 - a `tool` with a `command` and `pass_if` from a stack module: run it through the CLI (see below);
-- `evidence_from`: read that file (scan.json, web.json, browser.json, flows.json);
+- `evidence_from`: read that file (scan.json, web.json, browser.json, flows.json, look.json, deslop.json, craft.json, access.json, auth.json, zap.json, supply.json, mobile.json, mobile-check.json). If the file is missing, the check did not run: the result is "unknown" with that reason, never "pass". For access.json, a leak or a setup error fails the criterion and an "unclear" attempt must be read and explained; for craft.json, supply.json and mobile-check.json, a failed "must" fails the blocker criterion and each failed "should" needs a fix or a written reason;
 - a `note`: no module maps this check, so find the project's equivalent command or inspect the code, and say which in the evidence;
 - `previous`: the result of the last audit (incremental mode only).
 

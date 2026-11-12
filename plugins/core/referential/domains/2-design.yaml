@@ -192,3 +192,112 @@ domains:
         check: {method: inspect}
         label: {fr: "Fonctionne sans extension et avec bloqueur de publicité", en: "Works without extensions and with an ad blocker"}
         verify: {fr: "Les scripts tiers bloqués ne cassent pas l'application.", en: "Blocked third-party scripts do not break the app."}
+
+  - id: craft
+    code: CRF
+    label: {fr: "Finitions", en: "Craft"}
+    summary: {fr: "Les détails qui séparent un produit soigné d'un premier jet : typographie, états, mouvement, images, attente, pages annexes.", en: "The details that separate a cared-for product from a first draft: typography, states, motion, images, waiting, side pages."}
+    applies_if: [has_ui]
+    build:
+      - {fr: "Typographie : text-wrap: balance sur les titres, chiffres tabulaires dans les colonnes et compteurs, vrais caractères (’ « » … et espaces insécables), capitales espacées, 4 graisses au plus.", en: "Typography: text-wrap: balance on headings, tabular figures in columns and counters, real characters (’ “ ” … and non-breaking spaces), tracked capitals, 4 weights at most."}
+      - {fr: "Ombres douces en deux couches ou plus, d'une seule direction de lumière, teintées par le fond ; une échelle d'élévation, pas une ombre par composant.", en: "Soft shadows in two layers or more, one light direction, tinted by the background; an elevation scale, not one shadow per component."}
+      - {fr: "Rayons concentriques : rayon intérieur = rayon extérieur − marge intérieure.", en: "Concentric radii: inner radius = outer radius − padding."}
+      - {fr: "Chaque contrôle a ses états : survol, focus clavier visible, appui, désactivé, chargement. Le survol et le focus contrastent plus que le repos.", en: "Every control has its states: hover, visible keyboard focus, pressed, disabled, loading. Hover and focus contrast more than rest."}
+      - {fr: "Mouvement : 100 à 300 ms sur l'interface, sortie en ease-out, seulement transform et opacity, jamais transition: all ; aucune animation sur une action au clavier ou très fréquente.", en: "Motion: 100 to 300 ms on the interface, ease-out, transform and opacity only, never transition: all; no animation on a keyboard or very frequent action."}
+      - {fr: "Attente : rien sous 1 seconde ; indicateur retardé de 150 à 300 ms puis gardé au moins 300 ms ; squelette fidèle à la mise en page pour une page ; barre de progression au-delà de 10 secondes.", en: "Waiting: nothing under 1 second; indicator delayed by 150 to 300 ms then kept at least 300 ms; skeleton matching the layout for a page; progress bar beyond 10 seconds."}
+      - {fr: "Mise à jour optimiste quand le succès est probable, avec retour arrière ; annuler plutôt que confirmer pour ce qui est réversible.", en: "Optimistic update when success is likely, with rollback; undo rather than confirm for what is reversible."}
+      - {fr: "Thème sombre : un modèle d'élévation à part (les surfaces s'éclaircissent en montant), color-scheme: dark déclaré, jamais une simple inversion.", en: "Dark theme: its own elevation model (surfaces get lighter as they rise), color-scheme: dark declared, never a plain inversion."}
+      - {fr: "État dans l'adresse (filtres, onglets, page, panneau ouvert) : partager, recharger et revenir en arrière fonctionnent.", en: "State in the address (filters, tabs, page, open panel): sharing, reloading and going back work."}
+      - {fr: "Soigner ce qui entoure la page : icône du site, image de partage, page 404 et page d'erreur dans la voix du produit, titre d'onglet qui suit le contexte.", en: "Care for what surrounds the page: site icon, share image, 404 and error pages in the product's voice, tab title that follows the context."}
+    criteria:
+      - id: CRF-01
+        severity: blocker
+        check: {method: auto, tool: craft_scan}
+        label: {fr: "Aucun défaut de finition visible ou gênant sur les écrans clés", en: "No visible or obstructive finish defect on the key screens"}
+        verify: {fr: "craft.json sur les pages principales et les écrans de travail : aucun « must » en échec (focus clavier, images déformées ou floues, champs sous 16 px sur téléphone, zoom bloqué, saut de mise en page, chiffres non alignés, icône du site, statut 404).", en: "craft.json on the main pages and work screens: no failed \"must\" (keyboard focus, stretched or blurry images, fields under 16 px on phone, blocked zoom, layout shift, unaligned figures, site icon, 404 status)."}
+      - id: CRF-02
+        severity: major
+        check: {method: auto, tool: craft_scan}
+        label: {fr: "Finitions typographiques, de surface et de mouvement tenues", en: "Typographic, surface and motion finish kept"}
+        verify: {fr: "craft.json : chaque « should » en échec est corrigé ou justifié par un choix écrit dans DESIGN.md (titres équilibrés, caractères typographiques, ombres, rayons imbriqués, survol, durées, icônes).", en: "craft.json: each failed \"should\" is fixed or justified by a choice written in DESIGN.md (balanced headings, typographic characters, shadows, nested radii, hover, durations, icons)."}
+      - id: CRF-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Chaque contrôle a tous ses états", en: "Every control has all its states"}
+        verify: {fr: "Boutons, champs, liens, onglets des écrans clés : survol, focus, appui, désactivé et chargement existent et se distinguent ; le bouton en chargement garde son libellé.", en: "Buttons, fields, links, tabs of the key screens: hover, focus, pressed, disabled and loading exist and differ; a loading button keeps its label."}
+      - id: CRF-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Attente traitée selon sa durée", en: "Waiting handled according to its length"}
+        verify: {fr: "Réseau ralenti sur une tâche clé : pas d'indicateur qui clignote sous 300 ms, squelette fidèle pour les pages, progression au-delà de 10 secondes, aucune page blanche.", en: "Throttled network on a key task: no indicator flashing under 300 ms, faithful skeleton for pages, progress beyond 10 seconds, no blank page."}
+      - id: CRF-05
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Annulation possible pour ce qui est réversible, confirmation pour le reste", en: "Undo for what is reversible, confirmation for the rest"}
+        verify: {fr: "Supprimer, archiver, déplacer : annulation proposée au moins 5 secondes. Action irréversible : confirmation qui nomme ce qui sera perdu.", en: "Delete, archive, move: undo offered for at least 5 seconds. Irreversible action: confirmation naming what will be lost."}
+      - id: CRF-06
+        severity: major
+        check: {method: inspect}
+        label: {fr: "L'adresse reflète l'état de l'écran", en: "The address reflects the screen's state"}
+        verify: {fr: "Appliquer un filtre, changer d'onglet ou de page, puis recharger et revenir en arrière : même état, même position de défilement.", en: "Apply a filter, change tab or page, then reload and go back: same state, same scroll position."}
+      - id: CRF-07
+        severity: major
+        check: {method: inspect}
+        applies_if: [dark_mode]
+        label: {fr: "Thème sombre construit, pas inversé", en: "Dark theme built, not inverted"}
+        verify: {fr: "Les surfaces s'éclaircissent avec l'élévation ; bordures fines en blanc à faible opacité ; aucune ombre noire sur fond noir ; contrôles natifs et barres de défilement sombres.", en: "Surfaces get lighter with elevation; hairlines in low-opacity white; no black shadow on a black background; native controls and scrollbars dark."}
+      - id: CRF-08
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Clavier d'abord sur les écrans de travail", en: "Keyboard first on work screens"}
+        verify: {fr: "Entrée envoie le formulaire ; Échap ferme ; les listes se parcourent aux flèches ; les raccourcis sont affichés ; une application à plusieurs écrans a une recherche ou une palette de commandes.", en: "Enter submits the form; Escape closes; lists move with arrow keys; shortcuts are shown; a multi-screen app has a search or a command palette."}
+      - id: CRF-09
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Emails et pages d'erreur à l'image du produit", en: "Emails and error pages look like the product"}
+        verify: {fr: "Pages 404 et 500, emails de service : même voix, mêmes couleurs et typographie que l'application, et une action pour continuer.", en: "404 and 500 pages, service emails: same voice, colours and typography as the app, and an action to continue."}
+
+  - id: brand
+    code: BRD
+    label: {fr: "Identité et contenu vrai", en: "Identity and true content"}
+    summary: {fr: "Une identité propre au produit, des contenus réels et vérifiables, des ressources sous licence.", en: "An identity of the product's own, real and checkable content, licensed resources."}
+    applies_if: [has_ui]
+    build:
+      - {fr: "Tirer la couleur, la typographie et les images du sujet du produit et de son public, pas de la mode de la catégorie.", en: "Draw colour, type and imagery from the product's subject and audience, not from the category's fashion."}
+      - {fr: "Éviter les trois palettes réflexes : violet-indigo, crème et terracotta, presque noir et vert acide.", en: "Avoid the three reflex palettes: purple-indigo, cream and terracotta, near-black and acid green."}
+      - {fr: "Deux familles de caractères au plus, plus une à chasse fixe si besoin ; pas Inter ou Geist comme seule police ; noter nom, fonderie, licence et source de chaque police.", en: "Two typefaces at most, plus a monospace if needed; not Inter or Geist as the only face; record name, foundry, licence and source of each font."}
+      - {fr: "Un seul jeu d'icônes, une seule épaisseur de trait réglée selon la taille ; dessiner les quelques icônes des objets propres au produit ; jamais un glyphe du jeu d'icônes comme logo.", en: "One icon set, one stroke width tuned to the size; draw the few icons of the product's own objects; never a glyph of the icon set as the logo."}
+      - {fr: "Images, par ordre de préférence : le vrai produit (captures, composants), des schémas faits pour la page, ses propres photos, des images d'archives traitées de façon cohérente, rien. Pas d'illustrations de kit ni d'image générée contenant du texte, une interface ou des personnes.", en: "Imagery, in order of preference: the real product (screenshots, components), diagrams made for the page, own photos, archive images with a consistent treatment, nothing. No kit illustrations and no generated image containing text, an interface or people."}
+      - {fr: "Tout chiffre, citation, logo de client ou badge affiché vient d'un fait fourni par l'utilisateur ; sinon le bloc n'existe pas.", en: "Every number, quote, customer logo or badge shown comes from a fact supplied by the user; otherwise the block does not exist."}
+      - {fr: "Textes : dire ce que le produit fait et pour qui, avec les mots des clients ; libellé de bouton = verbe + objet ; erreur = ce qui s'est passé + comment corriger.", en: "Copy: say what the product does and for whom, in customers' words; button label = verb + object; error = what happened + how to fix it."}
+    criteria:
+      - id: BRD-01
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Aucun témoignage, chiffre, logo de client ou badge inventé", en: "No invented testimonial, figure, customer logo or badge"}
+        verify: {fr: "Chaque citation, nombre (« 10 000 équipes », « 99,9 % »), logo et badge des pages publiques est relié à une source fournie par l'utilisateur (fichier de faits, lien). Sans source : échec.", en: "Every quote, number (\"10,000 teams\", \"99.9%\"), logo and badge on public pages traces to a source supplied by the user (facts file, link). No source: fail."}
+      - id: BRD-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Direction visuelle tirée du produit, écrite et suivie", en: "Visual direction drawn from the product, written and followed"}
+        verify: {fr: "DESIGN.md dit d'où viennent la couleur, la typographie et les images, et ce que le produit refuse ; les écrans s'y conforment ; pas de palette réflexe non justifiée.", en: "DESIGN.md says where colour, type and imagery come from, and what the product refuses; the screens comply; no unjustified reflex palette."}
+      - id: BRD-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Typographie choisie et sous licence notée", en: "Typeface chosen, licence recorded"}
+        verify: {fr: "Deux familles au plus (plus une à chasse fixe) ; la police de texte a de vraies italiques et des chiffres tabulaires ; nom, fonderie, licence et source notés ; polices hébergées par le projet.", en: "Two families at most (plus a monospace); the text face has real italics and tabular figures; name, foundry, licence and source recorded; fonts hosted by the project."}
+      - id: BRD-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Un seul jeu d'icônes, ajusté, et un logo qui n'en vient pas", en: "One icon set, adjusted, and a logo that does not come from it"}
+        verify: {fr: "Un seul jeu, une épaisseur de trait par taille ; les objets propres au produit ont leur icône ; le logo n'est pas un glyphe du jeu ; l'icône du site, l'image de partage et l'avatar dérivent du même dessin.", en: "One set, one stroke width per size; the product's own objects have their icon; the logo is not a glyph of the set; site icon, share image and avatar derive from the same drawing."}
+      - id: BRD-05
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Images réelles et cohérentes", en: "Real and consistent imagery"}
+        verify: {fr: "Les pages montrent le vrai produit ; pas d'illustration de kit, pas d'image générée avec du texte, une interface ou des personnes ; un même traitement pour toutes ; source et licence notées.", en: "Pages show the real product; no kit illustration, no generated image with text, an interface or people; one treatment for all; source and licence recorded."}
+      - id: BRD-06
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Textes précis, dans une voix tenue", en: "Specific copy, in a consistent voice"}
+        verify: {fr: "Le titre principal dit ce que fait le produit et pour qui ; boutons en verbe + objet ; erreurs avec leur solution ; même mot pour la même chose partout ; pas de suite de trois blocs de longueur identique sans raison.", en: "The main headline says what the product does and for whom; buttons as verb + object; errors with their fix; the same word for the same thing everywhere; no run of three blocks of identical length without a reason."}

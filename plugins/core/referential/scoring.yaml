@@ -49,6 +49,9 @@ flags:
   self_hosted: {fr: "Hébergé sur un serveur géré par l'équipe (VPS, dédié)", en: "Hosted on a team-managed server (VPS, dedicated)"}
   multilingual: {fr: "Plusieurs langues", en: "Several languages"}
   dark_mode: {fr: "Thème sombre", en: "Dark theme"}
+  multi_tenant: {fr: "Plusieurs clients ou équipes partagent l'application, chacun avec ses données et ses membres", en: "Several customers or teams share the app, each with its own data and members"}
+  has_subscriptions: {fr: "Abonnements récurrents avec des offres", en: "Recurring subscriptions with plans"}
+  native_app: {fr: "Application mobile installée (App Store, Google Play)", en: "Installed mobile app (App Store, Google Play)"}
 
 # Flags computed from others.
 derived_flags:
@@ -60,12 +63,12 @@ derived_flags:
 score_areas:
   experience:
     label: {fr: "Expérience", en: "Experience"}
-    summary: {fr: "Ce que vit l'utilisateur : produit, parcours, ergonomie, interface, accessibilité, vitesse.", en: "What the user lives: product, flows, ergonomics, interface, accessibility, speed."}
-    domains: [product, features, ux, content, support, ergonomics, ui, ai-slop, responsive, accessibility, compatibility, performance]
+    summary: {fr: "Ce que vit l'utilisateur : produit, parcours, ergonomie, interface, finitions, identité, accessibilité, vitesse, première session.", en: "What the user lives: product, flows, ergonomics, interface, finish, identity, accessibility, speed, first session."}
+    domains: [product, features, ux, content, support, ergonomics, ui, ai-slop, responsive, accessibility, compatibility, craft, brand, performance, activation, mobile-ux]
   operations:
     label: {fr: "Technique et exploitation", en: "Engineering and operations"}
     summary: {fr: "Ce qui garde le projet sûr, légal et en marche : sécurité, données, code, tests, intégrations, serveur, sauvegardes.", en: "What keeps the project safe, lawful and running: security, data, code, tests, integrations, server, backups."}
-    domains: [security, privacy, data, compliance, reliability, tests, code, seo, scalability, integrations, payments, costs, infra, deployment, monitoring, backups]
+    domains: [security, privacy, data, compliance, reliability, tests, code, seo, scalability, integrations, payments, costs, infra, deployment, monitoring, backups, accounts, subscriptions, mobile-release]
 
 # Usage profiles: weight of each domain in the global score (0 = not counted).
 # Domains are also skipped when their applies_if flags are false.
@@ -73,20 +76,20 @@ profiles:
   vitrine:
     label: {fr: "Site vitrine ou landing page", en: "Showcase site or landing page"}
     default_flags: [has_ui, public_web]
-    weights: {product: 3, features: 2, ux: 2, ergonomics: 2, content: 3, support: 1, ui: 3, ai-slop: 3, responsive: 3, accessibility: 2, compatibility: 2, security: 2, privacy: 2, data: 1, compliance: 2, reliability: 1, tests: 1, code: 1, performance: 3, seo: 3, scalability: 0, integrations: 1, payments: 0, costs: 1, infra: 1, deployment: 1, monitoring: 1, backups: 1}
+    weights: {product: 3, features: 2, ux: 2, ergonomics: 2, content: 3, support: 1, ui: 3, ai-slop: 3, responsive: 3, accessibility: 2, compatibility: 2, security: 2, privacy: 2, data: 1, compliance: 2, reliability: 1, tests: 1, code: 1, performance: 3, seo: 3, scalability: 0, integrations: 1, payments: 0, costs: 1, infra: 1, deployment: 1, monitoring: 1, backups: 1, accounts: 0, subscriptions: 0, activation: 0, craft: 3, brand: 3, mobile-ux: 0, mobile-release: 0}
   webapp:
     label: {fr: "Application web", en: "Web application"}
     default_flags: [has_ui, has_backend, has_auth, has_user_data, has_db]
-    weights: {product: 3, features: 3, ux: 3, ergonomics: 3, content: 2, support: 2, ui: 2, ai-slop: 2, responsive: 2, accessibility: 2, compatibility: 2, security: 3, privacy: 3, data: 3, compliance: 2, reliability: 3, tests: 3, code: 2, performance: 2, seo: 1, scalability: 1, integrations: 2, payments: 2, costs: 1, infra: 2, deployment: 2, monitoring: 2, backups: 3}
+    weights: {product: 3, features: 3, ux: 3, ergonomics: 3, content: 2, support: 2, ui: 2, ai-slop: 2, responsive: 2, accessibility: 2, compatibility: 2, security: 3, privacy: 3, data: 3, compliance: 2, reliability: 3, tests: 3, code: 2, performance: 2, seo: 1, scalability: 1, integrations: 2, payments: 2, costs: 1, infra: 2, deployment: 2, monitoring: 2, backups: 3, accounts: 3, subscriptions: 2, activation: 2, craft: 2, brand: 2, mobile-ux: 2, mobile-release: 2}
   saas:
     label: {fr: "SaaS payant", en: "Paid SaaS"}
-    default_flags: [has_ui, has_backend, has_auth, has_user_data, has_db, has_payments, has_email, has_webhooks, public_web]
-    weights: {product: 3, features: 3, ux: 3, ergonomics: 3, content: 2, support: 3, ui: 2, ai-slop: 2, responsive: 2, accessibility: 2, compatibility: 2, security: 3, privacy: 3, data: 3, compliance: 3, reliability: 3, tests: 3, code: 2, performance: 2, seo: 2, scalability: 2, integrations: 2, payments: 3, costs: 2, infra: 2, deployment: 3, monitoring: 3, backups: 3}
+    default_flags: [has_ui, has_backend, has_auth, has_user_data, has_db, has_payments, has_subscriptions, has_email, has_webhooks, public_web]
+    weights: {product: 3, features: 3, ux: 3, ergonomics: 3, content: 2, support: 3, ui: 2, ai-slop: 2, responsive: 2, accessibility: 2, compatibility: 2, security: 3, privacy: 3, data: 3, compliance: 3, reliability: 3, tests: 3, code: 2, performance: 2, seo: 2, scalability: 2, integrations: 2, payments: 3, costs: 2, infra: 2, deployment: 3, monitoring: 3, backups: 3, accounts: 3, subscriptions: 3, activation: 3, craft: 2, brand: 2, mobile-ux: 2, mobile-release: 2}
   mobile:
     label: {fr: "Application mobile", en: "Mobile app"}
-    default_flags: [has_ui, has_backend, has_auth, has_user_data]
-    weights: {product: 3, features: 3, ux: 3, ergonomics: 3, content: 2, support: 2, ui: 3, ai-slop: 2, responsive: 2, accessibility: 2, compatibility: 3, security: 3, privacy: 3, data: 2, compliance: 2, reliability: 3, tests: 3, code: 2, performance: 3, seo: 0, scalability: 1, integrations: 2, payments: 2, costs: 1, infra: 1, deployment: 2, monitoring: 2, backups: 2}
+    default_flags: [has_ui, has_backend, has_auth, has_user_data, native_app]
+    weights: {product: 3, features: 3, ux: 3, ergonomics: 3, content: 2, support: 2, ui: 3, ai-slop: 2, responsive: 2, accessibility: 2, compatibility: 3, security: 3, privacy: 3, data: 2, compliance: 2, reliability: 3, tests: 3, code: 2, performance: 3, seo: 0, scalability: 1, integrations: 2, payments: 2, costs: 1, infra: 1, deployment: 2, monitoring: 2, backups: 2, accounts: 2, subscriptions: 2, activation: 2, craft: 2, brand: 2, mobile-ux: 3, mobile-release: 3}
   api:
     label: {fr: "API ou service backend", en: "API or backend service"}
     default_flags: [has_backend, has_db]
-    weights: {product: 2, features: 3, ux: 0, ergonomics: 0, content: 0, support: 1, ui: 0, ai-slop: 0, responsive: 0, accessibility: 0, compatibility: 0, security: 3, privacy: 3, data: 3, compliance: 2, reliability: 3, tests: 3, code: 3, performance: 3, seo: 0, scalability: 3, integrations: 2, payments: 2, costs: 2, infra: 3, deployment: 3, monitoring: 3, backups: 3}
+    weights: {product: 2, features: 3, ux: 0, ergonomics: 0, content: 0, support: 1, ui: 0, ai-slop: 0, responsive: 0, accessibility: 0, compatibility: 0, security: 3, privacy: 3, data: 3, compliance: 2, reliability: 3, tests: 3, code: 3, performance: 3, seo: 0, scalability: 3, integrations: 2, payments: 2, costs: 2, infra: 3, deployment: 3, monitoring: 3, backups: 3, accounts: 3, subscriptions: 2, activation: 0, craft: 0, brand: 0, mobile-ux: 0, mobile-release: 0}

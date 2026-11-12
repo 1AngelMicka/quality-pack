@@ -8,7 +8,7 @@ description: "Quality pack build rules for Performance and visibility (Performan
 
 Apply these rules while you build. Domains or criteria whose `applies_if` flags are false in `.quality/project.json` do not apply to this project. Before you call a task done, check your work against the criteria of the domains you touched: each one must be true and verifiable.
 
-If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps), its rules skill adds stack-specific rules on top of these.
+If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps, qp-expo, qp-capacitor), its rules skill adds stack-specific rules on top of these.
 
 ## Performance (PRF)
 

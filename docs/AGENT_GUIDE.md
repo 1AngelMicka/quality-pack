@@ -4,7 +4,7 @@ You are an AI agent helping a user install, configure or use quality-pack. Follo
 
 ## What it is, in one paragraph
 
-quality-pack is a set of Claude Code plugins. While the user codes, it gives Claude build rules across 28 quality domains. On demand, it audits the project (162 checks, each with evidence), plays the user's key tasks on a phone and a desktop, and writes a report with two scores out of 10 (experience; engineering and operations), with fixes by priority. It also reduces token usage. It is distributed as a Claude Code **plugin marketplace**, not as an npm package: never try `npm install quality-pack`.
+quality-pack is a set of Claude Code plugins. While the user codes, it gives Claude build rules across 28 quality domains. On demand, it audits the project (226 checks, each with evidence), plays the user's key tasks on a phone and a desktop, and writes a report with two scores out of 10 (experience; engineering and operations), with fixes by priority. It also reduces token usage. It is distributed as a Claude Code **plugin marketplace**, not as an npm package: never try `npm install quality-pack`.
 
 ## 0. Find out where the user is
 
@@ -33,6 +33,8 @@ Then the stack modules that match the project. Install only the relevant ones:
 | Next.js, React, TypeScript, Tailwind | `/plugin install qp-nextjs@quality-pack` |
 | A Node API: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io | `/plugin install qp-node-api@quality-pack` |
 | A self-hosted server: Docker Compose, PM2, Nginx or CloudPanel | `/plugin install qp-vps@quality-pack` |
+| An Expo or React Native mobile app | `/plugin install qp-expo@quality-pack` |
+| A web app shipped as a mobile app with Capacitor | `/plugin install qp-capacitor@quality-pack` |
 
 Then: restart Claude Code, or type `/reload-plugins`.
 

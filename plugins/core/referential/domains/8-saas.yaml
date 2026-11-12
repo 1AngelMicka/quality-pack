@@ -1,0 +1,179 @@
+group: saas
+label: {fr: "SaaS : comptes, abonnements et activation", en: "SaaS: accounts, subscriptions and activation"}
+domains:
+
+  - id: accounts
+    code: ACC
+    label: {fr: "Comptes, équipes et accès", en: "Accounts, teams and access"}
+    summary: {fr: "Cloisonnement entre clients, rôles, invitations et cycle de vie des comptes.", en: "Isolation between customers, roles, invitations and the account life cycle."}
+    applies_if: [has_auth]
+    build:
+      - {fr: "Poser le modèle de client (compte seul, ou organisation avec membres) et le cloisonnement des données avant la première fonctionnalité ; écrire le test à deux comptes en même temps.", en: "Set the customer model (single account, or organisation with members) and the data isolation before the first feature; write the two-account test at the same time."}
+      - {fr: "Cloisonner dans la couche de données (sécurité au niveau des lignes ou accès toujours filtré par client), pas route par route : une route oubliée ne doit pas pouvoir fuir.", en: "Isolate in the data layer (row-level security or access always scoped by customer), not route by route: a forgotten route must not be able to leak."}
+      - {fr: "L'identifiant de client envoyé par le navigateur n'est qu'un choix : le serveur revérifie l'appartenance à chaque requête.", en: "A customer identifier sent by the browser is only a selector: the server re-checks membership on every request."}
+      - {fr: "Reporter le client dans tout ce qui sort de la requête : clés de cache, tâches de fond, chemins de fichiers, liens signés, index de recherche, exports.", en: "Carry the customer into everything that leaves the request: cache keys, background jobs, file paths, signed links, search indexes, exports."}
+      - {fr: "Authentification par une bibliothèque ou un serveur d'identité maintenu ; jamais de cryptographie ni de sessions écrites à la main.", en: "Authentication through a maintained library or identity server; never hand-written crypto or sessions."}
+      - {fr: "Les rôles sont portés par l'adhésion à l'organisation, pas par l'utilisateur ; chaque action privilégiée est vérifiée côté serveur.", en: "Roles belong to the membership, not to the user; every privileged action is checked server-side."}
+      - {fr: "SSO, SCIM, rôles sur mesure, base par client : seulement quand un client le demande par contrat.", en: "SSO, SCIM, custom roles, one database per customer: only when a customer contract asks for it."}
+    criteria:
+      - id: ACC-01
+        severity: blocker
+        check: {method: inspect}
+        applies_if: [has_db]
+        label: {fr: "Cloisonnement des données fait dans la couche de données", en: "Data isolation enforced in the data layer"}
+        verify: {fr: "Chaque table liée à un client porte sa clé ; aucune table sans règle (RLS) ou sans accès filtré obligatoire ; le rôle de la base n'est ni superutilisateur ni BYPASSRLS.", en: "Every customer-scoped table carries its key; no table without a policy (RLS) or mandatory scoped access; the database role is neither superuser nor BYPASSRLS."}
+      - id: ACC-02
+        severity: blocker
+        check: {method: auto, tool: access_run}
+        label: {fr: "Le test à deux comptes couvre chaque type de ressource et tourne en CI", en: "The two-account test covers every kind of resource and runs in CI"}
+        verify: {fr: "access.json : une vérification par type de ressource et par rôle déclarée dans project.json › access, aucune fuite, aucun cas « unclear » non expliqué ; la même vérification bloque le déploiement.", en: "access.json: one check per kind of resource and per role declared in project.json › access, no leak, no unexplained \"unclear\"; the same check blocks deployment."}
+      - id: ACC-03
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Le client est reporté hors de la requête (cache, tâches, fichiers, recherche, exports)", en: "The customer is carried outside the request (cache, jobs, files, search, exports)"}
+        verify: {fr: "Clés de cache, charges des tâches de fond, chemins de stockage, liens signés (portée et durée), requêtes de recherche et exports : chacun contient et revérifie le client.", en: "Cache keys, background job payloads, storage paths, signed links (scope and lifetime), search queries and exports: each carries and re-checks the customer."}
+      - id: ACC-04
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Authentification confiée à une bibliothèque ou un service maintenu", en: "Authentication handled by a maintained library or service"}
+        verify: {fr: "Dépendance d'authentification identifiée, licence et dernière version datée de moins d'un an ; pas de hachage, de jeton ou de session écrits à la main.", en: "Authentication dependency identified, licence and latest release under a year old; no hand-written hashing, tokens or sessions."}
+      - id: ACC-05
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Email vérifié avant toute action sensible ; liens et codes à usage unique et de courte durée", en: "Email verified before any sensitive action; single-use, short-lived links and codes"}
+        verify: {fr: "Compte non vérifié : pas d'invitation, pas d'essai sans carte. Lien de réinitialisation ou code : aléatoire, utilisable une fois, expiré en 10 minutes à 1 heure, et ne contourne pas la double authentification.", en: "Unverified account: no invitation, no card-less trial. Reset link or code: random, usable once, expired within 10 minutes to 1 hour, and does not bypass two-factor."}
+      - id: ACC-06
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Double authentification disponible, sessions listées et révocables", en: "Two-factor available, sessions listed and revocable"}
+        verify: {fr: "TOTP ou clé d'accès (passkey) proposé ; liste des sessions actives avec déconnexion à distance ; changer l'email ou le mot de passe redemande une authentification.", en: "TOTP or passkey offered; list of active sessions with remote sign-out; changing email or password asks for authentication again."}
+      - id: ACC-07
+        severity: blocker
+        check: {method: inspect}
+        applies_if: [multi_tenant]
+        label: {fr: "Rôles vérifiés côté serveur ; le dernier propriétaire ne peut pas disparaître", en: "Roles checked server-side; the last owner cannot disappear"}
+        verify: {fr: "Appel d'une route d'administration avec un compte membre : refusé. Dans une organisation à un seul propriétaire : il ne peut ni partir, ni être rétrogradé, ni être supprimé ; le transfert de propriété existe.", en: "Calling an admin route with a member account: refused. In an organisation with one owner: the owner cannot leave, be demoted or be deleted; ownership transfer exists."}
+      - id: ACC-08
+        severity: blocker
+        check: {method: inspect}
+        applies_if: [multi_tenant]
+        label: {fr: "Invitations à usage unique, liées à l'email invité, expirables et révocables", en: "Invitations single-use, bound to the invited email, expiring and revocable"}
+        verify: {fr: "Réutiliser une invitation, l'utiliser avec un autre email, après expiration ou après révocation : refusé. Une invitation ne donne jamais un rôle supérieur à celui de l'invitant.", en: "Reusing an invitation, using it with another email, after expiry or after revocation: refused. An invitation never grants a higher role than the inviter's."}
+      - id: ACC-09
+        severity: major
+        check: {method: inspect}
+        applies_if: [multi_tenant]
+        label: {fr: "Retirer un membre ou changer son rôle prend effet tout de suite", en: "Removing a member or changing a role takes effect at once"}
+        verify: {fr: "Retirer un membre puis rejouer une requête avec son ancienne session et ses clés d'API : refusé.", en: "Remove a member, then replay a request with their old session and API keys: refused."}
+      - id: ACC-10
+        severity: major
+        check: {method: inspect}
+        applies_if: [multi_tenant]
+        label: {fr: "Journal des actions sensibles, lisible par les administrateurs du client", en: "Log of sensitive actions, readable by the customer's admins"}
+        verify: {fr: "Changement de rôle, export, suppression, accès du support : chacun laisse une ligne (qui, quoi, quand) que personne ne peut modifier.", en: "Role change, export, deletion, support access: each leaves a line (who, what, when) that nobody can edit."}
+      - id: ACC-11
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Accès du support aux comptes clients encadré", en: "Support access to customer accounts is controlled"}
+        verify: {fr: "Pas de mot de passe partagé ni d'accès direct à la base : prise de main limitée dans le temps, bandeau visible, ligne au journal, raison saisie.", en: "No shared password or direct database access: time-boxed impersonation, visible banner, log entry, reason entered."}
+
+  - id: subscriptions
+    code: SUB
+    label: {fr: "Abonnements", en: "Subscriptions"}
+    summary: {fr: "Essai, offres et limites, échecs de paiement, changement d'offre, résiliation, factures et taxes.", en: "Trial, plans and limits, failed payments, plan changes, cancellation, invoices and taxes."}
+    applies_if: [has_subscriptions]
+    build:
+      - {fr: "Une seule source de vérité pour les droits : une table côté serveur, mise à jour par les webhooks signés du prestataire, jamais par le navigateur ni par la page de retour.", en: "One source of truth for entitlements: a server-side table updated by the provider's signed webhooks, never by the browser or the return page."}
+      - {fr: "Chaque limite d'offre est appliquée côté serveur, là où l'écriture a lieu ; l'interface ne fait que l'annoncer.", en: "Every plan limit is enforced server-side, where the write happens; the interface only announces it."}
+      - {fr: "Webhooks : vérifier la signature sur le corps brut, répondre 2xx vite, traiter une seule fois par identifiant d'événement, accepter un ordre d'arrivée quelconque.", en: "Webhooks: verify the signature on the raw body, answer 2xx fast, process once per event ID, accept any arrival order."}
+      - {fr: "Écrire les règles avant le code : essai (durée, carte ou non, que se passe-t-il à la fin), délai de grâce après un paiement échoué, ce que devient la donnée après une rétrogradation.", en: "Write the rules before the code: trial (length, card or not, what happens at the end), grace period after a failed payment, what happens to data after a downgrade."}
+      - {fr: "Tester avec les horloges de test du prestataire : fin d'essai, renouvellement, carte refusée, relances, résiliation.", en: "Test with the provider's test clocks: trial end, renewal, declined card, retries, cancellation."}
+      - {fr: "Taxes : collecter le pays et le numéro de TVA, configurer le régime (guichet unique européen, autoliquidation) et vérifier les obligations de facturation électronique du pays.", en: "Taxes: collect the country and VAT number, configure the regime (EU one-stop shop, reverse charge) and check the country's e-invoicing duties."}
+    criteria:
+      - id: SUB-01
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Les droits viennent d'une table serveur mise à jour par webhook, jamais du navigateur", en: "Entitlements come from a server table updated by webhook, never from the browser"}
+        verify: {fr: "Ouvrir l'adresse de retour de paiement sans payer, ou envoyer une offre modifiée depuis le navigateur : aucun droit accordé.", en: "Open the payment return address without paying, or send a changed plan from the browser: no entitlement granted."}
+      - id: SUB-02
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Chaque limite d'offre est appliquée côté serveur", en: "Every plan limit is enforced server-side"}
+        verify: {fr: "Appel direct de l'API au-delà de la limite (nombre de projets, de membres, d'usage) : refusé avec un message clair.", en: "Direct API call beyond the limit (projects, members, usage): refused with a clear message."}
+      - id: SUB-03
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Paiement échoué : email, bandeau dans l'app et délai de grâce écrit", en: "Failed payment: email, in-app banner and a written grace period"}
+        verify: {fr: "Horloge de test avec une carte refusée : email avec lien pour corriger la carte, bandeau visible, accès maintenu pendant le délai annoncé puis coupé comme écrit.", en: "Test clock with a declined card: email with a link to fix the card, visible banner, access kept during the stated period then cut as written."}
+      - id: SUB-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Essai : conditions annoncées à l'inscription, rappel avant la fin, fin d'essai définie", en: "Trial: terms stated at signup, reminder before the end, defined end of trial"}
+        verify: {fr: "Durée et suite de l'essai visibles avant l'inscription ; email de rappel quelques jours avant la fin ; comportement sans carte testé.", en: "Trial length and what follows visible before signup; reminder email a few days before the end; behaviour without a card tested."}
+      - id: SUB-05
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Changement d'offre : montant dû maintenant et au prochain renouvellement affichés avant de confirmer", en: "Plan change: amount due now and at next renewal shown before confirming"}
+        verify: {fr: "Aperçu comparé à la facture émise ; une rétrogradation ne supprime aucune donnée sans l'annoncer.", en: "Preview compared with the invoice issued; a downgrade deletes no data without saying so."}
+      - id: SUB-06
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Résiliation en ligne, en trois étapes au plus depuis le compte, confirmée par email", en: "Cancellation online, in three steps at most from the account, confirmed by email"}
+        verify: {fr: "Parcours compté depuis les réglages du compte ; email de confirmation avec la date d'effet ; aucune obligation d'appeler ou d'écrire.", en: "Steps counted from the account settings; confirmation email with the effective date; no need to call or write."}
+      - id: SUB-07
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Factures dans le compte, pays et numéro de TVA collectés, régime de taxe configuré", en: "Invoices in the account, country and VAT number collected, tax regime configured"}
+        verify: {fr: "Facture d'essai avec les mentions légales ; réglages de taxe du prestataire ; note écrite sur la facturation électronique du pays.", en: "Sample invoice with the legal mentions; the provider's tax settings; written note on the country's e-invoicing."}
+      - id: SUB-08
+        severity: major
+        check: {method: inspect}
+        applies_if: [public_web]
+        label: {fr: "Page de prix complète, et identique au paiement", en: "Complete pricing page, identical to checkout"}
+        verify: {fr: "Prix, période, unité (par membre, par projet), mention des taxes, limites en chiffres, règles d'essai et de résiliation ; montants comparés à ceux du paiement.", en: "Price, period, unit (per member, per project), tax mention, limits in numbers, trial and cancellation rules; amounts compared with checkout."}
+
+  - id: activation
+    code: ACT
+    label: {fr: "Activation et relation client", en: "Activation and customer relationship"}
+    summary: {fr: "Première session, emails de service, mesure de l'activation, pages de confiance et sortie du client.", en: "First session, service emails, activation measurement, trust pages and customer exit."}
+    applies_if: [has_auth]
+    build:
+      - {fr: "Nommer l'événement d'activation : la première fois où l'utilisateur obtient ce que le produit promet. Tout le premier parcours y mène.", en: "Name the activation event: the first time the user gets what the product promises. The whole first-run leads there."}
+      - {fr: "Pas d'écran vide au premier lancement : un état vide avec une seule action, ou des données d'exemple.", en: "No blank screen on first launch: an empty state with one action, or sample data."}
+      - {fr: "Mesurer inscription → activation → paiement ; les événements de facturation sont enregistrés côté serveur.", en: "Measure signup → activation → payment; billing events are recorded server-side."}
+      - {fr: "Écrire tous les emails de service avant le lancement, dans la voix et l'apparence du produit, avec une version texte.", en: "Write every service email before launch, in the product's voice and look, with a text version."}
+      - {fr: "Le client peut partir avec ses données : export lisible par une machine et suppression du compte, en libre-service.", en: "The customer can leave with their data: machine-readable export and account deletion, self-service."}
+      - {fr: "N'afficher aucun badge de conformité (SOC 2, ISO, RGPD) qui n'a pas été obtenu.", en: "Show no compliance badge (SOC 2, ISO, GDPR) that was not earned."}
+    criteria:
+      - id: ACT-01
+        severity: major
+        check: {method: auto, tool: flow_run}
+        label: {fr: "Un compte neuf atteint l'activation dans sa première session", en: "A fresh account reaches activation in its first session"}
+        verify: {fr: "Un flow déclaré part d'un compte neuf et va jusqu'à l'événement d'activation ; aucun écran vide sans action ; pas de visite guidée obligatoire.", en: "A declared flow starts from a fresh account and reaches the activation event; no blank screen without an action; no forced tour."}
+      - id: ACT-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Événement d'activation défini et mesuré", en: "Activation event defined and measured"}
+        verify: {fr: "L'événement est nommé dans project.json ou la spec, et émis dans le code ; l'entonnoir inscription → activation → paiement est lisible.", en: "The event is named in project.json or the spec, and emitted in the code; the signup → activation → payment funnel can be read."}
+      - id: ACT-03
+        severity: blocker
+        check: {method: inspect}
+        applies_if: [has_email]
+        label: {fr: "Tous les emails de service existent", en: "Every service email exists"}
+        verify: {fr: "Déclencher chacun : vérification, réinitialisation, invitation, reçu, paiement échoué, fin d'essai, résiliation, suppression du compte. Chacun arrive, dans la bonne langue, avec une version texte.", en: "Trigger each: verification, reset, invitation, receipt, failed payment, trial ending, cancellation, account deletion. Each arrives, in the right language, with a text version."}
+      - id: ACT-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Réglages du compte complets", en: "Complete account settings"}
+        verify: {fr: "Profil, sécurité, notifications, facturation, export des données et suppression du compte sont tous présents et fonctionnent.", en: "Profile, security, notifications, billing, data export and account deletion are all there and work."}
+      - id: ACT-05
+        severity: major
+        check: {method: inspect}
+        applies_if: [public_web]
+        label: {fr: "Pages de confiance publiques et exactes", en: "Public and accurate trust pages"}
+        verify: {fr: "Page sécurité, accord de traitement des données et liste des sous-traitants, page d'état du service, journal des changements daté ; aucun badge non obtenu.", en: "Security page, data processing agreement and sub-processor list, status page, dated changelog; no unearned badge."}
+      - id: ACT-06
+        severity: major
+        check: {method: manual}
+        label: {fr: "Cinq personnes de la cible ont fait les tâches clés sans aide", en: "Five people from the target audience did the key tasks unaided"}
+        verify: {fr: "Compte rendu de test daté (skill user-testing) : qui, quelles tâches, où chacun a bloqué, ce qui a été corrigé depuis.", en: "Dated test report (user-testing skill): who, which tasks, where each got stuck, what was fixed since."}

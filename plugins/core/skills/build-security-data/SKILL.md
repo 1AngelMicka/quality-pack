@@ -8,7 +8,7 @@ description: "Quality pack build rules for Security and data (Security, Privacy,
 
 Apply these rules while you build. Domains or criteria whose `applies_if` flags are false in `.quality/project.json` do not apply to this project. Before you call a task done, check your work against the criteria of the domains you touched: each one must be true and verifiable.
 
-If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps), its rules skill adds stack-specific rules on top of these.
+If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps, qp-expo, qp-capacitor), its rules skill adds stack-specific rules on top of these.
 
 ## Security (SEC)
 
@@ -21,13 +21,16 @@ Rules:
 - Check authorisation on every request, server-side, on the requested resource (not just login).
 - Rate-limit login, sign-up, password reset, forms and expensive routes.
 - Parameterised database queries or ORM; never string concatenation.
+- Write the threat model at kickoff (.quality/threats.json): what an attacker wants, where input enters, what can go wrong, what is done about each case. Review it at every new entry point, kind of data, role or third party.
+- Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash.
+- Active tests (wrong passwords, attack scans) only target the local machine or staging, with disposable test accounts and the user's agreement; on production, read-only.
 - Headers: CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.
 
 Done means:
 
 - [BLOCKER] SEC-01: No secret in the repo, Git history or client bundle. Check: gitleaks on history; search for keys in the client build; .env ignored by Git.
 - [BLOCKER] SEC-02: Every external input is validated server-side with a schema (only if: has_backend). Check: Read every route, server action, webhook handler and upload.
-- [BLOCKER] SEC-03: Authorisation checked server-side on every resource (no IDOR) (only if: has_auth). Check: For each protected route: can a user read or change another user's resource by changing the ID?
+- [BLOCKER] SEC-03: Authorisation checked server-side on every resource (no IDOR) (only if: has_auth). Check: access.json: every resource declared in project.json › access is read by its owner and refused to the other accounts and to a visitor; no leak. Without an access block, read every protected route: can a user read or change another user's resource by changing the ID?
 - [BLOCKER] SEC-04: No dependency with a known critical or high vulnerability. Check: npm audit, pnpm audit or osv-scanner.
 - [major] SEC-05: Rate limiting on sensitive and expensive routes (only if: has_backend). Check: Login, sign-up, password reset, forms, calls to paid APIs.
 - [major] SEC-06: Security headers present and CSP without needless unsafe-inline. Check: Request against production or staging; check every header.
@@ -36,6 +39,12 @@ Done means:
 - [major] SEC-09: Uploads restricted in type and size, stored outside the executable root (only if: has_uploads). Check: Real type check, maximum size, regenerated file name.
 - [minor] SEC-10: Errors do not leak internal details. Check: No stack trace, SQL query or server path in production responses.
 - [minor] SEC-11: In-depth security audit run at every major release. Check: Dated and tracked report from the security-audit skill (Cloudflare).
+- [major] SEC-12: Threat model written, complete and current (only if: has_backend). Check: `qp threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open "before launch"; reviewed within 6 months.
+- [BLOCKER] SEC-13: Login resists repeated guesses and does not say which accounts exist (only if: has_auth). Check: auth.json: same answer for a known and an unknown account; wrong passwords in a row slowed, refused or locked. Check the same by hand on password reset, signup and one-time codes.
+- [major] SEC-14: Passive scan of the running app with no high or medium alert (only if: has_backend_or_public). Check: zap.json (OWASP ZAP baseline): no high alert; each medium alert fixed or explained. A clean scan means "nothing found by this tool", not "secure".
+- [major] SEC-15: Supply chain locked down. Check: supply.json: no failed "must" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files).
+- [minor] SEC-16: A researcher knows where to report a flaw (only if: public_web). Check: /.well-known/security.txt over HTTPS with Contact and Expires (future date, under a year); a page says what to report, in which scope, and how fast you answer.
+- [major] SEC-17: Penetration test by an independent person before the first paying customers (only if: has_payments). Check: Dated report from a tester outside the team, signed scope, flaws fixed and retested. Automatic tools cover neither business logic nor chained attacks.
 
 ## Privacy (PRV)
 
