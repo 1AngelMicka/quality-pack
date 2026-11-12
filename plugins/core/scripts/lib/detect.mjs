@@ -42,6 +42,7 @@ export function detect(cwd, stacks) {
   const file = (f) => existsSync(join(cwd, f));
   const pm = file("pnpm-lock.yaml") ? "pnpm" : file("yarn.lock") ? "yarn" : (file("bun.lockb") || file("bun.lock")) ? "bun" : "npm";
 
+
   const matched = stacks.filter((s) => {
     const d = s.detect || {};
     return (d.files_any || []).some(file) || (d.package_json_deps_any || []).some((n) => n in deps);
@@ -56,6 +57,9 @@ export function detect(cwd, stacks) {
   if (has(deps, ["@prisma/client", "prisma", "drizzle-orm", "mongoose", "pg", "mysql2", "typeorm", "@supabase/supabase-js", "kysely"])) add("has_db", "database client");
   if (has(deps, ["multer", "@fastify/multipart", "uploadthing", "formidable", "busboy"])) add("has_uploads", "upload library");
   if (has(deps, ["stripe", "@stripe/stripe-js", "@lemonsqueezy/*", "@paddle/*"])) { add("has_payments", "payment SDK"); add("has_webhooks", "payment webhooks"); add("has_external_api", "payment API"); }
+  if (has(deps, ["expo", "react-native", "@capacitor/*"]) || file("capacitor.config.ts") || file("capacitor.config.json") || file("pubspec.yaml")) add("native_app", "mobile framework (Expo, React Native, Capacitor or Flutter)");
+  if (has(deps, ["stripe", "@lemonsqueezy/*", "@paddle/*", "@polar-sh/*"])) add("has_subscriptions", "payment SDK (confirm the product sells subscriptions)");
+  if (has(deps, ["@clerk/*", "@workos-inc/*", "better-auth"]) && /organi[sz]ation|workspace|tenant/i.test(JSON.stringify(Object.keys(deps)))) add("multi_tenant", "organisation feature of the auth library (confirm)");
   if (has(deps, ["nodemailer", "resend", "@sendgrid/mail", "postmark", "@react-email/*", "mailgun.js", "brevo", "@getbrevo/*"])) add("has_email", "email library");
   if (has(deps, ["openai", "@anthropic-ai/sdk", "@google/generative-ai", "ai", "replicate"])) { add("uses_paid_services", "AI SDK"); add("has_external_api", "AI API"); }
   if (has(deps, ["axios", "ky", "got", "undici"])) add("has_external_api", "HTTP client (check what it calls)");

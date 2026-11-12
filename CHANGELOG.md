@@ -1,6 +1,39 @@
 # Changelog
 
-## Unreleased
+## 0.6.0 — 2026-11-12
+
+From zero to a launched SaaS: what the pack did not cover (isolation between customers, subscriptions, security tried for real, installed mobile apps, finish and identity). 35 domains, 226 criteria.
+
+**Security, played instead of read**
+- `qp access`: each resource declared in `project.json › access` is requested by its owner, then by the accounts that must not reach it and by a visitor. Sessions from headers, cookies, or login steps played in a browser. A leak (the owner's answer, or an accepted write) gives exit code 2. Refuses production unless `--allow-production`. SEC-03 now uses it.
+- `qp auth`: the login answers the same for a known and an unknown account, and repeated wrong passwords are slowed or refused. Local or staging only, no override.
+- `qp dast`: passive OWASP ZAP baseline scan in Docker, summarised by risk.
+- `qp supply`: lockfile, release cooldown (npm, pnpm, Yarn, Bun), install scripts, GitHub Actions pinned by commit, workflow permissions, env files.
+- `qp threats`: validates `.quality/threats.json` (template added): every entry point has an abuse case, every case a response and a test.
+- New criteria SEC-12 to SEC-17. Skill `security-testing`.
+
+**SaaS**
+- New group with three domains: accounts, teams and access (ACC), subscriptions (SUB), activation and customer relationship (ACT). Flags `multi_tenant`, `has_subscriptions`.
+- Skills `saas-foundations` (order of work, isolation, accounts, billing, service emails), `from-zero` (stages from idea to launch, with a gate each) and `user-testing` (five-person test, plan and report templates).
+
+**Installed mobile apps**
+- New group: native mobile experience (MUX), store release and mobile security (MRL). Flag `native_app`.
+- `qp mobile flows`: turns `project.json › mobile.flows` into Maestro flows and plays them on the running emulator, simulator or device. `qp mobile check`: release blockers read from the project (target API level, debuggable, cleartext, privacy manifest, permission texts, WebView, link files, deletion page).
+- Stack modules `qp-expo` and `qp-capacitor`. Skill `mobile-app`.
+
+**Finish and identity**
+- `qp craft`: finish of the rendered page measured on phone and desktop, as "must" and "should": keyboard focus, hover, typography details (balanced headings, tabular figures, typographic characters, French spacing), shadows, nested radii, transitions, image distortion and sharpness, layout shift, icons, site icon, share image, 404 status and page.
+- Two domains: craft (CRF) and identity and true content (BRD). BRD-01 is a blocker: no invented testimonial, figure, customer logo or badge.
+- `qp look`: nine second-generation generic signals (side-stripe cards, nested cards, icon tiles above headings, "01 / 02 / 03" labels, pulsing dots, italic accent word in a serif headline, cream with terracotta, near-black with acid green, em-dash rate).
+- Skill `premium-craft`.
+
+**Fixes**
+- `qp record` kept the folders of a Windows path recorded on another system (`path.basename` ignores `\` on Linux).
+- `qp deslop` says clearly that it needs Node 22 (built-in WebSocket); CI runs on Node 22 and installs Playwright so browser tests run instead of being skipped.
+
+**Not verified in this release:** `qp dast` against a live ZAP container (the Docker engine was not running), `qp mobile flows` on a device (Maestro not installed), and the new skills on a real project.
+
+**Also, merged just after 0.5.0**
 
 - **`text-squeezed` rule in `qp deslop`** (high): a paragraph or heading wrapped into a column a few words wide (under about 20 characters per line over 3 lines or more). It never overflows, so no overflow check saw it. Seen on a real landing page: a page gutter in `vw` applied as padding inside a `max-width` box, readable at 1440 px, about 140 px wide at 1850 px. Test page `tests/fixtures/deslop/squeezed.html`.
 - **1920 px** added to the widths of `qp deslop` (375, 768, 1440, 1920) and `qp browser` (360 to 1920): some layouts only break on wide screens.

@@ -13,8 +13,9 @@ If `.quality/handoff.md` exists and is recent, read it first: it says where the 
 1. Restate the task in one or two sentences and list your assumptions. If something is ambiguous and a wrong guess would be costly, ask. Otherwise pick the most reasonable reading and say which one you took.
 2. For a new feature, write its acceptance criteria first (in the task, a spec file or the ticket): what the user can do, what they see in the empty, loading and error cases, what must never happen.
 3. Find every place your change must reach: callers, types, tests, fixtures, config, translations (see "Find code cheaply" below).
-4. For a new or reorganised screen, use the `design-screens` skill before coding; for colours, fonts, spacing or a new look, the `design-direction` skill; for anything that moves with scrolling, the `scroll-animation` skill.
-5. Load the build skills of the quality pack for the domains you will touch (`build-product-experience`, `build-ergonomics`, `build-design`, `build-security-data`, `build-reliability-quality`, `build-performance-seo`, `build-integrations-payments`, `build-operations`) and the rules skill of the stack you are in.
+4. For a new or reorganised screen, use the `design-screens` skill before coding; for colours, fonts, spacing or a new look, the `design-direction` skill; for anything that moves with scrolling, the `scroll-animation` skill; to finish a screen (states, typography details, waiting, identity, copy), the `premium-craft` skill.
+5. For accounts, customers, roles, subscriptions or service emails, use the `saas-foundations` skill; for an installed mobile app, the `mobile-app` skill. When the project starts from nothing or you do not know what comes next, the `from-zero` skill gives the stages and their gates.
+6. Load the build skills of the quality pack for the domains you will touch (`build-product-experience`, `build-ergonomics`, `build-design`, `build-security-data`, `build-reliability-quality`, `build-performance-seo`, `build-integrations-payments`, `build-saas`, `build-mobile`, `build-operations`) and the rules skill of the stack you are in.
 
 ## While you write code
 
@@ -22,7 +23,9 @@ If `.quality/handoff.md` exists and is recent, read it first: it says where the 
 - Touch only what the task requires. If you see an unrelated problem, mention it instead of rewriting it.
 - Never cut: input validation at trust boundaries, authorisation checks, error handling that prevents data loss, accessibility, anything the user asked for.
 - Logic with a branch, a loop, money, parsing, permissions or security gets at least one test. A fixed bug gets a test that would have caught it.
-- No secret in code. No debug `console.log` left behind. No filler text or invented content.
+- No secret in code. No debug `console.log` left behind. No filler text or invented content: no testimonial, figure, customer logo or badge that the user did not supply.
+- A new kind of resource or a new role gets its line in `.quality/project.json` › `access` in the same change. A new entry point (route, webhook, upload) or third party gets its abuse case in `.quality/threats.json`.
+- Before adding a dependency, check on the registry that the exact name exists, how old it is and where its repository is.
 
 ## Find code cheaply
 
@@ -35,8 +38,10 @@ If `.quality/handoff.md` exists and is recent, read it first: it says where the 
 
 1. Run the project's typecheck, lint and tests (the stack rules skill lists the commands) and read the result.
 2. For UI changes, open the page (Playwright or the browser) at mobile and desktop widths, check the empty, loading and error states, and read the console. If the change touches a key task of `.quality/project.json` › `flows`, play it: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" flows <flow-id>`, then look at the screenshots of the steps you changed, on the phone and on the desktop. A screen that passes every check but makes the task long or confusing is not done. Before saying interface work is done, follow the `deslop-ui` skill: `qp.mjs deslop <url>`, fix the high findings, look at the screenshots.
-3. Check the "Done means" criteria of the domains you touched.
-4. Report in two or three lines: what changed, how you verified it, and anything you skipped or could not check. No recap of the steps, no restating the code. Never claim a check you did not run.
+3. If the change touches routes, permissions or data access and the project declares `access`, play it on the local app: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" access`. A leak is a blocker, not a note.
+4. For a screen meant to be finished, measure it: `qp.mjs craft <url>` (no failed "must") and `qp.mjs deslop <url>`.
+5. Check the "Done means" criteria of the domains you touched.
+6. Report in two or three lines: what changed, how you verified it, and anything you skipped or could not check. No recap of the steps, no restating the code. Never claim a check you did not run.
 
 ## Long tasks
 

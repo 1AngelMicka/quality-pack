@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "reviewed": "2026-01-01",
+  "system": "One sentence: what the product does and for whom.",
+  "assets": [
+    { "id": "A1", "name": "Sessions and passwords", "kind": "secret" },
+    { "id": "A2", "name": "Each customer's documents", "kind": "personal-data" },
+    { "id": "A3", "name": "Payment provider keys", "kind": "secret" },
+    { "id": "A4", "name": "Usage-billed services (email, AI)", "kind": "money" }
+  ],
+  "actors": ["anonymous", "member", "admin of a customer", "support staff", "third party (payment provider, login provider)"],
+  "entry_points": [
+    { "id": "E1", "what": "POST /api/login, /api/signup, /api/password-reset", "auth": "none" },
+    { "id": "E2", "what": "/api/documents/{id}", "auth": "member", "owner": "customer" },
+    { "id": "E3", "what": "POST /webhooks/payments", "auth": "signature" },
+    { "id": "E4", "what": "File upload /api/files", "auth": "member" },
+    { "id": "E5", "what": "/admin", "auth": "support staff" }
+  ],
+  "trust_boundaries": ["internet → app", "app → database", "app → third-party APIs", "customer A ↔ customer B", "member → admin"],
+  "abuse_cases": [
+    { "id": "AB1", "actor": "member", "text": "As a member I read or change another customer's document by changing the id.", "entry": ["E2"],
+      "response": "mitigate", "test": "access check: documents", "priority": "before-launch", "status": "open" },
+    { "id": "AB2", "actor": "anonymous", "text": "As a visitor I guess passwords or find out which emails have an account.", "entry": ["E1"],
+      "response": "mitigate", "test": "qp auth", "priority": "before-launch", "status": "open" },
+    { "id": "AB3", "actor": "anonymous", "text": "As a visitor I send a forged payment webhook to get a paid plan.", "entry": ["E3"],
+      "response": "mitigate", "test": "tests/webhooks.test: unsigned and replayed events are refused", "priority": "before-launch", "status": "open" },
+    { "id": "AB4", "actor": "member", "text": "As a member I upload a file that runs as a page or a script when opened.", "entry": ["E4"],
+      "response": "mitigate", "test": "manual: upload .html and .svg with a script, open the stored file", "priority": "before-launch", "status": "open" },
+    { "id": "AB5", "actor": "member", "text": "As a member I open the admin area or call its API.", "entry": ["E5"],
+      "response": "mitigate", "test": "access check: admin", "priority": "before-launch", "status": "open" },
+    { "id": "AB6", "actor": "member", "text": "As a member I run up the bill of a usage-billed service with a loop of requests.", "entry": ["E4"],
+      "response": "mitigate", "test": "manual: quota reached after N requests", "priority": "before-paying-customers", "status": "open" },
+    { "id": "AB7", "actor": "anonymous", "text": "As a visitor I flood the site until it stops answering.", "entry": ["E1"],
+      "response": "accept", "why": "No protection beyond the host's until the first paying customer; decided by the founder, to revisit at launch.", "priority": "accepted" }
+  ]
+}

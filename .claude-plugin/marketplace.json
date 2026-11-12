@@ -1,6 +1,6 @@
 {
   "name": "quality-pack",
-  "description": "Build and audit web projects across 28 quality domains, with two scores: experience and engineering. Construire et auditer des projets web sur 28 domaines qualité, avec deux notes : expérience et technique.",
+  "description": "Build and audit web projects across 35 quality domains, with two scores: experience and engineering. Construire et auditer des projets web sur 35 domaines qualité, avec deux notes : expérience et technique.",
   "owner": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"
@@ -8,8 +8,8 @@
   "plugins": [
     {
       "name": "qp",
-      "description": "Quality pack core: 28-domain referential, two scores (experience, engineering), key tasks played on phone and desktop, build skills, /qp:kickoff, /qp:audit, /qp:fix. Socle du pack qualité : référentiel 28 domaines, deux notes (expérience, technique), tâches clés jouées sur téléphone et ordinateur, skills de construction, /qp:kickoff, /qp:audit, /qp:fix.",
-      "version": "0.5.0",
+      "description": "Quality pack core: 35-domain referential, two scores (experience, engineering), key tasks played on phone and desktop, build skills, /qp:kickoff, /qp:audit, /qp:fix. Socle du pack qualité : référentiel 35 domaines, deux notes (expérience, technique), tâches clés jouées sur téléphone et ordinateur, skills de construction, /qp:kickoff, /qp:audit, /qp:fix.",
+      "version": "0.6.0",
       "source": "./plugins/core",
       "author": {
         "name": "Micka",
@@ -19,7 +19,7 @@
     {
       "name": "qp-nextjs",
       "description": "Quality pack module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind du pack qualité.",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "source": "./plugins/stack-nextjs",
       "author": {
         "name": "Micka",
@@ -29,8 +29,28 @@
     {
       "name": "qp-node-api",
       "description": "Quality pack module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node du pack qualité.",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "source": "./plugins/stack-node-api",
+      "author": {
+        "name": "Micka",
+        "url": "https://github.com/1AngelMicka"
+      }
+    },
+    {
+      "name": "qp-expo",
+      "description": "Quality pack module for Expo and React Native apps (iOS, Android). Module Expo / React Native du pack qualité.",
+      "version": "0.6.0",
+      "source": "./plugins/stack-expo",
+      "author": {
+        "name": "Micka",
+        "url": "https://github.com/1AngelMicka"
+      }
+    },
+    {
+      "name": "qp-capacitor",
+      "description": "Quality pack module for Capacitor apps: a web app shipped as an iOS and Android app. Module Capacitor du pack qualité.",
+      "version": "0.6.0",
+      "source": "./plugins/stack-capacitor",
       "author": {
         "name": "Micka",
         "url": "https://github.com/1AngelMicka"
@@ -39,7 +59,7 @@
     {
       "name": "qp-vps",
       "description": "Quality pack module for self-hosted VPS: Docker Compose, PM2, Nginx or CloudPanel, backups. Module VPS auto-hébergé du pack qualité.",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "source": "./plugins/infra-vps",
       "author": {
         "name": "Micka",

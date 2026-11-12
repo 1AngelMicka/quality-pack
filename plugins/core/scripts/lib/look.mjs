@@ -85,12 +85,38 @@ function measurePage() {
     const c = hsl(rgb(bgOf(e)));
     if (c.s > 0.45 && c.l > 0.15 && c.l < 0.85) hits++;
   }
+  // Second-generation generic signals: the "tasteful defaults" that replaced purple gradients in generated pages.
+  const cardish = boxes.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 120 && r.height > 60 && r.width < vw * 0.95; });
+  const cardSet = new Set(cardish);
+  const stripeHues = new Set();
+  let stripes = 0;
+  for (const e of cardish) {
+    const s = getComputedStyle(e), l = parseFloat(s.borderLeftWidth), o = parseFloat(s.borderTopWidth);
+    if (l >= 2 && l <= 8 && l > o + 1) { const c = hsl(rgb(s.borderLeftColor)); if (c.s > 0.35) { stripes++; stripeHues.add(Math.round(c.h / 20)); } }
+  }
+  const nestedCards = cardish.filter((e) => { let d = 0; for (let n = e.parentElement; n; n = n.parentElement) if (cardSet.has(n)) d++; return d >= 2; }).length;
+  const iconTiles = [...document.querySelectorAll("h2, h3, h4")].filter(visible).filter((h) => {
+    const p = h.previousElementSibling; if (!p || !visible(p)) return false;
+    const r = p.getBoundingClientRect(), s = getComputedStyle(p);
+    return r.width <= 72 && r.height <= 72 && Math.abs(r.width - r.height) < 4 && s.backgroundColor !== "rgba(0, 0, 0, 0)" && parseFloat(s.borderTopLeftRadius) >= 4 && (p.querySelector("svg, img") || EMOJI.test(p.textContent));
+  }).length;
+  const numberedLabels = all.filter((e) => !e.children.length && /^0[1-9].?$/.test(e.textContent.trim())).length;
+  const pulsingDots = all.filter((e) => { const s = getComputedStyle(e), r = e.getBoundingClientRect(); return s.animationName !== "none" && s.animationIterationCount === "infinite" && r.width <= 16 && r.height <= 16; }).length;
+  const h1Style = h1 && visible(h1) ? getComputedStyle(h1) : null;
+  const italicAccent = !!h1Style && h1Style.fontStyle !== "italic" && [...h1.querySelectorAll("*")].some((e) => getComputedStyle(e).fontStyle === "italic" && e.textContent.trim().length > 1)
+    && !/sans-serif|system-ui/.test(h1Style.fontFamily.split(",").slice(-1)[0]) ;
+  const pageBg = hsl(rgb(bgOf(document.body)));
+  const bodyText = document.body.innerText || "";
+  const wordCount = bodyText.split(/s+/).filter(Boolean).length;
+  const emDashes = (bodyText.match(/—/g) || []).length;
   // What a user can act on, by visible name: a redesign must keep all of it (compared with --baseline).
   const nameOf = (e) => (e.getAttribute("aria-label") || e.innerText || e.getAttribute("placeholder") || e.getAttribute("title") || e.getAttribute("name") || "").trim().replace(/\s+/g, " ").slice(0, 60);
   const inventory = [...new Set(interactive.map((e) => `${e.tagName === "A" ? "link" : e.tagName === "INPUT" || e.tagName === "SELECT" || e.tagName === "TEXTAREA" ? "field" : "button"}: ${nameOf(e) || (e.getAttribute("href") || "?")}`))].slice(0, 300);
   return { width: vw, accent_share: samples ? Math.round((hits / samples) * 100) / 100 : 0, inventory, families, font_sizes: Object.keys(sizes).map(Number).sort((a, b) => a - b), font_weights: Object.keys(weights).sort(),
     radii: Object.entries(radii).sort((a, b) => b[1] - a[1]).map(([r, n]) => ({ px: Number(r), count: n })), boxes: boxes.length,
     gradients: gradients.length, gradient_text: gradientText, glass, glows, primary_button: primaryHsl, emoji_in_ui: emojiUi,
+    side_stripes: stripes, side_stripe_hues: stripeHues.size, nested_cards: nestedCards, icon_tiles: iconTiles, numbered_labels: numberedLabels, pulsing_dots: pulsingDots,
+    italic_accent_h1: italicAccent, page_bg: pageBg, words: wordCount, em_dashes: emDashes, lang: (document.documentElement.lang || "").slice(0, 2).toLowerCase(),
     eyebrows, badge_before_h1: badgeBeforeH1, card_triplets: cardTriplets, sections: sections.length, animated,
     prose_blocks: prose.length, long_lines: longLines.length, long_line_max: longLines.length ? Math.max(...longLines) : 0, tight_line_height: tightLines.length,
     targets_under_24: small(24).slice(0, 8).map((e) => `${e.tagName.toLowerCase()} "${(e.textContent || e.getAttribute("aria-label") || "").trim().slice(0, 24)}" ${Math.round(e.getBoundingClientRect().width)}x${Math.round(e.getBoundingClientRect().height)}`),
@@ -118,6 +144,18 @@ export function scoreLook(m, { mode = "persuade", slopWords = [] } = {}) {
   if (desk.card_triplets) add("LOOK-TRIPLETS", "generic", 1, `${desk.card_triplets} group(s) of three identical icon cards`);
   if (desk.badge_before_h1) add("LOOK-BADGE", "generic", 1, "pill badge right above the h1");
   if (desk.eyebrows >= 3) add("LOOK-EYEBROWS", "generic", 1, `${desk.eyebrows} uppercase eyebrow labels above headings`);
+  if (desk.side_stripes >= 3) add("LOOK-STRIPES", "generic", 1, `${desk.side_stripes} cards with a coloured side stripe${desk.side_stripe_hues > 1 ? ` in ${desk.side_stripe_hues} hues` : ""}`);
+  if (desk.nested_cards >= 3) add("LOOK-NESTED", "quality", 1, `${desk.nested_cards} boxes nested three levels deep (cards inside cards)`);
+  if (desk.icon_tiles >= 3) add("LOOK-ICONTILES", "generic", 1, `${desk.icon_tiles} headings topped by a rounded icon tile`);
+  if (desk.numbered_labels >= 3) add("LOOK-NUMBERED", "generic", 1, `${desk.numbered_labels} "01 / 02 / 03" labels (number only real steps)`);
+  if (desk.pulsing_dots) add("LOOK-PULSE", "generic", 1, `${desk.pulsing_dots} small element(s) pulsing forever (a dot must show a real state)`);
+  if (desk.italic_accent_h1) add("LOOK-ITALIC", "generic", 1, "serif headline with one word in italics");
+  const bg = desk.page_bg;
+  if (bg && p && bg.l > 0.9 && bg.s > 0.15 && bg.h >= 25 && bg.h <= 60 && p.h >= 5 && p.h <= 30 && p.s > 0.4) add("LOOK-PALETTE", "generic", 1, "cream page with a terracotta accent");
+  else if (bg && p && bg.l < 0.1 && p.h >= 70 && p.h <= 150 && p.s > 0.7 && p.l > 0.45) add("LOOK-PALETTE", "generic", 1, "near-black page with an acid-green accent");
+  // A dash in an aside is normal French: the limit is a rate, and higher in French.
+  const dashRate = desk.words >= 150 ? (desk.em_dashes / desk.words) * 1000 : 0;
+  if (dashRate > (desk.lang === "fr" ? 15 : 8)) add("LOOK-EMDASH", "quality", 1, `${desk.em_dashes} em dashes in ${desk.words} words`);
   if (desk.emoji_in_ui.length) add("LOOK-EMOJI", "quality", 1, `emoji used as icons: ${desk.emoji_in_ui.slice(0, 3).join(", ")}`);
   if (desk.sections >= 4 && desk.animated >= desk.sections) add("LOOK-ANIMATE-ALL", "quality", 1, `${desk.animated} animated elements for ${desk.sections} sections`);
   const words = slopWords.map((w) => new RegExp(w, "i")).filter((re) => re.test(desk.visible_text)).map((re) => desk.visible_text.match(re)[0]);

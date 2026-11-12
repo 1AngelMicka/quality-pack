@@ -23,9 +23,9 @@ function fixture() {
 }
 const qp = (cwd, ...args) => JSON.parse(execFileSync("node", [QP, ...args], { cwd, encoding: "utf8" }));
 
-test("referential has 28 domains, unique criterion ids, each domain in one score", () => {
+test("referential has 35 domains, unique criterion ids, each domain in one score", () => {
   const domains = allDomains(ref);
-  assert.equal(domains.length, 28);
+  assert.equal(domains.length, 35);
   const ids = domains.flatMap((d) => d.criteria.map((c) => c.id));
   assert.equal(new Set(ids).size, ids.length);
   const placed = Object.values(ref.score_areas).flatMap((a) => a.domains);
@@ -486,5 +486,59 @@ test("flows play in a real browser when Playwright is available", async (t) => {
     const full = JSON.parse(readFileSync(join(dir, ".quality/audits/2026-04-01/flows.json"), "utf8"));
     assert.ok(full.flows[0].runs[0].steps.every((s) => s.screenshot && !/^[A-Z]:|^\//.test(s.screenshot) && existsSync(join(dir, s.screenshot))));
     assert.ok(readdirSync(join(dir, ".quality/audits/2026-04-01/flows")).length >= 10);
+  } finally { server.close(); }
+});
+
+test("access: a resource another account can read is reported as a leak", async () => {
+  const { createServer } = await import("node:http");
+  const { execFile } = await import("node:child_process");
+  const { validateAccess, verdict } = await import("../plugins/core/scripts/lib/access.mjs");
+  assert.ok(validateAccess({ access: { accounts: { a: { headers: { x: "1" } } }, checks: [] } }).errors.length >= 2);
+  assert.equal(verdict({ method: "GET" }, { status: 302, location: "/login", body: "" }).verdict, "denied");
+  assert.equal(verdict({ method: "GET" }, { status: 200, body: "<html>app</html>", bytes: 16 }, { status: 200, body: "{}" }).verdict, "unclear");
+  // Notes API: note 1 checks its owner, note 2 forgets to (the classic bug), /admin only checks that someone is logged in.
+  const notes = { 1: { owner: "alice", text: "alice-private-1" }, 2: { owner: "alice", text: "alice-private-2" } };
+  const server = createServer((req, res) => {
+    const user = /user=(\w+)/.exec(req.headers.cookie || "")?.[1] || (req.headers.authorization || "").replace("Bearer token-", "") || null;
+    const send = (code, body) => { res.statusCode = code; res.setHeader("content-type", "application/json"); res.end(JSON.stringify(body)); };
+    const m = /^\/api\/notes\/(\d)$/.exec(req.url);
+    if (m) {
+      const n = notes[m[1]];
+      if (!user) return send(401, { error: "login" });
+      if (!n) return send(404, { error: "not found" });
+      if (m[1] === "1" && n.owner !== user) return send(404, { error: "not found" });
+      if (req.method === "DELETE") return send(200, { deleted: true });
+      return send(200, n);
+    }
+    if (req.url === "/admin") return user ? send(200, { users: ["alice", "bob"], marker: "admin-only" }) : (res.statusCode = 302, res.setHeader("location", "/login"), res.end());
+    send(404, {});
+  }).listen(0);
+  try {
+    const dir = fixture();
+    const proj = JSON.parse(readFileSync(join(dir, ".quality/project.json"), "utf8"));
+    writeFileSync(join(dir, ".quality/project.json"), JSON.stringify({ ...proj, urls: { local: `http://localhost:${server.address().port}` },
+      access: { accounts: { alice: { cookies: { user: "alice" } }, bob: { headers: { Authorization: "Bearer token-${env:QP_TEST_BOB}" } } },
+        checks: [
+          { id: "note-ok", path: "/api/notes/1", owner: "alice", denied_to: ["bob", "anonymous"], secret: "alice-private-1" },
+          { id: "note-leak", path: "/api/notes/2", owner: "alice", denied_to: ["bob", "anonymous"] },
+          { id: "note-delete", method: "DELETE", path: "/api/notes/2", owner: "alice", denied_to: ["bob"] },
+          { id: "admin", path: "/admin", owner: "alice", denied_to: ["bob", "anonymous"], secret: "admin-only" },
+          { id: "broken-setup", path: "/api/notes/9", owner: "alice", denied_to: ["bob"] }] } }));
+    const r = await new Promise((resolve) => execFile("node", [QP, "access", "--run", "2026-05-01"], { cwd: dir, encoding: "utf8", env: { ...process.env, QP_TEST_BOB: "bob" } },
+      (e, stdout) => resolve({ code: e?.code ?? 0, out: JSON.parse(stdout) })));
+    assert.equal(r.code, 2);
+    const by = Object.fromEntries(r.out.checks.map((c) => [c.id, c]));
+    assert.equal(by["note-ok"].attempts, "bob: denied, anonymous: denied");
+    assert.equal(by["note-leak"].attempts, "bob: leak, anonymous: denied");
+    assert.equal(by["note-delete"].attempts, "bob: leak");
+    assert.equal(by.admin.attempts, "bob: leak, anonymous: denied");
+    assert.match(by["broken-setup"].setup_error, /HTTP 404/);
+    assert.equal(r.out.summary.leaks.length, 3);
+    assert.ok(existsSync(join(dir, ".quality/audits/2026-05-01/access.json")));
+    // Production is refused unless the user agreed.
+    writeFileSync(join(dir, ".quality/project.json"), JSON.stringify({ ...JSON.parse(readFileSync(join(dir, ".quality/project.json"), "utf8")), urls: { production: `http://localhost:${server.address().port}` } }));
+    const p = await new Promise((resolve) => execFile("node", [QP, "access", "--base", `http://localhost:${server.address().port}`], { cwd: dir, encoding: "utf8", env: { ...process.env, QP_TEST_BOB: "bob" } },
+      (e, stdout) => resolve(JSON.parse(stdout))));
+    assert.match(p.errors[0], /production/);
   } finally { server.close(); }
 });

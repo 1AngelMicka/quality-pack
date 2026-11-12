@@ -1,0 +1,23 @@
+{
+  "name": "qp-capacitor",
+  "description": "Quality pack module for Capacitor apps: a web app shipped as an iOS and Android app. Module Capacitor du pack qualité.",
+  "version": "0.6.0",
+  "author": {
+    "name": "Micka",
+    "url": "https://github.com/1AngelMicka"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/1AngelMicka/quality-pack",
+  "repository": "https://github.com/1AngelMicka/quality-pack",
+  "keywords": [
+    "quality",
+    "audit",
+    "security",
+    "accessibility",
+    "seo",
+    "qualité"
+  ],
+  "dependencies": [
+    "qp"
+  ]
+}

@@ -148,7 +148,7 @@ function scrollPositions() {
   return out;
 }
 
-async function act(page, step, root) {
+export async function act(page, step, root) {
   const [action] = Object.keys(step).filter((k) => ACTIONS.includes(k));
   const v = step[action];
   const timeout = step.timeout || 10000;

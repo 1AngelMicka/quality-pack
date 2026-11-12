@@ -53,3 +53,22 @@ The design skills (`design-screens`, `design-direction`, `design-review`) and th
 Every link examined for the pack, with its status and licence: `SOURCES.md` at the root of the repository.
 
 House settings without a published validation (adjust them per project): 8 font sizes per page, 5 radii, 20 % of controls under 44 px, about a dozen settings before grouping, every threshold of the generic-look signals.
+
+## Security, SaaS, mobile and craft (0.6.0)
+
+Detailed lists, with licences and what was excluded: root `SOURCES.md`, lot 3. The rules behind each command:
+
+| Command or criterion | Rule | Source |
+| --- | --- | --- |
+| `qp access`, SEC-03, ACC-02 | Access control is the first risk and must be tested with two accounts, not read | OWASP Top 10:2025 A01; OWASP API Security Top 10:2023 API1, API3, API5; OWASP Multi-Tenant Security Cheat Sheet |
+| `qp auth`, SEC-13 | Same answer for known and unknown accounts; failures counted per account and slowed | OWASP Authentication Cheat Sheet; OWASP ASVS 5.0 (chapters V6, V7, cited by identifier) |
+| `qp dast`, SEC-14 | Passive baseline scan, safe on a site one owns | OWASP ZAP (Apache-2.0) |
+| `qp supply`, SEC-15 | Release cooldown, blocked install scripts, actions pinned by commit | pnpm and npm documentation; GitHub "secure use" reference; the npm incidents of September 2025 and March 2026 |
+| `qp threats`, SEC-12 | Four questions, STRIDE per entry point, a response and a test per abuse case | OWASP Threat Modeling Cheat Sheet; Threat Modeling Manifesto |
+| ACC, SUB, ACT | Isolation in the data layer, entitlements from signed webhooks, cancellation online | PostgreSQL and Supabase row-level security documentation; Stripe documentation; EnterpriseReady |
+| `qp mobile check`, MRL | Target API level, privacy manifest, account deletion, payment rules | Apple App Review Guidelines; Google Play policy pages; Android developer documentation |
+| `qp mobile flows`, MUX | Key tasks played on a device; platform sizes | Maestro (Apache-2.0); Apple Human Interface Guidelines; Android accessibility guidance; OWASP MASVS 2.1 |
+| `qp craft`, CRF | Typography details, states, shadows, radii, loader timing, motion durations | Vercel Web Interface Guidelines (MIT); articles by Jakub Krehel, Emil Kowalski, Josh W. Comeau, Rauno Freiberg (cited, rules restated); Nielsen Norman Group on response times and skeleton screens; web.dev Web Vitals |
+| `qp look` second-generation signals, BRD | Newer generic patterns, counted together and never alone | Impeccable anti-pattern catalogue (Apache-2.0); Anthropic frontend-design skill (Apache-2.0); Fountain Institute |
+
+Thresholds without a published validation are house settings, and are labelled so in the references: the "should" limits of `qp craft`, the em-dash rate of `qp look`, the 20-attempt default of `qp auth`, the three priority buckets of the threat model.

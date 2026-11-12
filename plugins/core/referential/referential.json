@@ -1,5 +1,5 @@
 {
- "version": "0.5.0",
+ "version": "0.6.0",
  "scoring": {
   "severity_weight": {
    "blocker": 5,
@@ -124,6 +124,18 @@
   "dark_mode": {
    "fr": "Thème sombre",
    "en": "Dark theme"
+  },
+  "multi_tenant": {
+   "fr": "Plusieurs clients ou équipes partagent l'application, chacun avec ses données et ses membres",
+   "en": "Several customers or teams share the app, each with its own data and members"
+  },
+  "has_subscriptions": {
+   "fr": "Abonnements récurrents avec des offres",
+   "en": "Recurring subscriptions with plans"
+  },
+  "native_app": {
+   "fr": "Application mobile installée (App Store, Google Play)",
+   "en": "Installed mobile app (App Store, Google Play)"
   }
  },
  "derived_flags": {
@@ -178,7 +190,14 @@
     "infra": 1,
     "deployment": 1,
     "monitoring": 1,
-    "backups": 1
+    "backups": 1,
+    "accounts": 0,
+    "subscriptions": 0,
+    "activation": 0,
+    "craft": 3,
+    "brand": 3,
+    "mobile-ux": 0,
+    "mobile-release": 0
    }
   },
   "webapp": {
@@ -221,7 +240,14 @@
     "infra": 2,
     "deployment": 2,
     "monitoring": 2,
-    "backups": 3
+    "backups": 3,
+    "accounts": 3,
+    "subscriptions": 2,
+    "activation": 2,
+    "craft": 2,
+    "brand": 2,
+    "mobile-ux": 2,
+    "mobile-release": 2
    }
   },
   "saas": {
@@ -236,6 +262,7 @@
     "has_user_data",
     "has_db",
     "has_payments",
+    "has_subscriptions",
     "has_email",
     "has_webhooks",
     "public_web"
@@ -268,7 +295,14 @@
     "infra": 2,
     "deployment": 3,
     "monitoring": 3,
-    "backups": 3
+    "backups": 3,
+    "accounts": 3,
+    "subscriptions": 3,
+    "activation": 3,
+    "craft": 2,
+    "brand": 2,
+    "mobile-ux": 2,
+    "mobile-release": 2
    }
   },
   "mobile": {
@@ -280,7 +314,8 @@
     "has_ui",
     "has_backend",
     "has_auth",
-    "has_user_data"
+    "has_user_data",
+    "native_app"
    ],
    "weights": {
     "product": 3,
@@ -310,7 +345,14 @@
     "infra": 1,
     "deployment": 2,
     "monitoring": 2,
-    "backups": 2
+    "backups": 2,
+    "accounts": 2,
+    "subscriptions": 2,
+    "activation": 2,
+    "craft": 2,
+    "brand": 2,
+    "mobile-ux": 3,
+    "mobile-release": 3
    }
   },
   "api": {
@@ -350,7 +392,14 @@
     "infra": 3,
     "deployment": 3,
     "monitoring": 3,
-    "backups": 3
+    "backups": 3,
+    "accounts": 3,
+    "subscriptions": 2,
+    "activation": 0,
+    "craft": 0,
+    "brand": 0,
+    "mobile-ux": 0,
+    "mobile-release": 0
    }
   }
  },
@@ -361,8 +410,8 @@
     "en": "Experience"
    },
    "summary": {
-    "fr": "Ce que vit l'utilisateur : produit, parcours, ergonomie, interface, accessibilité, vitesse.",
-    "en": "What the user lives: product, flows, ergonomics, interface, accessibility, speed."
+    "fr": "Ce que vit l'utilisateur : produit, parcours, ergonomie, interface, finitions, identité, accessibilité, vitesse, première session.",
+    "en": "What the user lives: product, flows, ergonomics, interface, finish, identity, accessibility, speed, first session."
    },
    "domains": [
     "product",
@@ -376,7 +425,11 @@
     "responsive",
     "accessibility",
     "compatibility",
-    "performance"
+    "craft",
+    "brand",
+    "performance",
+    "activation",
+    "mobile-ux"
    ]
   },
   "operations": {
@@ -404,7 +457,10 @@
     "infra",
     "deployment",
     "monitoring",
-    "backups"
+    "backups",
+    "accounts",
+    "subscriptions",
+    "mobile-release"
    ]
   }
  },
@@ -461,18 +517,58 @@
   },
   "spacing_audit": {
    "provider": "core",
-   "fr": "Audit de l'espacement et de l'alignement du rendu (qp deslop) : proximité, écarts entre frères, bords, boîtes, contrôles, débordements, à 375, 768 et 1440 px",
-   "en": "Spacing and alignment audit of the rendered page (qp deslop): proximity, sibling gaps, edges, boxes, controls, overflow, at 375, 768 and 1440 px"
+   "fr": "Audit de l'espacement et de l'alignement du rendu (qp deslop) : proximité, écarts entre frères, bords, boîtes, contrôles, débordements, à 375, 768, 1440 et 1920 px",
+   "en": "Spacing and alignment audit of the rendered page (qp deslop): proximity, sibling gaps, edges, boxes, controls, overflow, at 375, 768, 1440 and 1920 px"
   },
   "generic_look_scan": {
    "provider": "core",
    "fr": "Mesure du rendu dans le navigateur : signaux de rendu générique pondérés, tailles et familles de police, rayons, longueur et interlignage des lignes, petites cibles",
    "en": "Rendered page measured in the browser: weighted generic-look signals, font sizes and families, radii, line length and height, small targets"
   },
+  "craft_scan": {
+   "provider": "core",
+   "fr": "Finitions du rendu mesurées dans le navigateur (qp craft) : typographie, focus et survol, transitions, images, icônes, icône du site, image de partage, page 404",
+   "en": "Finish of the rendered page measured in the browser (qp craft): typography, focus and hover, transitions, images, icons, site icon, share image, 404 page"
+  },
+  "access_run": {
+   "provider": "core",
+   "fr": "Contrôle d'accès joué pour de vrai (qp access) : chaque ressource déclarée est demandée par son propriétaire puis par les comptes qui ne doivent pas l'atteindre",
+   "en": "Access control played for real (qp access): each declared resource is requested by its owner, then by the accounts that must not reach it"
+  },
+  "auth_probe": {
+   "provider": "core",
+   "fr": "Connexion de l'application en marche (qp auth) : même réponse pour un compte connu et inconnu, mots de passe faux en série ralentis ou refusés. Local ou préproduction seulement",
+   "en": "Login of the running app (qp auth): same answer for known and unknown accounts, wrong passwords in a row slowed or refused. Local or staging only"
+  },
+  "dast_scan": {
+   "provider": "core",
+   "fr": "Scan passif de l'application avec OWASP ZAP (qp dast, Docker) : en-têtes, cookies, fuites d'information, bibliothèques vulnérables servies au navigateur",
+   "en": "Passive scan of the running app with OWASP ZAP (qp dast, Docker): headers, cookies, information leaks, vulnerable libraries served to the browser"
+  },
+  "supply_scan": {
+   "provider": "core",
+   "fr": "Chaîne d'approvisionnement lue dans le dépôt (qp supply) : fichier de verrouillage, délai avant installation, scripts d'installation, actions de CI épinglées, fichiers .env",
+   "en": "Supply chain read from the repository (qp supply): lockfile, release cooldown, install scripts, pinned CI actions, .env files"
+  },
+  "threat_model": {
+   "provider": "core",
+   "fr": "Modèle de menaces vérifié (qp threats) : points d'entrée couverts, réponse et test pour chaque cas d'abus",
+   "en": "Threat model checked (qp threats): entry points covered, a response and a test for each abuse case"
+  },
+  "mobile_flow_run": {
+   "provider": "core",
+   "fr": "Tâches clés de l'app installée jouées avec Maestro sur émulateur, simulateur ou appareil (qp mobile flows)",
+   "en": "Key tasks of the installed app played with Maestro on an emulator, simulator or device (qp mobile flows)"
+  },
+  "mobile_release_scan": {
+   "provider": "core",
+   "fr": "Blocages de publication lus dans le projet mobile (qp mobile check) : niveau d'API cible, build débogable, trafic en clair, manifeste de confidentialité, WebView, liens, page de suppression",
+   "en": "Release blockers read from the mobile project (qp mobile check): target API level, debuggable build, cleartext traffic, privacy manifest, WebView, links, deletion page"
+  },
   "viewport_screenshots": {
    "provider": "core",
-   "fr": "Captures et débordements à 360, 390, 768, 1024, 1440 px",
-   "en": "Screenshots and overflow at 360, 390, 768, 1024, 1440 px"
+   "fr": "Captures et débordements à 360, 390, 768, 1024, 1440 et 1920 px",
+   "en": "Screenshots and overflow at 360, 390, 768, 1024, 1440 and 1920 px"
   },
   "console_check": {
    "provider": "core",
@@ -576,7 +672,19 @@
    "next[- ]level",
    "de pointe",
    "il est important de noter que",
-   "en somme,"
+   "en somme,",
+   "passe[rz] au niveau supérieur",
+   "dites adieu (à|aux)",
+   "en toute simplicité",
+   "nouvelle génération",
+   "conçu(e)? pour les équipes de toutes tailles",
+   "une expérience fluide",
+   "il convient de noter que",
+   "il est (important|essentiel) de (souligner|comprendre) que",
+   "force est de constater",
+   "joue un rôle (clé|crucial|essentiel)",
+   "trouver le juste équilibre",
+   "les (études|experts) (montrent|s'accordent)"
   ],
   "en": [
    "revolutioni[sz]e",
@@ -605,7 +713,19 @@
    "it's (important|worth) (to note|noting)",
    "robust and scalable",
    "tapestry",
-   "testament to"
+   "testament to",
+   "say goodbye to",
+   "built for teams of all sizes",
+   "the future of \\w+",
+   "all[- ]in[- ]one (platform|solution)",
+   "next[- ]generation",
+   "reimagin(e|ed|ing)",
+   "streamline your",
+   "(stands|serves) as a",
+   "plays a (pivotal|crucial|key) role",
+   "not just \\w+, but",
+   "experts (say|agree)",
+   "trusted by (thousands|teams|companies) (of|worldwide|everywhere)"
   ]
  },
  "groups": [
@@ -1733,6 +1853,342 @@
        }
       }
      ]
+    },
+    {
+     "id": "craft",
+     "code": "CRF",
+     "label": {
+      "fr": "Finitions",
+      "en": "Craft"
+     },
+     "summary": {
+      "fr": "Les détails qui séparent un produit soigné d'un premier jet : typographie, états, mouvement, images, attente, pages annexes.",
+      "en": "The details that separate a cared-for product from a first draft: typography, states, motion, images, waiting, side pages."
+     },
+     "applies_if": [
+      "has_ui"
+     ],
+     "build": [
+      {
+       "fr": "Typographie : text-wrap: balance sur les titres, chiffres tabulaires dans les colonnes et compteurs, vrais caractères (’ « » … et espaces insécables), capitales espacées, 4 graisses au plus.",
+       "en": "Typography: text-wrap: balance on headings, tabular figures in columns and counters, real characters (’ “ ” … and non-breaking spaces), tracked capitals, 4 weights at most."
+      },
+      {
+       "fr": "Ombres douces en deux couches ou plus, d'une seule direction de lumière, teintées par le fond ; une échelle d'élévation, pas une ombre par composant.",
+       "en": "Soft shadows in two layers or more, one light direction, tinted by the background; an elevation scale, not one shadow per component."
+      },
+      {
+       "fr": "Rayons concentriques : rayon intérieur = rayon extérieur − marge intérieure.",
+       "en": "Concentric radii: inner radius = outer radius − padding."
+      },
+      {
+       "fr": "Chaque contrôle a ses états : survol, focus clavier visible, appui, désactivé, chargement. Le survol et le focus contrastent plus que le repos.",
+       "en": "Every control has its states: hover, visible keyboard focus, pressed, disabled, loading. Hover and focus contrast more than rest."
+      },
+      {
+       "fr": "Mouvement : 100 à 300 ms sur l'interface, sortie en ease-out, seulement transform et opacity, jamais transition: all ; aucune animation sur une action au clavier ou très fréquente.",
+       "en": "Motion: 100 to 300 ms on the interface, ease-out, transform and opacity only, never transition: all; no animation on a keyboard or very frequent action."
+      },
+      {
+       "fr": "Attente : rien sous 1 seconde ; indicateur retardé de 150 à 300 ms puis gardé au moins 300 ms ; squelette fidèle à la mise en page pour une page ; barre de progression au-delà de 10 secondes.",
+       "en": "Waiting: nothing under 1 second; indicator delayed by 150 to 300 ms then kept at least 300 ms; skeleton matching the layout for a page; progress bar beyond 10 seconds."
+      },
+      {
+       "fr": "Mise à jour optimiste quand le succès est probable, avec retour arrière ; annuler plutôt que confirmer pour ce qui est réversible.",
+       "en": "Optimistic update when success is likely, with rollback; undo rather than confirm for what is reversible."
+      },
+      {
+       "fr": "Thème sombre : un modèle d'élévation à part (les surfaces s'éclaircissent en montant), color-scheme: dark déclaré, jamais une simple inversion.",
+       "en": "Dark theme: its own elevation model (surfaces get lighter as they rise), color-scheme: dark declared, never a plain inversion."
+      },
+      {
+       "fr": "État dans l'adresse (filtres, onglets, page, panneau ouvert) : partager, recharger et revenir en arrière fonctionnent.",
+       "en": "State in the address (filters, tabs, page, open panel): sharing, reloading and going back work."
+      },
+      {
+       "fr": "Soigner ce qui entoure la page : icône du site, image de partage, page 404 et page d'erreur dans la voix du produit, titre d'onglet qui suit le contexte.",
+       "en": "Care for what surrounds the page: site icon, share image, 404 and error pages in the product's voice, tab title that follows the context."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "CRF-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "craft_scan"
+       },
+       "label": {
+        "fr": "Aucun défaut de finition visible ou gênant sur les écrans clés",
+        "en": "No visible or obstructive finish defect on the key screens"
+       },
+       "verify": {
+        "fr": "craft.json sur les pages principales et les écrans de travail : aucun « must » en échec (focus clavier, images déformées ou floues, champs sous 16 px sur téléphone, zoom bloqué, saut de mise en page, chiffres non alignés, icône du site, statut 404).",
+        "en": "craft.json on the main pages and work screens: no failed \"must\" (keyboard focus, stretched or blurry images, fields under 16 px on phone, blocked zoom, layout shift, unaligned figures, site icon, 404 status)."
+       }
+      },
+      {
+       "id": "CRF-02",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "craft_scan"
+       },
+       "label": {
+        "fr": "Finitions typographiques, de surface et de mouvement tenues",
+        "en": "Typographic, surface and motion finish kept"
+       },
+       "verify": {
+        "fr": "craft.json : chaque « should » en échec est corrigé ou justifié par un choix écrit dans DESIGN.md (titres équilibrés, caractères typographiques, ombres, rayons imbriqués, survol, durées, icônes).",
+        "en": "craft.json: each failed \"should\" is fixed or justified by a choice written in DESIGN.md (balanced headings, typographic characters, shadows, nested radii, hover, durations, icons)."
+       }
+      },
+      {
+       "id": "CRF-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Chaque contrôle a tous ses états",
+        "en": "Every control has all its states"
+       },
+       "verify": {
+        "fr": "Boutons, champs, liens, onglets des écrans clés : survol, focus, appui, désactivé et chargement existent et se distinguent ; le bouton en chargement garde son libellé.",
+        "en": "Buttons, fields, links, tabs of the key screens: hover, focus, pressed, disabled and loading exist and differ; a loading button keeps its label."
+       }
+      },
+      {
+       "id": "CRF-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Attente traitée selon sa durée",
+        "en": "Waiting handled according to its length"
+       },
+       "verify": {
+        "fr": "Réseau ralenti sur une tâche clé : pas d'indicateur qui clignote sous 300 ms, squelette fidèle pour les pages, progression au-delà de 10 secondes, aucune page blanche.",
+        "en": "Throttled network on a key task: no indicator flashing under 300 ms, faithful skeleton for pages, progress beyond 10 seconds, no blank page."
+       }
+      },
+      {
+       "id": "CRF-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Annulation possible pour ce qui est réversible, confirmation pour le reste",
+        "en": "Undo for what is reversible, confirmation for the rest"
+       },
+       "verify": {
+        "fr": "Supprimer, archiver, déplacer : annulation proposée au moins 5 secondes. Action irréversible : confirmation qui nomme ce qui sera perdu.",
+        "en": "Delete, archive, move: undo offered for at least 5 seconds. Irreversible action: confirmation naming what will be lost."
+       }
+      },
+      {
+       "id": "CRF-06",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "L'adresse reflète l'état de l'écran",
+        "en": "The address reflects the screen's state"
+       },
+       "verify": {
+        "fr": "Appliquer un filtre, changer d'onglet ou de page, puis recharger et revenir en arrière : même état, même position de défilement.",
+        "en": "Apply a filter, change tab or page, then reload and go back: same state, same scroll position."
+       }
+      },
+      {
+       "id": "CRF-07",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "dark_mode"
+       ],
+       "label": {
+        "fr": "Thème sombre construit, pas inversé",
+        "en": "Dark theme built, not inverted"
+       },
+       "verify": {
+        "fr": "Les surfaces s'éclaircissent avec l'élévation ; bordures fines en blanc à faible opacité ; aucune ombre noire sur fond noir ; contrôles natifs et barres de défilement sombres.",
+        "en": "Surfaces get lighter with elevation; hairlines in low-opacity white; no black shadow on a black background; native controls and scrollbars dark."
+       }
+      },
+      {
+       "id": "CRF-08",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Clavier d'abord sur les écrans de travail",
+        "en": "Keyboard first on work screens"
+       },
+       "verify": {
+        "fr": "Entrée envoie le formulaire ; Échap ferme ; les listes se parcourent aux flèches ; les raccourcis sont affichés ; une application à plusieurs écrans a une recherche ou une palette de commandes.",
+        "en": "Enter submits the form; Escape closes; lists move with arrow keys; shortcuts are shown; a multi-screen app has a search or a command palette."
+       }
+      },
+      {
+       "id": "CRF-09",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Emails et pages d'erreur à l'image du produit",
+        "en": "Emails and error pages look like the product"
+       },
+       "verify": {
+        "fr": "Pages 404 et 500, emails de service : même voix, mêmes couleurs et typographie que l'application, et une action pour continuer.",
+        "en": "404 and 500 pages, service emails: same voice, colours and typography as the app, and an action to continue."
+       }
+      }
+     ]
+    },
+    {
+     "id": "brand",
+     "code": "BRD",
+     "label": {
+      "fr": "Identité et contenu vrai",
+      "en": "Identity and true content"
+     },
+     "summary": {
+      "fr": "Une identité propre au produit, des contenus réels et vérifiables, des ressources sous licence.",
+      "en": "An identity of the product's own, real and checkable content, licensed resources."
+     },
+     "applies_if": [
+      "has_ui"
+     ],
+     "build": [
+      {
+       "fr": "Tirer la couleur, la typographie et les images du sujet du produit et de son public, pas de la mode de la catégorie.",
+       "en": "Draw colour, type and imagery from the product's subject and audience, not from the category's fashion."
+      },
+      {
+       "fr": "Éviter les trois palettes réflexes : violet-indigo, crème et terracotta, presque noir et vert acide.",
+       "en": "Avoid the three reflex palettes: purple-indigo, cream and terracotta, near-black and acid green."
+      },
+      {
+       "fr": "Deux familles de caractères au plus, plus une à chasse fixe si besoin ; pas Inter ou Geist comme seule police ; noter nom, fonderie, licence et source de chaque police.",
+       "en": "Two typefaces at most, plus a monospace if needed; not Inter or Geist as the only face; record name, foundry, licence and source of each font."
+      },
+      {
+       "fr": "Un seul jeu d'icônes, une seule épaisseur de trait réglée selon la taille ; dessiner les quelques icônes des objets propres au produit ; jamais un glyphe du jeu d'icônes comme logo.",
+       "en": "One icon set, one stroke width tuned to the size; draw the few icons of the product's own objects; never a glyph of the icon set as the logo."
+      },
+      {
+       "fr": "Images, par ordre de préférence : le vrai produit (captures, composants), des schémas faits pour la page, ses propres photos, des images d'archives traitées de façon cohérente, rien. Pas d'illustrations de kit ni d'image générée contenant du texte, une interface ou des personnes.",
+       "en": "Imagery, in order of preference: the real product (screenshots, components), diagrams made for the page, own photos, archive images with a consistent treatment, nothing. No kit illustrations and no generated image containing text, an interface or people."
+      },
+      {
+       "fr": "Tout chiffre, citation, logo de client ou badge affiché vient d'un fait fourni par l'utilisateur ; sinon le bloc n'existe pas.",
+       "en": "Every number, quote, customer logo or badge shown comes from a fact supplied by the user; otherwise the block does not exist."
+      },
+      {
+       "fr": "Textes : dire ce que le produit fait et pour qui, avec les mots des clients ; libellé de bouton = verbe + objet ; erreur = ce qui s'est passé + comment corriger.",
+       "en": "Copy: say what the product does and for whom, in customers' words; button label = verb + object; error = what happened + how to fix it."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "BRD-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Aucun témoignage, chiffre, logo de client ou badge inventé",
+        "en": "No invented testimonial, figure, customer logo or badge"
+       },
+       "verify": {
+        "fr": "Chaque citation, nombre (« 10 000 équipes », « 99,9 % »), logo et badge des pages publiques est relié à une source fournie par l'utilisateur (fichier de faits, lien). Sans source : échec.",
+        "en": "Every quote, number (\"10,000 teams\", \"99.9%\"), logo and badge on public pages traces to a source supplied by the user (facts file, link). No source: fail."
+       }
+      },
+      {
+       "id": "BRD-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Direction visuelle tirée du produit, écrite et suivie",
+        "en": "Visual direction drawn from the product, written and followed"
+       },
+       "verify": {
+        "fr": "DESIGN.md dit d'où viennent la couleur, la typographie et les images, et ce que le produit refuse ; les écrans s'y conforment ; pas de palette réflexe non justifiée.",
+        "en": "DESIGN.md says where colour, type and imagery come from, and what the product refuses; the screens comply; no unjustified reflex palette."
+       }
+      },
+      {
+       "id": "BRD-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Typographie choisie et sous licence notée",
+        "en": "Typeface chosen, licence recorded"
+       },
+       "verify": {
+        "fr": "Deux familles au plus (plus une à chasse fixe) ; la police de texte a de vraies italiques et des chiffres tabulaires ; nom, fonderie, licence et source notés ; polices hébergées par le projet.",
+        "en": "Two families at most (plus a monospace); the text face has real italics and tabular figures; name, foundry, licence and source recorded; fonts hosted by the project."
+       }
+      },
+      {
+       "id": "BRD-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Un seul jeu d'icônes, ajusté, et un logo qui n'en vient pas",
+        "en": "One icon set, adjusted, and a logo that does not come from it"
+       },
+       "verify": {
+        "fr": "Un seul jeu, une épaisseur de trait par taille ; les objets propres au produit ont leur icône ; le logo n'est pas un glyphe du jeu ; l'icône du site, l'image de partage et l'avatar dérivent du même dessin.",
+        "en": "One set, one stroke width per size; the product's own objects have their icon; the logo is not a glyph of the set; site icon, share image and avatar derive from the same drawing."
+       }
+      },
+      {
+       "id": "BRD-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Images réelles et cohérentes",
+        "en": "Real and consistent imagery"
+       },
+       "verify": {
+        "fr": "Les pages montrent le vrai produit ; pas d'illustration de kit, pas d'image générée avec du texte, une interface ou des personnes ; un même traitement pour toutes ; source et licence notées.",
+        "en": "Pages show the real product; no kit illustration, no generated image with text, an interface or people; one treatment for all; source and licence recorded."
+       }
+      },
+      {
+       "id": "BRD-06",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Textes précis, dans une voix tenue",
+        "en": "Specific copy, in a consistent voice"
+       },
+       "verify": {
+        "fr": "Le titre principal dit ce que fait le produit et pour qui ; boutons en verbe + objet ; erreurs avec leur solution ; même mot pour la même chose partout ; pas de suite de trois blocs de longueur identique sans raison.",
+        "en": "The main headline says what the product does and for whom; buttons as verb + object; errors with their fix; the same word for the same thing everywhere; no run of three blocks of identical length without a reason."
+       }
+      }
+     ]
     }
    ]
   },
@@ -1976,6 +2432,18 @@
        "en": "Parameterised database queries or ORM; never string concatenation."
       },
       {
+       "fr": "Écrire le modèle de menaces au cadrage (.quality/threats.json) : ce qu'un attaquant veut, par où l'on entre, ce qui peut mal tourner, ce qu'on fait pour chaque cas. Le relire à chaque nouveau point d'entrée, type de donnée, rôle ou service tiers.",
+       "en": "Write the threat model at kickoff (.quality/threats.json): what an attacker wants, where input enters, what can go wrong, what is done about each case. Review it at every new entry point, kind of data, role or third party."
+      },
+      {
+       "fr": "Chaîne d'approvisionnement : fichier de verrouillage commité, délai de 7 jours avant d'installer une nouvelle version, scripts d'installation bloqués, actions de CI épinglées par empreinte de commit.",
+       "en": "Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash."
+      },
+      {
+       "fr": "Les tests actifs (mots de passe faux, scans avec attaque) ne visent que le poste local ou la préproduction, avec des comptes de test jetables et l'accord de l'utilisateur ; en production, lecture seule.",
+       "en": "Active tests (wrong passwords, attack scans) only target the local machine or staging, with disposable test accounts and the user's agreement; on production, read-only."
+      },
+      {
        "fr": "Headers : CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.",
        "en": "Headers: CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors."
       }
@@ -2019,7 +2487,8 @@
        "id": "SEC-03",
        "severity": "blocker",
        "check": {
-        "method": "inspect"
+        "method": "auto",
+        "tool": "access_run"
        },
        "applies_if": [
         "has_auth"
@@ -2029,8 +2498,8 @@
         "en": "Authorisation checked server-side on every resource (no IDOR)"
        },
        "verify": {
-        "fr": "Pour chaque route protégée : l'utilisateur peut-il lire ou modifier la ressource d'un autre en changeant l'identifiant ?",
-        "en": "For each protected route: can a user read or change another user's resource by changing the ID?"
+        "fr": "access.json : chaque ressource déclarée dans project.json › access est lue par son propriétaire et refusée aux autres comptes et au visiteur ; aucune fuite. Sans bloc access, lire chaque route protégée : un utilisateur peut-il lire ou modifier la ressource d'un autre en changeant l'identifiant ?",
+        "en": "access.json: every resource declared in project.json › access is read by its owner and refused to the other accounts and to a visitor; no leak. Without an access block, read every protected route: can a user read or change another user's resource by changing the ID?"
        }
       },
       {
@@ -2162,6 +2631,115 @@
        "verify": {
         "fr": "Rapport du skill security-audit (Cloudflare) daté et suivi.",
         "en": "Dated and tracked report from the security-audit skill (Cloudflare)."
+       }
+      },
+      {
+       "id": "SEC-12",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "threat_model"
+       },
+       "applies_if": [
+        "has_backend"
+       ],
+       "label": {
+        "fr": "Modèle de menaces écrit, complet et à jour",
+        "en": "Threat model written, complete and current"
+       },
+       "verify": {
+        "fr": "`qp threats` : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois.",
+        "en": "`qp threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open \"before launch\"; reviewed within 6 months."
+       }
+      },
+      {
+       "id": "SEC-13",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "auth_probe"
+       },
+       "applies_if": [
+        "has_auth"
+       ],
+       "label": {
+        "fr": "La connexion résiste aux essais répétés et ne dit pas quels comptes existent",
+        "en": "Login resists repeated guesses and does not say which accounts exist"
+       },
+       "verify": {
+        "fr": "auth.json : même réponse pour un compte connu et inconnu ; mots de passe faux en série ralentis, refusés ou verrouillés. Vérifier à la main la même chose sur la réinitialisation, l'inscription et les codes à usage unique.",
+        "en": "auth.json: same answer for a known and an unknown account; wrong passwords in a row slowed, refused or locked. Check the same by hand on password reset, signup and one-time codes."
+       }
+      },
+      {
+       "id": "SEC-14",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "dast_scan"
+       },
+       "applies_if": [
+        "has_backend_or_public"
+       ],
+       "label": {
+        "fr": "Scan passif de l'application sans alerte haute ni moyenne",
+        "en": "Passive scan of the running app with no high or medium alert"
+       },
+       "verify": {
+        "fr": "zap.json (OWASP ZAP, scan de base) : aucune alerte haute ; chaque alerte moyenne corrigée ou expliquée. Un scan propre veut dire « rien trouvé par cet outil », pas « sûr ».",
+        "en": "zap.json (OWASP ZAP baseline): no high alert; each medium alert fixed or explained. A clean scan means \"nothing found by this tool\", not \"secure\"."
+       }
+      },
+      {
+       "id": "SEC-15",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "supply_scan"
+       },
+       "label": {
+        "fr": "Chaîne d'approvisionnement verrouillée",
+        "en": "Supply chain locked down"
+       },
+       "verify": {
+        "fr": "supply.json : aucun « must » en échec (fichier de verrouillage commité, délai avant installation, scripts d'installation, actions de CI épinglées, permissions des workflows, fichiers .env).",
+        "en": "supply.json: no failed \"must\" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files)."
+       }
+      },
+      {
+       "id": "SEC-16",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "public_web"
+       ],
+       "label": {
+        "fr": "Un chercheur sait où signaler une faille",
+        "en": "A researcher knows where to report a flaw"
+       },
+       "verify": {
+        "fr": "/.well-known/security.txt en HTTPS avec Contact et Expires (date à venir, moins d'un an) ; une page dit quoi signaler, sur quel périmètre, et sous quel délai on répond.",
+        "en": "/.well-known/security.txt over HTTPS with Contact and Expires (future date, under a year); a page says what to report, in which scope, and how fast you answer."
+       }
+      },
+      {
+       "id": "SEC-17",
+       "severity": "major",
+       "check": {
+        "method": "manual"
+       },
+       "applies_if": [
+        "has_payments"
+       ],
+       "label": {
+        "fr": "Test d'intrusion par une personne indépendante avant les premiers clients payants",
+        "en": "Penetration test by an independent person before the first paying customers"
+       },
+       "verify": {
+        "fr": "Rapport daté d'un testeur extérieur à l'équipe, périmètre signé, failles corrigées et retestées. Les outils automatiques ne couvrent ni la logique métier ni les attaques enchaînées.",
+        "en": "Dated report from a tester outside the team, signed scope, flaws fixed and retested. Automatic tools cover neither business logic nor chained attacks."
        }
       }
      ]
@@ -4199,6 +4777,937 @@
        "verify": {
         "fr": "Document de reprise avec objectifs de délai et de perte de données acceptables.",
         "en": "Recovery document with acceptable downtime and data-loss targets."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "saas",
+   "label": {
+    "fr": "SaaS : comptes, abonnements et activation",
+    "en": "SaaS: accounts, subscriptions and activation"
+   },
+   "domains": [
+    {
+     "id": "accounts",
+     "code": "ACC",
+     "label": {
+      "fr": "Comptes, équipes et accès",
+      "en": "Accounts, teams and access"
+     },
+     "summary": {
+      "fr": "Cloisonnement entre clients, rôles, invitations et cycle de vie des comptes.",
+      "en": "Isolation between customers, roles, invitations and the account life cycle."
+     },
+     "applies_if": [
+      "has_auth"
+     ],
+     "build": [
+      {
+       "fr": "Poser le modèle de client (compte seul, ou organisation avec membres) et le cloisonnement des données avant la première fonctionnalité ; écrire le test à deux comptes en même temps.",
+       "en": "Set the customer model (single account, or organisation with members) and the data isolation before the first feature; write the two-account test at the same time."
+      },
+      {
+       "fr": "Cloisonner dans la couche de données (sécurité au niveau des lignes ou accès toujours filtré par client), pas route par route : une route oubliée ne doit pas pouvoir fuir.",
+       "en": "Isolate in the data layer (row-level security or access always scoped by customer), not route by route: a forgotten route must not be able to leak."
+      },
+      {
+       "fr": "L'identifiant de client envoyé par le navigateur n'est qu'un choix : le serveur revérifie l'appartenance à chaque requête.",
+       "en": "A customer identifier sent by the browser is only a selector: the server re-checks membership on every request."
+      },
+      {
+       "fr": "Reporter le client dans tout ce qui sort de la requête : clés de cache, tâches de fond, chemins de fichiers, liens signés, index de recherche, exports.",
+       "en": "Carry the customer into everything that leaves the request: cache keys, background jobs, file paths, signed links, search indexes, exports."
+      },
+      {
+       "fr": "Authentification par une bibliothèque ou un serveur d'identité maintenu ; jamais de cryptographie ni de sessions écrites à la main.",
+       "en": "Authentication through a maintained library or identity server; never hand-written crypto or sessions."
+      },
+      {
+       "fr": "Les rôles sont portés par l'adhésion à l'organisation, pas par l'utilisateur ; chaque action privilégiée est vérifiée côté serveur.",
+       "en": "Roles belong to the membership, not to the user; every privileged action is checked server-side."
+      },
+      {
+       "fr": "SSO, SCIM, rôles sur mesure, base par client : seulement quand un client le demande par contrat.",
+       "en": "SSO, SCIM, custom roles, one database per customer: only when a customer contract asks for it."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "ACC-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_db"
+       ],
+       "label": {
+        "fr": "Cloisonnement des données fait dans la couche de données",
+        "en": "Data isolation enforced in the data layer"
+       },
+       "verify": {
+        "fr": "Chaque table liée à un client porte sa clé ; aucune table sans règle (RLS) ou sans accès filtré obligatoire ; le rôle de la base n'est ni superutilisateur ni BYPASSRLS.",
+        "en": "Every customer-scoped table carries its key; no table without a policy (RLS) or mandatory scoped access; the database role is neither superuser nor BYPASSRLS."
+       }
+      },
+      {
+       "id": "ACC-02",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "access_run"
+       },
+       "label": {
+        "fr": "Le test à deux comptes couvre chaque type de ressource et tourne en CI",
+        "en": "The two-account test covers every kind of resource and runs in CI"
+       },
+       "verify": {
+        "fr": "access.json : une vérification par type de ressource et par rôle déclarée dans project.json › access, aucune fuite, aucun cas « unclear » non expliqué ; la même vérification bloque le déploiement.",
+        "en": "access.json: one check per kind of resource and per role declared in project.json › access, no leak, no unexplained \"unclear\"; the same check blocks deployment."
+       }
+      },
+      {
+       "id": "ACC-03",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Le client est reporté hors de la requête (cache, tâches, fichiers, recherche, exports)",
+        "en": "The customer is carried outside the request (cache, jobs, files, search, exports)"
+       },
+       "verify": {
+        "fr": "Clés de cache, charges des tâches de fond, chemins de stockage, liens signés (portée et durée), requêtes de recherche et exports : chacun contient et revérifie le client.",
+        "en": "Cache keys, background job payloads, storage paths, signed links (scope and lifetime), search queries and exports: each carries and re-checks the customer."
+       }
+      },
+      {
+       "id": "ACC-04",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Authentification confiée à une bibliothèque ou un service maintenu",
+        "en": "Authentication handled by a maintained library or service"
+       },
+       "verify": {
+        "fr": "Dépendance d'authentification identifiée, licence et dernière version datée de moins d'un an ; pas de hachage, de jeton ou de session écrits à la main.",
+        "en": "Authentication dependency identified, licence and latest release under a year old; no hand-written hashing, tokens or sessions."
+       }
+      },
+      {
+       "id": "ACC-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Email vérifié avant toute action sensible ; liens et codes à usage unique et de courte durée",
+        "en": "Email verified before any sensitive action; single-use, short-lived links and codes"
+       },
+       "verify": {
+        "fr": "Compte non vérifié : pas d'invitation, pas d'essai sans carte. Lien de réinitialisation ou code : aléatoire, utilisable une fois, expiré en 10 minutes à 1 heure, et ne contourne pas la double authentification.",
+        "en": "Unverified account: no invitation, no card-less trial. Reset link or code: random, usable once, expired within 10 minutes to 1 hour, and does not bypass two-factor."
+       }
+      },
+      {
+       "id": "ACC-06",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Double authentification disponible, sessions listées et révocables",
+        "en": "Two-factor available, sessions listed and revocable"
+       },
+       "verify": {
+        "fr": "TOTP ou clé d'accès (passkey) proposé ; liste des sessions actives avec déconnexion à distance ; changer l'email ou le mot de passe redemande une authentification.",
+        "en": "TOTP or passkey offered; list of active sessions with remote sign-out; changing email or password asks for authentication again."
+       }
+      },
+      {
+       "id": "ACC-07",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "multi_tenant"
+       ],
+       "label": {
+        "fr": "Rôles vérifiés côté serveur ; le dernier propriétaire ne peut pas disparaître",
+        "en": "Roles checked server-side; the last owner cannot disappear"
+       },
+       "verify": {
+        "fr": "Appel d'une route d'administration avec un compte membre : refusé. Dans une organisation à un seul propriétaire : il ne peut ni partir, ni être rétrogradé, ni être supprimé ; le transfert de propriété existe.",
+        "en": "Calling an admin route with a member account: refused. In an organisation with one owner: the owner cannot leave, be demoted or be deleted; ownership transfer exists."
+       }
+      },
+      {
+       "id": "ACC-08",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "multi_tenant"
+       ],
+       "label": {
+        "fr": "Invitations à usage unique, liées à l'email invité, expirables et révocables",
+        "en": "Invitations single-use, bound to the invited email, expiring and revocable"
+       },
+       "verify": {
+        "fr": "Réutiliser une invitation, l'utiliser avec un autre email, après expiration ou après révocation : refusé. Une invitation ne donne jamais un rôle supérieur à celui de l'invitant.",
+        "en": "Reusing an invitation, using it with another email, after expiry or after revocation: refused. An invitation never grants a higher role than the inviter's."
+       }
+      },
+      {
+       "id": "ACC-09",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "multi_tenant"
+       ],
+       "label": {
+        "fr": "Retirer un membre ou changer son rôle prend effet tout de suite",
+        "en": "Removing a member or changing a role takes effect at once"
+       },
+       "verify": {
+        "fr": "Retirer un membre puis rejouer une requête avec son ancienne session et ses clés d'API : refusé.",
+        "en": "Remove a member, then replay a request with their old session and API keys: refused."
+       }
+      },
+      {
+       "id": "ACC-10",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "multi_tenant"
+       ],
+       "label": {
+        "fr": "Journal des actions sensibles, lisible par les administrateurs du client",
+        "en": "Log of sensitive actions, readable by the customer's admins"
+       },
+       "verify": {
+        "fr": "Changement de rôle, export, suppression, accès du support : chacun laisse une ligne (qui, quoi, quand) que personne ne peut modifier.",
+        "en": "Role change, export, deletion, support access: each leaves a line (who, what, when) that nobody can edit."
+       }
+      },
+      {
+       "id": "ACC-11",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Accès du support aux comptes clients encadré",
+        "en": "Support access to customer accounts is controlled"
+       },
+       "verify": {
+        "fr": "Pas de mot de passe partagé ni d'accès direct à la base : prise de main limitée dans le temps, bandeau visible, ligne au journal, raison saisie.",
+        "en": "No shared password or direct database access: time-boxed impersonation, visible banner, log entry, reason entered."
+       }
+      }
+     ]
+    },
+    {
+     "id": "subscriptions",
+     "code": "SUB",
+     "label": {
+      "fr": "Abonnements",
+      "en": "Subscriptions"
+     },
+     "summary": {
+      "fr": "Essai, offres et limites, échecs de paiement, changement d'offre, résiliation, factures et taxes.",
+      "en": "Trial, plans and limits, failed payments, plan changes, cancellation, invoices and taxes."
+     },
+     "applies_if": [
+      "has_subscriptions"
+     ],
+     "build": [
+      {
+       "fr": "Une seule source de vérité pour les droits : une table côté serveur, mise à jour par les webhooks signés du prestataire, jamais par le navigateur ni par la page de retour.",
+       "en": "One source of truth for entitlements: a server-side table updated by the provider's signed webhooks, never by the browser or the return page."
+      },
+      {
+       "fr": "Chaque limite d'offre est appliquée côté serveur, là où l'écriture a lieu ; l'interface ne fait que l'annoncer.",
+       "en": "Every plan limit is enforced server-side, where the write happens; the interface only announces it."
+      },
+      {
+       "fr": "Webhooks : vérifier la signature sur le corps brut, répondre 2xx vite, traiter une seule fois par identifiant d'événement, accepter un ordre d'arrivée quelconque.",
+       "en": "Webhooks: verify the signature on the raw body, answer 2xx fast, process once per event ID, accept any arrival order."
+      },
+      {
+       "fr": "Écrire les règles avant le code : essai (durée, carte ou non, que se passe-t-il à la fin), délai de grâce après un paiement échoué, ce que devient la donnée après une rétrogradation.",
+       "en": "Write the rules before the code: trial (length, card or not, what happens at the end), grace period after a failed payment, what happens to data after a downgrade."
+      },
+      {
+       "fr": "Tester avec les horloges de test du prestataire : fin d'essai, renouvellement, carte refusée, relances, résiliation.",
+       "en": "Test with the provider's test clocks: trial end, renewal, declined card, retries, cancellation."
+      },
+      {
+       "fr": "Taxes : collecter le pays et le numéro de TVA, configurer le régime (guichet unique européen, autoliquidation) et vérifier les obligations de facturation électronique du pays.",
+       "en": "Taxes: collect the country and VAT number, configure the regime (EU one-stop shop, reverse charge) and check the country's e-invoicing duties."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "SUB-01",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les droits viennent d'une table serveur mise à jour par webhook, jamais du navigateur",
+        "en": "Entitlements come from a server table updated by webhook, never from the browser"
+       },
+       "verify": {
+        "fr": "Ouvrir l'adresse de retour de paiement sans payer, ou envoyer une offre modifiée depuis le navigateur : aucun droit accordé.",
+        "en": "Open the payment return address without paying, or send a changed plan from the browser: no entitlement granted."
+       }
+      },
+      {
+       "id": "SUB-02",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Chaque limite d'offre est appliquée côté serveur",
+        "en": "Every plan limit is enforced server-side"
+       },
+       "verify": {
+        "fr": "Appel direct de l'API au-delà de la limite (nombre de projets, de membres, d'usage) : refusé avec un message clair.",
+        "en": "Direct API call beyond the limit (projects, members, usage): refused with a clear message."
+       }
+      },
+      {
+       "id": "SUB-03",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Paiement échoué : email, bandeau dans l'app et délai de grâce écrit",
+        "en": "Failed payment: email, in-app banner and a written grace period"
+       },
+       "verify": {
+        "fr": "Horloge de test avec une carte refusée : email avec lien pour corriger la carte, bandeau visible, accès maintenu pendant le délai annoncé puis coupé comme écrit.",
+        "en": "Test clock with a declined card: email with a link to fix the card, visible banner, access kept during the stated period then cut as written."
+       }
+      },
+      {
+       "id": "SUB-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Essai : conditions annoncées à l'inscription, rappel avant la fin, fin d'essai définie",
+        "en": "Trial: terms stated at signup, reminder before the end, defined end of trial"
+       },
+       "verify": {
+        "fr": "Durée et suite de l'essai visibles avant l'inscription ; email de rappel quelques jours avant la fin ; comportement sans carte testé.",
+        "en": "Trial length and what follows visible before signup; reminder email a few days before the end; behaviour without a card tested."
+       }
+      },
+      {
+       "id": "SUB-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Changement d'offre : montant dû maintenant et au prochain renouvellement affichés avant de confirmer",
+        "en": "Plan change: amount due now and at next renewal shown before confirming"
+       },
+       "verify": {
+        "fr": "Aperçu comparé à la facture émise ; une rétrogradation ne supprime aucune donnée sans l'annoncer.",
+        "en": "Preview compared with the invoice issued; a downgrade deletes no data without saying so."
+       }
+      },
+      {
+       "id": "SUB-06",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Résiliation en ligne, en trois étapes au plus depuis le compte, confirmée par email",
+        "en": "Cancellation online, in three steps at most from the account, confirmed by email"
+       },
+       "verify": {
+        "fr": "Parcours compté depuis les réglages du compte ; email de confirmation avec la date d'effet ; aucune obligation d'appeler ou d'écrire.",
+        "en": "Steps counted from the account settings; confirmation email with the effective date; no need to call or write."
+       }
+      },
+      {
+       "id": "SUB-07",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Factures dans le compte, pays et numéro de TVA collectés, régime de taxe configuré",
+        "en": "Invoices in the account, country and VAT number collected, tax regime configured"
+       },
+       "verify": {
+        "fr": "Facture d'essai avec les mentions légales ; réglages de taxe du prestataire ; note écrite sur la facturation électronique du pays.",
+        "en": "Sample invoice with the legal mentions; the provider's tax settings; written note on the country's e-invoicing."
+       }
+      },
+      {
+       "id": "SUB-08",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "public_web"
+       ],
+       "label": {
+        "fr": "Page de prix complète, et identique au paiement",
+        "en": "Complete pricing page, identical to checkout"
+       },
+       "verify": {
+        "fr": "Prix, période, unité (par membre, par projet), mention des taxes, limites en chiffres, règles d'essai et de résiliation ; montants comparés à ceux du paiement.",
+        "en": "Price, period, unit (per member, per project), tax mention, limits in numbers, trial and cancellation rules; amounts compared with checkout."
+       }
+      }
+     ]
+    },
+    {
+     "id": "activation",
+     "code": "ACT",
+     "label": {
+      "fr": "Activation et relation client",
+      "en": "Activation and customer relationship"
+     },
+     "summary": {
+      "fr": "Première session, emails de service, mesure de l'activation, pages de confiance et sortie du client.",
+      "en": "First session, service emails, activation measurement, trust pages and customer exit."
+     },
+     "applies_if": [
+      "has_auth"
+     ],
+     "build": [
+      {
+       "fr": "Nommer l'événement d'activation : la première fois où l'utilisateur obtient ce que le produit promet. Tout le premier parcours y mène.",
+       "en": "Name the activation event: the first time the user gets what the product promises. The whole first-run leads there."
+      },
+      {
+       "fr": "Pas d'écran vide au premier lancement : un état vide avec une seule action, ou des données d'exemple.",
+       "en": "No blank screen on first launch: an empty state with one action, or sample data."
+      },
+      {
+       "fr": "Mesurer inscription → activation → paiement ; les événements de facturation sont enregistrés côté serveur.",
+       "en": "Measure signup → activation → payment; billing events are recorded server-side."
+      },
+      {
+       "fr": "Écrire tous les emails de service avant le lancement, dans la voix et l'apparence du produit, avec une version texte.",
+       "en": "Write every service email before launch, in the product's voice and look, with a text version."
+      },
+      {
+       "fr": "Le client peut partir avec ses données : export lisible par une machine et suppression du compte, en libre-service.",
+       "en": "The customer can leave with their data: machine-readable export and account deletion, self-service."
+      },
+      {
+       "fr": "N'afficher aucun badge de conformité (SOC 2, ISO, RGPD) qui n'a pas été obtenu.",
+       "en": "Show no compliance badge (SOC 2, ISO, GDPR) that was not earned."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "ACT-01",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "flow_run"
+       },
+       "label": {
+        "fr": "Un compte neuf atteint l'activation dans sa première session",
+        "en": "A fresh account reaches activation in its first session"
+       },
+       "verify": {
+        "fr": "Un flow déclaré part d'un compte neuf et va jusqu'à l'événement d'activation ; aucun écran vide sans action ; pas de visite guidée obligatoire.",
+        "en": "A declared flow starts from a fresh account and reaches the activation event; no blank screen without an action; no forced tour."
+       }
+      },
+      {
+       "id": "ACT-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Événement d'activation défini et mesuré",
+        "en": "Activation event defined and measured"
+       },
+       "verify": {
+        "fr": "L'événement est nommé dans project.json ou la spec, et émis dans le code ; l'entonnoir inscription → activation → paiement est lisible.",
+        "en": "The event is named in project.json or the spec, and emitted in the code; the signup → activation → payment funnel can be read."
+       }
+      },
+      {
+       "id": "ACT-03",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_email"
+       ],
+       "label": {
+        "fr": "Tous les emails de service existent",
+        "en": "Every service email exists"
+       },
+       "verify": {
+        "fr": "Déclencher chacun : vérification, réinitialisation, invitation, reçu, paiement échoué, fin d'essai, résiliation, suppression du compte. Chacun arrive, dans la bonne langue, avec une version texte.",
+        "en": "Trigger each: verification, reset, invitation, receipt, failed payment, trial ending, cancellation, account deletion. Each arrives, in the right language, with a text version."
+       }
+      },
+      {
+       "id": "ACT-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Réglages du compte complets",
+        "en": "Complete account settings"
+       },
+       "verify": {
+        "fr": "Profil, sécurité, notifications, facturation, export des données et suppression du compte sont tous présents et fonctionnent.",
+        "en": "Profile, security, notifications, billing, data export and account deletion are all there and work."
+       }
+      },
+      {
+       "id": "ACT-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "public_web"
+       ],
+       "label": {
+        "fr": "Pages de confiance publiques et exactes",
+        "en": "Public and accurate trust pages"
+       },
+       "verify": {
+        "fr": "Page sécurité, accord de traitement des données et liste des sous-traitants, page d'état du service, journal des changements daté ; aucun badge non obtenu.",
+        "en": "Security page, data processing agreement and sub-processor list, status page, dated changelog; no unearned badge."
+       }
+      },
+      {
+       "id": "ACT-06",
+       "severity": "major",
+       "check": {
+        "method": "manual"
+       },
+       "label": {
+        "fr": "Cinq personnes de la cible ont fait les tâches clés sans aide",
+        "en": "Five people from the target audience did the key tasks unaided"
+       },
+       "verify": {
+        "fr": "Compte rendu de test daté (skill user-testing) : qui, quelles tâches, où chacun a bloqué, ce qui a été corrigé depuis.",
+        "en": "Dated test report (user-testing skill): who, which tasks, where each got stuck, what was fixed since."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "mobile",
+   "label": {
+    "fr": "Application mobile installée",
+    "en": "Installed mobile app"
+   },
+   "domains": [
+    {
+     "id": "mobile-ux",
+     "code": "MUX",
+     "label": {
+      "fr": "Expérience mobile native",
+      "en": "Native mobile experience"
+     },
+     "summary": {
+      "fr": "Tâches clés jouées sur appareil, règles des plateformes, clavier, zones sûres, hors-ligne, notifications.",
+      "en": "Key tasks played on a device, platform rules, keyboard, safe areas, offline, notifications."
+     },
+     "applies_if": [
+      "native_app"
+     ],
+     "build": [
+      {
+       "fr": "Choisir l'approche avant le code et l'écrire : PWA, Capacitor (enveloppe de la webapp), Expo/React Native, Flutter. Une simple enveloppe de site est refusée par Apple.",
+       "en": "Choose the approach before the code and write it down: PWA, Capacitor (wrapping the web app), Expo/React Native, Flutter. A bare website wrapper is refused by Apple."
+      },
+      {
+       "fr": "Donner un identifiant stable (testID, accessibilityIdentifier, resource-id) à chaque élément touché par une tâche clé : les tests et les lecteurs d'écran en dépendent.",
+       "en": "Give a stable identifier (testID, accessibilityIdentifier, resource-id) to every element a key task touches: tests and screen readers depend on it."
+      },
+      {
+       "fr": "Cibles tactiles : 44 × 44 pt sur iOS, 48 × 48 dp espacées de 8 dp sur Android.",
+       "en": "Touch targets: 44 × 44 pt on iOS, 48 × 48 dp spaced by 8 dp on Android."
+      },
+      {
+       "fr": "Respecter les zones sûres et le plein écran bord à bord (obligatoire sur Android en ciblant l'API 36) ; le champ en cours de saisie et l'action principale restent visibles clavier ouvert.",
+       "en": "Respect safe areas and edge-to-edge display (mandatory on Android when targeting API 36); the focused field and the main action stay visible with the keyboard open."
+      },
+      {
+       "fr": "Suivre les habitudes de la plateforme : retour (geste iOS, bouton Android avec retour prédictif), barre d'onglets pour naviguer et non pour agir, feuilles que l'on ferme en glissant.",
+       "en": "Follow the platform's habits: back (iOS gesture, Android button with predictive back), tab bar for navigation and not for actions, sheets dismissed by swiping."
+      },
+      {
+       "fr": "Texte agrandi jusqu'à 200 %, thème sombre, rotation et tablette : rien n'est coupé ni superposé.",
+       "en": "Text enlarged up to 200 %, dark theme, rotation and tablet: nothing is clipped or overlapping."
+      },
+      {
+       "fr": "Hors-ligne : écrire, par type de donnée, ce qui se lit sans réseau et ce que devient une écriture (refusée, mise en file, synchronisée plus tard avec règle de conflit).",
+       "en": "Offline: write down, per kind of data, what can be read without network and what happens to a write (refused, queued, synced later with a conflict rule)."
+      },
+      {
+       "fr": "Notifications : ne jamais demander la permission au premier lancement ; la demander après une action de l'utilisateur, avec un écran qui dit pourquoi.",
+       "en": "Notifications: never ask for permission on first launch; ask after a user action, with a screen that says why."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "MUX-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "mobile_flow_run"
+       },
+       "label": {
+        "fr": "Chaque tâche clé va au bout sur un appareil ou un émulateur",
+        "en": "Every key task completes on a device or an emulator"
+       },
+       "verify": {
+        "fr": "mobile.json : tous les flows de project.json › mobile.flows terminés, sur Android et, si un Mac est disponible, sur iOS. Dire quelles plateformes ont été jouées.",
+        "en": "mobile.json: every flow of project.json › mobile.flows completed, on Android and, when a Mac is available, on iOS. Say which platforms were played."
+       }
+      },
+      {
+       "id": "MUX-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Cibles tactiles aux tailles des plateformes",
+        "en": "Touch targets at platform sizes"
+       },
+       "verify": {
+        "fr": "Sur les captures des flows : aucune cible sous 44 × 44 pt (iOS) ou 48 × 48 dp (Android) parmi les actions des tâches clés.",
+        "en": "On the flow screenshots: no target under 44 × 44 pt (iOS) or 48 × 48 dp (Android) among the key-task actions."
+       }
+      },
+      {
+       "id": "MUX-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Clavier, zones sûres et bord à bord",
+        "en": "Keyboard, safe areas and edge-to-edge"
+       },
+       "verify": {
+        "fr": "Captures clavier ouvert : champ et bouton d'envoi visibles. Aucun contrôle sous la barre d'état, l'encoche, l'indicateur d'accueil ou la barre de gestes.",
+        "en": "Screenshots with the keyboard open: field and submit button visible. No control under the status bar, the notch, the home indicator or the gesture bar."
+       }
+      },
+      {
+       "id": "MUX-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Retour, onglets et feuilles suivent la plateforme",
+        "en": "Back, tabs and sheets follow the platform"
+       },
+       "verify": {
+        "fr": "Le retour ramène à l'écran précédent et ne perd aucune saisie sans prévenir ; la barre d'onglets sert à naviguer, sans onglet « Plus » de débordement ; une feuille se ferme en glissant.",
+        "en": "Back returns to the previous screen and loses no input without warning; the tab bar is for navigation, with no overflow \"More\" tab; a sheet closes by swiping."
+       }
+      },
+      {
+       "id": "MUX-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Texte à 200 %, thème sombre et tablette sans casse",
+        "en": "Text at 200 %, dark theme and tablet without breakage"
+       },
+       "verify": {
+        "fr": "Captures à la taille de police maximale, en thème sombre et sur un écran de 600 dp ou plus : pas de texte coupé, pas de surface blanche en dur, pas de portrait forcé.",
+        "en": "Screenshots at the largest font size, in dark theme and on a screen of 600 dp or more: no clipped text, no hard-coded white surface, no forced portrait."
+       }
+      },
+      {
+       "id": "MUX-06",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Comportement hors-ligne écrit et tenu",
+        "en": "Offline behaviour written and kept"
+       },
+       "verify": {
+        "fr": "Un flow passe hors-ligne (étape offline) : contenu en cache lisible, message clair, aucune donnée perdue après fermeture et réouverture de l'app en ligne.",
+        "en": "A flow goes offline (offline step): cached content readable, clear message, no data lost after closing and reopening the app online."
+       }
+      },
+      {
+       "id": "MUX-07",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Permissions demandées au bon moment",
+        "en": "Permissions asked at the right time"
+       },
+       "verify": {
+        "fr": "Aucune demande au premier lancement ; chaque demande suit une action et un écran d'explication ; un refus ne bloque pas l'app ; réglage par type de notification.",
+        "en": "No request on first launch; each request follows an action and an explanation screen; a refusal does not block the app; one setting per kind of notification."
+       }
+      },
+      {
+       "id": "MUX-08",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Chaque élément a un nom pour VoiceOver et TalkBack",
+        "en": "Every element has a name for VoiceOver and TalkBack"
+       },
+       "verify": {
+        "fr": "Contrôles des tâches clés : nom accessible, rôle et état exposés ; images décoratives masquées ; tout geste a une alternative au simple toucher.",
+        "en": "Key-task controls: accessible name, role and state exposed; decorative images hidden; every gesture has a single-tap alternative."
+       }
+      },
+      {
+       "id": "MUX-09",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Démarrage à froid sous 2 secondes sur un appareil moyen",
+        "en": "Cold start under 2 seconds on a mid-range device"
+       },
+       "verify": {
+        "fr": "Android : `adb shell am start -S -W` (TotalTime). 5 secondes ou plus est la limite « excessif » de Google Play : échec.",
+        "en": "Android: `adb shell am start -S -W` (TotalTime). 5 seconds or more is Google Play's \"excessive\" line: fail."
+       }
+      }
+     ]
+    },
+    {
+     "id": "mobile-release",
+     "code": "MRL",
+     "label": {
+      "fr": "Publication sur les stores et sécurité mobile",
+      "en": "Store release and mobile security"
+     },
+     "summary": {
+      "fr": "Ce qui bloque une publication : niveaux d'API, vie privée, suppression de compte, règles de paiement, stockage sûr.",
+      "en": "What blocks a release: API levels, privacy, account deletion, payment rules, safe storage."
+     },
+     "applies_if": [
+      "native_app"
+     ],
+     "build": [
+      {
+       "fr": "Écrire dès le cadrage le modèle de vente et les boutiques visées : vente aux particuliers dans l'app (achat intégré obligatoire, sauf États-Unis), vente aux entreprises hors de l'app (pas d'achat intégré, et aucun lien d'achat dans l'app), ou app compagnon sans achat.",
+       "en": "Write down at kickoff the sales model and the target storefronts: consumer sales in the app (in-app purchase required, except the United States), sales to organisations outside the app (no in-app purchase, and no purchase link in the app), or companion app without purchase."
+      },
+      {
+       "fr": "Suppression du compte : un chemin dans l'app (Apple et Google) et une page web publique (Google).",
+       "en": "Account deletion: a path inside the app (Apple and Google) and a public web page (Google)."
+      },
+      {
+       "fr": "Jetons et secrets dans le trousseau (iOS) ou le Keystore (Android) ; jamais dans AsyncStorage, SharedPreferences, localStorage ou un fichier.",
+       "en": "Tokens and secrets in the Keychain (iOS) or the Keystore (Android); never in AsyncStorage, SharedPreferences, localStorage or a file."
+      },
+      {
+       "fr": "Aucun secret dans l'app livrée : seules des clés publiques. Tout ce qui est dans le paquet peut être lu.",
+       "en": "No secret in the shipped app: public keys only. Everything in the package can be read."
+      },
+      {
+       "fr": "TLS uniquement, sans exception ; liens vérifiés en https pour l'authentification (pas de schéma d'URL sur mesure) ; WebView limitée aux origines de l'app.",
+       "en": "TLS only, without exception; verified https links for authentication (no custom URL scheme); WebView restricted to the app's own origins."
+      },
+      {
+       "fr": "Mises à jour à distance : corrections et contenu seulement ; une nouvelle fonction, permission ou voie de paiement passe par le store.",
+       "en": "Over-the-air updates: fixes and content only; a new feature, permission or payment path goes through the store."
+      },
+      {
+       "fr": "Tenir à jour la liste des SDK embarqués : elle alimente la fiche Sécurité des données (Google) et les étiquettes de confidentialité (Apple).",
+       "en": "Keep the list of embedded SDKs up to date: it feeds the Data safety form (Google) and the privacy labels (Apple)."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "MRL-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "mobile_release_scan"
+       },
+       "label": {
+        "fr": "Aucun blocage de publication lisible dans le projet",
+        "en": "No release blocker readable in the project"
+       },
+       "verify": {
+        "fr": "mobile-check.json : aucun « must » en échec (niveau d'API cible, build débogable, trafic en clair, manifeste de confidentialité, textes de permission, WebView, page de suppression).",
+        "en": "mobile-check.json: no failed \"must\" (target API level, debuggable build, cleartext traffic, privacy manifest, permission texts, WebView, deletion page)."
+       }
+      },
+      {
+       "id": "MRL-02",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_auth"
+       ],
+       "label": {
+        "fr": "Suppression du compte possible dans l'app",
+        "en": "Account deletion possible inside the app"
+       },
+       "verify": {
+        "fr": "Chemin trouvé depuis les réglages ; il supprime le compte et ses données (pas une simple désactivation), annonce le délai et confirme ; les abonnements du store sont signalés.",
+        "en": "Path found from the settings; it deletes the account and its data (not a mere deactivation), states the delay and confirms; store subscriptions are flagged."
+       }
+      },
+      {
+       "id": "MRL-03",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_payments"
+       ],
+       "label": {
+        "fr": "Règles de paiement des stores respectées pour le modèle de vente déclaré",
+        "en": "Store payment rules met for the declared sales model"
+       },
+       "verify": {
+        "fr": "project.json › mobile.monetisation et storefronts comparés aux écrans : achat intégré là où il est exigé ; aucun prix, bouton d'abonnement ou lien d'achat externe là où il est interdit.",
+        "en": "project.json › mobile.monetisation and storefronts compared with the screens: in-app purchase where required; no price, subscribe button or external purchase link where forbidden."
+       }
+      },
+      {
+       "id": "MRL-04",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Jetons en stockage sûr, aucun secret dans l'app livrée",
+        "en": "Tokens in safe storage, no secret in the shipped app"
+       },
+       "verify": {
+        "fr": "Recherche des API de stockage dans le code ; recherche de clés dans le paquet construit (apkleaks, ou décompression et recherche) ; gitleaks sur le dépôt.",
+        "en": "Search for storage APIs in the code; search for keys in the built package (apkleaks, or unzip and search); gitleaks on the repository."
+       }
+      },
+      {
+       "id": "MRL-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Fiches de confidentialité des stores exactes",
+        "en": "Store privacy forms accurate"
+       },
+       "verify": {
+        "fr": "Liste des SDK embarqués comparée à la fiche Sécurité des données (Google) et aux étiquettes de confidentialité (Apple) ; lien vers la politique de confidentialité.",
+        "en": "List of embedded SDKs compared with the Data safety form (Google) and the privacy labels (Apple); privacy policy link."
+       }
+      },
+      {
+       "id": "MRL-06",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_auth"
+       ],
+       "label": {
+        "fr": "Connexion par un tiers accompagnée d'une option respectueuse de la vie privée (iOS)",
+        "en": "Third-party login comes with a privacy-preserving option (iOS)"
+       },
+       "verify": {
+        "fr": "Si l'app propose Google, Facebook ou autre : une option équivalente qui se limite au nom et à l'email et permet de masquer l'email (Sign in with Apple y répond).",
+        "en": "If the app offers Google, Facebook or another: an equivalent option limited to name and email that lets users hide their email (Sign in with Apple qualifies)."
+       }
+      },
+      {
+       "id": "MRL-07",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Liens vers l'app vérifiés",
+        "en": "Links into the app verified"
+       },
+       "verify": {
+        "fr": "Android : `adb shell pm get-app-links <paquet>` affiche « verified » pour chaque domaine. iOS : le fichier d'association répond sans redirection et contient l'identifiant de l'app.",
+        "en": "Android: `adb shell pm get-app-links <package>` shows \"verified\" for each domain. iOS: the association file answers without redirect and contains the app identifier."
+       }
+      },
+      {
+       "id": "MRL-08",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Plantages suivis, publication progressive et retour arrière prévus",
+        "en": "Crashes tracked, staged rollout and rollback planned"
+       },
+       "verify": {
+        "fr": "Outil de suivi des plantages branché ; publication par paliers ; procédure de retour arrière pour les mises à jour à distance. Limites Google Play : 1,09 % de plantages, 0,47 % de blocages (ANR).",
+        "en": "Crash reporting wired in; staged rollout; rollback procedure for over-the-air updates. Google Play lines: 1.09 % crashes, 0.47 % freezes (ANR)."
+       }
+      },
+      {
+       "id": "MRL-09",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Mises à jour à distance limitées aux corrections",
+        "en": "Over-the-air updates limited to fixes"
+       },
+       "verify": {
+        "fr": "Aucune mise à jour à distance n'ajoute de fonction, de permission ou de voie de paiement ; règle écrite dans le dépôt.",
+        "en": "No over-the-air update adds a feature, a permission or a payment path; rule written in the repository."
        }
       }
      ]

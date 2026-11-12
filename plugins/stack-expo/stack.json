@@ -1,0 +1,82 @@
+{
+ "stack": "expo",
+ "label": {
+  "fr": "Expo et React Native (iOS, Android)",
+  "en": "Expo and React Native (iOS, Android)"
+ },
+ "detect": {
+  "package_json_deps_any": [
+   "expo",
+   "react-native"
+  ]
+ },
+ "sets_flags": [
+  "native_app"
+ ],
+ "checks": {
+  "typecheck": {
+   "run": "{pm} exec tsc --noEmit",
+   "pass_if": "exit code 0"
+  },
+  "lint": {
+   "run": "npx expo lint",
+   "pass_if": "exit code 0, no errors"
+  },
+  "test_run": {
+   "run": "{pm} test",
+   "pass_if": "exit code 0"
+  },
+  "deps_audit": {
+   "run": "{pm} audit --audit-level=high",
+   "pass_if": "no high or critical advisory; then `npx expo-doctor` reports no issue"
+  },
+  "license_check": {
+   "run": "npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'",
+   "pass_if": "exit code 0"
+  }
+ },
+ "rules": [
+  {
+   "fr": "Rester sur un SDK Expo maintenu et lancer `npx expo-doctor` avant chaque version : il signale les paquets natifs incompatibles.",
+   "en": "Stay on a supported Expo SDK and run `npx expo-doctor` before each release: it flags incompatible native packages."
+  },
+  {
+   "fr": "Jetons de session dans expo-secure-store (trousseau et Keystore), jamais dans AsyncStorage.",
+   "en": "Session tokens in expo-secure-store (Keychain and Keystore), never in AsyncStorage."
+  },
+  {
+   "fr": "Variables EXPO_PUBLIC_* : visibles dans l'app livrée. Aucune clé secrète ; les appels qui en demandent une passent par le serveur.",
+   "en": "EXPO_PUBLIC_* variables are visible in the shipped app. No secret key; calls that need one go through the server."
+  },
+  {
+   "fr": "Donner un testID à chaque élément touché par une tâche clé ; les flows Maestro et les lecteurs d'écran s'en servent.",
+   "en": "Give a testID to every element a key task touches; Maestro flows and screen readers use it."
+  },
+  {
+   "fr": "Zones sûres avec react-native-safe-area-context ; clavier géré (KeyboardAvoidingView ou react-native-keyboard-controller) sur chaque écran de saisie.",
+   "en": "Safe areas with react-native-safe-area-context; keyboard handled (KeyboardAvoidingView or react-native-keyboard-controller) on every input screen."
+  },
+  {
+   "fr": "Listes longues avec FlashList ou FlatList (jamais ScrollView + map) ; images avec expo-image, dimensionnées.",
+   "en": "Long lists with FlashList or FlatList (never ScrollView + map); images with expo-image, sized."
+  },
+  {
+   "fr": "Manifeste de confidentialité iOS déclaré dans app.json (expo.ios.privacyManifests) ; textes de permission précis dans app.json.",
+   "en": "iOS privacy manifest declared in app.json (expo.ios.privacyManifests); precise permission texts in app.json."
+  },
+  {
+   "fr": "Liens vers l'app : liens universels et App Links en https (expo-linking), pas un schéma sur mesure pour l'authentification.",
+   "en": "Links into the app: universal links and App Links over https (expo-linking), no custom scheme for authentication."
+  },
+  {
+   "fr": "EAS Update : corrections et contenu seulement, version d'exécution fixée, publication par paliers et retour arrière testé.",
+   "en": "EAS Update: fixes and content only, pinned runtime version, staged rollout and tested rollback."
+  },
+  {
+   "fr": "Android se construit et se teste sur tout poste ; iOS demande un Mac ou un build EAS dans le cloud (palier gratuit limité).",
+   "en": "Android builds and tests on any machine; iOS needs a Mac or an EAS cloud build (limited free tier)."
+  }
+ ],
+ "qp_stack": true,
+ "plugin": "qp-expo"
+}

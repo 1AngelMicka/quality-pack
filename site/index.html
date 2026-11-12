@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>quality-pack — coder proprement et auditer ses projets avec Claude Code</title>
-<meta name="description" content="Plugins Claude Code : règles de construction sur 28 domaines, tâches clés jouées sur téléphone et ordinateur, deux notes sur 10 (expérience, technique) avec une preuve par critère, et économie de tokens. Gratuit, open source, sans télémétrie.">
+<meta name="description" content="Plugins Claude Code : règles de construction sur 35 domaines, tâches clés jouées sur téléphone et ordinateur, deux notes sur 10 (expérience, technique) avec une preuve par critère, et économie de tokens. Gratuit, open source, sans télémétrie.">
 <meta name="qp-root" content=".">
 <link rel="canonical" href="https://1angelmicka.github.io/quality-pack/">
 <link rel="alternate" hreflang="fr" href="https://1angelmicka.github.io/quality-pack/">
@@ -42,7 +42,7 @@
     <li><a href="#tokens">Économie de tokens</a></li>
     <li><a href="#compagnons">Outils compagnons</a></li>
     <li><a href="#notation">Notation</a></li>
-    <li><a href="#referentiel">Ce qu'il vérifie</a></li>
+    <li><a href="#referentiel">Ce qu’il vérifie</a></li>
     <li><a href="#agents">Pour les agents IA</a></li>
     <li><a href="#fichiers">Fichiers créés</a></li>
     <li><a href="#probleme">En cas de problème</a></li>
@@ -53,10 +53,10 @@
   <div class="hero">
     <span class="eyebrow">Plugins pour Claude Code</span>
     <h1>Coder proprement dès le départ, puis le prouver.</h1>
-    <p class="lead">quality-pack donne à Claude des règles précises pendant qu'il code, puis audite le projet et lui donne une note sur 10, domaine par domaine. Chaque critère exige une preuve. Le tout en dépensant le moins de tokens possible.</p>
+    <p class="lead">quality-pack donne à Claude des règles précises pendant qu’il code, puis audite le projet et lui donne une note sur 10, domaine par domaine. Chaque critère exige une preuve. Le tout en dépensant le moins de tokens possible.</p>
     <ul class="facts">
       <li><strong>28</strong> domaines</li>
-      <li><strong>162</strong> critères vérifiables</li>
+      <li><strong>226</strong> critères vérifiables</li>
       <li><strong>0</strong> télémétrie</li>
       <li>FR · EN · MIT</li>
     </ul>
@@ -68,12 +68,12 @@
 
   <section id="principe">
     <h2>Le principe</h2>
-    <p>Un assistant de code produit vite quelque chose qui marche à peu près. Il oublie souvent les écrans vides, la validation côté serveur, l'accessibilité, le RGPD ou les sauvegardes, et il a tendance à produire des interfaces et des textes génériques. quality-pack corrige ça en deux temps : des règles pendant la construction, puis un audit qui exige une preuve pour chaque point.</p>
+    <p>Un assistant de code produit vite quelque chose qui marche à peu près. Il oublie souvent les écrans vides, la validation côté serveur, l’accessibilité, le RGPD ou les sauvegardes, et il a tendance à produire des interfaces et des textes génériques. quality-pack corrige ça en deux temps : des règles pendant la construction, puis un audit qui exige une preuve pour chaque point.</p>
     <div class="flow">
       <div><code>/qp:kickoff</code><p>Claude lit le projet, pose quelques questions et écrit sa fiche qualité.</p></div>
-      <div><code>tu codes</code><p>Les règles des domaines touchés s'appliquent toutes seules.</p></div>
-      <div><code>/qp:audit</code><p>Scans automatiques puis auditeurs en parallèle : note, preuves, priorités.</p></div>
-      <div><code>/qp:fix</code><p>Les problèmes sont corrigés dans l'ordre, bloquants d'abord.</p></div>
+      <div><code>tu codes</code><p>Les règles des domaines touchés s’appliquent toutes seules.</p></div>
+      <div><code>/qp:audit</code><p>Scans automatiques puis auditeurs en parallèle : note, preuves, priorités.</p></div>
+      <div><code>/qp:fix</code><p>Les problèmes sont corrigés dans l’ordre, bloquants d’abord.</p></div>
       <div><code>/qp:handoff</code><p>Une note courte pour reprendre la tâche à la session suivante.</p></div>
     </div>
   </section>
@@ -91,16 +91,20 @@
 <span class="c"># Fastify ou Express, Prisma, PostgreSQL, Redis, Socket.io</span>
 /plugin install qp-node-api@quality-pack
 <span class="c"># Serveur auto-hébergé : Docker Compose, PM2, Nginx ou CloudPanel</span>
-/plugin install qp-vps@quality-pack</code></pre></li>
-      <li><strong>Redémarre Claude Code</strong> (ou tape <code>/reload-plugins</code>), ouvre ton projet et lance :
+/plugin install qp-vps@quality-pack
+<span class="c"># App mobile Expo ou React Native</span>
+/plugin install qp-expo@quality-pack
+<span class="c"># Webapp livrée en app mobile avec Capacitor</span>
+/plugin install qp-capacitor@quality-pack</code></pre></li>
+      <li><strong>Redémarre Claude Code</strong> (ou tape <code>/reload-plugins</code>), ouvre ton projet et lance :
 <pre><code>/qp:kickoff</code></pre></li>
-      <li><strong>Tâches clés et vérifications navigateur</strong>, une fois pour toutes (Claude te le propose au premier audit) :
+      <li><strong>Tâches clés et vérifications navigateur</strong>, une fois pour toutes (Claude te le propose au premier audit) :
 <pre><code>node &lt;dossier du plugin&gt;/scripts/qp.mjs browser-setup</code></pre>
-      Playwright, axe-core et Chromium vont dans le cache du pack, pas dans ton projet. Sans eux, l'audit fonctionne ; ces critères sont marqués « non vérifiés ».</li>
-      <li><strong>Facultatif : <a href="#compagnons">Graphify</a></strong> pour économiser des tokens sur les projets moyens et gros. <code>/qp:kickoff</code> te le propose quand c'est utile.</li>
+      Playwright, axe-core et Chromium vont dans le cache du pack, pas dans ton projet. Sans eux, l’audit fonctionne ; ces critères sont marqués « non vérifiés ».</li>
+      <li><strong>Facultatif : <a href="#compagnons">Graphify</a></strong> pour économiser des tokens sur les projets moyens et gros. <code>/qp:kickoff</code> te le propose quand c’est utile.</li>
     </ol>
     <h3>Pour toute une équipe</h3>
-    <p>Dans le dossier du projet, une seule fois dans le terminal, puis commite <code>.claude/settings.json</code> :</p>
+    <p>Dans le dossier du projet, une seule fois dans le terminal, puis commite <code>.claude/settings.json</code> :</p>
 <pre><code>claude plugin marketplace add 1AngelMicka/quality-pack --scope project
 claude plugin install qp@quality-pack --scope project</code></pre>
     <h3>Mettre à jour, désinstaller</h3>
@@ -109,7 +113,7 @@ claude plugin install qp@quality-pack --scope project</code></pre>
 <span class="c"># désinstaller</span>
 /plugin uninstall qp@quality-pack
 /plugin marketplace remove quality-pack</code></pre>
-    <p>Pour les mises à jour automatiques : <code>/plugin</code> → Marketplaces → quality-pack → Enable auto-update.</p>
+    <p>Pour les mises à jour automatiques : <code>/plugin</code> → Marketplaces → quality-pack → Enable auto-update.</p>
   </section>
 
   <section id="commandes">
@@ -118,29 +122,29 @@ claude plugin install qp@quality-pack --scope project</code></pre>
       <thead><tr><th scope="col">Commande</th><th scope="col">Pour</th></tr></thead>
       <tbody>
         <tr><td><code>/qp:kickoff</code></td><td>Configurer ou mettre à jour le profil qualité du projet.</td></tr>
-        <tr><td><code>/qp:audit</code></td><td>Audit incrémental : seul ce qui a changé depuis le dernier audit est revérifié. Complet au premier audit, après une mise à jour du pack, ou tous les 30 jours.</td></tr>
-        <tr><td><code>/qp:audit quick</code></td><td>Vérifications automatiques seulement, sans agents : le moins cher, idéal avant une mise en ligne.</td></tr>
+        <tr><td><code>/qp:audit</code></td><td>Audit incrémental : seul ce qui a changé depuis le dernier audit est revérifié. Complet au premier audit, après une mise à jour du pack, ou tous les 30 jours.</td></tr>
+        <tr><td><code>/qp:audit quick</code></td><td>Vérifications automatiques seulement, sans agents : le moins cher, idéal avant une mise en ligne.</td></tr>
         <tr><td><code>/qp:audit full</code></td><td>Tout revérifier depuis zéro.</td></tr>
         <tr><td><code>/qp:audit security-data</code></td><td>Un seul groupe de domaines.</td></tr>
-        <tr><td><code>/qp:audit SEC-01 SEC-03</code></td><td>Des critères précis ; <code>/qp:audit blockers</code> pour les seuls points bloquants.</td></tr>
+        <tr><td><code>/qp:audit SEC-01 SEC-03</code></td><td>Des critères précis ; <code>/qp:audit blockers</code> pour les seuls points bloquants.</td></tr>
         <tr><td><code>/qp:fix</code></td><td>Corriger les points bloquants, ou les 5 premiers problèmes. <code>/qp:fix 10</code> ou <code>/qp:fix SEC-02</code> pour choisir.</td></tr>
-        <tr><td><code>/qp:handoff</code></td><td>Écrire <code>.quality/handoff.md</code> avant d'arrêter une longue tâche.</td></tr>
+        <tr><td><code>/qp:handoff</code></td><td>Écrire <code>.quality/handoff.md</code> avant d’arrêter une longue tâche.</td></tr>
       </tbody>
     </table></div>
   </section>
 
   <section id="tokens">
     <h2>Économie de tokens</h2>
-    <p>Le pack réduit trois choses : ce qui est chargé en permanence, ce que Claude lit, et ce qui est refait d'une fois sur l'autre.</p>
+    <p>Le pack réduit trois choses : ce qui est chargé en permanence, ce que Claude lit, et ce qui est refait d’une fois sur l’autre.</p>
     <div class="table-wrap"><table>
       <thead><tr><th scope="col">Mécanisme</th><th scope="col">Effet</th></tr></thead>
       <tbody>
         <tr><td>Règles à la demande</td><td>Environ 1 150 tokens chargés par session. Le détail des règles ne se charge que quand Claude touche le domaine.</td></tr>
         <tr><td>Scans en scripts</td><td>Remplissage, formules creuses, logs oubliés, en-têtes, SEO et navigateur tournent en Node. Claude lit un résumé.</td></tr>
-        <tr><td>Sorties compactes</td><td>Tests, lint et audits gardent leur log complet sur le disque ; Claude ne lit que les erreurs. Sur notre test : 3 000 lignes, environ 14 700 tokens ramenés à environ 190.</td></tr>
-        <tr><td>Audit incrémental</td><td>Seuls les critères que les fichiers modifiés peuvent affecter sont revérifiés. Rien n'a changé : aucun auditeur lancé.</td></tr>
-        <tr><td>Mode rapide</td><td><code>/qp:audit quick</code> : sans agents auditeurs.</td></tr>
-        <tr><td>Modèle des auditeurs</td><td>Opus (recommandé) ou Fable : les petits modèles ont donné de fausses preuves lors d'audits réels. L'économie vient des audits incrémentaux et des sorties compactes.</td></tr>
+        <tr><td>Sorties compactes</td><td>Tests, lint et audits gardent leur log complet sur le disque ; Claude ne lit que les erreurs. Sur notre test : 3 000 lignes, environ 14 700 tokens ramenés à environ 190.</td></tr>
+        <tr><td>Audit incrémental</td><td>Seuls les critères que les fichiers modifiés peuvent affecter sont revérifiés. Rien n’a changé : aucun auditeur lancé.</td></tr>
+        <tr><td>Mode rapide</td><td><code>/qp:audit quick</code> : sans agents auditeurs.</td></tr>
+        <tr><td>Modèle des auditeurs</td><td>Opus (recommandé) ou Fable : les petits modèles ont donné de fausses preuves lors d’audits réels. L’économie vient des audits incrémentaux et des sorties compactes.</td></tr>
         <tr><td>Passage de relais</td><td><code>/qp:handoff</code> évite de réexplorer le projet à chaque nouvelle session.</td></tr>
       </tbody>
     </table></div>
@@ -148,21 +152,21 @@ claude plugin install qp@quality-pack --scope project</code></pre>
     <div class="table-wrap"><table>
       <thead><tr><th scope="col">Taille</th><th scope="col">Une session</th><th scope="col">Quelques semaines</th><th scope="col">Vie du projet</th></tr></thead>
       <tbody>
-        <tr><td><strong>Petit</strong><br><small>moins de 60 fichiers de code</small></td><td>Le pack suffit. Graphify n'apporte presque rien.</td><td>Audit incrémental après chaque fonctionnalité, rapide avant chaque mise en ligne.</td><td>Audit complet mensuel, handoff pour les tâches sur plusieurs jours.</td></tr>
-        <tr><td><strong>Moyen</strong><br><small>60 à 400 fichiers</small></td><td>Graphify : Claude interroge le graphe au lieu de relire. RTK si les sessions sont longues.</td><td>Audits incrémentaux, graphe tenu à jour à chaque commit.</td><td>Historique des notes, audit complet mensuel, handoff en fin de session.</td></tr>
+        <tr><td><strong>Petit</strong><br><small>moins de 60 fichiers de code</small></td><td>Le pack suffit. Graphify n’apporte presque rien.</td><td>Audit incrémental après chaque fonctionnalité, rapide avant chaque mise en ligne.</td><td>Audit complet mensuel, handoff pour les tâches sur plusieurs jours.</td></tr>
+        <tr><td><strong>Moyen</strong><br><small>60 à 400 fichiers</small></td><td>Graphify : Claude interroge le graphe au lieu de relire. RTK si les sessions sont longues.</td><td>Audits incrémentaux, graphe tenu à jour à chaque commit.</td><td>Historique des notes, audit complet mensuel, handoff en fin de session.</td></tr>
         <tr><td><strong>Gros</strong><br><small>plus de 400 fichiers</small></td><td>Graphify fortement recommandé, RTK recommandé, lecture par plages de lignes.</td><td>Audits incrémentaux ou par groupe, <code>/qp:audit quick</code> pour les vérifications rapides.</td><td>Audits complets découpés par groupe, handoff obligatoire.</td></tr>
       </tbody>
     </table></div>
-    <p>Le rapport d'audit affiche les tokens évités. Pour la consommation d'une session, tape <code>/cost</code> ou <code>/usage</code> dans Claude Code.</p>
+    <p>Le rapport d’audit affiche les tokens évités. Pour la consommation d’une session, tape <code>/cost</code> ou <code>/usage</code> dans Claude Code.</p>
   </section>
 
   <section id="compagnons">
     <h2>Outils compagnons</h2>
-    <p>Projets séparés, non inclus dans le pack. <code>/qp:kickoff</code> propose ceux qui conviennent et ne les installe qu'avec ton accord.</p>
+    <p>Projets séparés, non inclus dans le pack. <code>/qp:kickoff</code> propose ceux qui conviennent et ne les installe qu’avec ton accord.</p>
     <div class="table-wrap"><table>
       <thead><tr><th scope="col">Outil</th><th scope="col">Quand</th><th scope="col">Installation</th></tr></thead>
       <tbody>
-        <tr><td><a href="https://github.com/Graphify-Labs/graphify">Graphify</a><br><small>graphe du code local, sans modèle d'IA</small></td><td>Projets moyens et gros</td><td><code>uv tool install graphifyy</code><br><code>graphify install --project</code></td></tr>
+        <tr><td><a href="https://github.com/Graphify-Labs/graphify">Graphify</a><br><small>graphe du code local, sans modèle d’IA</small></td><td>Projets moyens et gros</td><td><code>uv tool install graphifyy</code><br><code>graphify install --project</code></td></tr>
         <tr><td><a href="https://github.com/rtk-ai/rtk">RTK</a>, édition <code>rtk-oss</code><br><small>sorties de commandes compressées</small></td><td>Longues sessions</td><td><code>brew install rtk-ai/tap/rtk-oss</code><br><code>rtk init -g</code></td></tr>
         <tr><td><a href="https://github.com/cloudflare/security-audit-skill">Cloudflare security-audit</a><br><small>audit de sécurité approfondi</small></td><td>Avant une version majeure</td><td><code>npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit</code></td></tr>
         <tr><td><a href="https://github.com/Leonxlnx/taste-skill">Taste Skill</a><br><small>design anti-générique</small></td><td>Sites vitrines</td><td><code>npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"</code></td></tr>
@@ -174,24 +178,24 @@ claude plugin install qp@quality-pack --scope project</code></pre>
   <section id="notation">
     <h2>Notation</h2>
     <ul>
-      <li>Chaque critère est <strong>bloquant</strong> (5 points), <strong>majeur</strong> (3) ou <strong>mineur</strong> (1). Réussi : tous les points ; partiel : la moitié ; en échec ou non vérifié : aucun.</li>
+      <li>Chaque critère est <strong>bloquant</strong> (5 points), <strong>majeur</strong> (3) ou <strong>mineur</strong> (1). Réussi : tous les points ; partiel : la moitié ; en échec ou non vérifié : aucun.</li>
       <li>Un critère réussi sans preuve compte comme non vérifié.</li>
-      <li>Deux notes : <strong>Expérience</strong> (produit, parcours, ergonomie, interface, accessibilité, vitesse) et <strong>Technique et exploitation</strong> (sécurité, données, code, tests, intégrations, serveur, sauvegardes).</li>
-      <li>Un point bloquant en échec plafonne son domaine à 3/10 et la note dont il relève à 5,9/10, pas l'autre.</li>
-      <li>Chaque note pondère ses domaines selon le type de projet : vitrine, application web, SaaS, mobile ou API. Les domaines sans objet sont ignorés. La note d'ensemble reste dans le rapport pour l'historique.</li>
-      <li>Les tâches clés sont jouées sur téléphone et ordinateur : l'interface est jugée sur ces états, pas sur l'écran vide. Une revue d'ergonomie et une contre-vérification complètent les auditeurs.</li>
+      <li>Deux notes : <strong>Expérience</strong> (produit, parcours, ergonomie, interface, accessibilité, vitesse) et <strong>Technique et exploitation</strong> (sécurité, données, code, tests, intégrations, serveur, sauvegardes).</li>
+      <li>Un point bloquant en échec plafonne son domaine à 3/10 et la note dont il relève à 5,9/10, pas l’autre.</li>
+      <li>Chaque note pondère ses domaines selon le type de projet : vitrine, application web, SaaS, mobile ou API. Les domaines sans objet sont ignorés. La note d’ensemble reste dans le rapport pour l’historique.</li>
+      <li>Les tâches clés sont jouées sur téléphone et ordinateur : l’interface est jugée sur ces états, pas sur l’écran vide. Une revue d’ergonomie et une contre-vérification complètent les auditeurs.</li>
     </ul>
   </section>
 
   <section id="referentiel">
-    <h2>Ce qu'il vérifie</h2>
-    <p>Les 28 domaines, leurs règles de construction et leurs 162 critères, tirés du même fichier que le plugin.</p>
+    <h2>Ce qu’il vérifie</h2>
+    <p>Les 35 domaines, leurs règles de construction et leurs 226 critères, tirés du même fichier que le plugin.</p>
     <div id="referential"><p>Chargement… Sans JavaScript, voir <a href="https://github.com/1AngelMicka/quality-pack/blob/main/docs/fr/REFERENTIEL.md">le référentiel sur GitHub</a>.</p></div>
   </section>
 
   <section id="agents">
     <h2>Pour les agents IA</h2>
-    <p>Tu peux confier l'installation à ton assistant IA : donne-lui simplement le lien du repo. Il trouvera <a href="llms.txt"><code>llms.txt</code></a> et le <a href="https://github.com/1AngelMicka/quality-pack/blob/main/docs/AGENT_GUIDE.md">guide écrit pour les agents</a>, qui décrit chaque étape, les vérifications et les erreurs courantes.</p>
+    <p>Tu peux confier l’installation à ton assistant IA : donne-lui simplement le lien du repo. Il trouvera <a href="llms.txt"><code>llms.txt</code></a> et le <a href="https://github.com/1AngelMicka/quality-pack/blob/main/docs/AGENT_GUIDE.md">guide écrit pour les agents</a>, qui décrit chaque étape, les vérifications et les erreurs courantes.</p>
 <pre><code>Installe et configure quality-pack pour ce projet en suivant
 https://github.com/1AngelMicka/quality-pack/blob/main/docs/AGENT_GUIDE.md</code></pre>
   </section>
@@ -207,7 +211,7 @@ https://github.com/1AngelMicka/quality-pack/blob/main/docs/AGENT_GUIDE.md</code>
   handoff.md            passage de relais (/qp:handoff)
 DESIGN.md               direction visuelle et tokens de design
 CLAUDE.md               une courte section « Quality pack »</code></pre>
-    <p>Commite <code>.quality/</code> pour garder l'historique ; les captures et les logs sont ignorés par Git.</p>
+    <p>Commite <code>.quality/</code> pour garder l’historique ; les captures et les logs sont ignorés par Git.</p>
   </section>
 
   <section id="probleme">
@@ -215,16 +219,16 @@ CLAUDE.md               une courte section « Quality pack »</code></pre>
     <div class="table-wrap"><table>
       <thead><tr><th scope="col">Problème</th><th scope="col">Solution</th></tr></thead>
       <tbody>
-        <tr><td>« /plugin isn't available in this environment »</td><td>Les commandes <code>/plugin</code> se tapent dans Claude Code (terminal ou application de bureau), pas dans une conversation web.</td></tr>
-        <tr><td>Les commandes <code>/qp:…</code> n'apparaissent pas</td><td>Redémarre Claude Code ou tape <code>/reload-plugins</code>, puis regarde <code>/plugin</code> → Installed et l'onglet Errors.</td></tr>
+        <tr><td>« /plugin isn’t available in this environment »</td><td>Les commandes <code>/plugin</code> se tapent dans Claude Code (terminal ou application de bureau), pas dans une conversation web.</td></tr>
+        <tr><td>Les commandes <code>/qp:…</code> n’apparaissent pas</td><td>Redémarre Claude Code ou tape <code>/reload-plugins</code>, puis regarde <code>/plugin</code> → Installed et l’onglet Errors.</td></tr>
         <tr><td><code>node: command not found</code></td><td>Installe Node.js 18+ et vérifie que <code>node</code> est dans le PATH.</td></tr>
-        <tr><td>L'ajout de la marketplace échoue</td><td>Vérifie <code>git</code>. Sans clé SSH GitHub : <code>CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1</code>, puis réessaie.</td></tr>
-        <tr><td>Vérifications navigateur « non vérifiées »</td><td>Lance <code>qp.mjs browser-setup</code>, lance l'appli en local ou renseigne une URL de préproduction.</td></tr>
-        <tr><td>Écriture bloquée comme secret</td><td>Mets la valeur dans une variable d'environnement. Si ce n'est pas un secret : commentaire <code>qp-allow-secret</code> sur la ligne.</td></tr>
-        <tr><td>L'audit incrémental refait tout</td><td>Normal au premier audit, après une mise à jour du pack, après 30 jours, ou hors d'un dépôt Git.</td></tr>
+        <tr><td>L’ajout de la marketplace échoue</td><td>Vérifie <code>git</code>. Sans clé SSH GitHub : <code>CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1</code>, puis réessaie.</td></tr>
+        <tr><td>Vérifications navigateur « non vérifiées »</td><td>Lance <code>qp.mjs browser-setup</code>, lance l’appli en local ou renseigne une URL de préproduction.</td></tr>
+        <tr><td>Écriture bloquée comme secret</td><td>Mets la valeur dans une variable d’environnement. Si ce n’est pas un secret : commentaire <code>qp-allow-secret</code> sur la ligne.</td></tr>
+        <tr><td>L’audit incrémental refait tout</td><td>Normal au premier audit, après une mise à jour du pack, après 30 jours, ou hors d’un dépôt Git.</td></tr>
       </tbody>
     </table></div>
-    <p class="note">Le pack n'envoie aucune télémétrie et ne contacte que les URL de ton projet pendant un audit. Il aide à repérer les obligations légales, mais il ne remplace pas l'avis d'un juriste.</p>
+    <p class="note">Le pack n’envoie aucune télémétrie et ne contacte que les URL de ton projet pendant un audit. Il aide à repérer les obligations légales, mais il ne remplace pas l’avis d’un juriste.</p>
   </section>
 </main>
 </div>

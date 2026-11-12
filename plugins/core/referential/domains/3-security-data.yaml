@@ -12,6 +12,9 @@ domains:
       - {fr: "Vérifier l'autorisation à chaque requête, côté serveur, sur la ressource demandée (pas seulement la connexion).", en: "Check authorisation on every request, server-side, on the requested resource (not just login)."}
       - {fr: "Limiter le débit sur la connexion, l'inscription, la réinitialisation de mot de passe, les formulaires et les routes coûteuses.", en: "Rate-limit login, sign-up, password reset, forms and expensive routes."}
       - {fr: "Requêtes base de données paramétrées ou ORM ; jamais de concaténation de chaînes.", en: "Parameterised database queries or ORM; never string concatenation."}
+      - {fr: "Écrire le modèle de menaces au cadrage (.quality/threats.json) : ce qu'un attaquant veut, par où l'on entre, ce qui peut mal tourner, ce qu'on fait pour chaque cas. Le relire à chaque nouveau point d'entrée, type de donnée, rôle ou service tiers.", en: "Write the threat model at kickoff (.quality/threats.json): what an attacker wants, where input enters, what can go wrong, what is done about each case. Review it at every new entry point, kind of data, role or third party."}
+      - {fr: "Chaîne d'approvisionnement : fichier de verrouillage commité, délai de 7 jours avant d'installer une nouvelle version, scripts d'installation bloqués, actions de CI épinglées par empreinte de commit.", en: "Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash."}
+      - {fr: "Les tests actifs (mots de passe faux, scans avec attaque) ne visent que le poste local ou la préproduction, avec des comptes de test jetables et l'accord de l'utilisateur ; en production, lecture seule.", en: "Active tests (wrong passwords, attack scans) only target the local machine or staging, with disposable test accounts and the user's agreement; on production, read-only."}
       - {fr: "Headers : CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.", en: "Headers: CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors."}
     criteria:
       - id: SEC-01
@@ -27,10 +30,10 @@ domains:
         verify: {fr: "Lire chaque route, action serveur, handler de webhook et upload.", en: "Read every route, server action, webhook handler and upload."}
       - id: SEC-03
         severity: blocker
-        check: {method: inspect}
+        check: {method: auto, tool: access_run}
         applies_if: [has_auth]
         label: {fr: "Autorisation vérifiée côté serveur sur chaque ressource (pas d'IDOR)", en: "Authorisation checked server-side on every resource (no IDOR)"}
-        verify: {fr: "Pour chaque route protégée : l'utilisateur peut-il lire ou modifier la ressource d'un autre en changeant l'identifiant ?", en: "For each protected route: can a user read or change another user's resource by changing the ID?"}
+        verify: {fr: "access.json : chaque ressource déclarée dans project.json › access est lue par son propriétaire et refusée aux autres comptes et au visiteur ; aucune fuite. Sans bloc access, lire chaque route protégée : un utilisateur peut-il lire ou modifier la ressource d'un autre en changeant l'identifiant ?", en: "access.json: every resource declared in project.json › access is read by its owner and refused to the other accounts and to a visitor; no leak. Without an access block, read every protected route: can a user read or change another user's resource by changing the ID?"}
       - id: SEC-04
         severity: blocker
         check: {method: auto, tool: deps_audit}
@@ -74,6 +77,41 @@ domains:
         check: {method: inspect}
         label: {fr: "Audit de sécurité approfondi réalisé à chaque version majeure", en: "In-depth security audit run at every major release"}
         verify: {fr: "Rapport du skill security-audit (Cloudflare) daté et suivi.", en: "Dated and tracked report from the security-audit skill (Cloudflare)."}
+      - id: SEC-12
+        severity: major
+        check: {method: auto, tool: threat_model}
+        applies_if: [has_backend]
+        label: {fr: "Modèle de menaces écrit, complet et à jour", en: "Threat model written, complete and current"}
+        verify: {fr: "`qp threats` : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois.", en: "`qp threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open \"before launch\"; reviewed within 6 months."}
+      - id: SEC-13
+        severity: blocker
+        check: {method: auto, tool: auth_probe}
+        applies_if: [has_auth]
+        label: {fr: "La connexion résiste aux essais répétés et ne dit pas quels comptes existent", en: "Login resists repeated guesses and does not say which accounts exist"}
+        verify: {fr: "auth.json : même réponse pour un compte connu et inconnu ; mots de passe faux en série ralentis, refusés ou verrouillés. Vérifier à la main la même chose sur la réinitialisation, l'inscription et les codes à usage unique.", en: "auth.json: same answer for a known and an unknown account; wrong passwords in a row slowed, refused or locked. Check the same by hand on password reset, signup and one-time codes."}
+      - id: SEC-14
+        severity: major
+        check: {method: auto, tool: dast_scan}
+        applies_if: [has_backend_or_public]
+        label: {fr: "Scan passif de l'application sans alerte haute ni moyenne", en: "Passive scan of the running app with no high or medium alert"}
+        verify: {fr: "zap.json (OWASP ZAP, scan de base) : aucune alerte haute ; chaque alerte moyenne corrigée ou expliquée. Un scan propre veut dire « rien trouvé par cet outil », pas « sûr ».", en: "zap.json (OWASP ZAP baseline): no high alert; each medium alert fixed or explained. A clean scan means \"nothing found by this tool\", not \"secure\"."}
+      - id: SEC-15
+        severity: major
+        check: {method: auto, tool: supply_scan}
+        label: {fr: "Chaîne d'approvisionnement verrouillée", en: "Supply chain locked down"}
+        verify: {fr: "supply.json : aucun « must » en échec (fichier de verrouillage commité, délai avant installation, scripts d'installation, actions de CI épinglées, permissions des workflows, fichiers .env).", en: "supply.json: no failed \"must\" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files)."}
+      - id: SEC-16
+        severity: minor
+        check: {method: inspect}
+        applies_if: [public_web]
+        label: {fr: "Un chercheur sait où signaler une faille", en: "A researcher knows where to report a flaw"}
+        verify: {fr: "/.well-known/security.txt en HTTPS avec Contact et Expires (date à venir, moins d'un an) ; une page dit quoi signaler, sur quel périmètre, et sous quel délai on répond.", en: "/.well-known/security.txt over HTTPS with Contact and Expires (future date, under a year); a page says what to report, in which scope, and how fast you answer."}
+      - id: SEC-17
+        severity: major
+        check: {method: manual}
+        applies_if: [has_payments]
+        label: {fr: "Test d'intrusion par une personne indépendante avant les premiers clients payants", en: "Penetration test by an independent person before the first paying customers"}
+        verify: {fr: "Rapport daté d'un testeur extérieur à l'équipe, périmètre signé, failles corrigées et retestées. Les outils automatiques ne couvrent ni la logique métier ni les attaques enchaînées.", en: "Dated report from a tester outside the team, signed scope, flaws fixed and retested. Automatic tools cover neither business logic nor chained attacks."}
 
   - id: privacy
     code: PRV
