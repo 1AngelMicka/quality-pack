@@ -1,6 +1,6 @@
 {
   "name": "shipwright",
-  "description": "Build and audit web projects across 37 quality domains, with two scores: experience and engineering. Construire et auditer des projets web sur 37 domaines qualité, avec deux notes : expérience et technique.",
+  "description": "Shipwright: from the idea to the launch, with proof at every step. Build skills, played tasks, measured rendering and audits across 37 domains. De l'idée au lancement, avec la preuve à chaque étape.",
   "owner": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"
@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "sw",
-      "description": "Shipwright core: 37-domain referential, two scores (experience, engineering), key tasks played on phone and desktop, build skills, /sw:kickoff, /sw:audit, /sw:fix. Socle de Shipwright : référentiel 37 domaines, deux notes (expérience, technique), tâches clés jouées sur téléphone et ordinateur, skills de construction, /sw:kickoff, /sw:audit, /sw:fix.",
+      "description": "Shipwright: takes a site, web app, SaaS, desktop or mobile app from the idea to the launch. Stages with a gate each, build skills across 37 domains, key tasks played on phone and desktop, security tried, rendering measured, two scores with evidence. /sw:kickoff, /sw:audit, /sw:fix. Shipwright : mène un site, une application web, un SaaS, une application de bureau ou mobile de l'idée au lancement, avec la preuve à chaque étape.",
       "version": "0.8.0",
       "source": "./plugins/core",
       "author": {

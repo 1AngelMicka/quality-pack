@@ -32,7 +32,7 @@ _SCORING, _CHECKS, _GROUPS = R.load()
 N_DOMAINS = sum(len(g["domains"]) for g in _GROUPS)
 
 PLUGINS = {
-    "core": {"name": "sw", "description": f"Shipwright core: {N_DOMAINS}-domain referential, two scores (experience, engineering), key tasks played on phone and desktop, build skills, /sw:kickoff, /sw:audit, /sw:fix. Socle de Shipwright : référentiel {N_DOMAINS} domaines, deux notes (expérience, technique), tâches clés jouées sur téléphone et ordinateur, skills de construction, /sw:kickoff, /sw:audit, /sw:fix."},
+    "core": {"name": "sw", "description": f"Shipwright: takes a site, web app, SaaS, desktop or mobile app from the idea to the launch. Stages with a gate each, build skills across {N_DOMAINS} domains, key tasks played on phone and desktop, security tried, rendering measured, two scores with evidence. /sw:kickoff, /sw:audit, /sw:fix. Shipwright : mène un site, une application web, un SaaS, une application de bureau ou mobile de l'idée au lancement, avec la preuve à chaque étape."},
     "stack-nextjs": {"name": "sw-nextjs", "description": "Shipwright module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind de Shipwright."},
     "stack-node-api": {"name": "sw-node-api", "description": "Shipwright module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node de Shipwright."},
     "stack-expo": {"name": "sw-expo", "description": "Shipwright module for Expo and React Native apps (iOS, Android). Module Expo / React Native de Shipwright."},
@@ -125,7 +125,7 @@ def build_stack_skills():
 
 def build_manifests():
     mk = {"name": "shipwright",
-          "description": f"Build and audit web projects across {N_DOMAINS} quality domains, with two scores: experience and engineering. Construire et auditer des projets web sur {N_DOMAINS} domaines qualité, avec deux notes : expérience et technique.",
+          "description": f"Shipwright: from the idea to the launch, with proof at every step. Build skills, played tasks, measured rendering and audits across {N_DOMAINS} domains. De l'idée au lancement, avec la preuve à chaque étape.",
           "owner": AUTHOR, "plugins": []}
     for d, p in PLUGINS.items():
         pj = {"name": p["name"], "description": p["description"], "version": VERSION, "author": AUTHOR,

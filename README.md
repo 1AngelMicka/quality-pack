@@ -6,20 +6,25 @@
 
 **Français** · [English](README.en.md)
 
-Des plugins pour [Claude Code](https://claude.com/claude-code) qui font coder ton site ou ton application proprement dès le départ, l'auditent avec une note sur 10 domaine par domaine, et dépensent le moins de tokens possible pour y arriver.
+Des plugins pour [Claude Code](https://claude.com/claude-code) qui accompagnent un projet **de l'idée au lancement** : site vitrine, application web, SaaS, application de bureau ou mobile. Shipwright donne à Claude l'ordre de travail, les règles de chaque métier, et surtout de quoi **prouver** chaque étape : les tâches sont jouées, la sécurité est essayée, le rendu est mesuré.
 
-- **37 domaines, 247 vérifications** : produit, UX, ergonomie, UI, contenu générique « fait par IA », accessibilité, sécurité, RGPD, performance, SEO, paiements, comptes et abonnements d'un SaaS, application mobile, finitions, identité, déploiement, sauvegardes, etc.
-- **Tes vraies tâches, jouées sur téléphone et sur ordinateur** : tu déclares 2 à 5 tâches clés (« faire un collage de 4 photos ») ; l'audit les joue pas à pas, prend une capture et lance axe-core à chaque étape, et mesure l'effort : pages à faire défiler, réglages visibles à la fois, aperçu et action principale à portée. L'interface n'est plus jugée sur un écran vide.
-- **Deux notes** : **Expérience** (ce que vit l'utilisateur) et **Technique et exploitation** (ce qui garde le projet sûr et en marche), chacune avec ses propres points bloquants. Une sonde de panne manquante ne masque plus l'état de l'interface, et inversement.
-- **Une preuve pour chaque vérification** : un fichier et une ligne, le résultat d'une commande ou une capture d'écran. Un point déclaré réussi sans preuve ne compte pas.
-- **Concevoir, pas seulement auditer** : trois skills design. Le premier organise un écran (modèles par type de tâche, téléphone et ordinateur). Le deuxième passe des références aimées à des tokens vérifiés (OKLCH, format DTCG, contraste dans chaque thème). Le troisième conseille sur un écran existant (`/sw:design-review`). Chaque conseil se termine par une mesure.
-- **La sécurité essayée, pas seulement relue** : l'audit joue le contrôle d'accès avec deux comptes (un client peut-il lire les données d'un autre ?), teste la connexion, lance un scan passif OWASP ZAP et lit la chaîne d'approvisionnement du dépôt. Un modèle de menaces est écrit dès le cadrage.
-- **De zéro au lancement** : le skill `from-zero` donne les étapes d'un SaaS ou d'une webapp et ce qui doit être vrai avant de passer à la suivante ; `saas-foundations` construit ce qui coûte cher à ajouter tard (cloisonnement entre clients, rôles, abonnements, emails de service) ; `mobile-app` couvre l'app iOS et Android jusqu'aux blocages des stores.
-- **Les finitions mesurées** : `sw craft` vérifie dans un vrai navigateur ce qui sépare un produit soigné d'un premier jet (focus clavier, survol, typographie, images, page 404, image de partage…), et le référentiel refuse tout témoignage, chiffre ou logo de client inventé.
-- **Aller au-delà du correct** : une banque de références par type de site (ce que les visiteurs attendent, des sites reconnus comme excellents et pourquoi), des versions comparées à l'aveugle par un jury avant que tu choisisses, un directeur artistique qui relit les captures, et des passes de finition obligatoires (réseau lent, serveur en panne, textes longs, clavier seul).
-- **Une note honnête** : un point bloquant ouvert (un secret qui fuit, un parcours principal cassé) plafonne la note dont il relève. Un ergonome passe en revue les tâches clés et une contre-vérification relit les critères réussis sur les captures.
-- **Économe en tokens** : règles chargées à la demande, sorties de commandes compactes, audits incrémentaux, graphe du code avec [Graphify](https://github.com/Graphify-Labs/graphify). Voir [Économie de tokens](#économie-de-tokens).
-- **Gratuit, open source, sans télémétrie**, en français et en anglais.
+**Ce qu'il fait**
+
+- **Donne le chemin.** Le skill `from-zero` découpe un projet en étapes, chacune avec une condition de passage que l'on peut montrer : cadrage, socle (comptes, cloisonnement, menaces), première tâche de bout en bout, direction visuelle, écrans, paiement, finitions, lancement.
+- **Construit ce qui coûte cher à rattraper.** Cloisonnement entre clients, rôles, abonnements, emails de service, référencement, règles des stores et des applications de bureau : un skill par sujet, chargé quand il sert.
+- **Conçoit, puis compare.** Organisation des écrans par type de tâche, direction visuelle tirée de tes références, banque de 197 sites reconnus comme excellents pour 26 types de sites, plusieurs versions d'un écran départagées à l'aveugle par un jury avant que tu choisisses.
+- **Joue au lieu de relire.** Tes tâches clés sur téléphone et ordinateur, le contrôle d'accès avec deux comptes, la connexion, les webhooks, le cycle d'abonnement, l'écran avec un réseau lent ou un serveur en panne.
+- **Mesure le rendu dans un vrai navigateur.** Espacement, finitions, rendu générique « fait par IA », chargement sur téléphone ralenti, écart avec tes références.
+- **Refuse l'inventé.** Aucun témoignage, chiffre, logo de client ou badge sans un fait que tu as fourni.
+- **Note honnêtement.** 37 domaines, 247 critères, deux notes sur 10 (Expérience ; Technique et exploitation). Chaque critère exige une preuve, et un point bloquant ouvert plafonne la note.
+- **Reste économe et discret.** Règles chargées à la demande, sorties compactes, audits incrémentaux. Gratuit, open source, sans télémétrie, en français et en anglais.
+
+**Ce qu'il ne fait pas, et le dit**
+
+- Il ne sait pas si quelqu'un veut de ton produit.
+- Il ne remplace pas le fait de regarder cinq vraies personnes l'utiliser (le skill `user-testing` prépare ce test).
+- Il ne remplace pas un test d'intrusion indépendant avant les premiers clients payants.
+- Ses skills les plus récents n'ont pas encore été éprouvés sur beaucoup de projets réels : prends ses notes comme un garde-fou, pas comme un label.
 
 ## Documentation en ligne et agents IA
 
@@ -29,16 +34,37 @@ Des plugins pour [Claude Code](https://claude.com/claude-code) qui font coder to
 ## Le principe
 
 ```
-/sw:kickoff  →  tu codes (les règles s'appliquent toutes seules)  →  /sw:audit  →  /sw:fix  →  /sw:audit
+/sw:kickoff  →  tu construis, étape par étape (from-zero)  →  /sw:audit  →  /sw:fix  →  lancement
 ```
 
-| Étape | Ce qui se passe |
+| Moment | Ce qui se passe |
 | --- | --- |
-| `/sw:kickoff` | Claude lit ton projet, pose quelques questions (pour qui, quel type de projet, ce qu'il fait, le style voulu, les tâches clés), écrit les parcours que l'audit jouera, propose les outils compagnons utiles et écrit `.quality/project.json` et `DESIGN.md`. |
-| Pendant que tu codes | Claude suit les règles des domaines qu'il touche et celles de ta techno. Un garde-fou empêche d'écrire un secret dans le code. |
-| `/sw:audit` | Scans automatiques (code, en-têtes HTTP, SEO, rendu navigateur à 6 largeurs), tâches clés jouées sur téléphone et ordinateur, puis un auditeur par groupe de domaines en parallèle, un ergonome pour l'organisation des écrans, et une contre-vérification. Par défaut, seul ce qui a changé depuis le dernier audit est revérifié. Résultat : `.quality/AUDIT.md` avec les deux notes, la note de chaque domaine, la revue d'ergonomie, l'évolution et les correctifs par priorité. |
+| `/sw:kickoff` | Claude lit ton projet et pose quelques questions : pour qui, quel type de projet, les tâches clés, le style voulu, les comptes de test, les menaces, les recherches visées. Il écrit `.quality/project.json`, `DESIGN.md` et le modèle de menaces. |
+| Pendant que tu construis | Le skill `from-zero` dit où en est le projet et ce qui doit être vrai avant l'étape suivante. Claude charge les règles des domaines qu'il touche et le skill du sujet en cours (écrans, SaaS, sécurité, mobile, bureau, finitions, référencement). Un garde-fou empêche d'écrire un secret dans le code. |
+| À chaque étape | Les commandes `sw` prouvent ce qui vient d'être fait : tâches jouées, accès essayé, rendu mesuré. Un échec arrête l'étape, pas seulement un rapport. |
+| `/sw:audit` | La vue d'ensemble : scans automatiques, tâches clés jouées sur téléphone et ordinateur, un auditeur par groupe de domaines, un ergonome, une contre-vérification. Par défaut, seul ce qui a changé depuis le dernier audit est revérifié. Résultat : deux notes, des preuves, des priorités. |
 | `/sw:fix` | Corrige les problèmes dans l'ordre, les points bloquants d'abord, et vérifie chaque correction. |
 | `/sw:handoff` | Note où en est la tâche, pour que la session suivante reprenne sans réexplorer le projet. |
+
+## Le chemin, étape par étape
+
+C'est le skill `from-zero` qui le tient. Chaque étape se termine par quelque chose que l'on peut montrer, pas par une impression.
+
+| # | Étape | Ce qui doit être vrai avant de continuer |
+| --- | --- | --- |
+| 0 | Promesse et preuve | Une phrase : pour qui, quel problème, quel résultat. Au moins un signe que quelqu'un en veut. |
+| 1 | Cadrage | `/sw:kickoff` : profil, tâches clés, ce qui est hors périmètre. |
+| 2 | Socle | Modèle de client et comptes de test ; `sw access` passe sur la première ressource ; modèle de menaces validé ; chaîne d'approvisionnement verrouillée. |
+| 3 | Première tâche de bout en bout | La tâche principale marche avec de vraies données, sur téléphone et ordinateur (`sw flows`). |
+| 4 | Direction visuelle | Attentes du type de site lues (`sw bank`), références mesurées, direction choisie par toi, polices et icônes sous licence notée. |
+| 5 | Écrans | Chaque tâche clé dans ses budgets d'effort ; espacement sans défaut majeur (`sw deslop`). |
+| 6 | Paiement | Règles écrites ; cycle d'abonnement joué (`sw billing`) ; webhooks forgés refusés ; résiliation en trois étapes. |
+| 7 | Meilleure version, puis finitions | Écrans phares choisis parmi plusieurs versions ; `sw craft` et `sw stress` sans défaut bloquant sur chaque écran clé ; chaque chiffre relié à un fait. |
+| 8 | Application mobile ou de bureau | Tâches jouées sur appareil ou dans la vraie fenêtre ; blocages de publication levés. |
+| 9 | Personnes | Cinq personnes de la cible ont fait les tâches clés sans aide. |
+| 10 | Lancement | Pages prêtes pour la recherche (`sw seo`), audit complet sans point bloquant, sauvegardes restaurées une fois, alertes qui arrivent à quelqu'un. |
+
+Un prototype à montrer peut sauter des étapes ; le skill dit alors ce qui manque pour un vrai lancement.
 
 ## Installation
 
@@ -198,7 +224,7 @@ Sept skills se chargent quand Claude dessine ou retouche une interface :
 
 Le rendu « fait par IA » se mesure par signaux pondérés (police par défaut, violet, dégradés, trois cartes identiques, badge au-dessus du titre, émojis en guise d'icônes, formules creuses…). Un signal seul n'est jamais un défaut, et les écrans d'application (mode `operate`) ne sont jamais pénalisés parce qu'ils sont conventionnels. Les sources sont listées dans [plugins/core/SOURCES.md](plugins/core/SOURCES.md).
 
-## SaaS, sécurité et application mobile
+## SaaS, sécurité, référencement, applications de bureau et mobile
 
 | Skill | Ce qu'il fait | Ce qu'il vérifie |
 | --- | --- | --- |

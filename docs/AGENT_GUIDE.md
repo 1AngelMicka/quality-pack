@@ -4,7 +4,7 @@ You are an AI agent helping a user install, configure or use shipwright. Follow 
 
 ## What it is, in one paragraph
 
-shipwright is a set of Claude Code plugins. While the user codes, it gives Claude build rules across 28 quality domains. On demand, it audits the project (247 checks, each with evidence), plays the user's key tasks on a phone and a desktop, and writes a report with two scores out of 10 (experience; engineering and operations), with fixes by priority. It also reduces token usage. It is distributed as a Claude Code **plugin marketplace**, not as an npm package: never try `npm install shipwright`.
+Shipwright is a set of Claude Code plugins that take a project from the idea to the launch: showcase site, web app, SaaS, desktop or mobile app. It gives Claude the order of work (the `from-zero` skill: stages with a gate each), build rules across 37 domains, and commands that prove each step (key tasks played on a phone and a desktop, access control tried with two accounts, rendering measured in a real browser). On demand it audits the project (247 criteria, each with evidence) and writes a report with two scores out of 10 (experience; engineering and operations), with fixes by priority. It keeps token usage low. It was called quality-pack until version 0.7, and its commands were `/qp:…`. It is distributed as a Claude Code plugin marketplace, never through npm.
 
 ## 0. Find out where the user is
 

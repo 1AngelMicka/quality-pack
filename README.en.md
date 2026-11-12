@@ -6,20 +6,25 @@
 
 [Français](README.md) · **English**
 
-Plugins for [Claude Code](https://claude.com/claude-code) that make Claude build your website or app properly from the start, audit it with a score out of 10 domain by domain, and spend as few tokens as possible doing it.
+Plugins for [Claude Code](https://claude.com/claude-code) that take a project **from the idea to the launch**: showcase site, web app, SaaS, desktop or mobile app. Shipwright gives Claude the order of work, the rules of each trade, and above all the means to **prove** each step: tasks are played, security is tried, the rendering is measured.
 
-- **37 domains, 247 checks**: product, UX, ergonomics, UI, generic "AI-made" content, accessibility, security, privacy, performance, SEO, payments, the accounts and subscriptions of a SaaS, mobile apps, finish, identity, deployment, backups and more.
-- **Your real tasks, played on a phone and a desktop**: you declare 2 to 5 key tasks ("make a collage from 4 photos"); the audit plays them step by step, takes a screenshot and runs axe-core at every step, and measures the effort: pages to scroll, settings shown at once, preview and main action within reach. The interface is no longer judged on an empty screen.
-- **Two scores**: **Experience** (what the user lives) and **Engineering and operations** (what keeps the project safe and running), each with its own blockers. A missing uptime probe no longer hides how the interface fares, and the other way round.
-- **Evidence for every check**: a file and line, a command output or a screenshot. A check claimed as passed without evidence does not count.
-- **Design, not only audit**: three design skills. One organises a screen (patterns per task, phone and desktop). One turns the references a client likes into checked tokens (OKLCH, DTCG format, contrast in every theme). One advises on an existing screen (`/sw:design-review`). Every piece of advice ends with a measure.
-- **Security tried, not only read**: the audit plays access control with two accounts (can one customer read another's data?), probes the login, runs a passive OWASP ZAP scan and reads the repository's supply chain. A threat model is written at kickoff.
-- **From zero to launch**: the `from-zero` skill gives the stages of a SaaS or web app and what must be true before moving on; `saas-foundations` builds what is costly to add late (isolation between customers, roles, subscriptions, service emails); `mobile-app` covers the iOS and Android app up to the store blockers.
-- **Finish, measured**: `sw craft` checks in a real browser what separates a cared-for product from a first draft (keyboard focus, hover, typography, images, 404 page, share image…), and the referential refuses any invented testimonial, figure or customer logo.
-- **Beyond correct**: a reference bank per type of site (what visitors expect, sites recognised as excellent and why), versions compared blind by a jury before you choose, an art director who reads the screenshots, and mandatory finishing passes (slow network, failing server, long texts, keyboard only).
-- **Honest scores**: an open blocker (a leaked secret, a broken main flow) caps the score it belongs to. An ergonomist reviews the key tasks and a counter-check re-reads the passed criteria on the screenshots.
-- **Token-frugal**: rules loaded on demand, compact command outputs, incremental audits, a code graph with [Graphify](https://github.com/Graphify-Labs/graphify). See [Token economy](#token-economy).
-- **Free, open source, no telemetry**, in English and French.
+**What it does**
+
+- **Gives the path.** The `from-zero` skill splits a project into stages, each with a gate that can be shown: kickoff, foundations (accounts, isolation, threats), first task end to end, visual direction, screens, payment, finish, launch.
+- **Builds what is costly to retrofit.** Isolation between customers, roles, subscriptions, service emails, search, store rules and desktop apps: one skill per subject, loaded when it is needed.
+- **Designs, then compares.** Screen organisation per kind of task, a visual direction drawn from your references, a bank of 197 sites recognised as excellent across 26 types of site, several versions of a screen ranked blind by a jury before you choose.
+- **Plays instead of reading.** Your key tasks on phone and desktop, access control with two accounts, login, webhooks, the subscription life cycle, the screen with a slow network or a failing server.
+- **Measures the rendering in a real browser.** Spacing, finish, generic "AI-made" look, loading on a throttled phone, the gap to your references.
+- **Refuses what is invented.** No testimonial, figure, customer logo or badge without a fact you supplied.
+- **Scores honestly.** 37 domains, 247 criteria, two scores out of 10 (Experience; Engineering and operations). Every criterion needs evidence, and an open blocker caps the score.
+- **Stays frugal and quiet.** Rules loaded on demand, compact outputs, incremental audits. Free, open source, no telemetry, in English and French.
+
+**What it does not do, and says so**
+
+- It does not know whether anyone wants your product.
+- It does not replace watching five real people use it (the `user-testing` skill prepares that test).
+- It does not replace an independent penetration test before the first paying customers.
+- Its most recent skills have not yet been tried on many real projects: read its scores as a guard rail, not as a label.
 
 ## Online docs and AI agents
 
@@ -29,16 +34,37 @@ Plugins for [Claude Code](https://claude.com/claude-code) that make Claude build
 ## How it works
 
 ```
-/sw:kickoff  →  you code (rules apply automatically)  →  /sw:audit  →  /sw:fix  →  /sw:audit
+/sw:kickoff  →  you build, stage by stage (from-zero)  →  /sw:audit  →  /sw:fix  →  launch
 ```
 
-| Step | What happens |
+| Moment | What happens |
 | --- | --- |
-| `/sw:kickoff` | Claude reads your project, asks a few questions (who it is for, what kind of project, what it does, the look you want, the key tasks), writes the flows the audit will play, suggests useful companion tools and writes `.quality/project.json` and `DESIGN.md`. |
-| While you code | Claude follows the rules of the domains it touches and of your stack. A guard blocks secrets from being written into code. |
-| `/sw:audit` | Automatic scans (code, HTTP headers, SEO, browser at 5 screen widths), key tasks played on phone and desktop, then one auditor per group of domains in parallel, an ergonomist for how screens are organised, and a counter-check. By default, only what changed since the last audit is checked again. You get `.quality/AUDIT.md`: the two scores, score per domain, ergonomics review, trend, fixes by priority. |
-| `/sw:fix` | Fixes the issues in order, blockers first, and checks each fix. |
+| `/sw:kickoff` | Claude reads your project and asks a few questions: for whom, which kind of project, the key tasks, the look you want, the test accounts, the threats, the target searches. It writes `.quality/project.json`, `DESIGN.md` and the threat model. |
+| While you build | The `from-zero` skill says where the project stands and what must be true before the next stage. Claude loads the rules of the domains it touches and the skill of the subject at hand (screens, SaaS, security, mobile, desktop, finish, search). A guard blocks secrets written in code. |
+| At each stage | The `sw` commands prove what was just done: tasks played, access tried, rendering measured. A failure stops the stage, not just a report. |
+| `/sw:audit` | The overall view: automatic scans, key tasks played on phone and desktop, one auditor per group of domains, an ergonomist, a counter-check. By default only what changed since the last audit is re-checked. Result: two scores, evidence, priorities. |
+| `/sw:fix` | Fixes issues in order, blockers first, and verifies each fix. |
 | `/sw:handoff` | Notes where the task stands, so the next session resumes without exploring the project again. |
+
+## The path, stage by stage
+
+The `from-zero` skill holds it. Each stage ends with something that can be shown, not with an impression.
+
+| # | Stage | What must be true before going on |
+| --- | --- | --- |
+| 0 | Promise and evidence | One sentence: for whom, which problem, which outcome. At least one sign that someone wants it. |
+| 1 | Kickoff | `/sw:kickoff`: profile, key tasks, what is out of scope. |
+| 2 | Foundations | Customer model and test accounts; `sw access` passes on the first resource; threat model valid; supply chain locked down. |
+| 3 | First task end to end | The main task works with real data, on phone and desktop (`sw flows`). |
+| 4 | Visual direction | The site type's expectations read (`sw bank`), references measured, direction chosen by you, fonts and icons with their licences recorded. |
+| 5 | Screens | Every key task within its effort budgets; spacing with no major defect (`sw deslop`). |
+| 6 | Payment | Rules written; subscription life cycle played (`sw billing`); forged webhooks refused; cancellation in three steps. |
+| 7 | Best version, then finish | The screens that carry the product chosen among several versions; `sw craft` and `sw stress` with no blocking defect on every key screen; every figure traced to a fact. |
+| 8 | Mobile or desktop app | Tasks played on a device or in the real window; release blockers cleared. |
+| 9 | People | Five people from the audience did the key tasks unaided. |
+| 10 | Launch | Pages ready for search (`sw seo`), full audit with no blocker, backups restored once, alerts that reach someone. |
+
+A prototype to show people may skip stages; the skill then says what is missing for a real launch.
 
 ## Install
 
@@ -198,7 +224,7 @@ Seven skills load when Claude designs or changes an interface:
 
 The generic "AI-made" look is measured by weighted signals (default font, violet, gradients, three identical cards, a badge above the headline, emoji as icons, hollow wording…). One signal alone is never a defect, and app screens (`operate` mode) are never penalised for being conventional. Sources are listed in [plugins/core/SOURCES.md](plugins/core/SOURCES.md).
 
-## SaaS, security and mobile app
+## SaaS, security, search, desktop and mobile apps
 
 | Skill | What it does | What it checks |
 | --- | --- | --- |
