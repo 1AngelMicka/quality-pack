@@ -33,6 +33,9 @@
 //                                            case, every abuse case a response and a test
 //   node qp.mjs mobile flows [flow-id...]    Installed app: turn project.json › mobile.flows into Maestro flows (.maestro/qp/)
 //                                            and play them on the running emulator, simulator or device (mobile.json)
+//   node qp.mjs mobile audit                 Installed app, Android: the screen shown on the running device or emulator, read with adb:
+//                                            touch targets, controls without a name, crowded targets; screenshots at 200 % text
+//                                            size and in dark theme (mobile-audit.json)
 //   node qp.mjs mobile check                 Installed app: release blockers read from the project (target API, debuggable,
 //                                            cleartext, privacy manifest, WebView, link files, deletion page) (mobile-check.json)
 //   node qp.mjs desktop check                Desktop app (Tauri, Electron): what blocks or weakens a release, read from the project:
@@ -42,6 +45,9 @@
 //                                            weight of the page and of its scripts, requests (perf.json)
 //   node qp.mjs webhooks [--base URL]        Webhook endpoints of project.json › webhooks: an unsigned or wrongly signed event
 //                                            must be refused (webhooks.json). Local or staging only
+//   node qp.mjs billing [--wait seconds]     Subscription life cycle played in Stripe's test mode with a test clock: trial, first
+//                                            payment, declined renewal, cancellation; the app is asked what it believes at each
+//                                            stage (billing.json). Needs a Stripe TEST key in the environment
 //   node qp.mjs facts <url> [url...]         Figures, quotes and customer names shown on public pages, each to be traced to
 //                                            .quality/facts.json (facts.json in the run)
 //   node qp.mjs record <flow-id> [--name "…"] [--start /path] [--device desktop|mobile] [--from recorded.js]
@@ -167,7 +173,7 @@ const EVIDENCE = { placeholder_scan: "scan.json", slop_wording_scan: "scan.json"
   stress_run: "stress.json (per screen: summary.must_failed, should_failed, screenshots in stress/)",
   seo_pages: "seo.json (summary.must_failed, should_failed, keywords, pages)",
   desktop_release_scan: "desktop-check.json (summary.must_failed, should_failed, not_covered)", perf_run: "perf.json (per page: summary.must_failed, should_failed, measures)",
-  webhook_probe: "webhooks.json (summary.must_failed, checks)", facts_scan: "facts.json (summary.untraced, claims per page)" };
+  webhook_probe: "webhooks.json (summary.must_failed, checks)", billing_run: "billing.json (stages, summary.app_disagrees, stripe_unexpected)", facts_scan: "facts.json (summary.untraced, claims per page)" };
 const AGENTS = { ergonomics: "qp:ergonomist" };
 
 async function plan(scope, run, incremental = false) {
@@ -542,6 +548,14 @@ async function main() {
         if (result.summary.must_failed.length) process.exitCode = 2;
         return;
       }
+      if (sub === "audit") {
+        const { mobileAudit } = await import("./lib/mobile-audit.mjs");
+        const result = mobileAudit({ outDir: d, root: cwd });
+        if (result.checks) { mkdirSync(d, { recursive: true }); writeFileSync(join(d, "mobile-audit.json"), JSON.stringify(result, null, 2)); }
+        out(result);
+        if (result.errors?.length || result.summary?.must_failed.length) process.exitCode = 2;
+        return;
+      }
       if (sub === "flows") {
         if (flag("check")) { const v = validateMobile(project); return out({ ok: !v.errors.length, errors: v.errors, flows: v.flows.map((f) => ({ id: f.id, name: f.name, steps: f.steps.length })) }); }
         const result = playMobileFlows(project, { root: cwd, outDir: d, only: ids });
@@ -550,7 +564,7 @@ async function main() {
         if (result.errors?.length || result.summary?.failed.length) process.exitCode = 2;
         return;
       }
-      die("Usage: qp.mjs mobile flows [flow-id...] [--check] | qp.mjs mobile check");
+      die("Usage: qp.mjs mobile flows [flow-id...] [--check] | qp.mjs mobile check | qp.mjs mobile audit");
     }
     case "desktop": {
       const { desktopChecks } = await import("./lib/desktop.mjs");
@@ -597,6 +611,18 @@ async function main() {
       if (project && result.pages) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "facts.json"), JSON.stringify(result, null, 2)); }
       out(result);
       if (result.summary?.untraced) process.exitCode = 2;
+      return;
+    }
+    case "billing": {
+      const { playBilling } = await import("./lib/billing.mjs");
+      const project = requireProject();
+      const run = currentRun();
+      // The Stripe address can only be replaced by a local one, for the pack's own tests.
+      const local = process.env.QP_STRIPE_API && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(process.env.QP_STRIPE_API) ? process.env.QP_STRIPE_API : undefined;
+      const result = await playBilling(project, { apiBase: local, wait: Number(opt("wait", "20")) * 1000 });
+      if (result.stages?.length) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "billing.json"), JSON.stringify(result, null, 2)); }
+      out(result);
+      if (result.errors?.length || result.summary?.must_failed.length) process.exitCode = 2;
       return;
     }
     case "browser-setup": {

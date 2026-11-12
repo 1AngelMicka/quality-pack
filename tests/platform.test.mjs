@@ -161,3 +161,33 @@ test("facts: figures, quotes, customer names and badges on a page must trace to 
   assert.deepEqual(some.out.summary.facts_without_source, ["undocumented"]);
   assert.equal(some.code, 2);
 });
+
+test("mobile audit: small, unnamed and crowded touch targets are read from the Android view hierarchy", async () => {
+  const { parseHierarchy, auditHierarchy } = await lib("mobile-audit.mjs");
+  // 420 dpi: 1 dp = 2.625 px. A 48 dp target is 126 px.
+  const node = (cls, bounds, extra = "", inner = "") => `<node class="android.widget.${cls}" package="com.example.app" bounds="${bounds}" enabled="true" ${extra}>${inner}</node>`;
+  const xml = `<?xml version='1.0'?><hierarchy rotation="0">${node("FrameLayout", "[0,0][1080,2340]", 'clickable="false"',
+    node("Button", "[40,200][400,340]", 'clickable="true" text="Save &amp; send"') +
+    node("ImageButton", "[420,200][480,260]", 'clickable="true" content-desc=""') +
+    node("ImageButton", "[485,200][545,260]", 'clickable="true" content-desc="Share"') +
+    node("LinearLayout", "[0,400][1080,600]", 'clickable="true"', node("TextView", "[40,420][600,480]", 'clickable="false" text="Notifications"')) +
+    node("ImageView", "[900,900][950,950]", 'clickable="true" content-desc="Close" resource-id="com.example.app:id/close"') +
+    node("RecyclerView", "[0,1000][1080,2000]", 'clickable="false"', node("LinearLayout", "[0,1980][1080,2000]", 'clickable="true"', node("TextView", "[40,1985][400,2000]", 'text="Cut row"'))))}</hierarchy>`;
+  const nodes = parseHierarchy(xml);
+  assert.equal(nodes.length, 10);
+  assert.equal(nodes[1].text, "Save & send");
+  const a = auditHierarchy(nodes, { density: 420 });
+  // The row cut by the bottom of its list is not counted.
+  assert.equal(a.targets, 5);
+  assert.equal(a.checks.tiny_targets.ok, false);
+  assert.match(a.checks.tiny_targets.samples.join(" | "), /ImageButton .*23×23 dp/);
+  assert.match(a.checks.tiny_targets.samples.join(" | "), /ImageView#close "Close" 19×19 dp/);
+  assert.equal(a.checks.unnamed_controls.ok, false);
+  assert.equal(a.checks.unnamed_controls.samples.length, 1);
+  assert.equal(a.checks.crowded_targets.ok, false);
+  assert.match(a.checks.crowded_targets.samples[0], /2 dp apart/);
+  // A row is named by the text inside it, and is a full-size target.
+  assert.ok(!JSON.stringify(a.checks).includes("Notifications"));
+  const fine = auditHierarchy(parseHierarchy(`<hierarchy>${node("Button", "[40,200][400,340]", 'clickable="true" text="Save"')}</hierarchy>`), { density: 420 });
+  assert.deepEqual(Object.values(fine.checks).map((c) => c.ok), [true, true, true, true]);
+});

@@ -81,6 +81,22 @@ Read [references/billing.md](references/billing.md) before the first checkout. T
 - Cancellation is online, three steps at most from the account, confirmed by email with the date it takes effect. In France this is the law for consumers (three-click cancellation); in the EU a withdrawal function is required for distance contracts.
 - Taxes are part of the build: collect the billing country and VAT number, configure the regime, and write down what the country's e-invoicing rules ask (a PDF from the payment provider is not always enough). This is not legal advice: tell the user to confirm with their accountant.
 
+**Play the life cycle.** Reading the handler does not show that access follows the subscription. With a Stripe test key in the environment (the user puts it there; never ask for it in chat, never write it in a file) and the app's webhook receiving events (`stripe listen --forward-to <webhook url>` on a local machine):
+
+```json
+"billing": { "price_id": "price_…", "trial_days": 14,
+  "probe": { "url": "http://localhost:3000/api/test/entitlement?customer={customer}",
+             "expect": { "trialing": { "access": true }, "active": { "access": true }, "past_due": { "access": true, "banner": "payment" }, "canceled": { "access": false } } } }
+```
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" billing
+```
+
+It creates a test clock and a test customer, starts the trial, moves time past the trial, switches to a card Stripe declines and moves past the renewal, then cancels. After each stage it reads the subscription's status at Stripe and asks the app's probe what that customer is entitled to; the two must agree. Everything is deleted with the test clock. It refuses any key that is not a test key. The probe is a small endpoint to add to the app, available on local and staging only. Not covered: plan changes and proration, refunds, tax, 3-D Secure, the emails.
+
+The signature check of the webhook itself is played with `qp webhooks`: an unsigned or wrongly signed event must be refused.
+
 ## 4. Service emails
 
 All of these exist before launch, in the product's voice and look, with a text version, sent from a domain with SPF, DKIM and DMARC aligned: email verification, password reset, invitation, receipt, payment failed (with a link to fix the card), trial ending, plan changed, cancellation (with the effective date), account deletion. Marketing email is separate and carries one-click unsubscribe.

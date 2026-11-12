@@ -605,6 +605,11 @@
    "fr": "Chargement mesuré sur un téléphone ralenti (qp perf) : plus grand affichage, saut de mise en page, temps de blocage, poids de la page et des scripts, requêtes",
    "en": "Loading measured on a throttled phone (qp perf): largest paint, layout shift, blocking time, weight of the page and of scripts, requests"
   },
+  "billing_run": {
+   "provider": "core",
+   "fr": "Cycle d'abonnement joué en mode test Stripe avec une horloge de test (qp billing) : essai, premier paiement, renouvellement refusé, résiliation ; l'application est interrogée à chaque étape",
+   "en": "Subscription life cycle played in Stripe's test mode with a test clock (qp billing): trial, first payment, declined renewal, cancellation; the app is asked at each stage"
+  },
   "webhook_probe": {
    "provider": "core",
    "fr": "Webhooks joués (qp webhooks) : un événement non signé ou mal signé doit être refusé. Local ou préproduction seulement",
@@ -5332,15 +5337,16 @@
        "id": "SUB-03",
        "severity": "blocker",
        "check": {
-        "method": "inspect"
+        "method": "auto",
+        "tool": "billing_run"
        },
        "label": {
         "fr": "Paiement échoué : email, bandeau dans l'app et délai de grâce écrit",
         "en": "Failed payment: email, in-app banner and a written grace period"
        },
        "verify": {
-        "fr": "Horloge de test avec une carte refusée : email avec lien pour corriger la carte, bandeau visible, accès maintenu pendant le délai annoncé puis coupé comme écrit.",
-        "en": "Test clock with a declined card: email with a link to fix the card, visible banner, access kept during the stated period then cut as written."
+        "fr": "billing.json (`qp billing`) : à chaque étape (essai, premier paiement, renouvellement refusé, résiliation) la réponse de l'application correspond à ce qu'attend project.json › billing.probe ; aucune étape où l'application contredit Stripe. Puis à la main : l'email avec lien pour corriger la carte, le bandeau visible, l'accès coupé comme écrit après le délai de grâce.",
+        "en": "billing.json (`qp billing`): at each stage (trial, first payment, declined renewal, cancellation) the app's answer matches what project.json › billing.probe expects; no stage where the app disagrees with Stripe. Then by hand: the email with a link to fix the card, the visible banner, access cut as written after the grace period."
        }
       },
       {

@@ -129,6 +129,8 @@ Your project keeps its `.quality/` folder; delete it if you no longer want it.
 | `node qp.mjs perf <url>` | Measure loading on a throttled phone: largest paint, layout shift, blocking time, weight of the page and of scripts |
 | `node qp.mjs facts <url>` | List the figures, quotes, customer names and badges shown, and check each is traced to `.quality/facts.json` |
 | `node qp.mjs webhooks` | Play the webhooks (local or staging): an unsigned or wrongly signed event must be refused |
+| `node qp.mjs billing` | Play the subscription life cycle in Stripe's test mode with a test clock: trial, first payment, declined renewal, cancellation; the app is asked at each stage |
+| `node qp.mjs mobile audit` | Android: read the screen shown on the emulator or device (touch targets, unnamed controls), with screenshots at 200 % text and in dark theme |
 | `node qp.mjs desktop check` · `flows --attach <port>` | Desktop app: read isolation, permissions, signing and updates from the project; play the key tasks in the real window |
 | `node qp.mjs threats` | Check the threat model (`.quality/threats.json`): entry points covered, a response and a test for each abuse case |
 | `node qp.mjs mobile flows` · `mobile check` | Installed app: play the key tasks with Maestro on an emulator or device; read from the project what blocks a release |

@@ -28,7 +28,10 @@ export async function shootVariants(name, urls, { root, cwd = root, mode = "oper
   const { craftAt } = await import("./craft.mjs");
   const { lookAt } = await import("./look.mjs");
   const craft = await craftAt(urls, { cwd, mode });
-  const look = await lookAt(urls, { cwd, mode });
+  // Same hollow-wording list as `qp look`, so that a variant's copy counts in its generic-look measure.
+  const { loadReferential } = await import("./ref.mjs");
+  const words = loadReferential().slop_words || {};
+  const look = await lookAt(urls, { cwd, mode, slopWords: [...(words.fr || []), ...(words.en || [])] });
   const variants = urls.map((url, i) => {
     const c = craft.pages?.[i], l = look.pages?.[i], p = prof.pages[i];
     return { letter: letterOf[i], error: p.error || c?.error || l?.error,

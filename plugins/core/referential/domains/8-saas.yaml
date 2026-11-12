@@ -102,9 +102,9 @@ domains:
         verify: {fr: "Appel direct de l'API au-delà de la limite (nombre de projets, de membres, d'usage) : refusé avec un message clair.", en: "Direct API call beyond the limit (projects, members, usage): refused with a clear message."}
       - id: SUB-03
         severity: blocker
-        check: {method: inspect}
+        check: {method: auto, tool: billing_run}
         label: {fr: "Paiement échoué : email, bandeau dans l'app et délai de grâce écrit", en: "Failed payment: email, in-app banner and a written grace period"}
-        verify: {fr: "Horloge de test avec une carte refusée : email avec lien pour corriger la carte, bandeau visible, accès maintenu pendant le délai annoncé puis coupé comme écrit.", en: "Test clock with a declined card: email with a link to fix the card, visible banner, access kept during the stated period then cut as written."}
+        verify: {fr: "billing.json (`qp billing`) : à chaque étape (essai, premier paiement, renouvellement refusé, résiliation) la réponse de l'application correspond à ce qu'attend project.json › billing.probe ; aucune étape où l'application contredit Stripe. Puis à la main : l'email avec lien pour corriger la carte, le bandeau visible, l'accès coupé comme écrit après le délai de grâce.", en: "billing.json (`qp billing`): at each stage (trial, first payment, declined renewal, cancellation) the app's answer matches what project.json › billing.probe expects; no stage where the app disagrees with Stripe. Then by hand: the email with a link to fix the card, the visible banner, access cut as written after the grace period."}
       - id: SUB-04
         severity: major
         check: {method: inspect}

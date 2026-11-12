@@ -95,6 +95,14 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" mobile flows           # writes .mae
 
 The command writes one Maestro flow per task and plays them on the emulator, simulator or device that is running, with a screenshot after each step that changes the screen. It needs [Maestro](https://github.com/mobile-dev-inc/Maestro) (Apache-2.0; free CLI on your own devices, Java 17 or later) and a running device with the app installed. If Maestro is missing, the files are still written: ask the user before installing it. Never use Maestro's paid cloud.
 
+**Each screen, read from the device (Android).** With an emulator or a device running and the screen to check in front:
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" mobile audit
+```
+
+It needs only `adb` (no Maestro, no change to the app). It reads the screen's view hierarchy and reports touch targets under 24 dp (must) and under 48 dp (should), controls with no text or description for a screen reader (must), and small targets less than 8 dp apart. Then it takes the same screen at 200 % text size and in dark theme, and puts both settings back. Open each screen of the key tasks and run it again; read the two screenshots for cut or overlapping text. It does not measure contrast, reading order or gestures, and there is no equivalent for iOS from Windows or Linux.
+
 Then read the screenshots like the web ones (`design-review` skill), and add the passes a flow does not make by itself: keyboard open on each input screen, largest font size, dark theme (`{ "dark": true }`), a tablet, rotation.
 
 ## 4. Release blockers

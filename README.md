@@ -129,6 +129,8 @@ Ton projet garde son dossier `.quality/` ; supprime-le si tu n'en veux plus.
 | `node qp.mjs perf <url>` | Mesurer le chargement sur un téléphone ralenti : plus grand affichage, saut de mise en page, temps de blocage, poids de la page et des scripts |
 | `node qp.mjs facts <url>` | Relever les chiffres, citations, noms de clients et badges affichés, et vérifier que chacun est relié à `.quality/facts.json` |
 | `node qp.mjs webhooks` | Jouer les webhooks (local ou préproduction) : un événement non signé ou mal signé doit être refusé |
+| `node qp.mjs billing` | Jouer le cycle d'abonnement en mode test Stripe avec une horloge de test : essai, premier paiement, renouvellement refusé, résiliation ; l'application est interrogée à chaque étape |
+| `node qp.mjs mobile audit` | Android : lire l'écran affiché sur l'émulateur ou l'appareil (cibles tactiles, contrôles sans nom), avec captures en texte à 200 % et en thème sombre |
 | `node qp.mjs desktop check` · `flows --attach <port>` | Application de bureau : lire dans le projet l'isolation, les permissions, la signature et les mises à jour ; jouer les tâches clés dans la vraie fenêtre |
 | `node qp.mjs threats` | Vérifier le modèle de menaces (`.quality/threats.json`) : points d'entrée couverts, réponse et test pour chaque cas d'abus |
 | `node qp.mjs mobile flows` · `mobile check` | App installée : jouer les tâches clés avec Maestro sur émulateur ou appareil ; lire dans le projet ce qui bloque une publication |
