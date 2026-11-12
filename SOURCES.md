@@ -517,3 +517,11 @@ La banque (`plugins/core/bank/`) décrit, par type de site, des sites reconnus c
 Écartés : Mobbin, Refero, Pageflows (payants ou freemium), Lapa Ninja (bloque les robots), toute capture d'écran.
 
 Limites connues : les règles `expects` sont en majorité des règles de bon sens marquées non vérifiées ; la source d'une reconnaissance est souvent la page de catégorie et non la fiche du site ; les sites changent, la mesure et la calibration sont à refaire avant chaque version. Une première passe automatique (105 agents) n'avait vérifié que 4 familles de sites ; la banque vient d'une seconde passe ciblée, un agent par groupe de types, chaque site chargé avant d'être gardé.
+
+## Lot 5 — lien envoyé le 2026-11-12
+
+| Lien | Rôle | Licence | Statut |
+| --- | --- | --- | --- |
+| [GoogleChrome/modern-web-guidance](https://github.com/GoogleChrome/modern-web-guidance) | 228 guides sur les fonctions récentes de la plateforme web (dialog, popover, positionnement par ancre, container queries, view transitions, validation de formulaires, Core Web Vitals, sécurité), avec compatibilité navigateurs et solutions de repli ; commande `legacy-scan` pour repérer les anciens motifs | Apache-2.0 | proposé comme outil compagnon au kickoff ; ses guides ne sont pas copiés dans le pack, pour rester à jour |
+
+Lu le 2026-11-12 par l'API GitHub : dépôt créé en mars 2026, dernier envoi le 2026-11-10, non archivé, porté par les équipes Chrome, Edge, Firefox et MDN. Gratuit. Points d'attention : demande Node 22 ; chaque recherche lance son paquet avec `npx` ; le README ne dit rien d'une éventuelle télémétrie (non vérifié) ; la description de son skill demande à passer en premier sur toute tâche HTML ou CSS, ce que le pack ne suit pas. Le post X qui le signalait n'a pas été lu.

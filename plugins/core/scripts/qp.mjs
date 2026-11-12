@@ -755,13 +755,15 @@ async function main() {
       const { loadBank, listBank, measureBank, calibrateBank } = await import("./lib/bank.mjs");
       if (rest[0] === "calibrate") {
         const limit = Number(opt("limit", "0")) || 0;
-        if (!rest[1]) die("Usage: qp.mjs bank calibrate <type|all> [--limit N]");
-        return out(await calibrateBank(rest[1], { cwd, limit }));
+        const parallel = Number(opt("parallel", "4")) || 4;
+        if (!rest[1]) die("Usage: qp.mjs bank calibrate <type|all> [--limit N] [--parallel N]");
+        return out(await calibrateBank(rest[1], { cwd, limit, parallel }));
       }
       if (rest[0] === "measure") {
         const limit = Number(opt("limit", "0")) || 0;
-        if (!rest[1]) die("Usage: qp.mjs bank measure <type|all> [--limit N]");
-        return out(await measureBank(rest[1], { cwd, limit }));
+        const parallel = Number(opt("parallel", "4")) || 4;
+        if (!rest[1]) die("Usage: qp.mjs bank measure <type|all> [--limit N] [--parallel N]");
+        return out(await measureBank(rest[1], { cwd, limit, parallel }));
       }
       return out(listBank(loadBank(), rest[0]));
     }

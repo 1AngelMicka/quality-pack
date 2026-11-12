@@ -52,7 +52,19 @@ export function listBank(bank, type) {
     note: "Open two or three of these sites before designing: the descriptions say what to look at. They are references to learn from, never to copy." };
 }
 
-export async function measureBank(type, { cwd, limit = 0, dir = BANK_DIR } = {}) {
+// Run a page-measuring function on several slices of the list at once (one browser each), and give the pages
+// back in the order of the list. Measuring 200 sites one after the other takes hours; four at a time does not.
+export async function inParallel(urls, workers, fn) {
+  const n = Math.max(1, Math.min(workers, urls.length));
+  const slices = Array.from({ length: n }, (_, i) => urls.filter((_, j) => j % n === i));
+  const results = await Promise.all(slices.map((slice) => (slice.length ? fn(slice) : { available: true, pages: [] })));
+  const missing = results.find((r) => !r.available);
+  if (missing) return missing;
+  const byUrl = new Map(results.flatMap((r) => r.pages || []).map((p) => [p.url, p]));
+  return { ...results[0], pages: urls.map((u) => byUrl.get(u) || { url: u, error: "not measured" }) };
+}
+
+export async function measureBank(type, { cwd, limit = 0, dir = BANK_DIR, parallel = 4 } = {}) {
   const { profileAt, summarize, PROFILE_VERSION } = await import("./profile.mjs");
   const bank = loadBank(dir);
   const ids = type === "all" ? Object.keys(bank.types) : [type];
@@ -61,7 +73,7 @@ export async function measureBank(type, { cwd, limit = 0, dir = BANK_DIR } = {})
     const t = bank.types[id];
     if (!t) { out.push({ type: id, error: "unknown type" }); continue; }
     const urls = t.sites.map((s) => s.url).slice(0, limit || undefined);
-    const r = await profileAt(urls, { cwd });
+    const r = await inParallel(urls, parallel, (slice) => profileAt(slice, { cwd }));
     if (!r.available) return r;
     const ok = r.pages.filter((p) => !p.error && p.desktop && p.mobile);
     const file = join(dir, "profiles", `${id}.json`);
@@ -102,7 +114,7 @@ export function summarizeCalibration(pages, { mode } = {}) {
     frequent_must: Object.entries(craft).filter(([, k]) => k.level === "must" && k.n >= 10 && k.fail_rate >= 0.2).map(([id, k]) => `${id} (${Math.round(k.fail_rate * 100)} %)`).sort() };
 }
 
-export async function calibrateBank(type, { cwd, limit = 0, dir = BANK_DIR, file = CALIBRATION_FILE } = {}) {
+export async function calibrateBank(type, { cwd, limit = 0, dir = BANK_DIR, file = CALIBRATION_FILE, parallel = 4 } = {}) {
   const { craftAt } = await import("./craft.mjs");
   const { lookAt } = await import("./look.mjs");
   const bank = loadBank(dir);
@@ -114,11 +126,12 @@ export async function calibrateBank(type, { cwd, limit = 0, dir = BANK_DIR, file
     if (!t) return { errors: [`Unknown site type "${id}"`] };
     const urls = t.sites.map((s) => s.url).slice(0, limit || undefined);
     // The sites of the bank are public pages meant to convince or to be read: measured in "persuade" mode.
-    const craft = await craftAt(urls, { cwd, mode: "persuade", calibration: null });
+    const craft = await inParallel(urls, parallel, (slice) => craftAt(slice, { cwd, mode: "persuade", calibration: null }));
     if (!craft.available) return craft;
-    const look = await lookAt(urls, { cwd, mode: "persuade" });
+    const look = await inParallel(urls, parallel, (slice) => lookAt(slice, { cwd, mode: "persuade" }));
     urls.forEach((url, i) => {
       const c = craft.pages[i], l = look.pages?.[i];
+      if (!c || c.error === "not measured") { pages.push({ type: id, url, error: "not measured" }); return; }
       if (c?.error) { pages.push({ type: id, url, error: c.error }); return; }
       pages.push({ type: id, url, craft: { checks: Object.fromEntries(Object.entries(c.checks).map(([k, v]) => [k, { level: v.level, ok: v.ok }])) },
         look: l && !l.error ? { tier: l.tier, points: l.points, signals: l.counted } : null });
