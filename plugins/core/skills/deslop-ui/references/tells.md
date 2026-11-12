@@ -2,7 +2,7 @@
 
 None of these patterns is forbidden in itself. The problem is their presence by default, whatever the subject. For each one, ask: was this choice made for this app, or would it be the same in any other?
 
-## Measured by the audit (`qp deslop`)
+## Measured by the audit (`sw deslop`)
 
 | Rule | Pattern | Question to ask |
 | --- | --- | --- |
@@ -19,7 +19,7 @@ None of these patterns is forbidden in itself. The problem is their presence by 
 | `arrow-cta` | Arrow added to buttons | Is there real movement? |
 | `placeholder-copy` | Visible filler text | What is the real content? |
 
-`qp look` adds the page-level signals (default font, violet primary, three identical cards, badge above the headline, hollow wording) as weighted tiers, and the accent share and reduced-motion checks.
+`sw look` adds the page-level signals (default font, violet primary, three identical cards, badge above the headline, hollow wording) as weighted tiers, and the accent share and reduced-motion checks.
 
 ## To spot by eye
 

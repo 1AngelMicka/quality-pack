@@ -7,14 +7,14 @@ description: "Turns the sites and apps a client likes into a visual direction an
 
 A direction that holds is traced: a reference the client likes → a word → a principle → a token → a check. Taste does not encode reliably (each generation of "anti-generic" advice creates its own default look), so this skill keeps every choice tied to the client's brief and to a measure.
 
-CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below. Talk to the user in their language. Write the results into `DESIGN.md` (template: `${CLAUDE_PLUGIN_ROOT}/templates/DESIGN.md`) and token files.
+CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs"`, written `sw` below. Talk to the user in their language. Write the results into `DESIGN.md` (template: `${CLAUDE_PLUGIN_ROOT}/templates/DESIGN.md`) and token files.
 
 ## Before the references: the site type, and numbers
 
 Two commands turn "I like this site" into something that can be checked later.
 
-- `qp bank` lists site types (restaurant, online shop, SaaS marketing site, documentation…); `qp bank <type>` gives what visitors of that type expect, real sites recognised as excellent with what to look at on each, their shared traits, and what to avoid. Read it before asking the user for references, and offer two or three of its sites when the user has none. They are examples to learn from; nothing is copied from them.
-- `qp profile <url> <url> --save` measures the references the user names and writes `.quality/references.json`: type scale, number of typefaces, how much of the first screen is image, colour, empty space, density of controls, and the range the references share. Later, `qp gap <url>` lists where a screen of the project falls outside that range. A gap is a question to settle with the user (close it, or keep it and say why in `DESIGN.md`), never a defect by itself.
+- `sw bank` lists site types (restaurant, online shop, SaaS marketing site, documentation…); `sw bank <type>` gives what visitors of that type expect, real sites recognised as excellent with what to look at on each, their shared traits, and what to avoid. Read it before asking the user for references, and offer two or three of its sites when the user has none. They are examples to learn from; nothing is copied from them.
+- `sw profile <url> <url> --save` measures the references the user names and writes `.quality/references.json`: type scale, number of typefaces, how much of the first screen is image, colour, empty space, density of controls, and the range the references share. Later, `sw gap <url>` lists where a screen of the project falls outside that range. A gap is a question to settle with the user (close it, or keep it and say why in `DESIGN.md`), never a defect by itself.
 
 ## 1. Surface mode
 
@@ -67,9 +67,9 @@ How to build each family: colour in [references/color.md](references/color.md); 
 
 ## 6. Check, then write DESIGN.md
 
-1. `qp tokens`: every reference resolves, units and types are valid, tiers point downward, every text colour reaches 4.5:1 and every border, focus or state colour 3:1 against every background, in each theme, without rounding; colours outside sRGB have a fallback. Exit code 2 means something fails: fix the tokens, not the threshold.
+1. `sw tokens`: every reference resolves, units and types are valid, tiers point downward, every text colour reaches 4.5:1 and every border, focus or state colour 3:1 against every background, in each theme, without rounding; colours outside sRGB have a fallback. Exit code 2 means something fails: fix the tokens, not the threshold.
 2. Export the tokens (CSS variables, Tailwind `@theme`), and make sure components use only tokens.
-3. Once a screen exists: `qp look <url>`. In persuade mode the generic tier should be `low`; the execution checks (font sizes, families, radii, line length and height, targets) should pass.
+3. Once a screen exists: `sw look <url>`. In persuade mode the generic tier should be `low`; the execution checks (font sizes, families, radii, line length and height, targets) should pass.
 4. Update `DESIGN.md`: mood words and principles, references (look and organisation), tokens table, never-list, motion.
 
 ## Rules

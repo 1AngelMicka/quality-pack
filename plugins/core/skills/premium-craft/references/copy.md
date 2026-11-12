@@ -27,7 +27,7 @@ More rules, same sources:
 - The "30 seconds" in the headline above must be true and measured. If it is not, write the outcome without a number.
 - No customer words to draw on? Ask the user for support messages, reviews or interview notes before writing the headline (house setting).
 
-Measured: `qp craft` checks `label_case` (Title Case and sentence case mixed on buttons). By eye: every other row. Read each button aloud without its screen: does it still say what will happen?
+Measured: `sw craft` checks `label_case` (Title Case and sentence case mixed on buttons). By eye: every other row. Read each button aloud without its screen: does it still say what will happen?
 
 Sources: Vercel Web Interface Guidelines (https://vercel.com/design/guidelines), Anthropic `frontend-design` skill (https://github.com/anthropics/skills/tree/main/skills/frontend-design).
 
@@ -55,7 +55,7 @@ When there is no source:
 
 Signs of invented content to search for: lorem ipsum, "John Doe", "Jane Smith", "Acme", `example.com`, "Your Company", round statistics ("10,000+ teams", "99.9 %") with no row in the facts file, a copyright year that is not the current one.
 
-Measured: `qp deslop` flags visible filler text (`placeholder-copy`). By eye: compare each claim on the page with the facts file.
+Measured: `sw deslop` flags visible filler text (`placeholder-copy`). By eye: compare each claim on the page with the facts file.
 
 Sources: taste-skill (https://github.com/Leonxlnx/taste-skill) for the placeholder and invented-facts check; the facts file is a house rule.
 
@@ -78,7 +78,7 @@ A text can avoid every listed word and still read as generated, because of its s
 
 Sentence rhythm (house setting): generated text tends toward sentences of 8 to 20 words, all alike. Over ten sentences or more, a standard deviation of sentence length under about 4 words is a sign. Mix a 4-word sentence with a 22-word one.
 
-Measured: `qp look` flags `LOOK-TRIPLETS` (groups of three identical icon cards) and `LOOK-EMDASH` (more than 8 em dashes per 1,000 words, 15 in French, on pages of 150 words or more). Both thresholds are house settings. By eye: the rest.
+Measured: `sw look` flags `LOOK-TRIPLETS` (groups of three identical icon cards) and `LOOK-EMDASH` (more than 8 em dashes per 1,000 words, 15 in French, on pages of 150 words or more). Both thresholds are house settings. By eye: the rest.
 
 Sources: Wikipedia, "Signs of AI writing" (https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing; the first 100,000 of about 244,000 characters were read), Impeccable (https://impeccable.style/anti-patterns).
 
@@ -116,7 +116,7 @@ This list rests on a weak source: one commercial blog that sells a product, plus
 
 Many of these words are ordinary French ("ainsi", "de plus", "essentiel"). One use is not a defect. Three in a paragraph is a reason to rewrite.
 
-Measured: `qp scan` flags the pack's word list (`referential/slop-words.yaml`) in the source; `qp look` reports the same words on the rendered page as `LOOK-COPY`. By eye: whether a hit carries a fact.
+Measured: `sw scan` flags the pack's word list (`referential/slop-words.yaml`) in the source; `sw look` reports the same words on the rendered page as `LOOK-COPY`. By eye: whether a hit carries a fact.
 
 Sources: https://gpt-watermark-remover.com/fr/blog/mots-typiques-ia-eviter (commercial blog), https://digitad.ca/comment-savoir-texte-genere-par-chatgpt/ (read through a search summary only).
 
@@ -133,7 +133,7 @@ Sources: https://gpt-watermark-remover.com/fr/blog/mots-typiques-ia-eviter (comm
 | Number and unit, number and `%` or `€` | `12 %`, `30 €` with a non-breaking space |
 | Capitals keep their accents | `État`, `À propos` |
 
-Dash rate: a spaced dash around an aside is normal French. One per paragraph is ordinary (from a search summary). So the check is a rate, not a presence: `qp look` flags more than 15 per 1,000 words in French.
+Dash rate: a spaced dash around an aside is normal French. One per paragraph is ordinary (from a search summary). So the check is a rate, not a presence: `sw look` flags more than 15 per 1,000 words in French.
 
 **English:**
 
@@ -145,9 +145,9 @@ Dash rate: a spaced dash around an aside is normal French. One per paragraph is 
 | Number and unit | Non-breaking space: `10 MB` |
 | Shortcuts and names that must not split | Non-breaking space: `Ctrl K`, a product name of two words |
 
-Dash rate in English: `qp look` flags more than 8 em dashes per 1,000 words (house setting).
+Dash rate in English: `sw look` flags more than 8 em dashes per 1,000 words (house setting).
 
-Measured: `qp craft` check `typographic_characters` counts straight apostrophes, straight quotes, `...`, a hyphen used as a dash and double spaces. On a page with `lang="fr"`, it also counts missing spaces before `; : ! ? »` and after `«`, and accepts U+00A0 or U+202F. More than 2 hits fails. Text in `code`, `pre`, `kbd` and fields is skipped. By eye: accents on capitals, non-breaking spaces between number and unit.
+Measured: `sw craft` check `typographic_characters` counts straight apostrophes, straight quotes, `...`, a hyphen used as a dash and double spaces. On a page with `lang="fr"`, it also counts missing spaces before `; : ! ? »` and after `«`, and accepts U+00A0 or U+202F. More than 2 hits fails. Text in `code`, `pre`, `kbd` and fields is skipped. By eye: accents on capitals, non-breaking spaces between number and unit.
 
 ## Readability targets
 
@@ -168,7 +168,7 @@ Flesch-Kincaid grade  = 0.39 × (words / sentences) + 11.8 × (syllables / words
 Kandel-Moles (French) = 207 − 1.015 × (words / sentences) − 73.6 × (syllables / words)
 ```
 
-A score is a warning light. A short text of long technical words can score badly and read well to its audience. No `qp` command computes these scores: by eye, or with a tool of your choice.
+A score is a warning light. A short text of long technical words can score badly and read well to its audience. No `sw` command computes these scores: by eye, or with a tool of your choice.
 
 Source: https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests (not read again).
 

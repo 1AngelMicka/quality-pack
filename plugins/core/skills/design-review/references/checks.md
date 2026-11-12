@@ -34,4 +34,4 @@
 
 ## Generic look
 
-`qp look` gives a tier (low, some, strong) from weighted signals; read the signals, never one alone. In `persuade` mode a strong tier is worth a finding (severity 2 on its own, more if it hides the product). In `operate` mode, only quality signals count: gradient text, emoji as icons, everything animated, hollow wording. The list of signals is dated: see the `design-direction` skill, references/generic-clusters.md.
+`sw look` gives a tier (low, some, strong) from weighted signals; read the signals, never one alone. In `persuade` mode a strong tier is worth a finding (severity 2 on its own, more if it hides the product). In `operate` mode, only quality signals count: gradient text, emoji as icons, everything animated, hollow wording. The list of signals is dated: see the `design-direction` skill, references/generic-clusters.md.

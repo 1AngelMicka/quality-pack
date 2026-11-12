@@ -50,13 +50,13 @@ Recipes with code for each line: [references/techniques.md](references/technique
 
 ## 3. Prove it
 
-1. `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" look <url> --mode <surface>`:
+1. `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" look <url> --mode <surface>`:
    - `scroll_hijack` must pass on app and reading screens (no smooth-scroll library, no non-passive wheel or touch listener);
    - `content_without_animation` must pass everywhere: with reduced motion requested and the page scrolled through, no text stays invisible;
    - `reduced_motion` must pass: most animations stop or become fades.
 2. On persuasive pages that keep a smooth-scroll library, test by hand: Page Down, Space, Home, End, an anchor link (focus moves with it), find-in-page.
-3. `qp.mjs deslop <url>` for spacing, and look at the screenshots; scroll the page in the browser and watch for jank, blank areas while effects load, and text moving too fast to read.
-4. If the page belongs to a key task, play it: `qp.mjs flows <id>`.
+3. `sw.mjs deslop <url>` for spacing, and look at the screenshots; scroll the page in the browser and watch for jank, blank areas while effects load, and text moving too fast to read.
+4. If the page belongs to a key task, play it: `sw.mjs flows <id>`.
 
 ## Rules
 

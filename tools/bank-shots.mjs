@@ -38,7 +38,7 @@ function facts() {
 const only = process.argv.slice(2);
 const bank = loadBank();
 const tools = await loadBrowserTools(ROOT);
-if (!tools) { console.error("Playwright is not available: run qp.mjs browser-setup"); process.exit(1); }
+if (!tools) { console.error("Playwright is not available: run sw.mjs browser-setup"); process.exit(1); }
 const browser = await launch(tools.chromium);
 let done = 0, failed = 0;
 for (const [id, t] of Object.entries(bank.types)) {

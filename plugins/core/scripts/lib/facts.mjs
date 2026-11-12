@@ -64,7 +64,7 @@ export function traced(claim, facts) {
 
 export async function factsAt(urls, { cwd, known = null } = {}) {
   const tools = await loadBrowserTools(cwd);
-  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <qp.mjs> browser-setup` once (pack cache, not the project)." };
+  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <sw.mjs> browser-setup` once (pack cache, not the project)." };
   const facts = (known?.facts || []).filter((f) => f && f.claim);
   const unsourced = facts.filter((f) => !f.source || String(f.source).trim().length < 5).map((f) => f.claim);
   const browser = await launch(tools.chromium);

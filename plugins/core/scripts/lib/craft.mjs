@@ -1,6 +1,6 @@
 // Finish of the rendered page ("craft"): the details that separate a product someone cared about from a
 // first draft. Nothing here is a matter of taste: every check is a measure taken in a real browser, with the
-// elements at fault. `qp look` says how generic a page looks and `qp deslop` checks spacing; this one checks
+// elements at fault. `sw look` says how generic a page looks and `sw deslop` checks spacing; this one checks
 // typography details, states (focus, hover), media, motion and the small things a visitor meets around the
 // page (icon, share image, error page).
 //
@@ -422,7 +422,7 @@ export async function craftAt(urls, { cwd, mode = "operate", calibration } = {})
   // undefined: use the pack's calibration file; null: measure without it (used when calibrating).
   if (calibration === undefined) calibration = process.env.QP_NO_CALIBRATION ? null : (await import("./bank.mjs")).loadCalibration();
   const tools = await loadBrowserTools(cwd);
-  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <qp.mjs> browser-setup` once (pack cache, not the project)." };
+  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <sw.mjs> browser-setup` once (pack cache, not the project)." };
   const browser = await launch(tools.chromium);
   const pages = [];
   try {

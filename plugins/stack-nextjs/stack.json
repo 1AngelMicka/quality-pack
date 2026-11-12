@@ -91,5 +91,5 @@
   }
  ],
  "qp_stack": true,
- "plugin": "qp-nextjs"
+ "plugin": "sw-nextjs"
 }

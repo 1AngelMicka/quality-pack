@@ -18,6 +18,6 @@ body:
     id: versions
     attributes:
       label: Versions
-      placeholder: "quality-pack 0.2.0, Claude Code 2.x, Node 22, macOS / Windows / Linux"
+      placeholder: "shipwright 0.2.0, Claude Code 2.x, Node 22, macOS / Windows / Linux"
     validations:
       required: true

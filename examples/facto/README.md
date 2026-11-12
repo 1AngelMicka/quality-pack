@@ -13,14 +13,14 @@ It exists in two states:
 
 | Planted in the draft | Command that must find it |
 | --- | --- |
-| A logged-in customer can read another customer's invoice | `qp access` |
-| The login says which emails have an account and never slows down | `qp auth` |
-| The payment webhook accepts unsigned and forged events | `qp webhooks` |
-| No sitemap, no meta description, the same title everywhere, keywords not on the page | `qp seo` |
-| No focus indicator, form fields under 16 px, no site icon, unknown addresses answer 200 | `qp craft` |
-| Blank list while loading, uncaught error when the server fails, a toolbar that overflows | `qp stress` |
-| Invented figures, an invented testimonial, an unearned compliance badge | `qp facts` |
+| A logged-in customer can read another customer's invoice | `sw access` |
+| The login says which emails have an account and never slows down | `sw auth` |
+| The payment webhook accepts unsigned and forged events | `sw webhooks` |
+| No sitemap, no meta description, the same title everywhere, keywords not on the page | `sw seo` |
+| No focus indicator, form fields under 16 px, no site icon, unknown addresses answer 200 | `sw craft` |
+| Blank list while loading, uncaught error when the server fails, a toolbar that overflows | `sw stress` |
+| Invented figures, an invented testimonial, an unearned compliance badge | `sw facts` |
 
 The accounts, passwords and webhook secret in `server.mjs` and `.quality/project.json` are fixtures for this demo: they protect nothing. In a real project, test passwords come from environment variables.
 
-Not covered by this example: a real database, real payments (see `qp billing`), an installed mobile or desktop build.
+Not covered by this example: a real database, real payments (see `sw billing`), an installed mobile or desktop build.

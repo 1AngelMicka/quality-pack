@@ -1,6 +1,6 @@
 # Scanners an agent can run
 
-This file lists the free scanners that go further than `qp dast` and `qp supply`: what each one finds, what it misses, whether it may touch production, and the command. Everything recommended here is free and open source. Tools that are paid, source-available or tied to a paid product are under "Excluded" with the reason. Researched on 2026-11-12; licences and flags change, so check the tool's own page before adding it to CI. Version numbers are left out on purpose: the notes could not confirm them on the release pages.
+This file lists the free scanners that go further than `sw dast` and `sw supply`: what each one finds, what it misses, whether it may touch production, and the command. Everything recommended here is free and open source. Tools that are paid, source-available or tied to a paid product are under "Excluded" with the reason. Researched on 2026-11-12; licences and flags change, so check the tool's own page before adding it to CI. Version numbers are left out on purpose: the notes could not confirm them on the release pages.
 
 Marker: **(nv)** means not verified on the primary source during the research (flag or licence quoted from memory or from a secondary page).
 
@@ -15,7 +15,7 @@ Marker: **(nv)** means not verified on the primary source during the research (f
 
 | Tool | Licence | Finds | Misses | Safe on production | Command |
 | --- | --- | --- | --- | --- | --- |
-| [ZAP](https://www.zaproxy.org/docs/docker/baseline-scan/) baseline | Apache-2.0 | missing headers, cookies without flags, information leaks, vulnerable libraries served to the browser | everything behind login, access control, logic; routes a one-minute crawl does not reach | yes, passive (it still crawls every link) | `qp dast <url>`, which runs `zap-baseline.py -t <url> -J zap.json -m 1 -I` in the ZAP Docker image |
+| [ZAP](https://www.zaproxy.org/docs/docker/baseline-scan/) baseline | Apache-2.0 | missing headers, cookies without flags, information leaks, vulnerable libraries served to the browser | everything behind login, access control, logic; routes a one-minute crawl does not reach | yes, passive (it still crawls every link) | `sw dast <url>`, which runs `zap-baseline.py -t <url> -J zap.json -m 1 -I` in the ZAP Docker image |
 | [ZAP](https://www.zaproxy.org/docs/docker/full-scan/) full scan | Apache-2.0 | the above plus injection and XSS candidates found by sending attacks | access control, logic, stored issues, single-page routes the spider misses; active findings need confirming by hand | no | `docker run --rm -v "$(pwd):/zap/wrk/:rw" -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t http://host.docker.internal:3000 -m 5 -J zap-full.json` |
 | [ZAP](https://www.zaproxy.org/docs/docker/api-scan/) API scan | Apache-2.0 | active scan of the routes listed in an OpenAPI, GraphQL or SOAP description | routes missing from the description, access control | no | `zap-api-scan.py -t openapi.json -f openapi` in the same image **(nv)** |
 | [Schemathesis](https://schemathesis.readthedocs.io/en/stable/) | MIT | server errors on unexpected input, invalid input accepted, answers that break the schema, routes declared protected that answer without credentials (`ignored_auth`) | routes missing from the schema, business logic; a schema that is wrong looks like a failure | no: it calls every write route | `uvx schemathesis run http://localhost:3000/openapi.json -H "Authorization: Bearer $TOKEN" --max-examples 50 --rate-limit 100/m --exclude-method DELETE` (`uvx` launcher **(nv)**) |
@@ -25,8 +25,8 @@ Marker: **(nv)** means not verified on the primary source during the research (f
 Notes on ZAP:
 
 - Exit codes of the packaged scans: 0 clean, 1 at least one FAIL, 2 at least one WARN, 3 other failure. `-I` stops warnings from changing the code. `-c rules.conf` sets each rule to INFO, IGNORE or FAIL; `-g` writes a first rules file; `-j` adds the Ajax spider for single-page apps.
-- The baseline is documented by ZAP as fit for CI, production included. `qp dast` still refuses the host declared as `urls.production` unless `--allow-production` is passed after the user agreed.
-- ZAP only tests access control through a context built in its desktop interface, so that part is not usable by an agent. Use `qp access`.
+- The baseline is documented by ZAP as fit for CI, production included. `sw dast` still refuses the host declared as `urls.production` unless `--allow-production` is passed after the user agreed.
+- ZAP only tests access control through a context built in its desktop interface, so that part is not usable by an agent. Use `sw access`.
 - The Automation Framework (`zap.sh -cmd -autorun plan.yaml`) is ZAP's preferred path and runs without Docker. The notes could not read its authentication schema: not verified, so no plan is given here.
 
 Notes on Nuclei: the default rate is 150 requests per second, so always set `-rl`. Keep `-code` off and unsigned templates disabled (`-dut`). Do not add `-dast` or fuzzing tags outside local.
@@ -53,7 +53,7 @@ Notes:
 - gitleaks is in maintenance: its README says it is feature complete and will only get security patches. Its author moved to betterleaks. Use gitleaks today, and move when betterleaks is stable.
 - A leaked secret is rotated, not only deleted. No scanner proves a secret was never copied.
 - OSV-Scanner on pnpm: a lockfile can hold two YAML documents, and a reader that stops at the first reports zero dependencies. Check that the dependency count is above zero. Do not run `osv-scanner fix` on a project you do not trust: it runs the package manager.
-- `npm audit --audit-level=high --omit=dev` and `pnpm audit --prod` list known advisories. They miss a malicious package until an advisory exists. `qp supply` does not look for known vulnerabilities: that is the pack's separate dependency audit check.
+- `npm audit --audit-level=high --omit=dev` and `pnpm audit --prod` list known advisories. They miss a malicious package until an advisory exists. `sw supply` does not look for known vulnerabilities: that is the pack's separate dependency audit check.
 - Generate one SBOM per release and store it with the artifact.
 
 ### Semgrep's own rules must not be redistributed
@@ -70,7 +70,7 @@ The engine is LGPL-2.1, the rules Semgrep maintains in its registry (`p/default`
 | --- | --- |
 | CodeQL CLI on closed-source repositories | its terms allow open-source codebases, research and demos; any other codebase needs a paid GitHub licence (https://github.com/github/codeql-cli-binaries/blob/main/LICENSE.md). Fine on a public repository under an OSI licence, through GitHub's free code scanning |
 | Bearer CLI | Elastic License 2.0: source-available, not open source; cross-file analysis is paid (https://github.com/Bearer/bearer) |
-| Autorize, AuthMatrix | free extensions, but they run inside Burp Suite, which is proprietary and has no headless mode in its free edition. The method (replay as another account, compare) is what `qp access` does |
+| Autorize, AuthMatrix | free extensions, but they run inside Burp Suite, which is proprietary and has no headless mode in its free edition. The method (replay as another account, compare) is what `sw access` does |
 | Burp Suite Professional, paid scanners and paid tiers in general | paid |
 | Semgrep registry rules, Semgrep Code, Secrets, Supply Chain | rules not redistributable (above); the products are paid |
 | trufflehog | not excluded from use, but never bundled: AGPL-3.0, and by default it checks each secret by calling the service that issued it, so secret material leaves the machine. Only with the user's consent, or with `--no-verification` (https://github.com/trufflesecurity/trufflehog) |
@@ -78,7 +78,7 @@ The engine is LGPL-2.1, the rules Semgrep maintains in its registry (`p/default`
 | Trivy | free (Apache-2.0) but not a default here: its release channel was compromised in March 2026 (below) and its state after April 2026 was not verified. If used: a pinned version with a checksum, never `latest` |
 | sqlmap | GPL-2.0, but an exploitation tool: it can rewrite a table. Not run by the agent. Fix with parameterised queries instead |
 | Dockle | licence unclear (repository metadata and README disagree): not verified |
-| securityheaders.com, hosted header graders | hosted service, terms not verified, and they send the hostname to a third party. `qp web` reads the headers locally |
+| securityheaders.com, hosted header graders | hosted service, terms not verified, and they send the hostname to a third party. `sw web` reads the headers locally |
 | ZAP Access Control add-on | rules must be created in the desktop interface |
 
 ## Pin your tools
@@ -86,7 +86,7 @@ The engine is LGPL-2.1, the rules Semgrep maintains in its registry (`p/default`
 A scanner runs with access to the code and often to CI secrets, so it is part of the supply chain. On 19 March 2026 an attacker who had stolen a token published a malicious Trivy binary and moved 76 of the 77 version tags of `trivy-action` to malicious commits; malicious Docker images followed on 22 March (CVE-2026-33634; https://www.aquasec.com/blog/trivy-supply-chain-attack-what-you-need-to-know/). Projects that referenced a tag ran the attacker's code.
 
 - Install a named version and check the published checksum or signature (Opengrep signs its releases with Cosign).
-- In CI, reference actions by full commit SHA and Docker images by digest (`image@sha256:...`), not by `latest` or a moving tag. `qp dast` uses the `stable` tag of the ZAP image: pin a digest in CI.
+- In CI, reference actions by full commit SHA and Docker images by digest (`image@sha256:...`), not by `latest` or a moving tag. `sw dast` uses the `stable` tag of the ZAP image: pin a digest in CI.
 - Never pipe an install script from a `main` branch into a shell.
 - Write the version of every tool in the report.
 - If a tool you ran is later reported compromised, rotate every secret that pipeline could read.
@@ -101,7 +101,7 @@ These are the pack's defaults. Lower them on a small staging server.
 | ZAP active scan | 20 minutes by default, hard stop at 60; 2 threads per host at most **(nv)** |
 | Nuclei | `-rl 20` requests per second; `-rl 5` for a restricted run on a host you own |
 | Schemathesis | `--rate-limit 100/m`, `--max-examples 50` |
-| `qp auth` | 20 wrong passwords by default, 50 at most |
+| `sw auth` | 20 wrong passwords by default, 50 at most |
 
 ## Reference standards (as of 2026-11-12)
 

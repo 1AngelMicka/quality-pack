@@ -7,7 +7,7 @@ description: "The path from an idea to a launched web app or SaaS, in stages wit
 
 A product built in the wrong order gets rebuilt: billing before knowing the plans, features before isolation between customers, visual polish before the screen is organised, a store submission before the payment rules are understood. This skill gives the order, and a gate at the end of each stage: something that can be shown, not an opinion.
 
-CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below.
+CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs"`, written `sw` below.
 
 Use it as a map. Find the stage the project is in (ask, and read `.quality/project.json` and the code), state the next gate, and work towards it. Do not run every stage in one go, and do not skip a gate because the code "looks done".
 
@@ -24,17 +24,17 @@ Say this at the start, once. Three things stay with people:
 | # | Stage | Skill and commands | Gate: what must be true |
 | --- | --- | --- | --- |
 | 0 | Promise and evidence | conversation | One sentence: for whom, which problem, which outcome. At least one piece of evidence the user can show (people asked, a waiting list, a paid pilot, their own daily need). No evidence: say so and let the user decide; do not invent a market. |
-| 1 | Kickoff | `/qp:kickoff` | `.quality/project.json` (profile, flags, 2 to 5 key tasks), `DESIGN.md` started, what is out of scope written. |
-| 2 | Foundations | `saas-foundations` steps 1 and 2, `security-testing` step 1 | Customer model chosen; two test accounts seeded; `qp access` passes on the first resource; `qp threats` passes; `qp supply` has no failed must; CI runs build and tests. |
-| 3 | First key task, end to end | build skills, `design-screens` | The main task works with real data from a fresh account, on phone and desktop: `qp flows` completes. Plain styling is fine here. |
-| 4 | Direction | `design-direction`, `qp bank`, `qp profile` | The site type's expectations read (`qp bank <type>`); the user's references measured (`qp profile <url> <url> --save`); one direction chosen by the user; tokens checked (`qp tokens`); fonts and icons recorded with their licences. |
-| 5 | Screens | `design-screens`, `design-review`, `deslop-ui` | Every key task within its effort budgets (`qp flows`: no `over_budget`); the ergonomist's serious findings fixed; `qp deslop` with no high finding. |
-| 6 | Money | `saas-foundations` steps 3 to 7 | Plans and rules written; the life cycle is played (`qp billing`: trial end, first payment, declined renewal, cancellation, with the app agreeing at each stage) and forged webhooks are refused (`qp webhooks`); limits enforced on the server; every service email received; cancellation in three steps. |
-| 7 | Best version, then finish | `design-variants`, `premium-craft`, `scroll-animation` if used | The screens that carry the product (public home page, main work screen) chosen by the user among versions compared by a blind jury; an art-director review applied; each gap to the references closed or justified (`qp gap`); `qp craft` and `qp stress` with no failed must on **every key screen**; `qp look` not "strong" on public pages; every figure and quote traced to a fact (`qp facts`, no untraced claim); `qp perf` with no failed must on the main pages. This gate does not open on a general impression: one line per screen, with its two commands. |
-| 8 | Mobile or desktop app, if any | `mobile-app`, `desktop-app` | Mobile: sales model and storefronts written; key tasks completed on a device (`qp mobile flows`); `qp mobile check` with no failed must; account deletion in the app. Desktop: `qp desktop check` with no failed must; every command exposed to the page read; key tasks played in the real window (`qp flows --attach`); update tested end to end; installers signed. |
+| 1 | Kickoff | `/sw:kickoff` | `.quality/project.json` (profile, flags, 2 to 5 key tasks), `DESIGN.md` started, what is out of scope written. |
+| 2 | Foundations | `saas-foundations` steps 1 and 2, `security-testing` step 1 | Customer model chosen; two test accounts seeded; `sw access` passes on the first resource; `sw threats` passes; `sw supply` has no failed must; CI runs build and tests. |
+| 3 | First key task, end to end | build skills, `design-screens` | The main task works with real data from a fresh account, on phone and desktop: `sw flows` completes. Plain styling is fine here. |
+| 4 | Direction | `design-direction`, `sw bank`, `sw profile` | The site type's expectations read (`sw bank <type>`); the user's references measured (`sw profile <url> <url> --save`); one direction chosen by the user; tokens checked (`sw tokens`); fonts and icons recorded with their licences. |
+| 5 | Screens | `design-screens`, `design-review`, `deslop-ui` | Every key task within its effort budgets (`sw flows`: no `over_budget`); the ergonomist's serious findings fixed; `sw deslop` with no high finding. |
+| 6 | Money | `saas-foundations` steps 3 to 7 | Plans and rules written; the life cycle is played (`sw billing`: trial end, first payment, declined renewal, cancellation, with the app agreeing at each stage) and forged webhooks are refused (`sw webhooks`); limits enforced on the server; every service email received; cancellation in three steps. |
+| 7 | Best version, then finish | `design-variants`, `premium-craft`, `scroll-animation` if used | The screens that carry the product (public home page, main work screen) chosen by the user among versions compared by a blind jury; an art-director review applied; each gap to the references closed or justified (`sw gap`); `sw craft` and `sw stress` with no failed must on **every key screen**; `sw look` not "strong" on public pages; every figure and quote traced to a fact (`sw facts`, no untraced claim); `sw perf` with no failed must on the main pages. This gate does not open on a general impression: one line per screen, with its two commands. |
+| 8 | Mobile or desktop app, if any | `mobile-app`, `desktop-app` | Mobile: sales model and storefronts written; key tasks completed on a device (`sw mobile flows`); `sw mobile check` with no failed must; account deletion in the app. Desktop: `sw desktop check` with no failed must; every command exposed to the page read; key tasks played in the real window (`sw flows --attach`); update tested end to end; installers signed. |
 | 9 | People | `user-testing` | Five people from the audience did the key tasks unaided; what blocked them is fixed or listed. |
-| 10 | Launch | `/qp:audit`, `security-testing`, `seo-launch` | Public pages ready to be found: keywords chosen, `qp seo` with no failed must, site declared in Search Console and sitemap submitted. Full audit: no open blocker in either score; `qp access`, `qp auth` and `qp dast` clean on staging; backups restored once; monitoring alerts reach a person; legal pages published; rollback tried. |
-| 11 | After | `/qp:audit --incremental`, `/qp:handoff` | An audit at each release; the threat model reviewed when an entry point, a role or a third party is added. |
+| 10 | Launch | `/sw:audit`, `security-testing`, `seo-launch` | Public pages ready to be found: keywords chosen, `sw seo` with no failed must, site declared in Search Console and sitemap submitted. Full audit: no open blocker in either score; `sw access`, `sw auth` and `sw dast` clean on staging; backups restored once; monitoring alerts reach a person; legal pages published; rollback tried. |
+| 11 | After | `/sw:audit --incremental`, `/sw:handoff` | An audit at each release; the threat model reviewed when an entry point, a role or a third party is added. |
 
 Stages 4 and 5 can swap for a showcase site (direction first). Stage 8 can run beside 5 to 7 once the web key tasks are stable. Nothing else moves: in particular, 2 before 3 (isolation is not retrofitted), 5 before 7 (finish on a badly organised screen is wasted), and the rules of 6 before its code.
 
@@ -42,11 +42,11 @@ Stages 4 and 5 can swap for a showcase site (direction first). Stage 8 can run b
 
 Stage 7 is where average products stop early. List the key screens (the pages of `flows`, `work_screens`, and each public page), and for each one show:
 
-| Screen | `qp craft` | `qp stress` | By hand |
+| Screen | `sw craft` | `sw stress` | By hand |
 | --- | --- | --- | --- |
 | <address> | must 0 · should n (kept: why) | must 0 · should n (kept: why) | empty state · very long data · error message read |
 
-`qp stress <url>` shows the screen with a slow network, a failing server, texts three times longer, at 320 px, in the dark scheme, with the keyboard only and with scripts off, with a screenshot of each. A screen that starts empty is stressed after the steps that fill it too. The stage is not passed while a screen has a failed "must" or was not run.
+`sw stress <url>` shows the screen with a slow network, a failing server, texts three times longer, at 320 px, in the dark scheme, with the keyboard only and with scripts off, with a screenshot of each. A screen that starts empty is stressed after the steps that fill it too. The stage is not passed while a screen has a failed "must" or was not run.
 
 ## How to run a stage
 

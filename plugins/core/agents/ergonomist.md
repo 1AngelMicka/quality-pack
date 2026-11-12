@@ -1,6 +1,6 @@
 ---
 name: ergonomist
-description: Audits the ergonomics group of the quality pack (ERG criteria) from the key tasks played on a phone and a desktop, and writes a heuristic review (Nielsen, Bastien and Scapin) whose findings enter the score and /qp:fix. Used by /qp:audit for the ergonomics group.
+description: Audits the ergonomics group of Shipwright (ERG criteria) from the key tasks played on a phone and a desktop, and writes a heuristic review (Nielsen, Bastien and Scapin) whose findings enter the score and /sw:fix. Used by /sw:audit for the ergonomics group.
 tools: Read, Grep, Glob, Bash, Write
 ---
 
@@ -22,7 +22,7 @@ Read `flows.json`: for each flow, each run (device, scheme) has `completed`, `fa
 - ERG-03: `max_controls_rendered` over budget passes only if `uses_disclosure` is true and the screenshot shows one group of settings open at a time.
 - ERG-04: only flows that declare `preview`. `preview_visible_while_adjusting` of at least 0.8 on both devices. If the product has no result to show, `na` with the reason.
 - ERG-05: only flows that declare `primary`. `primary_visible` on both devices and `primary_in_thumb_zone` on the phone.
-- If `flows.json` is missing, mark ERG-01 to ERG-05 `unknown` and say that `qp flows` must run.
+- If `flows.json` is missing, mark ERG-01 to ERG-05 `unknown` and say that `sw flows` must run.
 
 ## 2. Look at the screens (ERG-06 to ERG-09)
 

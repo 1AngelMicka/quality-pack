@@ -9,7 +9,7 @@ A generated interface often looks right in the code and wobbly on screen: uneven
 
 It works with the other design skills: `design-direction` finds the visual direction, `design-screens` organises the screen; this one guarantees the execution, whatever the style.
 
-CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below.
+CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs"`, written `sw` below.
 
 Match the effort to the request:
 
@@ -43,12 +43,12 @@ If no reference is available, say so and continue with the project's tokens rath
 Run the audit on the real page:
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" deslop http://localhost:5173/ --widths 375,768,1440,1920
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" deslop http://localhost:5173/ --widths 375,768,1440,1920
 ```
 
 It takes a URL or a local HTML file and uses the installed Chrome or Edge, with nothing to install (set `CHROME_PATH` if neither is found; needs Node 22 or later). It returns the findings per width, the spacing and type system actually used, and screenshots at each width. In a project with `.quality/project.json`, results go to the current audit run (`deslop.json`, screenshots in `deslop/`); otherwise to `.quality/deslop/`. Each run overwrites the previous one in the same folder: copy the JSON aside before a fix if you want a before/after.
 
-For how generic the page looks, the type scale, line length, accent share and reduced motion, also run `qp look <url>`. The audit does not measure contrast, keyboard focus, hover states or baselines: check those separately (axe in `qp browser` and `qp flows`).
+For how generic the page looks, the type scale, line length, accent share and reduced motion, also run `sw look <url>`. The audit does not measure contrast, keyboard focus, hover states or baselines: check those separately (axe in `sw browser` and `sw flows`).
 
 Useful options:
 
@@ -74,7 +74,7 @@ window.__DESLOP_TAURI__ = { get_current_user: { id: 1, name: 'Test' } };
 ```
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" deslop http://localhost:1420/ --before mocks.js --tauri --widths 1280
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" deslop http://localhost:1420/ --before mocks.js --tauri --widths 1280
 ```
 
 ## 4. Look at the screenshots

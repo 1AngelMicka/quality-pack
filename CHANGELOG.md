@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0 — 2026-11-12
+
+**The project is renamed Shipwright** ("the one who builds all the way to the launch"). It no longer only audits: it covers the path from an idea to a launched product.
+
+- Marketplace `quality-pack` → `shipwright`; plugin `qp` → `sw`; modules `qp-nextjs`, `qp-node-api`, `qp-vps`, `qp-expo`, `qp-capacitor`, `qp-tauri`, `qp-electron` → `sw-…`.
+- Commands `/qp:kickoff`, `/qp:audit`, `/qp:fix`, `/qp:handoff`, `/qp:design-review` → `/sw:…`; agents `qp:auditor` and the others → `sw:…`; the CLI file `qp.mjs` → `sw.mjs`.
+- Unchanged: the `.quality/` folder of projects and every file in it, the `QP_…` environment variables, the `qp-allow-secret` comment of the secrets guard, and the GitHub repository address. A browser cache installed under `~/.cache/quality-pack` keeps being used.
+- To move an installation: uninstall `qp@quality-pack`, remove the `quality-pack` marketplace, add it again and install `sw@shipwright` (see the README). In a project, replace `/qp:` with `/sw:` in the section the kickoff added to `CLAUDE.md`, or run `/sw:kickoff` once.
+
 ## 0.7.0 — 2026-11-12
 
 Beyond correct: what helps a screen land above the average, the launch steps for search, and desktop apps. 37 domains, 247 criteria.

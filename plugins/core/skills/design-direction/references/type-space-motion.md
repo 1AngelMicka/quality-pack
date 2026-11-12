@@ -20,13 +20,13 @@
 - Two or three radii: one for controls, one for containers, full for pills and avatars. One radius on everything is a generic sign.
 - Two or three elevations at most, used for meaning (a menu above content, a dialog above everything), not for decoration. Soft coloured glows are a generic sign.
 - Light theme: a tight shadow plus a soft, wide, very light one (about `0 1px 2px` at 5 % and `0 8px 24px` at 6 % black) reads as real depth. Dark theme: shadows barely show; separate layers with lighter surface steps, a 1 px hairline at about 8 % white and, for raised elements, a faint inset highlight on the top edge. Values after heydamir/unslop (CC BY 4.0).
-- Accent colour stays rare: a few per cent of an app screen (`qp look` flags more than 15 % of the first screen on app and reading screens). Persuasive pages may use more, on purpose, in one place.
+- Accent colour stays rare: a few per cent of an app screen (`sw look` flags more than 15 % of the first screen on app and reading screens). Persuasive pages may use more, on purpose, in one place.
 
 ## Motion
 
 - Durations from tokens, in four bands (Material 3): short 50–200 ms (state changes, small elements), medium 250–400 ms (panels, sheets), long 450–600 ms (large transitions), extra-long 700–1000 ms (rare, full-screen). Most UI motion sits between 150 and 300 ms.
 - Easing: standard `cubic-bezier(0.2, 0, 0, 1)`; entering `cubic-bezier(0.05, 0.7, 0.1, 1)`; leaving `cubic-bezier(0.3, 0, 0.8, 0.15)`.
 - Motion explains a change (where something came from, what it became) or confirms an action. Not every section fades in.
-- `prefers-reduced-motion: reduce`: replace movement and scaling with a short fade; keep the feedback, remove the travel. `qp look` loads the page with reduced motion requested and flags it when most animations keep running.
+- `prefers-reduced-motion: reduce`: replace movement and scaling with a short fade; keep the feedback, remove the travel. `sw look` loads the page with reduced motion requested and flags it when most animations keep running.
 - Anything that moves with scrolling: follow the `scroll-animation` skill (native CSS first, content never hidden behind an animation, native scrolling).
 - WebGL, shader and video backgrounds: show a still frame when reduced motion is requested, and pause when off-screen or when the tab is hidden; they cost battery and distract from the content.

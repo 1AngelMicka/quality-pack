@@ -1,7 +1,7 @@
 {
-  "name": "qp",
-  "description": "Quality pack core: 37-domain referential, two scores (experience, engineering), key tasks played on phone and desktop, build skills, /qp:kickoff, /qp:audit, /qp:fix. Socle du pack qualité : référentiel 37 domaines, deux notes (expérience, technique), tâches clés jouées sur téléphone et ordinateur, skills de construction, /qp:kickoff, /qp:audit, /qp:fix.",
-  "version": "0.7.0",
+  "name": "sw",
+  "description": "Shipwright core: 37-domain referential, two scores (experience, engineering), key tasks played on phone and desktop, build skills, /sw:kickoff, /sw:audit, /sw:fix. Socle de Shipwright : référentiel 37 domaines, deux notes (expérience, technique), tâches clés jouées sur téléphone et ordinateur, skills de construction, /sw:kickoff, /sw:audit, /sw:fix.",
+  "version": "0.8.0",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

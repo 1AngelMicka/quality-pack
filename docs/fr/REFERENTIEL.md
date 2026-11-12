@@ -270,7 +270,7 @@ _S'applique si : Le projet a une interface utilisateur_
 - Mise à jour optimiste quand le succès est probable, avec retour arrière ; annuler plutôt que confirmer pour ce qui est réversible.
 - Thème sombre : un modèle d'élévation à part (les surfaces s'éclaircissent en montant), color-scheme: dark déclaré, jamais une simple inversion.
 - État dans l'adresse (filtres, onglets, page, panneau ouvert) : partager, recharger et revenir en arrière fonctionnent.
-- Passer chaque écran clé dans les conditions difficiles avant de le dire terminé : réseau lent, serveur en panne, textes trois fois plus longs, 320 px, thème sombre, clavier seul (`qp stress`), puis l'état vide et les très longues données à la main.
+- Passer chaque écran clé dans les conditions difficiles avant de le dire terminé : réseau lent, serveur en panne, textes trois fois plus longs, 320 px, thème sombre, clavier seul (`sw stress`), puis l'état vide et les très longues données à la main.
 - Soigner ce qui entoure la page : icône du site, image de partage, page 404 et page d'erreur dans la voix du produit, titre d'onglet qui suit le contexte.
 
 **Critères d'audit**
@@ -302,7 +302,7 @@ _S'applique si : Le projet a une interface utilisateur_
 - Deux familles de caractères au plus, plus une à chasse fixe si besoin ; pas Inter ou Geist comme seule police ; noter nom, fonderie, licence et source de chaque police.
 - Un seul jeu d'icônes, une seule épaisseur de trait réglée selon la taille ; dessiner les quelques icônes des objets propres au produit ; jamais un glyphe du jeu d'icônes comme logo.
 - Images, par ordre de préférence : le vrai produit (captures, composants), des schémas faits pour la page, ses propres photos, des images d'archives traitées de façon cohérente, rien. Pas d'illustrations de kit ni d'image générée contenant du texte, une interface ou des personnes.
-- Pour les écrans qui portent le produit, construire plusieurs versions vraiment différentes, les faire comparer à l'aveugle et laisser l'utilisateur choisir (skill design-variants) ; s'appuyer sur la banque de références du type de site (`qp bank`), pour apprendre et jamais pour copier.
+- Pour les écrans qui portent le produit, construire plusieurs versions vraiment différentes, les faire comparer à l'aveugle et laisser l'utilisateur choisir (skill design-variants) ; s'appuyer sur la banque de références du type de site (`sw bank`), pour apprendre et jamais pour copier.
 - Tout chiffre, citation, logo de client ou badge affiché vient d'un fait fourni par l'utilisateur ; sinon le bloc n'existe pas.
 - Textes : dire ce que le produit fait et pour qui, avec les mots des clients ; libellé de bouton = verbe + objet ; erreur = ce qui s'est passé + comment corriger.
 
@@ -310,8 +310,8 @@ _S'applique si : Le projet a une interface utilisateur_
 
 | ID | Critère | Sévérité | Vérification |
 | --- | --- | --- | --- |
-| BRD-01 | Aucun témoignage, chiffre, logo de client ou badge inventé | Bloquant | Chaque citation, nombre (« 10 000 équipes », « 99,9 % »), logo et badge des pages publiques est relié à une source fournie par l'utilisateur. facts.json du run (`qp facts` sur chaque page publique) : aucune affirmation non reliée à .quality/facts.json ; relire la liste, l'outil repère par motifs. Sans source : échec. (auto `facts_scan`) |
-| BRD-02 | Direction visuelle tirée du produit, écrite et suivie | Majeur | DESIGN.md dit d'où viennent la couleur, la typographie et les images, et ce que le produit refuse ; les écrans s'y conforment ; pas de palette réflexe non justifiée. Si des références sont mesurées (.quality/references.json), chaque écart relevé par `qp gap` est réduit ou justifié. (lecture) |
+| BRD-01 | Aucun témoignage, chiffre, logo de client ou badge inventé | Bloquant | Chaque citation, nombre (« 10 000 équipes », « 99,9 % »), logo et badge des pages publiques est relié à une source fournie par l'utilisateur. facts.json du run (`sw facts` sur chaque page publique) : aucune affirmation non reliée à .quality/facts.json ; relire la liste, l'outil repère par motifs. Sans source : échec. (auto `facts_scan`) |
+| BRD-02 | Direction visuelle tirée du produit, écrite et suivie | Majeur | DESIGN.md dit d'où viennent la couleur, la typographie et les images, et ce que le produit refuse ; les écrans s'y conforment ; pas de palette réflexe non justifiée. Si des références sont mesurées (.quality/references.json), chaque écart relevé par `sw gap` est réduit ou justifié. (lecture) |
 | BRD-07 | Les écrans qui portent le produit ont été choisis parmi plusieurs versions | Majeur | Pour la page d'accueil publique et l'écran de travail principal : dossier .quality/variants/ avec au moins deux versions comparées, le vote du jury et le choix de l'utilisateur ; ou une raison écrite de ne pas l'avoir fait. (lecture) |
 | BRD-03 | Typographie choisie et sous licence notée | Majeur | Deux familles au plus (plus une à chasse fixe) ; la police de texte a de vraies italiques et des chiffres tabulaires ; nom, fonderie, licence et source notés ; polices hébergées par le projet. (lecture) |
 | BRD-04 | Un seul jeu d'icônes, ajusté, et un logo qui n'en vient pas | Majeur | Un seul jeu, une épaisseur de trait par taille ; les objets propres au produit ont leur icône ; le logo n'est pas un glyphe du jeu ; l'icône du site, l'image de partage et l'avatar dérivent du même dessin. (lecture) |
@@ -328,7 +328,7 @@ _S'applique si : Le projet a une interface utilisateur_
 
 **Pendant la construction**
 
-- Lister 2 à 5 tâches clés au /qp:kickoff (project.json › flows), avec leurs données de test, et concevoir les écrans à partir d'elles.
+- Lister 2 à 5 tâches clés au /sw:kickoff (project.json › flows), avec leurs données de test, et concevoir les écrans à partir d'elles.
 - Au-delà d'une douzaine de réglages, les ranger en onglets, en étapes ou en sections repliables ; une page de réglages qu'on fait défiler sans fin n'est jamais une solution.
 - Le résultat (aperçu, total, rendu) reste visible pendant qu'on règle ; sur téléphone, aperçu en haut et panneau de réglages en bas.
 - L'action principale est atteignable sans défiler, et sous le pouce sur téléphone (barre d'action en bas).
@@ -384,7 +384,7 @@ Protection des secrets, validation des entrées, permissions, limitation des req
 | SEC-09 | Uploads limités en type et en taille, stockés hors de la racine exécutable | Majeur | Vérification du type réel, taille maximale, nom de fichier régénéré. (lecture) |
 | SEC-10 | Les erreurs ne révèlent pas de détails internes | Mineur | Pas de stack trace, requête SQL ou chemin serveur dans les réponses en production. (lecture) |
 | SEC-11 | Audit de sécurité approfondi réalisé à chaque version majeure | Mineur | Rapport du skill security-audit (Cloudflare) daté et suivi. (lecture) |
-| SEC-12 | Modèle de menaces écrit, complet et à jour | Majeur | `qp threats` : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois. (auto `threat_model`) |
+| SEC-12 | Modèle de menaces écrit, complet et à jour | Majeur | `sw threats` : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois. (auto `threat_model`) |
 | SEC-13 | La connexion résiste aux essais répétés et ne dit pas quels comptes existent | Bloquant | auth.json : même réponse pour un compte connu et inconnu ; mots de passe faux en série ralentis, refusés ou verrouillés. Vérifier à la main la même chose sur la réinitialisation, l'inscription et les codes à usage unique. (auto `auth_probe`) |
 | SEC-14 | Scan passif de l'application sans alerte haute ni moyenne | Majeur | zap.json (OWASP ZAP, scan de base) : aucune alerte haute ; chaque alerte moyenne corrigée ou expliquée. Un scan propre veut dire « rien trouvé par cet outil », pas « sûr ». (auto `dast_scan`) |
 | SEC-15 | Chaîne d'approvisionnement verrouillée | Majeur | supply.json : aucun « must » en échec (fichier de verrouillage commité, délai avant installation, scripts d'installation, actions de CI épinglées, permissions des workflows, fichiers .env). (auto `supply_scan`) |
@@ -830,7 +830,7 @@ _S'applique si : Abonnements récurrents avec des offres_
 | --- | --- | --- | --- |
 | SUB-01 | Les droits viennent d'une table serveur mise à jour par webhook, jamais du navigateur | Bloquant | Ouvrir l'adresse de retour de paiement sans payer, ou envoyer une offre modifiée depuis le navigateur : aucun droit accordé. (lecture) |
 | SUB-02 | Chaque limite d'offre est appliquée côté serveur | Bloquant | Appel direct de l'API au-delà de la limite (nombre de projets, de membres, d'usage) : refusé avec un message clair. (lecture) |
-| SUB-03 | Paiement échoué : email, bandeau dans l'app et délai de grâce écrit | Bloquant | billing.json (`qp billing`) : à chaque étape (essai, premier paiement, renouvellement refusé, résiliation) la réponse de l'application correspond à ce qu'attend project.json › billing.probe ; aucune étape où l'application contredit Stripe. Puis à la main : l'email avec lien pour corriger la carte, le bandeau visible, l'accès coupé comme écrit après le délai de grâce. (auto `billing_run`) |
+| SUB-03 | Paiement échoué : email, bandeau dans l'app et délai de grâce écrit | Bloquant | billing.json (`sw billing`) : à chaque étape (essai, premier paiement, renouvellement refusé, résiliation) la réponse de l'application correspond à ce qu'attend project.json › billing.probe ; aucune étape où l'application contredit Stripe. Puis à la main : l'email avec lien pour corriger la carte, le bandeau visible, l'accès coupé comme écrit après le délai de grâce. (auto `billing_run`) |
 | SUB-04 | Essai : conditions annoncées à l'inscription, rappel avant la fin, fin d'essai définie | Majeur | Durée et suite de l'essai visibles avant l'inscription ; email de rappel quelques jours avant la fin ; comportement sans carte testé. (lecture) |
 | SUB-05 | Changement d'offre : montant dû maintenant et au prochain renouvellement affichés avant de confirmer | Majeur | Aperçu comparé à la facture émise ; une rétrogradation ne supprime aucune donnée sans l'annoncer. (lecture) |
 | SUB-06 | Résiliation en ligne, en trois étapes au plus depuis le compte, confirmée par email | Bloquant | Parcours compté depuis les réglages du compte ; email de confirmation avec la date d'effet ; aucune obligation d'appeler ou d'écrire. (lecture) |
@@ -948,7 +948,7 @@ _S'applique si : Application de bureau installée (Tauri, Electron)_
 
 | ID | Critère | Sévérité | Vérification |
 | --- | --- | --- | --- |
-| DUX-01 | Chaque tâche clé va au bout dans la vraie fenêtre | Bloquant | flows.json joué avec `qp flows --attach <port>` sur l'application lancée (pas seulement dans un navigateur) : tous les flows terminés. Dire sur quel système. (auto `flow_run`) |
+| DUX-01 | Chaque tâche clé va au bout dans la vraie fenêtre | Bloquant | flows.json joué avec `sw flows --attach <port>` sur l'application lancée (pas seulement dans un navigateur) : tous les flows terminés. Dire sur quel système. (auto `flow_run`) |
 | DUX-02 | Fenêtre utilisable à toutes les tailles, état retenu | Majeur | Taille minimale définie dans la configuration ; captures à la taille minimale et en plein écran sans contenu coupé ; taille et position retrouvées après relance. (lecture) |
 | DUX-03 | Raccourcis et menus du système respectés | Majeur | Enregistrer, annuler, rétablir, copier, coller, fermer, quitter et préférences répondent aux raccourcis du système sur chaque plateforme visée ; menu de l'application présent sur macOS. (lecture) |
 | DUX-04 | Aucun travail perdu à la fermeture ou après un plantage | Bloquant | Fermer la fenêtre avec des changements : enregistrés ou avertissement. Tuer le processus en cours de saisie puis relancer : le travail est retrouvé ou proposé. (lecture) |

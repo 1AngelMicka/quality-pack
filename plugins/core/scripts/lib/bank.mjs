@@ -2,7 +2,7 @@
 // reason, what to avoid, and the measured visual profile of those sites. The bank holds addresses, descriptions
 // and numbers measured on the live pages; it never stores screenshots of other people's sites.
 // Files: plugins/core/bank/<type>.json (written by hand from research) and plugins/core/bank/profiles/<type>.json
-// (written by `qp bank measure`, numbers only).
+// (written by `sw bank measure`, numbers only).
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -44,7 +44,7 @@ export function validateType(t, id) {
 
 export function listBank(bank, type) {
   if (!type) return { types: Object.values(bank.types).map((t) => ({ id: t.id, label: t.label?.en, sites: (t.sites || []).length, profile: t.profile ? `${t.profile.n} sites measured ${t.measured}` : "not measured yet" })),
-    usage: "qp.mjs bank <type> for the expectations, the reference sites and what to avoid; qp.mjs gap <url> --type <type> to compare a screen with them." };
+    usage: "sw.mjs bank <type> for the expectations, the reference sites and what to avoid; sw.mjs gap <url> --type <type> to compare a screen with them." };
   const t = bank.types[type];
   if (!t) return { errors: [`Unknown site type "${type}". Types: ${Object.keys(bank.types).join(", ")}`] };
   return { id: t.id, label: t.label, expects: t.expects, traits: t.traits || [], sites: t.sites, avoid: t.avoid, sources: t.sources || [],

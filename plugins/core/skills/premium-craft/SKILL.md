@@ -9,7 +9,7 @@ What reads as "premium" is rarely a style. It is the absence of small neglects: 
 
 It comes after the others: `design-direction` chooses the look, `design-screens` organises the screen, `deslop-ui` fixes spacing and alignment. This one finishes.
 
-CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below. Criteria: craft (CRF) and identity (BRD).
+CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs"`, written `sw` below. Criteria: craft (CRF) and identity (BRD).
 
 Match the effort to the request: a small change gets steps 1 and 5 on the screens touched; a new product gets everything.
 
@@ -20,7 +20,7 @@ The user's choices and the product's identity come first. A "should" of the meas
 ## 1. Measure
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" craft http://localhost:3000/ http://localhost:3000/app
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" craft http://localhost:3000/ http://localhost:3000/app
 ```
 
 One address per kind of screen: the landing page, a work screen with data, a form, a table. It renders each on a phone and a desktop and returns two lists:
@@ -28,12 +28,12 @@ One address per kind of screen: the landing page, a work screen with data, a for
 - **must**: no visible keyboard focus, stretched or blurry images, form fields under 16 px on a phone (iOS zooms the page), blocked pinch zoom, the page jumping while it loads, number columns without tabular figures, no site icon, a wrong address answering 200, no share image on a public page.
 - **should**: headings without `text-wrap: balance` or ending on an orphan word, loose large headings, typewriter characters (`'`, `"`, `...`, a hyphen as a dash, and in French missing non-breaking spaces), capitals without tracking, more than 4 weights, mixed capitalisation of buttons, pure black on pure white, more than 5 shadows, one hard black shadow, a rounded box inside a rounded box with the same radius, no `::selection`, buttons that ignore the pointer, instant state changes, `transition: all`, transitions over 500 ms, animated layout properties, images without dimensions, mixed icon strokes or styles, no apple-touch-icon, a default 404 page.
 
-Each failed check lists the elements. Results go to the audit run as `craft.json` when the project has `.quality/project.json`. Also run `qp look` (how generic the page looks) and `qp deslop` (spacing): the three do not overlap.
+Each failed check lists the elements. Results go to the audit run as `craft.json` when the project has `.quality/project.json`. Also run `sw look` (how generic the page looks) and `sw deslop` (spacing): the three do not overlap.
 
 Then the finishing passes, on each key screen:
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" stress http://localhost:3000/app
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" stress http://localhost:3000/app
 ```
 
 It shows the screen in the conditions it was not built in: every data request slow, every data request failing, every label three times longer, 320 px wide, dark scheme, keyboard only, scripts off. Each pass has a screenshot and what could be detected: a blank screen while waiting, an uncaught error, no error message or no way to retry, sideways scrolling, text cut without an ellipsis, a focus trap. Read the screenshots: the tool sees that an error message exists, not whether it helps.
@@ -76,13 +76,13 @@ Rules and word lists in English and French: [references/copy.md](references/copy
 - The headline says what the product does and for whom, in words customers use. If you have none, ask the user for support messages, reviews or interview notes.
 - Button = verb + object ("Send invoice", not "Continue"). Error = what happened + how to fix it. Same word for the same thing everywhere.
 - Break the pattern of three: three cards, three-word headings, three sentences of equal length. Use two or four when that is what is true, and vary lengths.
-- Remove the words in the lists unless they carry a fact. `qp scan` flags them in the source; `qp look` flags an em-dash rate above 8 per 1,000 words (15 in French, where a dash in an aside is normal).
+- Remove the words in the lists unless they carry a fact. `sw scan` flags them in the source; `sw look` flags an em-dash rate above 8 per 1,000 words (15 in French, where a dash in an aside is normal).
 
 ## 5. A second pair of eyes
 
-Measures find defects; they do not see whether the screen is good. Before reporting, ask a `qp:art-director` agent to review the desktop and phone screenshots of each key screen, with the brief and the site type. It returns at most seven concrete changes, most of them removals, and what it could not see. Show them to the user, apply the ones they accept, and measure again.
+Measures find defects; they do not see whether the screen is good. Before reporting, ask a `sw:art-director` agent to review the desktop and phone screenshots of each key screen, with the brief and the site type. It returns at most seven concrete changes, most of them removals, and what it could not see. Show them to the user, apply the ones they accept, and measure again.
 
-For a screen that carries the product (public home page, pricing, the main work screen), one version is not enough: use the `design-variants` skill, which builds several, has them compared blind, and lets the user choose. To see how far a screen is from what the user admires, `qp gap <url>` compares it in numbers with the project's references (`qp profile <url> <url> --save`) or with the reference bank of its site type (`qp gap <url> --type <type>`).
+For a screen that carries the product (public home page, pricing, the main work screen), one version is not enough: use the `design-variants` skill, which builds several, has them compared blind, and lets the user choose. To see how far a screen is from what the user admires, `sw gap <url>` compares it in numbers with the project's references (`sw profile <url> <url> --save`) or with the reference bank of its site type (`sw gap <url> --type <type>`).
 
 ## 6. Check again, and report
 

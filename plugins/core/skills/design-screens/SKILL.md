@@ -56,9 +56,9 @@ Before coding, write a short spec for the phone and for the desktop, each in a f
 
 ## 8. Prove it
 
-1. If the screen belongs to a key task, play it: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" flows <flow-id>`. Read the summary per device: `over_budget` must be empty, `preview_visible_while_adjusting` at least 0.8 if the flow declares a preview, `primary_visible` true and `primary_in_thumb_zone` true on the phone. If the task has no flow yet, add one (`/qp:kickoff`, step 3, or `qp.mjs record <id>`).
+1. If the screen belongs to a key task, play it: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" flows <flow-id>`. Read the summary per device: `over_budget` must be empty, `preview_visible_while_adjusting` at least 0.8 if the flow declares a preview, `primary_visible` true and `primary_in_thumb_zone` true on the phone. If the task has no flow yet, add one (`/sw:kickoff`, step 3, or `sw.mjs record <id>`).
 2. Look at the screenshots of each step, phone and desktop, as a user in a hurry.
-3. `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" look <url>` for targets, line length and type sizes.
+3. `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" look <url>` for targets, line length and type sizes.
 4. Compare alternatives with `klm_seconds` from the flow summary: a difference under 20–25 % is a tie (the model is about 21 % off on average); decide on the other criteria then.
 
 ## Rules
@@ -76,4 +76,4 @@ Before coding, write a short spec for the phone and for the desktop, each in a f
 | SCR-09 | Checkout | aim for 7–8 visible fields; guest first; total visible before paying | Baymard |
 | SCR-10 | Empty states | status, reason, one action; never "no results" before loading ends | NN/g empty states |
 
-The thresholds without a published source (the dozen settings, the 20 % of small targets in `qp look`) are house settings: say so when you rely on them. Sources: [SOURCES.md](../../SOURCES.md).
+The thresholds without a published source (the dozen settings, the 20 % of small targets in `sw look`) are house settings: say so when you rely on them. Sources: [SOURCES.md](../../SOURCES.md).

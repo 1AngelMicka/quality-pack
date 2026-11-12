@@ -8,10 +8,10 @@ Marker used below: **(nv)** means the rule comes from memory in the research not
 
 | Command | Covers | Does not cover |
 | --- | --- | --- |
-| `qp auth` | login only: same status and message for a known and an unknown account, timing as a warning, repeated wrong passwords slowed or refused. Cookie flags (`HttpOnly`, `SameSite`, `Secure` over HTTPS) when `auth_probe.password_env` names the environment variable holding the test account's password | sign-up, reset, one-time codes, everything below |
-| `qp access` | declared resources requested by the owner, by the accounts in `denied_to` and by a visitor | mass assignment, list isolation, routes not declared |
-| `qp dast` | passive ZAP scan: headers, cookie flags on pages reached without login, information leaks | anything behind login, any attack |
-| `qp supply` | lockfile, cooldown, install scripts, pinned actions, `.env` tracked by git | secrets inside the bundle, logs, backups, database roles |
+| `sw auth` | login only: same status and message for a known and an unknown account, timing as a warning, repeated wrong passwords slowed or refused. Cookie flags (`HttpOnly`, `SameSite`, `Secure` over HTTPS) when `auth_probe.password_env` names the environment variable holding the test account's password | sign-up, reset, one-time codes, everything below |
+| `sw access` | declared resources requested by the owner, by the accounts in `denied_to` and by a visitor | mass assignment, list isolation, routes not declared |
+| `sw dast` | passive ZAP scan: headers, cookie flags on pages reached without login, information leaks | anything behind login, any attack |
+| `sw supply` | lockfile, cooldown, install scripts, pinned actions, `.env` tracked by git | secrets inside the bundle, logs, backups, database roles |
 
 ## Password policy
 
@@ -43,7 +43,7 @@ Source: OWASP Session Management Cheat Sheet (https://cheatsheetseries.owasp.org
 
 ## Sign-up, reset request and one-time codes
 
-Play the two probes of `qp auth` by hand on each of these routes, with a disposable account.
+Play the two probes of `sw auth` by hand on each of these routes, with a disposable account.
 
 | Try | Must happen |
 | --- | --- |
@@ -123,7 +123,7 @@ Source: OWASP File Upload Cheat Sheet (https://cheatsheetseries.owasp.org/cheats
 | Upload a file above the size limit, and a nested archive | refused; the limit also applies to the unpacked size |
 | Upload with the filename `../../x` | stored under a random server-side name, outside the web root or on another host |
 | Fetch the stored file as its owner | served from another origin or a download handler, with `Content-Disposition: attachment` or a safe type, and `X-Content-Type-Options: nosniff` |
-| Fetch it as another account and as a visitor | refused. Add it to `qp access` |
+| Fetch it as another account and as a visitor | refused. Add it to `sw access` |
 
 ## Mass assignment and error handling
 
@@ -147,7 +147,7 @@ Sources, all **(nv)**: OWASP Secrets Management Cheat Sheet (https://cheatsheets
 | Build, then search the client bundle for the names and prefixes of server keys | none. Variables with a public prefix (`NEXT_PUBLIC_`, `VITE_`, `PUBLIC_`) hold no secret |
 | Start the app with a required secret missing | it stops at boot with a message naming the variable |
 | Connect as the app's database role and run the query below | all four columns false; the role does not own the schema and cannot create or drop tables; migrations use another role |
-| Multi-customer tables on PostgreSQL with row level security: read `relrowsecurity` and `relforcerowsecurity` in `pg_class` | both true on each customer table. `qp access` remains the proof |
+| Multi-customer tables on PostgreSQL with row level security: read `relrowsecurity` and `relforcerowsecurity` in `pg_class` | both true on each customer table. `sw access` remains the proof |
 | Request the backup location without credentials | refused |
 | Ask where backups are, how they are encrypted, where the key is, and when a restore was last tested | encrypted, key stored apart, a copy off site, a restore date on record. These are answers from the user, not something a tool proves |
 | Run the end-to-end flows with canary values (a unique email, password and token), then search the logs | no canary found. Logs do contain login successes and failures, refusals and admin actions, with a user id and a time |

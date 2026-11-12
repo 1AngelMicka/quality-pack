@@ -270,7 +270,7 @@ _Applies if: The project has a user interface_
 - Optimistic update when success is likely, with rollback; undo rather than confirm for what is reversible.
 - Dark theme: its own elevation model (surfaces get lighter as they rise), color-scheme: dark declared, never a plain inversion.
 - State in the address (filters, tabs, page, open panel): sharing, reloading and going back work.
-- Take every key screen through hard conditions before calling it done: slow network, failing server, texts three times longer, 320 px, dark scheme, keyboard only (`qp stress`), then the empty state and very long data by hand.
+- Take every key screen through hard conditions before calling it done: slow network, failing server, texts three times longer, 320 px, dark scheme, keyboard only (`sw stress`), then the empty state and very long data by hand.
 - Care for what surrounds the page: site icon, share image, 404 and error pages in the product's voice, tab title that follows the context.
 
 **Audit criteria**
@@ -302,7 +302,7 @@ _Applies if: The project has a user interface_
 - Two typefaces at most, plus a monospace if needed; not Inter or Geist as the only face; record name, foundry, licence and source of each font.
 - One icon set, one stroke width tuned to the size; draw the few icons of the product's own objects; never a glyph of the icon set as the logo.
 - Imagery, in order of preference: the real product (screenshots, components), diagrams made for the page, own photos, archive images with a consistent treatment, nothing. No kit illustrations and no generated image containing text, an interface or people.
-- For the screens that carry the product, build several versions that really differ, have them compared blind and let the user choose (design-variants skill); lean on the reference bank of the site type (`qp bank`), to learn and never to copy.
+- For the screens that carry the product, build several versions that really differ, have them compared blind and let the user choose (design-variants skill); lean on the reference bank of the site type (`sw bank`), to learn and never to copy.
 - Every number, quote, customer logo or badge shown comes from a fact supplied by the user; otherwise the block does not exist.
 - Copy: say what the product does and for whom, in customers' words; button label = verb + object; error = what happened + how to fix it.
 
@@ -310,8 +310,8 @@ _Applies if: The project has a user interface_
 
 | ID | Criterion | Severity | How to verify |
 | --- | --- | --- | --- |
-| BRD-01 | No invented testimonial, figure, customer logo or badge | Blocker | Every quote, number ("10,000 teams", "99.9%"), logo and badge on public pages traces to a source supplied by the user. The run's facts.json (`qp facts` on each public page): no claim left untraced to .quality/facts.json; read the list, the tool finds claims by pattern. No source: fail. (auto `facts_scan`) |
-| BRD-02 | Visual direction drawn from the product, written and followed | Major | DESIGN.md says where colour, type and imagery come from, and what the product refuses; the screens comply; no unjustified reflex palette. When references are measured (.quality/references.json), each gap reported by `qp gap` is closed or justified. (inspection) |
+| BRD-01 | No invented testimonial, figure, customer logo or badge | Blocker | Every quote, number ("10,000 teams", "99.9%"), logo and badge on public pages traces to a source supplied by the user. The run's facts.json (`sw facts` on each public page): no claim left untraced to .quality/facts.json; read the list, the tool finds claims by pattern. No source: fail. (auto `facts_scan`) |
+| BRD-02 | Visual direction drawn from the product, written and followed | Major | DESIGN.md says where colour, type and imagery come from, and what the product refuses; the screens comply; no unjustified reflex palette. When references are measured (.quality/references.json), each gap reported by `sw gap` is closed or justified. (inspection) |
 | BRD-07 | The screens that carry the product were chosen among several versions | Major | For the public home page and the main work screen: a .quality/variants/ folder with at least two versions compared, the jury's votes and the user's choice; or a written reason for not doing it. (inspection) |
 | BRD-03 | Typeface chosen, licence recorded | Major | Two families at most (plus a monospace); the text face has real italics and tabular figures; name, foundry, licence and source recorded; fonts hosted by the project. (inspection) |
 | BRD-04 | One icon set, adjusted, and a logo that does not come from it | Major | One set, one stroke width per size; the product's own objects have their icon; the logo is not a glyph of the set; site icon, share image and avatar derive from the same drawing. (inspection) |
@@ -328,7 +328,7 @@ _Applies if: The project has a user interface_
 
 **While building**
 
-- List 2 to 5 key tasks at /qp:kickoff (project.json › flows), with their test data, and design the screens from them.
+- List 2 to 5 key tasks at /sw:kickoff (project.json › flows), with their test data, and design the screens from them.
 - Past a dozen settings, group them in tabs, steps or collapsible sections; an endlessly scrolling settings page is never the answer.
 - The result (preview, total, rendering) stays visible while adjusting; on a phone, preview on top and settings panel below.
 - The main action is reachable without scrolling, and under the thumb on a phone (bottom action bar).
@@ -384,7 +384,7 @@ Secret protection, input validation, permissions, rate limiting and security hea
 | SEC-09 | Uploads restricted in type and size, stored outside the executable root | Major | Real type check, maximum size, regenerated file name. (inspection) |
 | SEC-10 | Errors do not leak internal details | Minor | No stack trace, SQL query or server path in production responses. (inspection) |
 | SEC-11 | In-depth security audit run at every major release | Minor | Dated and tracked report from the security-audit skill (Cloudflare). (inspection) |
-| SEC-12 | Threat model written, complete and current | Major | `qp threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open "before launch"; reviewed within 6 months. (auto `threat_model`) |
+| SEC-12 | Threat model written, complete and current | Major | `sw threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open "before launch"; reviewed within 6 months. (auto `threat_model`) |
 | SEC-13 | Login resists repeated guesses and does not say which accounts exist | Blocker | auth.json: same answer for a known and an unknown account; wrong passwords in a row slowed, refused or locked. Check the same by hand on password reset, signup and one-time codes. (auto `auth_probe`) |
 | SEC-14 | Passive scan of the running app with no high or medium alert | Major | zap.json (OWASP ZAP baseline): no high alert; each medium alert fixed or explained. A clean scan means "nothing found by this tool", not "secure". (auto `dast_scan`) |
 | SEC-15 | Supply chain locked down | Major | supply.json: no failed "must" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files). (auto `supply_scan`) |
@@ -830,7 +830,7 @@ _Applies if: Recurring subscriptions with plans_
 | --- | --- | --- | --- |
 | SUB-01 | Entitlements come from a server table updated by webhook, never from the browser | Blocker | Open the payment return address without paying, or send a changed plan from the browser: no entitlement granted. (inspection) |
 | SUB-02 | Every plan limit is enforced server-side | Blocker | Direct API call beyond the limit (projects, members, usage): refused with a clear message. (inspection) |
-| SUB-03 | Failed payment: email, in-app banner and a written grace period | Blocker | billing.json (`qp billing`): at each stage (trial, first payment, declined renewal, cancellation) the app's answer matches what project.json › billing.probe expects; no stage where the app disagrees with Stripe. Then by hand: the email with a link to fix the card, the visible banner, access cut as written after the grace period. (auto `billing_run`) |
+| SUB-03 | Failed payment: email, in-app banner and a written grace period | Blocker | billing.json (`sw billing`): at each stage (trial, first payment, declined renewal, cancellation) the app's answer matches what project.json › billing.probe expects; no stage where the app disagrees with Stripe. Then by hand: the email with a link to fix the card, the visible banner, access cut as written after the grace period. (auto `billing_run`) |
 | SUB-04 | Trial: terms stated at signup, reminder before the end, defined end of trial | Major | Trial length and what follows visible before signup; reminder email a few days before the end; behaviour without a card tested. (inspection) |
 | SUB-05 | Plan change: amount due now and at next renewal shown before confirming | Major | Preview compared with the invoice issued; a downgrade deletes no data without saying so. (inspection) |
 | SUB-06 | Cancellation online, in three steps at most from the account, confirmed by email | Blocker | Steps counted from the account settings; confirmation email with the effective date; no need to call or write. (inspection) |
@@ -948,7 +948,7 @@ _Applies if: Installed desktop app (Tauri, Electron)_
 
 | ID | Criterion | Severity | How to verify |
 | --- | --- | --- | --- |
-| DUX-01 | Every key task completes in the real window | Blocker | flows.json played with `qp flows --attach <port>` on the running app (not only in a browser): every flow completed. Say on which system. (auto `flow_run`) |
+| DUX-01 | Every key task completes in the real window | Blocker | flows.json played with `sw flows --attach <port>` on the running app (not only in a browser): every flow completed. Say on which system. (auto `flow_run`) |
 | DUX-02 | Window usable at every size, state remembered | Major | Minimum size set in the configuration; screenshots at the minimum size and full screen with no clipped content; size and position restored after relaunch. (inspection) |
 | DUX-03 | System shortcuts and menus honoured | Major | Save, undo, redo, copy, paste, close, quit and preferences answer the system's shortcuts on each target platform; application menu present on macOS. (inspection) |
 | DUX-04 | No work lost on close or after a crash | Blocker | Close the window with changes: saved, or a warning. Kill the process while editing then relaunch: the work is back or offered. (inspection) |

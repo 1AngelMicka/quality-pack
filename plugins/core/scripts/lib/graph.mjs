@@ -29,9 +29,9 @@ export function graphStatus(cwd) {
   }
   out.recommended = size.tier !== "small";
   out.advice = !installed
-    ? (out.recommended ? "Recommended for this project size: uv tool install graphifyy && graphify install --project, then run: node qp.mjs graph refresh." : "Not needed for a small project.")
-    : !out.graph ? "Installed but no graph yet: run qp.mjs graph refresh."
-    : out.stale ? "Graph is stale: run qp.mjs graph refresh before relying on it." : "Graph is fresh: query it before reading files.";
+    ? (out.recommended ? "Recommended for this project size: uv tool install graphifyy && graphify install --project, then run: node sw.mjs graph refresh." : "Not needed for a small project.")
+    : !out.graph ? "Installed but no graph yet: run sw.mjs graph refresh."
+    : out.stale ? "Graph is stale: run sw.mjs graph refresh before relying on it." : "Graph is fresh: query it before reading files.";
   return out;
 }
 

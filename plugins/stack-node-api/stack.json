@@ -73,5 +73,5 @@
   }
  ],
  "qp_stack": true,
- "plugin": "qp-node-api"
+ "plugin": "sw-node-api"
 }

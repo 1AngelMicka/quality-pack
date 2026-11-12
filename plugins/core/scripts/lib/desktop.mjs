@@ -3,7 +3,7 @@
 // code away from the system matter more than on a site: Tauri's capabilities and content security policy,
 // Electron's context isolation and sandbox. Also read here: signing, the updater, the app's identity.
 // What this cannot see: the signed installers themselves, and how the app behaves in its window (play the
-// key tasks in the real window with `qp flows --attach <port>`).
+// key tasks in the real window with `sw flows --attach <port>`).
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, relative } from "node:path";
 

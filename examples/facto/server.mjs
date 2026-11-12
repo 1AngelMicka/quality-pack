@@ -80,7 +80,7 @@ ${DRAFT ? "" : `<link rel="canonical" href="{ORIGIN}${path}">
 ${DRAFT ? "" : '<a href="#main" class="btn" style="position:absolute;left:-999px" onfocus="this.style.left=\'8px\'" onblur="this.style.left=\'-999px\'">Skip to content</a>'}
 <header><a class="brand" href="/">Facto</a><nav><a href="/pricing">Pricing</a><a href="/demo">Demo</a><a href="/login">Log in</a></nav></header>
 <main id="main">${body}</main>
-<footer><p>Facto is a fixture used to test quality-pack. <a href="/">Home</a></p></footer>
+<footer><p>Facto is a fixture used to test shipwright. <a href="/">Home</a></p></footer>
 </body></html>`;
 
 const home = () => page({ path: "/", title: "Invoicing software for freelancers – Facto", description: "Facto is invoicing software for freelancers: write an invoice in two minutes, send it, and see who has paid.",

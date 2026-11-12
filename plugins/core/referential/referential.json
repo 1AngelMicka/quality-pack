@@ -1,5 +1,5 @@
 {
- "version": "0.7.0",
+ "version": "0.8.0",
  "scoring": {
   "severity_weight": {
    "blocker": 5,
@@ -2006,8 +2006,8 @@
        "en": "State in the address (filters, tabs, page, open panel): sharing, reloading and going back work."
       },
       {
-       "fr": "Passer chaque écran clé dans les conditions difficiles avant de le dire terminé : réseau lent, serveur en panne, textes trois fois plus longs, 320 px, thème sombre, clavier seul (`qp stress`), puis l'état vide et les très longues données à la main.",
-       "en": "Take every key screen through hard conditions before calling it done: slow network, failing server, texts three times longer, 320 px, dark scheme, keyboard only (`qp stress`), then the empty state and very long data by hand."
+       "fr": "Passer chaque écran clé dans les conditions difficiles avant de le dire terminé : réseau lent, serveur en panne, textes trois fois plus longs, 320 px, thème sombre, clavier seul (`sw stress`), puis l'état vide et les très longues données à la main.",
+       "en": "Take every key screen through hard conditions before calling it done: slow network, failing server, texts three times longer, 320 px, dark scheme, keyboard only (`sw stress`), then the empty state and very long data by hand."
       },
       {
        "fr": "Soigner ce qui entoure la page : icône du site, image de partage, page 404 et page d'erreur dans la voix du produit, titre d'onglet qui suit le contexte.",
@@ -2225,8 +2225,8 @@
        "en": "Imagery, in order of preference: the real product (screenshots, components), diagrams made for the page, own photos, archive images with a consistent treatment, nothing. No kit illustrations and no generated image containing text, an interface or people."
       },
       {
-       "fr": "Pour les écrans qui portent le produit, construire plusieurs versions vraiment différentes, les faire comparer à l'aveugle et laisser l'utilisateur choisir (skill design-variants) ; s'appuyer sur la banque de références du type de site (`qp bank`), pour apprendre et jamais pour copier.",
-       "en": "For the screens that carry the product, build several versions that really differ, have them compared blind and let the user choose (design-variants skill); lean on the reference bank of the site type (`qp bank`), to learn and never to copy."
+       "fr": "Pour les écrans qui portent le produit, construire plusieurs versions vraiment différentes, les faire comparer à l'aveugle et laisser l'utilisateur choisir (skill design-variants) ; s'appuyer sur la banque de références du type de site (`sw bank`), pour apprendre et jamais pour copier.",
+       "en": "For the screens that carry the product, build several versions that really differ, have them compared blind and let the user choose (design-variants skill); lean on the reference bank of the site type (`sw bank`), to learn and never to copy."
       },
       {
        "fr": "Tout chiffre, citation, logo de client ou badge affiché vient d'un fait fourni par l'utilisateur ; sinon le bloc n'existe pas.",
@@ -2250,8 +2250,8 @@
         "en": "No invented testimonial, figure, customer logo or badge"
        },
        "verify": {
-        "fr": "Chaque citation, nombre (« 10 000 équipes », « 99,9 % »), logo et badge des pages publiques est relié à une source fournie par l'utilisateur. facts.json du run (`qp facts` sur chaque page publique) : aucune affirmation non reliée à .quality/facts.json ; relire la liste, l'outil repère par motifs. Sans source : échec.",
-        "en": "Every quote, number (\"10,000 teams\", \"99.9%\"), logo and badge on public pages traces to a source supplied by the user. The run's facts.json (`qp facts` on each public page): no claim left untraced to .quality/facts.json; read the list, the tool finds claims by pattern. No source: fail."
+        "fr": "Chaque citation, nombre (« 10 000 équipes », « 99,9 % »), logo et badge des pages publiques est relié à une source fournie par l'utilisateur. facts.json du run (`sw facts` sur chaque page publique) : aucune affirmation non reliée à .quality/facts.json ; relire la liste, l'outil repère par motifs. Sans source : échec.",
+        "en": "Every quote, number (\"10,000 teams\", \"99.9%\"), logo and badge on public pages traces to a source supplied by the user. The run's facts.json (`sw facts` on each public page): no claim left untraced to .quality/facts.json; read the list, the tool finds claims by pattern. No source: fail."
        }
       },
       {
@@ -2265,8 +2265,8 @@
         "en": "Visual direction drawn from the product, written and followed"
        },
        "verify": {
-        "fr": "DESIGN.md dit d'où viennent la couleur, la typographie et les images, et ce que le produit refuse ; les écrans s'y conforment ; pas de palette réflexe non justifiée. Si des références sont mesurées (.quality/references.json), chaque écart relevé par `qp gap` est réduit ou justifié.",
-        "en": "DESIGN.md says where colour, type and imagery come from, and what the product refuses; the screens comply; no unjustified reflex palette. When references are measured (.quality/references.json), each gap reported by `qp gap` is closed or justified."
+        "fr": "DESIGN.md dit d'où viennent la couleur, la typographie et les images, et ce que le produit refuse ; les écrans s'y conforment ; pas de palette réflexe non justifiée. Si des références sont mesurées (.quality/references.json), chaque écart relevé par `sw gap` est réduit ou justifié.",
+        "en": "DESIGN.md says where colour, type and imagery come from, and what the product refuses; the screens comply; no unjustified reflex palette. When references are measured (.quality/references.json), each gap reported by `sw gap` is closed or justified."
        }
       },
       {
@@ -2371,8 +2371,8 @@
      ],
      "build": [
       {
-       "fr": "Lister 2 à 5 tâches clés au /qp:kickoff (project.json › flows), avec leurs données de test, et concevoir les écrans à partir d'elles.",
-       "en": "List 2 to 5 key tasks at /qp:kickoff (project.json › flows), with their test data, and design the screens from them."
+       "fr": "Lister 2 à 5 tâches clés au /sw:kickoff (project.json › flows), avec leurs données de test, et concevoir les écrans à partir d'elles.",
+       "en": "List 2 to 5 key tasks at /sw:kickoff (project.json › flows), with their test data, and design the screens from them."
       },
       {
        "fr": "Au-delà d'une douzaine de réglages, les ranger en onglets, en étapes ou en sections repliables ; une page de réglages qu'on fait défiler sans fin n'est jamais une solution.",
@@ -2804,8 +2804,8 @@
         "en": "Threat model written, complete and current"
        },
        "verify": {
-        "fr": "`qp threats` : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois.",
-        "en": "`qp threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open \"before launch\"; reviewed within 6 months."
+        "fr": "`sw threats` : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois.",
+        "en": "`sw threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open \"before launch\"; reviewed within 6 months."
        }
       },
       {
@@ -5345,8 +5345,8 @@
         "en": "Failed payment: email, in-app banner and a written grace period"
        },
        "verify": {
-        "fr": "billing.json (`qp billing`) : à chaque étape (essai, premier paiement, renouvellement refusé, résiliation) la réponse de l'application correspond à ce qu'attend project.json › billing.probe ; aucune étape où l'application contredit Stripe. Puis à la main : l'email avec lien pour corriger la carte, le bandeau visible, l'accès coupé comme écrit après le délai de grâce.",
-        "en": "billing.json (`qp billing`): at each stage (trial, first payment, declined renewal, cancellation) the app's answer matches what project.json › billing.probe expects; no stage where the app disagrees with Stripe. Then by hand: the email with a link to fix the card, the visible banner, access cut as written after the grace period."
+        "fr": "billing.json (`sw billing`) : à chaque étape (essai, premier paiement, renouvellement refusé, résiliation) la réponse de l'application correspond à ce qu'attend project.json › billing.probe ; aucune étape où l'application contredit Stripe. Puis à la main : l'email avec lien pour corriger la carte, le bandeau visible, l'accès coupé comme écrit après le délai de grâce.",
+        "en": "billing.json (`sw billing`): at each stage (trial, first payment, declined renewal, cancellation) the app's answer matches what project.json › billing.probe expects; no stage where the app disagrees with Stripe. Then by hand: the email with a link to fix the card, the visible banner, access cut as written after the grace period."
        }
       },
       {
@@ -6023,8 +6023,8 @@
         "en": "Every key task completes in the real window"
        },
        "verify": {
-        "fr": "flows.json joué avec `qp flows --attach <port>` sur l'application lancée (pas seulement dans un navigateur) : tous les flows terminés. Dire sur quel système.",
-        "en": "flows.json played with `qp flows --attach <port>` on the running app (not only in a browser): every flow completed. Say on which system."
+        "fr": "flows.json joué avec `sw flows --attach <port>` sur l'application lancée (pas seulement dans un navigateur) : tous les flows terminés. Dire sur quel système.",
+        "en": "flows.json played with `sw flows --attach <port>` on the running app (not only in a browser): every flow completed. Say on which system."
        }
       },
       {

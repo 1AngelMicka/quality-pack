@@ -13,7 +13,7 @@ scoring:
   global_blocker_cap: 5.9
   # A criterion that could not be checked counts as failed until verified.
   unknown_counts_as: fail
-  # Effort budgets for the key tasks played by `qp.mjs flows`, per device. A flow can override them (flows[].budget).
+  # Effort budgets for the key tasks played by `sw.mjs flows`, per device. A flow can override them (flows[].budget).
   #   page_screens: height of the longest page or panel, in screens, at any step
   #   controls_rendered: controls on one screen at once (reachable by scrolling, hidden tabs not counted)
   #   scroll_screens: screens scrolled through during the whole task

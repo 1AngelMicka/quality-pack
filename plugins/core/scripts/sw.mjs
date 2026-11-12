@@ -1,87 +1,87 @@
 #!/usr/bin/env node
-// quality-pack CLI. Zero dependencies, Node 18+. Run it from anywhere inside the project: it finds the
+// shipwright CLI. Zero dependencies, Node 18+. Run it from anywhere inside the project: it finds the
 // folder that holds .quality/project.json and writes there.
 //
-//   node qp.mjs detect                       Guess stacks, flags and profile for /qp:kickoff
-//   node qp.mjs stacks                       List installed qp stack modules
-//   node qp.mjs plan [scope...] [--incremental]
-//                                            Applicable criteria for /qp:audit, written to .quality/audits/<run>/plan.json.
+//   node sw.mjs detect                       Guess stacks, flags and profile for /sw:kickoff
+//   node sw.mjs stacks                       List installed qp stack modules
+//   node sw.mjs plan [scope...] [--incremental]
+//                                            Applicable criteria for /sw:audit, written to .quality/audits/<run>/plan.json.
 //                                            scope: group, domain, criterion IDs, "blockers" or "quick" (automatic checks only).
 //                                            --incremental: only what changed since the last audit (git), the rest is carried over.
 //                                            Each audit gets its own run folder: 2026-11-11, then 2026-11-11-2 for a second one that day.
-//   node qp.mjs run <label> "<command>"      Run a command, keep the full log on disk, print only a compact summary
-//   node qp.mjs graph [refresh]              Graphify status (installed, fresh, recommended for this size) or code-only refresh
-//   node qp.mjs scan                         Static scans of the source (placeholder, hollow wording, debug leftovers)
-//   node qp.mjs web <url>                    HTTP checks: headers, compression, cache, SEO metadata, robots, sitemap
-//   node qp.mjs seo [url] [--limit N]        Search readiness of the public pages: sitemap (found, declared, every address answers and is
+//   node sw.mjs run <label> "<command>"      Run a command, keep the full log on disk, print only a compact summary
+//   node sw.mjs graph [refresh]              Graphify status (installed, fresh, recommended for this size) or code-only refresh
+//   node sw.mjs scan                         Static scans of the source (placeholder, hollow wording, debug leftovers)
+//   node sw.mjs web <url>                    HTTP checks: headers, compression, cache, SEO metadata, robots, sitemap
+//   node sw.mjs seo [url] [--limit N]        Search readiness of the public pages: sitemap (found, declared, every address answers and is
 //                                            indexable), title and meta description of each page (filled, length, unique), one h1,
 //                                            the keywords of project.json › seo.keywords carried by their page, Search Console (seo.json)
-//   node qp.mjs browser <url> [url...]       Playwright checks of pages as they load, at 6 widths
-//   node qp.mjs flows [flow-id...] [--base URL] [--check] [--attach port]
+//   node sw.mjs browser <url> [url...]       Playwright checks of pages as they load, at 6 widths
+//   node sw.mjs flows [flow-id...] [--base URL] [--check] [--attach port]
 //                                            Play the key tasks declared in project.json step by step, on a phone and a
 //                                            desktop: screenshot, axe-core and effort measures at every step (flows.json)
-//   node qp.mjs access [--base URL] [--check] [--allow-production]
+//   node sw.mjs access [--base URL] [--check] [--allow-production]
 //                                            Access control played for real: each resource declared in project.json › access is
 //                                            requested by its owner, then by the accounts that must not reach it (access.json)
-//   node qp.mjs dast [url] [--minutes N] [--allow-production]
+//   node sw.mjs dast [url] [--minutes N] [--allow-production]
 //                                            Passive security scan of the running app with OWASP ZAP's baseline, in Docker (zap.json)
-//   node qp.mjs auth [--base URL]            Login of the running app: same answer for known and unknown accounts, wrong passwords
+//   node sw.mjs auth [--base URL]            Login of the running app: same answer for known and unknown accounts, wrong passwords
 //                                            slowed or refused (auth.json). Sends failed logins: local or staging only
-//   node qp.mjs supply                       Supply chain read from the repository: lockfile, release cooldown, install scripts,
+//   node sw.mjs supply                       Supply chain read from the repository: lockfile, release cooldown, install scripts,
 //                                            pinned CI actions, env files (supply.json)
-//   node qp.mjs threats [--check]            Check the threat model (.quality/threats.json): every entry point has an abuse
+//   node sw.mjs threats [--check]            Check the threat model (.quality/threats.json): every entry point has an abuse
 //                                            case, every abuse case a response and a test
-//   node qp.mjs mobile flows [flow-id...]    Installed app: turn project.json › mobile.flows into Maestro flows (.maestro/qp/)
+//   node sw.mjs mobile flows [flow-id...]    Installed app: turn project.json › mobile.flows into Maestro flows (.maestro/qp/)
 //                                            and play them on the running emulator, simulator or device (mobile.json)
-//   node qp.mjs mobile audit                 Installed app, Android: the screen shown on the running device or emulator, read with adb:
+//   node sw.mjs mobile audit                 Installed app, Android: the screen shown on the running device or emulator, read with adb:
 //                                            touch targets, controls without a name, crowded targets; screenshots at 200 % text
 //                                            size and in dark theme (mobile-audit.json)
-//   node qp.mjs mobile check                 Installed app: release blockers read from the project (target API, debuggable,
+//   node sw.mjs mobile check                 Installed app: release blockers read from the project (target API, debuggable,
 //                                            cleartext, privacy manifest, WebView, link files, deletion page) (mobile-check.json)
-//   node qp.mjs desktop check                Desktop app (Tauri, Electron): what blocks or weakens a release, read from the project:
+//   node sw.mjs desktop check                Desktop app (Tauri, Electron): what blocks or weakens a release, read from the project:
 //                                            content security policy, permissions, isolation, updater, signing (desktop-check.json).
-//                                            Key tasks in the real window: qp.mjs flows --attach <remote debugging port>
-//   node qp.mjs perf <url> [url...]          Loading measured on a throttled phone: largest paint, layout shift, blocking time,
+//                                            Key tasks in the real window: sw.mjs flows --attach <remote debugging port>
+//   node sw.mjs perf <url> [url...]          Loading measured on a throttled phone: largest paint, layout shift, blocking time,
 //                                            weight of the page and of its scripts, requests (perf.json)
-//   node qp.mjs webhooks [--base URL]        Webhook endpoints of project.json › webhooks: an unsigned or wrongly signed event
+//   node sw.mjs webhooks [--base URL]        Webhook endpoints of project.json › webhooks: an unsigned or wrongly signed event
 //                                            must be refused (webhooks.json). Local or staging only
-//   node qp.mjs billing [--wait seconds]     Subscription life cycle played in Stripe's test mode with a test clock: trial, first
+//   node sw.mjs billing [--wait seconds]     Subscription life cycle played in Stripe's test mode with a test clock: trial, first
 //                                            payment, declined renewal, cancellation; the app is asked what it believes at each
 //                                            stage (billing.json). Needs a Stripe TEST key in the environment
-//   node qp.mjs facts <url> [url...]         Figures, quotes and customer names shown on public pages, each to be traced to
+//   node sw.mjs facts <url> [url...]         Figures, quotes and customer names shown on public pages, each to be traced to
 //                                            .quality/facts.json (facts.json in the run)
-//   node qp.mjs record <flow-id> [--name "…"] [--start /path] [--device desktop|mobile] [--from recorded.js]
+//   node sw.mjs record <flow-id> [--name "…"] [--start /path] [--device desktop|mobile] [--from recorded.js]
 //                                            Record a key task by doing it in a browser; saves it as a flow in project.json
-//   node qp.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]
+//   node sw.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]
 //                                            How the page looks, measured: generic "AI-made" signals (weighted, never one alone),
 //                                            font sizes and families, radii, line length and height, small targets, accent share,
 //                                            reduced motion (look.json). --baseline: controls lost since an earlier look.json (redesign guard)
-//   node qp.mjs craft <url> [url...] [--mode persuade|operate|read]
+//   node sw.mjs craft <url> [url...] [--mode persuade|operate|read]
 //                                            Finish of the rendered page, measured: typography details, focus and hover states,
 //                                            transitions, images, icons, site icon, share image, 404 page (craft.json)
-//   node qp.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script]
+//   node sw.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script]
 //                                            Finishing passes: the screen with a slow network, a failing server, texts three times
 //                                            longer, 320 px wide, dark scheme, keyboard only, scripts off (stress.json, screenshots)
-//   node qp.mjs profile <url> [url...] [--save]
+//   node sw.mjs profile <url> [url...] [--save]
 //                                            Visual profile of a page in numbers (type scale, typefaces, first screen, colours,
 //                                            surfaces, density). --save: keep them as the project's references (.quality/references.json)
-//   node qp.mjs gap <url> [--type <site-type>] [--device mobile]
+//   node sw.mjs gap <url> [--type <site-type>] [--device mobile]
 //                                            Compare a screen with the project's references, or with the reference bank of a site type
-//   node qp.mjs bank [type] | bank measure <type|all> | bank calibrate <type|all> [--limit N]
+//   node sw.mjs bank [type] | bank measure <type|all> | bank calibrate <type|all> [--limit N]
 //                                            Reference bank: excellent sites by type, why they are, their measured profile;
 //                                            calibrate runs qp craft and qp look on them, so that a rule most of them break becomes advice
-//   node qp.mjs variants <name> <url> <url> [url...] | variants <name> --tally
+//   node sw.mjs variants <name> <url> <url> [url...] | variants <name> --tally
 //                                            Several versions of one screen: screenshots under shuffled letters, measures, pairs
 //                                            for a blind jury; --tally ranks them from the votes
-//   node qp.mjs deslop <url|file.html> [--widths …] [--click sel] [--before file.js] [--tauri] [--dark] [--attach port]
+//   node sw.mjs deslop <url|file.html> [--widths …] [--click sel] [--before file.js] [--tauri] [--dark] [--attach port]
 //                                            Spacing, alignment and execution audit of the rendered page, with installed
 //                                            Chrome or Edge (deslop.json, screenshots per width)
-//   node qp.mjs tokens [file.tokens.json...] Check design tokens (DTCG 2025.10): references, units, tiers, contrast per theme, sRGB gamut
-//   node qp.mjs browser-setup                Install Playwright, axe-core and Chromium once, in the pack's cache (not the project)
-//   node qp.mjs assemble                     Merge agent results, score, write .quality/AUDIT.md and .quality/report.html
-//   node qp.mjs report [--run R]             Rewrite .quality/report.html: scores over time, key-task screenshots, review findings
-//   node qp.mjs score <audit.json> [--previous old.json] [--lang fr|en]
-//   node qp.mjs status [--json]              Summary of the latest audit
+//   node sw.mjs tokens [file.tokens.json...] Check design tokens (DTCG 2025.10): references, units, tiers, contrast per theme, sRGB gamut
+//   node sw.mjs browser-setup                Install Playwright, axe-core and Chromium once, in the pack's cache (not the project)
+//   node sw.mjs assemble                     Merge agent results, score, write .quality/AUDIT.md and .quality/report.html
+//   node sw.mjs report [--run R]             Rewrite .quality/report.html: scores over time, key-task screenshots, review findings
+//   node sw.mjs score <audit.json> [--previous old.json] [--lang fr|en]
+//   node sw.mjs status [--json]              Summary of the latest audit
 //
 // Commands that write audit files take --run <run> (or --date <run>); by default, the latest run of today.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
@@ -107,7 +107,7 @@ const auditsDir = () => join(qualityDir(cwd), "audits");
 
 function requireProject() {
   const p = loadProject(cwd);
-  if (!p) die("No .quality/project.json in this directory or its parents. Run /qp:kickoff first.");
+  if (!p) die("No .quality/project.json in this directory or its parents. Run /sw:kickoff first.");
   if (!ref.profiles[p.profile]) die(`Unknown profile "${p.profile}" in .quality/project.json (${Object.keys(ref.profiles).join(", ")}).`);
   return p;
 }
@@ -168,13 +168,13 @@ const EVIDENCE = { placeholder_scan: "scan.json", slop_wording_scan: "scan.json"
   access_run: "access.json (summary.leaks, unclear, setup_errors)", dast_scan: "zap.json (summary by risk, alerts)",
   craft_scan: "craft.json (summary.must_failed, should_failed, checks with samples)",
   auth_probe: "auth.json (summary.must_failed, checks)", supply_scan: "supply.json (summary.must_failed, should_failed, checks)",
-  threat_model: "node qp.mjs threats (errors, open_before_launch)", mobile_flow_run: "mobile.json (summary, screenshots in mobile/)",
+  threat_model: "node sw.mjs threats (errors, open_before_launch)", mobile_flow_run: "mobile.json (summary, screenshots in mobile/)",
   mobile_release_scan: "mobile-check.json (summary.must_failed, should_failed, not_covered)",
   stress_run: "stress.json (per screen: summary.must_failed, should_failed, screenshots in stress/)",
   seo_pages: "seo.json (summary.must_failed, should_failed, keywords, pages)",
   desktop_release_scan: "desktop-check.json (summary.must_failed, should_failed, not_covered)", perf_run: "perf.json (per page: summary.must_failed, should_failed, measures)",
   webhook_probe: "webhooks.json (summary.must_failed, checks)", billing_run: "billing.json (stages, summary.app_disagrees, stripe_unexpected)", facts_scan: "facts.json (summary.untraced, claims per page)" };
-const AGENTS = { ergonomics: "qp:ergonomist" };
+const AGENTS = { ergonomics: "sw:ergonomist" };
 
 async function plan(scope, run, incremental = false) {
   const project = requireProject();
@@ -227,12 +227,12 @@ async function plan(scope, run, incremental = false) {
       }
       if (criteria.length) domains.push({ id: d.id, label: d.label.en, criteria });
     }
-    if (domains.length) groups.push({ group: g.group, label: g.label.en, agent: AGENTS[g.group] || "qp:auditor", domains });
+    if (domains.length) groups.push({ group: g.group, label: g.label.en, agent: AGENTS[g.group] || "sw:auditor", domains });
   }
   const { validateFlows } = await import("./lib/flows.mjs");
   const fl = validateFlows(project);
   const flowInfo = { declared: fl.flows.map((f) => ({ id: f.id, name: f.name, devices: f.devices, steps: f.steps.length })), errors: fl.errors };
-  if (flags.has("has_ui") && !fl.flows.length) flowInfo.missing = "No key tasks in project.json › flows: the interface can only be judged on the screens as they load. Declare 2 to 5 flows (see /qp:kickoff) before a full audit.";
+  if (flags.has("has_ui") && !fl.flows.length) flowInfo.missing = "No key tasks in project.json › flows: the interface can only be judged on the screens as they load. Declare 2 to 5 flows (see /sw:kickoff) before a full audit.";
   const dir = join(auditsDir(), run);
   mkdirSync(join(dir, "parts"), { recursive: true });
   const result = { run, date: runDay(run), out_dir: relative(cwd, dir), project_root: cwd, qp_cli: qp, project: project.name, profile: project.profile,
@@ -386,7 +386,7 @@ async function main() {
       const { runCommand } = await import("./lib/run.mjs");
       const run = currentRun();
       const [label, ...cmdParts] = rest;
-      if (!label || !cmdParts.length) die('Usage: qp.mjs run <label> "<command>"');
+      if (!label || !cmdParts.length) die('Usage: sw.mjs run <label> "<command>"');
       const logDir = loadProject(cwd) ? join(auditsDir(), run, "logs") : join(qualityDir(cwd), "logs");
       // The command runs where it was typed (a sub-folder may be intended); its log goes to the project root.
       return out(runCommand(label, cmdParts.join(" "), { cwd: here, logDir }));
@@ -419,7 +419,7 @@ async function main() {
     case "web": {
       const { webChecks } = await import("./lib/web.mjs");
       const run = currentRun();
-      if (!rest[0]) die("Usage: qp.mjs web <url>");
+      if (!rest[0]) die("Usage: sw.mjs web <url>");
       const result = await webChecks(rest[0]);
       if (loadProject(cwd)) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "web.json"), JSON.stringify(result, null, 2)); }
       return out(result);
@@ -430,7 +430,7 @@ async function main() {
       const run = currentRun();
       const limit = Number(opt("limit", "0")) || undefined;
       const base = rest[0] || project?.urls?.production || project?.urls?.staging || project?.urls?.local;
-      if (!base) die("Usage: qp.mjs seo <url> (or set urls.production in .quality/project.json)");
+      if (!base) die("Usage: sw.mjs seo <url> (or set urls.production in .quality/project.json)");
       const result = await seoChecks(base, { keywords: project?.seo?.keywords || [], searchConsole: project?.seo?.search_console || null, limit });
       if (result.errors) die(result.errors.join("\n"));
       if (project) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "seo.json"), JSON.stringify(result, null, 2)); }
@@ -442,7 +442,7 @@ async function main() {
     case "browser": {
       const { browserChecks } = await import("./lib/browser.mjs");
       const run = currentRun();
-      if (!rest.length) die("Usage: qp.mjs browser <url> [url...]");
+      if (!rest.length) die("Usage: sw.mjs browser <url> [url...]");
       const d = loadProject(cwd) ? join(auditsDir(), run) : null;
       const result = await browserChecks(rest, { cwd, outDir: d });
       if (d) { mkdirSync(d, { recursive: true }); writeFileSync(join(d, "browser.json"), JSON.stringify(result, null, 2)); }
@@ -494,7 +494,7 @@ async function main() {
       const minutes = Number(opt("minutes", "1")) || 1;
       const allowProduction = flag("allow-production");
       const target = rest[0] || project?.urls?.local || project?.urls?.staging;
-      if (!target) die("Usage: qp.mjs dast <url> (or set urls.local or urls.staging in .quality/project.json)");
+      if (!target) die("Usage: sw.mjs dast <url> (or set urls.local or urls.staging in .quality/project.json)");
       const d = project ? join(auditsDir(), run) : join(qualityDir(cwd), "dast");
       mkdirSync(d, { recursive: true });
       const result = runZap(target, { outDir: d, production: project?.urls?.production, allowProduction, minutes });
@@ -564,11 +564,11 @@ async function main() {
         if (result.errors?.length || result.summary?.failed.length) process.exitCode = 2;
         return;
       }
-      die("Usage: qp.mjs mobile flows [flow-id...] [--check] | qp.mjs mobile check | qp.mjs mobile audit");
+      die("Usage: sw.mjs mobile flows [flow-id...] [--check] | sw.mjs mobile check | sw.mjs mobile audit");
     }
     case "desktop": {
       const { desktopChecks } = await import("./lib/desktop.mjs");
-      if (rest[0] !== "check") die("Usage: qp.mjs desktop check   (key tasks in the real window: qp.mjs flows --attach <port>)");
+      if (rest[0] !== "check") die("Usage: sw.mjs desktop check   (key tasks in the real window: sw.mjs flows --attach <port>)");
       const run = currentRun();
       const result = desktopChecks(cwd);
       if (loadProject(cwd)) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "desktop-check.json"), JSON.stringify(result, null, 2)); }
@@ -580,7 +580,7 @@ async function main() {
       const { perfAt } = await import("./lib/perf.mjs");
       const project = loadProject(cwd);
       const run = currentRun();
-      if (!rest.length) die("Usage: qp.mjs perf <url> [url...]");
+      if (!rest.length) die("Usage: sw.mjs perf <url> [url...]");
       const urls = rest.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href);
       const result = await perfAt(urls, { cwd });
       if (project && result.pages) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "perf.json"), JSON.stringify(result, null, 2)); }
@@ -602,7 +602,7 @@ async function main() {
       const { factsAt } = await import("./lib/facts.mjs");
       const project = loadProject(cwd);
       const run = currentRun();
-      if (!rest.length) die("Usage: qp.mjs facts <url> [url...]");
+      if (!rest.length) die("Usage: sw.mjs facts <url> [url...]");
       const file = join(qualityDir(cwd), "facts.json");
       let known = null;
       try { known = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : null; } catch (e) { die(`.quality/facts.json is not valid JSON: ${e.message}`); }
@@ -631,7 +631,7 @@ async function main() {
       const dir = cacheDir();
       mkdirSync(dir, { recursive: true });
       if (!existsSync(join(dir, "package.json"))) writeFileSync(join(dir, "package.json"), JSON.stringify({ name: "qp-browser-cache", private: true,
-        description: "Playwright and axe-core used by quality-pack audits. Safe to delete: `qp.mjs browser-setup` rebuilds it." }, null, 2) + "\n");
+        description: "Playwright and axe-core used by shipwright audits. Safe to delete: `sw.mjs browser-setup` rebuilds it." }, null, 2) + "\n");
       const steps = [];
       for (const [label, command] of setupCommands()) {
         const r = runCommand(label, command, { cwd: dir, logDir: join(dir, "logs"), record: false });
@@ -648,7 +648,7 @@ async function main() {
       const run = currentRun();
       const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
       if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
-      if (!rest.length) die("Usage: qp.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]");
+      if (!rest.length) die("Usage: sw.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]");
       const baselinePath = opt("baseline");
       const baseline = baselinePath ? JSON.parse(readFileSync(resolve(here, baselinePath), "utf8")) : null;
       const result = await lookAt(rest, { cwd, mode, baseline, slopWords: [...(ref.slop_words.fr || []), ...(ref.slop_words.en || [])] });
@@ -667,7 +667,7 @@ async function main() {
       const run = currentRun();
       const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
       if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
-      if (!rest.length) die("Usage: qp.mjs craft <url> [url...] [--mode persuade|operate|read]");
+      if (!rest.length) die("Usage: sw.mjs craft <url> [url...] [--mode persuade|operate|read]");
       const urls = rest.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href);
       const result = await craftAt(urls, { cwd, mode });
       if (project && result.pages) {
@@ -684,7 +684,7 @@ async function main() {
       const only = (opt("only") || PASSES.join(",")).split(",").map((x) => x.trim()).filter(Boolean);
       const bad = only.filter((x) => !PASSES.includes(x));
       if (bad.length) die(`--only: unknown pass ${bad.join(", ")} (${PASSES.join(", ")})`);
-      if (!rest[0]) die("Usage: qp.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script]");
+      if (!rest[0]) die("Usage: sw.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script]");
       const url = /^[a-z]+:\/\//i.test(rest[0]) ? rest[0] : pathToFileURL(resolve(here, rest[0])).href;
       const { mkdtempSync } = await import("node:fs");
       const { tmpdir } = await import("node:os");
@@ -708,7 +708,7 @@ async function main() {
     case "profile": {
       const { profileAt, summarize } = await import("./lib/profile.mjs");
       const save = flag("save");
-      if (!rest.length) die("Usage: qp.mjs profile <url> [url...] [--save]");
+      if (!rest.length) die("Usage: sw.mjs profile <url> [url...] [--save]");
       const urls = rest.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href);
       const result = await profileAt(urls, { cwd });
       if (result.pages && save) {
@@ -726,20 +726,20 @@ async function main() {
       const { profileAt, summarize, gap } = await import("./lib/profile.mjs");
       const type = opt("type");
       const device = opt("device", "desktop");
-      if (!rest[0]) die("Usage: qp.mjs gap <url> [--type <site-type>] [--device mobile]");
+      if (!rest[0]) die("Usage: sw.mjs gap <url> [--type <site-type>] [--device mobile]");
       let summary = null, against = null;
       if (type) {
         const { loadBank } = await import("./lib/bank.mjs");
         const bank = loadBank();
         const t = bank.types[type];
         if (!t) die(`Unknown site type "${type}". Types: ${Object.keys(bank.types).join(", ")}`);
-        if (!t.profile) die(`The bank has no measured profile for "${type}" yet: run \`qp.mjs bank measure ${type}\`.`);
+        if (!t.profile) die(`The bank has no measured profile for "${type}" yet: run \`sw.mjs bank measure ${type}\`.`);
         summary = t.profile; against = `reference bank, ${type} (${t.profile.n} sites measured ${t.measured || ""})`;
       } else {
         const file = join(qualityDir(cwd), "references.json");
-        if (!existsSync(file)) die("No .quality/references.json: measure the references the user likes first (`qp.mjs profile <url> <url> --save`), or pass --type <site-type> to use the reference bank.");
+        if (!existsSync(file)) die("No .quality/references.json: measure the references the user likes first (`sw.mjs profile <url> <url> --save`), or pass --type <site-type> to use the reference bank.");
         const refs = JSON.parse(readFileSync(file, "utf8"));
-        if ((refs.references || []).length < 2) die("At least two references are needed to compare with (`qp.mjs profile <url> <url> --save`).");
+        if ((refs.references || []).length < 2) die("At least two references are needed to compare with (`sw.mjs profile <url> <url> --save`).");
         summary = refs.summary || summarize(refs.references); against = `${refs.references.length} project references`;
       }
       const url = /^[a-z]+:\/\//i.test(rest[0]) ? rest[0] : pathToFileURL(resolve(here, rest[0])).href;
@@ -756,13 +756,13 @@ async function main() {
       if (rest[0] === "calibrate") {
         const limit = Number(opt("limit", "0")) || 0;
         const parallel = Number(opt("parallel", "4")) || 4;
-        if (!rest[1]) die("Usage: qp.mjs bank calibrate <type|all> [--limit N] [--parallel N]");
+        if (!rest[1]) die("Usage: sw.mjs bank calibrate <type|all> [--limit N] [--parallel N]");
         return out(await calibrateBank(rest[1], { cwd, limit, parallel }));
       }
       if (rest[0] === "measure") {
         const limit = Number(opt("limit", "0")) || 0;
         const parallel = Number(opt("parallel", "4")) || 4;
-        if (!rest[1]) die("Usage: qp.mjs bank measure <type|all> [--limit N] [--parallel N]");
+        if (!rest[1]) die("Usage: sw.mjs bank measure <type|all> [--limit N] [--parallel N]");
         return out(await measureBank(rest[1], { cwd, limit, parallel }));
       }
       return out(listBank(loadBank(), rest[0]));
@@ -775,7 +775,7 @@ async function main() {
       const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
       if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
       const [name, ...urls] = rest;
-      if (!name) die("Usage: qp.mjs variants <name> <url> <url> [url...]   |   qp.mjs variants <name> --tally");
+      if (!name) die("Usage: sw.mjs variants <name> <url> <url> [url...]   |   sw.mjs variants <name> --tally");
       if (tally) { const r = tallyVariants(name, { root: cwd }); out(r); if (r.errors) process.exitCode = 2; return; }
       const r = await shootVariants(name, urls.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href), { root: cwd, cwd, mode });
       out(r);
@@ -789,7 +789,7 @@ async function main() {
       const { spawnSync } = await import("node:child_process");
       const run = currentRun();
       const project = loadProject(cwd);
-      if (!rest.length) die('Usage: qp.mjs deslop <url|file.html> [--widths 375,768,1440,1920] [--click "selector"] [--before file.js] [--tauri] [--dark] [--attach port]');
+      if (!rest.length) die('Usage: sw.mjs deslop <url|file.html> [--widths 375,768,1440,1920] [--click "selector"] [--before file.js] [--tauri] [--dark] [--attach port]');
       const outDir = project ? join(auditsDir(), run, "deslop") : join(qualityDir(cwd), "deslop");
       const script = fileURLToPath(new URL("./deslop/audit.mjs", import.meta.url));
       const args = [...rest];
@@ -813,7 +813,7 @@ async function main() {
       const { checkTokens } = await import("./lib/tokens.mjs");
       const { listFiles } = await import("./lib/scan.mjs");
       const files = rest.length ? rest : listFiles(cwd).filter((f) => /\.tokens\.json$/.test(f));
-      if (!files.length) die("No design token files (*.tokens.json). Pass the files, or write them with the qp:design-direction skill.");
+      if (!files.length) die("No design token files (*.tokens.json). Pass the files, or write them with the sw:design-direction skill.");
       // Several files are merged in order (primitives first, then semantic, then themes).
       const merge = (a, b) => { for (const [k, v] of Object.entries(b)) a[k] = v && typeof v === "object" && !Array.isArray(v) && !("$value" in v) && a[k] && typeof a[k] === "object" ? merge(a[k], v) : v; return a; };
       const doc = files.reduce((acc, f) => merge(acc, JSON.parse(readFileSync(rest.length ? resolve(here, f) : join(cwd, f), "utf8"))), {});
@@ -825,7 +825,7 @@ async function main() {
     case "report": {
       const project = requireProject();
       const run = opt("run") || opt("date") || auditRuns().at(-1);
-      if (!run || !loadAudit(run)) die("No assembled audit yet: run /qp:audit first.");
+      if (!run || !loadAudit(run)) die("No assembled audit yet: run /sw:audit first.");
       const report = compute(loadAudit(run), ref);
       report.mode = loadAudit(run).mode;
       return out({ run, html_report: await writeHtmlReport(run, report, opt("lang", project.language || "fr"), project) });
@@ -837,14 +837,14 @@ async function main() {
       const name = opt("name"), from = opt("from"), device = opt("device", "desktop"), start = opt("start", "/");
       const base = opt("base") || project.urls?.local || project.urls?.staging || project.urls?.production;
       const id = rest[0];
-      if (!id || !/^[a-z0-9][a-z0-9-]*$/.test(id)) die('Usage: qp.mjs record <flow-id> [--name "the task in the user\'s words"] [--start /path] [--device desktop|mobile] [--base URL] [--from recorded.js]');
+      if (!id || !/^[a-z0-9][a-z0-9-]*$/.test(id)) die('Usage: sw.mjs record <flow-id> [--name "the task in the user\'s words"] [--start /path] [--device desktop|mobile] [--base URL] [--from recorded.js]');
       let code;
       if (from) code = readFileSync(from, "utf8");
       else {
         if (!base) die("No URL: pass --base <url> or set urls.local in .quality/project.json.");
         const { loadBrowserTools } = await import("./lib/browser.mjs");
         const tools = await loadBrowserTools(cwd);
-        if (!tools) die("Playwright is not available: run `qp.mjs browser-setup` first (it installs into the pack's cache).");
+        if (!tools) die("Playwright is not available: run `sw.mjs browser-setup` first (it installs into the pack's cache).");
         const cli = playwrightCli(tools.path);
         if (!cli) die("Could not find Playwright's command line next to " + tools.path);
         process.stderr.write("A browser opens: do the task as a user would, then close the window.\n");
@@ -861,10 +861,10 @@ async function main() {
       writeFileSync(join(qualityDir(cwd), "recordings", `${id}.js`), code);
       writeFileSync(join(qualityDir(cwd), "project.json"), JSON.stringify(next, null, 2) + "\n");
       return out({ saved: ".quality/project.json", flow, warnings, errors: check.errors,
-        next: "Mark the steps where the user decides with \"decision\": true, set \"preview\" and \"primary\" if the task has them, then run `qp.mjs flows " + id + "`." });
+        next: "Mark the steps where the user decides with \"decision\": true, set \"preview\" and \"primary\" if the task has them, then run `sw.mjs flows " + id + "`." });
     }
     case "score": {
-      if (!rest[0]) die("Usage: qp.mjs score <audit.json> [--previous old.json] [--lang fr|en]");
+      if (!rest[0]) die("Usage: sw.mjs score <audit.json> [--previous old.json] [--lang fr|en]");
       const lang = opt("lang", "fr");
       const prevPath = opt("previous");
       const audit = JSON.parse(readFileSync(rest[0], "utf8"));

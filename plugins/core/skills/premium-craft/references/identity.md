@@ -63,7 +63,7 @@ body { font-family: "Text", "Text Fallback", sans-serif; }
 
 Self-host, subset to the scripts in use, preload the one or two files needed above the fold. `size-adjust` on the fallback keeps the layout still when the font arrives (not verified on MDN; the percentage is an example).
 
-Measured by `qp look`: `LOOK-FONT` (a common default face sets more than 60 % of the text), `font_families` (2 at most above 2 % of the text). Measured by `qp craft`: `font_weights`, `layout_shift`. By eye: italics, tabular figures, the licence record.
+Measured by `sw look`: `LOOK-FONT` (a common default face sets more than 60 % of the text), `font_families` (2 at most above 2 % of the text). Measured by `sw craft`: `font_weights`, `layout_shift`. By eye: italics, tabular figures, the licence record.
 
 ## Icon sets
 
@@ -94,7 +94,7 @@ House settings:
 .icon-sm { width: 16px; height: 16px; stroke-width: 1.25; }
 ```
 
-Measured by `qp craft`: `icon_stroke` (two stroke widths on screen at most), `icon_style` (outline and filled mixed), and the signal "every icon is an unmodified Lucide icon". Measured by `qp look`: `LOOK-ICONTILES`, `LOOK-EMOJI`. By eye: the custom icons, the optical weight next to text.
+Measured by `sw craft`: `icon_stroke` (two stroke widths on screen at most), `icon_style` (outline and filled mixed), and the signal "every icon is an unmodified Lucide icon". Measured by `sw look`: `LOOK-ICONTILES`, `LOOK-EMOJI`. By eye: the custom icons, the optical weight next to text.
 
 ## Colour system
 
@@ -109,7 +109,7 @@ The scale and contrast rules are in [color.md](../../design-direction/references
 
 The three reflex palettes to avoid unless `DESIGN.md` gives a reason: purple to indigo; cream with terracotta; near-black with acid green. Test: would this palette be the same for a plant shop and an accounting tool? Then it was not chosen.
 
-Measured by `qp look`: `LOOK-VIOLET` (primary hue 240 to 290°), `LOOK-PALETTE` (the cream and near-black pairs), `accent_share`. All thresholds are house settings. By eye: the link between the hue and the subject.
+Measured by `sw look`: `LOOK-VIOLET` (primary hue 240 to 290°), `LOOK-PALETTE` (the cream and near-black pairs), `accent_share`. All thresholds are house settings. By eye: the link between the hue and the subject.
 
 Sources: Linear (https://linear.app/now/how-we-redesigned-the-linear-ui), Stripe (https://stripe.com/blog/accessible-color-systems), Vercel guidelines (https://vercel.com/design/guidelines), ibelick/ui-skills (https://github.com/ibelick/ui-skills), Impeccable (https://impeccable.style/anti-patterns), Anthropic `frontend-design` skill (https://github.com/anthropics/skills/tree/main/skills/frontend-design).
 
@@ -143,7 +143,7 @@ House settings. The usual defects: unreadable text and interface inside the imag
 
 Every image, generated or not, has a real `alt`, explicit dimensions and a row in the record.
 
-Measured by `qp craft`: `image_distortion`, `image_sharpness`, `image_dimensions`. By eye: the content of each image, the consistency of treatment.
+Measured by `sw craft`: `image_distortion`, `image_sharpness`, `image_dimensions`. By eye: the content of each image, the consistency of treatment.
 
 ## Record it
 
@@ -163,7 +163,7 @@ Rules for the record:
 - Restricted licences are written out in Notes: "not to be redistributed", "credit required", "no logo use".
 - Fonts from Fontshare and Remix Icon 4.9.0 or later get the note "do not copy into a public template".
 
-`qp craft` and `qp look` do not read this table. The report line "Identity" in `SKILL.md` states whether it exists.
+`sw craft` and `sw look` do not read this table. The report line "Identity" in `SKILL.md` states whether it exists.
 
 ## Excluded
 

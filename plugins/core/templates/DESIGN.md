@@ -1,6 +1,6 @@
 # Design direction
 
-<!-- Written by /qp:kickoff. Keep it short and specific: this file is what keeps the project from looking like every other one. -->
+<!-- Written by /sw:kickoff. Keep it short and specific: this file is what keeps the project from looking like every other one. -->
 
 ## Mood
 

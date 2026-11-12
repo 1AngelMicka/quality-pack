@@ -32,14 +32,14 @@ _SCORING, _CHECKS, _GROUPS = R.load()
 N_DOMAINS = sum(len(g["domains"]) for g in _GROUPS)
 
 PLUGINS = {
-    "core": {"name": "qp", "description": f"Quality pack core: {N_DOMAINS}-domain referential, two scores (experience, engineering), key tasks played on phone and desktop, build skills, /qp:kickoff, /qp:audit, /qp:fix. Socle du pack qualité : référentiel {N_DOMAINS} domaines, deux notes (expérience, technique), tâches clés jouées sur téléphone et ordinateur, skills de construction, /qp:kickoff, /qp:audit, /qp:fix."},
-    "stack-nextjs": {"name": "qp-nextjs", "description": "Quality pack module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind du pack qualité."},
-    "stack-node-api": {"name": "qp-node-api", "description": "Quality pack module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node du pack qualité."},
-    "stack-expo": {"name": "qp-expo", "description": "Quality pack module for Expo and React Native apps (iOS, Android). Module Expo / React Native du pack qualité."},
-    "stack-capacitor": {"name": "qp-capacitor", "description": "Quality pack module for Capacitor apps: a web app shipped as an iOS and Android app. Module Capacitor du pack qualité."},
-    "stack-tauri": {"name": "qp-tauri", "description": "Quality pack module for Tauri desktop apps. Module Tauri (application de bureau) du pack qualité."},
-    "stack-electron": {"name": "qp-electron", "description": "Quality pack module for Electron desktop apps. Module Electron (application de bureau) du pack qualité."},
-    "infra-vps": {"name": "qp-vps", "description": "Quality pack module for self-hosted VPS: Docker Compose, PM2, Nginx or CloudPanel, backups. Module VPS auto-hébergé du pack qualité."},
+    "core": {"name": "sw", "description": f"Shipwright core: {N_DOMAINS}-domain referential, two scores (experience, engineering), key tasks played on phone and desktop, build skills, /sw:kickoff, /sw:audit, /sw:fix. Socle de Shipwright : référentiel {N_DOMAINS} domaines, deux notes (expérience, technique), tâches clés jouées sur téléphone et ordinateur, skills de construction, /sw:kickoff, /sw:audit, /sw:fix."},
+    "stack-nextjs": {"name": "sw-nextjs", "description": "Shipwright module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind de Shipwright."},
+    "stack-node-api": {"name": "sw-node-api", "description": "Shipwright module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node de Shipwright."},
+    "stack-expo": {"name": "sw-expo", "description": "Shipwright module for Expo and React Native apps (iOS, Android). Module Expo / React Native de Shipwright."},
+    "stack-capacitor": {"name": "sw-capacitor", "description": "Shipwright module for Capacitor apps: a web app shipped as an iOS and Android app. Module Capacitor de Shipwright."},
+    "stack-tauri": {"name": "sw-tauri", "description": "Shipwright module for Tauri desktop apps. Module Tauri (application de bureau) de Shipwright."},
+    "stack-electron": {"name": "sw-electron", "description": "Shipwright module for Electron desktop apps. Module Electron (application de bureau) de Shipwright."},
+    "infra-vps": {"name": "sw-vps", "description": "Shipwright module for self-hosted VPS: Docker Compose, PM2, Nginx or CloudPanel, backups. Module VPS auto-hébergé de Shipwright."},
 }
 
 GROUP_TRIGGERS = {
@@ -84,13 +84,13 @@ def build_group_skills(scoring, groups):
     sev = {"blocker": "BLOCKER", "major": "major", "minor": "minor"}
     for g in groups:
         names = ", ".join(d["label"]["en"] for d in g["domains"])
-        desc = f"Quality pack build rules for {g['label']['en']} ({names}). {GROUP_TRIGGERS[g['group']]}"
+        desc = f"Shipwright build rules for {g['label']['en']} ({names}). {GROUP_TRIGGERS[g['group']]}"
         L = ["---", f"name: build-{g['group']}", f"description: {json.dumps(desc, ensure_ascii=False)}", "---", GEN, "",
              f"# {g['label']['en']}: build rules", "",
              "Apply these rules while you build. Domains or criteria whose `applies_if` flags are false in "
              "`.quality/project.json` do not apply to this project. Before you call a task done, check your work "
              "against the criteria of the domains you touched: each one must be true and verifiable.", "",
-             "If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps, qp-expo, qp-capacitor, qp-tauri, qp-electron), its rules skill "
+             "If a stack module of Shipwright is installed (sw-nextjs, sw-node-api, sw-vps, sw-expo, sw-capacitor, sw-tauri, sw-electron), its rules skill "
              "adds stack-specific rules on top of these.", ""]
         for d in g["domains"]:
             L += [f"## {d['label']['en']} ({d['code']})", "", d["summary"]["en"]]
@@ -109,13 +109,13 @@ def build_stack_skills():
     for sf in sorted((ROOT / "plugins").glob("*/stack.yaml")):
         st = yaml.safe_load(sf.read_text(encoding="utf-8"))
         name = f"{st['stack']}-rules"
-        desc = (f"Quality pack rules and check commands for {st['label']['en']}. Use when writing, reviewing or "
+        desc = (f"Shipwright rules and check commands for {st['label']['en']}. Use when writing, reviewing or "
                 f"auditing code in a project that uses this stack. FR : règles et commandes de vérification pour {st['label']['fr']}.")
         L = ["---", f"name: {name}", f"description: {json.dumps(desc, ensure_ascii=False)}", "---", GEN, "",
-             f"# {st['label']['en']}", "", "These rules add to the core build skills of the quality pack.", "", "## Rules", ""]
+             f"# {st['label']['en']}", "", "These rules add to the core build skills of Shipwright.", "", "## Rules", ""]
         L += [f"- {r['en']}" for r in st.get("rules", [])]
         L += ["", "## Check commands", "",
-              "Used by `/qp:audit`. `{pm}` is the project's package manager, `{url}` the app URL, `{host}` its host name.", "",
+              "Used by `/sw:audit`. `{pm}` is the project's package manager, `{url}` the app URL, `{host}` its host name.", "",
               "| Check | Command | Passes if |", "| --- | --- | --- |"]
         for k, v in st.get("checks", {}).items():
             cmd = v["run"].replace("|", "\\|")
@@ -124,7 +124,7 @@ def build_stack_skills():
 
 
 def build_manifests():
-    mk = {"name": "quality-pack",
+    mk = {"name": "shipwright",
           "description": f"Build and audit web projects across {N_DOMAINS} quality domains, with two scores: experience and engineering. Construire et auditer des projets web sur {N_DOMAINS} domaines qualité, avec deux notes : expérience et technique.",
           "owner": AUTHOR, "plugins": []}
     for d, p in PLUGINS.items():

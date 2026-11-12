@@ -12,7 +12,7 @@ import { loadReferential, allDomains } from "../plugins/core/scripts/lib/ref.mjs
 import { parseHead } from "../plugins/core/scripts/lib/web.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const QP = join(ROOT, "plugins/core/scripts/qp.mjs");
+const QP = join(ROOT, "plugins/core/scripts/sw.mjs");
 const GUARD = join(ROOT, "plugins/core/scripts/hooks/secrets-guard.mjs");
 const ref = loadReferential();
 
@@ -434,7 +434,7 @@ test("flows: effort is estimated with the keystroke-level model", async () => {
 
 test("look: weighted generic signals, strict only on persuasive pages", async (t) => {
   const { loadBrowserTools } = await import("../plugins/core/scripts/lib/browser.mjs");
-  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run qp.mjs browser-setup)");
+  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run sw.mjs browser-setup)");
   const url = (f) => pathToFileURL(join(ROOT, "tests/fixtures/look", f)).href;
   const look = (f, mode) => new Promise((resolve, reject) => import("node:child_process").then(({ execFile }) =>
     execFile("node", [QP, "look", url(f), "--mode", mode], { cwd: ROOT, encoding: "utf8" }, (e, out) => (e ? reject(e) : resolve(JSON.parse(out).pages[0])))));
@@ -461,7 +461,7 @@ test("look: weighted generic signals, strict only on persuasive pages", async (t
 
 test("flows play in a real browser when Playwright is available", async (t) => {
   const { loadBrowserTools } = await import("../plugins/core/scripts/lib/browser.mjs");
-  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run qp.mjs browser-setup)");
+  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run sw.mjs browser-setup)");
   const { createServer } = await import("node:http");
   const { execFile } = await import("node:child_process");
   const settings = Array.from({ length: 60 }, (_, i) => `<label>Setting ${i} <input name="s${i}"></label><br>`).join("");

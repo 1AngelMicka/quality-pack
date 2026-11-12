@@ -14,7 +14,7 @@ ASVS is published under CC BY-SA 4.0. The rules below are restated in this file'
 | Passwords of 64 characters or more are accepted | 6.2.9 | L2 | Sign up with 64 characters |
 | No forced periodic change | 6.2.10 | L2 | Settings and code |
 | Passwords are compared with a breached-password set | 6.2.12 | L2 | A known breached password is refused |
-| A written and implemented defence against credential stuffing and guessing, which cannot be used to lock someone out on purpose | 6.1.1, 6.3.1 | L1 | `qp auth`: repeated failures are slowed or refused |
+| A written and implemented defence against credential stuffing and guessing, which cannot be used to lock someone out on purpose | 6.1.1, 6.3.1 | L1 | `sw auth`: repeated failures are slowed or refused |
 | No default accounts | 6.3.2 | L1 | Seed data and first-run code |
 | A second factor is available, and required for sensitive products | 6.3.3 | L2 | TOTP or passkey can be enrolled |
 | No hints, no secret questions | 6.4.2 | L1 | Reset flow |

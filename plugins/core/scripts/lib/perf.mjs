@@ -42,7 +42,7 @@ export function scorePerf(m) {
 
 export async function perfAt(urls, { cwd, throttle = true } = {}) {
   const tools = await loadBrowserTools(cwd);
-  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <qp.mjs> browser-setup` once (pack cache, not the project)." };
+  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <sw.mjs> browser-setup` once (pack cache, not the project)." };
   const browser = await launch(tools.chromium);
   const pages = [];
   try {

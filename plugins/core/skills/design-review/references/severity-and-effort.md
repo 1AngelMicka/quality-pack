@@ -16,7 +16,7 @@ In the audit's ergonomics review, 4 maps to `critical`, 3 to `major`, 1–2 to `
 
 ## Effort of a task
 
-Count, per device, from the flow (`qp flows`): actions (taps, entries, uploads, key presses), decisions (`"decision": true` steps), screens scrolled, the longest page in screens, controls on screen. Add back-navigations and fields typed if you redesign the flow on paper.
+Count, per device, from the flow (`sw flows`): actions (taps, entries, uploads, key presses), decisions (`"decision": true` steps), screens scrolled, the longest page in screens, controls on screen. Add back-navigations and fields typed if you redesign the flow on paper.
 
 Estimate time with the keystroke-level model (Card, Moran and Newell), as `klm_seconds` in the flow summary does:
 

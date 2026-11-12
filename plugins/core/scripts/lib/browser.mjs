@@ -1,7 +1,7 @@
 // Browser checks: overflow at 5 widths, console errors, axe-core violations, touch targets, cookies and
 // third-party requests before consent, screenshots.
 // Playwright and axe-core come from the project if it has them, otherwise from the pack's own cache
-// (installed once by `qp.mjs browser-setup`, outside the project). The pack never adds them to the project.
+// (installed once by `sw.mjs browser-setup`, outside the project). The pack never adds them to the project.
 import { createRequire } from "node:module";
 import { join } from "node:path";
 import { homedir } from "node:os";
@@ -12,10 +12,14 @@ import { pathToFileURL } from "node:url";
 export const WIDTHS = [360, 390, 768, 1024, 1440, 1920];
 
 // Where `browser-setup` installs Playwright and axe-core. QP_CACHE_DIR wins, then the plugin data
-// folder Claude Code gives plugins, then ~/.cache/quality-pack.
+// folder Claude Code gives plugins, then ~/.cache/shipwright (or ~/.cache/quality-pack if it was installed under the old name).
 export function cacheDir() {
   if (process.env.QP_CACHE_DIR) return process.env.QP_CACHE_DIR;
-  return join(process.env.CLAUDE_PLUGIN_DATA || join(homedir(), ".cache", "quality-pack"), "browser");
+  if (process.env.CLAUDE_PLUGIN_DATA) return join(process.env.CLAUDE_PLUGIN_DATA, "browser");
+  // The pack was called quality-pack before 0.8.0: a cache installed under that name keeps working.
+  const old = join(homedir(), ".cache", "quality-pack", "browser");
+  const now = join(homedir(), ".cache", "shipwright", "browser");
+  return !existsSync(now) && existsSync(old) ? old : now;
 }
 
 function resolveFrom(base, names) {
@@ -26,7 +30,7 @@ function resolveFrom(base, names) {
   return null;
 }
 
-const SETUP_HINT = "Playwright is not available. Run `node <qp.mjs> browser-setup` once (ask the user first: it downloads Playwright, axe-core and Chromium into the pack's cache, not into the project).";
+const SETUP_HINT = "Playwright is not available. Run `node <sw.mjs> browser-setup` once (ask the user first: it downloads Playwright, axe-core and Chromium into the pack's cache, not into the project).";
 
 // Playwright's chromium and the path of axe.min.js, from the project first, then from the cache.
 export async function loadBrowserTools(cwd) {
@@ -119,14 +123,14 @@ export async function browserChecks(urls, { cwd = process.cwd(), outDir } = {}) 
         }
         await ctx.close();
       }
-      if (!axePath) res.axe = { unavailable: "axe-core not found: run `node <qp.mjs> browser-setup` (pack cache, not the project)." };
+      if (!axePath) res.axe = { unavailable: "axe-core not found: run `node <sw.mjs> browser-setup` (pack cache, not the project)." };
       pages.push(res);
     }
   } finally {
     await browser.close();
   }
   return { available: true, playwright: tools.playwright, from: tools.source, widths: WIDTHS, pages,
-    note: "Only the pages as they load. What happens after the user acts (files added, tabs, dialogs) is in flows.json (`qp.mjs flows`)." };
+    note: "Only the pages as they load. What happens after the user acts (files added, tabs, dialogs) is in flows.json (`sw.mjs flows`)." };
 }
 
 // One-time install of Playwright, axe-core and Chromium into the pack's cache.

@@ -6,7 +6,7 @@ Règle : rien de payant, de verrouillé (freemium) ni de non redistribuable n'es
 
 Statuts :
 - **Intégré** : une idée ou une valeur reprise dans le pack (avec crédit, sans copie de texte).
-- **Compagnon** : proposé par `/qp:kickoff`, installé seulement avec l'accord de l'utilisateur.
+- **Compagnon** : proposé par `/sw:kickoff`, installé seulement avec l'accord de l'utilisateur.
 - **Référence libre** : gratuit, sans compte, utile pour trouver des références (skill `design-direction`).
 - **Utilisable en projet** : code ou ressource sous licence libre, qu'un projet peut employer. Le pack ne l'embarque pas.
 - **Référence seulement** : à regarder, pas à copier (licence absente, restrictive ou inconnue).
@@ -21,7 +21,7 @@ Posts lus un par un. Beaucoup répètent les mêmes listes de sites (souvent pro
 | Lien | Ce que c'est | Licence, prix | Statut |
 | --- | --- | --- | --- |
 | [heydamir/unslop](https://github.com/heydamir/unslop) | Skill « unslop » : audit, direction, passes de correction, valeurs précises d'espacement, d'ombres et de couleurs | CC BY 4.0, gratuit | **Intégré** : valeurs d'élévation clair/sombre, accent rare (avec crédit) |
-| [Nutlope/hallmark](https://github.com/Nutlope/hallmark) | Skill design de Together AI : 50 thèmes, `sloplint --render` à 8 largeurs, relecture à contexte neuf, `redesign` qui vérifie que chaque lien, champ et action survit | MIT, gratuit | **Intégré** : garde de refonte (`qp look --baseline`, REV-09) |
+| [Nutlope/hallmark](https://github.com/Nutlope/hallmark) | Skill design de Together AI : 50 thèmes, `sloplint --render` à 8 largeurs, relecture à contexte neuf, `redesign` qui vérifie que chaque lien, champ et action survit | MIT, gratuit | **Intégré** : garde de refonte (`sw look --baseline`, REV-09) |
 | Tobi Adonadon, article « How to Stop Making your Apps Look Like AI Slop » | Skill de refonte d'apps : concept, 3 directions, rendu iPhone, critique anti-slop | pas de dépôt public, envoyé par e-mail, Mac | **Intégré** (idée : concept tiré du monde du produit, 3 directions) ; outil écarté, non inspectable |
 | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | Skill pour sites vitrines avec vérification à 5 largeurs et hook Stop | MIT, gratuit | Déjà étudié (0.5.0) ; reste compagnon pour les vitrines. Appels réseau (jsDelivr, Wikimedia, picsum, Google Fonts) |
 | [tasteskill/tasteskill](https://github.com/tasteskill/tasteskill) | Copie figée de l'ancienne Taste Skill, auteur changé, URL d'installation cassée | MIT (copie non officielle) | **Écarté** : copie non officielle |
@@ -45,7 +45,7 @@ Posts lus un par un. Beaucoup répètent les mêmes listes de sites (souvent pro
 | Outil « navigateur live dans Claude Code » (Om Patel, avril 2026) | Cliquer un élément pour le modifier | introuvable | **Écarté** : non identifié. L'app Claude a son propre panneau navigateur depuis avril 2026 |
 | [NiazMorshed2007/reanimate](https://github.com/NiazMorshed2007/reanimate) | Recrée une animation vue ailleurs | MIT | Déjà **compagnon** |
 | [Graphify](https://github.com/Graphify-Labs/graphify) | Graphe du code | MIT | Déjà **compagnon** |
-| [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes), [ahujasid/mcp-for-blender](https://github.com/ahujasid/mcp-for-blender), [EL4CTEO/blender-skills](https://github.com/EL4CTEO/blender-skills) | Vidéo depuis HTML, Blender piloté par Claude | — | Hors sujet pour quality-pack (vidéo, 3D) ; à voir pour Ultimate Motion Design |
+| [heygen-com/hyperframes](https://github.com/heygen-com/hyperframes), [ahujasid/mcp-for-blender](https://github.com/ahujasid/mcp-for-blender), [EL4CTEO/blender-skills](https://github.com/EL4CTEO/blender-skills) | Vidéo depuis HTML, Blender piloté par Claude | — | Hors sujet pour shipwright (vidéo, 3D) ; à voir pour Ultimate Motion Design |
 | Google DESIGN.md (spec ouverte, avril 2026) | Format de règles de design pour agents | Apache-2.0 | Déjà intégré (format de `DESIGN.md`) |
 
 ### Composants, animations, 3D
@@ -212,7 +212,7 @@ Les 242 liens des fiches et de ce lot ont été testés le 2026-11-12 : tous ré
 
 | Link | Role | Licence | Status |
 | --- | --- | --- | --- |
-| Playwright (under `qp access`) | two-account route tests | Apache-2.0 | recommended |
+| Playwright (under `sw access`) | two-account route tests | Apache-2.0 | recommended |
 | [pgTAP](https://github.com/theory/pgtap) | SQL tests for policies | PostgreSQL-style permissive (no SPDX tag) | recommended |
 | [Schemathesis](https://github.com/schemathesis/schemathesis) | OpenAPI fuzzing | MIT | recommended |
 | [OWASP ZAP](https://github.com/zaproxy/zaproxy) + Access Control Testing add-on | access matrix | Apache-2.0 | recommended |
@@ -292,7 +292,7 @@ Les 242 liens des fiches et de ce lot ont été testés le 2026-11-12 : tous ré
 
 | Link | Role | Licence | Status |
 | --- | --- | --- | --- |
-| [ZAP](https://github.com/zaproxy/zaproxy) | passive baseline scan (`qp dast`), full scan, API scan | Apache-2.0 | recommended tool (API scan command nv) |
+| [ZAP](https://github.com/zaproxy/zaproxy) | passive baseline scan (`sw dast`), full scan, API scan | Apache-2.0 | recommended tool (API scan command nv) |
 | [ZAP baseline scan documentation](https://www.zaproxy.org/docs/docker/baseline-scan/) | options and exit codes | not captured in the notes | used as a rule |
 | [ZAP full scan documentation](https://www.zaproxy.org/docs/docker/full-scan/) | options, "performs attacks" | not captured in the notes | used as a rule |
 | [ZAP API scan documentation](https://www.zaproxy.org/docs/docker/api-scan/) | command | not captured in the notes | cited only (nv) |
@@ -342,7 +342,7 @@ Les 242 liens des fiches et de ce lot ont été testés le 2026-11-12 : tous ré
 | [Aqua Security: Trivy supply chain attack](https://www.aquasec.com/blog/trivy-supply-chain-attack-what-you-need-to-know/) | facts of the March 2026 compromise (CVE-2026-33634), reason to pin tools | vendor blog | cited only |
 #### Read in the notes, not used in the references
 
-Left out because the notes mark them as unverified or because the skill does not depend on them: OWASP Threat Dragon, pytm and Threagile (threat-model tools), Web Fuzzing Commons auth file (field names nv), the OWASP Authorization Testing Automation Cheat Sheet (the `qp access` format already exists), MDN HTTP Observatory and CSP Evaluator (`qp web` reads headers), garak and promptfoo (nv), `possession` and `bola` (found by search only), SLSA levels, hosting-provider testing policies (AWS from memory, OVHcloud nv), NIST failure ceiling (nv), version numbers of every tool (release pages did not render).
+Left out because the notes mark them as unverified or because the skill does not depend on them: OWASP Threat Dragon, pytm and Threagile (threat-model tools), Web Fuzzing Commons auth file (field names nv), the OWASP Authorization Testing Automation Cheat Sheet (the `sw access` format already exists), MDN HTTP Observatory and CSP Evaluator (`sw web` reads headers), garak and promptfoo (nv), `possession` and `bola` (found by search only), SLSA levels, hosting-provider testing policies (AWS from memory, OVHcloud nv), NIST failure ceiling (nv), version numbers of every tool (release pages did not render).
 
 #### Weak points to re-check before hard-coding
 
@@ -398,7 +398,7 @@ Left out because the notes mark them as unverified or because the skill does not
 | [WCAG2Mobile draft note](https://www.w3.org/TR/wcag2mobile-22/) | criteria that matter on mobile | W3C document licence | cited only (draft, informative) |
 | [EAS Update](https://docs.expo.dev/eas-update/introduction/) | what an over-the-air update can change | Expo docs | used as a rule |
 | [Expo SDK 58 changelog](https://expo.dev/changelog/sdk-58) | R8 on by default | Expo docs | cited only |
-| [Maestro](https://github.com/mobile-dev-inc/Maestro) | flow engine behind `qp mobile flows` | Apache-2.0 | recommended tool (local CLI only) |
+| [Maestro](https://github.com/mobile-dev-inc/Maestro) | flow engine behind `sw mobile flows` | Apache-2.0 | recommended tool (local CLI only) |
 | [Fastlane](https://github.com/fastlane/fastlane) | signing, TestFlight and Play uploads | MIT | recommended tool |
 | [EAS Build free plan](https://expo.dev/pricing) | cloud builds without a Mac | proprietary service, free tier | usable with care (quota; reset period not stated) |
 | [GitHub Actions runner pricing](https://docs.github.com/en/billing/reference/actions-runner-pricing), [billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions) | per-minute prices, free allowance | proprietary service, free on public repositories | usable with care (macOS minutes cost 10 times Linux) |

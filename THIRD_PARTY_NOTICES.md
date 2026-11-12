@@ -24,8 +24,8 @@ de l'un de ces projets sera repris, le texte de sa licence et sa mention de copy
 | [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | MIT | 2a12295a7717 | Product discovery and PRD references |
 | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | MIT | 8eef6dc6540d | Idea of a persistent plan on disk |
 | [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | Apache-2.0 | 16218bfc80d4 | Optional companion: local code graph queried by the auditors (not bundled) |
-| [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | Apache-2.0 (`rtk-oss`) / BUSL-1.1 (full edition) | 1cf7bc703efa | Optional companion: shell output compression (not bundled); idea of compact outputs for `qp.mjs run` |
+| [rtk-ai/rtk](https://github.com/rtk-ai/rtk) | Apache-2.0 (`rtk-oss`) / BUSL-1.1 (full edition) | 1cf7bc703efa | Optional companion: shell output compression (not bundled); idea of compact outputs for `sw.mjs run` |
 | [NiazMorshed2007/reanimate](https://github.com/NiazMorshed2007/reanimate) | MIT | 3f7a55a2986a | Optional companion for motion work (not bundled) |
 | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | Apache-2.0 | c310c9d300df | Idea only: short replies save output tokens |
-| [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Apache-2.0 | 68905ccd9f2f | Idea only: carry context between sessions (`/qp:handoff`) |
+| [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Apache-2.0 | 68905ccd9f2f | Idea only: carry context between sessions (`/sw:handoff`) |
 | [multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) | none stated | 2c606141936f | Ideas only (no text reused): think first, simplicity, surgical changes, verifiable goals |

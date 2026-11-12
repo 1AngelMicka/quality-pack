@@ -2,7 +2,7 @@
 // The baseline crawls the site for about a minute and only reads the answers: missing security headers,
 // cookies without flags, mixed content, information leaks, vulnerable libraries served to the browser.
 // It sends no attack, so it is safe on any site the user owns; it finds configuration mistakes, not logic
-// flaws (access control is `qp access`, and a real attack test stays a human pentest).
+// flaws (access control is `sw access`, and a real attack test stays a human pentest).
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
