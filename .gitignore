@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# Screenshots of third-party sites taken while building the reference bank: never committed
+research_notes/reference-bank/shots/

@@ -1,0 +1,152 @@
+{
+  "id": "education",
+  "label": {
+    "fr": "Éducation et formation",
+    "en": "Education and courses"
+  },
+  "expects": [
+    {
+      "rule": "The full name of the school or university is prominent on every page, not only in the footer.",
+      "source": "https://www.nngroup.com/articles/university-sites/",
+      "verified": true
+    },
+    {
+      "rule": "All programmes or courses are listed with their names visible, grouped by field if needed: 48% of tested users did not realise a school offered the programme they wanted.",
+      "source": "https://www.nngroup.com/articles/university-sites/",
+      "verified": true
+    },
+    {
+      "rule": "Application deadlines, a step-by-step application process and outcome figures (job placement) are easy to find and labelled with numbers and sources.",
+      "source": "https://www.nngroup.com/articles/university-sites/",
+      "verified": true
+    },
+    {
+      "rule": "Images are authentic (real students, real classrooms) rather than stock photos, and the About page gives a scannable list of facts in plain language.",
+      "source": "https://www.nngroup.com/articles/university-sites/",
+      "verified": true
+    },
+    {
+      "rule": "Prospective students and parents can see who teaches: faculty or teacher pages with names and backgrounds.",
+      "source": "https://www.nngroup.com/videos/university-faculty-pages/",
+      "verified": true
+    },
+    {
+      "rule": "Body text and controls meet WCAG AA contrast: at least 4.5:1 for normal text and 3:1 for large text.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "A course page shows duration, price, schedule, level and what the learner can do afterwards, with one clear enrol or enquire button.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A site search that works, because users often arrive from search engines and look for one programme or date.",
+      "source": "https://www.nngroup.com/articles/university-sites/",
+      "verified": true
+    }
+  ],
+  "traits": [
+    "6 of 7 first screens carry one main action (Inquire, Find a school, Join waitlist, Download app, Explore), none carries more than two.",
+    "5 of 6 seen on a screenshot lead with a photograph or video of real people (child on a balance beam, children in a line, a barista, a phone on a desk); Krackerz uses four photo cards and CalArts uses none.",
+    "Headlines are 10 words or fewer on 6 of 7 (Seen & valued, Speak like you mean it, Bettr Coffee. Bettr World.), set at 36 to 198 px.",
+    "5 of 6 use one or two typefaces, usually a display face for the headline and a plain sans for the rest (Jobclarendon + Roboto, DM Sans + Inter, Sirca + Soehne).",
+    "The first screen holds fewer than 40 words of text on 5 of 6 seen on a screenshot.",
+    "Page backgrounds split: 3 of 6 dark or black (Bettr, Fluently, CalArts), 3 of 6 light or cream; each uses one saturated accent (yellow, lime, violet).",
+    "Parent-facing school sites (Quaker School, Primer) put approach, support, admissions or tuition in the top menu; course platforms put audience or price instead."
+  ],
+  "sites": [
+    {
+      "name": "Bettr Academy",
+      "url": "https://bettr.academy/",
+      "why": "Full-bleed dimmed photograph of an espresso machine and a hand holding a milk jug; headline 'Bettr Coffee. Bettr World.' in a yellow (#fcbf27) slab serif at 137 px over dark brown (#2c1c0f); top banner on funding; cookie box over it. Set in Jobclarendon and Roboto.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-18",
+      "source": "https://www.awwwards.com/sites/bettr-academy",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "The Quaker School at Horsham",
+      "url": "https://www.quakerschool.org/",
+      "why": "First screen is a full-bleed video of two adults helping a child along a balance beam in a classroom, inside a pale blue frame; 'Seen & valued' at 198 px in a Season-family type on cream (#f9f9f0). Menu: Our Approach, Specialist Support, Admissions, Inquire.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-15",
+      "source": "https://www.awwwards.com/sites/the-quaker-school-at-horsham",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Primer",
+      "url": "https://primer.com/",
+      "why": "White (#ffffff) page: a wide cut-out photograph of about 25 children in a line, then a bordered grid with the headline in a serif (Sirca) at 36 px, one sentence and an outlined 'Find a school' button; menu hidden behind a hamburger, black 'Get started' pill top right.",
+      "recognition": "Awwwards Honorable Mention, 2026-06-20",
+      "source": "https://www.awwwards.com/sites/primer",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Fluently",
+      "url": "https://getfluently.app",
+      "why": "Black (#000000) first screen with a dimmed photograph of a phone on a wooden desk; 64 px white headline 'Speak like you mean it' in DM Sans, one two-line subtitle, App Store and Google Play buttons and a QR code. About 25 words.",
+      "recognition": "Awwwards Honorable Mention, 2026-07-18",
+      "source": "https://www.awwwards.com/sites/fluently",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Krackerz Learning",
+      "url": "https://krackerz.com/",
+      "why": "Cream (#f7f6f0) page with a headline in a heavy display face (Highway Motel Sans) at 64 px, a red mascot, one lime 'Join waitlist' button and four tilted photo cards of learners with captions. Colour is red, lime and black.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-28",
+      "source": "https://www.awwwards.com/sites/krackerz-learning",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "CalArts Graphic Design Yearbook 2026",
+      "url": "https://design2026.calarts.edu/",
+      "why": "Black (#000000) page, no photograph: 'CALARTS GRAPHIC DESIGN' at 160 px in a heavy condensed sans (Gamay) with a pink brush scribble over it, yellow (#eeff00) year and menu tabs, links to the 2020 to 2025 yearbooks. The work is on sub-pages.",
+      "recognition": "Awwwards Honorable Mention, 2026-06-24",
+      "source": "https://www.awwwards.com/sites/calarts-graphic-design-2026",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "25 Years of University in Zlin",
+      "url": "https://jenamdvacetpet.cz/",
+      "why": "Interactive 3D microsite in Czech for the 25th anniversary of Tomas Bata University, with a map of milestones in the city of Zlin; headline 'UTB slaví 25 let' (not seen on a screenshot).",
+      "recognition": "Awwwards Honorable Mention, 2026-04-21",
+      "source": "https://www.awwwards.com/sites/25-years-of-university-in-zlin",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "Stock photos of smiling students at a laptop, and a hero carousel of campus buildings.",
+    "A programme list hidden behind a mega-menu or only in a PDF prospectus, so visitors assume the programme does not exist.",
+    "Prices, dates and deadlines only after a 'request a brochure' form.",
+    "Insider vocabulary (credits, pathways, modules) with no plain explanation for parents and teenagers.",
+    "Gimmick copy and slang aimed at young people, instead of clear, age-appropriate content.",
+    "Testimonial walls with no names, faces or outcomes, and 'world-class' claims with no figures.",
+    "Gamified badges, confetti and mascots on every screen of an adult course platform."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Culture and education listing",
+      "url": "https://www.awwwards.com/inspiration_search/culture-education/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Education",
+      "url": "https://www.awwwards.com/websites/education/",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, University websites: top 10 design guidelines",
+      "url": "https://www.nngroup.com/articles/university-sites/",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, Faculty pages on university websites",
+      "url": "https://www.nngroup.com/videos/university-faculty-pages/",
+      "access": "free"
+    },
+    {
+      "name": "W3C, WCAG 2.2 Understanding 1.4.3 Contrast (Minimum)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "access": "free"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
- "version": "0.6.0",
+ "version": "0.7.0",
  "scoring": {
   "severity_weight": {
    "blocker": 5,
@@ -133,6 +133,10 @@
    "fr": "Abonnements récurrents avec des offres",
    "en": "Recurring subscriptions with plans"
   },
+  "desktop_app": {
+   "fr": "Application de bureau installée (Tauri, Electron)",
+   "en": "Installed desktop app (Tauri, Electron)"
+  },
   "native_app": {
    "fr": "Application mobile installée (App Store, Google Play)",
    "en": "Installed mobile app (App Store, Google Play)"
@@ -197,7 +201,9 @@
     "craft": 3,
     "brand": 3,
     "mobile-ux": 0,
-    "mobile-release": 0
+    "mobile-release": 0,
+    "desktop-ux": 0,
+    "desktop-release": 0
    }
   },
   "webapp": {
@@ -247,7 +253,9 @@
     "craft": 2,
     "brand": 2,
     "mobile-ux": 2,
-    "mobile-release": 2
+    "mobile-release": 2,
+    "desktop-ux": 2,
+    "desktop-release": 2
    }
   },
   "saas": {
@@ -302,7 +310,9 @@
     "craft": 2,
     "brand": 2,
     "mobile-ux": 2,
-    "mobile-release": 2
+    "mobile-release": 2,
+    "desktop-ux": 2,
+    "desktop-release": 2
    }
   },
   "mobile": {
@@ -352,7 +362,58 @@
     "craft": 2,
     "brand": 2,
     "mobile-ux": 3,
-    "mobile-release": 3
+    "mobile-release": 3,
+    "desktop-ux": 0,
+    "desktop-release": 0
+   }
+  },
+  "desktop": {
+   "label": {
+    "fr": "Application de bureau",
+    "en": "Desktop app"
+   },
+   "default_flags": [
+    "has_ui",
+    "desktop_app"
+   ],
+   "weights": {
+    "product": 3,
+    "features": 3,
+    "ux": 3,
+    "ergonomics": 3,
+    "content": 2,
+    "support": 2,
+    "ui": 2,
+    "ai-slop": 2,
+    "responsive": 1,
+    "accessibility": 2,
+    "compatibility": 3,
+    "security": 3,
+    "privacy": 2,
+    "data": 3,
+    "compliance": 2,
+    "reliability": 3,
+    "tests": 3,
+    "code": 2,
+    "performance": 2,
+    "seo": 0,
+    "scalability": 0,
+    "integrations": 2,
+    "payments": 2,
+    "costs": 1,
+    "infra": 0,
+    "deployment": 2,
+    "monitoring": 1,
+    "backups": 1,
+    "accounts": 1,
+    "subscriptions": 1,
+    "activation": 1,
+    "craft": 2,
+    "brand": 2,
+    "mobile-ux": 0,
+    "mobile-release": 0,
+    "desktop-ux": 3,
+    "desktop-release": 3
    }
   },
   "api": {
@@ -399,7 +460,9 @@
     "craft": 0,
     "brand": 0,
     "mobile-ux": 0,
-    "mobile-release": 0
+    "mobile-release": 0,
+    "desktop-ux": 0,
+    "desktop-release": 0
    }
   }
  },
@@ -429,7 +492,8 @@
     "brand",
     "performance",
     "activation",
-    "mobile-ux"
+    "mobile-ux",
+    "desktop-ux"
    ]
   },
   "operations": {
@@ -460,7 +524,8 @@
     "backups",
     "accounts",
     "subscriptions",
-    "mobile-release"
+    "mobile-release",
+    "desktop-release"
    ]
   }
  },
@@ -529,6 +594,36 @@
    "provider": "core",
    "fr": "Finitions du rendu mesurées dans le navigateur (qp craft) : typographie, focus et survol, transitions, images, icônes, icône du site, image de partage, page 404",
    "en": "Finish of the rendered page measured in the browser (qp craft): typography, focus and hover, transitions, images, icons, site icon, share image, 404 page"
+  },
+  "desktop_release_scan": {
+   "provider": "core",
+   "fr": "Application de bureau lue dans le projet (qp desktop check) : politique de sécurité du contenu, permissions, isolation, mises à jour, signature",
+   "en": "Desktop app read from the project (qp desktop check): content security policy, permissions, isolation, updater, signing"
+  },
+  "perf_run": {
+   "provider": "core",
+   "fr": "Chargement mesuré sur un téléphone ralenti (qp perf) : plus grand affichage, saut de mise en page, temps de blocage, poids de la page et des scripts, requêtes",
+   "en": "Loading measured on a throttled phone (qp perf): largest paint, layout shift, blocking time, weight of the page and of scripts, requests"
+  },
+  "webhook_probe": {
+   "provider": "core",
+   "fr": "Webhooks joués (qp webhooks) : un événement non signé ou mal signé doit être refusé. Local ou préproduction seulement",
+   "en": "Webhooks played (qp webhooks): an unsigned or wrongly signed event must be refused. Local or staging only"
+  },
+  "facts_scan": {
+   "provider": "core",
+   "fr": "Chiffres, citations, noms de clients et badges affichés sur les pages publiques (qp facts), chacun relié à .quality/facts.json",
+   "en": "Figures, quotes, customer names and badges shown on public pages (qp facts), each traced to .quality/facts.json"
+  },
+  "seo_pages": {
+   "provider": "core",
+   "fr": "Pages publiques prêtes pour la recherche (qp seo) : sitemap trouvé, déclaré et sans adresse cassée, titre et description remplis et uniques, un seul h1, mots-clés visés portés par leur page, Search Console",
+   "en": "Public pages ready for search (qp seo): sitemap found, declared and without a broken address, title and description filled and unique, one h1, target keywords carried by their page, Search Console"
+  },
+  "stress_run": {
+   "provider": "core",
+   "fr": "Passes de finition (qp stress) : l'écran avec un réseau lent, un serveur en panne, des textes trois fois plus longs, 320 px de large, le thème sombre, le clavier seul et sans scripts",
+   "en": "Finishing passes (qp stress): the screen with a slow network, a failing server, texts three times longer, 320 px wide, the dark scheme, the keyboard only and scripts off"
   },
   "access_run": {
    "provider": "core",
@@ -1906,6 +2001,10 @@
        "en": "State in the address (filters, tabs, page, open panel): sharing, reloading and going back work."
       },
       {
+       "fr": "Passer chaque écran clé dans les conditions difficiles avant de le dire terminé : réseau lent, serveur en panne, textes trois fois plus longs, 320 px, thème sombre, clavier seul (`qp stress`), puis l'état vide et les très longues données à la main.",
+       "en": "Take every key screen through hard conditions before calling it done: slow network, failing server, texts three times longer, 320 px, dark scheme, keyboard only (`qp stress`), then the empty state and very long data by hand."
+      },
+      {
        "fr": "Soigner ce qui entoure la page : icône du site, image de partage, page 404 et page d'erreur dans la voix du produit, titre d'onglet qui suit le contexte.",
        "en": "Care for what surrounds the page: site icon, share image, 404 and error pages in the product's voice, tab title that follows the context."
       }
@@ -1956,6 +2055,38 @@
        "verify": {
         "fr": "Boutons, champs, liens, onglets des écrans clés : survol, focus, appui, désactivé et chargement existent et se distinguent ; le bouton en chargement garde son libellé.",
         "en": "Buttons, fields, links, tabs of the key screens: hover, focus, pressed, disabled and loading exist and differ; a loading button keeps its label."
+       }
+      },
+      {
+       "id": "CRF-10",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "stress_run"
+       },
+       "label": {
+        "fr": "Chaque écran clé tient dans les conditions difficiles",
+        "en": "Every key screen holds in hard conditions"
+       },
+       "verify": {
+        "fr": "stress.json sur chaque écran clé : aucun « must » en échec (écran blanc pendant le chargement ou quand le serveur ne répond pas, erreur non rattrapée, débordement avec des textes trois fois plus longs, défilement horizontal à 320 px, focus clavier bloqué). Captures relues.",
+        "en": "stress.json on every key screen: no failed \"must\" (blank screen while loading or when the server does not answer, uncaught error, overflow with texts three times longer, sideways scrolling at 320 px, trapped keyboard focus). Screenshots read."
+       }
+      },
+      {
+       "id": "CRF-11",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "stress_run"
+       },
+       "label": {
+        "fr": "États d'attente et d'erreur présents sur chaque écran clé",
+        "en": "Waiting and error states present on every key screen"
+       },
+       "verify": {
+        "fr": "stress.json : chaque « should » en échec est corrigé ou justifié (indicateur d'attente, message d'erreur avec moyen de réessayer, texte coupé sans points de suspension, contenu atteint au clavier). L'état vide de chaque liste est vérifié à la main.",
+        "en": "stress.json: each failed \"should\" is fixed or justified (waiting indicator, error message with a way to retry, text cut without an ellipsis, content reached by keyboard). The empty state of each list is checked by hand."
        }
       },
       {
@@ -2089,6 +2220,10 @@
        "en": "Imagery, in order of preference: the real product (screenshots, components), diagrams made for the page, own photos, archive images with a consistent treatment, nothing. No kit illustrations and no generated image containing text, an interface or people."
       },
       {
+       "fr": "Pour les écrans qui portent le produit, construire plusieurs versions vraiment différentes, les faire comparer à l'aveugle et laisser l'utilisateur choisir (skill design-variants) ; s'appuyer sur la banque de références du type de site (`qp bank`), pour apprendre et jamais pour copier.",
+       "en": "For the screens that carry the product, build several versions that really differ, have them compared blind and let the user choose (design-variants skill); lean on the reference bank of the site type (`qp bank`), to learn and never to copy."
+      },
+      {
        "fr": "Tout chiffre, citation, logo de client ou badge affiché vient d'un fait fourni par l'utilisateur ; sinon le bloc n'existe pas.",
        "en": "Every number, quote, customer logo or badge shown comes from a fact supplied by the user; otherwise the block does not exist."
       },
@@ -2102,15 +2237,16 @@
        "id": "BRD-01",
        "severity": "blocker",
        "check": {
-        "method": "inspect"
+        "method": "auto",
+        "tool": "facts_scan"
        },
        "label": {
         "fr": "Aucun témoignage, chiffre, logo de client ou badge inventé",
         "en": "No invented testimonial, figure, customer logo or badge"
        },
        "verify": {
-        "fr": "Chaque citation, nombre (« 10 000 équipes », « 99,9 % »), logo et badge des pages publiques est relié à une source fournie par l'utilisateur (fichier de faits, lien). Sans source : échec.",
-        "en": "Every quote, number (\"10,000 teams\", \"99.9%\"), logo and badge on public pages traces to a source supplied by the user (facts file, link). No source: fail."
+        "fr": "Chaque citation, nombre (« 10 000 équipes », « 99,9 % »), logo et badge des pages publiques est relié à une source fournie par l'utilisateur. facts.json du run (`qp facts` sur chaque page publique) : aucune affirmation non reliée à .quality/facts.json ; relire la liste, l'outil repère par motifs. Sans source : échec.",
+        "en": "Every quote, number (\"10,000 teams\", \"99.9%\"), logo and badge on public pages traces to a source supplied by the user. The run's facts.json (`qp facts` on each public page): no claim left untraced to .quality/facts.json; read the list, the tool finds claims by pattern. No source: fail."
        }
       },
       {
@@ -2124,8 +2260,23 @@
         "en": "Visual direction drawn from the product, written and followed"
        },
        "verify": {
-        "fr": "DESIGN.md dit d'où viennent la couleur, la typographie et les images, et ce que le produit refuse ; les écrans s'y conforment ; pas de palette réflexe non justifiée.",
-        "en": "DESIGN.md says where colour, type and imagery come from, and what the product refuses; the screens comply; no unjustified reflex palette."
+        "fr": "DESIGN.md dit d'où viennent la couleur, la typographie et les images, et ce que le produit refuse ; les écrans s'y conforment ; pas de palette réflexe non justifiée. Si des références sont mesurées (.quality/references.json), chaque écart relevé par `qp gap` est réduit ou justifié.",
+        "en": "DESIGN.md says where colour, type and imagery come from, and what the product refuses; the screens comply; no unjustified reflex palette. When references are measured (.quality/references.json), each gap reported by `qp gap` is closed or justified."
+       }
+      },
+      {
+       "id": "BRD-07",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Les écrans qui portent le produit ont été choisis parmi plusieurs versions",
+        "en": "The screens that carry the product were chosen among several versions"
+       },
+       "verify": {
+        "fr": "Pour la page d'accueil publique et l'écran de travail principal : dossier .quality/variants/ avec au moins deux versions comparées, le vote du jury et le choix de l'utilisateur ; ou une raison écrite de ne pas l'avoir fait.",
+        "en": "For the public home page and the main work screen: a .quality/variants/ folder with at least two versions compared, the jury's votes and the user's choice; or a written reason for not doing it."
        }
       },
       {
@@ -3565,6 +3716,25 @@
      ],
      "criteria": [
       {
+       "id": "PRF-07",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "perf_run"
+       },
+       "applies_if": [
+        "has_ui"
+       ],
+       "label": {
+        "fr": "Chargement tenu sur un téléphone ralenti",
+        "en": "Loading holds on a throttled phone"
+       },
+       "verify": {
+        "fr": "perf.json sur les pages principales : aucun « must » en échec (affichage principal sous 4 s, saut de mise en page de 0,1 au plus, moins de 600 ms de blocage, moins de 700 kB de scripts) ; chaque « should » corrigé ou justifié.",
+        "en": "perf.json on the main pages: no failed \"must\" (largest paint under 4 s, layout shift of 0.1 at most, under 600 ms of blocking, under 700 kB of scripts); each \"should\" fixed or justified."
+       }
+      },
+      {
        "id": "PRF-01",
        "severity": "major",
        "check": {
@@ -3704,6 +3874,26 @@
       {
        "fr": "Les pages privées et de préproduction ne sont pas indexables.",
        "en": "Private and staging pages are not indexable."
+      },
+      {
+       "fr": "Choisir les recherches sur lesquelles on veut ressortir avant d'écrire les pages : une expression principale par page, tirée des mots des clients, notée dans .quality/project.json › seo.keywords. Deux pages ne visent jamais la même expression.",
+       "en": "Choose the searches to be found for before writing the pages: one main phrase per page, taken from customers' words, recorded in .quality/project.json › seo.keywords. Two pages never target the same phrase."
+      },
+      {
+       "fr": "Chaque page cible porte son expression dans le titre, le h1, la description, l'adresse et le premier paragraphe, dans une phrase naturelle ; jamais de liste de mots-clés ni de répétition forcée.",
+       "en": "Each target page carries its phrase in the title, the h1, the description, the address and the first paragraph, in a natural sentence; never a list of keywords or forced repetition."
+      },
+      {
+       "fr": "Titre de 15 à 60 caractères et description de 70 à 160 caractères, écrits pour chaque page : ce que la page apporte, puis le nom du site.",
+       "en": "Title of 15 to 60 characters and description of 70 to 160 characters, written for each page: what the page offers, then the site's name."
+      },
+      {
+       "fr": "Le sitemap.xml est généré à partir des vraies pages, ne liste que des adresses canoniques qui répondent 200, porte des dates lastmod réelles et est déclaré dans robots.txt.",
+       "en": "sitemap.xml is generated from the real pages, lists only canonical addresses that answer 200, carries real lastmod dates and is declared in robots.txt."
+      },
+      {
+       "fr": "Au lancement : déclarer le site dans Google Search Console (propriété de domaine vérifiée par DNS de préférence), y envoyer le sitemap, puis contrôler l'indexation ; noter les dates dans project.json › seo.search_console.",
+       "en": "At launch: declare the site in Google Search Console (domain property verified by DNS preferably), submit the sitemap there, then check indexing; record the dates in project.json › seo.search_console."
       }
      ],
      "criteria": [
@@ -3799,6 +3989,54 @@
        "verify": {
         "fr": "JSON-LD Organization, LocalBusiness, Product ou Article selon le cas, validé.",
         "en": "JSON-LD Organization, LocalBusiness, Product or Article as relevant, validated."
+       }
+      },
+      {
+       "id": "SEO-08",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "seo_pages"
+       },
+       "label": {
+        "fr": "Sitemap complet et sain, titre et description remplis sur chaque page",
+        "en": "Complete and sound sitemap, title and description filled on every page"
+       },
+       "verify": {
+        "fr": "seo.json : aucun « must » en échec (sitemap présent, adresses du bon domaine qui répondent 200 et sont indexables, robots.txt qui ne bloque pas le site, titre et description présents, titres uniques).",
+        "en": "seo.json: no failed \"must\" (sitemap present, addresses on the right domain that answer 200 and are indexable, robots.txt not blocking the site, title and description present, unique titles)."
+       }
+      },
+      {
+       "id": "SEO-09",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "seo_pages"
+       },
+       "label": {
+        "fr": "Chaque recherche visée a sa page, et la page porte l'expression",
+        "en": "Each target search has its page, and the page carries the phrase"
+       },
+       "verify": {
+        "fr": "seo.json › keywords : project.json › seo.keywords déclare une expression principale par page ; chacune est dans le titre et le h1, et dans au moins deux endroits parmi la description, le premier paragraphe et l'adresse ; aucune expression visée par deux pages. Longueurs de titre et de description tenues.",
+        "en": "seo.json › keywords: project.json › seo.keywords declares one main phrase per page; each is in the title and the h1, and in at least two of description, first paragraph and address; no phrase targeted by two pages. Title and description lengths kept."
+       }
+      },
+      {
+       "id": "SEO-10",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "seo_pages"
+       },
+       "label": {
+        "fr": "Site déclaré dans Google Search Console, sitemap envoyé",
+        "en": "Site declared in Google Search Console, sitemap submitted"
+       },
+       "verify": {
+        "fr": "project.json › seo.search_console donne la date de vérification de la propriété et la date d'envoi du sitemap, confirmées par l'utilisateur ; le rapport d'indexation ne montre pas d'erreur sur les pages du sitemap.",
+        "en": "project.json › seo.search_console gives the date the property was verified and the date the sitemap was submitted, confirmed by the user; the indexing report shows no error on the sitemap's pages."
        }
       },
       {
@@ -3959,7 +4197,8 @@
        "id": "INT-01",
        "severity": "blocker",
        "check": {
-        "method": "inspect"
+        "method": "auto",
+        "tool": "webhook_probe"
        },
        "applies_if": [
         "has_webhooks"
@@ -3969,8 +4208,8 @@
         "en": "Webhook signatures verified"
        },
        "verify": {
-        "fr": "Chaque handler vérifie la signature avec le corps brut avant tout traitement.",
-        "en": "Each handler verifies the signature against the raw body before any processing."
+        "fr": "webhooks.json : chaque point d'entrée déclaré dans project.json › webhooks refuse un événement non signé et un événement mal signé (4xx, jamais 2xx ni 5xx). Lire aussi le code : la signature est vérifiée sur le corps brut avant tout traitement.",
+        "en": "webhooks.json: every endpoint declared in project.json › webhooks refuses an unsigned event and a wrongly signed one (4xx, never 2xx or 5xx). Also read the code: the signature is verified on the raw body before any processing."
        }
       },
       {
@@ -5708,6 +5947,318 @@
        "verify": {
         "fr": "Aucune mise à jour à distance n'ajoute de fonction, de permission ou de voie de paiement ; règle écrite dans le dépôt.",
         "en": "No over-the-air update adds a feature, a permission or a payment path; rule written in the repository."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "group": "desktop",
+   "label": {
+    "fr": "Application de bureau",
+    "en": "Desktop app"
+   },
+   "domains": [
+    {
+     "id": "desktop-ux",
+     "code": "DUX",
+     "label": {
+      "fr": "Expérience de bureau",
+      "en": "Desktop experience"
+     },
+     "summary": {
+      "fr": "Fenêtre, menus, raccourcis, fichiers, hors-ligne : ce qu'on attend d'une application installée sur un ordinateur.",
+      "en": "Window, menus, shortcuts, files, offline: what people expect from an app installed on a computer."
+     },
+     "applies_if": [
+      "desktop_app"
+     ],
+     "build": [
+      {
+       "fr": "Une application de bureau n'est pas un site dans une fenêtre : elle démarre vite, marche sans réseau pour ce qui est local, et suit les habitudes du système (menus, raccourcis, glisser-déposer, fichiers récents).",
+       "en": "A desktop app is not a site in a window: it starts fast, works without network for what is local, and follows the system's habits (menus, shortcuts, drag and drop, recent files)."
+      },
+      {
+       "fr": "Fenêtre : taille minimale fixée, mise en page utilisable de la taille minimale au plein écran, taille et position retenues d'un lancement à l'autre, y compris avec plusieurs écrans.",
+       "en": "Window: a minimum size is set, the layout works from the minimum size to full screen, size and position are remembered between launches, including with several displays."
+      },
+      {
+       "fr": "Raccourcis du système respectés (enregistrer, annuler, rétablir, fermer, quitter, préférences), avec Cmd sur macOS et Ctrl ailleurs ; chaque action des menus est aussi dans l'interface.",
+       "en": "System shortcuts honoured (save, undo, redo, close, quit, preferences), with Cmd on macOS and Ctrl elsewhere; every menu action is also in the interface."
+      },
+      {
+       "fr": "Aucune perte de travail : enregistrement automatique ou avertissement avant de fermer avec des changements, reprise après un plantage.",
+       "en": "No lost work: autosave or a warning before closing with changes, recovery after a crash."
+      },
+      {
+       "fr": "Fichiers : dialogues natifs pour ouvrir et enregistrer, glisser-déposer accepté, chemins longs et caractères accentués gérés, rien d'écrit hors des dossiers choisis par l'utilisateur ou du dossier de données de l'app.",
+       "en": "Files: native dialogs to open and save, drag and drop accepted, long paths and accented characters handled, nothing written outside the folders the user chose or the app's data folder."
+      },
+      {
+       "fr": "Les opérations longues n'immobilisent pas la fenêtre : progression affichée, annulation possible.",
+       "en": "Long operations do not freeze the window: progress shown, cancel possible."
+      },
+      {
+       "fr": "Thème clair et sombre suivant le système ; mise à l'échelle de l'affichage (125 %, 150 %, 200 %) sans flou ni texte coupé.",
+       "en": "Light and dark theme following the system; display scaling (125 %, 150 %, 200 %) without blur or clipped text."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "DUX-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "flow_run"
+       },
+       "label": {
+        "fr": "Chaque tâche clé va au bout dans la vraie fenêtre",
+        "en": "Every key task completes in the real window"
+       },
+       "verify": {
+        "fr": "flows.json joué avec `qp flows --attach <port>` sur l'application lancée (pas seulement dans un navigateur) : tous les flows terminés. Dire sur quel système.",
+        "en": "flows.json played with `qp flows --attach <port>` on the running app (not only in a browser): every flow completed. Say on which system."
+       }
+      },
+      {
+       "id": "DUX-02",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Fenêtre utilisable à toutes les tailles, état retenu",
+        "en": "Window usable at every size, state remembered"
+       },
+       "verify": {
+        "fr": "Taille minimale définie dans la configuration ; captures à la taille minimale et en plein écran sans contenu coupé ; taille et position retrouvées après relance.",
+        "en": "Minimum size set in the configuration; screenshots at the minimum size and full screen with no clipped content; size and position restored after relaunch."
+       }
+      },
+      {
+       "id": "DUX-03",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Raccourcis et menus du système respectés",
+        "en": "System shortcuts and menus honoured"
+       },
+       "verify": {
+        "fr": "Enregistrer, annuler, rétablir, copier, coller, fermer, quitter et préférences répondent aux raccourcis du système sur chaque plateforme visée ; menu de l'application présent sur macOS.",
+        "en": "Save, undo, redo, copy, paste, close, quit and preferences answer the system's shortcuts on each target platform; application menu present on macOS."
+       }
+      },
+      {
+       "id": "DUX-04",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Aucun travail perdu à la fermeture ou après un plantage",
+        "en": "No work lost on close or after a crash"
+       },
+       "verify": {
+        "fr": "Fermer la fenêtre avec des changements : enregistrés ou avertissement. Tuer le processus en cours de saisie puis relancer : le travail est retrouvé ou proposé.",
+        "en": "Close the window with changes: saved, or a warning. Kill the process while editing then relaunch: the work is back or offered."
+       }
+      },
+      {
+       "id": "DUX-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Fichiers gérés comme le système l'attend",
+        "en": "Files handled the way the system expects"
+       },
+       "verify": {
+        "fr": "Dialogues natifs ; glisser-déposer ; un fichier au nom accentué, long ou sur un autre disque s'ouvre ; un fichier absent ou verrouillé donne un message clair ; rien d'écrit hors des dossiers autorisés.",
+        "en": "Native dialogs; drag and drop; a file with an accented or long name, or on another drive, opens; a missing or locked file gives a clear message; nothing written outside the allowed folders."
+       }
+      },
+      {
+       "id": "DUX-06",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Fonctionne sans réseau pour ce qui est local",
+        "en": "Works without network for what is local"
+       },
+       "verify": {
+        "fr": "Réseau coupé : l'app démarre, les données locales s'ouvrent et se modifient, ce qui demande le réseau le dit sans bloquer le reste.",
+        "en": "Network off: the app starts, local data opens and can be changed, what needs the network says so without blocking the rest."
+       }
+      },
+      {
+       "id": "DUX-07",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Opérations longues sans gel, avec progression et annulation",
+        "en": "Long operations without freezing, with progress and cancel"
+       },
+       "verify": {
+        "fr": "Lancer l'opération la plus lourde sur de vraies données : la fenêtre répond toujours, la progression avance, l'annulation fonctionne.",
+        "en": "Run the heaviest operation on real data: the window still answers, progress moves, cancel works."
+       }
+      },
+      {
+       "id": "DUX-08",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Démarrage rapide, thème du système et mise à l'échelle suivis",
+        "en": "Fast start, system theme and scaling followed"
+       },
+       "verify": {
+        "fr": "Fenêtre utilisable en moins de 2 secondes à froid ; thème sombre du système suivi ; affichage net à 150 % et 200 %.",
+        "en": "Window usable in under 2 seconds cold; the system's dark theme followed; sharp display at 150 % and 200 %."
+       }
+      }
+     ]
+    },
+    {
+     "id": "desktop-release",
+     "code": "DRL",
+     "label": {
+      "fr": "Publication et sécurité de bureau",
+      "en": "Desktop release and security"
+     },
+     "summary": {
+      "fr": "Isolation entre la page et le système, signature, mises à jour, installation et désinstallation.",
+      "en": "Isolation between the page and the system, signing, updates, install and uninstall."
+     },
+     "applies_if": [
+      "desktop_app"
+     ],
+     "build": [
+      {
+       "fr": "La page n'accède au système que par une courte liste de fonctions nommées (commandes Tauri, script de préchargement Electron) ; chacune valide ses arguments comme une route de serveur.",
+       "en": "The page reaches the system only through a short list of named functions (Tauri commands, Electron preload script); each validates its arguments like a server route."
+      },
+      {
+       "fr": "Tauri : politique de sécurité du contenu définie, permissions par fenêtre limitées aux dossiers, commandes et hôtes utilisés. Electron : contextIsolation activée, nodeIntegration désactivée, bac à sable conservé, aucune page en http.",
+       "en": "Tauri: content security policy set, per-window permissions narrowed to the folders, commands and hosts used. Electron: contextIsolation on, nodeIntegration off, sandbox kept, no http page."
+      },
+      {
+       "fr": "Installeurs signés (Windows) et notariés (macOS) ; sinon le système met en garde ou refuse.",
+       "en": "Installers signed (Windows) and notarised (macOS); otherwise the system warns or refuses."
+      },
+      {
+       "fr": "Mises à jour signées, servies en https, vérifiées avant installation ; l'utilisateur sait quelle version il a et ce qui a changé.",
+       "en": "Updates signed, served over https, verified before install; the user knows which version they have and what changed."
+      },
+      {
+       "fr": "Secrets dans le trousseau du système, jamais en clair dans un fichier de configuration ; aucun secret dans le paquet livré.",
+       "en": "Secrets in the system keychain, never in clear in a configuration file; no secret in the shipped package."
+      },
+      {
+       "fr": "Données de l'utilisateur dans le dossier prévu par le système ; la désinstallation les laisse ou les retire selon ce qui est annoncé.",
+       "en": "User data in the folder the system provides; uninstalling keeps or removes it as announced."
+      }
+     ],
+     "criteria": [
+      {
+       "id": "DRL-01",
+       "severity": "blocker",
+       "check": {
+        "method": "auto",
+        "tool": "desktop_release_scan"
+       },
+       "label": {
+        "fr": "Isolation entre la page et le système en place",
+        "en": "Isolation between the page and the system in place"
+       },
+       "verify": {
+        "fr": "desktop-check.json : aucun « must » en échec (politique de sécurité du contenu, permissions ou liste d'API, accès distant, nodeIntegration, contextIsolation, sécurité web, mises à jour signées et en https, identifiant de l'app).",
+        "en": "desktop-check.json: no failed \"must\" (content security policy, permissions or API list, remote access, nodeIntegration, contextIsolation, web security, signed https updates, app identifier)."
+       }
+      },
+      {
+       "id": "DRL-02",
+       "severity": "major",
+       "check": {
+        "method": "auto",
+        "tool": "desktop_release_scan"
+       },
+       "label": {
+        "fr": "Signature, mises à jour et permissions resserrées",
+        "en": "Signing, updates and narrowed permissions"
+       },
+       "verify": {
+        "fr": "desktop-check.json : chaque « should » en échec est corrigé ou justifié (signature Windows et macOS, mise à jour prévue, permissions larges, bac à sable, script de préchargement).",
+        "en": "desktop-check.json: each failed \"should\" is fixed or justified (Windows and macOS signing, updater, broad permissions, sandbox, preload script)."
+       }
+      },
+      {
+       "id": "DRL-03",
+       "severity": "blocker",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Chaque fonction exposée à la page valide ses arguments",
+        "en": "Every function exposed to the page validates its arguments"
+       },
+       "verify": {
+        "fr": "Lire chaque commande Tauri ou fonction du script de préchargement : chemins restreints aux dossiers autorisés (pas de « .. »), tailles bornées, aucune exécution de commande construite à partir d'une entrée.",
+        "en": "Read every Tauri command or preload function: paths restricted to allowed folders (no \"..\"), sizes bounded, no command built from input and executed."
+       }
+      },
+      {
+       "id": "DRL-04",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Installeurs acceptés par le système sur chaque plateforme visée",
+        "en": "Installers accepted by the system on each target platform"
+       },
+       "verify": {
+        "fr": "Installer la version publiée sur une machine propre : pas d'avertissement SmartScreen bloquant sous Windows, ouverture sans contournement sous macOS ; l'app se lance et se désinstalle proprement.",
+        "en": "Install the released build on a clean machine: no blocking SmartScreen warning on Windows, opens without a workaround on macOS; the app launches and uninstalls cleanly."
+       }
+      },
+      {
+       "id": "DRL-05",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Mise à jour testée de bout en bout, version et nouveautés visibles",
+        "en": "Update tested end to end, version and changes visible"
+       },
+       "verify": {
+        "fr": "Installer la version précédente, publier une version de test, vérifier que la mise à jour se télécharge, se vérifie et s'installe ; le numéro de version et les nouveautés sont affichés dans l'app.",
+        "en": "Install the previous version, publish a test release, check the update downloads, verifies and installs; the version number and the changes are shown in the app."
+       }
+      },
+      {
+       "id": "DRL-06",
+       "severity": "major",
+       "check": {
+        "method": "inspect"
+       },
+       "label": {
+        "fr": "Secrets dans le trousseau du système, données au bon endroit",
+        "en": "Secrets in the system keychain, data in the right place"
+       },
+       "verify": {
+        "fr": "Chercher les jetons et clés dans les fichiers de l'app après connexion : aucun en clair. Les données sont dans le dossier d'application du système, pas à côté de l'exécutable.",
+        "en": "Look for tokens and keys in the app's files after signing in: none in clear. Data lives in the system's application data folder, not next to the executable."
        }
       }
      ]

@@ -1,7 +1,7 @@
 {
   "name": "qp-node-api",
   "description": "Quality pack module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node du pack qualité.",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

@@ -1,0 +1,144 @@
+{
+  "id": "non-profit",
+  "label": {
+    "fr": "Association et organisation à but non lucratif",
+    "en": "Non-profit and association"
+  },
+  "expects": [
+    {
+      "rule": "The first screen states what the organisation does and who it helps, in plain words, before any appeal for money. NN/g found that users looked for trust information and rated finding it only 5.3 out of 7.",
+      "source": "https://www.nngroup.com/articles/non-profit-websites-donations/",
+      "verified": true
+    },
+    {
+      "rule": "Show stories of people the work has helped. NN/g testers valued them more than mission statements on social media.",
+      "source": "https://www.nngroup.com/articles/non-profit-websites-donations/",
+      "verified": true
+    },
+    {
+      "rule": "Keep the donation flow as short as a shop checkout. NN/g measured donating at 7% longer than an e-commerce checkout on average, with a 5.7 out of 7 rating for the process itself.",
+      "source": "https://www.nngroup.com/articles/non-profit-websites-donations/",
+      "verified": true
+    },
+    {
+      "rule": "Give volunteers the typical duties and hours up front, and a way to talk to a person. NN/g notes people often want to speak to somebody before volunteering.",
+      "source": "https://www.nngroup.com/articles/non-profit-websites-donations/",
+      "verified": true
+    },
+    {
+      "rule": "Do not push donations, products or newsletter sign-ups at every step. NN/g participants were annoyed by it.",
+      "source": "https://www.nngroup.com/articles/non-profit-websites-donations/",
+      "verified": true
+    },
+    {
+      "rule": "A donate button is reachable from every page without scrolling back to the top, and the page says where the money goes.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Annual figures, legal status and contact details are one click from the first screen, so a donor can judge the organisation.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "6 of 8 first screens are led by a photograph or film of people, a place or a building (Obama, Oregon, Higherlife, Zacamil, Re-Cycle, MobilityLab's map below); Climate TRACE uses a 3D globe and Illinois a graphic.",
+    "The headline is 12 words or fewer on 7 of 8, set at 46 to 198 px or larger than the body by at least 3x.",
+    "A donate, join or contact action is in the header on 6 of 8 (Obama, Oregon, Higherlife, Re-Cycle, Illinois, MobilityLab); only Obama, Re-Cycle and Illinois say donate.",
+    "4 of 8 use one typeface family (Higherlife, MobilityLab, Illinois, Climate TRACE); the other 4 pair a display or serif face with a sans or mono (Obama, Zacamil, Re-Cycle, Oregon).",
+    "One accent colour marks the action: lime on Higherlife and Re-Cycle, orange on Oregon, blue on Illinois; the rest is dark, grey or white.",
+    "6 of 8 have a header menu of 3 to 6 items; Climate TRACE and Colonia Zacamil have none on the first screen.",
+    "6 of 8 show a consent box or bar over part of the first screen."
+  ],
+  "sites": [
+    {
+      "name": "Obama Foundation",
+      "url": "https://www.obama.org/",
+      "why": "Dark photograph of the Obama Presidential Center tower under a slate-blue banner for programme applications (deadline 2026-11-23); 'A campus that brings change home' in a grey condensed sans, a grey 'Donate' box in the header, five menu items. Serif body (Chronicle Text) and Gotham Condensed.",
+      "recognition": "Webby Award 2025, Charitable Organizations/Non-Profit, General Desktop & Mobile Sites (announced 2025-04-22)",
+      "source": "https://www.webbyawards.com/press/press-releases/29th-annual-webby-awards-announce-2025-winners/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Climate TRACE",
+      "url": "https://climatetrace.org/",
+      "why": "3D globe covered in orange bars on dark slate (#444546); headline 'Comprehensive Emissions Insight' and three stacked panels (Track Global Emissions, See Pollution Plumes, Estimate Emissions Reductions). Set in APK Protocol. No donate button.",
+      "recognition": "Webby Award 2025, Sustainability & Environment, General Desktop & Mobile Sites",
+      "source": "https://winners.webbyawards.com/2025/websites-and-mobile-sites/general-desktop-mobile-sites/sustainability-environment/333338/climate-trace",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Oregon Outdoor Alliance",
+      "url": "https://www.oregonoutdooralliance.org/",
+      "why": "Grey (#efeeee) page with a blurred black-and-white film of a cup in a machine; 'Connection. Cultivation. Business Growth.' in a grotesk (Manrope) with a monospaced label (IBM Plex Mono); orange 'Become a member' button, two news cards at right, cookie bar over the headline.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-04",
+      "source": "https://www.awwwards.com/sites/oregon-outdoor-alliance",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Higherlife Foundation",
+      "url": "https://higherlifefoundation.org/",
+      "why": "Full-bleed dimmed photograph of a person at a microscope; 46 px headline 'Building Africa's future. One person, one community, one purpose at a time.' in Cera Pro, a lime (#c6f886) 'Get Involved' button in the header and a lime 'What We Do' arrow. One typeface.",
+      "recognition": "Awwwards Honorable Mention, 2026-03-24",
+      "source": "https://www.awwwards.com/sites/higherlife-foundation",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Colonia Zacamil",
+      "url": "https://coloniazacamil.com/",
+      "why": "Beige (#ebe6e0) page: 'FLY TO ZACAMIL' in a tall condensed black display face with an aerial photograph of housing blocks inside a rounded slot between the words; a black 'Discover' pill; audio prompt below; consent panel at right. Reckless Neue, Heathergreen and Roboto Mono.",
+      "recognition": "Awwwards Site of the Day, 2026-10-01",
+      "source": "https://www.awwwards.com/sites/colonia-zacamil",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "MobilityLab",
+      "url": "https://www.mobilitylab.ch/",
+      "why": "White page with faint vertical grid lines: 64 px two-tone headline 'Expérimenter. Inspirer. Transformer la mobilité de demain, ici, au cœur des Alpes.' in Switzer, five partner logos, 'En savoir plus' button, FR/DE switch, black Contact button, 3D map of mountains below the fold.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-21",
+      "source": "https://www.awwwards.com/sites/mobilitylab",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Re-Cycle",
+      "url": "https://re-cycle.org/",
+      "why": "Dark green photograph of a smiling boy on a bike with a man beside him; 81 px headline 'DONATE A BIKE. CHANGE A LIFE.' in Rubik, white and lime (#c8df0a); two Donate buttons in the header and a 'Donate A Bike' button; phone and email in a lime top strip. DM Sans for text.",
+      "recognition": "Awwwards Nominee, 2026-11-11 (voting open, no award yet)",
+      "source": "https://www.awwwards.com/sites/re-cycle",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Illinois Innocence Project",
+      "url": "https://www.illinoisinnocenceproject.org/",
+      "why": "Saturated blue (#405bf7) panel with 'Advocate. Educate. Reform.' at 86 px in TASA Orbiter and a huge striped '25 You're invited' graphic in navy, lime and lilac; one sentence of text; Request Help and Donate in a top strip. No photograph.",
+      "recognition": "Awwwards Nominee, 2026-07-10 (no award)",
+      "source": "https://www.awwwards.com/sites/illinois-innocence-project",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "Stock photos of smiling children or hands holding a globe in place of real people and places.",
+    "A donation form that asks for an account or many fields before the amount.",
+    "Impact claims without a figure, a date or a named programme.",
+    "A pop-up asking for a gift or newsletter sign-up on arrival.",
+    "Social media feeds embedded as main content: NN/g found people do not use Facebook to research non-profits.",
+    "Non-monetary giving (items, volunteering) hidden in the footer: NN/g rated finding item donations 5.3 out of 7, the lowest score in its study."
+  ],
+  "sources": [
+    {
+      "name": "Nielsen Norman Group, Non-Profit Websites: Donations",
+      "url": "https://www.nngroup.com/articles/non-profit-websites-donations/",
+      "access": "free"
+    },
+    {
+      "name": "Webby Awards winners",
+      "url": "https://winners.webbyawards.com/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Institutions",
+      "url": "https://www.awwwards.com/websites/institutions/",
+      "access": "free"
+    }
+  ]
+}

@@ -15,10 +15,10 @@ domains:
     criteria:
       - id: INT-01
         severity: blocker
-        check: {method: inspect}
+        check: {method: auto, tool: webhook_probe}
         applies_if: [has_webhooks]
         label: {fr: "Signature des webhooks vérifiée", en: "Webhook signatures verified"}
-        verify: {fr: "Chaque handler vérifie la signature avec le corps brut avant tout traitement.", en: "Each handler verifies the signature against the raw body before any processing."}
+        verify: {fr: "webhooks.json : chaque point d'entrée déclaré dans project.json › webhooks refuse un événement non signé et un événement mal signé (4xx, jamais 2xx ni 5xx). Lire aussi le code : la signature est vérifiée sur le corps brut avant tout traitement.", en: "webhooks.json: every endpoint declared in project.json › webhooks refuses an unsigned event and a wrongly signed one (4xx, never 2xx or 5xx). Also read the code: the signature is verified on the raw body before any processing."}
       - id: INT-02
         severity: major
         check: {method: inspect}

@@ -1,0 +1,127 @@
+{
+  "id": "hotel-travel",
+  "label": {
+    "fr": "Hôtel et voyage",
+    "en": "Hotel and travel"
+  },
+  "expects": [
+    {
+      "rule": "A booking or enquiry button is in the header on every page and in the hero, with the same label.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Rooms or trip types are listed with a starting price, or the site says clearly that prices come on enquiry.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Address, phone and an email are plain text, and the phone number is a tap-to-call link.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Room pages state size, number of guests and what is included, as text next to the photographs.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Getting there (airport, transfer, map) is on a page reachable from the menu, not only in the footer.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The first screen names the place and the kind of stay in the headline, so a visitor knows what is sold without playing a video.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Cancellation and payment terms are linked near the booking action.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "5 of 7 put a video or full-bleed photograph on the whole first screen (Tengile, White Desert, Velaa, Lingers, Tandjung); Vander and Mont Rural use a beige text block with small or lower photographs.",
+    "A booking or enquiry control is on the first screen of 6 of 7 (Enquire, Book now, Book a room, Book room); Lingers shows only a phone icon.",
+    "A headline is on the first screen of 4 of 7 (Tengile, White Desert, Vander, Mont Rural); Velaa, Lingers and Tandjung open on an image with no headline.",
+    "3 of 7 have a consent box over the first screen on load (Tengile, White Desert, Tandjung).",
+    "5 of 7 pair a serif or display headline face with a plain sans for text (Tengile, White Desert, Velaa, Tandjung, Mont Rural); Lingers uses two serifs, Vander one sans.",
+    "4 of 7 hide navigation behind a menu control on the first screen (Tengile, Velaa, Lingers, Tandjung); the others show 3 to 6 links.",
+    "A language switch is visible on 3 of 7 (Velaa, Lingers, Mont Rural); a direct-booking incentive appears on 2 (Vander, Lingers).",
+    "Rates are stated on the home page of 3 of 7 (White Desert, Lingers, Mont Rural); the other four give none there."
+  ],
+  "sites": [
+    {
+      "name": "Tengile MalaMala Collection",
+      "url": "https://tengilemalamala.com/",
+      "why": "Aerial video of a river through bush fills the screen; menu left, centred logo, Enquire right; two-line serif headline 'Unmatched abundance', a short line of copy and an Explore Collection button; consent box bottom left. PP Fragment and Inter. Six lodge cards lower, no prices.",
+      "recognition": "Awwwards Site of the Day and Developer Award, 2026-10-03",
+      "source": "https://www.awwwards.com/sites/tengile-malamala-collection",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "White Desert",
+      "url": "https://white-desert.com/",
+      "why": "Film of two climbers in an ice cave, framed by a huge condensed white word ANTARCTICA (Oswald) over a small italic serif tagline; Experience, Operation, About left, Rates and Enquire right, Watch Film link, consent box. Trip prices (US$16,500 to 115,500) lower on the page.",
+      "recognition": "Awwwards Site of the Day and Developer Award, 2026-09-11",
+      "source": "https://www.awwwards.com/sites/white-desert",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Velaa Private Island",
+      "url": "https://www.velaaprivateisland.com/",
+      "why": "Full-screen video of guests with champagne, no headline on the first screen; Menu, Villas, Dining, Activities left, EN and a filled Book now at right, 'Sound on' bottom right. Instrument Sans with thin Canela headlines further down. No prices, no street address.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-25",
+      "source": "https://www.awwwards.com/sites/velaa-private-island",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Lingers",
+      "url": "https://www.lingers.it/en",
+      "why": "Photograph of the hotel behind a vine fence under a dark overlay, centred wordmark, menu icon left, phone, gallery, favourites icons and EN at right; no headline or button on the first screen. Cormorant Garamond and Cinzel. Suites priced from EUR 115 per person lower down.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-31",
+      "source": "https://www.awwwards.com/sites/lingers",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Vander Hotel",
+      "url": "https://www.vanderhotel.com",
+      "why": "Black strip with a best-price-when-booking-directly line, then a nav with Book now and a Book a room link; centred script line, a large capital sans headline, two lines of copy and an outlined Book a room button, four small room photographs scattered around. Beige (#f4f2f1). No room rates.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-29",
+      "source": "https://www.awwwards.com/sites/vander-hotel",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Tandjung Sari",
+      "url": "https://www.tandjungsarihotel.com/",
+      "why": "Lobby photograph in dark wood with a side bar (logo, menu icon, WhatsApp) and Book room and Book table buttons top right; a cookie box over the centre on load and no headline. Helvetica with Adobe Caslon Pro for titles further down. No prices or address in the page text.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-05",
+      "source": "https://www.awwwards.com/sites/tandjung-sari",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "MontRural (Masia Mont Rural)",
+      "url": "https://mont-rural.emblematica.agency",
+      "why": "Cream (#f8e8c5) upper half with a split serif headline 'Private Masia among the vineyards of Penedès' (Playfair), two short paragraphs (6 bedrooms, 12 guests), a terrace photograph below, Book now and Check availability pinned bottom right. Prices (790 to 1200 EUR) lower; page said unavailable.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-21",
+      "source": "https://www.awwwards.com/sites/masia-mont-rural",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A hero video with sound or a gate before the visitor can see the headline, the price range or the booking button.",
+    "No prices and no statement on how prices are given, so the visitor cannot judge the budget.",
+    "Booking on a different brand or domain than the hotel without telling the visitor.",
+    "Room cards that are only images, with no size, guests or inclusions.",
+    "Cookie banners that hide the booking button on a phone.",
+    "A page that shows a sample date in the past or an unavailable notice with no alternative contact."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Hotel / Restaurant",
+      "url": "https://www.awwwards.com/websites/hotel-restaurant/",
+      "access": "free"
+    }
+  ]
+}

@@ -23,9 +23,9 @@ function fixture() {
 }
 const qp = (cwd, ...args) => JSON.parse(execFileSync("node", [QP, ...args], { cwd, encoding: "utf8" }));
 
-test("referential has 35 domains, unique criterion ids, each domain in one score", () => {
+test("referential has 37 domains, unique criterion ids, each domain in one score", () => {
   const domains = allDomains(ref);
-  assert.equal(domains.length, 35);
+  assert.equal(domains.length, 37);
   const ids = domains.flatMap((d) => d.criteria.map((c) => c.id));
   assert.equal(new Set(ids).size, ids.length);
   const placed = Object.values(ref.score_areas).flatMap((a) => a.domains);

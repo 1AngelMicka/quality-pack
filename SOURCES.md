@@ -500,3 +500,20 @@ Left out because the notes mark them as unverified or because the skill does not
 | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | MIT, but a fixed catalogue of styles and palettes gives recognisable outputs; content not read |
 | Linear "quality" post | URL returned 404; nothing sourced |
 | French Wikipedia page on signs of generated text | not found |
+
+## Lot 4 — banque de références (recherche du 2026-11-12)
+
+La banque (`plugins/core/bank/`) décrit, par type de site, des sites reconnus comme excellents. Elle ne contient que des adresses, des descriptions écrites pour le pack et des mesures : aucune capture d'écran de sites tiers, qui sont protégées par le droit d'auteur. Chaque fichier liste ses propres sources dans `sources`, avec leur mode d'accès.
+
+| Source | Rôle | Accès |
+| --- | --- | --- |
+| [Awwwards](https://www.awwwards.com/websites/) (Site of the Day, Honorable Mention, catégories) | reconnaissance datée des sites | gratuit |
+| [Webby Awards](https://winners.webbyawards.com/) | lauréats 2024 à 2026 | gratuit |
+| [WebAwards](https://www.webaward.org/) | lauréats « Small Business » pour les commerces de proximité | gratuit |
+| [One Page Love](https://onepagelove.com), [SaaS Landing Page](https://saaslandingpage.com), [recent.design](https://recent.design), [Typewolf](https://www.typewolf.com) | sélection éditoriale ; dates pas toujours affichées | gratuit |
+| [Baymard Institute](https://baymard.com/blog), articles publics | attentes d'une boutique en ligne | gratuit (les rapports complets sont payants : non utilisés) |
+| [Nielsen Norman Group](https://www.nngroup.com/articles/) | attentes : prix affichés, formulaires | gratuit |
+
+Écartés : Mobbin, Refero, Pageflows (payants ou freemium), Lapa Ninja (bloque les robots), toute capture d'écran.
+
+Limites connues : les règles `expects` sont en majorité des règles de bon sens marquées non vérifiées ; la source d'une reconnaissance est souvent la page de catégorie et non la fiche du site ; les sites changent, la mesure et la calibration sont à refaire avant chaque version. Une première passe automatique (105 agents) n'avait vérifié que 4 familles de sites ; la banque vient d'une seconde passe ciblée, un agent par groupe de types, chaque site chargé avant d'être gardé.

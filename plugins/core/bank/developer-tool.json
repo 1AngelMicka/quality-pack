@@ -1,0 +1,135 @@
+{
+  "id": "developer-tool",
+  "label": {
+    "fr": "Outil pour développeurs",
+    "en": "Developer tool"
+  },
+  "expects": [
+    {
+      "rule": "The product is shown in use within the first two screens: a real code sample, an install command, a product panel or a working demo, not only a slogan.",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "verified": true
+    },
+    {
+      "rule": "Documentation is in the primary navigation and one click from the home page, with a quickstart that ends in a working result.",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "verified": true
+    },
+    {
+      "rule": "The page names what it replaces or competes with, or the job it does, so an evaluator places it within seconds.",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "verified": true
+    },
+    {
+      "rule": "Code blocks are real text that can be selected and copied, with a copy button, a language switcher and syntax colours that keep a readable contrast.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Free start and sales contact both exist as paths: a self-serve sign-up and a talk-to-sales link.",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "verified": true
+    },
+    {
+      "rule": "Pricing, limits, status and changelog are public and linked from the header or footer.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The content is also readable by agents and scripts: plain text or markdown without scripts, stable headings, and no content hidden behind interaction.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "Header carries a Sign in or Log in link and one filled button on 8 of 8 sites; Docs is a header item on 6 of 8 (Resend, Clerk, Supabase, Neon, Sentry, and Vercel's Resources menu aside).",
+    "A mono face appears in the CSS of 6 of 8 sites (Resend, Clerk, Vercel, Neon, Railway, Sentry) next to Inter or Geist for text.",
+    "A real code block or command is visible on 0 of 8 first screens; 3 of 8 show a product panel (Clerk, Railway, Sentry), the rest art, a logo mark or a gradient.",
+    "Dark surfaces on 4 of 8 (Resend, Neon, Railway, Sentry); white or light grey on 4 of 8 (Stripe, Clerk, Vercel, Supabase).",
+    "Two buttons in the first screen on 8 of 8: one filled sign-up or deploy action and one docs, demo or sales action.",
+    "Headlines run 4 to 9 words at 40 to 96px; 2 of 8 are set in a serif (Resend, Railway).",
+    "An agent angle (MCP, prompt, agents) shows on the first screen on 5 of 8 (Stripe, Clerk, Vercel, Neon, Railway).",
+    "Proof on the first screen: a logo row on 2 of 8 (Stripe, Vercel) or a GitHub star count in the header on 2 of 8 (Supabase, Neon)."
+  ],
+  "sites": [
+    {
+      "name": "Stripe",
+      "url": "https://stripe.com/",
+      "why": "Shown here in French. White page with an announcement bar, a 40px two-tone headline in a sans (sohne-var) over a full-bleed ribbon of orange, pink and violet, a purple start button beside a Google sign-up, and a scrolling row of customer logos. A live counter of share of world GDP sits above the title.",
+      "recognition": "Cited as a best-in-class developer tool site in Veza Digital article, 2026-09-03",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Resend",
+      "url": "https://resend.com/",
+      "why": "Black page (#000000), a 96px light serif headline \"Email for developers\" at left, a two-line subhead, a filled Get started and a text link to Documentation, and a dark 3D cube at right. Header has Docs, Pricing, Log in. Body in Inter, code in Commit Mono. Lists SDKs for nine languages below.",
+      "recognition": "Cited as a best-in-class developer tool site in Veza Digital article, 2026-09-03",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Clerk",
+      "url": "https://clerk.com/",
+      "why": "Light grey page (#f7f7f8), a 56px bold headline at left, one subline, a floating Copy prompt pill for agents, and below a tabbed product panel (User Authentication, Multi-tenancy, Enterprise, Agent) showing a sign-up form. Header: Products, Docs, Changelog, Pricing, Sign in, Sign up.",
+      "recognition": "Cited as a best-in-class developer tool site in Veza Digital article, 2026-09-03",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Vercel",
+      "url": "https://vercel.com/",
+      "why": "Light grey page (#fafafa), a 64px two-line headline in Geist Sans at left, a black triangle at centre, three short lines at right, Deploy now and Talk to sales buttons, a row of customer logos at the bottom. Header: Get a Demo, Log In, Sign Up.",
+      "recognition": "Cited as a best-in-class developer tool site in Veza Digital article, 2026-09-03",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Supabase",
+      "url": "https://supabase.com/",
+      "why": "White page, a 46px headline with the second line in green, a short paragraph listing the services, a green Start your project button and a Request a demo, header with a GitHub star count (114.9K), Docs and Pricing, then three product cards showing small commands and data rows. Set in Inter and Manrope.",
+      "recognition": "Cited as a best-in-class developer tool site in Veza Digital article, 2026-09-03",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Neon",
+      "url": "https://neon.com/",
+      "why": "Black page with a full-bleed dark artwork of green and blue vertical bars, a mono eyebrow, a 56px two-line headline in Inter at bottom left, a white Get started and an outlined Read the docs button. Header has Docs, Pricing, Discord and a GitHub star count (23.3k).",
+      "recognition": "Cited as a best-in-class developer tool site in Veza Digital article, 2026-09-03",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Railway",
+      "url": "https://railway.com/",
+      "why": "Dark purple page (#13111c) with a starry cloud illustration, a centred 54px serif headline, one subline, Deploy and Agents buttons, and the top of a real project dashboard (Architecture, Observability, Logs tabs) cut off by a large cookie panel.",
+      "recognition": "Cited as a best-in-class developer tool site in Veza Digital article, 2026-09-03",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Sentry",
+      "url": "https://sentry.io/welcome/",
+      "why": "Dark purple page (#1f1633), an 88px bold headline with one word in pink at a slant, a subline, Get Started and Get Demo buttons, an announcement pill and a header with Docs and Pricing. Below, cartoon characters and cut-off product panels (Errors, Replays, Seer).",
+      "recognition": "Cited as a best-in-class developer tool site in Veza Digital article, 2026-09-03",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A hero with a stock photo of developers or a floating 3D cube and no code, command or demo.",
+    "Terminal or code screenshots saved as images, which cannot be copied or read by screen readers.",
+    "The same dark gradient, glowing grid and neon accent as every other developer site, with no product-specific visual.",
+    "Documentation behind a sign-up wall, or only a Book a demo button for a tool developers try themselves.",
+    "Claims such as \"10x faster\" with no benchmark, number or method.",
+    "A command that is shown but cannot be copied in one click, or code samples in only one language when SDKs exist for several."
+  ],
+  "sources": [
+    {
+      "name": "Veza Digital, best devtool website design examples (2026)",
+      "url": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "access": "free"
+    }
+  ]
+}

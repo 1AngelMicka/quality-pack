@@ -1,0 +1,176 @@
+{
+  "id": "public-service",
+  "label": {
+    "fr": "Service public",
+    "en": "Public service and government"
+  },
+  "expects": [
+    {
+      "rule": "Each page has one h1 that says what the page does. The title follows the pattern Question - Service name - GOV.UK, for example Where do you live? - Register to vote - GOV.UK.",
+      "source": "https://www.gov.uk/service-manual/design/writing-for-user-interfaces",
+      "verified": true
+    },
+    {
+      "rule": "Write short sentences, one idea each, important words first, in sentence case. Headings and input labels take no full stop. Spell out acronyms on every page.",
+      "source": "https://www.gov.uk/service-manual/design/writing-for-user-interfaces",
+      "verified": true
+    },
+    {
+      "rule": "Do not rely on shape, size, colour or position in instructions, and give links text that makes sense alone. Click here is not accessible.",
+      "source": "https://www.gov.uk/service-manual/design/writing-for-user-interfaces",
+      "verified": true
+    },
+    {
+      "rule": "One default button per page for the main action, aligned to the left edge of the form. Labels describe the action in sentence case, for example Save and continue, Pay, Sign in.",
+      "source": "https://design-system.service.gov.uk/components/button/",
+      "verified": true
+    },
+    {
+      "rule": "Use the green Start now button, built as a link, only for the main call to action on a service start page. A warning button is only for serious actions users cannot easily undo.",
+      "source": "https://design-system.service.gov.uk/components/button/",
+      "verified": true
+    },
+    {
+      "rule": "Text on a dark button background keeps a contrast ratio of at least 4.5:1 (WCAG 2.2 criterion 1.4.3). The GOV.UK button page states this.",
+      "source": "https://design-system.service.gov.uk/components/button/",
+      "verified": true
+    },
+    {
+      "rule": "Pointer targets are at least 24 by 24 CSS pixels (WCAG 2.2 criterion 2.5.8), unless spacing, an equivalent control, inline text, a browser control or an essential presentation applies.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "USWDS: use a native button element, always set its type, keep a visible focus state, give the main action the most distinct style and start labels with a verb. The USWDS button passed 6 of 9 WCAG 2.1 AA criteria in its own tests, with 1 passed with exceptions and 2 conditional.",
+      "source": "https://designsystem.digital.gov/components/button/",
+      "verified": true
+    },
+    {
+      "rule": "The French Système de design de l'État (DSFR) sets the typeface and colour tokens for state sites. Its page could not be opened by an automated client (HTTP 403), so no figure from it is quoted.",
+      "source": "https://www.systeme-de-design.gouv.fr/",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "A search box is on the first screen on 4 of 7 (GOV.UK, NASA header, NLA, Johnson County); the others lead with a virtual tour, a campaign or a mission statement.",
+    "Of the 4 seen on a screenshot, 2 lead with a real photograph (NASA spacewalk, Louisiana fountain), 1 with 3D renders (SURSUR) and GOV.UK with none.",
+    "GOV.UK uses one typeface (GDS Transport); the other 3 seen pair two (NASA Public Sans + Inter, Louisiana Ivy Presto + Stevie Sans, SURSUR Sofia Sans + League Gothic).",
+    "Headlines are 3 to 10 words (Seeking Next Generation of Explorers, Mets ton esprit en mode sûr sûr) at 55 px or more on 4 of 4 seen.",
+    "One main action per first screen on 4 of 4 seen: Become a NASA Astronaut, search, Start virtual tour, Échantillon gratuit.",
+    "Plain document-like styling on service sites (GOV.UK blue band, white page, underlined links, 19 px body); the 3 award sites for design (Louisiana, SURSUR, NASA) use more imagery and one accent colour.",
+    "1 of 4 seen carries a cookie panel above the header (GOV.UK) and pushes the headline down; the other 3 start straight on content."
+  ],
+  "sites": [
+    {
+      "name": "NASA",
+      "url": "https://www.nasa.gov/",
+      "why": "White page with a black header (Explore, search box, logo, News and Events, Multimedia, NASA+ Live), a blue countdown banner to the astronaut application deadline (3 Dec 2026), then a photograph of a spacewalker with 'Seeking Next Generation of Explorers' and a red button. Public Sans and Inter.",
+      "recognition": "Webby Award 2025 and People's Voice, Government & Associations, General Desktop & Mobile Sites",
+      "source": "https://winners.webbyawards.com/2025/websites-and-mobile-sites/general-desktop-mobile-sites/government-associations/323048/nasagov",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "GOV.UK",
+      "url": "https://www.gov.uk/",
+      "why": "Cookie panel on pale grey, then a blue (#1d70b8) band with the white 55 px headline 'The best place to find government services and information' and a labelled search box; menu and search icon top right. One typeface (GDS Transport), no image, green buttons.",
+      "recognition": "Design Museum Design of the Year 2013, announced 2013-04-16 (older award, still the reference for the type)",
+      "source": "https://www.dezeen.com/2013/04/16/gov-uk-government-website-wins-designs-of-the-year-2013/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Louisiana Governor's Mansion",
+      "url": "https://www.governorsmansion.org/",
+      "why": "Full-width photograph of the mansion's garden fountain with a play button and 'Start virtual tour' below, then the title 'LOUISIANA GOVERNOR'S MANSION' at 77 px in a light display serif (Ivy Presto) on white; logo left, hamburger right. Navy (#002b59) is the accent.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-24",
+      "source": "https://www.awwwards.com/sites/louisiana-governors-mansion",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "SURSUR, Élections Québec",
+      "url": "https://sursur.ca/",
+      "why": "Navy-to-cyan (#00335f) page with 3D clouds, blue gummies and a supplement jar, a yellow 'Nouveau' badge, headline 'Mets ton esprit en mode sûr sûr' in condensed League Gothic at 115 px and a yellow 'Échantillon gratuit' button. A fake product page that becomes a media-literacy message.",
+      "recognition": "Awwwards Honorable Mention, 2026-07-19",
+      "source": "https://www.awwwards.com/sites/sursur-elections-quebec",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "National Library of Australia",
+      "url": "https://www.library.gov.au/",
+      "why": "Home page opens with the headline 'What can we help you find?' and a catalogue and website search box, then a collections carousel, Latest news, What's on, Get started and Visit us blocks, and an Acknowledgement of Country (not seen on a screenshot).",
+      "recognition": "Australian Web Awards 2025, Government category (announced 2025-05-27)",
+      "source": "https://www.library.gov.au/news-media/celebrating-our-win-2025-australian-web-awards",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Johnson County, Kansas",
+      "url": "https://www.jocogov.org/",
+      "why": "County home page with a menu by audience (For Residents, For Businesses, County Services, Newsroom), Search, Pay Online and Translate links, a rotating hero of four notices, then resident guides and Board meetings (not seen on a screenshot).",
+      "recognition": "NAGW Pinnacle Award 2025, web design, City/County large population (announced 2025-10-23)",
+      "source": "https://www.jocogov.org/newsroom/johnson-county-website-receives-award-national-association-government-web-professionals",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Cook County Digital Equity",
+      "url": "https://digitalequity.cookcountyil.gov/",
+      "why": "Textured gradient hero, no photograph, headline 'Building a More Connected Cook County' and three buttons under 'Where Do You Fit In?' (Explore our Mission, View the Ecosystem, Go to the Toolkit); photo of the County Board President just below (not seen on a screenshot).",
+      "recognition": "Mobile WebAward 2025, Best Government Mobile Website (Web Marketing Association)",
+      "source": "https://www.webaward.org/mwa/winner.asp?eid=12330",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A decorative hero or full-screen animation ahead of the task the visitor came to do.",
+    "Services whose only entry is a PDF form to download and mail.",
+    "Click here or Read more as the only link text.",
+    "Several primary buttons on one page, or colour as the only way to tell them apart.",
+    "Jargon and unexplained acronyms in page titles and headings.",
+    "A cookie banner or a chat widget covering the main call to action on a small screen."
+  ],
+  "sources": [
+    {
+      "name": "GOV.UK Service Manual, Writing for user interfaces",
+      "url": "https://www.gov.uk/service-manual/design/writing-for-user-interfaces",
+      "access": "free"
+    },
+    {
+      "name": "GOV.UK Design System, Button",
+      "url": "https://design-system.service.gov.uk/components/button/",
+      "access": "free"
+    },
+    {
+      "name": "U.S. Web Design System, Button",
+      "url": "https://designsystem.digital.gov/components/button/",
+      "access": "free"
+    },
+    {
+      "name": "W3C, Understanding SC 2.5.8 Target Size (Minimum)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "access": "free"
+    },
+    {
+      "name": "Système de design de l'État",
+      "url": "https://www.systeme-de-design.gouv.fr/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Institutions",
+      "url": "https://www.awwwards.com/websites/institutions/",
+      "access": "free"
+    },
+    {
+      "name": "Webby Awards winners",
+      "url": "https://winners.webbyawards.com/",
+      "access": "free"
+    },
+    {
+      "name": "Web Marketing Association, WebAward Best Government Website",
+      "url": "https://www.webaward.org/",
+      "access": "free"
+    },
+    {
+      "name": "NAGW Pinnacle Awards (via Johnson County announcement)",
+      "url": "https://www.jocogov.org/newsroom/johnson-county-website-receives-award-national-association-government-web-professionals",
+      "access": "free"
+    }
+  ]
+}

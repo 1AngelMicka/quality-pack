@@ -8,7 +8,7 @@ description: "Quality pack build rules for Performance and visibility (Performan
 
 Apply these rules while you build. Domains or criteria whose `applies_if` flags are false in `.quality/project.json` do not apply to this project. Before you call a task done, check your work against the criteria of the domains you touched: each one must be true and verifiable.
 
-If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps, qp-expo, qp-capacitor), its rules skill adds stack-specific rules on top of these.
+If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps, qp-expo, qp-capacitor, qp-tauri, qp-electron), its rules skill adds stack-specific rules on top of these.
 
 ## Performance (PRF)
 
@@ -24,6 +24,7 @@ Rules:
 
 Done means:
 
+- [major] PRF-07: Loading holds on a throttled phone (only if: has_ui). Check: perf.json on the main pages: no failed "must" (largest paint under 4 s, layout shift of 0.1 at most, under 600 ms of blocking, under 700 kB of scripts); each "should" fixed or justified.
 - [major] PRF-01: Core Web Vitals within budget on mobile (LCP, INP, CLS) (only if: has_ui). Check: Lighthouse mobile on main pages; field data if available.
 - [major] PRF-02: No N+1 query or unpaginated list (only if: has_db). Check: Read data access inside loops; log the queries of one page.
 - [major] PRF-03: Images optimised, sized and lazy-loaded (only if: has_ui). Check: Modern formats, srcset or image component, width and height present.
@@ -43,6 +44,11 @@ Rules:
 - Important content is in the served HTML (server or static rendering), not only client-generated.
 - Provide sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons and manifest.
 - Private and staging pages are not indexable.
+- Choose the searches to be found for before writing the pages: one main phrase per page, taken from customers' words, recorded in .quality/project.json › seo.keywords. Two pages never target the same phrase.
+- Each target page carries its phrase in the title, the h1, the description, the address and the first paragraph, in a natural sentence; never a list of keywords or forced repetition.
+- Title of 15 to 60 characters and description of 70 to 160 characters, written for each page: what the page offers, then the site's name.
+- sitemap.xml is generated from the real pages, lists only canonical addresses that answer 200, carries real lastmod dates and is declared in robots.txt.
+- At launch: declare the site in Google Search Console (domain property verified by DNS preferably), submit the sitemap there, then check indexing; record the dates in project.json › seo.search_console.
 
 Done means:
 
@@ -52,6 +58,9 @@ Done means:
 - [major] SEO-04: Main content present in the served HTML. Check: curl the page: main text is in the response.
 - [minor] SEO-05: sitemap.xml, robots.txt, favicons and manifest present and valid. Check: Fetch each file; favicons in several sizes and apple-touch-icon.
 - [minor] SEO-06: Structured data suited to the site type. Check: JSON-LD Organization, LocalBusiness, Product or Article as relevant, validated.
+- [BLOCKER] SEO-08: Complete and sound sitemap, title and description filled on every page. Check: seo.json: no failed "must" (sitemap present, addresses on the right domain that answer 200 and are indexable, robots.txt not blocking the site, title and description present, unique titles).
+- [major] SEO-09: Each target search has its page, and the page carries the phrase. Check: seo.json › keywords: project.json › seo.keywords declares one main phrase per page; each is in the title and the h1, and in at least two of description, first paragraph and address; no phrase targeted by two pages. Title and description lengths kept.
+- [major] SEO-10: Site declared in Google Search Console, sitemap submitted. Check: project.json › seo.search_console gives the date the property was verified and the date the sitemap was submitted, confirmed by the user; the indexing report shows no error on the sitemap's pages.
 - [minor] SEO-07: Correct hreflang tags for language versions (only if: multilingual). Check: Each version points to the others and to itself.
 
 ## Scalability (SCL)

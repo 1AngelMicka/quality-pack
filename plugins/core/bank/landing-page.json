@@ -1,0 +1,136 @@
+{
+  "id": "landing-page",
+  "label": {
+    "fr": "Landing page",
+    "en": "Landing page for one product or offer"
+  },
+  "expects": [
+    {
+      "rule": "The page has one goal and one primary action, repeated at the top, in the middle and at the end with the same wording.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The first screen says what is offered, for whom and at what cost or condition (price, free trial, quote) without scrolling.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Proof sits next to the action: a number, a named customer, a quote, or a demo the visitor can try.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The navigation is reduced to a few links or none, so the visitor is not led away from the action.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The form or purchase step asks for the minimum: an email, or a single button to a checkout.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The page works on a phone: the action button is reachable without hunting, text is at least 16px, and nothing depends on hover.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The page answers the main objections (price, setup time, platform support) in a short block before the final action.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "Header holds 6 links or fewer on 7 of 7 sites (Clips 3, AccessGrid 4, Tegra 4, ZIRKA 4, Nucleo 5, Buzzabout 6) plus one coloured action button on 5 of 7.",
+    "Headline is 2 to 3 lines at 46 to 88px on 6 of 7 sites; Nucleo runs one line of capitals across the width.",
+    "The first screen holds fewer than 50 words on 5 of 7 sites; Tegra and Clips carry a paragraph of 30 to 45 words.",
+    "One filled button plus a quieter secondary action on 3 of 7 (Clips, Buzzabout, AccessGrid); Tegra, Raycast and ZIRKA show a single action.",
+    "A large visual takes about half or more of the first screen on 6 of 7: product photograph, mock-up, sphere or artwork; Clips is type only.",
+    "Typefaces: 2 or 3 named families per site on 7 of 7; a mono face on ZIRKA and Raycast.",
+    "Backgrounds are near-black on 3 of 7 (Clips, ZIRKA, Raycast) and white or light grey on 4 of 7; one saturated accent (lime, red, blue, orange)."
+  ],
+  "sites": [
+    {
+      "name": "Clips",
+      "url": "https://plastic.audio/clips/",
+      "why": "Near-black page (#0a0a0a), a floating pill nav with How it works, Pricing and a lime (#b4f213) Buy $59 button, a centred three-line headline in Uncut Sans, a four-line paragraph, then a lime Buy Clips $59 button above a grey Try it free. No image on the first screen.",
+      "recognition": "One Page Love, 2026-11-11 (Landing Page, App)",
+      "source": "https://onepagelove.com/clips",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Tegra",
+      "url": "https://www.tegra.nyc/",
+      "why": "White page, a very large red (#e43e1e) wordmark, a four-link nav stacked at the right, a three-line headline in a grotesque at left, a short paragraph and a red Request a quote button, beside a black-and-white photograph of two workers laying steel studs.",
+      "recognition": "One Page Love, 2026-11-07 (Landing Page, Service)",
+      "source": "https://onepagelove.com/tegra",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "ZIRKA Interceptor",
+      "url": "https://www.zrk.technology/",
+      "why": "Full-screen dark photograph of the product's fins and nozzle, a thin HUD bar with a live clock, four anchor links and an orange Contact us button, grey mono readouts at the top left, and a three-line headline at bottom left set in Inter Display. Mono text in Geist Mono.",
+      "recognition": "Awwwards Site of the Day, 2026-11-09 (also Developer Award, per the earlier pass)",
+      "source": "https://www.awwwards.com/sites/zirka-interceptor",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Buzzabout",
+      "url": "https://buzzabout.ai/",
+      "why": "White page, left-aligned two-line headline in Geist at 59px, a two-line grey subline, a black Try for free button and an outlined Book a demo, a row of six grey social icons, and a rotating sphere of social-post thumbnails at right. Nav: Home, Features, Pricing, API, Compare, Partnerships; Log in.",
+      "recognition": "Listed on SaaS Landing Page gallery, opened 2026-11-12 (listing date not shown)",
+      "source": "https://saaslandingpage.com/buzzabout/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "AccessGrid",
+      "url": "https://accessgrid.com/",
+      "why": "Light grey page (light grey) with a floating nav (Developers, Pricing, About, Sign in, blue Get started), a three-line 64px headline in a grotesque at left, a paragraph with the time promise in bold, a blue and a grey button, and a phone showing a wallet card at right.",
+      "recognition": "Listed on SaaS Landing Page gallery, opened 2026-11-12 (listing date not shown)",
+      "source": "https://saaslandingpage.com/accessgrid/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Raycast",
+      "url": "https://www.raycast.com/",
+      "why": "Near-black page (#07080a), a floating nav with a Download button, a centred two-line headline in Inter at 64px over a full-bleed artwork of diagonal red, white and blue streaks; no product screen on the first view. Claims below are one word plus a sentence.",
+      "recognition": "Listed on SaaS Landing Page gallery, opened 2026-11-12 (listing date not shown)",
+      "source": "https://saaslandingpage.com/raycast-keyboard/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Nucleo",
+      "url": "https://nucleoapp.com/",
+      "why": "Off-white page (#fafafa), a five-item header ending in a purple Buy Icons button, a single-line heavy-capitals headline in Geist across the full width, then large tiles of live icon grids from three families. A web app teaser and designer testimonials follow.",
+      "recognition": "Listed on SaaS Landing Page gallery, opened 2026-11-12 (listing date not shown)",
+      "source": "https://saaslandingpage.com/nucleo/",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A full website menu (ten links, a footer sitemap) on a page meant to get one action.",
+    "Several competing buttons of equal weight in the first screen.",
+    "A hero with a stock photo of people at laptops, or an abstract gradient, and no view of the offer.",
+    "Fake urgency (countdown that resets, \"only 3 left\") and invented testimonials.",
+    "A long form on the first screen when an email address would do.",
+    "Text over a moving background without enough contrast, or content that only appears after scroll animations."
+  ],
+  "sources": [
+    {
+      "name": "One Page Love",
+      "url": "https://onepagelove.com/",
+      "access": "free"
+    },
+    {
+      "name": "SaaS Landing Page",
+      "url": "https://www.saaslandingpage.com/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Technology",
+      "url": "https://www.awwwards.com/websites/technology/",
+      "access": "free"
+    }
+  ]
+}

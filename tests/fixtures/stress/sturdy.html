@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sturdy</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: sans-serif; margin: 0; background: Canvas; color: CanvasText; }
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; }
+  .bar button { padding: 10px 16px; max-width: 100%; }
+  .card h2 { margin: 12px; overflow-wrap: anywhere; }
+  .skeleton { height: 16px; margin: 12px; background: color-mix(in srgb, CanvasText 12%, Canvas); border-radius: 4px; }
+</style></head>
+<body>
+  <a href="#main">Skip to content</a>
+  <div class="bar"><button>Save</button><button>Export</button><button>Share with the team</button></div>
+  <main id="main"><div class="card"><h2>Monthly report</h2></div>
+    <div id="list" aria-busy="true"><div class="skeleton"></div><div class="skeleton"></div></div></main>
+  <script>
+    const list = document.getElementById("list");
+    function load() {
+      list.setAttribute("aria-busy", "true");
+      fetch("/api/items").then((r) => r.json()).then((items) => { list.removeAttribute("aria-busy"); list.innerHTML = items.map((i) => "<p>" + i + "</p>").join(""); })
+        .catch(() => { list.removeAttribute("aria-busy"); list.innerHTML = '<p role="alert">The list could not be loaded. Check your connection.</p><button id="retry">Try again</button>'; document.getElementById("retry").onclick = load; });
+    }
+    load();
+  </script>
+</body></html>

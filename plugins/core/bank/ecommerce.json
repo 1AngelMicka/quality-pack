@@ -1,0 +1,143 @@
+{
+  "id": "ecommerce",
+  "label": {
+    "fr": "Boutique en ligne",
+    "en": "Online shop"
+  },
+  "expects": [
+    {
+      "rule": "Show the full order cost early: Baymard finds 67% of sites show no total order cost estimate near the buy section, and 40% of shoppers who left a cart blamed extra costs (shipping, tax, fees).",
+      "source": "https://baymard.com/research-articles/current-state-ecommerce-product-page-ux",
+      "verified": true
+    },
+    {
+      "rule": "Do not force account creation: 18% of shoppers who abandoned a cart gave forced account creation as the reason; let guests check out and save items.",
+      "source": "https://baymard.com/lists/cart-abandonment-rate",
+      "verified": true
+    },
+    {
+      "rule": "Offer size and variant options as visible buttons, not drop-downs (57% of benchmarked sites do not).",
+      "source": "https://baymard.com/research-articles/current-state-ecommerce-product-page-ux",
+      "verified": true
+    },
+    {
+      "rule": "Show wearable products on a human model and add at least one image with a size reference: 42% of users judge size from images, yet 37% of sites give no in-scale image and 23% no model image.",
+      "source": "https://baymard.com/research-articles/current-state-ecommerce-product-page-ux",
+      "verified": true
+    },
+    {
+      "rule": "Link or summarise the return policy on the product page and the footer: 60% of users look for it there, 44% of sites do not show it, and 15% of shoppers abandoned over an unsatisfactory policy.",
+      "source": "https://baymard.com/research-articles/current-state-ecommerce-product-page-ux",
+      "verified": true
+    },
+    {
+      "rule": "Keep checkout short and trustworthy: 17% abandon over a long or complicated checkout, 19% over distrust of the site with card details, 17% over errors or crashes, 9% over too few payment methods.",
+      "source": "https://baymard.com/lists/cart-abandonment-rate",
+      "verified": true
+    },
+    {
+      "rule": "Show price, availability and a visible cart count in the header without scrolling; the add-to-cart control must be reachable on a phone with one thumb.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Product lists show a real product photo, name and price per card, with working filters and a visible result count.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "4 of 7 fill the first screen with one photograph or video (Theobroma, Estudio Niksen, Second Ride, Flux Theory); Lajoya and Morpho use a flat or dark ground with a 3D or tilted product.",
+    "A product is visible on the first screen of 5 of 7 (Theobroma, Niksen, Lajoya, Morpho, Second Ride's vehicles); Flux Theory shows a mood image and IGIN a game.",
+    "A cart icon or counter is in the header of 4 of 7 (Theobroma, Niksen with a count, Lajoya, Flux Theory); Morpho uses a Shop button instead.",
+    "4 of 7 have a consent box or age gate over the first screen (Niksen, Second Ride, Morpho, IGIN).",
+    "The first-screen headline is under 10 words on 6 of 7; 4 set it in a heavy or condensed display face (Theobroma, IGIN, Flux Theory, Lajoya's serif wordmark).",
+    "2 of 7 use one typeface (Niksen, Second Ride); 4 use two or three; IGIN uses four.",
+    "A language toggle is visible in the header of 4 of 7 (Theobroma FR, Niksen EN, Lajoya Es/En/Fr, Morpho EN/ES).",
+    "Page colour is a flat brand tone on 3 of 7 (cream #fff4e3, green #00ef84, navy #101820); the product or photograph supplies the rest."
+  ],
+  "sites": [
+    {
+      "name": "Theobroma",
+      "url": "https://theobromachocolat.com/",
+      "why": "Cream (#fff4e3) page; rounded dark-brown header (logo, Shop, About, Wholesale, FAQ, FR, account, search, Cart), full-width photo of chocolate bars and raspberries, heavy 'Pause mode: on Flavour: loud' headline, a 'This just in' product card with a green Discover button. Bowlby One SC, Figtree.",
+      "recognition": "Awwwards Honorable Mention, E-Commerce listing, 2026-10-16",
+      "source": "https://www.awwwards.com/sites/theobroma",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Estudio Niksen",
+      "url": "https://estudioniksen.com/",
+      "why": "White page: line 'All prices include duties and taxes', nav left, script logo centre, Search, EN and Cart - 0 right; full-width photo of a jacket on a fence, 'Fall Winter 26' and one Shop all new arrivals button, a consent box. PP Neue Montreal only. Bestseller labels lower.",
+      "recognition": "Awwwards Honorable Mention, E-Commerce listing, 2026-10-15",
+      "source": "https://www.awwwards.com/sites/estudio-niksen",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Second Ride",
+      "url": "https://second-ride.de/en",
+      "why": "First screen is a two-way split of photographs (rider on a moped, rider on a motorbike) with the wordmark in the middle and a label under each choice (Conversion Kits on the right); a consent box covers the left half. Nunito Sans. Header offers E-Mopeds, Conversion Kits and Book test ride.",
+      "recognition": "Awwwards Honorable Mention, E-Commerce listing, 2026-10-15",
+      "source": "https://www.awwwards.com/sites/second-ride",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Lajoya",
+      "url": "https://lajoya-foods.com/en",
+      "why": "Flat green (#00ef84) screen: oversized nav (Contact, About, Shop, Es/En/Fr, cart icon), a giant black serif wordmark stacked over two tilted tins, a HORECA / Restaurant access pill. Three typefaces (Ambiant Light Sans, JoyaMaison, Maison Neue). Product rows with euro prices lower.",
+      "recognition": "Awwwards Honorable Mention, E-Commerce listing, 2026-10-17",
+      "source": "https://www.awwwards.com/sites/lajoya",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Morpho Water",
+      "url": "https://morphowater.com",
+      "why": "Dark navy (#101820) page with a 3D silver can in the centre, a white 'A world within.' headline in Gotham, an italic serif 'Pure possibility.', nav pill, EN/ES, a pale blue (#d0edff) Shop MORPHO button, Play and Sound controls and a consent box over the lower left. Seven numbered sections.",
+      "recognition": "Awwwards Honorable Mention, E-Commerce listing, 2026-10-12",
+      "source": "https://www.awwwards.com/sites/morpho-water",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "IGIN USA",
+      "url": "https://iginusa.com",
+      "why": "White first screen taken by a game and a gate: black condensed 'Doodle Pop' headline (Anton), italic serif copy with red (#ed302a) words, a giveaway box, a 21+ Yes/No choice and a greyed Play Now, on a background of faint doodles. Inter, Archivo and a mono. No product or shop link at first sight.",
+      "recognition": "Awwwards Honorable Mention, E-Commerce listing, 2026-10-11",
+      "source": "https://www.awwwards.com/sites/igin-usa",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Flux Theory",
+      "url": "https://www.fluxtheory.in/",
+      "why": "Full-screen video of a steamed shower glass with water drops, headline in condensed capitals (Oswald) bottom left over it, a translucent box top right with Shop All, About Us, account and bag icons, and an Explore Products pill. Geist for small text. A bag drawer states 'Your bag is empty'.",
+      "recognition": "Awwwards Honorable Mention, E-Commerce listing, 2026-10-18",
+      "source": "https://www.awwwards.com/sites/flux-theory",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A newsletter or sign-up panel that covers the first screen before the shopper has seen a product.",
+    "Size or variant choice hidden in a drop-down; shipping and tax revealed only at the last checkout step.",
+    "Account creation required before payment.",
+    "Return policy reachable only from a legal page or the footer.",
+    "Product cards without price, or with identical stock photos and generic names.",
+    "Autoplay carousels of promotions with auto-advancing slides and no pause control.",
+    "Fake urgency (countdowns, 'only 2 left') with no stock data behind it."
+  ],
+  "sources": [
+    {
+      "name": "Baymard Institute, The Current State of E-Commerce Product Page UX",
+      "url": "https://baymard.com/research-articles/current-state-ecommerce-product-page-ux",
+      "access": "free"
+    },
+    {
+      "name": "Baymard Institute, Cart Abandonment Rate Statistics",
+      "url": "https://baymard.com/lists/cart-abandonment-rate",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, E-Commerce",
+      "url": "https://www.awwwards.com/websites/e-commerce/",
+      "access": "free"
+    }
+  ]
+}

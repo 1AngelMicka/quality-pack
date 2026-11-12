@@ -1,0 +1,141 @@
+{
+  "id": "real-estate",
+  "label": {
+    "fr": "Immobilier",
+    "en": "Real estate"
+  },
+  "expects": [
+    {
+      "rule": "Each property or unit shows price (or a payment schedule), size, number of rooms and location as text next to the photographs.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "An enquiry or call-back button is in the header and in the hero, and the form asks only for name, contact and a message.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Phone and sales-office address are plain text, and the phone number is a tap-to-call link.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Location is explained with a map and travel times to named places (station, school, airport).",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Floor plans and documents (permit, brochure) are linked as files with their size, and the key facts are also in the page text.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The site states who the developer, architect and agent are, and the status (under construction, available).",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Listings can be filtered by price, size and rooms, and show availability.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "4 of 8 fill the first screen with one photograph, render or video (Lenval, Mejuma, Rialto, Kononenko); the name or one short headline sits at the bottom or centre.",
+    "3 of 8 were still on a loader or intro at capture (Belgrade Arbor, ERA Residence, Storey), and 2 more had a cookie panel over the picture (Lenval, Mejuma).",
+    "6 of 8 pair a serif or display face with a plain sans (Belgrade, Concrete, Lenval, Mejuma, ERA, Kononenko); Rialto sets headlines in a condensed grotesque.",
+    "Backgrounds are cream or white on 5 of 8 and near-black on 3 (Concrete #141416, Lenval #211a19, Rialto #080808); no site uses more than one accent colour.",
+    "An enquiry control sits in the top bar of 3 of 8 (Inquire, Let's Talk, Demander une estimation); Rialto has Portal Login and Contact.",
+    "2 of 8 hide the main links behind a Menu control (Belgrade, Mejuma); Kononenko shows four links and Rialto six.",
+    "Key figures are written as numbers where the site states them (25 residences, 104 to 244 m2, 600M EUR, EUR 185,000 to 700,000); only Mejuma shows prices.",
+    "3 of 8 offer more than one language (Concrete FR/EN, Mejuma en/nl/de, Belgrade en/rs)."
+  ],
+  "sites": [
+    {
+      "name": "Belgrade Arbor",
+      "url": "https://belgradearbor.rs/en",
+      "why": "At capture the first screen was an empty cream (#fdfbef) page with two thin vertical lines, a dark green pill bar (Menu, logo, Inquire) and a Site of the Day tab: a loading intro. Work Sans and a serif for the 134 px name. Menu of nine entries, payment schedule in percentages. No unit prices.",
+      "recognition": "Awwwards Site of the Day and Developer Award, 2026-10-17",
+      "source": "https://www.awwwards.com/sites/belgrade-arbor",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Concrete (Concrete Management)",
+      "url": "https://www.concretemanagement.ch/",
+      "why": "Dark (#141416) first screen caught on an intro: wordmark and two tall interior photographs, Paris and Lausanne, with arrow buttons. The page then gives headline 'L'immobilier, pensé pour vous', four figures (600M EUR managed, 4.8/5), a Demander une estimation button, FR/EN switch.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-13",
+      "source": "https://www.awwwards.com/sites/concrete-3",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Lenval Properties",
+      "url": "https://lenvalproperties.com",
+      "why": "Full-screen video of a car and palms with the serif headline 'Creators of Refined Living & Iconic Spaces' bottom centre, three links left, logo centre, Let's Talk right, a cookie box bottom left. Financier Display with Helvetica Now. Featured project Project J on Jubail Island lower.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-09",
+      "source": "https://www.awwwards.com/sites/lenval-properties",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Mejuma Tuscany",
+      "url": "https://www.mejuma-tuscany.com/",
+      "why": "Aerial photograph of a Tuscan farm under a huge white serif wordmark, a three-line intro sentence, Menu button top right and a cookie panel down the right. Golos Text with a display serif. Four listing cards lower with price range, place and area (EUR 185,000 to 700,000).",
+      "recognition": "Awwwards Honorable Mention, 2026-10-08",
+      "source": "https://www.awwwards.com/sites/mejuma-tuscany",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Rialto (Melbourne)",
+      "url": "https://rialto.com.au/",
+      "why": "Night aerial video of towers with a blue neon outline, a split nav around the logo (Discover, What's On, Experience / Leasing, About, Contact), a blue (#004bff) Portal Login button and a condensed capital headline 'Celebrating 40 years'. Gotham and Sharp Grotesk. Address and phone lower.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-08",
+      "source": "https://www.awwwards.com/sites/rialto",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "ERA Residence (Estepona)",
+      "url": "https://www.era-residence.com/",
+      "why": "At capture a plum-coloured intro screen: logo, stacked name ERA Residence in condensed serif with a script 'Estepona', 'Costa del Sol' either side, a one-line tagline. The page then offers Select an Apartment, facts (25 residences, 104 to 244 m2), developer named. No prices.",
+      "recognition": "Awwwards Site of the Day 2026-08-31, Site of the Month August 2026, Developer Award",
+      "source": "https://www.awwwards.com/sites/era-residence",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Kononenko Architectural Bureau",
+      "url": "https://kononenkogroup.com",
+      "why": "Architectural render of a metal-clad building under a cloudy sky fills the screen; the name in a grotesque and a serif sits bottom left, four links (Index, Work, About, Contact) top right. Eight project cards with area lower, two office addresses and weekday hours in the footer.",
+      "recognition": "Awwwards Site of the Day and Developer Award, 2026-08-23",
+      "source": "https://www.awwwards.com/sites/kononenko-architectural-bureau",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Storey Architecture (Exeter)",
+      "url": "https://www.storeyarchitecture.co.uk/",
+      "why": "The screenshot caught a black loading screen with the name and a spinner. The page then has white (#ffffff) ground, New Grotesk with a mono, cycling hero images, email and phone in the menu, a project row, and a contact form asking project type, location and timeline.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-20",
+      "source": "https://www.awwwards.com/sites/storey-architecture",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A loading counter or intro animation that delays the first view of the property by several seconds.",
+    "A site that asks the visitor to rotate the device to portrait mode.",
+    "Properties shown only as renders, with no price, size or availability anywhere.",
+    "A contact button that does not lead anywhere (link to '#').",
+    "Stock photographs of generic interiors in place of the actual project.",
+    "A map pin with no address or travel times.",
+    "Brochures and floor plans only as heavy PDFs with no text version of the key facts."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Real Estate",
+      "url": "https://www.awwwards.com/websites/real-estate/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Architecture",
+      "url": "https://www.awwwards.com/websites/architecture/",
+      "access": "free"
+    }
+  ]
+}

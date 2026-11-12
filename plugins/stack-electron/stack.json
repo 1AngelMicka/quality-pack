@@ -1,0 +1,81 @@
+{
+ "stack": "electron",
+ "label": {
+  "fr": "Electron (application de bureau)",
+  "en": "Electron (desktop app)"
+ },
+ "detect": {
+  "package_json_deps_any": [
+   "electron"
+  ]
+ },
+ "sets_flags": [
+  "desktop_app"
+ ],
+ "checks": {
+  "typecheck": {
+   "run": "{pm} exec tsc --noEmit",
+   "pass_if": "exit code 0"
+  },
+  "lint": {
+   "run": "{pm} run lint",
+   "pass_if": "exit code 0, no errors"
+  },
+  "test_run": {
+   "run": "{pm} test",
+   "pass_if": "exit code 0"
+  },
+  "deps_audit": {
+   "run": "{pm} audit --audit-level=high",
+   "pass_if": "no high or critical advisory; Electron itself on a supported major version"
+  },
+  "license_check": {
+   "run": "npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'",
+   "pass_if": "exit code 0"
+  }
+ },
+ "rules": [
+  {
+   "fr": "Chaque fenêtre : contextIsolation activée, nodeIntegration désactivée, bac à sable conservé, webSecurity activée. La page ne reçoit jamais Node.js.",
+   "en": "Every window: contextIsolation on, nodeIntegration off, sandbox kept, webSecurity on. The page never gets Node.js."
+  },
+  {
+   "fr": "L'accès au système passe par un script de préchargement qui expose, avec contextBridge, une courte liste de fonctions nommées ; jamais ipcRenderer entier.",
+   "en": "System access goes through a preload script exposing, with contextBridge, a short list of named functions; never the whole ipcRenderer."
+  },
+  {
+   "fr": "Chaque gestionnaire ipcMain valide l'expéditeur et ses arguments comme une route de serveur.",
+   "en": "Every ipcMain handler validates the sender and its arguments like a server route."
+  },
+  {
+   "fr": "Les fenêtres chargent des fichiers locaux ou du https ; la navigation et l'ouverture de nouvelles fenêtres sont filtrées (will-navigate, setWindowOpenHandler) ; shell.openExternal n'ouvre que des adresses https vérifiées.",
+   "en": "Windows load local files or https; navigation and new windows are filtered (will-navigate, setWindowOpenHandler); shell.openExternal only opens checked https addresses."
+  },
+  {
+   "fr": "Politique de sécurité du contenu définie ; pas de module remote.",
+   "en": "Content security policy set; no remote module."
+  },
+  {
+   "fr": "Rester sur une des trois dernières versions majeures d'Electron : les plus anciennes ne reçoivent plus les correctifs de sécurité de Chromium.",
+   "en": "Stay on one of the three latest Electron major versions: older ones no longer receive Chromium security fixes."
+  },
+  {
+   "fr": "Traitements lourds dans un processus utilitaire ou un worker, jamais dans le processus principal, qui gèlerait toutes les fenêtres.",
+   "en": "Heavy work in a utility process or a worker, never in the main process, which would freeze every window."
+  },
+  {
+   "fr": "Mises à jour signées (electron-updater ou update-electron-app), installeurs signés et notariés en CI.",
+   "en": "Signed updates (electron-updater or update-electron-app), installers signed and notarised in CI."
+  },
+  {
+   "fr": "Secrets avec safeStorage ou le trousseau du système ; données dans app.getPath('userData').",
+   "en": "Secrets with safeStorage or the system keychain; data in app.getPath('userData')."
+  },
+  {
+   "fr": "Pour vérifier l'interface dans la vraie fenêtre : lancer l'app avec --remote-debugging-port=9222, puis qp flows --attach 9222.",
+   "en": "To check the interface in the real window: start the app with --remote-debugging-port=9222, then qp flows --attach 9222."
+  }
+ ],
+ "qp_stack": true,
+ "plugin": "qp-electron"
+}

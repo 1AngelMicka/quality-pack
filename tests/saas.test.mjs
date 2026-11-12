@@ -22,7 +22,7 @@ const setProject = (dir, patch) => {
   writeFileSync(f, JSON.stringify({ ...JSON.parse(readFileSync(f, "utf8")), ...patch }));
 };
 // Async on purpose: the test's own HTTP server must keep answering while the CLI runs.
-const run = (cwd, args, env = {}) => new Promise((resolve) => execFile("node", [QP, ...args], { cwd, encoding: "utf8", env: { ...process.env, ...env } },
+const run = (cwd, args, env = {}) => new Promise((resolve) => execFile("node", [QP, ...args], { cwd, encoding: "utf8", env: { ...process.env, QP_NO_CALIBRATION: "1", ...env } },
   (e, stdout, stderr) => resolve({ code: e?.code ?? 0, out: stdout ? JSON.parse(stdout) : null, stderr })));
 
 test("craft: a rough page fails on finish, a polished one passes", async (t) => {

@@ -1,0 +1,86 @@
+{
+ "stack": "tauri",
+ "label": {
+  "fr": "Tauri (application de bureau)",
+  "en": "Tauri (desktop app)"
+ },
+ "detect": {
+  "files_any": [
+   "src-tauri/tauri.conf.json",
+   "src-tauri/Cargo.toml"
+  ],
+  "package_json_deps_any": [
+   "@tauri-apps/api",
+   "@tauri-apps/cli"
+  ]
+ },
+ "sets_flags": [
+  "desktop_app"
+ ],
+ "checks": {
+  "typecheck": {
+   "run": "{pm} exec tsc --noEmit && cargo check --manifest-path src-tauri/Cargo.toml",
+   "pass_if": "exit code 0 for both"
+  },
+  "lint": {
+   "run": "{pm} run lint && cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings",
+   "pass_if": "exit code 0, no warning"
+  },
+  "test_run": {
+   "run": "{pm} test && cargo test --manifest-path src-tauri/Cargo.toml",
+   "pass_if": "exit code 0 for both"
+  },
+  "deps_audit": {
+   "run": "{pm} audit --audit-level=high && cargo audit --file src-tauri/Cargo.lock",
+   "pass_if": "no high or critical advisory (cargo audit needs `cargo install cargo-audit`)"
+  },
+  "license_check": {
+   "run": "npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'",
+   "pass_if": "exit code 0; check Rust crates with cargo-deny if the app is distributed"
+  }
+ },
+ "rules": [
+  {
+   "fr": "Chaque commande exposée à la page (#[tauri::command]) valide ses arguments : chemins résolus puis vérifiés contre les dossiers autorisés, tailles bornées, jamais de commande système construite à partir d'une entrée.",
+   "en": "Every command exposed to the page (#[tauri::command]) validates its arguments: paths resolved then checked against the allowed folders, sizes bounded, never a system command built from input."
+  },
+  {
+   "fr": "Permissions par fenêtre dans src-tauri/capabilities, resserrées par des portées (dossiers, commandes, hôtes) ; jamais fs, shell ou http accordés en entier.",
+   "en": "Per-window permissions in src-tauri/capabilities, narrowed by scopes (folders, commands, hosts); never fs, shell or http granted whole."
+  },
+  {
+   "fr": "Politique de sécurité du contenu définie dans tauri.conf.json, sans 'unsafe-eval' ni source générique ; aucune page distante ne reçoit les permissions de l'app.",
+   "en": "Content security policy set in tauri.conf.json, without 'unsafe-eval' or a wildcard source; no remote page receives the app's permissions."
+  },
+  {
+   "fr": "Les traitements lourds tournent côté Rust dans une tâche asynchrone, avec des événements de progression ; la fenêtre ne gèle jamais.",
+   "en": "Heavy work runs on the Rust side in an async task, with progress events; the window never freezes."
+  },
+  {
+   "fr": "État de la fenêtre retenu (plugin window-state) ; taille minimale fixée dans la configuration.",
+   "en": "Window state remembered (window-state plugin); minimum size set in the configuration."
+  },
+  {
+   "fr": "Données dans le dossier d'application du système (app_data_dir), secrets dans le trousseau du système ; rien à côté de l'exécutable.",
+   "en": "Data in the system's application folder (app_data_dir), secrets in the system keychain; nothing next to the executable."
+  },
+  {
+   "fr": "Mises à jour avec le plugin updater : clé publique dans la configuration, clé privée seulement en CI, points de mise à jour en https.",
+   "en": "Updates with the updater plugin: public key in the configuration, private key only in CI, https endpoints."
+  },
+  {
+   "fr": "Signature Windows et notarisation macOS faites en CI ; aucune clé ni certificat dans le dépôt.",
+   "en": "Windows signing and macOS notarisation done in CI; no key or certificate in the repository."
+  },
+  {
+   "fr": "Ne jamais lancer un générateur de projet avec --force dans un dossier non vide.",
+   "en": "Never run a project generator with --force in a non-empty folder."
+  },
+  {
+   "fr": "Pour vérifier l'interface dans la vraie fenêtre sous Windows : lancer l'app avec WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222, puis qp flows --attach 9222 et qp deslop --attach 9222.",
+   "en": "To check the interface in the real window on Windows: start the app with WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222, then qp flows --attach 9222 and qp deslop --attach 9222."
+  }
+ ],
+ "qp_stack": true,
+ "plugin": "qp-tauri"
+}

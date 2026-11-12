@@ -12,14 +12,15 @@ For a security issue, do not open a public issue: see [SECURITY.md](SECURITY.md)
 
 | Path | Content |
 | --- | --- |
-| `plugins/core/referential/domains/*.yaml` | The 35 domains: build rules and audit criteria, in FR and EN. **Source of truth.** |
+| `plugins/core/referential/domains/*.yaml` | The 37 domains: build rules and audit criteria, in FR and EN. **Source of truth.** |
 | `plugins/core/referential/scoring.yaml` | Scoring rules, the two scores (`score_areas`), flow budgets, project flags, usage profiles |
 | `plugins/core/referential/checks.yaml` | Automatic checks referenced by criteria |
 | `plugins/core/referential/slop-words.yaml` | Hollow wording list (FR/EN) |
 | `plugins/*/stack.yaml` | Stack modules: check commands and stack rules |
-| `plugins/core/skills/{workflow,kickoff,audit,fix,handoff,design-screens,design-direction,design-review,deslop-ui,scroll-animation,premium-craft,saas-foundations,security-testing,mobile-app,from-zero,user-testing}/` | Hand-written skills (design skills have `references/` loaded on demand) |
+| `plugins/core/skills/{workflow,kickoff,audit,fix,handoff,design-screens,design-direction,design-review,deslop-ui,scroll-animation,premium-craft,design-variants,saas-foundations,security-testing,mobile-app,from-zero,user-testing,seo-launch,desktop-app}/` | Hand-written skills (design skills have `references/` loaded on demand) |
 | `plugins/core/SOURCES.md` | Sources of the design skills and measures, by rule |
-| `plugins/core/agents/` | The agents: `auditor` (one per group), `ergonomist` (ergonomics group and heuristic review), `challenger` (counter-check) |
+| `plugins/core/agents/` | The agents: `auditor` (one per group), `ergonomist` (ergonomics group and heuristic review), `challenger` (counter-check), `art-director` (ranked changes from screenshots), `juror` (blind comparison of two versions) |
+| `plugins/core/bank/*.json` | Reference bank: one file per type of site (expectations, recognised sites with the reason, what to avoid). `profiles/` and `calibration.json` are measured with `qp bank measure` and `qp bank calibrate`. No screenshot of a third-party site is ever stored |
 | `plugins/core/scripts/` | Node engine (`qp.mjs`) and hooks, no dependencies; `scripts/deslop/` is the spacing audit (CDP, installed Chrome or Edge) |
 | `tools/build.py` | Generates docs, JSON, build skills and manifests from the YAML |
 | `tests/` | Node tests |

@@ -208,6 +208,7 @@ domains:
       - {fr: "Mise à jour optimiste quand le succès est probable, avec retour arrière ; annuler plutôt que confirmer pour ce qui est réversible.", en: "Optimistic update when success is likely, with rollback; undo rather than confirm for what is reversible."}
       - {fr: "Thème sombre : un modèle d'élévation à part (les surfaces s'éclaircissent en montant), color-scheme: dark déclaré, jamais une simple inversion.", en: "Dark theme: its own elevation model (surfaces get lighter as they rise), color-scheme: dark declared, never a plain inversion."}
       - {fr: "État dans l'adresse (filtres, onglets, page, panneau ouvert) : partager, recharger et revenir en arrière fonctionnent.", en: "State in the address (filters, tabs, page, open panel): sharing, reloading and going back work."}
+      - {fr: "Passer chaque écran clé dans les conditions difficiles avant de le dire terminé : réseau lent, serveur en panne, textes trois fois plus longs, 320 px, thème sombre, clavier seul (`qp stress`), puis l'état vide et les très longues données à la main.", en: "Take every key screen through hard conditions before calling it done: slow network, failing server, texts three times longer, 320 px, dark scheme, keyboard only (`qp stress`), then the empty state and very long data by hand."}
       - {fr: "Soigner ce qui entoure la page : icône du site, image de partage, page 404 et page d'erreur dans la voix du produit, titre d'onglet qui suit le contexte.", en: "Care for what surrounds the page: site icon, share image, 404 and error pages in the product's voice, tab title that follows the context."}
     criteria:
       - id: CRF-01
@@ -225,6 +226,16 @@ domains:
         check: {method: inspect}
         label: {fr: "Chaque contrôle a tous ses états", en: "Every control has all its states"}
         verify: {fr: "Boutons, champs, liens, onglets des écrans clés : survol, focus, appui, désactivé et chargement existent et se distinguent ; le bouton en chargement garde son libellé.", en: "Buttons, fields, links, tabs of the key screens: hover, focus, pressed, disabled and loading exist and differ; a loading button keeps its label."}
+      - id: CRF-10
+        severity: blocker
+        check: {method: auto, tool: stress_run}
+        label: {fr: "Chaque écran clé tient dans les conditions difficiles", en: "Every key screen holds in hard conditions"}
+        verify: {fr: "stress.json sur chaque écran clé : aucun « must » en échec (écran blanc pendant le chargement ou quand le serveur ne répond pas, erreur non rattrapée, débordement avec des textes trois fois plus longs, défilement horizontal à 320 px, focus clavier bloqué). Captures relues.", en: "stress.json on every key screen: no failed \"must\" (blank screen while loading or when the server does not answer, uncaught error, overflow with texts three times longer, sideways scrolling at 320 px, trapped keyboard focus). Screenshots read."}
+      - id: CRF-11
+        severity: major
+        check: {method: auto, tool: stress_run}
+        label: {fr: "États d'attente et d'erreur présents sur chaque écran clé", en: "Waiting and error states present on every key screen"}
+        verify: {fr: "stress.json : chaque « should » en échec est corrigé ou justifié (indicateur d'attente, message d'erreur avec moyen de réessayer, texte coupé sans points de suspension, contenu atteint au clavier). L'état vide de chaque liste est vérifié à la main.", en: "stress.json: each failed \"should\" is fixed or justified (waiting indicator, error message with a way to retry, text cut without an ellipsis, content reached by keyboard). The empty state of each list is checked by hand."}
       - id: CRF-04
         severity: major
         check: {method: inspect}
@@ -268,19 +279,25 @@ domains:
       - {fr: "Deux familles de caractères au plus, plus une à chasse fixe si besoin ; pas Inter ou Geist comme seule police ; noter nom, fonderie, licence et source de chaque police.", en: "Two typefaces at most, plus a monospace if needed; not Inter or Geist as the only face; record name, foundry, licence and source of each font."}
       - {fr: "Un seul jeu d'icônes, une seule épaisseur de trait réglée selon la taille ; dessiner les quelques icônes des objets propres au produit ; jamais un glyphe du jeu d'icônes comme logo.", en: "One icon set, one stroke width tuned to the size; draw the few icons of the product's own objects; never a glyph of the icon set as the logo."}
       - {fr: "Images, par ordre de préférence : le vrai produit (captures, composants), des schémas faits pour la page, ses propres photos, des images d'archives traitées de façon cohérente, rien. Pas d'illustrations de kit ni d'image générée contenant du texte, une interface ou des personnes.", en: "Imagery, in order of preference: the real product (screenshots, components), diagrams made for the page, own photos, archive images with a consistent treatment, nothing. No kit illustrations and no generated image containing text, an interface or people."}
+      - {fr: "Pour les écrans qui portent le produit, construire plusieurs versions vraiment différentes, les faire comparer à l'aveugle et laisser l'utilisateur choisir (skill design-variants) ; s'appuyer sur la banque de références du type de site (`qp bank`), pour apprendre et jamais pour copier.", en: "For the screens that carry the product, build several versions that really differ, have them compared blind and let the user choose (design-variants skill); lean on the reference bank of the site type (`qp bank`), to learn and never to copy."}
       - {fr: "Tout chiffre, citation, logo de client ou badge affiché vient d'un fait fourni par l'utilisateur ; sinon le bloc n'existe pas.", en: "Every number, quote, customer logo or badge shown comes from a fact supplied by the user; otherwise the block does not exist."}
       - {fr: "Textes : dire ce que le produit fait et pour qui, avec les mots des clients ; libellé de bouton = verbe + objet ; erreur = ce qui s'est passé + comment corriger.", en: "Copy: say what the product does and for whom, in customers' words; button label = verb + object; error = what happened + how to fix it."}
     criteria:
       - id: BRD-01
         severity: blocker
-        check: {method: inspect}
+        check: {method: auto, tool: facts_scan}
         label: {fr: "Aucun témoignage, chiffre, logo de client ou badge inventé", en: "No invented testimonial, figure, customer logo or badge"}
-        verify: {fr: "Chaque citation, nombre (« 10 000 équipes », « 99,9 % »), logo et badge des pages publiques est relié à une source fournie par l'utilisateur (fichier de faits, lien). Sans source : échec.", en: "Every quote, number (\"10,000 teams\", \"99.9%\"), logo and badge on public pages traces to a source supplied by the user (facts file, link). No source: fail."}
+        verify: {fr: "Chaque citation, nombre (« 10 000 équipes », « 99,9 % »), logo et badge des pages publiques est relié à une source fournie par l'utilisateur. facts.json du run (`qp facts` sur chaque page publique) : aucune affirmation non reliée à .quality/facts.json ; relire la liste, l'outil repère par motifs. Sans source : échec.", en: "Every quote, number (\"10,000 teams\", \"99.9%\"), logo and badge on public pages traces to a source supplied by the user. The run's facts.json (`qp facts` on each public page): no claim left untraced to .quality/facts.json; read the list, the tool finds claims by pattern. No source: fail."}
       - id: BRD-02
         severity: major
         check: {method: inspect}
         label: {fr: "Direction visuelle tirée du produit, écrite et suivie", en: "Visual direction drawn from the product, written and followed"}
-        verify: {fr: "DESIGN.md dit d'où viennent la couleur, la typographie et les images, et ce que le produit refuse ; les écrans s'y conforment ; pas de palette réflexe non justifiée.", en: "DESIGN.md says where colour, type and imagery come from, and what the product refuses; the screens comply; no unjustified reflex palette."}
+        verify: {fr: "DESIGN.md dit d'où viennent la couleur, la typographie et les images, et ce que le produit refuse ; les écrans s'y conforment ; pas de palette réflexe non justifiée. Si des références sont mesurées (.quality/references.json), chaque écart relevé par `qp gap` est réduit ou justifié.", en: "DESIGN.md says where colour, type and imagery come from, and what the product refuses; the screens comply; no unjustified reflex palette. When references are measured (.quality/references.json), each gap reported by `qp gap` is closed or justified."}
+      - id: BRD-07
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Les écrans qui portent le produit ont été choisis parmi plusieurs versions", en: "The screens that carry the product were chosen among several versions"}
+        verify: {fr: "Pour la page d'accueil publique et l'écran de travail principal : dossier .quality/variants/ avec au moins deux versions comparées, le vote du jury et le choix de l'utilisateur ; ou une raison écrite de ne pas l'avoir fait.", en: "For the public home page and the main work screen: a .quality/variants/ folder with at least two versions compared, the jury's votes and the user's choice; or a written reason for not doing it."}
       - id: BRD-03
         severity: major
         check: {method: inspect}

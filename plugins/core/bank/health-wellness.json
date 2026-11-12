@@ -1,0 +1,165 @@
+{
+  "id": "health-wellness",
+  "label": {
+    "fr": "Santé, médical et bien-être",
+    "en": "Health, medical and wellness"
+  },
+  "expects": [
+    {
+      "rule": "Content is written in plain language that most users understand: more than 4 in 10 adults struggle with public health content, and more than 6 in 10 when it includes numbers and statistics. Test with people of low health literacy.",
+      "source": "https://service-manual.nhs.uk/content/health-literacy",
+      "verified": true
+    },
+    {
+      "rule": "The service meets WCAG 2.2 and is accessible to everyone who needs it, not only on desktop.",
+      "source": "https://service-manual.nhs.uk/accessibility",
+      "verified": true
+    },
+    {
+      "rule": "Text meets WCAG AA contrast: 4.5:1 for normal text and 3:1 for large text (18 pt or 14 pt bold), which also matters for the calm pastel palettes common in wellness.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "Pages are short and scannable: visitors read about 20% of the words, and stressed visitors skim for the answer.",
+      "source": "https://www.nngroup.com/articles/how-little-do-users-read/",
+      "verified": true
+    },
+    {
+      "rule": "The first screen gives a way to act on the main need: book, call, start an assessment or download, with phone number and address visible for a clinic. NN/g found appointment scheduling the most frequent online healthcare task.",
+      "source": "https://www.nngroup.com/articles/healthcare-customer-journeys/",
+      "verified": true
+    },
+    {
+      "rule": "Clinicians are named with photo, credentials and specialty, and treatments and prices are listed in plain words.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Privacy, how health data is stored and used, and what the product is not (not a diagnosis, not emergency care) are stated in plain words and linked from the first screen.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Claims about results cite a figure and a source, with no before-and-after promises.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "3 of 8 first screens are a full-bleed photograph or video of a person or medical object (Institute of Health, Rejuvenation Dentistry, Function); 2 show phone or dashboard screens (Bevel, Impilo); Pomegranate and Heva show none.",
+    "One main action on the first screen on 6 of 8 (Download App, Start testing, Request Demo, Register your interest, Get services, Learn More); only Rejuvenation Dentistry shows three (virtual consultation, book, phone).",
+    "The headline is 10 words or fewer at 51 to 104 px on 7 of 7 sites that have one (Health+ has none), in plain language (Check your health., Vitality, refined.).",
+    "4 of 8 pair a serif or display face for the headline with a plain sans for the rest (Heva, Function, Health+, Pomegranate); 2 use a single sans.",
+    "Backgrounds: 4 of 8 pale or cream (#f3f6f7, #fffaf0, #fdfdf1, #fef9ef), 2 photographic and dark, 2 saturated blue (Impilo, Health+ header).",
+    "Trust figures appear on the first screen on 4 of 8: rating count (Bevel 4.8 from 64.7k), counters (Institute of Health), lab tests and price (Function), HSA/FSA eligibility.",
+    "5 of 8 show a cookie or consent box over the first screen, which hides part of the layout."
+  ],
+  "sites": [
+    {
+      "name": "Bevel Health",
+      "url": "https://www.bevel.health/",
+      "why": "Pale blue (#f3f6f7) sky-gradient page: 75 px two-line headline 'Your Connected Health Coach' in a system sans-serif, one subtitle, a black App Store badge, '4.8 / 64.7k ratings', then an iPhone and a watch cut by the fold. Cookie box at bottom left.",
+      "recognition": "Awwwards Honorable Mention, 2026-05-11",
+      "source": "https://www.awwwards.com/sites/bevel-health",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Institute of Health",
+      "url": "https://www.instituteofhealth.com/",
+      "why": "Full-bleed dimmed video of a blood-pressure cuff on a shoulder; 51 px headline at bottom left in Lay Grotesk, three counters at right (966 course units, 46 countries, 21 laboratory tests), Student Login and a Learn More tile. Grey (#e6e6e6) and white text.",
+      "recognition": "Awwwards Honorable Mention, 2026-02-05",
+      "source": "https://www.awwwards.com/sites/institute-of-health",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Pomegranate Health",
+      "url": "https://pomegranate.health/",
+      "why": "Cream (#fffaf0) page inside stacked pink and burgundy rounded tabs; 76 px headline 'Your personal health intelligence platform' in a rounded display face (Gliker), a four-line paragraph, 'Register your interest' button. No photograph; separate entries for individuals, employers and professionals.",
+      "recognition": "Awwwards Honorable Mention, 2025-07-26",
+      "source": "https://www.awwwards.com/sites/pomegranate-health",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Rejuvenation Dentistry",
+      "url": "https://www.rejuv-health.com/",
+      "why": "Header with name, 'Virtual Consultation', 'Book a Visit' and the phone number, a dark brown (#2c1910) menu of seven treatment links, then a black-and-white close-up photograph of the dentist behind the headline 'Dentistry Designed for Your Whole Body', address and name in small caps.",
+      "recognition": "Awwwards Honorable Mention, 2025-03-10",
+      "source": "https://www.awwwards.com/sites/rejuvenation-health",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Heva Health",
+      "url": "https://www.hevahealth.com/",
+      "why": "Page loads with an overlay on pale green (#fdfdf1): a 30% discount offer, a 104 px light condensed serif headline (PP Editorial New) and an email field with 'Continue'. The page behind has Care, How It Works, a HSA/FSA badge and clinician headshots lower down. Dark green (#39442b) text.",
+      "recognition": "Awwwards Site of the Day and Developer Award, 2024-07-26",
+      "source": "https://www.awwwards.com/sites/heva-health",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Function Health",
+      "url": "https://www.functionhealth.com",
+      "why": "Full-bleed photograph of a woman in profile in a desert at dusk, 'Check your health.' in a light display serif (Financier Display) at 77 px, three figures (160+ lab tests, whole body, $1 per day), cream pill 'Start testing' in the header. Cookie box covers the left.",
+      "recognition": "Awwwards Honorable Mention, 2024-07-09",
+      "source": "https://www.awwwards.com/sites/function-health",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Impilo",
+      "url": "https://impilo.health",
+      "why": "Saturated blue-violet page: 82 px white headline 'Making at home healthcare easy.' in Gilroy with 'easy.' in cyan, line drawings of a thermometer and watch, and a dashboard card of blood-pressure data cut at the fold. 'Request Demo' pill in the header.",
+      "recognition": "Awwwards Honorable Mention, 2024-05-23",
+      "source": "https://www.awwwards.com/sites/impilo-health-care",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Health+ Polyclinic",
+      "url": "https://www.healthplus.cz/en/home",
+      "why": "Blue (#1f519c) header with a menu for clients and for health professionals, a 'Get services' button and 'Client zone'; a blurred photo of a magazine rack with three tiles (Health Care, 4 branches in Prague, Our Programs). Set in Inter with a serif for titles. Cookie box over it.",
+      "recognition": "Awwwards Honorable Mention, 2024-03-22",
+      "source": "https://www.awwwards.com/sites/health",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "Stock photos of smiling doctors and a stethoscope, or a generic blue and white medical template.",
+    "Pale grey text on pastel backgrounds under 4.5:1 contrast to look calm.",
+    "Medical jargon and long paragraphs on the first screen, with no plain-language summary.",
+    "Before-and-after or miracle claims with no figure, source or clinician name.",
+    "Booking only through a form with no phone number, address or opening hours.",
+    "Opening a chat widget or newsletter pop-up before the visitor has read anything.",
+    "Hiding prices, data use and privacy behind a sign-up, or implying a diagnosis the product cannot give."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Health",
+      "url": "https://www.awwwards.com/websites/health/",
+      "access": "free"
+    },
+    {
+      "name": "NHS digital service manual, health literacy",
+      "url": "https://service-manual.nhs.uk/content/health-literacy",
+      "access": "free"
+    },
+    {
+      "name": "NHS digital service manual, accessibility",
+      "url": "https://service-manual.nhs.uk/accessibility",
+      "access": "free"
+    },
+    {
+      "name": "W3C, WCAG 2.2 Understanding 1.4.3 Contrast (Minimum)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, How little do users read?",
+      "url": "https://www.nngroup.com/articles/how-little-do-users-read/",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, Digital interactions in healthcare customer journeys",
+      "url": "https://www.nngroup.com/articles/healthcare-customer-journeys/",
+      "access": "free"
+    }
+  ]
+}

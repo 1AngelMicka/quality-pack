@@ -1,0 +1,144 @@
+{
+  "id": "event-conference",
+  "label": {
+    "fr": "Événement et conférence",
+    "en": "Event and conference"
+  },
+  "expects": [
+    {
+      "rule": "The homepage says why the event exists, what attendees gain and who should come.",
+      "source": "https://www.mightycitizen.com/insights/articles/five-and-a-half-fundamentals-for-every-conference-website",
+      "verified": true
+    },
+    {
+      "rule": "A Register or Tickets button sits in the same place on every page. Long registration forms are split into steps, such as contact details then payment, to reduce abandonment.",
+      "source": "https://www.mightycitizen.com/insights/articles/five-and-a-half-fundamentals-for-every-conference-website",
+      "verified": true
+    },
+    {
+      "rule": "Photographs come from the event itself, taken by a photographer, not from stock libraries.",
+      "source": "https://www.mightycitizen.com/insights/articles/five-and-a-half-fundamentals-for-every-conference-website",
+      "verified": true
+    },
+    {
+      "rule": "The detailed schedule gives session titles, speaker names and bios, rooms, the venue address with a map link and lodging options.",
+      "source": "https://www.mightycitizen.com/insights/articles/five-and-a-half-fundamentals-for-every-conference-website",
+      "verified": true
+    },
+    {
+      "rule": "Date, city and venue are in the first screen and in the page title, as in the listed sites.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Ticket prices and the deadline for each price are shown before the buyer reaches the form.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The line-up or programme is real text that can be searched and read on a phone, not a poster image.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "After the event the site keeps the date, a recap and a way to join the next edition instead of staying on a dead Buy tickets button.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "A date is on the first screen on 5 of 8 (OFFFForum, Design Bomb, Kelvin, Hack the North, Francouvertes); 2 show only a preloader on capture and Lago Lago is covered by a consent panel.",
+    "A ticket or pass button is in the header or first screen on 5 of 8 (OFFFForum, Design Bomb, Kelvin, Lago Lago, ShapeShift text).",
+    "The event name is the largest element, set between 52 and 160 px or as a logo spanning the width, on 6 of 8 captures.",
+    "Photography of people is the background on 3 of 8 (OFFFForum, Lago Lago, Kelvin's thermal portrait); 2 use illustration (Hack the North, Francouvertes); Design Bomb uses type and stickers only.",
+    "4 of 8 use a heavy or condensed display face for the name (PP Frama italic, League Gothic, Castledown, Kelvin's tall condensed) with a plain sans for the details.",
+    "A strong accent set against black or cream: pink on black (Design Bomb), gradient on cream (Kelvin), orange on black (Francouvertes), blue on white (Creative Cruise).",
+    "2 of 8 (ShapeShift, Creative Cruise) show only a preloader at capture time, which hides the date and the ticket action until it ends."
+  ],
+  "sites": [
+    {
+      "name": "OFFFForum",
+      "url": "https://www.offforum.com/",
+      "why": "Full-screen blurred photograph of attendees in a hall; 'OFFF FORUM' in a large logo/serif, a boxed table of dates (Forum Sept 15, OFFF Sept 16-17, 2027) and venue (SAT), a headline in capitals with the date and Montréal, and a white 'Get your forum ticket' pill. Cookie box lower right.",
+      "recognition": "Awwwards Site of the Day, 2026-10-16",
+      "source": "https://www.awwwards.com/sites/offfforum",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Design Bomb Festival",
+      "url": "https://www.designbomb.it/",
+      "why": "Black (#141414) page filled by 'DESIGN BOMB!!!' in a heavy italic sans (PP Frama) in off-white, a collage sticker with the dates 22-24 maggio, Catania, a pair of cartoon eyes, a pink TICKET button in a five-item menu. No photograph. Italian labels.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-11",
+      "source": "https://www.awwwards.com/sites/design-bomb-festival",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Kelvin Music Festival 2027",
+      "url": "https://kelvin.8b.com/",
+      "why": "Cream (#f1ede4) page: giant letters KELVIN in a thin condensed face filled with a red-to-blue gradient, a thermal-camera portrait in the centre, a black date block (23-25 July 2027, Centrale Noord, Rotterdam), a two-line intro with 'Get passes' and 'See the lineup'. Hubot Sans.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-20",
+      "source": "https://www.awwwards.com/sites/kelvin-music-festival-2027",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Hack the North",
+      "url": "https://hackthenorth.com",
+      "why": "Illustrated mountain landscape and a wooden table with a map and objects (record player, camera, cassette); the name in red-orange at 52 px in Castledown, dates 18-20 September 2026, 'applications are closed' line, menu of six items with social icons. Light blue and orange, no photograph.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-03",
+      "source": "https://www.awwwards.com/sites/hack-the-north",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "SHAPESHIFT FESTIVAL 2026",
+      "url": "https://shapeshiftfestival.com/",
+      "why": "On capture only a grey (#e9e9e9) preloader with a pixel square and the line 'initialising the human'; page text lists schedule, lineup, about, a grid tool, talks, exhibitions, workshops, screenings and a regular full pass at EUR 60 (not seen beyond the preloader).",
+      "recognition": "Awwwards Honorable Mention, 2026-04-14",
+      "source": "https://www.awwwards.com/sites/shapeshift-festival-2026",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Lago Lago",
+      "url": "https://lagolago.nl/en",
+      "why": "Full-bleed photograph of a crowd with raised arms at an outdoor festival by water, a large serif letter set in light pink, two outlined buttons (tickets, newsletter) at right; a Cookiebot panel covers the centre. Headline 'Ci vediamo a Lago Lago 2027' in Satoshi light at 70 px.",
+      "recognition": "Awwwards Honorable Mention, 2026-03-16",
+      "source": "https://www.awwwards.com/sites/lago-lago-2026",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Creative Cruise 2026",
+      "url": "https://creativecruise.nl",
+      "why": "On capture only a white loading screen with a 3D boat and a blue percentage counter; the page after loading has a five-item menu (Home, About, Behind, Sign Up, Not Invited?) set in BW Gradual, blue (#065abf) text on white (not seen beyond the loader).",
+      "recognition": "Awwwards Honorable Mention, 2026-05-30",
+      "source": "https://www.awwwards.com/sites/creative-cruise-2026",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Festival Les Francouvertes",
+      "url": "https://francouvertes.com/",
+      "why": "Black page with a floating rounded header (SiriusXM presents, Francouvertes logo, orange 'Concours' button), an illustration of a leg in a yellow shoe, '31e Francouvertes, du 8 mai' in a tall condensed grey face (League Gothic); a consent panel covers the right. Inter for text.",
+      "recognition": "Awwwards Honorable Mention, 2026-05-23",
+      "source": "https://www.awwwards.com/sites/festival-les-francouvertes",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A hero with only the event name and a countdown, with no date written as text and no city.",
+    "Programme published only as a PDF or an image: it cannot be read on a phone or by a screen reader.",
+    "A ticket button that changes place or wording between pages.",
+    "Stock photographs of audiences and handshakes in place of the venue, speakers or the previous edition.",
+    "Full-page animation that delays the date, the line-up and the ticket link.",
+    "A site left online after the event still saying Buy tickets."
+  ],
+  "sources": [
+    {
+      "name": "Mighty Citizen, Five and a Half Fundamentals for Every Conference Website",
+      "url": "https://www.mightycitizen.com/insights/articles/five-and-a-half-fundamentals-for-every-conference-website",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Events",
+      "url": "https://www.awwwards.com/websites/events/",
+      "access": "free"
+    }
+  ]
+}

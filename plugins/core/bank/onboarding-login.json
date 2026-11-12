@@ -1,0 +1,153 @@
+{
+  "id": "onboarding-login",
+  "label": {
+    "fr": "Inscription, connexion et premiers pas",
+    "en": "Sign-up, login and onboarding"
+  },
+  "expects": [
+    {
+      "rule": "One column, one field per row, label above the field. Remove any field whose data can be derived or collected later (NN/g cites a form cut from 6 fields to 2). Keep optional fields to 1 or 2 and label them as optional.",
+      "source": "https://www.nngroup.com/articles/web-form-design/",
+      "verified": true
+    },
+    {
+      "rule": "Errors use more than colour: outline the field, red text and heavier type, say what is wrong and keep what the user typed. NN/g cites 78% one-try error-free submissions for forms that follow guidelines against 42% for forms that break them (Seckler et al., CHI 2014).",
+      "source": "https://www.nngroup.com/articles/web-form-design/",
+      "verified": true
+    },
+    {
+      "rule": "Do not use placeholder text in place of a label.",
+      "source": "https://www.nngroup.com/articles/web-form-design/",
+      "verified": true
+    },
+    {
+      "rule": "In a shop, offer guest checkout as the most prominent choice, above or next to sign-in, and ask for an account at the confirmation step. Baymard reports 18% of users abandon a checkout when forced to create an account.",
+      "source": "https://baymard.com/learn/reduce-cart-abandonment",
+      "verified": true
+    },
+    {
+      "rule": "Do not make login depend on remembering a password or solving a puzzle without an alternative. Allow password managers, autofill and pasting, including pasting a verification code (WCAG 2.2 criterion 3.3.8, Level AA).",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "Information already entered in the same process is filled in or offered for selection; browser autocomplete alone does not meet it. A new hidden password may still be asked twice (WCAG 2.2 criterion 3.3.7, Level A).",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html",
+      "verified": true
+    },
+    {
+      "rule": "Offer single sign-on with the providers the audience already uses, next to email, so the shortest path is one click.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "State the password rule where the user creates the password, visible at that moment, rather than after a failed attempt or behind a link.",
+      "source": "https://www.nngroup.com/articles/password-creation/",
+      "verified": true
+    }
+  ],
+  "traits": [
+    "7 of 7 offer Google; 4 of 7 add Microsoft (Cal.com, Calendly, Auth0, Asana), 2 add GitHub (Vercel, Auth0), 2 offer SAML (Linear, Cal.com), and Vercel adds Apple and ChatGPT.",
+    "3 of 7 show an email input at once (Calendly, Auth0, Asana); 3 hide email behind a button (Linear, Vercel, Cal.com); Stripe asks four fields.",
+    "The heading is under 10 words on 7 of 7 and names the task or the free offer; 3 of 7 add 'No credit card required' (Calendly, Auth0, Asana).",
+    "4 of 7 use one centred column or modal (Linear, Stripe, Vercel, Asana); 3 of 7 split the screen with a brand or product panel (Cal.com, Calendly, Auth0).",
+    "6 of 7 show a link to the other state (Sign in, Log In, Sign up) on the first screen.",
+    "4 of 7 show a cookie banner or dialog over the first screen, covering part of the form on Calendly, Auth0 and Asana.",
+    "4 of 7 use one typeface family (Linear, Stripe, Vercel, Asana); labels sit above fields on Stripe and Asana, while Calendly uses placeholder text only.",
+    "Colour is held back: white or pale grey on 5 of 7, one accent on the main button (periwinkle, blue, dark)."
+  ],
+  "sites": [
+    {
+      "name": "Linear, log in",
+      "url": "https://linear.app/login",
+      "why": "Light grey page with a logo, the heading 'Log in to Linear' (18 px Inter) and four full-width rounded buttons: Continue with Google (filled periwinkle, #6d78d5), Continue with email, Continue with SAML SSO, Log in with passkey. A sign-up link below; no password field and no menu.",
+      "recognition": "SaaSUI curated gallery of real sign-up and login screens, 2026",
+      "source": "https://www.saasui.design/application/linear",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Stripe, create an account",
+      "url": "https://dashboard.stripe.com/register",
+      "why": "Modal over a blurred dashboard in Söhne: heading 'Create your Stripe account', four labelled fields stacked (email, full name, password, country preset to France), a ticked marketing checkbox, a Create account button and an 'Or sign up with Google' button, Sign in link. Cookie card bottom right.",
+      "recognition": "SaaSUI curated gallery of real sign-up and login screens, 2026",
+      "source": "https://www.saasui.design/application/stripe",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Vercel, sign up",
+      "url": "https://vercel.com/signup",
+      "why": "Off-white (#fafafa) page, a centred bordered card with the 32 px heading 'Your first deploy is just a sign-up away', four provider buttons (Google, GitHub, ChatGPT, Apple), a Show other options link, a blue Continue with Email link and a terms line; Log In button top right. Geist.",
+      "recognition": "SaaSUI curated gallery of real sign-up and login screens, 2026",
+      "source": "https://www.saasui.design/application/vercel",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Cal.com, sign up",
+      "url": "https://app.cal.com/signup",
+      "why": "Two columns: left a 56 px heading 'Claim cal.com/you', one line on free use and four buttons (Google filled dark, Microsoft, Email, SAML), terms at the foot; right a collage of instant-print photos with a card of review scores and partner names. Sign in link top right.",
+      "recognition": "SaaSUI curated gallery of real sign-up and login screens, 2026",
+      "source": "https://www.saasui.design/application/cal-com",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Calendly, sign up",
+      "url": "https://calendly.com/signup",
+      "why": "Cream page with a blue-to-mint gradient panel holding a white card: heading 'Create a free account', 'No credit card required', one email input with placeholder text only, a dark Continue button, then Google and Microsoft. A right column lists five trial features; a cookie banner covers the card.",
+      "recognition": "SaaSUI curated gallery of real sign-up and login screens, 2026",
+      "source": "https://www.saasui.design/application/calendly",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Auth0, sign up",
+      "url": "https://auth0.com/signup",
+      "why": "Split screen: black left half with logo and the 44 px heading 'Start building with your free plan' in Aeonik, white-on-gradient right half with a card holding an email field, a blue (#3f59e4) Continue button and GitHub, Google and Microsoft buttons. A cookie dialog covers the top of the card.",
+      "recognition": "SaaSUI curated gallery of real sign-up and login screens, 2026",
+      "source": "https://www.saasui.design/application/auth0",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Asana, create an account",
+      "url": "https://asana.com/create-account",
+      "why": "White page, centred 'You're one click away from less busywork' in TWK Lausanne, a free-trial line, Google and Microsoft side by side, then a labelled 'Work email' field with a dark Continue button on the same row. A cookie banner covers the lower left.",
+      "recognition": "SaaSUI curated gallery of real sign-up and login screens, 2026",
+      "source": "https://www.saasui.design/application/asana",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A sign-up form of more than five fields before the user sees the product.",
+    "Blocking paste in the password or code field, or asking for a code that must be retyped from another screen.",
+    "Placeholder text as the only label, which disappears when the user types.",
+    "Password rules revealed only after a failed submit, or an error that says Invalid input without naming the field.",
+    "A CAPTCHA puzzle as the only way to prove the user is human, with no alternative.",
+    "A forced account before checkout or before the first useful action in the product.",
+    "Asking for the same email or address twice in one flow."
+  ],
+  "sources": [
+    {
+      "name": "Nielsen Norman Group, Web Form Design Guidelines",
+      "url": "https://www.nngroup.com/articles/web-form-design/",
+      "access": "free"
+    },
+    {
+      "name": "Baymard Institute, How to Reduce Cart Abandonment",
+      "url": "https://baymard.com/learn/reduce-cart-abandonment",
+      "access": "free"
+    },
+    {
+      "name": "W3C, Understanding SC 3.3.8 Accessible Authentication (Minimum)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html",
+      "access": "free"
+    },
+    {
+      "name": "W3C, Understanding SC 3.3.7 Redundant Entry",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/redundant-entry.html",
+      "access": "free"
+    },
+    {
+      "name": "SaaSUI, Sign Up and Login Page Design Examples",
+      "url": "https://www.saasui.design/signup-login-page-design",
+      "access": "free"
+    }
+  ]
+}

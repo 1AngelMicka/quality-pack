@@ -1,0 +1,19 @@
+{
+  "facts": [
+    {
+      "claim": "1,240 teams",
+      "source": "Where the figure comes from (admin dashboard, invoice export…)",
+      "date": "2026-01-01"
+    },
+    {
+      "claim": "Marie Dupont, Atelier Nord",
+      "source": "Who said it, where, and that they agreed to be quoted",
+      "date": "2026-01-01"
+    },
+    {
+      "claim": "Acme, Globex",
+      "source": "Customers who agreed to have their name or logo shown",
+      "date": "2026-01-01"
+    }
+  ]
+}

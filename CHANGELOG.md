@@ -1,8 +1,43 @@
 # Changelog
 
+## 0.7.0 — 2026-11-12
+
+Beyond correct: what helps a screen land above the average, the launch steps for search, and desktop apps. 37 domains, 247 criteria.
+
+**Reference bank**
+- `plugins/core/bank/`: one file per type of site, with what its visitors expect, real sites recognised as excellent (award or curated gallery, with the reason in checkable terms), their shared traits and what to avoid. 26 types, 190 sites: SaaS marketing site, application and dashboard, landing page, pricing page, developer tool, restaurant and café, hotel and travel, local service, real estate, online shop, luxury brand, mobile app page, fintech, portfolio, agency and studio, personal site, editorial, documentation, AI product, education, health, non-profit, event, culture, public service, sign-up and login. Every address was loaded on 2026-11-12. No screenshot of a third-party site is stored: addresses, descriptions and measured numbers only.
+- `qp bank [type]` lists them; `qp bank measure` profiles the sites; `qp bank calibrate` runs `qp craft` and `qp look` on them.
+- Calibration: `qp craft` now shows, for each check, the share of the bank's sites that fail it. A "should" failed by 40 % or more of them becomes "advice" and is no longer counted.
+
+**Comparing instead of producing**
+- `qp variants <name> <url>…`: screenshots of several versions of one screen under shuffled letters, their measures, and the pairs to judge; `--tally` ranks them from the jurors' votes. Skill `design-variants`; agent `juror` (blind comparison of two screenshots).
+- Agent `art-director`: reads the screenshots and returns at most seven concrete changes, most of them removals, never a score.
+- `qp profile <url> --save` measures the references the user likes (type scale, typefaces, first-screen composition, colour, surfaces, density); `qp gap <url>` lists where a screen falls outside their range, or outside the bank's for a site type (`--type`).
+
+**Finishing passes**
+- `qp stress <url>`: the screen with every data request slow, every data request failing, texts three times longer, at 320 px, in the dark scheme, with the keyboard only and with scripts off; a screenshot of each.
+- Criteria CRF-10 (blocker) and CRF-11; BRD-07 (the screens that carry the product were chosen among several versions). Stage 7 of `from-zero` now asks for `qp craft` and `qp stress` on every key screen.
+
+**Search**
+- `qp seo [url]`: the sitemap (found, declared in robots.txt, every address answers 200 and is indexable), title and meta description of each page (filled, length, unique), one h1, the keywords of `project.json › seo.keywords` carried by their page, Search Console confirmed in `seo.search_console`.
+- Criteria SEO-08 (blocker), SEO-09 and SEO-10. Skill `seo-launch`: choosing the searches, writing each page around its phrase, sitemap and robots.txt, the Search Console steps (done by the user).
+
+**Desktop apps (Tauri, Electron)**
+- New group: desktop experience (DUX) and desktop release and security (DRL). Flag `desktop_app`, profile `desktop`, stack modules `qp-tauri` and `qp-electron`, skill `desktop-app`.
+- `qp desktop check`: content security policy, Tauri capabilities and scopes, remote access, Electron window options (nodeIntegration, contextIsolation, sandbox, webSecurity), preload, updater signature and https, app identifier, signing.
+- `qp flows --attach <port>`: plays the key tasks in the window of an app already running with its debugging port open (WebView2, Electron).
+
+**Played or measured instead of read**
+- `qp perf <url>`: one load on a throttled phone (CPU slowed 4 times, slow 4G): largest paint, layout shift, blocking time, weight of the page, of scripts and of the largest image, requests. Criterion PRF-07.
+- `qp webhooks`: an unsigned or wrongly signed event sent to each endpoint of `project.json › webhooks` must be refused; local or staging only. INT-01 now uses it.
+- `qp facts <url>`: figures, ratings, quotes, customer names and compliance badges found on the rendered page, each to be traced to `.quality/facts.json` (template added). BRD-01 now uses it.
+- The visual profile (`qp profile`, `qp gap`, the bank) now measures layout basics: gaps and their scale, share of gaps on a 4 px grid, paddings, content width and gutter, sizes of buttons, fields, icons, cards and headings, image proportions, section heights, and regularity (siblings with identical gaps, identical sizes, shared left edges).
+
+**Not verified in this release:** `qp desktop check` and `flows --attach` were tested on fixtures and a stand-in browser, not on a real Tauri or Electron app; the `art-director` and `juror` agents and the `design-variants` skill have not run on a real project; the bank's `expects` rules are mostly marked unverified house rules; in the first thirteen types, recognition sources are often a listing page rather than the site's own award page; site descriptions were written from the pages' text, not from their rendering; a few types rest on a curated list rather than an award (personal site, documentation, sign-up and login).
+
 ## 0.6.0 — 2026-11-12
 
-From zero to a launched SaaS: what the pack did not cover (isolation between customers, subscriptions, security tried for real, installed mobile apps, finish and identity). 35 domains, 226 criteria.
+From zero to a launched SaaS: what the pack did not cover (isolation between customers, subscriptions, security tried for real, installed mobile apps, finish and identity). 37 domains, 226 criteria.
 
 **Security, played instead of read**
 - `qp access`: each resource declared in `project.json › access` is requested by its owner, then by the accounts that must not reach it and by a visitor. Sessions from headers, cookies, or login steps played in a browser. A leak (the owner's answer, or an accepted write) gives exit code 2. Refuses production unless `--allow-production`. SEC-03 now uses it.

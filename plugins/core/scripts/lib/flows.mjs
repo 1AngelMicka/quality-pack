@@ -201,7 +201,7 @@ export function summarizeRun(run, budgets) {
   const clickAt = run.steps.findIndex((x) => x.action === "click" && run.primary && x.target === run.primary);
   const before = clickAt > 0 ? run.steps.slice(0, clickAt) : run.steps;
   const lastPrimary = before.filter((x) => x.ok && x.metrics?.primary?.found).at(-1)?.metrics.primary;
-  const b = (k) => run.budget?.[k] ?? budgets[k]?.[run.device];
+  const b = (k) => run.budget?.[k] ?? budgets[k]?.[run.device] ?? budgets[k]?.desktop;
   const s = {
     actions: run.steps.filter((x) => COUNTED.has(x.action)).length,
     decisions: run.steps.filter((x) => x.decision).length,
@@ -226,31 +226,41 @@ export function summarizeRun(run, budgets) {
   return { summary: s, over_budget: over };
 }
 
-export async function playFlows(project, { root, outDir, base, only = [], budgets = DEFAULT_BUDGETS }) {
+// attach: a port where an app already running exposes the Chrome DevTools Protocol (a Tauri app started with
+// WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222, an Electron app started with
+// --remote-debugging-port=9222). The flows are then played in the app's own window, once, as it is.
+export async function playFlows(project, { root, outDir, base, only = [], budgets = DEFAULT_BUDGETS, attach = null }) {
   const { flows, errors } = validateFlows(project);
   if (errors.length) return { available: true, errors };
   const selected = only.length ? flows.filter((f) => only.includes(f.id)) : flows;
   if (!selected.length) return { available: true, errors: [flows.length ? `no flow named ${only.join(", ")}` : "no flows in .quality/project.json: declare 2 to 5 key tasks (see /qp:kickoff)"] };
   const tools = await loadBrowserTools(root);
   if (!tools) return { available: false, hint: "Playwright is not available. Run `node <qp.mjs> browser-setup` once (ask the user first: it installs into the pack's cache, not the project)." };
-  const baseUrl = base || project.urls?.local || project.urls?.staging || project.urls?.production;
+  const baseUrl = base || project.urls?.local || project.urls?.staging || project.urls?.production || (attach ? "app://window" : null);
   if (!baseUrl) return { available: true, errors: ["no URL: pass --base <url> or set urls.local in .quality/project.json"] };
   const schemes = project.flags?.includes("dark_mode") ? ["light", "dark"] : ["light"];
   const shots = outDir ? join(outDir, "flows") : null;
   if (shots) mkdirSync(shots, { recursive: true });
-  const browser = await launch(tools.chromium);
+  let browser;
+  try { browser = attach ? await tools.chromium.connectOverCDP(`http://127.0.0.1:${attach}`) : await launch(tools.chromium); }
+  catch (e) { if (!attach) throw e; return { available: true, errors: [`nothing answers on port ${attach}: start the app with its remote debugging port open (see the desktop-app skill). ${String(e.message).split("\n")[0].slice(0, 120)}`] }; }
   const results = [];
   try {
     for (const flow of selected) {
       const entry = { id: flow.id, name: flow.name, runs: [] };
-      for (const device of flow.devices) for (const scheme of schemes) {
-        const ctx = await browser.newContext({ ...DEVICES[device], colorScheme: scheme, reducedMotion: "reduce", acceptDownloads: true, baseURL: baseUrl });
-        const page = await ctx.newPage();
+      for (const device of attach ? ["window"] : flow.devices) for (const scheme of attach ? ["as shown"] : schemes) {
+        const ctx = attach ? browser.contexts()[0] : await browser.newContext({ ...DEVICES[device], colorScheme: scheme, reducedMotion: "reduce", acceptDownloads: true, baseURL: baseUrl });
+        const page = attach ? ctx?.pages().find((p) => !/^(devtools|chrome-extension|about):/.test(p.url())) : await ctx.newPage();
+        if (!page) return { available: true, errors: [`the app on port ${attach} shows no window to drive`] };
+        const viewport = attach ? await page.evaluate(() => ({ width: innerWidth, height: innerHeight })) : DEVICES[device].viewport;
         const run = { device, scheme, budget: flow.budget, primary: flow.primary, completed: false, steps: [], console: [], dialogs: [] };
         page.on("console", (m) => { if (m.type() === "error" && run.console.length < 30) run.console.push(m.text().slice(0, 200)); });
         page.on("pageerror", (e) => { if (run.console.length < 30) run.console.push(`page error: ${String(e.message).slice(0, 200)}`); });
         page.on("dialog", (d) => { run.dialogs.push(`${d.type()}: ${d.message().slice(0, 120)}`); d.accept().catch(() => {}); });
-        const steps = Object.keys(flow.steps[0]).includes("goto") ? flow.steps : [{ name: "Open", goto: flow.start || "/" }, ...flow.steps];
+        // In an attached window the app is already on screen: nothing is opened unless the flow says so, and a
+        // relative address is resolved against the page the window shows.
+        const steps = (Object.keys(flow.steps[0]).includes("goto") || attach ? flow.steps : [{ name: "Open", goto: flow.start || "/" }, ...flow.steps])
+          .map((st) => (attach && typeof st.goto === "string" && !/^[a-z][a-z0-9+.-]*:/i.test(st.goto) ? { ...st, goto: new URL(st.goto, page.url()).href } : st));
         for (const [i, step] of steps.entries()) {
           const action = Object.keys(step).find((k) => ACTIONS.includes(k));
           const target = typeof step[action] === "string" ? step[action] : step[action]?.selector || "";
@@ -266,12 +276,12 @@ export async function playFlows(project, { root, outDir, base, only = [], budget
           if (before) {
             const after = await page.evaluate(scrollPositions).catch(() => ({}));
             const px = Object.entries(before).reduce((t, [k, y]) => t + Math.abs((after[k] ?? y) - y), 0);
-            rec.scrolled_screens = Math.round((px / DEVICES[device].viewport.height) * 10) / 10;
+            rec.scrolled_screens = Math.round((px / viewport.height) * 10) / 10;
           }
           rec.metrics = await page.evaluate(measure).catch(() => null);
           if (rec.metrics) {
-            rec.metrics.preview = await locate(page, flow.preview, DEVICES[device].viewport);
-            rec.metrics.primary = await locate(page, flow.primary, DEVICES[device].viewport);
+            rec.metrics.preview = await locate(page, flow.preview, viewport);
+            rec.metrics.primary = await locate(page, flow.primary, viewport);
           } else delete rec.metrics;
           if (step.snapshot !== false || !rec.ok) {
             rec.axe = await runAxe(page, tools.axePath);
@@ -292,7 +302,7 @@ export async function playFlows(project, { root, outDir, base, only = [], budget
         run.completed = run.steps.every((s) => s.ok);
         Object.assign(run, summarizeRun(run, budgets));
         entry.runs.push(run);
-        await ctx.close();
+        if (!attach) await ctx.close();
       }
       results.push(entry);
     }
@@ -300,7 +310,7 @@ export async function playFlows(project, { root, outDir, base, only = [], budget
     await browser.close();
   }
   const runs = results.flatMap((f) => f.runs);
-  return { available: true, playwright: tools.playwright, from: tools.source, base: baseUrl, schemes, budgets, flows: results,
+  return { available: true, playwright: tools.playwright, from: tools.source, base: baseUrl, attached: attach ? `port ${attach}` : undefined, schemes, budgets, flows: results,
     summary: { flows: results.length, runs: runs.length, completed: runs.filter((r) => r.completed).length,
       failed: runs.filter((r) => !r.completed).map((r) => `${results.find((f) => f.runs.includes(r)).id} ${r.device}${r.scheme === "dark" ? " dark" : ""}: step ${r.failed_step}`),
       states: runs.reduce((t, r) => t + r.steps.length, 0), axe_states_with_serious: runs.reduce((t, r) => t + r.summary.axe_states_with_serious, 0),

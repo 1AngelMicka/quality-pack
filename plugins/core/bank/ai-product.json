@@ -1,0 +1,151 @@
+{
+  "id": "ai-product",
+  "label": {
+    "fr": "Produit d'IA",
+    "en": "AI product"
+  },
+  "expects": [
+    {
+      "rule": "The first screen says what the product does and for whom in one plain sentence, and shows the product at work (a real note, chat or result), not an abstract orb or gradient.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The interface makes clear what the system can do and how well it can do it, so visitors do not expect more than it delivers.",
+      "source": "https://www.microsoft.com/en-us/haxtoolkit/library/",
+      "verified": true
+    },
+    {
+      "rule": "Users can correct, dismiss and give granular feedback on an output, and the product says why it produced it.",
+      "source": "https://www.microsoft.com/en-us/haxtoolkit/library/",
+      "verified": true
+    },
+    {
+      "rule": "Prompt input helps users who cannot put a need into words: example prompts, rewrite, related follow-ups, builders or sliders, tested with users.",
+      "source": "https://www.uxtigers.com/post/prompt-augmentation",
+      "verified": true
+    },
+    {
+      "rule": "Claims carry a number or a named source (speed, accuracy, customers) and customer logos are real.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Pricing, data use and privacy (what is stored, whether it trains models) are one click from the first screen.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A free trial or a download is the main button; talking to sales is secondary.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "A real output or product view is on the first screen on 4 of 8 (Wispr Flow transcript ribbon, Granola note, Parloa chat, Restless API strip); the other 4 lead with photography or artwork.",
+    "Two typefaces named in the facts on 7 of 8 sites, often a serif with a sans (Wispr Flow, Granola, Parloa, Artificial Societies); only Sierra uses one family.",
+    "A serif headline on 5 of 8 (Wispr Flow, Granola, Parloa, Artificial Societies; Restless uses a pixel-cut face).",
+    "Headlines are 3 to 10 words on 8 of 8 sites; Parloa's is the longest at 10.",
+    "A photograph fills the first screen on 3 of 8 (Parloa, Sierra, Artificial Societies); TwelveLabs uses video thumbnails.",
+    "Palette: white or near-white on 4 of 8 (Granola, Parloa, Buzzabout, Artificial Societies), pale yellow or sky blue on 2 of 8, dark on 1 of 8 (TwelveLabs); not one uses a purple-to-blue gradient.",
+    "Two buttons in the first screen on 5 of 8 (Parloa, TwelveLabs, Buzzabout, Restless, Wispr Flow in header and body); Granola, Sierra and Artificial Societies show one main action.",
+    "Cookie or privacy panels cover part of the first screen on 6 of 8 captures."
+  ],
+  "sites": [
+    {
+      "name": "Wispr Flow",
+      "url": "https://wisprflow.ai/",
+      "why": "Pale yellow page (#ffffeb), a dark green announcement bar, a pill nav with a Dictation / Notetaker switch and a lilac Get started on Windows button, then a centred 96px serif headline with the second line in italics, set in EB Garamond, and a looping ribbon of transcribed speech with a waveform. Body in Figtree. Below: a typing-speed demo.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-19",
+      "source": "https://www.awwwards.com/sites/wispr-flow",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Granola",
+      "url": "https://www.granola.ai/",
+      "why": "White page, a three-column header and a Download button, a 77px serif headline at left (the title face is named quadrant in the CSS, the body face melange), two lines of support, an olive green (#5b6f00) Download for free button, and at right a real note window and a video-call tile. Cookie panel in the middle.",
+      "recognition": "SaaS Landing Page, 2026-10",
+      "source": "https://saaslandingpage.com/granola/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Parloa",
+      "url": "https://www.parloa.com/",
+      "why": "Full-bleed warm photograph of a woman with an earbud, thin nav with Login and Book a demo, and a large privacy panel over the lower half. Below the photo: a 54px Season Serif headline in dark (#1f1c1b) with an orange-red (#ff5522) button, and a chat mock-up where each exchange is tagged Resolved with a time.",
+      "recognition": "SaaS Landing Page, 2026-10",
+      "source": "https://saaslandingpage.com/parloa/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Sierra",
+      "url": "https://sierra.ai/",
+      "why": "A full-bleed video still of a sleeping baby on a shoulder, a white two-line 65px headline at bottom left in GT America (the only face), a blue announcement bar, a header with Sign in and a dark green (#006838) Learn more button, and a translucent call card at right. No product screen.",
+      "recognition": "SaaS Landing Page, 2026-10",
+      "source": "https://saaslandingpage.com/sierra/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "TwelveLabs",
+      "url": "https://www.twelvelabs.io/",
+      "why": "Dark backdrop of blurred video thumbnails drifting in a curve, a two-line headline at left in Milling Duplex, a two-line subhead, a light Try Free and an outlined Talk to Sales, and a cropped product card at right. A cookie panel covers the right side.",
+      "recognition": "SaaS Landing Page, 2026-11",
+      "source": "https://saaslandingpage.com/twelvelabs/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Restless",
+      "url": "https://www.restless.ai/",
+      "why": "Sky-blue page, a 'by readme' tag in the header, a pixel-cut headline with \"self-improving\" in a black box, a four-line paragraph, a black Prompt box with a copy button and an npx command, and a framed strip of API calls (GET, POST, DELETE with status codes) as the demo. Mono labels, Inter body.",
+      "recognition": "SaaS Landing Page, 2026-11",
+      "source": "https://saaslandingpage.com/restless/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Buzzabout",
+      "url": "https://buzzabout.ai/",
+      "why": "White page, a left-aligned two-line headline in Geist at 59px, a two-line grey subline, a black Try for free and an outlined Book a demo, six grey platform icons, and at right a rotating sphere of social-post thumbnails. Nav: Home, Features, Pricing, API, Compare, Partnerships; Log in. Cookie card at lower right.",
+      "recognition": "SaaS Landing Page, 2026-10",
+      "source": "https://saaslandingpage.com/buzzabout/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Artificial Societies",
+      "url": "https://societies.ai/",
+      "why": "Full-bleed photograph of sunlit stone office towers with fire escapes, small white markers with persona labels (for example Engineer, Cloudscale Systems), a 40px serif headline at left, a short paragraph and a white Solutions button. Header: Home, Solutions, Partnerships, Company, Publications, Book demo. Set in a grotesque and a serif.",
+      "recognition": "Awwwards Honorable Mention, 2025-09-02",
+      "source": "https://www.awwwards.com/sites/artificial-societies",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "Purple-to-blue gradient glow, floating orbs or particle fields as the only visual, with no product on screen.",
+    "Headlines made of 'intelligent', 'the future of' or 'supercharge', with no named task or user.",
+    "A sparkle icon on every button and card, and a six-card feature grid with identical icons.",
+    "A chat box mock-up with invented output, or logos of customers that are not real.",
+    "Dark mode with neon accents as the only identity, using one default sans (Inter alone) and no typographic choice.",
+    "Hiding pricing, privacy and data use behind a demo request.",
+    "Claims such as 10x faster or 99% accurate with no source."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Technology",
+      "url": "https://www.awwwards.com/websites/technology/",
+      "access": "free"
+    },
+    {
+      "name": "SaaS Landing Page",
+      "url": "https://www.saaslandingpage.com/",
+      "access": "free"
+    },
+    {
+      "name": "Microsoft HAX Toolkit, guidelines for human-AI interaction",
+      "url": "https://www.microsoft.com/en-us/haxtoolkit/library/",
+      "access": "free"
+    },
+    {
+      "name": "Jakob Nielsen, UX Tigers, prompt augmentation (2025-03-27)",
+      "url": "https://www.uxtigers.com/post/prompt-augmentation",
+      "access": "free"
+    }
+  ]
+}

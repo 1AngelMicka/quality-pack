@@ -1,0 +1,145 @@
+{
+  "id": "restaurant-cafe",
+  "label": {
+    "fr": "Restaurant et café",
+    "en": "Restaurant and café"
+  },
+  "expects": [
+    {
+      "rule": "The first screen or the header gives the address, today's opening hours and a way to book or call, as text.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The menu is real text with prices, readable on a phone and by a screen reader, not only a PDF or an image.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The phone number is a tap-to-call link and the address opens a map.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Booking is one clear button that stays reachable while scrolling, and the site says when no booking is needed.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Special hours (holidays, closed days, kitchen last order) are stated in the same place as the regular hours.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Photographs show the real room, food and people of the place, and weigh little enough to load fast on mobile data.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Allergen and dietary information is available from the menu.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Opening hours, address, phone and a menu link are also published as LocalBusiness structured data, so search results can show them.",
+      "source": "https://developers.google.com/search/docs/appearance/structured-data/local-business",
+      "verified": true
+    }
+  ],
+  "traits": [
+    "6 of 8 put a photograph or full-bleed image on most of the first screen (Delice, Ballena, Madie, 11 Bar, The Devonshire, Le Petit Bleu); the two others use a logo or an illustration.",
+    "A booking or ordering button is visible on the first screen of 6 of 8 (Delice, Studenterkilden, Ballena, 11 Bar, The Devonshire, Le Petit Bleu), as a labelled button, not an icon alone.",
+    "Hours or an open-now line appear on the first screen of only 2 of 8 (Delice's top strip, Le Petit Bleu); on the others they are lower down or in the footer, as text.",
+    "4 of 8 put an intro, pop-up or splash over the first screen on load (Studenterkilden, Ballena, The Devonshire, Le Petit Bleu): a cost to check against the point of the page.",
+    "The page background is cream or off-white on 7 of 8 (#f6efe6 to #fff7d7, or #fdfdfd); one is black. Colour comes from the venue and its photographs, with one accent.",
+    "1 of 8 uses one typeface; 5 of 8 pair a display face for the headline with a plain face for details; the three or four faces on Madie and TAB are a brand choice, not a rule.",
+    "First-screen text is short: under 40 words on 5 of 8 (Studenterkilden, Ballena, 11 Bar, TAB, Devonshire without its pop-up); Delice and Le Petit Bleu carry more because they list offers."
+  ],
+  "sites": [
+    {
+      "name": "Delice (Levis)",
+      "url": "https://delice.ca/",
+      "why": "Red (#de2b2b) first screen: a strip of daily offers with hours, centred nav around the script logo, a large light-weight serif headline on the left, a plate of food in a wavy cut-out on the right, four buttons (visit, book, order, gift card) along the bottom. Set in Filson Soft and Ivy Mode.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-24",
+      "source": "https://www.awwwards.com/sites/delice",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Studenterkilden",
+      "url": "https://studenterkilden.dk/en",
+      "why": "The screenshot caught an intro: a painted branch with the name in black on white (#fdfdfd). Below it the page has a Book a table button in the header and hero, a short headline listing weddings and events, an FAQ, and address, phone and hours in the footer. Set in one face, GT Ultra Median.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-11",
+      "source": "https://www.awwwards.com/sites/studenterkilden",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Ballena",
+      "url": "https://ballenacabo.com",
+      "why": "Dark full-bleed food photograph behind a boxed header with BOOK NOW, logo and menu icon; a recruitment pop-up covered the first screen on load, over a large light headline set in Sweet Sans Pro with TT Commons Pro for small text. Cream (#f8f2e5) below; hours as text further down.",
+      "recognition": "Awwwards Honorable Mention, 2026-06-17",
+      "source": "https://www.awwwards.com/websites/hotel-restaurant/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Madie",
+      "url": "https://madie.es",
+      "why": "Rounded dark photo panel of an iced coffee and a madeleine on a cream (#f6efe6) page: outlined then solid capital headline, three lines of copy, a pink (#ff99d3) button, 4.9 Google rating, ES/EN/FR switch. Four typefaces. Hours and address lower, as text.",
+      "recognition": "One Page Love restaurant gallery, 2026 (month July inferred from the image path)",
+      "source": "https://onepagelove.com/gallery/restaurant",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "11 Bar (Jul's, London)",
+      "url": "https://www.11elevenbar.com",
+      "why": "Full-screen dark photograph of the bar with a row of seven small party photographs across the middle, a white logo and the word ELEVEN centred, one outlined RESERVE A TABLE button and a sound toggle. No text on the first screen beyond that. Set in Optima; black (#000000) page.",
+      "recognition": "One Page Love restaurant gallery, 2026 (month April inferred from the image path)",
+      "source": "https://onepagelove.com/gallery/restaurant",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "TAB Kitchen & Bakery",
+      "url": "https://tabkitchenbakery.com",
+      "why": "Beige (#e5d4b9) first screen: tiny monospace header (name left, JP NAGAR right), serif headline split around an oval interior illustration, leaf drawings in the corners. Sometype Mono for text, PP Editorial New for headlines. No photograph, no button.",
+      "recognition": "One Page Love restaurant gallery, 2026 (month February inferred from the image path)",
+      "source": "https://onepagelove.com/gallery/restaurant",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "The Devonshire (Soho)",
+      "url": "https://www.devonshiresoho.co.uk",
+      "why": "Split screen of pub facade at night and restaurant table, Menus / Hours / FAQ across the top, red BOOK NOW tab and street address at the bottom; a booking pop-up covered the middle on load. Dark green (#34533b) frame, cream (#fff7d7) page. Menus are PDFs.",
+      "recognition": "One Page Love restaurant gallery, 2025 (month May inferred from the image path)",
+      "source": "https://onepagelove.com/gallery/restaurant",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Le Petit Bleu (New Orleans)",
+      "url": "https://www.lepetitbleucafe.com",
+      "why": "Left: serif headline and three blocks (Thanksgiving pickup, pickup and delivery, catering) with Order Online buttons. Right: photograph of a blue-striped room. A teal (#13a7b2) 'Bonjour Y'all' intro covered it on load. Open-now line and address on screen.",
+      "recognition": "One Page Love restaurant gallery, 2024 (month November inferred from the image path)",
+      "source": "https://onepagelove.com/gallery/restaurant",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "Menu only as a PDF or an image: it cannot be read on a phone or by a screen reader.",
+    "Hours, address and phone only inside a hero video or an image, or only in the footer.",
+    "A pop-up (newsletter, banner) covering the first screen before the visitor sees the hours.",
+    "A site that asks the visitor to rotate the device to see it.",
+    "Stock photographs of generic dishes instead of the real place.",
+    "A reservation widget that only opens a third-party page with no phone number as a fallback.",
+    "A placeholder page that still says 'coming soon' after the opening date."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Hotel / Restaurant",
+      "url": "https://www.awwwards.com/websites/hotel-restaurant/",
+      "access": "free"
+    },
+    {
+      "name": "One Page Love, Restaurant",
+      "url": "https://onepagelove.com/gallery/restaurant",
+      "access": "free"
+    }
+  ]
+}

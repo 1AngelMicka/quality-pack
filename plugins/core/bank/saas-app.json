@@ -1,0 +1,139 @@
+{
+  "id": "saas-app",
+  "label": {
+    "fr": "Application et tableau de bord",
+    "en": "SaaS application and dashboard"
+  },
+  "expects": [
+    {
+      "rule": "Key metrics sit above the fold, and navigation supports both an overview and a drill-down into detail.",
+      "source": "https://www.saasui.design/best-saas-dashboard-ui-inspiration",
+      "verified": true
+    },
+    {
+      "rule": "Empty states teach the first step: they explain what will appear and offer the action that fills them, instead of showing an empty chart or table.",
+      "source": "https://www.saasui.design/best-saas-dashboard-ui-inspiration",
+      "verified": true
+    },
+    {
+      "rule": "Charts offer time-range controls so a period can be compared with an earlier one, and stay readable at small widths.",
+      "source": "https://www.saasui.design/best-saas-dashboard-ui-inspiration",
+      "verified": true
+    },
+    {
+      "rule": "Colour contrast is sufficient and every control can be reached and used from the keyboard.",
+      "source": "https://www.saasui.design/best-saas-dashboard-ui-inspiration",
+      "verified": true
+    },
+    {
+      "rule": "Lists of records are tables with sortable columns, saved filters or views, and a visible count and state for each row.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Every screen has one primary action, and destructive actions ask for confirmation or offer undo.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A global search or command entry reaches any object in one step, with a keyboard shortcut shown next to it.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "A persistent left sidebar of 5 to 8 top-level items on 4 of 8 sites (Sentry, Attio, Linear, Umami); Plausible and Intercom have no sidebar in the first view.",
+    "Metric tiles above a chart: 6 numbers on Plausible, 5 on Umami; tables below with percentages or counts.",
+    "Dark or near-black interface on 3 of 8 (Plausible, Linear, Grafana's default); the rest use white or light grey (#f8f9fa, #ffffff).",
+    "One typeface family per product screen on 6 of 8 (Inter on Attio and Linear, Rubik on Sentry); a mono face for identifiers on Linear.",
+    "One accent colour on the main button or active item (purple on Sentry and Plausible).",
+    "Record pages split into a main timeline and a properties panel (Linear, Attio).",
+    "Four of the eight can be used with no account (Plausible, Umami, Grafana, Lightdash); Sentry asks only for a work email."
+  ],
+  "sites": [
+    {
+      "name": "Sentry Sandbox",
+      "url": "https://sandbox.sentry.io/",
+      "why": "Opens on a modal asking for a work email before the sandbox starts, over a blurred app: icon rail, sidebar, Feed table. Light grey (#f8f9fa) interface in Rubik with a purple (#6c5fc7) button; once in, a real issues table with trend and priority columns.",
+      "recognition": "Sentry is listed in SaaSUI's dashboard UI inspiration collection, opened 2026-11-12 (listing date not shown)",
+      "source": "https://www.saasui.design/best-saas-dashboard-ui-inspiration",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Attio",
+      "url": "https://attio.com/",
+      "why": "Announcement bar, then a centred 64px headline in Inter Display on white, two buttons, and a product window with traffic-light dots below showing a chat about a deal and a linked record. Below: real record views, as before.",
+      "recognition": "Attio is listed in SaaSUI's dashboard UI inspiration collection, opened 2026-11-12 (listing date not shown), and cited in SaaSFrame's dashboard article, 2026-09-15 updated 2026-11-12",
+      "source": "https://www.saasframe.io/blog/saas-dashboard-design-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Linear",
+      "url": "https://linear.app/",
+      "why": "Near-black page (#08090a), left-aligned 64px headline in Inter, two-line subhead, then a screenshot of an issue view (sidebar, description, activity, properties panel) from the bottom edge. Nav: Product, Resources, Customers, Pricing, Now, Contact.",
+      "recognition": "Linear is listed in SaaSUI's dashboard UI inspiration collection, opened 2026-11-12 (listing date not shown)",
+      "source": "https://www.saasui.design/best-saas-dashboard-ui-inspiration",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Intercom",
+      "url": "https://www.intercom.com/",
+      "why": "White page, centred three-line headline at 80px set in Saans with grey and black lines, serif body text (Serrif), photographs cropped at both edges, announcement bar, nav with Pricing, Log in, View demo and a dark trial button. Product views further down.",
+      "recognition": "Cited in SaaSFrame's SaaS dashboard design examples, 2026-09-15, updated 2026-11-12",
+      "source": "https://www.saasframe.io/blog/saas-dashboard-design-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Plausible live demo",
+      "url": "https://plausible.io/plausible.io",
+      "why": "Public dashboard of the company's own traffic, no account: dark theme, filter and date-range controls at top right, six metric tiles (visitors, visits, pageviews, views per visit, bounce rate, duration) above one line chart, then tabbed tables for channels, sources and pages.",
+      "recognition": "Cited in AdminLTE dashboard design examples, 2026-08-24",
+      "source": "https://adminlte.io/blog/dashboard-design-examples/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Umami live demo",
+      "url": "https://cloud.umami.is/share/LGazGOecbDtaIwDr/umami.is",
+      "why": "Shared public report of umami.is, no account: left navigation grouped as Traffic, Behavior, Growth and Monitoring, a row of five metric cards with change figures, a visitors and views chart, then ranked tables of pages with counts and percentages.",
+      "recognition": "Cited in AdminLTE dashboard design examples, 2026-08-24",
+      "source": "https://adminlte.io/blog/dashboard-design-examples/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Grafana Play",
+      "url": "https://play.grafana.org/",
+      "why": "Public Grafana instance that opens on a Grafana Play Home dashboard without sign-in, with a dashboard browser, a time range of the last 6 hours and edit controls; many example dashboards of live panels are reachable from it. (not seen on a screenshot)",
+      "recognition": "Cited in AdminLTE dashboard design examples, 2026-08-24",
+      "source": "https://adminlte.io/blog/dashboard-design-examples/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Lightdash demo",
+      "url": "https://demo.lightdash.com/",
+      "why": "Public demo project (\"saas-demo\") that opens in the app without sign-in: dark top bar with a search field and Ctrl K hint, project switcher and a home page of saved charts and dashboards. (not seen on a screenshot)",
+      "recognition": "Lightdash is featured in SaaSFrame's SaaS dashboard design examples, 2026-09-15, updated 2026-11-12",
+      "source": "https://www.saasframe.io/blog/saas-dashboard-design-examples",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A dashboard of equal-size cards each holding one big number and a small sparkline, with no hierarchy.",
+    "Empty tables or charts with no message and no action on a new account.",
+    "Rounded oversized controls and wide padding that show six rows where a user needs thirty.",
+    "A hamburger or icon-only sidebar with no labels and no tooltips.",
+    "Fake placeholder data (Lorem ipsum, John Doe, round numbers) left in screens.",
+    "Modal dialogs for every edit, and no keyboard shortcut for common actions."
+  ],
+  "sources": [
+    {
+      "name": "SaaSUI, SaaS dashboard UI inspiration (2026)",
+      "url": "https://www.saasui.design/best-saas-dashboard-ui-inspiration",
+      "access": "free"
+    },
+    {
+      "name": "SaaSFrame, SaaS dashboard design examples (2026)",
+      "url": "https://www.saasframe.io/blog/saas-dashboard-design-examples",
+      "access": "freemium"
+    }
+  ]
+}
