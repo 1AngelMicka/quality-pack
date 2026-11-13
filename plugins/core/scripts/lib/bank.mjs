@@ -140,5 +140,5 @@ export async function calibrateBank(type, { cwd, limit = 0, dir = BANK_DIR, file
   const summary = summarizeCalibration(pages, { mode: "persuade" });
   writeFileSync(file, JSON.stringify({ measured: new Date().toISOString().slice(0, 10), advice_rate: ADVICE_RATE, ...summary, pages }, null, 1) + "\n");
   return { measured: summary.sites, failed_to_load: pages.filter((p) => p.error).length, advice: summary.advice, frequent_must: summary.frequent_must, look: summary.look,
-    reading: `A "should" failed by ${ADVICE_RATE * 100} % or more of the excellent sites becomes advice in qp craft. Sites change: calibrate again before a release.` };
+    reading: `A "should" failed by ${ADVICE_RATE * 100} % or more of the excellent sites becomes advice in sw craft. Sites change: calibrate again before a release.` };
 }
