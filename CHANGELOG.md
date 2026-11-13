@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+Four measures of `sw craft` corrected after checking them on reference sites that failed them:
+
+- `focus_visible` waited for nothing: a focus ring that eases in (Sentry's, over 0.2 s) was read while still 0 px wide. The probe now waits for the control's transitions to end, and sees a ring drawn on one of the three boxes around the control or on its `::before` / `::after`.
+- `image_sharpness` fails under 80 % of the shown width instead of 95 %, and ignores loading placeholders of a few pixels.
+- `dark_color_scheme` is a `should`, no longer a `must`: 70 % of the dark reference sites do not declare it, and the effect is limited to native controls and scrollbars.
+- `layout_animation` matched property names by fragment: `outline-width` or `border-top-color` counted as layout. Names are now matched whole.
+
+The calibration file was measured before these corrections: its figures for these four rules are overstated until the bank is calibrated again (`sw bank calibrate all`).
+
 ## 0.8.0 — 2026-11-12
 
 **The project is renamed Shipwright** ("the one who builds all the way to the launch"). It no longer only audits: it covers the path from an idea to a launched product.
