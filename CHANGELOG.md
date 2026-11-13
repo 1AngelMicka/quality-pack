@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.3 — 2026-11-13
+
+- **Fix: the stack modules could not be installed.** Their manifest carried a `dependencies` key that `claude plugin install` refuses (`sw-nextjs`, `sw-node-api`, `sw-vps`, `sw-expo`, `sw-capacitor`, `sw-tauri`, `sw-electron`). Found by installing the renamed plugin for real, in a throwaway configuration folder; a test now checks the manifests, with `claude plugin validate` when the CLI is there.
+- **Three ways to use Shipwright without typing a `/plugin` command**, for agents: `sw.mjs skills` lists the skills and agents and `sw.mjs skill <name>` prints one with its paths filled in (no installation, from a clone); `sw.mjs enable [--modules a,b]` writes the project's `.claude/settings.json`; the `claude plugin` command line. Documented in the agent guide and the READMEs.
+
 ## 0.8.2 — 2026-11-13
 
 - `sw bank calibrate` shares its workers between all the sites instead of type by type, and takes `--craft-only` to keep the look of each site from the last calibration when only the craft measures changed. The whole bank: 9 minutes with `--parallel 12 --craft-only`, against 88 before.

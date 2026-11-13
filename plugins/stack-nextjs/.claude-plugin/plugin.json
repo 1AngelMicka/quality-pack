@@ -1,7 +1,7 @@
 {
   "name": "sw-nextjs",
   "description": "Shipwright module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind de Shipwright.",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"
@@ -16,8 +16,5 @@
     "accessibility",
     "seo",
     "qualité"
-  ],
-  "dependencies": [
-    "qp"
   ]
 }

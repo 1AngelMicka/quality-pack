@@ -130,8 +130,6 @@ def build_manifests():
     for d, p in PLUGINS.items():
         pj = {"name": p["name"], "description": p["description"], "version": VERSION, "author": AUTHOR,
               "license": "MIT", "homepage": REPO, "repository": REPO, "keywords": ["quality", "audit", "security", "accessibility", "seo", "qualité"]}
-        if d != "core":
-            pj["dependencies"] = ["qp"]
         write(ROOT / "plugins" / d / ".claude-plugin" / "plugin.json", json.dumps(pj, ensure_ascii=False, indent=2) + "\n")
         mk["plugins"].append({"name": p["name"], "description": p["description"], "version": VERSION,
                               "source": f"./plugins/{d}", "author": AUTHOR})

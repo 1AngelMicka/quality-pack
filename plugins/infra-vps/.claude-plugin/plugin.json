@@ -1,7 +1,7 @@
 {
   "name": "sw-vps",
   "description": "Shipwright module for self-hosted VPS: Docker Compose, PM2, Nginx or CloudPanel, backups. Module VPS auto-hébergé de Shipwright.",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"
@@ -16,8 +16,5 @@
     "accessibility",
     "seo",
     "qualité"
-  ],
-  "dependencies": [
-    "qp"
   ]
 }

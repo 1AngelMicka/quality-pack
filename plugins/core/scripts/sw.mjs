@@ -3,7 +3,10 @@
 // folder that holds .quality/project.json and writes there.
 //
 //   node sw.mjs detect                       Guess stacks, flags and profile for /sw:kickoff
-//   node sw.mjs stacks                       List installed qp stack modules
+//   node sw.mjs stacks                       List installed sw stack modules
+//   node sw.mjs skills                       Without the plugin loaded: list the skills and agents, with their files
+//   node sw.mjs skill <name> [notes]         Print one skill (or an agent's brief) with its paths filled in, ready to follow
+//   node sw.mjs enable [--modules a,b]       Write the project's .claude/settings.json so that Claude Code offers the plugin
 //   node sw.mjs plan [scope...] [--incremental]
 //                                            Applicable criteria for /sw:audit, written to .quality/audits/<run>/plan.json.
 //                                            scope: group, domain, criterion IDs, "blockers" or "quick" (automatic checks only).
@@ -881,6 +884,27 @@ async function main() {
         age_days: Math.round((Date.now() - statSync(last.file).mtimeMs) / 86400000) });
       const area = (k) => r.scores?.[k]?.score == null ? "—" : `${r.scores[k].score}/10`;
       return process.stdout.write(`Last audit ${last.run}: experience ${area("experience")}, engineering ${area("operations")}, overall ${r.global}/10, ${r.open_blockers} open blocker(s), ${r.issues.length} open issue(s).\n`);
+    }
+    case "skills": {
+      const { listSkills } = await import("./lib/standalone.mjs");
+      const l = listSkills();
+      return out({ ...l, how: "Read one with: node sw.mjs skill <name>. A skill marked asked_by_the_user_only is a command (/sw:kickoff, /sw:audit…): follow it only when the user asked for it." });
+    }
+    case "skill": {
+      const { readSkill } = await import("./lib/standalone.mjs");
+      if (!rest[0]) die("Usage: sw.mjs skill <name> [notes from the user]");
+      const r = readSkill(rest[0], { args: rest.slice(1).join(" ") });
+      if (r.error) { out(r); process.exit(1); }
+      process.stdout.write(`<!-- Shipwright skill "${r.name}", read without the plugin system. Plugin folder: ${r.plugin_root}${r.references.length ? `. Reference files to read when the skill names them: ${r.references.join(", ")}` : ""}. Where the text says to run another skill or /sw: command, read it the same way: node sw.mjs skill <name>. -->\n`);
+      return process.stdout.write(r.text.endsWith("\n") ? r.text : r.text + "\n");
+    }
+    case "enable": {
+      const { enableInProject } = await import("./lib/standalone.mjs");
+      const modules = (opt("modules", "") || "").split(",").map((x) => x.trim()).filter(Boolean);
+      const r = enableInProject(cwd, modules);
+      out(r);
+      if (r.error) process.exit(1);
+      return;
     }
     default:
       process.stdout.write(readFileSync(new URL(import.meta.url), "utf8").split("\n").filter((l) => l.startsWith("//")).join("\n").replace(/^\/\/ ?/gm, "") + "\n");
