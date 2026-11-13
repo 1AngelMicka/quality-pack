@@ -233,7 +233,7 @@ async function main() {
   mkdirSync(outDir, { recursive: true });
   const measure = readFileSync(join(HERE, 'measure.js'), 'utf8');
 
-  if (typeof WebSocket === 'undefined') throw new Error('qp deslop needs Node 22 or later (built-in WebSocket).');
+  if (typeof WebSocket === 'undefined') throw new Error('sw deslop needs Node 22 or later (built-in WebSocket).');
   const attached = opts.attach ? await attachedTarget(opts.attach) : null;
   const profile = attached ? null : mkdtempSync(join(tmpdir(), 'deslop-profile-'));
   const { proc, endpoint } = attached ? {} : launch(findBrowser(), profile);

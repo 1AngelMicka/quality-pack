@@ -1,4 +1,4 @@
-// Tests of qp billing against a stand-in for Stripe's test API (no network, no real key). Run with: node --test tests/
+// Tests of sw billing against a stand-in for Stripe's test API (no network, no real key). Run with: node --test tests/
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFile } from "node:child_process";

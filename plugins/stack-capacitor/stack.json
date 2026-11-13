@@ -76,8 +76,8 @@
    "en": "Run `npx cap sync` after any plugin change and commit the android/ and ios/ folders."
   },
   {
-   "fr": "Les mêmes tâches clés sont jouées dans le navigateur (qp flows) et sur appareil (qp mobile flows).",
-   "en": "The same key tasks are played in the browser (qp flows) and on a device (qp mobile flows)."
+   "fr": "Les mêmes tâches clés sont jouées dans le navigateur (sw flows) et sur appareil (sw mobile flows).",
+   "en": "The same key tasks are played in the browser (sw flows) and on a device (sw mobile flows)."
   }
  ],
  "qp_stack": true,

@@ -66,7 +66,7 @@ export function runZap(target, { outDir, production, allowProduction = false, mi
   if (!existsSync(reportFile)) return { available: true, errors: [`ZAP wrote no report (exit ${r.status ?? "killed"}): ${log.split(/\r?\n/).filter((l) => l.trim()).slice(-4).join(" | ").slice(0, 400)}`] };
   const parsed = parseZap(JSON.parse(readFileSync(reportFile, "utf8")));
   return { available: true, tool: "OWASP ZAP baseline (passive)", image: ZAP_IMAGE, target, scanned_as, duration_s: Math.round((Date.now() - started) / 1000), ...parsed,
-    note: "Passive scan: configuration and header mistakes on the pages the crawler reached without logging in. It does not test access control (qp access), injection or business logic." };
+    note: "Passive scan: configuration and header mistakes on the pages the crawler reached without logging in. It does not test access control (sw access), injection or business logic." };
 }
 
 export function compactZap(result) {

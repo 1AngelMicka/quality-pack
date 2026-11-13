@@ -23,4 +23,4 @@ rules:
   - {fr: "Bouton retour Android géré (App.addListener('backButton')) : il ramène à l'écran précédent et ne ferme l'app que depuis l'accueil.", en: "Android back button handled (App.addListener('backButton')): it returns to the previous screen and only closes the app from home."}
   - {fr: "Pas de survol comme seul moyen d'agir ; retours tactiles sous 100 ms ; pas de délai de 300 ms (touch-action: manipulation).", en: "No hover as the only way to act; touch feedback under 100 ms; no 300 ms delay (touch-action: manipulation)."}
   - {fr: "Lancer `npx cap sync` après tout changement de plugin et commiter les dossiers android/ et ios/.", en: "Run `npx cap sync` after any plugin change and commit the android/ and ios/ folders."}
-  - {fr: "Les mêmes tâches clés sont jouées dans le navigateur (qp flows) et sur appareil (qp mobile flows).", en: "The same key tasks are played in the browser (qp flows) and on a device (qp mobile flows)."}
+  - {fr: "Les mêmes tâches clés sont jouées dans le navigateur (sw flows) et sur appareil (sw mobile flows).", en: "The same key tasks are played in the browser (sw flows) and on a device (sw mobile flows)."}

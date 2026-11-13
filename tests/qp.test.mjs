@@ -406,7 +406,7 @@ test("deslop: spacing audit flags the generic page and passes the clean one", (t
   const run = (f) => spawnSync("node", [QP, "deslop", page(f), "--widths", "375,1440", "--run", "2026-07-01"], { cwd: dir, encoding: "utf8" });
   const slop = run("slop.html");
   if (slop.status !== 0 && /Chrome or Edge not found/.test(slop.stderr)) return t.skip("no Chrome or Edge installed");
-  if (slop.status !== 0 && /needs Node 22/.test(slop.stderr)) return t.skip("Node 22 or later needed for qp deslop");
+  if (slop.status !== 0 && /needs Node 22/.test(slop.stderr)) return t.skip("Node 22 or later needed for sw deslop");
   assert.equal(slop.status, 0, slop.stderr);
   const s = JSON.parse(slop.stdout);
   assert.ok(s.total.high > 0);
@@ -417,7 +417,7 @@ test("deslop: spacing audit flags the generic page and passes the clean one", (t
   const clean = JSON.parse(run("clean.html").stdout);
   assert.deepEqual(clean.total, { high: 0, med: 0, low: 0 });
   // wide screens: the clean page stays clean, and text squeezed by a growing gutter is caught at 1920 only
-  const wide = (f) => JSON.parse(spawnSync("node", [QP, "deslop", page(f), "--widths", "1440,1920", "--run", "2026-07-01"], { cwd: dir, encoding: "utf8" }).stdout);
+  const wide = (f) => { const r = spawnSync("node", [QP, "deslop", page(f), "--widths", "1440,1920", "--run", "2026-07-01"], { cwd: dir, encoding: "utf8" }); assert.equal(r.status, 0, r.stderr); return JSON.parse(r.stdout); };
   assert.deepEqual(wide("clean.html").total, { high: 0, med: 0, low: 0 });
   const sq = wide("squeezed.html");
   const squeezedAt = (w) => sq.widths.find((x) => x.width === w).findings.some((f) => f.rule === "text-squeezed");

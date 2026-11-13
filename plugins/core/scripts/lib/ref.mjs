@@ -53,7 +53,7 @@ export function applies(item, flags) {
   return (item.applies_if || []).every((f) => flags.has(f));
 }
 
-// Find stack.json files of installed qp stack modules.
+// Find stack.json files of installed sw stack modules.
 // Works for marketplace installs (sibling plugins in the cache), local marketplaces (plugins/*),
 // and project overrides in .quality/stacks/*.json.
 export function findStacks(cwd = process.cwd()) {

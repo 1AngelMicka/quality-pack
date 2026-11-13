@@ -72,8 +72,8 @@
    "en": "Secrets with safeStorage or the system keychain; data in app.getPath('userData')."
   },
   {
-   "fr": "Pour vérifier l'interface dans la vraie fenêtre : lancer l'app avec --remote-debugging-port=9222, puis qp flows --attach 9222.",
-   "en": "To check the interface in the real window: start the app with --remote-debugging-port=9222, then qp flows --attach 9222."
+   "fr": "Pour vérifier l'interface dans la vraie fenêtre : lancer l'app avec --remote-debugging-port=9222, puis sw flows --attach 9222.",
+   "en": "To check the interface in the real window: start the app with --remote-debugging-port=9222, then sw flows --attach 9222."
   }
  ],
  "qp_stack": true,

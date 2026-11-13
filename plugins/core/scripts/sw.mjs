@@ -72,7 +72,7 @@
 //                                            Compare a screen with the project's references, or with the reference bank of a site type
 //   node sw.mjs bank [type] | bank measure <type|all> | bank calibrate <type|all> [--limit N]
 //                                            Reference bank: excellent sites by type, why they are, their measured profile;
-//                                            calibrate runs qp craft and qp look on them, so that a rule most of them break becomes advice
+//                                            calibrate runs sw craft and sw look on them, so that a rule most of them break becomes advice
 //   node sw.mjs variants <name> <url> <url> [url...] | variants <name> --tally
 //                                            Several versions of one screen: screenshots under shuffled letters, measures, pairs
 //                                            for a blind jury; --tally ranks them from the votes
@@ -797,7 +797,10 @@ async function main() {
       const script = fileURLToPath(new URL("./deslop/audit.mjs", import.meta.url));
       const args = [...rest];
       if (!args.includes("--widths") && !args.includes("--attach")) args.push("--widths", "375,768,1440,1920");
-      const r = spawnSync(process.execPath, [script, ...args, "--out", outDir, "--json"], { cwd: here, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+      const audit = () => spawnSync(process.execPath, [script, ...args, "--out", outDir, "--json"], { cwd: here, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+      let r = audit();
+      // On a busy machine the browser sometimes fails to start in time: one more try before giving up.
+      if (r.status !== 0 && /did not start|timed out|ECONNREFUSED|ECONNRESET/i.test(r.stderr || "")) r = audit();
       if (r.status !== 0) die((r.stderr || r.stdout || "deslop failed").trim());
       const reports = JSON.parse(r.stdout);
       const result = { widths: reports.map((x) => ({ width: x.viewport.width, counts: x.counts, text_length: x.textLength, js_errors: x.errors.length,
