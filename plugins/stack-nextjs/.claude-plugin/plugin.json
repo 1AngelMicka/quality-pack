@@ -1,7 +1,7 @@
 {
   "name": "sw-nextjs",
   "description": "Optional add-on for Next.js / React projects: rules for Next.js, React, TypeScript and Tailwind. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les projets Next.js, React, TypeScript, Tailwind.",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"
