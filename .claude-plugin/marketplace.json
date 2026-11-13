@@ -2,7 +2,7 @@
   "name": "shipwright",
   "metadata": {
     "description": "Shipwright takes a site, web app, SaaS, desktop or mobile app from the idea to the launch, with proof at every step. Install the main plugin, Sw: it is the only one you need. The others are optional add-ons, one per technology (Next.js, Node API, Expo, Capacitor, Tauri, Electron, VPS): add one only if your project uses it. Un plugin principal (Sw) et des modules optionnels par technologie.",
-    "version": "0.8.4"
+    "version": "0.8.5"
   },
   "owner": {
     "name": "Micka",
@@ -12,7 +12,7 @@
     {
       "name": "sw",
       "description": "Start here: the main Shipwright plugin, the only one you need. Takes a site, web app, SaaS, desktop or mobile app from the idea to the launch. Stages with a gate each, build skills across 37 domains, key tasks played on phone and desktop, security tried, rendering measured, two scores with evidence. /sw:kickoff, /sw:audit, /sw:fix. Shipwright : mène un site, une application web, un SaaS, une application de bureau ou mobile de l'idée au lancement, avec la preuve à chaque étape.",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "source": "./plugins/core",
       "author": {
         "name": "Micka",
@@ -22,7 +22,7 @@
     {
       "name": "sw-nextjs",
       "description": "Optional add-on for Next.js / React projects: rules for Next.js, React, TypeScript and Tailwind. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les projets Next.js, React, TypeScript, Tailwind.",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "source": "./plugins/stack-nextjs",
       "author": {
         "name": "Micka",
@@ -32,7 +32,7 @@
     {
       "name": "sw-node-api",
       "description": "Optional add-on for Node API projects: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les API Node.",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "source": "./plugins/stack-node-api",
       "author": {
         "name": "Micka",
@@ -42,7 +42,7 @@
     {
       "name": "sw-expo",
       "description": "Optional add-on for Expo / React Native apps (iOS, Android). Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les apps Expo et React Native.",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "source": "./plugins/stack-expo",
       "author": {
         "name": "Micka",
@@ -52,7 +52,7 @@
     {
       "name": "sw-capacitor",
       "description": "Optional add-on for Capacitor mobile apps: a web app shipped as an iOS and Android app. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les apps Capacitor.",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "source": "./plugins/stack-capacitor",
       "author": {
         "name": "Micka",
@@ -62,7 +62,7 @@
     {
       "name": "sw-tauri",
       "description": "Optional add-on for Tauri desktop apps. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les applications de bureau Tauri.",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "source": "./plugins/stack-tauri",
       "author": {
         "name": "Micka",
@@ -72,7 +72,7 @@
     {
       "name": "sw-electron",
       "description": "Optional add-on for Electron desktop apps. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les applications de bureau Electron.",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "source": "./plugins/stack-electron",
       "author": {
         "name": "Micka",
@@ -82,7 +82,7 @@
     {
       "name": "sw-vps",
       "description": "Optional add-on for a self-hosted VPS server: Docker Compose, PM2, Nginx or CloudPanel, backups. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour un serveur VPS auto-hébergé.",
-      "version": "0.8.4",
+      "version": "0.8.5",
       "source": "./plugins/infra-vps",
       "author": {
         "name": "Micka",

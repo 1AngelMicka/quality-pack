@@ -1,7 +1,7 @@
 {
   "name": "sw-node-api",
   "description": "Optional add-on for Node API projects: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les API Node.",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

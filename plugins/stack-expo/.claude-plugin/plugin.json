@@ -1,7 +1,7 @@
 {
   "name": "sw-expo",
   "description": "Optional add-on for Expo / React Native apps (iOS, Android). Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les apps Expo et React Native.",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

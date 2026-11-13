@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.5 — 2026-11-13
 
 - **Interactive 3D in the `scroll-animation` skill.** The 3D part was one paragraph; it is now a reference of its own (`references/3d.md`): which tool to pick (`<model-viewer>` for one model, React Three Fiber in React, three.js elsewhere), recipes with code, the poster image that comes before the canvas, rendering on demand, model compression, tying the scene to the page scroll without replacing it, working budgets for phones, keyboard access, and nine rules (3D-01 to 3D-09). Licences and versions checked on 2026-11-13.
 
