@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.1 — 2026-11-13
 
 Four measures of `sw craft` corrected after checking them on reference sites that failed them:
 

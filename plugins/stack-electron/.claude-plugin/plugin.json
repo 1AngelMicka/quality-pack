@@ -1,7 +1,7 @@
 {
   "name": "sw-electron",
   "description": "Shipwright module for Electron desktop apps. Module Electron (application de bureau) de Shipwright.",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"
