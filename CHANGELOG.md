@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.2 — 2026-11-13
 
 - `sw bank calibrate` shares its workers between all the sites instead of type by type, and takes `--craft-only` to keep the look of each site from the last calibration when only the craft measures changed. The whole bank: 9 minutes with `--parallel 12 --craft-only`, against 88 before.
 - The bank is calibrated again with the measures corrected in 0.8.1: `focus_visible` 31 % → 26 % of the reference sites, `image_sharpness` 20 % → 10 %; `dark_color_scheme` (70 %) becomes advice.
