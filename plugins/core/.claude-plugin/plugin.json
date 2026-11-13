@@ -1,7 +1,7 @@
 {
   "name": "sw",
-  "description": "Shipwright: takes a site, web app, SaaS, desktop or mobile app from the idea to the launch. Stages with a gate each, build skills across 37 domains, key tasks played on phone and desktop, security tried, rendering measured, two scores with evidence. /sw:kickoff, /sw:audit, /sw:fix. Shipwright : mène un site, une application web, un SaaS, une application de bureau ou mobile de l'idée au lancement, avec la preuve à chaque étape.",
-  "version": "0.8.3",
+  "description": "Start here: the main Shipwright plugin, the only one you need. Takes a site, web app, SaaS, desktop or mobile app from the idea to the launch. Stages with a gate each, build skills across 37 domains, key tasks played on phone and desktop, security tried, rendering measured, two scores with evidence. /sw:kickoff, /sw:audit, /sw:fix. Shipwright : mène un site, une application web, un SaaS, une application de bureau ou mobile de l'idée au lancement, avec la preuve à chaque étape.",
+  "version": "0.8.4",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

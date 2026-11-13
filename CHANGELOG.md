@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.4 — 2026-11-13
+
+- **A marketplace listing that can be understood.** Listings cut each description after about 45 characters, so the eight plugins read as "Shipwright: takes a site…" and seven times "Shipwright module for…". Each description now starts with what the plugin is: "Start here: the main Shipwright plugin, the only one you need" for `sw`, "Optional add-on for Next.js / React projects" and the like for the seven others, which also say to install `sw` first.
+- The marketplace had no description of its own: it was written at the top level of the manifest, where it is ignored. It is now in `metadata.description` and says which plugin to install.
+
 ## 0.8.3 — 2026-11-13
 
 - **Fix: the stack modules could not be installed.** Their manifest carried a `dependencies` key that `claude plugin install` refuses (`sw-nextjs`, `sw-node-api`, `sw-vps`, `sw-expo`, `sw-capacitor`, `sw-tauri`, `sw-electron`). Found by installing the renamed plugin for real, in a throwaway configuration folder; a test now checks the manifests, with `claude plugin validate` when the CLI is there.

@@ -1,7 +1,7 @@
 {
   "name": "sw-electron",
-  "description": "Shipwright module for Electron desktop apps. Module Electron (application de bureau) de Shipwright.",
-  "version": "0.8.3",
+  "description": "Optional add-on for Electron desktop apps. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les applications de bureau Electron.",
+  "version": "0.8.4",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

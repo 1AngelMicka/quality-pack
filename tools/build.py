@@ -32,14 +32,14 @@ _SCORING, _CHECKS, _GROUPS = R.load()
 N_DOMAINS = sum(len(g["domains"]) for g in _GROUPS)
 
 PLUGINS = {
-    "core": {"name": "sw", "description": f"Shipwright: takes a site, web app, SaaS, desktop or mobile app from the idea to the launch. Stages with a gate each, build skills across {N_DOMAINS} domains, key tasks played on phone and desktop, security tried, rendering measured, two scores with evidence. /sw:kickoff, /sw:audit, /sw:fix. Shipwright : mène un site, une application web, un SaaS, une application de bureau ou mobile de l'idée au lancement, avec la preuve à chaque étape."},
-    "stack-nextjs": {"name": "sw-nextjs", "description": "Shipwright module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind de Shipwright."},
-    "stack-node-api": {"name": "sw-node-api", "description": "Shipwright module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node de Shipwright."},
-    "stack-expo": {"name": "sw-expo", "description": "Shipwright module for Expo and React Native apps (iOS, Android). Module Expo / React Native de Shipwright."},
-    "stack-capacitor": {"name": "sw-capacitor", "description": "Shipwright module for Capacitor apps: a web app shipped as an iOS and Android app. Module Capacitor de Shipwright."},
-    "stack-tauri": {"name": "sw-tauri", "description": "Shipwright module for Tauri desktop apps. Module Tauri (application de bureau) de Shipwright."},
-    "stack-electron": {"name": "sw-electron", "description": "Shipwright module for Electron desktop apps. Module Electron (application de bureau) de Shipwright."},
-    "infra-vps": {"name": "sw-vps", "description": "Shipwright module for self-hosted VPS: Docker Compose, PM2, Nginx or CloudPanel, backups. Module VPS auto-hébergé de Shipwright."},
+    "core": {"name": "sw", "description": f"Start here: the main Shipwright plugin, the only one you need. Takes a site, web app, SaaS, desktop or mobile app from the idea to the launch. Stages with a gate each, build skills across {N_DOMAINS} domains, key tasks played on phone and desktop, security tried, rendering measured, two scores with evidence. /sw:kickoff, /sw:audit, /sw:fix. Shipwright : mène un site, une application web, un SaaS, une application de bureau ou mobile de l'idée au lancement, avec la preuve à chaque étape."},
+    "stack-nextjs": {"name": "sw-nextjs", "description": "Optional add-on for Next.js / React projects: rules for Next.js, React, TypeScript and Tailwind. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les projets Next.js, React, TypeScript, Tailwind."},
+    "stack-node-api": {"name": "sw-node-api", "description": "Optional add-on for Node API projects: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les API Node."},
+    "stack-expo": {"name": "sw-expo", "description": "Optional add-on for Expo / React Native apps (iOS, Android). Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les apps Expo et React Native."},
+    "stack-capacitor": {"name": "sw-capacitor", "description": "Optional add-on for Capacitor mobile apps: a web app shipped as an iOS and Android app. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les apps Capacitor."},
+    "stack-tauri": {"name": "sw-tauri", "description": "Optional add-on for Tauri desktop apps. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les applications de bureau Tauri."},
+    "stack-electron": {"name": "sw-electron", "description": "Optional add-on for Electron desktop apps. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les applications de bureau Electron."},
+    "infra-vps": {"name": "sw-vps", "description": "Optional add-on for a self-hosted VPS server: Docker Compose, PM2, Nginx or CloudPanel, backups. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour un serveur VPS auto-hébergé."},
 }
 
 GROUP_TRIGGERS = {
@@ -124,8 +124,12 @@ def build_stack_skills():
 
 
 def build_manifests():
-    mk = {"name": "shipwright",
-          "description": f"Shipwright: from the idea to the launch, with proof at every step. Build skills, played tasks, measured rendering and audits across {N_DOMAINS} domains. De l'idée au lancement, avec la preuve à chaque étape.",
+    # The listing shows metadata.description; a top-level "description" is ignored (claude plugin validate warns).
+    about = ("Shipwright takes a site, web app, SaaS, desktop or mobile app from the idea to the launch, with proof at every step. "
+             "Install the main plugin, Sw: it is the only one you need. The others are optional add-ons, one per technology "
+             "(Next.js, Node API, Expo, Capacitor, Tauri, Electron, VPS): add one only if your project uses it. "
+             "Un plugin principal (Sw) et des modules optionnels par technologie.")
+    mk = {"name": "shipwright", "metadata": {"description": about, "version": VERSION},
           "owner": AUTHOR, "plugins": []}
     for d, p in PLUGINS.items():
         pj = {"name": p["name"], "description": p["description"], "version": VERSION, "author": AUTHOR,
