@@ -7,6 +7,10 @@
 //   node sw.mjs skills                       Without the plugin loaded: list the skills and agents, with their files
 //   node sw.mjs skill <name> [notes]         Print one skill (or an agent's brief) with its paths filled in, ready to follow
 //   node sw.mjs enable [--modules a,b]       Write the project's .claude/settings.json so that Claude Code offers the plugin
+//   node sw.mjs install [--modules a,b] [--scope user|project]
+//                                            Install the marketplace, the main plugin and the modules of the technologies found in
+//                                            the project, with Claude Code's command line. Changes the user's Claude Code
+//                                            configuration: only when the user asked. Then the user types /reload-plugins
 //   node sw.mjs plan [scope...] [--incremental]
 //                                            Applicable criteria for /sw:audit, written to .quality/audits/<run>/plan.json.
 //                                            scope: group, domain, criterion IDs, "blockers" or "quick" (automatic checks only).
@@ -900,6 +904,18 @@ async function main() {
       if (r.error) { out(r); process.exit(1); }
       process.stdout.write(`<!-- Shipwright skill "${r.name}", read without the plugin system. Plugin folder: ${r.plugin_root}${r.references.length ? `. Reference files to read when the skill names them: ${r.references.join(", ")}` : ""}. Where the text says to run another skill or /sw: command, read it the same way: node sw.mjs skill <name>. -->\n`);
       return process.stdout.write(r.text.endsWith("\n") ? r.text : r.text + "\n");
+    }
+    case "install": {
+      const { installPlugins } = await import("./lib/install.mjs");
+      const { detect } = await import("./lib/detect.mjs");
+      const modules = (opt("modules", "") || "").split(",").map((x) => x.trim()).filter(Boolean);
+      const scope = opt("scope", "user");
+      let detected = [];
+      try { detected = detect(cwd, findStacks(cwd)).stacks || []; } catch { /* a project that cannot be read installs the main plugin only */ }
+      const r = installPlugins({ cwd, modules, detected, scope });
+      out(r);
+      if (r.error || r.failed?.length) process.exit(1);
+      return;
     }
     case "enable": {
       const { enableInProject } = await import("./lib/standalone.mjs");

@@ -1,7 +1,7 @@
 {
   "name": "sw-vps",
-  "description": "Shipwright module for self-hosted VPS: Docker Compose, PM2, Nginx or CloudPanel, backups. Module VPS auto-hébergé de Shipwright.",
-  "version": "0.8.3",
+  "description": "Optional add-on for a self-hosted VPS server: Docker Compose, PM2, Nginx or CloudPanel, backups. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour un serveur VPS auto-hébergé.",
+  "version": "0.8.4",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

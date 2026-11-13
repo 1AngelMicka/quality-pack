@@ -1,7 +1,7 @@
 {
   "name": "sw-node-api",
-  "description": "Shipwright module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node de Shipwright.",
-  "version": "0.8.3",
+  "description": "Optional add-on for Node API projects: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les API Node.",
+  "version": "0.8.4",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

@@ -99,9 +99,9 @@ node <clone>/plugins/core/scripts/sw.mjs skill kickoff   # one skill, ready to f
 # B. Write the project's settings: Claude Code offers the plugin the next time the project is opened
 node <clone>/plugins/core/scripts/sw.mjs enable --modules nextjs,vps
 
-# C. On the command line, from a terminal outside Claude Code
-claude plugin marketplace add 1AngelMicka/quality-pack
-claude plugin install sw@shipwright
+# C. Full installation by the agent, when you ask for it (marketplace, plugin, detected modules)
+node <clone>/plugins/core/scripts/sw.mjs install
+# then you type /reload-plugins: the one thing an agent cannot do for you
 ```
 
 Details are in the [agent guide](docs/AGENT_GUIDE.md).

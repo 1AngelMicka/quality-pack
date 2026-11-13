@@ -78,3 +78,33 @@ test("manifests: no key that the plugin installer refuses", () => {
   const v = spawnSync("claude", ["plugin", "validate", ROOT], { encoding: "utf8", env, shell: process.platform === "win32" });
   assert.equal(v.status, 0, v.stdout + v.stderr);
 });
+
+test("install: the marketplace, the main plugin and the modules found in the project, without the session variable", () => {
+  const fake = join(ROOT, "tests/fixtures/fake-claude.mjs");
+  const dir = mkdtempSync(join(tmpdir(), "sw-"));
+  writeFileSync(join(dir, "package.json"), JSON.stringify({ name: "x", dependencies: { next: "15.0.0", react: "19.0.0" } }));
+  const log = join(dir, "claude.log");
+  const run = (args, extra = {}) => spawnSync("node", [SW, "install", ...args], { cwd: dir, encoding: "utf8", env: { ...process.env, CLAUDECODE: "1", SW_CLAUDE_BIN: fake, FAKE_CLAUDE_LOG: log, ...extra } });
+  // Run as an agent would, inside a session: the variable that makes claude refuse is not passed on.
+  const first = run(["--modules", "vps"]);
+  assert.equal(first.status, 0, first.stdout + first.stderr);
+  const r = JSON.parse(first.stdout);
+  assert.deepEqual(r.installed, ["sw@shipwright", "sw-vps@shipwright", "sw-nextjs@shipwright"]);
+  assert.match(r.next, /\/reload-plugins/);
+  const asked = readFileSync(log, "utf8").trim().split("\n");
+  assert.ok(asked.includes("plugin marketplace add 1AngelMicka/quality-pack"));
+  assert.ok(asked.includes("plugin install sw-nextjs@shipwright --scope user"));
+  // A second run updates the marketplace instead of adding it again.
+  const second = JSON.parse(run(["--scope", "project"]).stdout);
+  assert.match(second.steps[0].step, /already known, updated/);
+  assert.ok(readFileSync(log, "utf8").includes("plugin install sw@shipwright --scope project"));
+  // A failed install is reported and the command exits with an error.
+  const bad = run([], { FAKE_CLAUDE_FAIL: "sw-nextjs" });
+  assert.equal(bad.status, 1);
+  assert.deepEqual(JSON.parse(bad.stdout).failed, ["install sw-nextjs@shipwright"]);
+  assert.match(JSON.parse(run(["--modules", "nope"]).stdout).error, /Unknown module/);
+  assert.match(JSON.parse(run(["--scope", "everyone"]).stdout).error, /Unknown scope/);
+  // No claude command on the machine: a clear message that names the other ways.
+  const none = JSON.parse(run([], { SW_CLAUDE_BIN: "no-such-claude-command" }).stdout);
+  assert.match(none.error, /sw\.mjs skills/);
+});

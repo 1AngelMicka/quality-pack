@@ -63,17 +63,27 @@ node <clone>/plugins/core/scripts/sw.mjs enable --modules nextjs,vps
 
 It adds the marketplace and the plugins to `.claude/settings.json` of the project and keeps what is already there. Claude Code reads that file when the project is opened: the user restarts the session there and accepts the marketplace. The file can be committed to share the setup with a team. Until the restart, keep using A.
 
-**C. The command line**, from a terminal outside any Claude Code session:
+**C. Install it yourself, when the user asked you to install Shipwright.**
+
+```bash
+node <clone>/plugins/core/scripts/sw.mjs install            # marketplace, main plugin, modules of the technologies found in the project
+node <clone>/plugins/core/scripts/sw.mjs install --modules vps --scope project
+```
+
+It runs Claude Code's own command line (`claude plugin marketplace add`, `claude plugin install`) and reports each step. It changes the user's Claude Code configuration, so run it only when the user asked for the installation ("use Shipwright from this repository", "install it") and say that you did. It works from inside a session: the `claude` command normally refuses to start there, to prevent a session inside a session; installing a plugin opens none, and `install` leaves that one variable out of the commands it runs. Do not use that for anything else.
+
+What it cannot do: load the plugin into the session that is already open. End by telling the user, in these words: **type `/reload-plugins`** (or reopen the session). Until they have, keep working with A. If the reload does not start the hooks, the session has to be reopened once.
+
+The same by hand, from a terminal outside any session:
 
 ```bash
 claude plugin marketplace add 1AngelMicka/quality-pack
 claude plugin install sw@shipwright
-claude plugin install sw-nextjs@shipwright
 ```
 
-`claude plugin install` takes `--scope project` to write the project's settings instead of the user's. Inside a Claude Code session the `claude` command refuses to start; do not work around that, use A or B, or ask the user to run these three lines in a terminal. The plugin is active after a restart of the session or `/reload-plugins`.
+**Which one.** The user gave you the repository link and asked to use or install Shipwright: clone, run C, ask for `/reload-plugins`, and start working with A meanwhile. The user only wants to try it, or there is no `claude` command: A, then B.
 
-Checked on Claude Code 2.1.45: A, B (the file written is the one `claude plugin install --scope project` writes) and C.
+Checked on Claude Code 2.1.45: A, B (the file written is the one `claude plugin install --scope project` writes) and C run from inside a session. Not checked: that `/reload-plugins` starts the hooks without reopening the session.
 
 ## 2. Optional extras
 
