@@ -264,7 +264,9 @@ async function main() {
       proc.removeAllListeners('exit');
       proc.kill();
       await sleep(300);
-      rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+      // The browser may still be writing its profile while it stops: a temporary folder left behind is harmless,
+      // failing the whole audit after its report was written is not (seen in CI: ENOTEMPTY on Linux).
+      try { rmSync(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 300 }); } catch { /* left in the temp folder */ }
     }
   }
 }
