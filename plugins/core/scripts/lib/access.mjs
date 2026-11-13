@@ -64,7 +64,7 @@ async function browserSessions(accounts, { root, base }) {
   const need = Object.entries(accounts).filter(([, a]) => Array.isArray(a.login));
   if (!need.length) return {};
   const tools = await loadBrowserTools(root);
-  if (!tools) throw Object.assign(new Error("Playwright is not available. Run `node <qp.mjs> browser-setup` once (ask the user first), or give the accounts headers or cookies instead of login steps."), { unavailable: true });
+  if (!tools) throw Object.assign(new Error("Playwright is not available. Run `node <sw.mjs> browser-setup` once (ask the user first), or give the accounts headers or cookies instead of login steps."), { unavailable: true });
   const { act } = await import("./flows.mjs");
   const browser = await launch(tools.chromium);
   const out = {};
@@ -137,7 +137,7 @@ export function verdict(check, res, ownerRes) {
 export async function runAccess(project, { root, base, allowProduction = false } = {}) {
   const v = validateAccess(project);
   if (v.errors.length) return { available: true, errors: v.errors };
-  if (!v.checks.length) return { available: true, errors: ["no access block in .quality/project.json: declare two accounts and the resources each must not reach (see /qp:kickoff)"] };
+  if (!v.checks.length) return { available: true, errors: ["no access block in .quality/project.json: declare two accounts and the resources each must not reach (see /sw:kickoff)"] };
   const baseUrl = base || project.urls?.local || project.urls?.staging;
   if (!baseUrl) return { available: true, errors: ["no URL: pass --base <url> or set urls.local or urls.staging in .quality/project.json"] };
   const prod = project.urls?.production;

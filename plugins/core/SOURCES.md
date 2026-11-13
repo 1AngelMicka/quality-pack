@@ -10,10 +10,10 @@ The design skills (`design-screens`, `design-direction`, `design-review`) and th
 | Tab bars, sheets, targets | Apple Human Interface Guidelines: tab bars, sheets, accessibility | SCR-03, SCR-05, SCR-07 |
 | Target size, contrast, text spacing, focus, forms | W3C WCAG 2.2 and its Understanding pages (1.3.5, 1.4.3, 1.4.4, 1.4.8, 1.4.10, 1.4.11, 1.4.12, 2.4.11, 2.4.13, 2.5.7, 2.5.8, 3.2.6, 3.3.7, 3.3.8, 4.1.3) | SCR-05, DIR-02 to DIR-06, REV-05, REV-06, checks |
 | WCAG 3 status | W3C WAI, WCAG 3 overview (Working Draft, September 2026) | colour |
-| Design tokens | W3C Design Tokens Community Group, Format 2025.10 | DIR-08, tokens-dtcg, `qp tokens` |
+| Design tokens | W3C Design Tokens Community Group, Format 2025.10 | DIR-08, tokens-dtcg, `sw tokens` |
 | Motion durations and easing | Material 3 motion tokens (AndroidX Compose `MotionTokens.kt`); MDN `prefers-reduced-motion` | DIR-07 |
 | Question pages, check answers | GOV.UK Design System | wizard, long form, REV-05 |
-| OKLab / OKLCH | Björn Ottosson, "A perceptual color space for image processing" (2020); Evil Martians on OKLCH in CSS | colour, `qp tokens` conversion |
+| OKLab / OKLCH | Björn Ottosson, "A perceptual color space for image processing" (2020); Evil Martians on OKLCH in CSS | colour, `sw tokens` conversion |
 | 12-step colour scale | Radix Colors, "Understanding the scale" (idea of one job per step) | colour |
 | Tailwind v4 theme | Tailwind CSS documentation, `@theme` | tokens-dtcg |
 
@@ -30,7 +30,7 @@ The design skills (`design-screens`, `design-direction`, `design-review`) and th
 | Keystroke-level model | Card, Moran and Newell; operator times and error as summarised in the KLM literature; Sauro's web operators | REV-04, `klmSeconds` |
 | Zeigarnik effect | Ghibellini and Meier (2025) meta-analysis | heuristics |
 | Style tiles | Samantha Warren, styletil.es | design-direction step 4 |
-| Generic look prevalence | Adrian Krebs (2026), deterministic checks on about 1,590 Show HN pages | REV-08, `qp look` |
+| Generic look prevalence | Adrian Krebs (2026), deterministic checks on about 1,590 Show HN pages | REV-08, `sw look` |
 | Distributional convergence, mode collapse | Anthropic, "Improving frontend design through skills" (2025); Verbalized Sampling, arXiv 2510.01171 | generic-clusters |
 
 ## Ideas from other tools (no text copied)
@@ -60,15 +60,15 @@ Detailed lists, with licences and what was excluded: root `SOURCES.md`, lot 3. T
 
 | Command or criterion | Rule | Source |
 | --- | --- | --- |
-| `qp access`, SEC-03, ACC-02 | Access control is the first risk and must be tested with two accounts, not read | OWASP Top 10:2025 A01; OWASP API Security Top 10:2023 API1, API3, API5; OWASP Multi-Tenant Security Cheat Sheet |
-| `qp auth`, SEC-13 | Same answer for known and unknown accounts; failures counted per account and slowed | OWASP Authentication Cheat Sheet; OWASP ASVS 5.0 (chapters V6, V7, cited by identifier) |
-| `qp dast`, SEC-14 | Passive baseline scan, safe on a site one owns | OWASP ZAP (Apache-2.0) |
-| `qp supply`, SEC-15 | Release cooldown, blocked install scripts, actions pinned by commit | pnpm and npm documentation; GitHub "secure use" reference; the npm incidents of September 2025 and March 2026 |
-| `qp threats`, SEC-12 | Four questions, STRIDE per entry point, a response and a test per abuse case | OWASP Threat Modeling Cheat Sheet; Threat Modeling Manifesto |
+| `sw access`, SEC-03, ACC-02 | Access control is the first risk and must be tested with two accounts, not read | OWASP Top 10:2025 A01; OWASP API Security Top 10:2023 API1, API3, API5; OWASP Multi-Tenant Security Cheat Sheet |
+| `sw auth`, SEC-13 | Same answer for known and unknown accounts; failures counted per account and slowed | OWASP Authentication Cheat Sheet; OWASP ASVS 5.0 (chapters V6, V7, cited by identifier) |
+| `sw dast`, SEC-14 | Passive baseline scan, safe on a site one owns | OWASP ZAP (Apache-2.0) |
+| `sw supply`, SEC-15 | Release cooldown, blocked install scripts, actions pinned by commit | pnpm and npm documentation; GitHub "secure use" reference; the npm incidents of September 2025 and March 2026 |
+| `sw threats`, SEC-12 | Four questions, STRIDE per entry point, a response and a test per abuse case | OWASP Threat Modeling Cheat Sheet; Threat Modeling Manifesto |
 | ACC, SUB, ACT | Isolation in the data layer, entitlements from signed webhooks, cancellation online | PostgreSQL and Supabase row-level security documentation; Stripe documentation; EnterpriseReady |
-| `qp mobile check`, MRL | Target API level, privacy manifest, account deletion, payment rules | Apple App Review Guidelines; Google Play policy pages; Android developer documentation |
-| `qp mobile flows`, MUX | Key tasks played on a device; platform sizes | Maestro (Apache-2.0); Apple Human Interface Guidelines; Android accessibility guidance; OWASP MASVS 2.1 |
-| `qp craft`, CRF | Typography details, states, shadows, radii, loader timing, motion durations | Vercel Web Interface Guidelines (MIT); articles by Jakub Krehel, Emil Kowalski, Josh W. Comeau, Rauno Freiberg (cited, rules restated); Nielsen Norman Group on response times and skeleton screens; web.dev Web Vitals |
-| `qp look` second-generation signals, BRD | Newer generic patterns, counted together and never alone | Impeccable anti-pattern catalogue (Apache-2.0); Anthropic frontend-design skill (Apache-2.0); Fountain Institute |
+| `sw mobile check`, MRL | Target API level, privacy manifest, account deletion, payment rules | Apple App Review Guidelines; Google Play policy pages; Android developer documentation |
+| `sw mobile flows`, MUX | Key tasks played on a device; platform sizes | Maestro (Apache-2.0); Apple Human Interface Guidelines; Android accessibility guidance; OWASP MASVS 2.1 |
+| `sw craft`, CRF | Typography details, states, shadows, radii, loader timing, motion durations | Vercel Web Interface Guidelines (MIT); articles by Jakub Krehel, Emil Kowalski, Josh W. Comeau, Rauno Freiberg (cited, rules restated); Nielsen Norman Group on response times and skeleton screens; web.dev Web Vitals |
+| `sw look` second-generation signals, BRD | Newer generic patterns, counted together and never alone | Impeccable anti-pattern catalogue (Apache-2.0); Anthropic frontend-design skill (Apache-2.0); Fountain Institute |
 
-Thresholds without a published validation are house settings, and are labelled so in the references: the "should" limits of `qp craft`, the em-dash rate of `qp look`, the 20-attempt default of `qp auth`, the three priority buckets of the threat model.
+Thresholds without a published validation are house settings, and are labelled so in the references: the "should" limits of `sw craft`, the em-dash rate of `sw look`, the 20-attempt default of `sw auth`, the three priority buckets of the threat model.

@@ -19,6 +19,6 @@ jobs:
           python tools/build.py
           git diff --exit-code
       - name: Install Playwright, axe-core and Chromium in the pack cache
-        run: node plugins/core/scripts/qp.mjs browser-setup
+        run: node plugins/core/scripts/sw.mjs browser-setup
       - name: Tests
         run: node --test tests/*.test.mjs

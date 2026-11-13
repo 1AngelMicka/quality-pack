@@ -1,6 +1,6 @@
 # Threat model
 
-This file explains how to write `.quality/threats.json` at kickoff: the four questions, every field `qp threats` reads, the questions to ask at each entry point, and how each line of the model becomes a test. Budget 30 to 60 minutes. The result is one JSON file of one or two screens, kept next to the code and reviewed when the product changes.
+This file explains how to write `.quality/threats.json` at kickoff: the four questions, every field `sw threats` reads, the questions to ask at each entry point, and how each line of the model becomes a test. Budget 30 to 60 minutes. The result is one JSON file of one or two screens, kept next to the code and reviewed when the product changes.
 
 ## The four questions
 
@@ -11,7 +11,7 @@ The method is the one of the OWASP Threat Modeling Cheat Sheet, reduced to what 
 | 1. What are we building? | `system`, `assets`, `actors`, `entry_points`, `trust_boundaries` | every route group, webhook, upload and admin screen is an entry point |
 | 2. What can go wrong? | `abuse_cases`, one line each, from the six questions below | every entry point has at least one abuse case |
 | 3. What do we do about it? | `response`, `test` or `why`, `priority` on each abuse case | no abuse case is left without a response |
-| 4. Did we do enough? | run `qp threats`, then give the file to a second reader | no error, and the open cases are known |
+| 4. Did we do enough? | run `sw threats`, then give the file to a second reader | no error, and the open cases are known |
 
 A diagram is optional. If one helps, draw boxes for actors, processes and data stores, arrows for data flows, and a dotted line wherever trust changes. A photo of a whiteboard is enough.
 
@@ -19,7 +19,7 @@ A diagram is optional. If one helps, draw boxes for actors, processes and data s
 
 Copy `${CLAUDE_PLUGIN_ROOT}/templates/threats.json` and rewrite every value. The file is JSON, not YAML.
 
-| Field | Checked by `qp threats` | How to fill it |
+| Field | Checked by `sw threats` | How to fill it |
 | --- | --- | --- |
 | `version` | no | keep `1` |
 | `reviewed` | required, a date `YYYY-MM-DD`; warning when older than 180 days | the day the model was last read against the product |
@@ -39,7 +39,7 @@ Fields of one abuse case:
 | `text` | at least 15 characters | "As a member I read another customer's invoice by changing the id." Who, what harm, how |
 | `entry` | required; a string or a list; each value must be an existing entry point id | `["E2"]` |
 | `response` | one of `mitigate`, `eliminate`, `transfer`, `accept` | see "Responses" |
-| `test` | required when `response` is `mitigate` | `access check: <id>`, `qp auth`, a test file path with what it asserts, or `manual: <how>` |
+| `test` | required when `response` is `mitigate` | `access check: <id>`, `sw auth`, a test file path with what it asserts, or `manual: <how>` |
 | `why` | required when `response` is `accept` | the reason, who decided, when to revisit |
 | `priority` | optional; if present, one of `before-launch`, `before-paying-customers`, `accepted` | see "Priority" |
 | `status` | only the value `open` has a meaning | `open` until the test passes, then any other word, for example `done` |
@@ -96,7 +96,7 @@ Likelihood times impact is the textbook ranking. It is hard to compute and ignor
 
 | `priority` | Use it for | Effect |
 | --- | --- | --- |
-| `before-launch` | anything that lets one account reach another's data, take over an account, forge a payment or run code | listed by `qp threats` while `status` is `open` |
+| `before-launch` | anything that lets one account reach another's data, take over an account, forge a payment or run code | listed by `sw threats` while `status` is `open` |
 | `before-paying-customers` | abuse that costs money or availability once people depend on the product (quotas, flooding, missing audit log) | counted as open for later |
 | `accepted` | a risk recorded with `response: accept` and a `why` | counted as accepted, never as open |
 
@@ -106,16 +106,16 @@ The model is the test list. For each line below that exists in the model, the te
 
 | Model element | Test | Pass condition |
 | --- | --- | --- |
-| Entry point with an `owner` | one access check per method in `.quality/project.json` › `access`, played by `qp access` | owner gets the resource; another customer's account and `anonymous` are refused; no `leak`, no `unclear` |
+| Entry point with an `owner` | one access check per method in `.quality/project.json` › `access`, played by `sw access` | owner gets the resource; another customer's account and `anonymous` are refused; no `leak`, no `unclear` |
 | Entry point with `auth: <role>` | an access check with every lower role and `anonymous` in `denied_to` | all refused, including the write methods |
-| Public auth route (`auth: none`: login, sign-up, reset, one-time code) | `qp auth` for login; the same two probes by hand on the others ([checks.md](checks.md)) | same answer for a known and an unknown account; repeated failures slowed, refused or locked |
+| Public auth route (`auth: none`: login, sign-up, reset, one-time code) | `sw auth` for login; the same two probes by hand on the others ([checks.md](checks.md)) | same answer for a known and an unknown account; repeated failures slowed, refused or locked |
 | Webhook (`auth: signature`) | a test that posts the event unsigned, with a wrong signature, and a second time with a valid old one | all three refused; the event has no effect |
 | Upload | the upload test of [checks.md](checks.md) | active files refused or stored inert; the stored file is served as a download and only to its owner |
 | Outbound fetch of a URL given by a user | the SSRF probe list of [checks.md](checks.md), with a local canary listener | every probe refused; the listener receives nothing |
 | Usage-billed service (asset of kind `money`: AI, email, SMS) | a quota test: send requests past the limit for one account | the app answers 429 or an explicit refusal before the bill grows; the limit is per account or per customer |
 | Personal data store | log check with canary values, backup checks, database role query ([checks.md](checks.md)) | no canary in the logs; backups encrypted and not public; the app role has no admin right |
 
-Name the test in `test` so a reader can find it: `access check: documents-read`, `qp auth`, `tests/webhooks.test: unsigned and replayed events are refused`, `manual: upload .html, open the stored file`.
+Name the test in `test` so a reader can find it: `access check: documents-read`, `sw auth`, `tests/webhooks.test: unsigned and replayed events are refused`, `manual: upload .html, open the stored file`.
 
 ## When to review
 
@@ -123,7 +123,7 @@ Name the test in `test` so a reader can find it: `access check: documents-read`,
 - A new kind of data, a new role, a new third party that receives data or calls the app.
 - A new AI feature that can call tools or read documents: it acts with someone's rights, so it is an entry point.
 - After an incident or a pentest finding: add the abuse case that was missed.
-- At the latest every 180 days: `qp threats` warns past that age. Set `reviewed` to the day of the review, even when nothing changed.
+- At the latest every 180 days: `sw threats` warns past that age. Set `reviewed` to the day of the review, even when nothing changed.
 
 ## What a second reader should look for
 

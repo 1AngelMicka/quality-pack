@@ -20,8 +20,8 @@ For a security issue, do not open a public issue: see [SECURITY.md](SECURITY.md)
 | `plugins/core/skills/{workflow,kickoff,audit,fix,handoff,design-screens,design-direction,design-review,deslop-ui,scroll-animation,premium-craft,design-variants,saas-foundations,security-testing,mobile-app,from-zero,user-testing,seo-launch,desktop-app}/` | Hand-written skills (design skills have `references/` loaded on demand) |
 | `plugins/core/SOURCES.md` | Sources of the design skills and measures, by rule |
 | `plugins/core/agents/` | The agents: `auditor` (one per group), `ergonomist` (ergonomics group and heuristic review), `challenger` (counter-check), `art-director` (ranked changes from screenshots), `juror` (blind comparison of two versions) |
-| `plugins/core/bank/*.json` | Reference bank: one file per type of site (expectations, recognised sites with the reason, what to avoid). `profiles/` and `calibration.json` are measured with `qp bank measure` and `qp bank calibrate`. No screenshot of a third-party site is ever stored |
-| `plugins/core/scripts/` | Node engine (`qp.mjs`) and hooks, no dependencies; `scripts/deslop/` is the spacing audit (CDP, installed Chrome or Edge) |
+| `plugins/core/bank/*.json` | Reference bank: one file per type of site (expectations, recognised sites with the reason, what to avoid). `profiles/` and `calibration.json` are measured with `sw bank measure` and `sw bank calibrate`. No screenshot of a third-party site is ever stored |
+| `plugins/core/scripts/` | Node engine (`sw.mjs`) and hooks, no dependencies; `scripts/deslop/` is the spacing audit (CDP, installed Chrome or Edge) |
 | `tools/build.py` | Generates docs, JSON, build skills and manifests from the YAML |
 | `examples/facto/` | Reference project: a small invoicing app in a draft state (planted defects) and a careful state; the end-to-end test runs the pack on both |
 | `tests/` | Node tests |
@@ -42,7 +42,7 @@ Try your change locally in Claude Code:
 
 ```
 /plugin marketplace add /path/to/your/clone
-/plugin install qp@quality-pack
+/plugin install sw@shipwright
 ```
 
 A local marketplace is read in place: edits apply after `/reload-plugins`.

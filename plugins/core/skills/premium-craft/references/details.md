@@ -1,6 +1,6 @@
 # Finishing details
 
-This file lists the finishing details as rules you can check on a rendered page: a number, a CSS line or a test to run. Each group ends by saying what `qp craft` measures and what you check by eye. It goes deeper than `SKILL.md` and does not repeat the token rules of `design-direction` ([color.md](../../design-direction/references/color.md), [type-space-motion.md](../../design-direction/references/type-space-motion.md)) or the spacing rules of `deslop-ui`.
+This file lists the finishing details as rules you can check on a rendered page: a number, a CSS line or a test to run. Each group ends by saying what `sw craft` measures and what you check by eye. It goes deeper than `SKILL.md` and does not repeat the token rules of `design-direction` ([color.md](../../design-direction/references/color.md), [type-space-motion.md](../../design-direction/references/type-space-motion.md)) or the spacing rules of `deslop-ui`.
 
 Checked on 2026-11-12. Two kinds of uncertainty are marked. "House setting" means a threshold chosen by this pack and not validated on a reference set: tune it on real pages. "Not verified" means the value was stated from memory and not read again on the primary source.
 
@@ -20,7 +20,7 @@ Checked on 2026-11-12. Two kinds of uncertainty are marked. "House setting" mean
 | Sizes and files | Fluid sizes use `clamp()` with a `rem` term (see type-space-motion.md). Fonts are subset; preload the ones used above the fold |
 | Hanging punctuation | `hanging-punctuation` works in Safari only (not verified, MDN): an extra, never a pass or fail |
 
-Measured by `qp craft`: `heading_wrap`, `heading_orphans` (last line under 20 % of the widest), `heading_line_height` (32 px and more: 1.0 to 1.3), `tabular_numbers` (must, on table columns of 3 or more number cells), `typographic_characters` (more than 2 hits fails), `caps_tracking`, `font_weights` (4 at most), `label_case`, `input_font_size` (must, phone). By eye: paragraph orphans, the display cut, weight change on hover, anchors under a sticky header, digits outside tables (timers, prices, counters).
+Measured by `sw craft`: `heading_wrap`, `heading_orphans` (last line under 20 % of the widest), `heading_line_height` (32 px and more: 1.0 to 1.3), `tabular_numbers` (must, on table columns of 3 or more number cells), `typographic_characters` (more than 2 hits fails), `caps_tracking`, `font_weights` (4 at most), `label_case`, `input_font_size` (must, phone). By eye: paragraph orphans, the display cut, weight change on hover, anchors under a sticky header, digits outside tables (timers, prices, counters).
 
 Sources: Jakub Krehel (https://jakub.kr/writing/details-that-make-interfaces-feel-better), Vercel Web Interface Guidelines (https://vercel.com/design/guidelines), Rauno Freiberg (https://github.com/raunofreiberg/interfaces), Linear (https://linear.app/now/how-we-redesigned-the-linear-ui), Impeccable (https://impeccable.style/anti-patterns).
 
@@ -32,7 +32,7 @@ Sources: Jakub Krehel (https://jakub.kr/writing/details-that-make-interfaces-fee
 - **Selection.** Style `::selection` with the brand colours, at 4.5:1 with the selected text. Inside it, unset gradient text.
 - **WCAG 2 AA is the floor;** APCA is a second opinion only (see color.md). Body text is not `#000` on `#fff`: soften or tint one of the two.
 
-Measured by `qp craft`: `pure_black_text` (fails when half the body text blocks or more are pure black on pure white), `selection_color`. `qp tokens` checks the contrast matrix. By eye: contrast of hover, pressed and focus against rest; tint of greys on coloured surfaces.
+Measured by `sw craft`: `pure_black_text` (fails when half the body text blocks or more are pure black on pure white), `selection_color`. `sw tokens` checks the contrast matrix. By eye: contrast of hover, pressed and focus against rest; tint of greys on coloured surfaces.
 
 Sources: Stripe (https://stripe.com/blog/accessible-color-systems), Linear (same post as above), Vercel guidelines, Impeccable, Rauno Freiberg.
 
@@ -56,7 +56,7 @@ Sources: Stripe (https://stripe.com/blog/accessible-color-systems), Linear (same
 .card img { outline: 1px solid rgb(0 0 0 / 0.1); outline-offset: -1px; }
 ```
 
-Measured by `qp craft`: `shadow_count` (5 different shadows at most), `shadow_quality` (a single layer of plain black at 25 % or more), `nested_radius` (child radius equal to or larger than a parent of 8 px and more with 4 px padding and more). By eye: light direction, shadow tint, the ring, the image outline, border plus wide shadow on one surface.
+Measured by `sw craft`: `shadow_count` (5 different shadows at most), `shadow_quality` (a single layer of plain black at 25 % or more), `nested_radius` (child radius equal to or larger than a parent of 8 px and more with 4 px padding and more). By eye: light direction, shadow tint, the ring, the image outline, border plus wide shadow on one surface.
 
 Sources: Josh W. Comeau (https://www.joshwcomeau.com/css/designing-shadows/), Jakub Krehel, Vercel guidelines, Impeccable.
 
@@ -69,7 +69,7 @@ Sources: Josh W. Comeau (https://www.joshwcomeau.com/css/designing-shadows/), Ja
 - **Content of any length.** Each component is tried with a short, an average and a very long value (a 60-character name, a 7-digit amount, an empty field). Nothing overlaps or pushes a button out.
 - **Widths.** Test on a phone, a laptop and a very wide screen (zoom out to 50 %). No unwanted scrollbar: preview with scrollbars always visible.
 
-Measured by `qp craft`: nothing in this group. `qp deslop` measures alignment and spacing. By eye: all of the above.
+Measured by `sw craft`: nothing in this group. `sw deslop` measures alignment and spacing. By eye: all of the above.
 
 Sources: Vercel guidelines, Jakub Krehel, ibelick/ui-skills (https://github.com/ibelick/ui-skills).
 
@@ -94,7 +94,7 @@ Three limits (Nielsen): 0.1 s feels instant; 1 s keeps the train of thought; 10 
 - House settings for a first marketing page, not validated: 170 kB of compressed JavaScript on first load, no long task over 200 ms during the first interaction.
 - Test with CPU and network throttling, in Safari, and on iOS in Low Power Mode.
 
-Measured by `qp craft`: `layout_shift` (must, CLS over 0.1 while the page loads in the lab), `image_dimensions`. By eye, with the network throttled to 100 ms, 1.5 s and 12 s: the loader policy, optimistic updates, rollback. Field vitals come from real-user data, not from this CLI.
+Measured by `sw craft`: `layout_shift` (must, CLS over 0.1 while the page loads in the lab), `image_dimensions`. By eye, with the network throttled to 100 ms, 1.5 s and 12 s: the loader policy, optimistic updates, rollback. Field vitals come from real-user data, not from this CLI.
 
 Sources: Nielsen Norman Group (https://www.nngroup.com/articles/response-times-3-important-limits/, https://www.nngroup.com/articles/skeleton-screens/), Vercel guidelines, Rauno Freiberg, web.dev (https://web.dev/articles/vitals).
 
@@ -117,7 +117,7 @@ The token bands are in type-space-motion.md. These are the values for controls.
 
 Never animate: `width`, `height`, `top`, `left`, margins or padding; `transition: all`; an action started from the keyboard; an action done many times a day; the theme switch. Use CSS transitions for anything the user can interrupt: they retarget, keyframes do not. Large blurs and `backdrop-filter` on big surfaces are slow. Pause loops when off screen. Set `will-change` only while the animation runs.
 
-Measured by `qp craft`: `transition_all`, `transition_duration` (over 500 ms on a control), `layout_animation`, `hover_transitions` (more than half of buttons changing with no transition), and the signal "every transition lasts 150 ms". The checks read transitions on controls only. By eye: press scale, entry scale and origin, stagger, tooltip grouping, exits, keyframe animations.
+Measured by `sw craft`: `transition_all`, `transition_duration` (over 500 ms on a control), `layout_animation`, `hover_transitions` (more than half of buttons changing with no transition), and the signal "every transition lasts 150 ms". The checks read transitions on controls only. By eye: press scale, entry scale and origin, stagger, tooltip grouping, exits, keyframe animations.
 
 Sources: Emil Kowalski (https://emilkowal.ski/ui/7-practical-animation-tips, https://emilkowal.ski/ui/great-animations), Rauno Freiberg, Jakub Krehel, ibelick/ui-skills, Vercel guidelines, Impeccable.
 
@@ -132,7 +132,7 @@ Sources: Emil Kowalski (https://emilkowal.ski/ui/7-practical-animation-tips, htt
 - **Shortcuts** are shown with the platform's symbols and work on non-QWERTY layouts. A multi-screen app has a search or command palette on Ctrl or Cmd + K (house setting).
 - **Forms.** Enter submits; Ctrl or Cmd + Enter in a textarea. Submit is never disabled in advance. Paste is never blocked. The error sits beside its field and focus goes to the first one. `autocomplete` and `inputmode` are set. Leaving with unsaved changes warns. Values are trimmed.
 
-Measured by `qp craft`: `focus_visible` (must, 25 Tab stops), `hover_states` (12 buttons), `input_font_size`, `viewport_zoom`. By eye: everything else. Run each flow once with the keyboard only.
+Measured by `sw craft`: `focus_visible` (must, 25 Tab stops), `hover_states` (12 buttons), `input_font_size`, `viewport_zoom`. By eye: everything else. Run each flow once with the keyboard only.
 
 Sources: Vercel guidelines, Rauno Freiberg, Linear (https://linear.app/now/invisible-details).
 
@@ -145,7 +145,7 @@ Sources: Vercel guidelines, Rauno Freiberg, Linear (https://linear.app/now/invis
 - **Long strings.** The layout holds with labels 35 % longer (house setting, for German or French).
 - **Around the page:** apple-touch-icon (180 px), web manifest, `theme-color`, share image of 1200 × 630, a 404 page of the product's own with a way back, the current year or none in the footer, no console error on load.
 
-Measured by `qp craft`: `favicon`, `not_found_status` (must), `touch_icon`, `not_found_page`, `share_image` (must on public pages), `image_distortion`, `image_sharpness` (must). By eye: the four states, the title per route, the dark favicon, locale, long strings.
+Measured by `sw craft`: `favicon`, `not_found_status` (must), `touch_icon`, `not_found_page`, `share_image` (must on public pages), `image_distortion`, `image_sharpness` (must). By eye: the four states, the title per route, the dark favicon, locale, long strings.
 
 Sources: Vercel guidelines, Rauno Freiberg, ibelick/ui-skills, survey of 100 generated sites (https://dev.to/kaplich/i-analyzed-100-vibe-coded-websites-and-found-these-common-mistakes-5275).
 
@@ -158,7 +158,7 @@ Token mapping is in color.md. The finishing rules:
 - `:root { color-scheme: dark; }`, so scrollbars, native controls and autofill follow. `<meta name="theme-color">` equals the page background. On Windows, give `<select>` explicit colours.
 - No transition while the theme switches. Check the selection colour, the image outlines and the favicon again in dark.
 
-Measured by `qp craft`: `dark_color_scheme` (must, when the page background is dark). By eye: the levels, hairlines, shadows, the switch.
+Measured by `sw craft`: `dark_color_scheme` (must, when the page background is dark). By eye: the levels, hairlines, shadows, the switch.
 
 Sources: Jakub Krehel, Vercel guidelines, Linear, Rauno Freiberg.
 
@@ -166,7 +166,7 @@ Sources: Jakub Krehel, Vercel guidelines, Linear, Rauno Freiberg.
 
 The first round of advice against generated looks produced a new default look. These patterns are as recognisable now as the purple gradient was. One alone proves nothing: sources agree that clusters give a page away. The older tells are in [generic-clusters.md](../../design-direction/references/generic-clusters.md) and [tells.md](../../deslop-ui/references/tells.md).
 
-| Tell | Instead | `qp look` |
+| Tell | Instead | `sw look` |
 | --- | --- | --- |
 | Thin serif headline with one word in italics | Emphasis by weight or size, in a face chosen for the subject | `LOOK-ITALIC` |
 | Cream page with terracotta accent; near-black with acid green | A palette derived from the subject (see identity.md) | `LOOK-PALETTE` |
@@ -178,7 +178,7 @@ The first round of advice against generated looks produced a new default look. T
 | "01 / 02 / 03" labels without a sequence | Number real steps only | `LOOK-NUMBERED` |
 | Cards inside cards | Group with space and type | `LOOK-NESTED` |
 | Pill buttons everywhere; one radius on everything | A radius scale with roles | `LOOK-RADIUS` (12 to 24 px on 70 % of boxes) |
-| Middle-dot strings, "WORD — fragment" labels, monospace for small labels, an arrow on every link | Only where it encodes something | by eye (`qp deslop`: `arrow-cta`) |
+| Middle-dot strings, "WORD — fragment" labels, monospace for small labels, an arrow on every link | Only where it encodes something | by eye (`sw deslop`: `arrow-cta`) |
 | Grid-line background, stripes, hard offset shadow of 4 px and more | Remove; texture needs a reason | by eye |
 | Fade and slide up on every section; hover effect on every card | One orchestrated moment per page | `LOOK-ANIMATE-ALL` |
 | Bounce on routine actions; logo marquee without pause; blinking cursor on static text | Ease-out; a pause control on motion over 5 s | by eye |

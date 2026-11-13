@@ -80,11 +80,11 @@ export async function playBilling(project, { apiBase = API, now = Math.floor(Dat
     throw new Error("the test clock did not finish advancing");
   };
   try {
-    clock = await call("POST", "/test_helpers/test_clocks", { frozen_time: now, name: "quality-pack billing run" });
-    const customer = await call("POST", "/customers", { test_clock: clock.id, email: "qp-billing@example.test", name: "quality-pack test customer" });
+    clock = await call("POST", "/test_helpers/test_clocks", { frozen_time: now, name: "shipwright billing run" });
+    const customer = await call("POST", "/customers", { test_clock: clock.id, email: "qp-billing@example.test", name: "shipwright test customer" });
     const good = await call("POST", "/payment_methods/pm_card_visa/attach", { customer: customer.id });
     await call("POST", `/customers/${customer.id}`, { invoice_settings: { default_payment_method: good.id } });
-    const sub = await call("POST", "/subscriptions", { customer: customer.id, items: { 0: { price: cfg.price_id } }, ...(trial > 0 ? { trial_period_days: trial } : {}), metadata: { created_by: "quality-pack" } });
+    const sub = await call("POST", "/subscriptions", { customer: customer.id, items: { 0: { price: cfg.price_id } }, ...(trial > 0 ? { trial_period_days: trial } : {}), metadata: { created_by: "shipwright" } });
     await stage(trial > 0 ? "trial started" : "subscribed", trial > 0 ? "trialing" : "active", sub.id, customer.id);
     let t = now;
     if (trial > 0) { t += (trial + 1) * DAY; await advance(t); await stage("trial ended, first invoice paid", "active", sub.id, customer.id); }

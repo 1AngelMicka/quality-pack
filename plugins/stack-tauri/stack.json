@@ -82,5 +82,5 @@
   }
  ],
  "qp_stack": true,
- "plugin": "qp-tauri"
+ "plugin": "sw-tauri"
 }

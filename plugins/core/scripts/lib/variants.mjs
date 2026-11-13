@@ -4,7 +4,7 @@
 //   shoot   screenshots of each variant on desktop and phone under shuffled letters (A, B, C…), the measures
 //           of each (finish, generic look, visual profile), and the list of pairs to judge
 //   tally   reads the jurors' votes (.quality/variants/<name>/votes/*.json) and ranks the variants
-// The jurors are agents (qp:juror) or people; the user chooses between the finalists.
+// The jurors are agents (sw:juror) or people; the user chooses between the finalists.
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { profileAt } from "./profile.mjs";
@@ -28,7 +28,7 @@ export async function shootVariants(name, urls, { root, cwd = root, mode = "oper
   const { craftAt } = await import("./craft.mjs");
   const { lookAt } = await import("./look.mjs");
   const craft = await craftAt(urls, { cwd, mode });
-  // Same hollow-wording list as `qp look`, so that a variant's copy counts in its generic-look measure.
+  // Same hollow-wording list as `sw look`, so that a variant's copy counts in its generic-look measure.
   const { loadReferential } = await import("./ref.mjs");
   const words = loadReferential().slop_words || {};
   const look = await lookAt(urls, { cwd, mode, slopWords: [...(words.fr || []), ...(words.en || [])] });
@@ -47,7 +47,7 @@ export async function shootVariants(name, urls, { root, cwd = root, mode = "oper
   writeFileSync(join(dir, "key.json"), JSON.stringify({ name, created: new Date().toISOString(), mode, key: Object.fromEntries(urls.map((u, i) => [letterOf[i], u])) }, null, 2));
   const result = { name, dir: posix(relative(root, dir)), variants, pairs,
     votes_dir: posix(relative(root, join(dir, "votes"))),
-    next: "Give each pair to three jurors (agent qp:juror) with only the two screenshots, the brief and the device; each writes one vote file. Then run the same command with --tally.",
+    next: "Give each pair to three jurors (agent sw:juror) with only the two screenshots, the brief and the device; each writes one vote file. Then run the same command with --tally.",
     vote_format: { juror: "j1", device: "desktop", pair: ["A", "B"], winner: "A", margin: "clear | slight", reasons: ["what makes the winner better, on the screen"], loser_keeps: ["what the loser does better"] } };
   writeFileSync(join(dir, "variants.json"), JSON.stringify(result, null, 2));
   return result;
@@ -55,7 +55,7 @@ export async function shootVariants(name, urls, { root, cwd = root, mode = "oper
 
 export function tallyVariants(name, { root } = {}) {
   const dir = variantsDir(root, name);
-  if (!existsSync(join(dir, "variants.json"))) return { errors: [`no variants named ${name}: run \`qp variants ${name} <url> <url>…\` first`] };
+  if (!existsSync(join(dir, "variants.json"))) return { errors: [`no variants named ${name}: run \`sw variants ${name} <url> <url>…\` first`] };
   const meta = JSON.parse(readFileSync(join(dir, "variants.json"), "utf8"));
   const key = JSON.parse(readFileSync(join(dir, "key.json"), "utf8")).key;
   const letters = meta.variants.map((v) => v.letter);

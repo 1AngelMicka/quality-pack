@@ -1,9 +1,9 @@
 // Visual profile of a rendered page: the handful of numbers that describe how it is built, so that a page can be
 // compared with references instead of with adjectives. Used three ways:
-//  - `qp profile <url>` measures any page (a reference the user likes, a screen of the project);
-//  - `qp gap <url>` compares a screen with the project's references (.quality/references.json) or with the
+//  - `sw profile <url>` measures any page (a reference the user likes, a screen of the project);
+//  - `sw gap <url>` compares a screen with the project's references (.quality/references.json) or with the
 //    reference bank of its site type, and lists the properties that differ most;
-//  - `qp bank measure` profiles the sites of the reference bank, to calibrate thresholds on real sites.
+//  - `sw bank measure` profiles the sites of the reference bank, to calibrate thresholds on real sites.
 // A profile describes; it does not judge. A gap is a question to ask ("references use 2 typefaces, this screen 4"),
 // not a defect by itself.
 import { loadBrowserTools, launch } from "./browser.mjs";
@@ -223,7 +223,7 @@ export function gap(profile, summary, { device = "desktop" } = {}) {
 
 export async function profileAt(urls, { cwd, shots = null } = {}) {
   const tools = await loadBrowserTools(cwd);
-  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <qp.mjs> browser-setup` once (pack cache, not the project)." };
+  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <sw.mjs> browser-setup` once (pack cache, not the project)." };
   const browser = await launch(tools.chromium);
   const pages = [];
   try {

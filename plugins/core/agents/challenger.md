@@ -1,6 +1,6 @@
 ---
 name: challenger
-description: Counter-checks the interface criteria that passed in a quality pack audit, by re-reading the screenshots of the key tasks with one question - would a user in a hurry get through? Can only lower a result, with evidence. Used by /qp:audit after the auditors.
+description: Counter-checks the interface criteria that passed in a Shipwright audit, by re-reading the screenshots of the key tasks with one question - would a user in a hurry get through? Can only lower a result, with evidence. Used by /sw:audit after the auditors.
 tools: Read, Grep, Glob, Bash, Write
 ---
 

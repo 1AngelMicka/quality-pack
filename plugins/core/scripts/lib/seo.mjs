@@ -44,7 +44,7 @@ export function parsePage(html, url) {
 
 async function get(url, timeout = 20000) {
   try {
-    const res = await fetch(url, { redirect: "manual", signal: AbortSignal.timeout(timeout), headers: { "user-agent": "quality-pack seo check", accept: "text/html,application/xml;q=0.9,*/*;q=0.5" } });
+    const res = await fetch(url, { redirect: "manual", signal: AbortSignal.timeout(timeout), headers: { "user-agent": "shipwright seo check", accept: "text/html,application/xml;q=0.9,*/*;q=0.5" } });
     const body = res.status === 200 ? await res.text() : "";
     return { status: res.status, body, location: res.headers.get("location"), robots_header: res.headers.get("x-robots-tag") || "", type: res.headers.get("content-type") || "" };
   } catch (e) { return { error: String(e.cause?.code || e.message).slice(0, 120) }; }

@@ -7,7 +7,7 @@ description: "Builds and releases a desktop app made with web technology (Tauri,
 
 A desktop app built with web technology has two ways to disappoint. It can feel like a website in a window: no shortcuts, a frozen window during a long task, work lost on close. And it can be dangerous: the page sits one function call away from the user's files and shell, so a single injected script or a careless command becomes control of the machine.
 
-CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below. Flag `desktop_app`, profile `desktop`; criteria DUX (experience) and DRL (release and security). Stack modules: `qp-tauri`, `qp-electron`.
+CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs"`, written `sw` below. Flag `desktop_app`, profile `desktop`; criteria DUX (experience) and DRL (release and security). Stack modules: `sw-tauri`, `sw-electron`.
 
 Say at the start what you can and cannot test: builds and installers are specific to each system. On Windows you can build and run the Windows app; macOS signing, notarisation and behaviour need a Mac.
 
@@ -57,7 +57,7 @@ The rule for both frameworks: the page reaches the system only through a short l
 ## 4. Check
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" desktop check
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" desktop check
 ```
 
 Reads the project: content security policy, capabilities or API list, remote access, the Electron window options above, the updater (signature key, https), the app identifier, signing configuration. It exits with code 2 on a failed "must". It cannot see what a command does with its arguments: read each one (DRL-03).
@@ -70,11 +70,11 @@ WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222 npm run tauri
 # Electron
 npx electron . --remote-debugging-port=9222
 
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" flows --attach 9222
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" deslop --attach 9222
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" flows --attach 9222
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" deslop --attach 9222
 ```
 
-The flows run once, in the window as it is, on the app's real data: use a test profile, and ask the user first if the app is connected to real data. On macOS and Linux, Tauri's WebView does not offer this port: play the flows in a browser against the dev server with the Tauri stub (`qp deslop --tauri`), and check the real window by hand. Say which was done.
+The flows run once, in the window as it is, on the app's real data: use a test profile, and ask the user first if the app is connected to real data. On macOS and Linux, Tauri's WebView does not offer this port: play the flows in a browser against the dev server with the Tauri stub (`sw deslop --tauri`), and check the real window by hand. Say which was done.
 
 Then by hand, on each target system: the window at its minimum size and full screen; close with unsaved changes; kill the process mid-task and relaunch; unplug the network; open a file with an accented name; run the heaviest operation and try to cancel.
 

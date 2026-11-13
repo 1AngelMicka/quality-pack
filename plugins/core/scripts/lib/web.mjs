@@ -1,7 +1,7 @@
 // HTTP-level checks of a running site: security headers, compression, caching, SEO metadata, robots, sitemap.
 // Uses the global fetch of Node 18+. Results are evidence; the auditor decides pass or fail.
 
-const UA = "quality-pack-audit";
+const UA = "shipwright-audit";
 
 async function get(url, opts = {}) {
   const ctrl = new AbortController();

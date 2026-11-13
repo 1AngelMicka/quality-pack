@@ -1,6 +1,6 @@
 # Platform rules that can be measured
 
-This file gives the numbers and commands behind section 2 of the skill: what iOS and Android expect from a screen, and how to check it with the plugin's mobile flows, `adb` or `xcrun simctl`. Use it while building a screen and during the manual passes after `qp mobile flows`. Pages were read on 2026-11-12. A line marked "not verified on the primary source" comes from memory or a secondary source: confirm it before scoring an app on it.
+This file gives the numbers and commands behind section 2 of the skill: what iOS and Android expect from a screen, and how to check it with the plugin's mobile flows, `adb` or `xcrun simctl`. Use it while building a screen and during the manual passes after `sw mobile flows`. Pages were read on 2026-11-12. A line marked "not verified on the primary source" comes from memory or a secondary source: confirm it before scoring an app on it.
 
 ## Apple (HIG, read 2026-11-12)
 
@@ -95,7 +95,7 @@ Source: [offline-first guide](https://developer.android.com/topic/architecture/d
 
 ## Links into the app (read 2026-11-12)
 
-`qp mobile check` fetches both files on `mobile.links_host` and fails on anything but HTTP 200 with JSON and no redirect. The same check by hand:
+`sw mobile check` fetches both files on `mobile.links_host` and fails on anything but HTTP 200 with JSON and no redirect. The same check by hand:
 
 ```bash
 curl -sI https://app.example.com/.well-known/assetlinks.json
@@ -132,13 +132,13 @@ Reference: OWASP MASVS 2.1.0 (CC BY-SA 4.0). Eight control groups: STORAGE, CRYP
 | --- | --- |
 | Session tokens in the Keychain (iOS) or Keystore-backed storage (Android). Never in AsyncStorage, SharedPreferences, localStorage or a plain file. | Search the code for those storage calls. After a login on an emulator: `adb shell run-as com.example.app ls -R` and read the files. Mapping to MASVS-STORAGE is not verified on the primary source. |
 | No secret in the shipped app: no API secret key, signing key or service-account file. Public keys only. | `apkleaks -f app.apk`; unzip the `.apk` or `.ipa` and search the JavaScript bundle and the plists |
-| TLS only | `qp mobile check`: `android_cleartext`, `ios_ats`, `webview_navigation` |
+| TLS only | `sw mobile check`: `android_cleartext`, `ios_ats`, `webview_navigation` |
 | Certificate pinning is optional. Android's own guide does not recommend it. If pins exist: at least two, one on a key you control, and an expiry date. | Read `network_security_config.xml`. Do not mark a standard SaaS down for having no pins. |
 | Verified https links for authentication callbacks, never a custom URL scheme; every parameter validated | Read the manifest and the link files |
-| Only needed components are exported; backups exclude tokens | `qp mobile check`: `android_exported` (more than 3 exported), `android_backup` |
-| WebView (Capacitor): loads the app's own origins only, no file access, no mixed content | `qp mobile check`: `webview_navigation` fails on `allowNavigation: ["*"]` or `cleartext: true`. Also search for `addJavascriptInterface` and `setAllowFileAccess`. |
+| Only needed components are exported; backups exclude tokens | `sw mobile check`: `android_exported` (more than 3 exported), `android_backup` |
+| WebView (Capacitor): loads the app's own origins only, no file access, no mixed content | `sw mobile check`: `webview_navigation` fails on `allowNavigation: ["*"]` or `cleartext: true`. Also search for `addJavascriptInterface` and `setAllowFileAccess`. |
 | Biometric unlock releases a key held in the Keychain or Keystore; it is not a boolean in the code | Code review (not verified on the primary source) |
-| Release build: not debuggable, code shrinking on, no dev menu | `qp mobile check`: `android_debuggable`. Expo SDK 58 turns R8 on by default. |
+| Release build: not debuggable, code shrinking on, no dev menu | `sw mobile check`: `android_debuggable`. Expo SDK 58 turns R8 on by default. |
 
 Free scanners. Call them as external tools; never copy a GPL tool into the project or the plugin.
 

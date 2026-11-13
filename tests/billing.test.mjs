@@ -9,7 +9,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const QP = join(ROOT, "plugins/core/scripts/qp.mjs");
+const QP = join(ROOT, "plugins/core/scripts/sw.mjs");
 const fixture = () => { const dir = mkdtempSync(join(tmpdir(), "qp-")); cpSync(join(ROOT, "tests/fixtures/app"), dir, { recursive: true }); return dir; };
 const run = (cwd, args, env) => new Promise((resolve) => execFile("node", [QP, ...args], { cwd, encoding: "utf8", env: { ...process.env, ...env } },
   (e, stdout) => resolve({ code: e?.code ?? 0, out: stdout ? JSON.parse(stdout) : null })));

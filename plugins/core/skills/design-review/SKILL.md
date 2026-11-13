@@ -6,9 +6,9 @@ argument-hint: "[flow-id | URL | screen name]"
 
 # Review a screen and advise
 
-Target: `$ARGUMENTS` (a flow ID from `.quality/project.json`, a URL, or a screen the user names). Talk to the user in their language. This review is advice; it does not change the scores (that is `/qp:audit`).
+Target: `$ARGUMENTS` (a flow ID from `.quality/project.json`, a URL, or a screen the user names). Talk to the user in their language. This review is advice; it does not change the scores (that is `/sw:audit`).
 
-CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below. If Playwright is missing, ask the user whether to run `qp browser-setup` (pack cache, not the project).
+CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs"`, written `sw` below. If Playwright is missing, ask the user whether to run `sw browser-setup` (pack cache, not the project).
 
 ## 1. Frame it
 
@@ -18,8 +18,8 @@ CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below. If Playw
 
 ## 2. Measure first
 
-1. The task: `qp flows <flow-id>`. If the task has no flow, write one (or `qp record <id>`) before judging: a review of an empty screen misses what matters. Read the summary per device: `over_budget`, `max_controls_rendered`, `scroll_screens`, `preview_visible_while_adjusting`, `primary_visible`, `primary_in_thumb_zone`, `axe_states_with_serious`, `klm_seconds`.
-2. The page: `qp deslop <url>` for spacing, alignment and execution per element (see the `deslop-ui` skill), and `qp look <url> --mode <surface>`: generic-look tier and signals, font sizes and families, radii, line length and height, small targets.
+1. The task: `sw flows <flow-id>`. If the task has no flow, write one (or `sw record <id>`) before judging: a review of an empty screen misses what matters. Read the summary per device: `over_budget`, `max_controls_rendered`, `scroll_screens`, `preview_visible_while_adjusting`, `primary_visible`, `primary_in_thumb_zone`, `axe_states_with_serious`, `klm_seconds`.
+2. The page: `sw deslop <url>` for spacing, alignment and execution per element (see the `deslop-ui` skill), and `sw look <url> --mode <surface>`: generic-look tier and signals, font sizes and families, radii, line length and height, small targets.
 3. The screenshots of every step in `.quality/audits/<run>/flows/`, phone and desktop. Open them; judge phone and desktop separately.
 
 ## 3. Heuristic review, in two passes
@@ -61,7 +61,7 @@ Not checked: <states not played, devices, real users>
 
 Keep it short. Then offer to implement the recommended option and to re-measure: play the flow again and compare the summary before and after.
 
-Before implementing a redesign, keep the current `look.json` (`qp look <url>` writes it in the run folder). After, run `qp look <url> --baseline <that look.json>`: `redesign_guard.missing` lists the links, buttons and fields that disappeared. It must be empty, or each removal must be intended and said; the key tasks must still play to the end.
+Before implementing a redesign, keep the current `look.json` (`sw look <url>` writes it in the run folder). After, run `sw look <url> --baseline <that look.json>`: `redesign_guard.missing` lists the links, buttons and fields that disappeared. It must be empty, or each removal must be intended and said; the key tasks must still play to the end.
 
 ## Rules
 

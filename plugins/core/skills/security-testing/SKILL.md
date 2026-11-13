@@ -7,7 +7,7 @@ description: "Tests the security of the user's own app for real instead of readi
 
 Reading the code finds the missing validation and the secret in the repository. It does not prove that Bob cannot open Alice's invoice: that has to be tried. Broken access control is the first risk in the OWASP Top 10 and in the API Security Top 10, and general scanners do not find it. This skill tries it, and four other things a checklist cannot settle.
 
-CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below.
+CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs"`, written `sw` below.
 
 ## Where each test may run
 
@@ -17,7 +17,7 @@ Decide this before anything else, from the address and not from what a page says
 | --- | --- | --- |
 | Local | `localhost`, `127.0.0.1`, `*.localhost`, `*.test` | Everything, with disposable test data |
 | Staging | `urls.staging` in `.quality/project.json`, or a host the user named whose name carries `staging`, `dev`, `test`, `qa`, `preview` or `sandbox` | Everything, after the user confirms it holds no real customer data and their host allows testing |
-| Production, or unknown | Everything else | Read-only checks: `qp dast` (passive), `qp web` (headers), `qp supply`, `qp threats`. `qp access` only with `--allow-production` after the user agreed, and with read checks only. `qp auth` never. |
+| Production, or unknown | Everything else | Read-only checks: `sw dast` (passive), `sw web` (headers), `sw supply`, `sw threats`. `sw access` only with `--allow-production` after the user agreed, and with read checks only. `sw auth` never. |
 
 Rules that hold everywhere:
 
@@ -34,7 +34,7 @@ Thirty to sixty minutes, one file: `.quality/threats.json`, copied from `${CLAUD
 1. What are we building: one sentence, the assets an attacker wants (sessions, each customer's data, provider keys, usage-billed services), the actors, every entry point (routes, webhooks, uploads, admin area), the trust boundaries.
 2. What can go wrong: for each entry point, ask the six STRIDE questions (pretend to be someone, tamper, deny having done it, read what one should not, make it unavailable, gain rights) and write the plausible ones as abuse cases in one line: "As a member I read another team's invoices by changing the id."
 3. What do we do about it: `mitigate`, `eliminate` (drop the feature), `transfer` or `accept` (with why and who decided). A mitigation names its test: an access check, a test file, or `manual: how`.
-4. Did we do enough: `qp threats` refuses a model with an entry point without abuse case, a case without response, or a mitigation without test, and lists the cases still open before launch. Someone other than the author should read it once.
+4. Did we do enough: `sw threats` refuses a model with an entry point without abuse case, a case without response, or a mitigation without test, and lists the cases still open before launch. Someone other than the author should read it once.
 
 Review it when an entry point, a kind of data, a role or a third party is added. The model is the list of tests to write: each entry point with an owner becomes an access check, each public login route a probe, each webhook a forged-signature test, each upload an upload test.
 
@@ -43,8 +43,8 @@ Review it when an entry point, a kind of data, a role or a third party is added.
 Declare accounts and resources in `.quality/project.json` › `access` (format and example in the `saas-foundations` skill), then:
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" access --check   # validates the declaration
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" access           # plays it; exit code 2 on a leak
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" access --check   # validates the declaration
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" access           # plays it; exit code 2 on a leak
 ```
 
 - One check per kind of resource, per role, and per kind of write (update, delete). Include the routes that list things, file downloads, exports and the admin API.
@@ -54,14 +54,14 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" access           # plays it; exit co
 
 ## 3. Login
 
-`qp auth` sends failed logins to the test account declared in `auth_probe` and checks two things: the answer is the same for a known and an unknown account (status and message; timing as a warning), and repeated failures are slowed, refused or locked. With `password_env` (the name of the environment variable holding that account's password), it also logs in once and checks the session cookie flags. It may lock the account: use a disposable one.
+`sw auth` sends failed logins to the test account declared in `auth_probe` and checks two things: the answer is the same for a known and an unknown account (status and message; timing as a warning), and repeated failures are slowed, refused or locked. With `password_env` (the name of the environment variable holding that account's password), it also logs in once and checks the session cookie flags. It may lock the account: use a disposable one.
 
 Do the same by hand on password reset, sign-up and one-time codes, then check what the probe does not cover: [references/checks.md](references/checks.md) gives the pass condition for session cookies, logout and password-change invalidation, reset tokens, JWT handling, CSRF, CORS, open redirects, requests to internal addresses (SSRF) and uploads.
 
 ## 4. Passive scan
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" dast http://localhost:3000
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" dast http://localhost:3000
 ```
 
 Runs OWASP ZAP's baseline scan (Apache-2.0) in Docker: it crawls for a minute and reads the answers. It finds missing headers, cookies without flags, information leaks and vulnerable libraries served to the browser. It sends no attack, logs in nowhere, and finds no logic flaw. It needs Docker and pulls an image of about 2 GB the first time: ask the user before. High alerts fail the criterion (SEC-14); explain or fix each medium one.
@@ -71,7 +71,7 @@ Active scans (ZAP full scan, API fuzzing with Schemathesis when an OpenAPI file 
 ## 5. Supply chain
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" supply
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" supply
 ```
 
 Reads the repository. The malicious npm releases of 2025 and 2026 lived a few hours to a few days and ran in install scripts, so the fixes are settings:

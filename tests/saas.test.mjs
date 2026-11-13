@@ -9,7 +9,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const QP = join(ROOT, "plugins/core/scripts/qp.mjs");
+const QP = join(ROOT, "plugins/core/scripts/sw.mjs");
 const lib = (f) => import(`../plugins/core/scripts/lib/${f}`);
 
 function fixture() {
@@ -27,7 +27,7 @@ const run = (cwd, args, env = {}) => new Promise((resolve) => execFile("node", [
 
 test("craft: a rough page fails on finish, a polished one passes", async (t) => {
   const { loadBrowserTools } = await lib("browser.mjs");
-  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run qp.mjs browser-setup)");
+  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run sw.mjs browser-setup)");
   const dir = mkdtempSync(join(tmpdir(), "qp-craft-"));
   const page = (f) => join(ROOT, "tests/fixtures/craft", f);
   const rough = (await run(dir, ["craft", page("rough.html")])).out.pages[0];
@@ -41,7 +41,7 @@ test("craft: a rough page fails on finish, a polished one passes", async (t) => 
 
 test("craft: site icon, share image and 404 page are checked on a served site", async (t) => {
   const { loadBrowserTools } = await lib("browser.mjs");
-  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run qp.mjs browser-setup)");
+  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run sw.mjs browser-setup)");
   const html = readFileSync(join(ROOT, "tests/fixtures/craft/polished.html"), "utf8");
   // Every address answers 200 with the same page (a "soft 404"), and there is no icon.
   const soft = createServer((req, res) => { res.setHeader("content-type", "text/html"); res.end(html); }).listen(0);
@@ -222,7 +222,7 @@ test("auth: a login that names unknown accounts and never slows down fails, a ca
 
 test("access: login steps played in a browser give the session used for the checks", async (t) => {
   const { loadBrowserTools } = await lib("browser.mjs");
-  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run qp.mjs browser-setup)");
+  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run sw.mjs browser-setup)");
   const server = createServer((req, res) => {
     const user = /user=(\w+)/.exec(req.headers.cookie || "")?.[1];
     if (req.url.startsWith("/login")) {

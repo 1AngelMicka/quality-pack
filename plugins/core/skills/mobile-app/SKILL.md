@@ -7,7 +7,7 @@ description: "Builds and releases an installed mobile app (iOS, Android) next to
 
 An app that works in the simulator can still be refused by a store, or be useless with the keyboard open. This skill covers the decisions made before the code, the platform rules that can be measured, and the release blockers that can be read in the project.
 
-CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below. Flag `native_app` in `.quality/project.json`; criteria MUX (experience) and MRL (release and security). Stack modules: `qp-expo`, `qp-capacitor`.
+CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs"`, written `sw` below. Flag `native_app` in `.quality/project.json`; criteria MUX (experience) and MRL (release and security). Stack modules: `sw-expo`, `sw-capacitor`.
 
 One limit to state at the start: **iOS builds and simulators need macOS.** On Windows or Linux, Android can be built and played locally; iOS needs a Mac, a macOS CI runner or a cloud build. Say which platforms were really tested.
 
@@ -89,8 +89,8 @@ Declare 2 to 5 tasks in `mobile.flows`, with the same idea as web flows and a vo
 Steps: `launch`, `tap`, `long_press`, `type`, `erase`, `expect`, `expect_gone`, `wait_for`, `screenshot`, `back`, `scroll_to`, `swipe`, `open_link`, `offline`, `dark`, `hide_keyboard`, `press`. A target is a visible text or `{ "id": "…" }`; prefer ids, they survive translation. The test account is a throwaway one; never the user's.
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" mobile flows --check   # validates
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" mobile flows           # writes .maestro/qp/*.yaml and plays them
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" mobile flows --check   # validates
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" mobile flows           # writes .maestro/qp/*.yaml and plays them
 ```
 
 The command writes one Maestro flow per task and plays them on the emulator, simulator or device that is running, with a screenshot after each step that changes the screen. It needs [Maestro](https://github.com/mobile-dev-inc/Maestro) (Apache-2.0; free CLI on your own devices, Java 17 or later) and a running device with the app installed. If Maestro is missing, the files are still written: ask the user before installing it. Never use Maestro's paid cloud.
@@ -98,7 +98,7 @@ The command writes one Maestro flow per task and plays them on the emulator, sim
 **Each screen, read from the device (Android).** With an emulator or a device running and the screen to check in front:
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" mobile audit
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" mobile audit
 ```
 
 It needs only `adb` (no Maestro, no change to the app). It reads the screen's view hierarchy and reports touch targets under 24 dp (must) and under 48 dp (should), controls with no text or description for a screen reader (must), and small targets less than 8 dp apart. Then it takes the same screen at 200 % text size and in dark theme, and puts both settings back. Open each screen of the key tasks and run it again; read the two screenshots for cut or overlapping text. It does not measure contrast, reading order or gestures, and there is no equivalent for iOS from Windows or Linux.
@@ -108,7 +108,7 @@ Then read the screenshots like the web ones (`design-review` skill), and add the
 ## 4. Release blockers
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" mobile check
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" mobile check
 ```
 
 Reads the project, no device needed: Android target API level (Google Play requires 36), debuggable or cleartext builds, backups, exported components; iOS privacy manifest, App Transport Security, permission texts that say why; Capacitor WebView open to any site or loading a live URL; the two link files on the site; the public account-deletion page. With Expo managed builds there is no `android/` or `ios/` folder: run `npx expo prebuild` in a copy to check the generated projects.

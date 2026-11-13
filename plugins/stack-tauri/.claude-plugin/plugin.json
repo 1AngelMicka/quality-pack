@@ -1,7 +1,7 @@
 {
-  "name": "qp-tauri",
-  "description": "Quality pack module for Tauri desktop apps. Module Tauri (application de bureau) du pack qualité.",
-  "version": "0.7.0",
+  "name": "sw-tauri",
+  "description": "Shipwright module for Tauri desktop apps. Module Tauri (application de bureau) de Shipwright.",
+  "version": "0.8.0",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

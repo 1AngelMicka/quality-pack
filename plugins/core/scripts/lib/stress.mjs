@@ -72,7 +72,7 @@ async function open(browser, url, { context = {}, before } = {}) {
 
 export async function stressAt(url, { cwd, outDir, root = cwd, only = PASSES, darkExpected = false, publicPage = false } = {}) {
   const tools = await loadBrowserTools(cwd);
-  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <qp.mjs> browser-setup` once (pack cache, not the project)." };
+  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <sw.mjs> browser-setup` once (pack cache, not the project)." };
   const shots = outDir ? join(outDir, "stress") : null;
   if (shots) mkdirSync(shots, { recursive: true });
   const slug = (url.startsWith("file:") ? url.split("/").pop() : url.replace(/^[a-z]+:\/\//, "")).replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").slice(0, 40) || "page";

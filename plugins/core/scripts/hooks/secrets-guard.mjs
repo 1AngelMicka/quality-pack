@@ -41,7 +41,7 @@ for (const text of chunks) {
 }
 if (!hits.length) process.exit(0);
 process.stderr.write(
-  `quality-pack blocked this write to ${name}: it looks like it contains a secret.\n- ${[...new Set(hits)].join("\n- ")}\n` +
+  `shipwright blocked this write to ${name}: it looks like it contains a secret.\n- ${[...new Set(hits)].join("\n- ")}\n` +
   "Put the value in an environment variable read on the server (and in .env, which must stay out of Git), then reference it here. " +
   "If it is a deliberate non-secret value, add the comment qp-allow-secret on that line.\n");
 process.exit(2);

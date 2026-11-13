@@ -9,12 +9,12 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const QP = join(ROOT, "plugins/core/scripts/qp.mjs");
+const QP = join(ROOT, "plugins/core/scripts/sw.mjs");
 const lib = (f) => import(`../plugins/core/scripts/lib/${f}`);
 const fixture = () => { const dir = mkdtempSync(join(tmpdir(), "qp-")); cpSync(join(ROOT, "tests/fixtures/app"), dir, { recursive: true }); return dir; };
 const run = (cwd, args) => new Promise((resolve) => execFile("node", [QP, ...args], { cwd, encoding: "utf8", maxBuffer: 32 * 1024 * 1024, env: { ...process.env, QP_NO_CALIBRATION: "1" } },
   (e, stdout, stderr) => resolve({ code: e?.code ?? 0, out: stdout ? JSON.parse(stdout) : null, stderr })));
-const browser = async (t) => { const { loadBrowserTools } = await lib("browser.mjs"); if (await loadBrowserTools(ROOT)) return true; t.skip("Playwright not installed (run qp.mjs browser-setup)"); return false; };
+const browser = async (t) => { const { loadBrowserTools } = await lib("browser.mjs"); if (await loadBrowserTools(ROOT)) return true; t.skip("Playwright not installed (run sw.mjs browser-setup)"); return false; };
 const setProject = (dir, patch) => { const f = join(dir, ".quality/project.json"); writeFileSync(f, JSON.stringify({ ...JSON.parse(readFileSync(f, "utf8")), ...patch })); };
 
 test("desktop check: an open Tauri app and an unsafe Electron window are reported, careful ones pass", async () => {

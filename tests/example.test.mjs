@@ -9,7 +9,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const QP = join(ROOT, "plugins/core/scripts/qp.mjs");
+const QP = join(ROOT, "plugins/core/scripts/sw.mjs");
 const run = (cwd, args) => new Promise((resolve) => execFile("node", [QP, ...args], { cwd, encoding: "utf8", maxBuffer: 32 * 1024 * 1024, env: { ...process.env, QP_NO_CALIBRATION: "1" } },
   (e, stdout, stderr) => resolve({ code: e?.code ?? 0, out: stdout ? JSON.parse(stdout) : null, stderr })));
 
@@ -43,7 +43,7 @@ async function audit(app, runId) {
 
 test("reference project: every defect planted in the draft is found, and the careful version passes", async (t) => {
   const { loadBrowserTools } = await import("../plugins/core/scripts/lib/browser.mjs");
-  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run qp.mjs browser-setup)");
+  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run sw.mjs browser-setup)");
   const has = (list, ...ids) => ids.forEach((id) => assert.ok(list.includes(id), `expected ${id} in ${JSON.stringify(list)}`));
 
   const draft = await start(true);

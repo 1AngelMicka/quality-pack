@@ -21,7 +21,7 @@
 
 - WCAG 2.2 is the rule today: 4.5:1 for normal text, 3:1 for large text (24 px, or 18.67 px bold) and for non-text (field borders, states, focus ring), 7:1 for AAA. The ratio is (L1 + 0.05) / (L2 + 0.05) and is never rounded: 4.499 fails.
 - APCA is not the WCAG 3 method (the WCAG 3 contrast algorithm is still undecided). Use it only as a second opinion, never instead of WCAG 2.
-- Pair by role: every `text`/`fg` colour against every `bg`/`surface` colour of the same theme, every `border`/`focus` colour at 3:1. `qp tokens` does this from the token names.
+- Pair by role: every `text`/`fg` colour against every `bg`/`surface` colour of the same theme, every `border`/`focus` colour at 3:1. `sw tokens` does this from the token names.
 - A light grey border on white usually fails 3:1: check field borders explicitly.
 
 ## Dark theme
@@ -33,7 +33,7 @@
 ## Wide gamut
 
 - Display P3 holds about 30 % more colours than sRGB. A colour with high chroma may fall outside sRGB.
-- Give an sRGB value first, then the wider one inside `@media (color-gamut: p3) { … }`. `qp tokens` lists the colours outside sRGB.
+- Give an sRGB value first, then the wider one inside `@media (color-gamut: p3) { … }`. `sw tokens` lists the colours outside sRGB.
 
 ## Avoid the defaults
 

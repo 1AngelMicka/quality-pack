@@ -7,7 +7,7 @@ description: "Builds the parts every SaaS needs and that are costly to add late:
 
 A SaaS fails in a few known places: one customer reads another's data, a plan limit only exists in the interface, a failed payment silently cuts access, nobody can cancel without writing to support. These parts are cheap at the start and expensive later, so they come before the features.
 
-CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below. The criteria are in the referential: accounts (ACC), subscriptions (SUB), activation (ACT). Flags in `.quality/project.json`: `multi_tenant` when customers are organisations with members, `has_subscriptions` when plans renew.
+CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs"`, written `sw` below. The criteria are in the referential: accounts (ACC), subscriptions (SUB), activation (ACT). Flags in `.quality/project.json`: `multi_tenant` when customers are organisations with members, `has_subscriptions` when plans renew.
 
 ## Order of work
 
@@ -15,11 +15,11 @@ Each step is usable before the next one starts. Do not reorder 1 and 2 after the
 
 | Step | What exists when it is done | Proof |
 | --- | --- | --- |
-| 1. Customer model and isolation | Every customer-scoped table carries its key; access is filtered in the data layer; two test accounts are seeded | `qp access` passes on one resource of each kind |
-| 2. Accounts | Sign-up, login, reset, verification, sessions through a maintained library; organisations, roles and invitations if `multi_tenant` | `qp auth` passes; invitation and last-owner tests |
+| 1. Customer model and isolation | Every customer-scoped table carries its key; access is filtered in the data layer; two test accounts are seeded | `sw access` passes on one resource of each kind |
+| 2. Accounts | Sign-up, login, reset, verification, sessions through a maintained library; organisations, roles and invitations if `multi_tenant` | `sw auth` passes; invitation and last-owner tests |
 | 3. Subscriptions | Plans, checkout, signed webhooks → entitlements table → limits enforced on the server | Test clock: trial end, renewal, declined card, cancellation |
 | 4. Service emails | Every email of the list below, sent from an authenticated domain | Each one triggered and received |
-| 5. First session | A fresh account reaches the activation event without a blank screen | A flow from a fresh account (`qp flows`) |
+| 5. First session | A fresh account reaches the activation event without a blank screen | A flow from a fresh account (`sw flows`) |
 | 6. Self-service account | Profile, security, notifications, billing, plan change, cancellation | Cancellation in three steps at most |
 | 7. Leaving | Export in a machine-readable format, account deletion | Both run on a test account |
 | 8. Support tools | Admin area with time-boxed, logged impersonation | Log line after one use |
@@ -52,7 +52,7 @@ Read [references/tenancy.md](references/tenancy.md) before writing the first tab
 }
 ```
 
-`qp access` asks for each resource as its owner (it must answer, and contain `secret` when given), then as every account in `denied_to` and as a visitor. Refused means 401, 403, 404 or a redirect. A 200 with the owner's answer, or an accepted write, is a leak and the command exits with code 2. Declare one check per kind of resource and per role, and two for writes (update, delete). Alice and Bob belong to two different customers; for roles, add a member and an admin of the same customer. Run it on local or staging; it refuses production unless the user agreed. Put the same command in CI so a leak blocks deployment.
+`sw access` asks for each resource as its owner (it must answer, and contain `secret` when given), then as every account in `denied_to` and as a visitor. Refused means 401, 403, 404 or a redirect. A 200 with the owner's answer, or an accepted write, is a leak and the command exits with code 2. Declare one check per kind of resource and per role, and two for writes (update, delete). Alice and Bob belong to two different customers; for roles, add a member and an admin of the same customer. Run it on local or staging; it refuses production unless the user agreed. Put the same command in CI so a leak blocks deployment.
 
 A clean result covers the declared resources only. When you add a kind of resource, add its check in the same change.
 
@@ -60,7 +60,7 @@ A clean result covers the declared resources only. When you add a kind of resour
 
 - Use a maintained library or identity server; never write hashing, tokens or sessions. Check its licence and last release before choosing: [references/accounts-and-email.md](references/accounts-and-email.md) lists free options and the traps (some are no longer developed, some are not open source).
 - Passwords: 8 characters minimum, 64 or more accepted, no composition rules, refuse the most common ones. Offer a passkey or TOTP as second factor.
-- A failed login, a reset request and a sign-up answer the same way whether the account exists or not, and repeated failures are slowed or refused. Declare the probe and run `qp auth` (local or staging only: it sends wrong passwords and may lock the test account):
+- A failed login, a reset request and a sign-up answer the same way whether the account exists or not, and repeated failures are slowed or refused. Declare the probe and run `sw auth` (local or staging only: it sends wrong passwords and may lock the test account):
 
 ```json
 "auth_probe": { "login": { "path": "/api/auth/login", "body": { "email": "{email}", "password": "{password}" } }, "known_email": "probe@test.local", "password_env": "QP_TEST_PASSWORD" }
@@ -90,12 +90,12 @@ Read [references/billing.md](references/billing.md) before the first checkout. T
 ```
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" billing
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" billing
 ```
 
 It creates a test clock and a test customer, starts the trial, moves time past the trial, switches to a card Stripe declines and moves past the renewal, then cancels. After each stage it reads the subscription's status at Stripe and asks the app's probe what that customer is entitled to; the two must agree. Everything is deleted with the test clock. It refuses any key that is not a test key. The probe is a small endpoint to add to the app, available on local and staging only. Not covered: plan changes and proration, refunds, tax, 3-D Secure, the emails.
 
-The signature check of the webhook itself is played with `qp webhooks`: an unsigned or wrongly signed event must be refused.
+The signature check of the webhook itself is played with `sw webhooks`: an unsigned or wrongly signed event must be refused.
 
 ## 4. Service emails
 
@@ -106,7 +106,7 @@ All of these exist before launch, in the product's voice and look, with a text v
 - Name the activation event with the user: the first time someone gets what the product promises ("first invoice sent", "first collage saved"). Record it in `.quality/project.json` (`success_metric` or a note) and emit it in the code, with sign-up and first payment, so the funnel can be read. Billing events are recorded on the server.
 - A fresh account never lands on a blank screen: an empty state with one action, or sample data it can delete.
 - No forced tour. If the first screen needs a tour, the screen is the problem (see the `design-screens` skill).
-- Declare a flow that starts from a fresh account and ends on the activation event; `qp flows` plays it on phone and desktop.
+- Declare a flow that starts from a fresh account and ends on the activation event; `sw flows` plays it on phone and desktop.
 - Do not quote conversion or activation benchmarks: the published figures contradict each other. Measure the product's own funnel.
 
 ## 6 to 10. Account, leaving, support, public pages
@@ -122,9 +122,9 @@ All of these exist before launch, in the product's voice and look, with a text v
 Run what applies and report the result of each, not a general "it works":
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" access     # no leak, no unexplained "unclear"
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" auth       # local or staging only
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" flows      # the fresh-account flow completes
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" access     # no leak, no unexplained "unclear"
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" auth       # local or staging only
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" flows      # the fresh-account flow completes
 ```
 
 Then say what was not tested: payment paths not played with a test clock, emails not received, roles without a check.

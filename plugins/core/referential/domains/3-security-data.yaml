@@ -82,7 +82,7 @@ domains:
         check: {method: auto, tool: threat_model}
         applies_if: [has_backend]
         label: {fr: "Modèle de menaces écrit, complet et à jour", en: "Threat model written, complete and current"}
-        verify: {fr: "`qp threats` : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois.", en: "`qp threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open \"before launch\"; reviewed within 6 months."}
+        verify: {fr: "`sw threats` : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois.", en: "`sw threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open \"before launch\"; reviewed within 6 months."}
       - id: SEC-13
         severity: blocker
         check: {method: auto, tool: auth_probe}

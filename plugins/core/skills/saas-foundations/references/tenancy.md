@@ -103,7 +103,7 @@ Source: OWASP Multi-Tenant Security Cheat Sheet (all rows except search, derived
 
 1. Seed two customers, Alice and Bob, each with one user and one object of every customer-scoped kind. For roles, add a member and an admin inside the same customer.
 2. For every route that takes an object ID (path, query, header, body), replay Alice's request with Bob's object ID. Cover read, update, delete and nested resources.
-3. Expected: the owner gets 200 and their data. Anyone else gets 403 or 404, with nothing of the owner in the body. `qp access` also counts 401 and a redirect as a refusal. A 200 with the owner's content, or an accepted write, is a leak.
+3. Expected: the owner gets 200 and their data. Anyone else gets 403 or 404, with nothing of the owner in the body. `sw access` also counts 401 and a redirect as a refusal. A 200 with the owner's content, or an accepted write, is a leak.
 4. Database level, per table: the cross-customer statement is refused or returns zero rows, and the same-customer statement succeeds. A test that only checks refusals passes on a table that denies everyone.
 5. Coverage is itself a check. Generate the route list from the router or the OpenAPI file and fail when a route with an ID parameter has no cross-customer test.
 6. Run all of it in CI on each pull request. A failure blocks deployment.
@@ -114,7 +114,7 @@ The two-user ID-swap is the method of OWASP WSTG-ATHZ-04. That page could not be
 
 | Tool | Use | Licence | Note |
 | --- | --- | --- | --- |
-| `qp access` (this pack, Playwright underneath) | Route-level two-account test | Apache-2.0 (Playwright) | first choice |
+| `sw access` (this pack, Playwright underneath) | Route-level two-account test | Apache-2.0 (Playwright) | first choice |
 | [pgTAP](https://github.com/theory/pgtap) | SQL tests for policies | PostgreSQL-style permissive | recommended |
 | [Schemathesis](https://github.com/schemathesis/schemathesis) | Fuzzing from an OpenAPI file | MIT | recommended |
 | [OWASP ZAP](https://github.com/zaproxy/zaproxy), Access Control Testing add-on | Access matrix by role | Apache-2.0 | recommended |

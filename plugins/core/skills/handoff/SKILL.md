@@ -4,7 +4,7 @@ description: "Write a short handoff file (.quality/handoff.md) so the next sessi
 argument-hint: "[what to focus on]"
 ---
 
-# /qp:handoff
+# /sw:handoff
 
 Write `.quality/handoff.md` for the task in progress, so the next session can resume it cheaply. Extra focus from the user: $ARGUMENTS
 

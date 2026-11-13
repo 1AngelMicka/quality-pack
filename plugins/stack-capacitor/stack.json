@@ -81,5 +81,5 @@
   }
  ],
  "qp_stack": true,
- "plugin": "qp-capacitor"
+ "plugin": "sw-capacitor"
 }

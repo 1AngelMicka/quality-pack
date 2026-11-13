@@ -7,7 +7,7 @@ The W3C Design Tokens Community Group format reached its first stable version, 2
 - A token is an object with `$value`; anything else is a group. `$type` is set on the token or inherited from a group; types are never guessed from the value.
 - Names never start with `$` and never contain `{`, `}` or `.`.
 - `dimension`: `{"value": 16, "unit": "px"}` or `rem`, with the unit even for 0. `duration`: `ms` or `s`. `cubicBezier`: four numbers, x1 and x2 between 0 and 1. `fontWeight`: 1 to 1000.
-- `color`: `{"colorSpace": "oklch", "components": [0.62, 0.14, 45]}`; sRGB, Display P3 and the CSS Color 4 spaces are allowed. `qp tokens` also reads `#hex`, `rgb()` and `oklch()` strings.
+- `color`: `{"colorSpace": "oklch", "components": [0.62, 0.14, 45]}`; sRGB, Display P3 and the CSS Color 4 spaces are allowed. `sw tokens` also reads `#hex`, `rgb()` and `oklch()` strings.
 - References: `"{group.token}"`. A reference that does not resolve, or a cycle, is an error.
 
 ## Example
@@ -54,4 +54,4 @@ The W3C Design Tokens Community Group format reached its first stable version, 2
 
 ## Check
 
-`qp tokens` (or `qp tokens path/a.tokens.json path/b.tokens.json`, merged in order): structure, references, units, tiers, the contrast matrix per theme (`light`/`dark` groups, or groups under `theme`), colours outside sRGB. Exit code 2 when a contrast pair or the format fails.
+`sw tokens` (or `sw tokens path/a.tokens.json path/b.tokens.json`, merged in order): structure, references, units, tiers, the contrast matrix per theme (`light`/`dark` groups, or groups under `theme`), colours outside sRGB. Exit code 2 when a contrast pair or the format fails.

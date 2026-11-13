@@ -20,7 +20,7 @@ domains:
         severity: blocker
         check: {method: auto, tool: flow_run}
         label: {fr: "Chaque tâche clé va au bout dans la vraie fenêtre", en: "Every key task completes in the real window"}
-        verify: {fr: "flows.json joué avec `qp flows --attach <port>` sur l'application lancée (pas seulement dans un navigateur) : tous les flows terminés. Dire sur quel système.", en: "flows.json played with `qp flows --attach <port>` on the running app (not only in a browser): every flow completed. Say on which system."}
+        verify: {fr: "flows.json joué avec `sw flows --attach <port>` sur l'application lancée (pas seulement dans un navigateur) : tous les flows terminés. Dire sur quel système.", en: "flows.json played with `sw flows --attach <port>` on the running app (not only in a browser): every flow completed. Say on which system."}
       - id: DUX-02
         severity: major
         check: {method: inspect}

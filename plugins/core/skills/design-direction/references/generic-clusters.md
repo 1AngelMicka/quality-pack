@@ -2,7 +2,7 @@
 
 Generated interfaces converge on the most probable "safe" design. Each round of anti-generic advice creates a new default, so this list is dated and must be revised. Use it to notice a default, never to pick a replacement: derive the choice from the brief and the references instead.
 
-`qp look` measures most of these signals in the browser and weights them. One signal alone is never a defect; in `operate` mode, a conventional layout is right and only quality signals count.
+`sw look` measures most of these signals in the browser and weights them. One signal alone is never a defect; in `operate` mode, a conventional layout is right and only quality signals count.
 
 ## Tokens
 

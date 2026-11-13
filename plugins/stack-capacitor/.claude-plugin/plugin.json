@@ -1,7 +1,7 @@
 {
-  "name": "qp-capacitor",
-  "description": "Quality pack module for Capacitor apps: a web app shipped as an iOS and Android app. Module Capacitor du pack qualité.",
-  "version": "0.7.0",
+  "name": "sw-capacitor",
+  "description": "Shipwright module for Capacitor apps: a web app shipped as an iOS and Android app. Module Capacitor de Shipwright.",
+  "version": "0.8.0",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

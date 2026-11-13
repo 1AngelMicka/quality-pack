@@ -2,7 +2,7 @@
 
 This file lists what blocks a release on the App Store and on Google Play, with the guideline number, the date and the check. Use it at kickoff to choose the sales model, and before each submission. It is not legal advice: store rules and fees change, so read the linked page again before a decision that costs money. Every rule below was read on 2026-11-12 unless a line says "not verified on the primary source".
 
-`qp mobile check` reads part of this in the project files (target API level, privacy manifest present, permission texts, the public deletion page). The rest is checked by hand; the last section says which is which.
+`sw mobile check` reads part of this in the project files (target API level, privacy manifest present, permission texts, the public deletion page). The rest is checked by hand; the last section says which is which.
 
 ## Apple (read 2026-11-12)
 
@@ -47,7 +47,7 @@ How to apply it: record `monetisation` and `storefronts` in `.quality/project.js
 - **Privacy manifest.** Since 2024-05-01, App Store Connect refuses an app that uses a required-reason API without declaring it in `PrivacyInfo.xcprivacy`. Each entry under `NSPrivacyAccessedAPITypes` carries `NSPrivacyAccessedAPIType` and `NSPrivacyAccessedAPITypeReasons` ([Apple documentation](https://developer.apple.com/documentation/bundleresources/describing-use-of-required-reason-api)). The API categories (file timestamp, system boot time, disk space, active keyboards, user defaults) and the reason codes are not verified on the primary source here: read them on that page.
 - **Third-party SDKs.** SDKs on Apple's list ship their own privacy manifest, and a signature when they are a binary dependency. The list includes Capacitor, Cordova, Flutter, hermes and many Firebase pods ([list](https://developer.apple.com/support/third-party-SDK-requirements/)). Check: each listed SDK in the lockfile has a `PrivacyInfo.xcprivacy` in its package.
 - **Privacy labels.** Required to submit a new app or an update. They cover the data collected by third-party SDKs. "Collect" means sent off the device and kept longer than needed to serve the request. A privacy policy URL is required. Answers can be changed without a new build ([App privacy details](https://developer.apple.com/app-store/app-privacy-details/)). Check: list the SDKs really shipped, then compare with the answers.
-- **Permission texts.** `qp mobile check` fails a `NS…UsageDescription` shorter than 20 characters. Write what the app does with the access, in the user's words.
+- **Permission texts.** `sw mobile check` fails a `NS…UsageDescription` shorter than 20 characters. Write what the app does with the access, in the user's words.
 
 ### Build and size
 
@@ -65,11 +65,11 @@ Sources: [upcoming requirements](https://developer.apple.com/news/upcoming-requi
 
 | Rule | Detail | Check |
 | --- | --- | --- |
-| Target API level | New apps and updates target API 36 since 2026-08-31. Existing apps target API 35 or higher to stay visible to new users on newer Android versions. | `qp mobile check` (`android_target_api`), or `aapt dump badging app.apk` on the built app |
+| Target API level | New apps and updates target API 36 since 2026-08-31. Existing apps target API 35 or higher to stay visible to new users on newer Android versions. | `sw mobile check` (`android_target_api`), or `aapt dump badging app.apk` on the built app |
 | 12 testers, 14 days | Personal accounts created after 2023-11-13 need a closed test with at least 12 testers opted in for 14 days in a row, then an application for production access. Organisation accounts are exempt. | Start the closed test two to three weeks before the planned release |
 | 16 KB page size | Apps targeting API 35 or higher support 16 KB memory pages on 64-bit devices. The page states that from 2027-02-01 a non-compliant update cannot be released. Pure Kotlin or Java apps comply. Native code needs AGP 8.5.1 or later and NDK r28 or later, or the linker flag `-Wl,-z,max-page-size=16384`. | Commands below |
 | Data safety form | Required for closed, open and production tracks (internal testing only is exempt). Privacy policy link required even with no data collected. Covers third-party SDKs. A wrong declaration can block updates or remove the app. | Compare the form with the SDK list |
-| Account deletion | An app with account creation gives a path inside the app to delete the account and its data, and a working web link where deletion can be requested without reinstalling. Retention is disclosed. The form asks about it. | `qp mobile check` (`account_deletion_page`) for the web page; a flow for the in-app path |
+| Account deletion | An app with account creation gives a path inside the app to delete the account and its data, and a working web link where deletion can be requested without reinstalling. Retention is disclosed. The form asks about it. | `sw mobile check` (`account_deletion_page`) for the web page; a flow for the in-app path |
 | Payments | Play Billing for digital features, subscriptions and cloud software sold in the app. Never for physical goods. Outside the eligible programs, the app does not lead users to another payment method. | Search screens for checkout links |
 | Payments, United States | Since 2025-10-29 Play Billing is not required for users in the United States. Links to external content and alternative billing go through enrolment programs. Enrolled developers report transactions and pay service fees from 2026-10-01; reporting of successful downloads for link-outs is due by 2027-02-01. | Read the programme page before enabling a link |
 | Size | Base module 500 MB compressed download; 4 GB for all install-time modules; legacy APK 100 MB. Above 200 MB the user gets a mobile-data warning. | Stay under 200 MB |
@@ -136,11 +136,11 @@ Cheapest path per stack:
 
 | # | Line | How |
 | --- | --- | --- |
-| 1 | Android targets API 36 | `qp mobile check` |
-| 2 | Release build not debuggable, no cleartext traffic, App Transport Security on | `qp mobile check` |
-| 3 | Privacy manifest present, with reasons; listed SDKs carry theirs | `qp mobile check` for presence; reasons and SDKs by hand |
-| 4 | Each permission text says why | `qp mobile check`, then read them |
-| 5 | Public deletion page answers 200 | `qp mobile check` |
+| 1 | Android targets API 36 | `sw mobile check` |
+| 2 | Release build not debuggable, no cleartext traffic, App Transport Security on | `sw mobile check` |
+| 3 | Privacy manifest present, with reasons; listed SDKs carry theirs | `sw mobile check` for presence; reasons and SDKs by hand |
+| 4 | Each permission text says why | `sw mobile check`, then read them |
+| 5 | Public deletion page answers 200 | `sw mobile check` |
 | 6 | Account deletion inside the app really deletes | flow with a throwaway account, then try to log in again |
 | 7 | Payment screens match the decision table for each storefront | by hand, on the flow screenshots |
 | 8 | An equivalent private login next to any third-party login (iOS), or a written exemption | by hand |
@@ -149,5 +149,5 @@ Cheapest path per stack:
 | 11 | Built with Xcode 26 or later; deployment target iOS 13 or later | `xcodebuild -version` |
 | 12 | App under 200 MB on Play, under 4 GB on Apple | store size reports |
 | 13 | Closed test with 12 testers for 14 days done (new personal Play account) | Play Console |
-| 14 | At least one working native feature beyond the web content (4.2); no live `server.url` in a Capacitor build | `qp mobile check` (`webview_live_url`), then by hand |
+| 14 | At least one working native feature beyond the web content (4.2); no live `server.url` in a Capacitor build | `sw mobile check` (`webview_live_url`), then by hand |
 | 15 | Crash reporting wired, staged rollout chosen, over-the-air rollback written | by hand |

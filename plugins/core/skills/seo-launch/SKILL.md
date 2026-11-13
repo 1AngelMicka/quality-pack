@@ -7,7 +7,7 @@ description: "Gets the public pages of a site found on search engines, from the 
 
 A page is found when it answers a search someone really types, says so where search engines look first, and can be reached and indexed. This skill covers those three things and the launch steps. It cannot promise a position: ranking depends on competition, links and time. Say that to the user instead of promising results.
 
-CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below. Criteria SEO-01 to SEO-10.
+CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs"`, written `sw` below. Criteria SEO-01 to SEO-10.
 
 ## 1. Choose the searches
 
@@ -63,7 +63,7 @@ Most frameworks have a built-in or standard way (a `sitemap` route or file in Ne
 ## 4. Measure
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" seo https://example.com
+node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" seo https://example.com
 ```
 
 It reads the site like a search engine, without running scripts: the sitemap and robots.txt, then each page of the sitemap (60 at most by default). It reports as **must**: no sitemap, an address of another host in it, a sitemap page that does not answer 200 or carries `noindex`, robots.txt blocking the whole site, a missing title or description, a title used on several pages, a keyword not carried by its page, Search Console not confirmed. As **should**: sitemap not declared in robots.txt, missing `lastmod`, title or description outside the lengths, repeated descriptions, pages without exactly one `h1`, thin pages, images without alt text, no keywords declared, one phrase targeted by two pages.
@@ -80,7 +80,7 @@ You cannot do these steps: they need the user's Google account and, for the best
 4. A few days later, **Pages**: look at "Why pages aren't indexed" and fix real errors (not found, redirect, blocked by robots.txt, noindex, duplicate without canonical).
 5. Optional: the same in Bing Webmaster Tools, which can import the property from Search Console.
 
-Then write the two dates in `.quality/project.json` › `seo.search_console` (`verified`, `sitemap_submitted`). `qp seo` counts Search Console as done only when both are there; it can see a verification tag on the home page, not a DNS verification or a submitted sitemap.
+Then write the two dates in `.quality/project.json` › `seo.search_console` (`verified`, `sitemap_submitted`). `sw seo` counts Search Console as done only when both are there; it can see a verification tag on the home page, not a DNS verification or a submitted sitemap.
 
 ## 6. After launch
 

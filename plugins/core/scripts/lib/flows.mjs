@@ -233,9 +233,9 @@ export async function playFlows(project, { root, outDir, base, only = [], budget
   const { flows, errors } = validateFlows(project);
   if (errors.length) return { available: true, errors };
   const selected = only.length ? flows.filter((f) => only.includes(f.id)) : flows;
-  if (!selected.length) return { available: true, errors: [flows.length ? `no flow named ${only.join(", ")}` : "no flows in .quality/project.json: declare 2 to 5 key tasks (see /qp:kickoff)"] };
+  if (!selected.length) return { available: true, errors: [flows.length ? `no flow named ${only.join(", ")}` : "no flows in .quality/project.json: declare 2 to 5 key tasks (see /sw:kickoff)"] };
   const tools = await loadBrowserTools(root);
-  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <qp.mjs> browser-setup` once (ask the user first: it installs into the pack's cache, not the project)." };
+  if (!tools) return { available: false, hint: "Playwright is not available. Run `node <sw.mjs> browser-setup` once (ask the user first: it installs into the pack's cache, not the project)." };
   const baseUrl = base || project.urls?.local || project.urls?.staging || project.urls?.production || (attach ? "app://window" : null);
   if (!baseUrl) return { available: true, errors: ["no URL: pass --base <url> or set urls.local in .quality/project.json"] };
   const schemes = project.flags?.includes("dark_mode") ? ["light", "dark"] : ["light"];

@@ -78,5 +78,5 @@
   }
  ],
  "qp_stack": true,
- "plugin": "qp-expo"
+ "plugin": "sw-expo"
 }

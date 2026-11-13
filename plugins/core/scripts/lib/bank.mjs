@@ -2,7 +2,7 @@
 // reason, what to avoid, and the measured visual profile of those sites. The bank holds addresses, descriptions
 // and numbers measured on the live pages; it never stores screenshots of other people's sites.
 // Files: plugins/core/bank/<type>.json (written by hand from research) and plugins/core/bank/profiles/<type>.json
-// (written by `qp bank measure`, numbers only).
+// (written by `sw bank measure`, numbers only).
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -44,7 +44,7 @@ export function validateType(t, id) {
 
 export function listBank(bank, type) {
   if (!type) return { types: Object.values(bank.types).map((t) => ({ id: t.id, label: t.label?.en, sites: (t.sites || []).length, profile: t.profile ? `${t.profile.n} sites measured ${t.measured}` : "not measured yet" })),
-    usage: "qp.mjs bank <type> for the expectations, the reference sites and what to avoid; qp.mjs gap <url> --type <type> to compare a screen with them." };
+    usage: "sw.mjs bank <type> for the expectations, the reference sites and what to avoid; sw.mjs gap <url> --type <type> to compare a screen with them." };
   const t = bank.types[type];
   if (!t) return { errors: [`Unknown site type "${type}". Types: ${Object.keys(bank.types).join(", ")}`] };
   return { id: t.id, label: t.label, expects: t.expects, traits: t.traits || [], sites: t.sites, avoid: t.avoid, sources: t.sources || [],
@@ -140,5 +140,5 @@ export async function calibrateBank(type, { cwd, limit = 0, dir = BANK_DIR, file
   const summary = summarizeCalibration(pages, { mode: "persuade" });
   writeFileSync(file, JSON.stringify({ measured: new Date().toISOString().slice(0, 10), advice_rate: ADVICE_RATE, ...summary, pages }, null, 1) + "\n");
   return { measured: summary.sites, failed_to_load: pages.filter((p) => p.error).length, advice: summary.advice, frequent_must: summary.frequent_must, look: summary.look,
-    reading: `A "should" failed by ${ADVICE_RATE * 100} % or more of the excellent sites becomes advice in qp craft. Sites change: calibrate again before a release.` };
+    reading: `A "should" failed by ${ADVICE_RATE * 100} % or more of the excellent sites becomes advice in sw craft. Sites change: calibrate again before a release.` };
 }

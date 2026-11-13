@@ -1,4 +1,4 @@
-// Guess stacks, flags and profile from an existing project. Suggestions only: /qp:kickoff confirms them with the user.
+// Guess stacks, flags and profile from an existing project. Suggestions only: /sw:kickoff confirms them with the user.
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, extname } from "node:path";
 import { listFiles } from "./scan.mjs";
