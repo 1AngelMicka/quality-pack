@@ -1,0 +1,1902 @@
+{
+ "type": "editorial",
+ "version": 1,
+ "measured": "2026-11-12",
+ "summary": {
+  "n": 8,
+  "desktop": {
+   "type.body_px": {
+    "low": 15.5,
+    "mid": 16,
+    "high": 18.5,
+    "min": 12,
+    "max": 26,
+    "n": 8
+   },
+   "type.largest_to_body": {
+    "low": 2.72,
+    "mid": 4.37,
+    "high": 6.56,
+    "min": 1.17,
+    "max": 7.77,
+    "n": 8
+   },
+   "type.scale_step": {
+    "low": 1.17,
+    "mid": 1.21,
+    "high": 1.85,
+    "min": 1.13,
+    "max": 2.8,
+    "n": 8
+   },
+   "type.sizes": {
+    "low": 4.25,
+    "mid": 7,
+    "high": 12,
+    "min": 2,
+    "max": 15,
+    "n": 8
+   },
+   "type.families": {
+    "low": 1,
+    "mid": 1.5,
+    "high": 3,
+    "min": 1,
+    "max": 3,
+    "n": 8
+   },
+   "type.weights": {
+    "low": 1.75,
+    "mid": 2.5,
+    "high": 3,
+    "min": 1,
+    "max": 4,
+    "n": 8
+   },
+   "type.line_length": {
+    "low": 37,
+    "mid": 61,
+    "high": 71,
+    "min": 32,
+    "max": 111,
+    "n": 5
+   },
+   "type.line_height": {
+    "low": 1.4,
+    "mid": 1.5,
+    "high": 1.5,
+    "min": 1.25,
+    "max": 1.6,
+    "n": 5
+   },
+   "first_screen.image_share": {
+    "low": 0,
+    "mid": 0.05,
+    "high": 0.18,
+    "min": 0,
+    "max": 0.93,
+    "n": 8
+   },
+   "first_screen.accent_share": {
+    "low": 0,
+    "mid": 0,
+    "high": 0,
+    "min": 0,
+    "max": 0.02,
+    "n": 8
+   },
+   "first_screen.empty_share": {
+    "low": 0.21,
+    "mid": 0.64,
+    "high": 0.85,
+    "min": 0.06,
+    "max": 1,
+    "n": 8
+   },
+   "first_screen.controls": {
+    "low": 7.75,
+    "mid": 11,
+    "high": 16,
+    "min": 3,
+    "max": 27,
+    "n": 8
+   },
+   "first_screen.words": {
+    "low": 10.75,
+    "mid": 21.5,
+    "high": 78.25,
+    "min": 8,
+    "max": 380,
+    "n": 8
+   },
+   "colour.hue_families": {
+    "low": 0.75,
+    "mid": 3,
+    "high": 3.25,
+    "min": 0,
+    "max": 11,
+    "n": 8
+   },
+   "surface.radii": {
+    "low": 0.75,
+    "mid": 2,
+    "high": 3,
+    "min": 0,
+    "max": 7,
+    "n": 8
+   },
+   "surface.main_radius_px": {
+    "low": 1.5,
+    "mid": 6,
+    "high": 31,
+    "min": 0,
+    "max": 100,
+    "n": 8
+   },
+   "surface.shadows": {
+    "low": 0,
+    "mid": 0.5,
+    "high": 1.75,
+    "min": 0,
+    "max": 13,
+    "n": 8
+   },
+   "surface.bordered_share": {
+    "low": 0,
+    "mid": 0.27,
+    "high": 0.46,
+    "min": 0,
+    "max": 0.59,
+    "n": 8
+   },
+   "surface.shadowed_share": {
+    "low": 0,
+    "mid": 0.07,
+    "high": 0.47,
+    "min": 0,
+    "max": 1,
+    "n": 8
+   },
+   "layout.content_width_px": {
+    "low": 1378.75,
+    "mid": 1390.5,
+    "high": 1396.25,
+    "min": 869,
+    "max": 1400,
+    "n": 8
+   },
+   "layout.gutter_px": {
+    "low": 20,
+    "mid": 22,
+    "high": 36.25,
+    "min": 16,
+    "max": 464,
+    "n": 8
+   },
+   "layout.gap_values": {
+    "low": 3.5,
+    "mid": 5.5,
+    "high": 8.25,
+    "min": 1,
+    "max": 9,
+    "n": 8
+   },
+   "layout.gap_median_px": {
+    "low": 9.5,
+    "mid": 14,
+    "high": 20,
+    "min": 5,
+    "max": 20,
+    "n": 8
+   },
+   "layout.gap_largest_px": {
+    "low": 30.5,
+    "mid": 41.5,
+    "high": 101.75,
+    "min": 20,
+    "max": 315,
+    "n": 8
+   },
+   "layout.gaps_on_4px_grid": {
+    "low": 0.52,
+    "mid": 0.66,
+    "high": 0.75,
+    "min": 0,
+    "max": 1,
+    "n": 8
+   },
+   "layout.padding_values": {
+    "low": 1.75,
+    "mid": 3.5,
+    "high": 4.25,
+    "min": 0,
+    "max": 8,
+    "n": 8
+   },
+   "layout.padding_median_px": {
+    "low": 11,
+    "mid": 12,
+    "high": 18.5,
+    "min": 6,
+    "max": 64,
+    "n": 7
+   },
+   "layout.even_gap_groups": {
+    "low": 0.81,
+    "mid": 0.88,
+    "high": 0.93,
+    "min": 0.67,
+    "max": 1,
+    "n": 8
+   },
+   "layout.even_size_groups": {
+    "low": 0.47,
+    "mid": 0.62,
+    "high": 0.76,
+    "min": 0.28,
+    "max": 0.95,
+    "n": 8
+   },
+   "layout.aligned_left_edges": {
+    "low": 0.19,
+    "mid": 0.41,
+    "high": 0.56,
+    "min": 0.11,
+    "max": 0.75,
+    "n": 8
+   },
+   "layout.button_height_px": {
+    "low": 25.5,
+    "mid": 32,
+    "high": 38.5,
+    "min": 16,
+    "max": 63,
+    "n": 8
+   },
+   "layout.button_heights": {
+    "low": 2,
+    "mid": 2.5,
+    "high": 3.5,
+    "min": 1,
+    "max": 6,
+    "n": 8
+   },
+   "layout.field_height_px": {
+    "low": 44.5,
+    "mid": 50,
+    "high": 51,
+    "min": 39,
+    "max": 52,
+    "n": 3
+   },
+   "layout.icon_size_px": {
+    "low": 16,
+    "mid": 16,
+    "high": 16.75,
+    "min": 14,
+    "max": 24,
+    "n": 6
+   },
+   "layout.icon_sizes": {
+    "low": 1.5,
+    "mid": 2.5,
+    "high": 4.25,
+    "min": 0,
+    "max": 5,
+    "n": 8
+   },
+   "layout.card_width_px": {
+    "low": 396.75,
+    "mid": 463,
+    "high": 480.5,
+    "min": 310,
+    "max": 584,
+    "n": 6
+   },
+   "layout.card_height_px": {
+    "low": 198.5,
+    "mid": 333.5,
+    "high": 394.25,
+    "min": 100,
+    "max": 585,
+    "n": 6
+   },
+   "layout.image_ratios": {
+    "low": 1,
+    "mid": 4,
+    "high": 5.5,
+    "min": 0,
+    "max": 7,
+    "n": 8
+   },
+   "layout.section_height_screens": {
+    "low": 0.86,
+    "mid": 0.95,
+    "high": 1,
+    "min": 0.26,
+    "max": 1,
+    "n": 6
+   },
+   "layout.section_height_variation": {
+    "low": 0.37,
+    "mid": 0.63,
+    "high": 0.89,
+    "min": 0.2,
+    "max": 1.1,
+    "n": 4
+   },
+   "layout.h1_px": {
+    "low": 65,
+    "mid": 82.5,
+    "high": 111.25,
+    "min": 40,
+    "max": 202,
+    "n": 6
+   },
+   "layout.h2_px": {
+    "low": 24,
+    "mid": 43,
+    "high": 72.5,
+    "min": 19,
+    "max": 100,
+    "n": 6
+   },
+   "layout.h3_px": {
+    "low": 26,
+    "mid": 26,
+    "high": 30,
+    "min": 24,
+    "max": 36,
+    "n": 5
+   },
+   "page.screens": {
+    "low": 4.82,
+    "mid": 9.65,
+    "high": 15.3,
+    "min": 1,
+    "max": 24.2,
+    "n": 8
+   },
+   "page.controls_per_screen": {
+    "low": 3.05,
+    "mid": 6.3,
+    "high": 11.5,
+    "min": 0.8,
+    "max": 16.3,
+    "n": 8
+   },
+   "page.animated": {
+    "low": 0,
+    "mid": 0,
+    "high": 1.5,
+    "min": 0,
+    "max": 3,
+    "n": 8
+   }
+  },
+  "mobile": {
+   "type.body_px": {
+    "low": 13.5,
+    "mid": 15,
+    "high": 16,
+    "min": 12,
+    "max": 19,
+    "n": 8
+   },
+   "type.largest_to_body": {
+    "low": 2.34,
+    "mid": 2.79,
+    "high": 3.24,
+    "min": 1.17,
+    "max": 7.5,
+    "n": 8
+   },
+   "type.scale_step": {
+    "low": 1.17,
+    "mid": 1.2,
+    "high": 1.71,
+    "min": 1.14,
+    "max": 2.5,
+    "n": 8
+   },
+   "type.sizes": {
+    "low": 3.5,
+    "mid": 5.5,
+    "high": 10.25,
+    "min": 2,
+    "max": 12,
+    "n": 8
+   },
+   "type.families": {
+    "low": 1,
+    "mid": 1.5,
+    "high": 2.25,
+    "min": 1,
+    "max": 3,
+    "n": 8
+   },
+   "type.weights": {
+    "low": 1.75,
+    "mid": 2.5,
+    "high": 3,
+    "min": 1,
+    "max": 3,
+    "n": 8
+   },
+   "type.line_length": {
+    "low": 36,
+    "mid": 41,
+    "high": 43,
+    "min": 34,
+    "max": 45,
+    "n": 5
+   },
+   "type.line_height": {
+    "low": 1.4,
+    "mid": 1.5,
+    "high": 1.55,
+    "min": 1.25,
+    "max": 1.63,
+    "n": 5
+   },
+   "first_screen.image_share": {
+    "low": 0,
+    "mid": 0.08,
+    "high": 0.13,
+    "min": 0,
+    "max": 0.93,
+    "n": 8
+   },
+   "first_screen.accent_share": {
+    "low": 0,
+    "mid": 0,
+    "high": 0,
+    "min": 0,
+    "max": 0.05,
+    "n": 8
+   },
+   "first_screen.empty_share": {
+    "low": 0.1,
+    "mid": 0.52,
+    "high": 0.89,
+    "min": 0.06,
+    "max": 0.98,
+    "n": 8
+   },
+   "first_screen.controls": {
+    "low": 5.5,
+    "mid": 7.5,
+    "high": 14.5,
+    "min": 3,
+    "max": 25,
+    "n": 8
+   },
+   "first_screen.words": {
+    "low": 8.75,
+    "mid": 12,
+    "high": 68.25,
+    "min": 7,
+    "max": 353,
+    "n": 8
+   },
+   "colour.hue_families": {
+    "low": 0.75,
+    "mid": 3,
+    "high": 3.25,
+    "min": 0,
+    "max": 11,
+    "n": 8
+   },
+   "surface.radii": {
+    "low": 0.75,
+    "mid": 2,
+    "high": 3.25,
+    "min": 0,
+    "max": 6,
+    "n": 8
+   },
+   "surface.main_radius_px": {
+    "low": 1.5,
+    "mid": 7,
+    "high": 100,
+    "min": 0,
+    "max": 390,
+    "n": 8
+   },
+   "surface.shadows": {
+    "low": 0,
+    "mid": 0.5,
+    "high": 1.75,
+    "min": 0,
+    "max": 11,
+    "n": 8
+   },
+   "surface.bordered_share": {
+    "low": 0,
+    "mid": 0.26,
+    "high": 0.56,
+    "min": 0,
+    "max": 0.73,
+    "n": 8
+   },
+   "surface.shadowed_share": {
+    "low": 0,
+    "mid": 0.07,
+    "high": 0.48,
+    "min": 0,
+    "max": 1,
+    "n": 8
+   },
+   "layout.content_width_px": {
+    "low": 348,
+    "mid": 352,
+    "high": 360,
+    "min": 299,
+    "max": 370,
+    "n": 8
+   },
+   "layout.gutter_px": {
+    "low": 15,
+    "mid": 18,
+    "high": 21,
+    "min": 10,
+    "max": 24,
+    "n": 8
+   },
+   "layout.gap_values": {
+    "low": 2.75,
+    "mid": 5,
+    "high": 6.25,
+    "min": 2,
+    "max": 8,
+    "n": 8
+   },
+   "layout.gap_median_px": {
+    "low": 11.5,
+    "mid": 17,
+    "high": 21.75,
+    "min": 5,
+    "max": 108,
+    "n": 8
+   },
+   "layout.gap_largest_px": {
+    "low": 23,
+    "mid": 32,
+    "high": 56.25,
+    "min": 20,
+    "max": 108,
+    "n": 8
+   },
+   "layout.gaps_on_4px_grid": {
+    "low": 0.13,
+    "mid": 0.59,
+    "high": 0.79,
+    "min": 0,
+    "max": 1,
+    "n": 8
+   },
+   "layout.padding_values": {
+    "low": 1,
+    "mid": 3,
+    "high": 4,
+    "min": 0,
+    "max": 6,
+    "n": 8
+   },
+   "layout.padding_median_px": {
+    "low": 11,
+    "mid": 16,
+    "high": 16,
+    "min": 6,
+    "max": 20,
+    "n": 7
+   },
+   "layout.even_gap_groups": {
+    "low": 0.73,
+    "mid": 0.84,
+    "high": 0.91,
+    "min": 0.5,
+    "max": 1,
+    "n": 8
+   },
+   "layout.even_size_groups": {
+    "low": 0.4,
+    "mid": 0.66,
+    "high": 0.76,
+    "min": 0,
+    "max": 0.95,
+    "n": 8
+   },
+   "layout.aligned_left_edges": {
+    "low": 0.42,
+    "mid": 0.59,
+    "high": 0.71,
+    "min": 0.25,
+    "max": 1,
+    "n": 8
+   },
+   "layout.button_height_px": {
+    "low": 18.75,
+    "mid": 36,
+    "high": 38.5,
+    "min": 16,
+    "max": 50,
+    "n": 8
+   },
+   "layout.button_heights": {
+    "low": 2,
+    "mid": 2.5,
+    "high": 3.5,
+    "min": 1,
+    "max": 6,
+    "n": 8
+   },
+   "layout.field_height_px": {
+    "low": 50,
+    "mid": 50,
+    "high": 51,
+    "min": 50,
+    "max": 52,
+    "n": 3
+   },
+   "layout.icon_size_px": {
+    "low": 16,
+    "mid": 16,
+    "high": 28.5,
+    "min": 14,
+    "max": 40,
+    "n": 7
+   },
+   "layout.icon_sizes": {
+    "low": 1.75,
+    "mid": 3,
+    "high": 5,
+    "min": 0,
+    "max": 7,
+    "n": 8
+   },
+   "layout.card_width_px": {
+    "low": 270,
+    "mid": 326,
+    "high": 342,
+    "min": 267,
+    "max": 350,
+    "n": 5
+   },
+   "layout.card_height_px": {
+    "low": 322,
+    "mid": 329,
+    "high": 385,
+    "min": 154,
+    "max": 467,
+    "n": 5
+   },
+   "layout.image_ratios": {
+    "low": 1,
+    "mid": 3.5,
+    "high": 4,
+    "min": 0,
+    "max": 8,
+    "n": 8
+   },
+   "layout.section_height_screens": {
+    "low": 0.25,
+    "mid": 0.95,
+    "high": 1,
+    "min": 0.21,
+    "max": 1,
+    "n": 7
+   },
+   "layout.section_height_variation": {
+    "low": 0.62,
+    "mid": 0.74,
+    "high": 1.05,
+    "min": 0.3,
+    "max": 1.96,
+    "n": 4
+   },
+   "layout.h1_px": {
+    "low": 30.75,
+    "mid": 42,
+    "high": 48,
+    "min": 24,
+    "max": 61,
+    "n": 6
+   },
+   "layout.h2_px": {
+    "low": 18,
+    "mid": 30,
+    "high": 39,
+    "min": 16,
+    "max": 40,
+    "n": 6
+   },
+   "layout.h3_px": {
+    "low": 24,
+    "mid": 26,
+    "high": 26,
+    "min": 19,
+    "max": 36,
+    "n": 5
+   },
+   "page.screens": {
+    "low": 5.95,
+    "mid": 10.7,
+    "high": 14.45,
+    "min": 1,
+    "max": 25.1,
+    "n": 8
+   },
+   "page.controls_per_screen": {
+    "low": 2.05,
+    "mid": 5.6,
+    "high": 7.63,
+    "min": 0.9,
+    "max": 11.9,
+    "n": 8
+   },
+   "page.animated": {
+    "low": 0,
+    "mid": 0,
+    "high": 0.25,
+    "min": 0,
+    "max": 3,
+    "n": 8
+   }
+  }
+ },
+ "sites": [
+  {
+   "url": "https://both-sides.the7eye.org.il/en/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 40,
+     "h1_px": 40,
+     "largest_to_body": 2.5,
+     "sizes": 6,
+     "scale_step": 1.13,
+     "families": 2,
+     "weights": 3,
+     "line_length": 111,
+     "line_height": 1.6
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.99,
+     "text_share": 0,
+     "accent_hues": 0,
+     "controls": 7,
+     "words": 10
+    },
+    "colour": {
+     "hue_families": 11,
+     "dark_page": false,
+     "page_saturation": 1
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 8,
+     "shadows": 0,
+     "bordered_share": 0.26,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 1363,
+     "gutter_px": 55,
+     "gap_values": 2,
+     "gap_median_px": 12,
+     "gap_largest_px": 43,
+     "gaps_on_4px_grid": 0.75,
+     "padding_values": 4,
+     "padding_median_px": 21,
+     "even_gap_groups": 1,
+     "even_size_groups": 0.83,
+     "aligned_left_edges": 0.57,
+     "button_height_px": 36,
+     "button_heights": 2,
+     "field_height_px": null,
+     "icon_size_px": 17,
+     "icon_sizes": 2,
+     "card_width_px": 456,
+     "card_height_px": 155,
+     "image_ratios": 0,
+     "image_ratio": null,
+     "section_height_screens": 1,
+     "section_height_variation": 0.82,
+     "h1_px": 40,
+     "h2_px": 19,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 24.2,
+     "words": 1411,
+     "images": 0,
+     "controls": 26,
+     "controls_per_screen": 1.1,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 14,
+     "largest_px": 26,
+     "h1_px": 24,
+     "largest_to_body": 1.86,
+     "sizes": 4,
+     "scale_step": 1.14,
+     "families": 2,
+     "weights": 3,
+     "line_length": 45,
+     "line_height": 1.55
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.98,
+     "text_share": 0,
+     "accent_hues": 0,
+     "controls": 4,
+     "words": 9
+    },
+    "colour": {
+     "hue_families": 11,
+     "dark_page": false,
+     "page_saturation": 1
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 8,
+     "shadows": 0,
+     "bordered_share": 0.24,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 354,
+     "gutter_px": 24,
+     "gap_values": 2,
+     "gap_median_px": 10,
+     "gap_largest_px": 43,
+     "gaps_on_4px_grid": 0,
+     "padding_values": 3,
+     "padding_median_px": 16,
+     "even_gap_groups": 1,
+     "even_size_groups": 0.75,
+     "aligned_left_edges": 0.68,
+     "button_height_px": 36,
+     "button_heights": 2,
+     "field_height_px": null,
+     "icon_size_px": 17,
+     "icon_sizes": 2,
+     "card_width_px": 342,
+     "card_height_px": 154,
+     "image_ratios": 0,
+     "image_ratio": null,
+     "section_height_screens": 1,
+     "section_height_variation": 0.74,
+     "h1_px": 24,
+     "h2_px": 16,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 25.1,
+     "words": 1306,
+     "images": 0,
+     "controls": 23,
+     "controls_per_screen": 0.9,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.theboringblog.ai/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 12,
+     "largest_px": 14,
+     "h1_px": 85,
+     "largest_to_body": 1.17,
+     "sizes": 2,
+     "scale_step": 1.17,
+     "families": 1,
+     "weights": 2,
+     "line_length": null,
+     "line_height": null
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 1,
+     "text_share": 0,
+     "accent_hues": 0,
+     "controls": 8,
+     "words": 8
+    },
+    "colour": {
+     "hue_families": 0,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 1,
+     "main_radius_px": 6,
+     "shadows": 4,
+     "bordered_share": 0,
+     "shadowed_share": 1
+    },
+    "layout": {
+     "content_width_px": 869,
+     "gutter_px": 464,
+     "gap_values": 4,
+     "gap_median_px": 10,
+     "gap_largest_px": 34,
+     "gaps_on_4px_grid": 0,
+     "padding_values": 0,
+     "padding_median_px": null,
+     "even_gap_groups": 0.9,
+     "even_size_groups": 0.95,
+     "aligned_left_edges": 0.75,
+     "button_height_px": 36,
+     "button_heights": 3,
+     "field_height_px": null,
+     "icon_size_px": 16,
+     "icon_sizes": 5,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 1,
+     "image_ratio": 1.82,
+     "section_height_screens": 0.26,
+     "section_height_variation": null,
+     "h1_px": 85,
+     "h2_px": null,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 1,
+     "words": 28,
+     "images": 1,
+     "controls": 8,
+     "controls_per_screen": 8,
+     "animated": 1
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 12,
+     "largest_px": 14,
+     "h1_px": 29,
+     "largest_to_body": 1.17,
+     "sizes": 2,
+     "scale_step": 1.17,
+     "families": 1,
+     "weights": 2,
+     "line_length": null,
+     "line_height": null
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.98,
+     "text_share": 0.02,
+     "accent_hues": 0,
+     "controls": 7,
+     "words": 7
+    },
+    "colour": {
+     "hue_families": 0,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 1,
+     "main_radius_px": 6,
+     "shadows": 4,
+     "bordered_share": 0,
+     "shadowed_share": 1
+    },
+    "layout": {
+     "content_width_px": 299,
+     "gutter_px": 24,
+     "gap_values": 3,
+     "gap_median_px": 27,
+     "gap_largest_px": 34,
+     "gaps_on_4px_grid": 0,
+     "padding_values": 0,
+     "padding_median_px": null,
+     "even_gap_groups": 0.95,
+     "even_size_groups": 0.95,
+     "aligned_left_edges": 1,
+     "button_height_px": 36,
+     "button_heights": 3,
+     "field_height_px": null,
+     "icon_size_px": 16,
+     "icon_sizes": 5,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 1,
+     "image_ratio": 0.53,
+     "section_height_screens": 0.21,
+     "section_height_variation": null,
+     "h1_px": 29,
+     "h2_px": null,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 1,
+     "words": 24,
+     "images": 1,
+     "controls": 7,
+     "controls_per_screen": 7,
+     "animated": 1
+    }
+   }
+  },
+  {
+   "url": "https://www.thefriedegg.com/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 14,
+     "largest_px": 60,
+     "h1_px": 60,
+     "largest_to_body": 4.29,
+     "sizes": 12,
+     "scale_step": 1.15,
+     "families": 1,
+     "weights": 3,
+     "line_length": 71,
+     "line_height": 1.25
+    },
+    "first_screen": {
+     "image_share": 0.02,
+     "accent_share": 0.02,
+     "empty_share": 0.25,
+     "text_share": 0.02,
+     "accent_hues": 1,
+     "controls": 27,
+     "words": 88
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 6,
+     "shadows": 0,
+     "bordered_share": 0.27,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 1388,
+     "gutter_px": 20,
+     "gap_values": 7,
+     "gap_median_px": 20,
+     "gap_largest_px": 54,
+     "gaps_on_4px_grid": 0.62,
+     "padding_values": 4,
+     "padding_median_px": 6,
+     "even_gap_groups": 0.89,
+     "even_size_groups": 0.28,
+     "aligned_left_edges": 0.11,
+     "button_height_px": 46,
+     "button_heights": 3,
+     "field_height_px": 50,
+     "icon_size_px": 24,
+     "icon_sizes": 2,
+     "card_width_px": 310,
+     "card_height_px": 413,
+     "image_ratios": 7,
+     "image_ratio": 1,
+     "section_height_screens": 0.85,
+     "section_height_variation": 0.43,
+     "h1_px": 60,
+     "h2_px": 50,
+     "h3_px": 30
+    },
+    "page": {
+     "screens": 15.2,
+     "words": 1967,
+     "images": 65,
+     "controls": 247,
+     "controls_per_screen": 16.3,
+     "animated": 3
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 12,
+     "largest_px": 40,
+     "h1_px": 36,
+     "largest_to_body": 3.33,
+     "sizes": 10,
+     "scale_step": 1.15,
+     "families": 1,
+     "weights": 3,
+     "line_length": 36,
+     "line_height": 1.25
+    },
+    "first_screen": {
+     "image_share": 0.08,
+     "accent_share": 0.01,
+     "empty_share": 0.29,
+     "text_share": 0.03,
+     "accent_hues": 1,
+     "controls": 25,
+     "words": 68
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 4,
+     "main_radius_px": 390,
+     "shadows": 0,
+     "bordered_share": 0.28,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 350,
+     "gutter_px": 20,
+     "gap_values": 6,
+     "gap_median_px": 20,
+     "gap_largest_px": 30,
+     "gaps_on_4px_grid": 0.63,
+     "padding_values": 4,
+     "padding_median_px": 6,
+     "even_gap_groups": 0.89,
+     "even_size_groups": 0.39,
+     "aligned_left_edges": 0.25,
+     "button_height_px": 46,
+     "button_heights": 3,
+     "field_height_px": 50,
+     "icon_size_px": 40,
+     "icon_sizes": 2,
+     "card_width_px": 350,
+     "card_height_px": 467,
+     "image_ratios": 4,
+     "image_ratio": 1,
+     "section_height_screens": 0.95,
+     "section_height_variation": 0.73,
+     "h1_px": 36,
+     "h2_px": 40,
+     "h3_px": 26
+    },
+    "page": {
+     "screens": 20.3,
+     "words": 1901,
+     "images": 65,
+     "controls": 242,
+     "controls_per_screen": 11.9,
+     "animated": 3
+    }
+   }
+  },
+  {
+   "url": "https://thecassandravale.com/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 26,
+     "largest_px": 202,
+     "h1_px": 202,
+     "largest_to_body": 7.77,
+     "sizes": 5,
+     "scale_step": 1.84,
+     "families": 1,
+     "weights": 1,
+     "line_length": null,
+     "line_height": null
+    },
+    "first_screen": {
+     "image_share": 0.17,
+     "accent_share": 0,
+     "empty_share": 0.8,
+     "text_share": 0.03,
+     "accent_hues": 0,
+     "controls": 3,
+     "words": 13
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 0,
+     "main_radius_px": 0,
+     "shadows": 0,
+     "bordered_share": 0.55,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 1397,
+     "gutter_px": 20,
+     "gap_values": 4,
+     "gap_median_px": 5,
+     "gap_largest_px": 20,
+     "gaps_on_4px_grid": 0.22,
+     "padding_values": 2,
+     "padding_median_px": 10,
+     "even_gap_groups": 0.67,
+     "even_size_groups": 0.73,
+     "aligned_left_edges": 0.56,
+     "button_height_px": 26,
+     "button_heights": 1,
+     "field_height_px": null,
+     "icon_size_px": null,
+     "icon_sizes": 0,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 4,
+     "image_ratio": 0.81,
+     "section_height_screens": null,
+     "section_height_variation": null,
+     "h1_px": 202,
+     "h2_px": null,
+     "h3_px": 26
+    },
+    "page": {
+     "screens": 15.6,
+     "words": 179,
+     "images": 7,
+     "controls": 12,
+     "controls_per_screen": 0.8,
+     "animated": 3
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 19,
+     "largest_px": 61,
+     "h1_px": 61,
+     "largest_to_body": 3.21,
+     "sizes": 6,
+     "scale_step": 1.53,
+     "families": 1,
+     "weights": 1,
+     "line_length": null,
+     "line_height": null
+    },
+    "first_screen": {
+     "image_share": 0.08,
+     "accent_share": 0,
+     "empty_share": 0.86,
+     "text_share": 0.06,
+     "accent_hues": 0,
+     "controls": 3,
+     "words": 13
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 0,
+     "main_radius_px": 0,
+     "shadows": 0,
+     "bordered_share": 0.73,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 370,
+     "gutter_px": 10,
+     "gap_values": 4,
+     "gap_median_px": 5,
+     "gap_largest_px": 20,
+     "gaps_on_4px_grid": 0.17,
+     "padding_values": 1,
+     "padding_median_px": 10,
+     "even_gap_groups": 0.73,
+     "even_size_groups": 0.73,
+     "aligned_left_edges": 0.79,
+     "button_height_px": 19,
+     "button_heights": 1,
+     "field_height_px": null,
+     "icon_size_px": null,
+     "icon_sizes": 0,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 4,
+     "image_ratio": 0.71,
+     "section_height_screens": null,
+     "section_height_variation": null,
+     "h1_px": 61,
+     "h2_px": null,
+     "h3_px": 19
+    },
+    "page": {
+     "screens": 11.5,
+     "words": 178,
+     "images": 9,
+     "controls": 12,
+     "controls_per_screen": 1,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://rozaliabomawrites.com/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 100,
+     "h1_px": null,
+     "largest_to_body": 6.25,
+     "sizes": 8,
+     "scale_step": 1.88,
+     "families": 3,
+     "weights": 4,
+     "line_length": 37,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0.08,
+     "accent_share": 0.01,
+     "empty_share": 0.74,
+     "text_share": 0.18,
+     "accent_hues": 2,
+     "controls": 14,
+     "words": 30
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": false,
+     "page_saturation": 0.8
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 2,
+     "shadows": 13,
+     "bordered_share": 0.59,
+     "shadowed_share": 0.66
+    },
+    "layout": {
+     "content_width_px": 1396,
+     "gutter_px": 30,
+     "gap_values": 9,
+     "gap_median_px": 20,
+     "gap_largest_px": 245,
+     "gaps_on_4px_grid": 0.63,
+     "padding_values": 5,
+     "padding_median_px": 12,
+     "even_gap_groups": 0.83,
+     "even_size_groups": 0.39,
+     "aligned_left_edges": 0.14,
+     "button_height_px": 28,
+     "button_heights": 6,
+     "field_height_px": 52,
+     "icon_size_px": 16,
+     "icon_sizes": 4,
+     "card_width_px": 377,
+     "card_height_px": 338,
+     "image_ratios": 4,
+     "image_ratio": 0.83,
+     "section_height_screens": 1,
+     "section_height_variation": 0.2,
+     "h1_px": null,
+     "h2_px": 100,
+     "h3_px": 36
+    },
+    "page": {
+     "screens": 6.8,
+     "words": 558,
+     "images": 41,
+     "controls": 31,
+     "controls_per_screen": 4.6,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 14,
+     "largest_px": 36,
+     "h1_px": null,
+     "largest_to_body": 2.57,
+     "sizes": 5,
+     "scale_step": 2.25,
+     "families": 2,
+     "weights": 3,
+     "line_length": 41,
+     "line_height": 1.63
+    },
+    "first_screen": {
+     "image_share": 0.08,
+     "accent_share": 0.05,
+     "empty_share": 0.74,
+     "text_share": 0.12,
+     "accent_hues": 2,
+     "controls": 8,
+     "words": 11
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": false,
+     "page_saturation": 0.8
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 2,
+     "shadows": 11,
+     "bordered_share": 0.72,
+     "shadowed_share": 0.72
+    },
+    "layout": {
+     "content_width_px": 342,
+     "gutter_px": 16,
+     "gap_values": 8,
+     "gap_median_px": 18,
+     "gap_largest_px": 24,
+     "gaps_on_4px_grid": 0.54,
+     "padding_values": 4,
+     "padding_median_px": 12,
+     "even_gap_groups": 0.73,
+     "even_size_groups": 0.4,
+     "aligned_left_edges": 0.33,
+     "button_height_px": 36,
+     "button_heights": 5,
+     "field_height_px": 52,
+     "icon_size_px": 16,
+     "icon_sizes": 4,
+     "card_width_px": 326,
+     "card_height_px": 385,
+     "image_ratios": 3,
+     "image_ratio": 0.82,
+     "section_height_screens": 1,
+     "section_height_variation": 0.3,
+     "h1_px": null,
+     "h2_px": 36,
+     "h3_px": 36
+    },
+    "page": {
+     "screens": 7.6,
+     "words": 445,
+     "images": 41,
+     "controls": 18,
+     "controls_per_screen": 2.4,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://archives.surfersjournal.com/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 20,
+     "largest_px": 56,
+     "h1_px": null,
+     "largest_to_body": 2.8,
+     "sizes": 2,
+     "scale_step": 2.8,
+     "families": 1,
+     "weights": 1,
+     "line_length": null,
+     "line_height": null
+    },
+    "first_screen": {
+     "image_share": 0.22,
+     "accent_share": 0,
+     "empty_share": 0.06,
+     "text_share": 0,
+     "accent_hues": 0,
+     "controls": 9,
+     "words": 11
+    },
+    "colour": {
+     "hue_families": 0,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 0,
+     "main_radius_px": 0,
+     "shadows": 1,
+     "bordered_share": 0,
+     "shadowed_share": 0.4
+    },
+    "layout": {
+     "content_width_px": 1400,
+     "gutter_px": 20,
+     "gap_values": 1,
+     "gap_median_px": 20,
+     "gap_largest_px": 20,
+     "gaps_on_4px_grid": 1,
+     "padding_values": 1,
+     "padding_median_px": 64,
+     "even_gap_groups": 1,
+     "even_size_groups": 0.5,
+     "aligned_left_edges": 0.4,
+     "button_height_px": 24,
+     "button_heights": 2,
+     "field_height_px": null,
+     "icon_size_px": null,
+     "icon_sizes": 0,
+     "card_width_px": 484,
+     "card_height_px": 585,
+     "image_ratios": 1,
+     "image_ratio": 0.83,
+     "section_height_screens": 1,
+     "section_height_variation": null,
+     "h1_px": null,
+     "h2_px": 20,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 1,
+     "words": 12,
+     "images": 2,
+     "controls": 10,
+     "controls_per_screen": 10,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 40,
+     "h1_px": null,
+     "largest_to_body": 2.5,
+     "sizes": 2,
+     "scale_step": 2.5,
+     "families": 1,
+     "weights": 1,
+     "line_length": null,
+     "line_height": null
+    },
+    "first_screen": {
+     "image_share": 0.28,
+     "accent_share": 0,
+     "empty_share": 0.06,
+     "text_share": 0.01,
+     "accent_hues": 0,
+     "controls": 6,
+     "words": 8
+    },
+    "colour": {
+     "hue_families": 0,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 0,
+     "main_radius_px": 0,
+     "shadows": 1,
+     "bordered_share": 0,
+     "shadowed_share": 0.4
+    },
+    "layout": {
+     "content_width_px": 350,
+     "gutter_px": 20,
+     "gap_values": 2,
+     "gap_median_px": 108,
+     "gap_largest_px": 108,
+     "gaps_on_4px_grid": 1,
+     "padding_values": 1,
+     "padding_median_px": 20,
+     "even_gap_groups": 0.5,
+     "even_size_groups": 0,
+     "aligned_left_edges": 0.57,
+     "button_height_px": 18,
+     "button_heights": 2,
+     "field_height_px": null,
+     "icon_size_px": 40,
+     "icon_sizes": 1,
+     "card_width_px": 270,
+     "card_height_px": 329,
+     "image_ratios": 1,
+     "image_ratio": 0.83,
+     "section_height_screens": 1,
+     "section_height_variation": null,
+     "h1_px": null,
+     "h2_px": 16,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 1,
+     "words": 9,
+     "images": 2,
+     "controls": 7,
+     "controls_per_screen": 7,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://stateofaidesign.com/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 120,
+     "h1_px": 120,
+     "largest_to_body": 7.5,
+     "sizes": 15,
+     "scale_step": 1.23,
+     "families": 3,
+     "weights": 2,
+     "line_length": 61,
+     "line_height": 1.4
+    },
+    "first_screen": {
+     "image_share": 0.93,
+     "accent_share": 0,
+     "empty_share": 0.07,
+     "text_share": 0,
+     "accent_hues": 0,
+     "controls": 13,
+     "words": 75
+    },
+    "colour": {
+     "hue_families": 4,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 1,
+     "main_radius_px": 100,
+     "shadows": 0,
+     "bordered_share": 0,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 1393,
+     "gutter_px": 16,
+     "gap_values": 9,
+     "gap_median_px": 16,
+     "gap_largest_px": 315,
+     "gaps_on_4px_grid": 0.76,
+     "padding_values": 3,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.86,
+     "even_size_groups": 0.71,
+     "aligned_left_edges": 0.41,
+     "button_height_px": 63,
+     "button_heights": 2,
+     "field_height_px": 39,
+     "icon_size_px": 16,
+     "icon_sizes": 3,
+     "card_width_px": 470,
+     "card_height_px": 100,
+     "image_ratios": 7,
+     "image_ratio": 1.53,
+     "section_height_screens": null,
+     "section_height_variation": null,
+     "h1_px": 120,
+     "h2_px": 80,
+     "h3_px": 26
+    },
+    "page": {
+     "screens": 12.5,
+     "words": 928,
+     "images": 41,
+     "controls": 46,
+     "controls_per_screen": 3.7,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 120,
+     "h1_px": 48,
+     "largest_to_body": 7.5,
+     "sizes": 12,
+     "scale_step": 1.2,
+     "families": 3,
+     "weights": 2,
+     "line_length": 43,
+     "line_height": 1.4
+    },
+    "first_screen": {
+     "image_share": 0.93,
+     "accent_share": 0,
+     "empty_share": 0.07,
+     "text_share": 0,
+     "accent_hues": 0,
+     "controls": 14,
+     "words": 69
+    },
+    "colour": {
+     "hue_families": 4,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 1,
+     "main_radius_px": 100,
+     "shadows": 0,
+     "bordered_share": 0,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 358,
+     "gutter_px": 16,
+     "gap_values": 7,
+     "gap_median_px": 16,
+     "gap_largest_px": 96,
+     "gaps_on_4px_grid": 0.83,
+     "padding_values": 3,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.89,
+     "even_size_groups": 0.78,
+     "aligned_left_edges": 0.61,
+     "button_height_px": 50,
+     "button_heights": 2,
+     "field_height_px": 50,
+     "icon_size_px": 16,
+     "icon_sizes": 5,
+     "card_width_px": 267,
+     "card_height_px": 322,
+     "image_ratios": 8,
+     "image_ratio": 1.45,
+     "section_height_screens": 0.24,
+     "section_height_variation": null,
+     "h1_px": 48,
+     "h2_px": 40,
+     "h3_px": 26
+    },
+    "page": {
+     "screens": 12.5,
+     "words": 941,
+     "images": 41,
+     "controls": 53,
+     "controls_per_screen": 4.2,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://chicago.com/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 80,
+     "h1_px": null,
+     "largest_to_body": 4.44,
+     "sizes": 12,
+     "scale_step": 1.2,
+     "families": 3,
+     "weights": 3,
+     "line_length": 32,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.53,
+     "text_share": 0.23,
+     "accent_hues": 0,
+     "controls": 22,
+     "words": 380
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 7,
+     "main_radius_px": 100,
+     "shadows": 1,
+     "bordered_share": 0.43,
+     "shadowed_share": 0.14
+    },
+    "layout": {
+     "content_width_px": 1384,
+     "gutter_px": 24,
+     "gap_values": 8,
+     "gap_median_px": 8,
+     "gap_largest_px": 40,
+     "gaps_on_4px_grid": 0.68,
+     "padding_values": 8,
+     "padding_median_px": 12,
+     "even_gap_groups": 0.75,
+     "even_size_groups": 0.52,
+     "aligned_left_edges": 0.2,
+     "button_height_px": 16,
+     "button_heights": 5,
+     "field_height_px": null,
+     "icon_size_px": 14,
+     "icon_sizes": 5,
+     "card_width_px": 584,
+     "card_height_px": 329,
+     "image_ratios": 5,
+     "image_ratio": 0.99,
+     "section_height_screens": 0.89,
+     "section_height_variation": 1.1,
+     "h1_px": 80,
+     "h2_px": 36,
+     "h3_px": 24
+    },
+    "page": {
+     "screens": 6.1,
+     "words": 1083,
+     "images": 37,
+     "controls": 98,
+     "controls_per_screen": 16,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 48,
+     "h1_px": null,
+     "largest_to_body": 3,
+     "sizes": 11,
+     "scale_step": 1.2,
+     "families": 3,
+     "weights": 3,
+     "line_length": 34,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.11,
+     "text_share": 0.64,
+     "accent_hues": 0,
+     "controls": 16,
+     "words": 353
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 100,
+     "shadows": 1,
+     "bordered_share": 0.51,
+     "shadowed_share": 0.14
+    },
+    "layout": {
+     "content_width_px": 366,
+     "gutter_px": 12,
+     "gap_values": 6,
+     "gap_median_px": 12,
+     "gap_largest_px": 20,
+     "gaps_on_4px_grid": 0.77,
+     "padding_values": 6,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.78,
+     "even_size_groups": 0.58,
+     "aligned_left_edges": 0.45,
+     "button_height_px": 16,
+     "button_heights": 6,
+     "field_height_px": null,
+     "icon_size_px": 14,
+     "icon_sizes": 7,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 4,
+     "image_ratio": 1,
+     "section_height_screens": 0.25,
+     "section_height_variation": 1.96,
+     "h1_px": 48,
+     "h2_px": 24,
+     "h3_px": 24
+    },
+    "page": {
+     "screens": 9.9,
+     "words": 1061,
+     "images": 36,
+     "controls": 94,
+     "controls_per_screen": 9.5,
+     "animated": 0
+    }
+   }
+  }
+ ]
+}

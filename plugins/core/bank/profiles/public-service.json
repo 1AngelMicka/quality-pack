@@ -1,0 +1,1758 @@
+{
+ "type": "public-service",
+ "version": 1,
+ "measured": "2026-11-12",
+ "summary": {
+  "n": 7,
+  "desktop": {
+   "type.body_px": {
+    "low": 16,
+    "mid": 18,
+    "high": 18,
+    "min": 12,
+    "max": 19,
+    "n": 7
+   },
+   "type.largest_to_body": {
+    "low": 2.94,
+    "mid": 4,
+    "high": 4.25,
+    "min": 2.22,
+    "max": 4.83,
+    "n": 7
+   },
+   "type.scale_step": {
+    "low": 1.18,
+    "mid": 1.22,
+    "high": 1.42,
+    "min": 1.14,
+    "max": 1.5,
+    "n": 7
+   },
+   "type.sizes": {
+    "low": 6,
+    "mid": 9,
+    "high": 10.5,
+    "min": 5,
+    "max": 13,
+    "n": 7
+   },
+   "type.families": {
+    "low": 1.5,
+    "mid": 2,
+    "high": 3,
+    "min": 1,
+    "max": 3,
+    "n": 7
+   },
+   "type.weights": {
+    "low": 3,
+    "mid": 3,
+    "high": 3.5,
+    "min": 2,
+    "max": 6,
+    "n": 7
+   },
+   "type.line_length": {
+    "low": 70.5,
+    "mid": 79,
+    "high": 83,
+    "min": 37,
+    "max": 109,
+    "n": 7
+   },
+   "type.line_height": {
+    "low": 1.31,
+    "mid": 1.44,
+    "high": 1.5,
+    "min": 1.2,
+    "max": 1.65,
+    "n": 7
+   },
+   "first_screen.image_share": {
+    "low": 0,
+    "mid": 0.01,
+    "high": 0.17,
+    "min": 0,
+    "max": 0.46,
+    "n": 7
+   },
+   "first_screen.accent_share": {
+    "low": 0.05,
+    "mid": 0.1,
+    "high": 0.61,
+    "min": 0,
+    "max": 0.99,
+    "n": 7
+   },
+   "first_screen.empty_share": {
+    "low": 0.1,
+    "mid": 0.11,
+    "high": 0.42,
+    "min": 0,
+    "max": 0.8,
+    "n": 7
+   },
+   "first_screen.controls": {
+    "low": 10,
+    "mid": 13,
+    "high": 18.5,
+    "min": 7,
+    "max": 28,
+    "n": 7
+   },
+   "first_screen.words": {
+    "low": 58,
+    "mid": 89,
+    "high": 166.5,
+    "min": 10,
+    "max": 539,
+    "n": 7
+   },
+   "colour.hue_families": {
+    "low": 1.5,
+    "mid": 2,
+    "high": 3,
+    "min": 0,
+    "max": 5,
+    "n": 7
+   },
+   "surface.radii": {
+    "low": 0.5,
+    "mid": 3,
+    "high": 3,
+    "min": 0,
+    "max": 4,
+    "n": 7
+   },
+   "surface.main_radius_px": {
+    "low": 1.5,
+    "mid": 8,
+    "high": 37.5,
+    "min": 0,
+    "max": 50,
+    "n": 7
+   },
+   "surface.shadows": {
+    "low": 0,
+    "mid": 1,
+    "high": 1,
+    "min": 0,
+    "max": 2,
+    "n": 7
+   },
+   "surface.bordered_share": {
+    "low": 0.25,
+    "mid": 0.31,
+    "high": 0.47,
+    "min": 0.16,
+    "max": 0.79,
+    "n": 7
+   },
+   "surface.shadowed_share": {
+    "low": 0,
+    "mid": 0.03,
+    "high": 0.09,
+    "min": 0,
+    "max": 0.24,
+    "n": 7
+   },
+   "layout.content_width_px": {
+    "low": 1275.5,
+    "mid": 1373,
+    "high": 1418,
+    "min": 960,
+    "max": 1440,
+    "n": 7
+   },
+   "layout.gutter_px": {
+    "low": 0,
+    "mid": 24,
+    "high": 81.5,
+    "min": 0,
+    "max": 240,
+    "n": 7
+   },
+   "layout.gap_values": {
+    "low": 6.5,
+    "mid": 7,
+    "high": 9,
+    "min": 6,
+    "max": 12,
+    "n": 7
+   },
+   "layout.gap_median_px": {
+    "low": 14.5,
+    "mid": 20,
+    "high": 24,
+    "min": 11,
+    "max": 40,
+    "n": 7
+   },
+   "layout.gap_largest_px": {
+    "low": 36,
+    "mid": 50,
+    "high": 74,
+    "min": 24,
+    "max": 98,
+    "n": 7
+   },
+   "layout.gaps_on_4px_grid": {
+    "low": 0.55,
+    "mid": 0.71,
+    "high": 0.82,
+    "min": 0.4,
+    "max": 0.93,
+    "n": 7
+   },
+   "layout.padding_values": {
+    "low": 2.5,
+    "mid": 3,
+    "high": 5,
+    "min": 2,
+    "max": 9,
+    "n": 7
+   },
+   "layout.padding_median_px": {
+    "low": 11,
+    "mid": 12,
+    "high": 18.5,
+    "min": 8,
+    "max": 24,
+    "n": 7
+   },
+   "layout.even_gap_groups": {
+    "low": 0.64,
+    "mid": 0.71,
+    "high": 0.79,
+    "min": 0.42,
+    "max": 0.97,
+    "n": 7
+   },
+   "layout.even_size_groups": {
+    "low": 0.62,
+    "mid": 0.67,
+    "high": 0.75,
+    "min": 0.45,
+    "max": 0.83,
+    "n": 7
+   },
+   "layout.aligned_left_edges": {
+    "low": 0.17,
+    "mid": 0.19,
+    "high": 0.51,
+    "min": 0.07,
+    "max": 0.77,
+    "n": 7
+   },
+   "layout.button_height_px": {
+    "low": 35.5,
+    "mid": 45,
+    "high": 48,
+    "min": 31,
+    "max": 48,
+    "n": 7
+   },
+   "layout.button_heights": {
+    "low": 3.5,
+    "mid": 4,
+    "high": 6.5,
+    "min": 1,
+    "max": 10,
+    "n": 7
+   },
+   "layout.field_height_px": {
+    "low": 43.5,
+    "mid": 49,
+    "high": 50,
+    "min": 32,
+    "max": 72,
+    "n": 6
+   },
+   "layout.icon_size_px": {
+    "low": 17.25,
+    "mid": 18,
+    "high": 26.25,
+    "min": 16,
+    "max": 40,
+    "n": 6
+   },
+   "layout.icon_sizes": {
+    "low": 2.5,
+    "mid": 4,
+    "high": 8,
+    "min": 0,
+    "max": 11,
+    "n": 7
+   },
+   "layout.card_width_px": {
+    "low": 252.5,
+    "mid": 309,
+    "high": 400,
+    "min": 230,
+    "max": 610,
+    "n": 6
+   },
+   "layout.card_height_px": {
+    "low": 157.5,
+    "mid": 279.5,
+    "high": 451.75,
+    "min": 109,
+    "max": 900,
+    "n": 6
+   },
+   "layout.image_ratios": {
+    "low": 4,
+    "mid": 4,
+    "high": 6,
+    "min": 1,
+    "max": 6,
+    "n": 7
+   },
+   "layout.section_height_screens": {
+    "low": 2.14,
+    "mid": 3.66,
+    "high": 5.22,
+    "min": 1,
+    "max": 7.12,
+    "n": 7
+   },
+   "layout.section_height_variation": {
+    "low": 0.54,
+    "mid": 0.55,
+    "high": 0.62,
+    "min": 0.53,
+    "max": 0.68,
+    "n": 3
+   },
+   "layout.h1_px": {
+    "low": 46,
+    "mid": 68,
+    "high": 82.5,
+    "min": 40,
+    "max": 127,
+    "n": 6
+   },
+   "layout.h2_px": {
+    "low": 33.5,
+    "mid": 48,
+    "high": 68,
+    "min": 24,
+    "max": 172,
+    "n": 7
+   },
+   "layout.h3_px": {
+    "low": 19,
+    "mid": 26,
+    "high": 26,
+    "min": 11,
+    "max": 48,
+    "n": 5
+   },
+   "page.screens": {
+    "low": 4.95,
+    "mid": 5.5,
+    "high": 7.6,
+    "min": 1,
+    "max": 9.2,
+    "n": 7
+   },
+   "page.controls_per_screen": {
+    "low": 9.4,
+    "mid": 11.9,
+    "high": 14.5,
+    "min": 3.1,
+    "max": 20,
+    "n": 7
+   },
+   "page.animated": {
+    "low": 0,
+    "mid": 0,
+    "high": 1,
+    "min": 0,
+    "max": 2,
+    "n": 7
+   }
+  },
+  "mobile": {
+   "type.body_px": {
+    "low": 16,
+    "mid": 18,
+    "high": 18,
+    "min": 14,
+    "max": 19,
+    "n": 7
+   },
+   "type.largest_to_body": {
+    "low": 2.09,
+    "mid": 2.11,
+    "high": 2.45,
+    "min": 1.67,
+    "max": 3.19,
+    "n": 7
+   },
+   "type.scale_step": {
+    "low": 1.15,
+    "mid": 1.15,
+    "high": 1.21,
+    "min": 1.11,
+    "max": 1.3,
+    "n": 7
+   },
+   "type.sizes": {
+    "low": 6,
+    "mid": 6,
+    "high": 8,
+    "min": 4,
+    "max": 11,
+    "n": 7
+   },
+   "type.families": {
+    "low": 1.5,
+    "mid": 2,
+    "high": 3,
+    "min": 1,
+    "max": 3,
+    "n": 7
+   },
+   "type.weights": {
+    "low": 2.5,
+    "mid": 3,
+    "high": 3,
+    "min": 2,
+    "max": 6,
+    "n": 7
+   },
+   "type.line_length": {
+    "low": 35,
+    "mid": 41,
+    "high": 42.5,
+    "min": 29,
+    "max": 50,
+    "n": 7
+   },
+   "type.line_height": {
+    "low": 1.26,
+    "mid": 1.44,
+    "high": 1.5,
+    "min": 1.1,
+    "max": 1.65,
+    "n": 7
+   },
+   "first_screen.image_share": {
+    "low": 0.01,
+    "mid": 0.01,
+    "high": 0.13,
+    "min": 0.01,
+    "max": 0.24,
+    "n": 7
+   },
+   "first_screen.accent_share": {
+    "low": 0.11,
+    "mid": 0.24,
+    "high": 0.53,
+    "min": 0,
+    "max": 0.99,
+    "n": 7
+   },
+   "first_screen.empty_share": {
+    "low": 0.07,
+    "mid": 0.15,
+    "high": 0.37,
+    "min": 0,
+    "max": 0.74,
+    "n": 7
+   },
+   "first_screen.controls": {
+    "low": 7,
+    "mid": 8,
+    "high": 9.5,
+    "min": 5,
+    "max": 17,
+    "n": 7
+   },
+   "first_screen.words": {
+    "low": 59,
+    "mid": 69,
+    "high": 91.5,
+    "min": 10,
+    "max": 190,
+    "n": 7
+   },
+   "colour.hue_families": {
+    "low": 1.5,
+    "mid": 2,
+    "high": 3,
+    "min": 0,
+    "max": 5,
+    "n": 7
+   },
+   "surface.radii": {
+    "low": 1.5,
+    "mid": 2,
+    "high": 3,
+    "min": 0,
+    "max": 4,
+    "n": 7
+   },
+   "surface.main_radius_px": {
+    "low": 5.5,
+    "mid": 24,
+    "high": 37.5,
+    "min": 0,
+    "max": 390,
+    "n": 7
+   },
+   "surface.shadows": {
+    "low": 0,
+    "mid": 1,
+    "high": 1,
+    "min": 0,
+    "max": 2,
+    "n": 7
+   },
+   "surface.bordered_share": {
+    "low": 0.29,
+    "mid": 0.37,
+    "high": 0.47,
+    "min": 0.12,
+    "max": 0.81,
+    "n": 7
+   },
+   "surface.shadowed_share": {
+    "low": 0,
+    "mid": 0.03,
+    "high": 0.08,
+    "min": 0,
+    "max": 0.38,
+    "n": 7
+   },
+   "layout.content_width_px": {
+    "low": 354,
+    "mid": 360,
+    "high": 375,
+    "min": 342,
+    "max": 390,
+    "n": 7
+   },
+   "layout.gutter_px": {
+    "low": 0,
+    "mid": 15,
+    "high": 18,
+    "min": 0,
+    "max": 24,
+    "n": 7
+   },
+   "layout.gap_values": {
+    "low": 5,
+    "mid": 6,
+    "high": 8,
+    "min": 4,
+    "max": 9,
+    "n": 7
+   },
+   "layout.gap_median_px": {
+    "low": 15,
+    "mid": 16,
+    "high": 16,
+    "min": 12,
+    "max": 33,
+    "n": 7
+   },
+   "layout.gap_largest_px": {
+    "low": 27.5,
+    "mid": 48,
+    "high": 49,
+    "min": 24,
+    "max": 73,
+    "n": 7
+   },
+   "layout.gaps_on_4px_grid": {
+    "low": 0.37,
+    "mid": 0.5,
+    "high": 0.85,
+    "min": 0.2,
+    "max": 1,
+    "n": 7
+   },
+   "layout.padding_values": {
+    "low": 3,
+    "mid": 3,
+    "high": 3.5,
+    "min": 2,
+    "max": 6,
+    "n": 7
+   },
+   "layout.padding_median_px": {
+    "low": 10,
+    "mid": 14,
+    "high": 18,
+    "min": 8,
+    "max": 24,
+    "n": 7
+   },
+   "layout.even_gap_groups": {
+    "low": 0.65,
+    "mid": 0.79,
+    "high": 0.79,
+    "min": 0.52,
+    "max": 1,
+    "n": 7
+   },
+   "layout.even_size_groups": {
+    "low": 0.64,
+    "mid": 0.75,
+    "high": 0.85,
+    "min": 0.45,
+    "max": 0.96,
+    "n": 7
+   },
+   "layout.aligned_left_edges": {
+    "low": 0.49,
+    "mid": 0.54,
+    "high": 0.73,
+    "min": 0.13,
+    "max": 0.88,
+    "n": 7
+   },
+   "layout.button_height_px": {
+    "low": 34,
+    "mid": 44,
+    "high": 46.5,
+    "min": 22,
+    "max": 48,
+    "n": 7
+   },
+   "layout.button_heights": {
+    "low": 3,
+    "mid": 4,
+    "high": 6,
+    "min": 2,
+    "max": 8,
+    "n": 7
+   },
+   "layout.field_height_px": {
+    "low": 42,
+    "mid": 48,
+    "high": 50,
+    "min": 39,
+    "max": 50,
+    "n": 5
+   },
+   "layout.icon_size_px": {
+    "low": 18.75,
+    "mid": 22.5,
+    "high": 29.25,
+    "min": 17,
+    "max": 40,
+    "n": 6
+   },
+   "layout.icon_sizes": {
+    "low": 3,
+    "mid": 4,
+    "high": 7,
+    "min": 0,
+    "max": 10,
+    "n": 7
+   },
+   "layout.card_width_px": {
+    "low": 299.5,
+    "mid": 322.5,
+    "high": 326,
+    "min": 166,
+    "max": 342,
+    "n": 6
+   },
+   "layout.card_height_px": {
+    "low": 188.75,
+    "mid": 229,
+    "high": 462.75,
+    "min": 134,
+    "max": 606,
+    "n": 6
+   },
+   "layout.image_ratios": {
+    "low": 2,
+    "mid": 4,
+    "high": 4.5,
+    "min": 1,
+    "max": 5,
+    "n": 7
+   },
+   "layout.section_height_screens": {
+    "low": 0.67,
+    "mid": 1.08,
+    "high": 7.48,
+    "min": 0.18,
+    "max": 15.67,
+    "n": 7
+   },
+   "layout.section_height_variation": {
+    "low": 0.83,
+    "mid": 1.07,
+    "high": 1.29,
+    "min": 0.58,
+    "max": 1.45,
+    "n": 4
+   },
+   "layout.h1_px": {
+    "low": 38,
+    "mid": 40,
+    "high": 51,
+    "min": 33,
+    "max": 64,
+    "n": 5
+   },
+   "layout.h2_px": {
+    "low": 29,
+    "mid": 35,
+    "high": 42.5,
+    "min": 21,
+    "max": 98,
+    "n": 7
+   },
+   "layout.h3_px": {
+    "low": 19,
+    "mid": 24,
+    "high": 26,
+    "min": 11,
+    "max": 42,
+    "n": 5
+   },
+   "page.screens": {
+    "low": 7.95,
+    "mid": 8.9,
+    "high": 9.95,
+    "min": 1,
+    "max": 17.4,
+    "n": 7
+   },
+   "page.controls_per_screen": {
+    "low": 4.15,
+    "mid": 5.3,
+    "high": 8.95,
+    "min": 3.4,
+    "max": 18,
+    "n": 7
+   },
+   "page.animated": {
+    "low": 0,
+    "mid": 0,
+    "high": 1,
+    "min": 0,
+    "max": 2,
+    "n": 7
+   }
+  }
+ },
+ "sites": [
+  {
+   "url": "https://www.nasa.gov/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 72,
+     "h1_px": null,
+     "largest_to_body": 4.5,
+     "sizes": 11,
+     "scale_step": 1.22,
+     "families": 3,
+     "weights": 6,
+     "line_length": 82,
+     "line_height": 1.65
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0.1,
+     "empty_share": 0.11,
+     "text_share": 0.2,
+     "accent_hues": 2,
+     "controls": 13,
+     "words": 89
+    },
+    "colour": {
+     "hue_families": 2,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 50,
+     "shadows": 1,
+     "bordered_share": 0.16,
+     "shadowed_share": 0.03
+    },
+    "layout": {
+     "content_width_px": 1373,
+     "gutter_px": 24,
+     "gap_values": 7,
+     "gap_median_px": 11,
+     "gap_largest_px": 40,
+     "gaps_on_4px_grid": 0.65,
+     "padding_values": 3,
+     "padding_median_px": 24,
+     "even_gap_groups": 0.82,
+     "even_size_groups": 0.68,
+     "aligned_left_edges": 0.18,
+     "button_height_px": 31,
+     "button_heights": 6,
+     "field_height_px": 32,
+     "icon_size_px": 18,
+     "icon_sizes": 7,
+     "card_width_px": 328,
+     "card_height_px": 192,
+     "image_ratios": 6,
+     "image_ratio": 1,
+     "section_height_screens": 7.12,
+     "section_height_variation": null,
+     "h1_px": null,
+     "h2_px": 72,
+     "h3_px": 11
+    },
+    "page": {
+     "screens": 7.9,
+     "words": 550,
+     "images": 36,
+     "controls": 78,
+     "controls_per_screen": 9.9,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 14,
+     "largest_px": 36,
+     "h1_px": null,
+     "largest_to_body": 2.57,
+     "sizes": 11,
+     "scale_step": 1.14,
+     "families": 3,
+     "weights": 6,
+     "line_length": 41,
+     "line_height": 1.65
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0.21,
+     "empty_share": 0.15,
+     "text_share": 0.37,
+     "accent_hues": 2,
+     "controls": 8,
+     "words": 74
+    },
+    "colour": {
+     "hue_families": 2,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 50,
+     "shadows": 1,
+     "bordered_share": 0.12,
+     "shadowed_share": 0.03
+    },
+    "layout": {
+     "content_width_px": 342,
+     "gutter_px": 24,
+     "gap_values": 8,
+     "gap_median_px": 16,
+     "gap_largest_px": 48,
+     "gaps_on_4px_grid": 0.81,
+     "padding_values": 3,
+     "padding_median_px": 24,
+     "even_gap_groups": 0.79,
+     "even_size_groups": 0.75,
+     "aligned_left_edges": 0.54,
+     "button_height_px": 22,
+     "button_heights": 7,
+     "field_height_px": null,
+     "icon_size_px": 18,
+     "icon_sizes": 6,
+     "card_width_px": 326,
+     "card_height_px": 200,
+     "image_ratios": 5,
+     "image_ratio": 0.78,
+     "section_height_screens": 15.67,
+     "section_height_variation": null,
+     "h1_px": null,
+     "h2_px": 35,
+     "h3_px": 11
+    },
+    "page": {
+     "screens": 17.4,
+     "words": 543,
+     "images": 36,
+     "controls": 75,
+     "controls_per_screen": 4.3,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.gov.uk/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 19,
+     "largest_px": 64,
+     "h1_px": 64,
+     "largest_to_body": 3.37,
+     "sizes": 5,
+     "scale_step": 1.5,
+     "families": 1,
+     "weights": 2,
+     "line_length": 63,
+     "line_height": 1.32
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0.52,
+     "empty_share": 0.08,
+     "text_share": 0.3,
+     "accent_hues": 2,
+     "controls": 8,
+     "words": 72
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 0,
+     "main_radius_px": 0,
+     "shadows": 2,
+     "bordered_share": 0.79,
+     "shadowed_share": 0.13
+    },
+    "layout": {
+     "content_width_px": 960,
+     "gutter_px": 240,
+     "gap_values": 7,
+     "gap_median_px": 20,
+     "gap_largest_px": 60,
+     "gaps_on_4px_grid": 0.72,
+     "padding_values": 2,
+     "padding_median_px": 8,
+     "even_gap_groups": 0.67,
+     "even_size_groups": 0.58,
+     "aligned_left_edges": 0.77,
+     "button_height_px": 38,
+     "button_heights": 4,
+     "field_height_px": 50,
+     "icon_size_px": 40,
+     "icon_sizes": 4,
+     "card_width_px": 610,
+     "card_height_px": 109,
+     "image_ratios": 1,
+     "image_ratio": 1,
+     "section_height_screens": 3.08,
+     "section_height_variation": null,
+     "h1_px": 64,
+     "h2_px": 24,
+     "h3_px": 19
+    },
+    "page": {
+     "screens": 5.5,
+     "words": 582,
+     "images": 4,
+     "controls": 87,
+     "controls_per_screen": 15.9,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 19,
+     "largest_px": 40,
+     "h1_px": 40,
+     "largest_to_body": 2.11,
+     "sizes": 4,
+     "scale_step": 1.25,
+     "families": 1,
+     "weights": 2,
+     "line_length": 31,
+     "line_height": 1.32
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0.46,
+     "empty_share": 0,
+     "text_share": 0.65,
+     "accent_hues": 2,
+     "controls": 8,
+     "words": 69
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 0,
+     "main_radius_px": 0,
+     "shadows": 2,
+     "bordered_share": 0.81,
+     "shadowed_share": 0.12
+    },
+    "layout": {
+     "content_width_px": 360,
+     "gutter_px": 15,
+     "gap_values": 4,
+     "gap_median_px": 15,
+     "gap_largest_px": 31,
+     "gaps_on_4px_grid": 0.2,
+     "padding_values": 3,
+     "padding_median_px": 8,
+     "even_gap_groups": 0.79,
+     "even_size_groups": 0.64,
+     "aligned_left_edges": 0.88,
+     "button_height_px": 42,
+     "button_heights": 4,
+     "field_height_px": 50,
+     "icon_size_px": 40,
+     "icon_sizes": 4,
+     "card_width_px": 342,
+     "card_height_px": 134,
+     "image_ratios": 1,
+     "image_ratio": 1,
+     "section_height_screens": 1.08,
+     "section_height_variation": 0.91,
+     "h1_px": 40,
+     "h2_px": 21,
+     "h3_px": 19
+    },
+    "page": {
+     "screens": 9.3,
+     "words": 582,
+     "images": 4,
+     "controls": 87,
+     "controls_per_screen": 9.4,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.governorsmansion.org/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 87,
+     "h1_px": 86,
+     "largest_to_body": 4.83,
+     "sizes": 10,
+     "scale_step": 1.33,
+     "families": 2,
+     "weights": 3,
+     "line_length": 78,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0.7,
+     "empty_share": 0.7,
+     "text_share": 0.09,
+     "accent_hues": 1,
+     "controls": 7,
+     "words": 10
+    },
+    "colour": {
+     "hue_families": 2,
+     "dark_page": true,
+     "page_saturation": 1
+    },
+    "surface": {
+     "radii": 0,
+     "main_radius_px": 0,
+     "shadows": 0,
+     "bordered_share": 0.26,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 1326,
+     "gutter_px": 48,
+     "gap_values": 6,
+     "gap_median_px": 40,
+     "gap_largest_px": 88,
+     "gaps_on_4px_grid": 0.71,
+     "padding_values": 4,
+     "padding_median_px": 13,
+     "even_gap_groups": 0.71,
+     "even_size_groups": 0.65,
+     "aligned_left_edges": 0.62,
+     "button_height_px": 48,
+     "button_heights": 3,
+     "field_height_px": 48,
+     "icon_size_px": 17,
+     "icon_sizes": 4,
+     "card_width_px": 240,
+     "card_height_px": 900,
+     "image_ratios": 6,
+     "image_ratio": 0.8,
+     "section_height_screens": 1.2,
+     "section_height_variation": 0.55,
+     "h1_px": 86,
+     "h2_px": 64,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 9.2,
+     "words": 481,
+     "images": 19,
+     "controls": 29,
+     "controls_per_screen": 3.1,
+     "animated": 2
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 51,
+     "h1_px": 51,
+     "largest_to_body": 3.19,
+     "sizes": 9,
+     "scale_step": 1.15,
+     "families": 2,
+     "weights": 3,
+     "line_length": 50,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0.03,
+     "accent_share": 0.59,
+     "empty_share": 0.58,
+     "text_share": 0.21,
+     "accent_hues": 1,
+     "controls": 6,
+     "words": 10
+    },
+    "colour": {
+     "hue_families": 2,
+     "dark_page": true,
+     "page_saturation": 1
+    },
+    "surface": {
+     "radii": 1,
+     "main_radius_px": 390,
+     "shadows": 0,
+     "bordered_share": 0.23,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 390,
+     "gutter_px": 0,
+     "gap_values": 6,
+     "gap_median_px": 33,
+     "gap_largest_px": 73,
+     "gaps_on_4px_grid": 0.35,
+     "padding_values": 4,
+     "padding_median_px": 14,
+     "even_gap_groups": 0.69,
+     "even_size_groups": 0.63,
+     "aligned_left_edges": 0.87,
+     "button_height_px": 48,
+     "button_heights": 3,
+     "field_height_px": 48,
+     "icon_size_px": 17,
+     "icon_sizes": 3,
+     "card_width_px": 319,
+     "card_height_px": 531,
+     "image_ratios": 4,
+     "image_ratio": 0.8,
+     "section_height_screens": 1.01,
+     "section_height_variation": 0.58,
+     "h1_px": 51,
+     "h2_px": 49,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 7.8,
+     "words": 477,
+     "images": 16,
+     "controls": 27,
+     "controls_per_screen": 3.4,
+     "animated": 2
+    }
+   }
+  },
+  {
+   "url": "https://sursur.ca/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 12,
+     "largest_px": 48,
+     "h1_px": 127,
+     "largest_to_body": 4,
+     "sizes": 13,
+     "scale_step": 1.14,
+     "families": 3,
+     "weights": 4,
+     "line_length": 37,
+     "line_height": 1.3
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0.99,
+     "empty_share": 0.8,
+     "text_share": 0.19,
+     "accent_hues": 2,
+     "controls": 19,
+     "words": 539
+    },
+    "colour": {
+     "hue_families": 4,
+     "dark_page": true,
+     "page_saturation": 1
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 50,
+     "shadows": 1,
+     "bordered_share": 0.24,
+     "shadowed_share": 0.24
+    },
+    "layout": {
+     "content_width_px": 1396,
+     "gutter_px": 0,
+     "gap_values": 12,
+     "gap_median_px": 13,
+     "gap_largest_px": 24,
+     "gaps_on_4px_grid": 0.4,
+     "padding_values": 3,
+     "padding_median_px": 12,
+     "even_gap_groups": 0.97,
+     "even_size_groups": 0.67,
+     "aligned_left_edges": 0.07,
+     "button_height_px": 33,
+     "button_heights": 4,
+     "field_height_px": null,
+     "icon_size_px": 29,
+     "icon_sizes": 1,
+     "card_width_px": 290,
+     "card_height_px": 480,
+     "image_ratios": 4,
+     "image_ratio": 1.67,
+     "section_height_screens": 1,
+     "section_height_variation": 0.68,
+     "h1_px": 127,
+     "h2_px": 172,
+     "h3_px": 48
+    },
+    "page": {
+     "screens": 1,
+     "words": 649,
+     "images": 28,
+     "controls": 20,
+     "controls_per_screen": 20,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 42,
+     "h1_px": 64,
+     "largest_to_body": 2.33,
+     "sizes": 6,
+     "scale_step": 1.11,
+     "families": 3,
+     "weights": 2,
+     "line_length": 42,
+     "line_height": 1.1
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0.99,
+     "empty_share": 0.74,
+     "text_share": 0.23,
+     "accent_hues": 2,
+     "controls": 17,
+     "words": 190
+    },
+    "colour": {
+     "hue_families": 4,
+     "dark_page": true,
+     "page_saturation": 1
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 24,
+     "shadows": 1,
+     "bordered_share": 0.38,
+     "shadowed_share": 0.38
+    },
+    "layout": {
+     "content_width_px": 360,
+     "gutter_px": 0,
+     "gap_values": 5,
+     "gap_median_px": 15,
+     "gap_largest_px": 24,
+     "gaps_on_4px_grid": 0.5,
+     "padding_values": 2,
+     "padding_median_px": 20,
+     "even_gap_groups": 1,
+     "even_size_groups": 0.87,
+     "aligned_left_edges": 0.13,
+     "button_height_px": 26,
+     "button_heights": 3,
+     "field_height_px": null,
+     "icon_size_px": 31,
+     "icon_sizes": 3,
+     "card_width_px": 293,
+     "card_height_px": 606,
+     "image_ratios": 2,
+     "image_ratio": 1.67,
+     "section_height_screens": 0.18,
+     "section_height_variation": 1.23,
+     "h1_px": 64,
+     "h2_px": 98,
+     "h3_px": 42
+    },
+    "page": {
+     "screens": 1,
+     "words": 593,
+     "images": 28,
+     "controls": 18,
+     "controls_per_screen": 18,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.library.gov.au/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 40,
+     "h1_px": 40,
+     "largest_to_body": 2.5,
+     "sizes": 7,
+     "scale_step": 1.21,
+     "families": 1,
+     "weights": 3,
+     "line_length": 84,
+     "line_height": 1.2
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0,
+     "text_share": 0.15,
+     "accent_hues": 0,
+     "controls": 28,
+     "words": 143
+    },
+    "colour": {
+     "hue_families": 0,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 4,
+     "main_radius_px": 8,
+     "shadows": 0,
+     "bordered_share": 0.36,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 1440,
+     "gutter_px": 0,
+     "gap_values": 6,
+     "gap_median_px": 24,
+     "gap_largest_px": 32,
+     "gaps_on_4px_grid": 0.93,
+     "padding_values": 6,
+     "padding_median_px": 24,
+     "even_gap_groups": 0.76,
+     "even_size_groups": 0.83,
+     "aligned_left_edges": 0.19,
+     "button_height_px": 48,
+     "button_heights": 10,
+     "field_height_px": 72,
+     "icon_size_px": 16,
+     "icon_sizes": 11,
+     "card_width_px": 230,
+     "card_height_px": 146,
+     "image_ratios": 6,
+     "image_ratio": 0.64,
+     "section_height_screens": 5.78,
+     "section_height_variation": null,
+     "h1_px": 40,
+     "h2_px": 33,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 7.3,
+     "words": 738,
+     "images": 48,
+     "controls": 95,
+     "controls_per_screen": 13.1,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 33,
+     "h1_px": null,
+     "largest_to_body": 2.06,
+     "sizes": 6,
+     "scale_step": 1.18,
+     "families": 1,
+     "weights": 3,
+     "line_length": 29,
+     "line_height": 1.2
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0,
+     "empty_share": 0,
+     "text_share": 0.29,
+     "accent_hues": 0,
+     "controls": 10,
+     "words": 109
+    },
+    "colour": {
+     "hue_families": 0,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 4,
+     "main_radius_px": 8,
+     "shadows": 0,
+     "bordered_share": 0.34,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 358,
+     "gutter_px": 16,
+     "gap_values": 5,
+     "gap_median_px": 16,
+     "gap_largest_px": 24,
+     "gaps_on_4px_grid": 0.89,
+     "padding_values": 3,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.79,
+     "even_size_groups": 0.82,
+     "aligned_left_edges": 0.54,
+     "button_height_px": 44,
+     "button_heights": 8,
+     "field_height_px": 50,
+     "icon_size_px": 24,
+     "icon_sizes": 8,
+     "card_width_px": 166,
+     "card_height_px": 185,
+     "image_ratios": 5,
+     "image_ratio": 0.64,
+     "section_height_screens": 6.13,
+     "section_height_variation": null,
+     "h1_px": 33,
+     "h2_px": 28,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 8.9,
+     "words": 696,
+     "images": 44,
+     "controls": 76,
+     "controls_per_screen": 8.5,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.jocogov.org/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 40,
+     "h1_px": null,
+     "largest_to_body": 2.22,
+     "sizes": 9,
+     "scale_step": 1.15,
+     "families": 3,
+     "weights": 3,
+     "line_length": 109,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0.32,
+     "accent_share": 0,
+     "empty_share": 0.11,
+     "text_share": 0.14,
+     "accent_hues": 0,
+     "controls": 18,
+     "words": 190
+    },
+    "colour": {
+     "hue_families": 2,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 3,
+     "shadows": 0,
+     "bordered_share": 0.31,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 1440,
+     "gutter_px": 0,
+     "gap_values": 8,
+     "gap_median_px": 24,
+     "gap_largest_px": 98,
+     "gaps_on_4px_grid": 0.92,
+     "padding_values": 9,
+     "padding_median_px": 12,
+     "even_gap_groups": 0.42,
+     "even_size_groups": 0.82,
+     "aligned_left_edges": 0.16,
+     "button_height_px": 45,
+     "button_heights": 7,
+     "field_height_px": 42,
+     "icon_size_px": 18,
+     "icon_sizes": 9,
+     "card_width_px": 424,
+     "card_height_px": 367,
+     "image_ratios": 4,
+     "image_ratio": 1.98,
+     "section_height_screens": 4.66,
+     "section_height_variation": null,
+     "h1_px": 40,
+     "h2_px": 34,
+     "h3_px": 26
+    },
+    "page": {
+     "screens": 5.5,
+     "words": 644,
+     "images": 12,
+     "controls": 66,
+     "controls_per_screen": 11.9,
+     "animated": 2
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 30,
+     "h1_px": null,
+     "largest_to_body": 1.67,
+     "sizes": 7,
+     "scale_step": 1.15,
+     "families": 3,
+     "weights": 3,
+     "line_length": 43,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0.24,
+     "accent_share": 0,
+     "empty_share": 0.13,
+     "text_share": 0.3,
+     "accent_hues": 0,
+     "controls": 9,
+     "words": 65
+    },
+    "colour": {
+     "hue_families": 2,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 2,
+     "main_radius_px": 3,
+     "shadows": 0,
+     "bordered_share": 0.37,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 390,
+     "gutter_px": 0,
+     "gap_values": 8,
+     "gap_median_px": 16,
+     "gap_largest_px": 48,
+     "gaps_on_4px_grid": 1,
+     "padding_values": 6,
+     "padding_median_px": 10,
+     "even_gap_groups": 0.52,
+     "even_size_groups": 0.96,
+     "aligned_left_edges": 0.43,
+     "button_height_px": 45,
+     "button_heights": 5,
+     "field_height_px": 42,
+     "icon_size_px": 21,
+     "icon_sizes": 10,
+     "card_width_px": 326,
+     "card_height_px": 258,
+     "image_ratios": 2,
+     "image_ratio": 1.3,
+     "section_height_screens": 8.82,
+     "section_height_variation": null,
+     "h1_px": null,
+     "h2_px": 30,
+     "h3_px": 24
+    },
+    "page": {
+     "screens": 10.6,
+     "words": 524,
+     "images": 7,
+     "controls": 56,
+     "controls_per_screen": 5.3,
+     "animated": 2
+    }
+   }
+  },
+  {
+   "url": "https://digitalequity.cookcountyil.gov/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 72,
+     "h1_px": 72,
+     "largest_to_body": 4,
+     "sizes": 5,
+     "scale_step": 1.5,
+     "families": 2,
+     "weights": 3,
+     "line_length": 79,
+     "line_height": 1.44
+    },
+    "first_screen": {
+     "image_share": 0.46,
+     "accent_share": 0.09,
+     "empty_share": 0.14,
+     "text_share": 0.28,
+     "accent_hues": 1,
+     "controls": 12,
+     "words": 44
+    },
+    "colour": {
+     "hue_families": 5,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 1,
+     "main_radius_px": 25,
+     "shadows": 1,
+     "bordered_share": 0.58,
+     "shadowed_share": 0.04
+    },
+    "layout": {
+     "content_width_px": 1225,
+     "gutter_px": 115,
+     "gap_values": 10,
+     "gap_median_px": 16,
+     "gap_largest_px": 50,
+     "gaps_on_4px_grid": 0.44,
+     "padding_values": 2,
+     "padding_median_px": 10,
+     "even_gap_groups": 0.6,
+     "even_size_groups": 0.45,
+     "aligned_left_edges": 0.39,
+     "button_height_px": 48,
+     "button_heights": 1,
+     "field_height_px": 50,
+     "icon_size_px": null,
+     "icon_sizes": 0,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 4,
+     "image_ratio": 2.4,
+     "section_height_screens": 3.66,
+     "section_height_variation": 0.53,
+     "h1_px": 72,
+     "h2_px": 48,
+     "h3_px": 26
+    },
+    "page": {
+     "screens": 4.4,
+     "words": 463,
+     "images": 9,
+     "controls": 39,
+     "controls_per_screen": 8.9,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 38,
+     "h1_px": 38,
+     "largest_to_body": 2.11,
+     "sizes": 6,
+     "scale_step": 1.3,
+     "families": 2,
+     "weights": 3,
+     "line_length": 39,
+     "line_height": 1.44
+    },
+    "first_screen": {
+     "image_share": 0.22,
+     "accent_share": 0.24,
+     "empty_share": 0.16,
+     "text_share": 0.41,
+     "accent_hues": 1,
+     "controls": 5,
+     "words": 53
+    },
+    "colour": {
+     "hue_families": 5,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 2,
+     "main_radius_px": 25,
+     "shadows": 1,
+     "bordered_share": 0.56,
+     "shadowed_share": 0.04
+    },
+    "layout": {
+     "content_width_px": 350,
+     "gutter_px": 20,
+     "gap_values": 9,
+     "gap_median_px": 12,
+     "gap_largest_px": 50,
+     "gaps_on_4px_grid": 0.38,
+     "padding_values": 3,
+     "padding_median_px": 10,
+     "even_gap_groups": 0.6,
+     "even_size_groups": 0.45,
+     "aligned_left_edges": 0.58,
+     "button_height_px": 48,
+     "button_heights": 2,
+     "field_height_px": 39,
+     "icon_size_px": null,
+     "icon_sizes": 0,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 4,
+     "image_ratio": 2.4,
+     "section_height_screens": 0.32,
+     "section_height_variation": 1.45,
+     "h1_px": 38,
+     "h2_px": 36,
+     "h3_px": 26
+    },
+    "page": {
+     "screens": 8.1,
+     "words": 449,
+     "images": 9,
+     "controls": 32,
+     "controls_per_screen": 4,
+     "animated": 0
+    }
+   }
+  }
+ ]
+}
