@@ -158,7 +158,7 @@ Token mapping is in color.md. The finishing rules:
 - `:root { color-scheme: dark; }`, so scrollbars, native controls and autofill follow. `<meta name="theme-color">` equals the page background. On Windows, give `<select>` explicit colours.
 - No transition while the theme switches. Check the selection colour, the image outlines and the favicon again in dark.
 
-Measured by `sw craft`: `dark_color_scheme` (must, when the page background is dark). By eye: the levels, hairlines, shadows, the switch.
+Measured by `sw craft`: `dark_color_scheme` (when the page background is dark). By eye: the levels, hairlines, shadows, the switch.
 
 Sources: Jakub Krehel, Vercel guidelines, Linear, Rauno Freiberg.
 

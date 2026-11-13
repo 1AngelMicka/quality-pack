@@ -9,7 +9,7 @@
     {
       "name": "sw",
       "description": "Shipwright: takes a site, web app, SaaS, desktop or mobile app from the idea to the launch. Stages with a gate each, build skills across 37 domains, key tasks played on phone and desktop, security tried, rendering measured, two scores with evidence. /sw:kickoff, /sw:audit, /sw:fix. Shipwright : mène un site, une application web, un SaaS, une application de bureau ou mobile de l'idée au lancement, avec la preuve à chaque étape.",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "source": "./plugins/core",
       "author": {
         "name": "Micka",
@@ -19,7 +19,7 @@
     {
       "name": "sw-nextjs",
       "description": "Shipwright module for Next.js, React, TypeScript and Tailwind. Module Next.js / React / TypeScript / Tailwind de Shipwright.",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "source": "./plugins/stack-nextjs",
       "author": {
         "name": "Micka",
@@ -29,7 +29,7 @@
     {
       "name": "sw-node-api",
       "description": "Shipwright module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node de Shipwright.",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "source": "./plugins/stack-node-api",
       "author": {
         "name": "Micka",
@@ -39,7 +39,7 @@
     {
       "name": "sw-expo",
       "description": "Shipwright module for Expo and React Native apps (iOS, Android). Module Expo / React Native de Shipwright.",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "source": "./plugins/stack-expo",
       "author": {
         "name": "Micka",
@@ -49,7 +49,7 @@
     {
       "name": "sw-capacitor",
       "description": "Shipwright module for Capacitor apps: a web app shipped as an iOS and Android app. Module Capacitor de Shipwright.",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "source": "./plugins/stack-capacitor",
       "author": {
         "name": "Micka",
@@ -59,7 +59,7 @@
     {
       "name": "sw-tauri",
       "description": "Shipwright module for Tauri desktop apps. Module Tauri (application de bureau) de Shipwright.",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "source": "./plugins/stack-tauri",
       "author": {
         "name": "Micka",
@@ -69,7 +69,7 @@
     {
       "name": "sw-electron",
       "description": "Shipwright module for Electron desktop apps. Module Electron (application de bureau) de Shipwright.",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "source": "./plugins/stack-electron",
       "author": {
         "name": "Micka",
@@ -79,7 +79,7 @@
     {
       "name": "sw-vps",
       "description": "Shipwright module for self-hosted VPS: Docker Compose, PM2, Nginx or CloudPanel, backups. Module VPS auto-hébergé de Shipwright.",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "source": "./plugins/infra-vps",
       "author": {
         "name": "Micka",

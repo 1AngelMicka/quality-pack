@@ -140,7 +140,7 @@ function measureCraft() {
 
   // --- Motion -------------------------------------------------------------------------------------------
   const interactive = all.filter((e) => e.matches("a[href], button, [role=button], [role=tab], input, select, textarea, summary"));
-  const LAYOUT = /\b(width|height|top|left|right|bottom|margin|padding|inset|font-size|line-height)\b/;
+  const LAYOUT = /^((min-|max-)?(width|height)|top|left|right|bottom|(margin|padding|inset)(-[a-z-]+)?|border(-[a-z]+)*-width|font-size|line-height)$/; // whole names: outline-width or border-top-color move nothing
   const transAll = [], slow = [], layout = [];
   const durations = new Set();
   for (const e of interactive) {
@@ -162,8 +162,8 @@ function measureCraft() {
   const raster = imgs.filter((i) => !/\.svg(\?|$)|^data:image\/svg/i.test(i.currentSrc || i.src));
   const distorted = imgs.filter((i) => { const r = i.getBoundingClientRect(); const fit = getComputedStyle(i).objectFit;
     return fit === "fill" && r.width >= 24 && Math.abs(r.width / r.height - i.naturalWidth / i.naturalHeight) / (i.naturalWidth / i.naturalHeight) > 0.03; });
-  const blurry = raster.filter((i) => { const r = i.getBoundingClientRect(); return r.width >= 80 && i.naturalWidth < r.width * 0.95; });
-  const lowDensity = raster.filter((i) => { const r = i.getBoundingClientRect(); return r.width >= 80 && i.naturalWidth >= r.width * 0.95 && i.naturalWidth < r.width * dpr * 0.9; });
+  const blurry = raster.filter((i) => { const r = i.getBoundingClientRect(); return r.width >= 80 && i.naturalWidth > 4 && i.naturalWidth < r.width * 0.8; });
+  const lowDensity = raster.filter((i) => { const r = i.getBoundingClientRect(); return r.width >= 80 && i.naturalWidth >= r.width * 0.8 && i.naturalWidth < r.width * dpr * 0.9; });
   const unsized = [...document.querySelectorAll("img")].filter(shown).filter((i) => !(i.getAttribute("width") && i.getAttribute("height")) && getComputedStyle(i).aspectRatio === "auto" && !/^\d/.test(i.style.height));
 
   // Icons: inline SVG up to 40 px. Stroke as drawn on screen = stroke-width × rendered size / viewBox size.
@@ -226,25 +226,40 @@ async function focusProbe(page, max = 25) {
   await page.evaluate((keys) => {
     window.__qpBase = new WeakMap();
     for (const e of document.querySelectorAll("a[href], button, input, select, textarea, summary, [tabindex], [role=button], [role=tab]")) {
-      const s = getComputedStyle(e); window.__qpBase.set(e, Object.fromEntries(keys.map((k) => [k, s[k]])));
+      const s = getComputedStyle(e); const base = Object.fromEntries(keys.map((k) => [k, s[k]]));
+      base.__pseudo = ["::before", "::after"].map((p) => { const ps = getComputedStyle(e, p); return keys.map((k) => ps[k]).join("|"); }).join("§");
+      window.__qpBase.set(e, base);
+      // The three boxes around a control are remembered too: a search field often draws its ring on a wrapper (:focus-within).
+      for (let p = e.parentElement, n = 0; p && p !== document.body && n < 3; p = p.parentElement, n++) {
+        if (window.__qpBase.has(p)) continue;
+        const ps = getComputedStyle(p); window.__qpBase.set(p, Object.fromEntries(keys.map((k) => [k, ps[k]])));
+      }
     }
   }, STYLE_KEYS);
   const seen = [], bad = [];
   for (let i = 0; i < max; i++) {
     await page.keyboard.press("Tab");
-    const r = await page.evaluate((keys) => {
+    const r = await page.evaluate(async (keys) => {
       const e = document.activeElement;
       if (!e || e === document.body) return null;
       const base = window.__qpBase.get(e);
+      // Many sites ease their focus ring in: read at once, the outline is still 0 px wide. Wait for the
+      // transitions of the control, its parent and its children to end (0.8 s at most).
+      const moving = [e, e.parentElement, ...e.children].filter(Boolean).flatMap((n) => (n.getAnimations ? n.getAnimations() : [])).filter((a) => a.constructor.name === "CSSTransition");
+      if (moving.length) await Promise.race([Promise.allSettled(moving.map((a) => a.finished)), new Promise((done) => setTimeout(done, 800))]);
       const s = getComputedStyle(e);
+      const pseudo = ["::before", "::after"].map((p) => { const ps = getComputedStyle(e, p); return keys.map((k) => ps[k]).join("|"); }).join("§");
       const outline = s.outlineStyle !== "none" && parseFloat(s.outlineWidth) > 0;
       const changed = base ? keys.filter((k) => !/^outline/.test(k) && base[k] !== s[k]) : [];
       // A ring drawn on a wrapper (:focus-within) counts too.
-      const p = e.parentElement, ps = p ? getComputedStyle(p) : null;
-      const wrapper = ps && ((ps.outlineStyle !== "none" && parseFloat(ps.outlineWidth) > 0) || (window.__qpBase.get(p) && window.__qpBase.get(p).boxShadow !== ps.boxShadow));
+      let wrapper = false;
+      for (let p = e.parentElement, n = 0; p && p !== document.body && n < 3 && !wrapper; p = p.parentElement, n++) {
+        const ps = getComputedStyle(p), pb = window.__qpBase.get(p);
+        wrapper = (ps.outlineStyle !== "none" && parseFloat(ps.outlineWidth) > 0) || (!!pb && ["boxShadow", "borderTopColor", "borderBottomColor", "backgroundColor"].some((k) => pb[k] !== ps[k]));
+      }
       const t = (e.getAttribute("aria-label") || e.innerText || e.getAttribute("placeholder") || e.name || "").trim().replace(/\s+/g, " ").slice(0, 40);
       const rect = e.getBoundingClientRect();
-      return { key: `${e.tagName.toLowerCase()}${e.id ? `#${e.id}` : ""}${t ? ` "${t}"` : ""}`, visible: outline || changed.length > 0 || !!wrapper, on_screen: rect.width > 0 && rect.height > 0 };
+      return { key: `${e.tagName.toLowerCase()}${e.id ? `#${e.id}` : ""}${t ? ` "${t}"` : ""}`, visible: outline || changed.length > 0 || !!wrapper || (!!base && base.__pseudo !== pseudo), on_screen: rect.width > 0 && rect.height > 0 };
     }, STYLE_KEYS).catch(() => null);
     if (!r) continue;
     if (seen.includes(r.key)) break; // went round
@@ -350,7 +365,7 @@ export function scoreCraft(m, { mode = "operate", calibration = null } = {}) {
   // Colour and surfaces
   if (s.body_text_elements) add("pure_black_text", "should", s.pure_black_on_white / s.body_text_elements < 0.5, `${s.pure_black_on_white} of ${s.body_text_elements} text blocks are pure black on pure white (or the reverse)`,
     "body text is not #000 on #fff: a slightly softened or tinted pair reads better and looks deliberate");
-  if (s.dark_page) add("dark_color_scheme", "must", /dark/.test(s.color_scheme), `color-scheme: ${s.color_scheme || "not set"}`,
+  if (s.dark_page) add("dark_color_scheme", "should", /dark/.test(s.color_scheme), `color-scheme: ${s.color_scheme || "not set"}`,
     "a dark page declares color-scheme: dark, so scrollbars, form controls and autofill are dark too");
   add("shadow_count", "should", s.shadows <= 5, `${s.shadows} different shadows`, "at most 5 different shadows: an elevation scale, not one shadow per component");
   add("shadow_quality", "should", s.harsh_shadows.length === 0, `${s.harsh_shadows.length} single-layer shadow(s) of plain black at 25 % or more`,
@@ -378,7 +393,7 @@ export function scoreCraft(m, { mode = "operate", calibration = null } = {}) {
   // Media
   if (me.images) {
     add("image_distortion", "must", me.distorted.length === 0, `${me.distorted.length} stretched image(s)`, "images keep their proportions (object-fit: cover or contain, or matching dimensions)", me.distorted);
-    add("image_sharpness", "must", me.blurry.length === 0, `${me.blurry.length} image(s) smaller than their display size`, "an image file is at least as wide as it is shown (and 2× for dense screens)", me.blurry);
+    add("image_sharpness", "must", me.blurry.length === 0, `${me.blurry.length} image(s) stretched beyond their file (under 80 % of the shown width)`, "an image file is at least as wide as it is shown (and 2× for dense screens); under 80 % of the shown width it looks blurred", me.blurry);
     add("image_dimensions", "should", me.unsized.length === 0, `${me.unsized.length} image(s) without width and height`, "images carry width and height (or aspect-ratio), so the page does not jump when they load", me.unsized);
   }
   const strokeKinds = Object.keys(me.icon_strokes).length;

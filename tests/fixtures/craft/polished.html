@@ -14,6 +14,9 @@
   button, a.btn { display: inline-block; background: #1f4d3a; color: #fff; border: 0; padding: 12px 20px; font: inherit; font-size: 16px; text-decoration: none; transition: background-color 150ms ease-out; }
   button:hover, a.btn:hover { background: #2a6a50; }
   :focus-visible { outline: 2px solid #1f4d3a; outline-offset: 2px; }
+  /* A focus ring that eases in: at the first instant it is still 0 px wide. */
+  .eased { outline: 0 solid #1f4d3a; transition: outline-width 0.25s ease-out; }
+  .eased:focus-visible { outline-width: 3px; }
   input { font: inherit; font-size: 16px; padding: 8px; }
   td { padding: 4px 12px; }
   td.num { font-variant-numeric: tabular-nums; text-align: right; }
@@ -33,6 +36,7 @@
     <tr><td>Team</td><td class="num">111.00</td></tr>
     <tr><td>Org</td><td class="num">1,499.00</td></tr>
   </table>
+  <p><a class="eased" href="#top">Back to the top</a></p>
   <img alt="Mark" width="100" height="100" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Crect width='10' height='10' fill='%231f4d3a'/%3E%3C/svg%3E">
 </body>
 </html>

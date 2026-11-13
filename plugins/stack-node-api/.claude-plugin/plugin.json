@@ -1,7 +1,7 @@
 {
   "name": "sw-node-api",
   "description": "Shipwright module for Node APIs: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Module API Node de Shipwright.",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"

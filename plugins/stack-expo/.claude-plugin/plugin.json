@@ -1,7 +1,7 @@
 {
   "name": "sw-expo",
   "description": "Shipwright module for Expo and React Native apps (iOS, Android). Module Expo / React Native de Shipwright.",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "author": {
     "name": "Micka",
     "url": "https://github.com/1AngelMicka"
