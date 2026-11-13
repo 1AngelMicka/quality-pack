@@ -1,0 +1,1758 @@
+{
+ "type": "pricing-page",
+ "version": 1,
+ "measured": "2026-11-12",
+ "summary": {
+  "n": 7,
+  "desktop": {
+   "type.body_px": {
+    "low": 15,
+    "mid": 16,
+    "high": 17,
+    "min": 14,
+    "max": 18,
+    "n": 7
+   },
+   "type.largest_to_body": {
+    "low": 3.65,
+    "mid": 3.75,
+    "high": 4.39,
+    "min": 2.67,
+    "max": 4.8,
+    "n": 7
+   },
+   "type.scale_step": {
+    "low": 1.17,
+    "mid": 1.2,
+    "high": 1.48,
+    "min": 1.13,
+    "max": 1.54,
+    "n": 7
+   },
+   "type.sizes": {
+    "low": 8,
+    "mid": 8,
+    "high": 9,
+    "min": 6,
+    "max": 11,
+    "n": 7
+   },
+   "type.families": {
+    "low": 1,
+    "mid": 1,
+    "high": 1.5,
+    "min": 1,
+    "max": 3,
+    "n": 7
+   },
+   "type.weights": {
+    "low": 3.5,
+    "mid": 4,
+    "high": 4.5,
+    "min": 3,
+    "max": 9,
+    "n": 7
+   },
+   "type.line_length": {
+    "low": 65,
+    "mid": 71,
+    "high": 89,
+    "min": 62,
+    "max": 550,
+    "n": 5
+   },
+   "type.line_height": {
+    "low": 1.5,
+    "mid": 1.56,
+    "high": 1.6,
+    "min": 1.4,
+    "max": 1.78,
+    "n": 5
+   },
+   "first_screen.image_share": {
+    "low": 0,
+    "mid": 0.01,
+    "high": 0.01,
+    "min": 0,
+    "max": 0.08,
+    "n": 7
+   },
+   "first_screen.accent_share": {
+    "low": 0,
+    "mid": 0.02,
+    "high": 0.04,
+    "min": 0,
+    "max": 0.16,
+    "n": 7
+   },
+   "first_screen.empty_share": {
+    "low": 0.11,
+    "mid": 0.5,
+    "high": 0.64,
+    "min": 0,
+    "max": 0.87,
+    "n": 7
+   },
+   "first_screen.controls": {
+    "low": 11.5,
+    "mid": 14,
+    "high": 27.5,
+    "min": 7,
+    "max": 105,
+    "n": 7
+   },
+   "first_screen.words": {
+    "low": 168.5,
+    "mid": 174,
+    "high": 213.5,
+    "min": 108,
+    "max": 499,
+    "n": 7
+   },
+   "colour.hue_families": {
+    "low": 1,
+    "mid": 1,
+    "high": 2.5,
+    "min": 1,
+    "max": 4,
+    "n": 7
+   },
+   "surface.radii": {
+    "low": 5,
+    "mid": 6,
+    "high": 6,
+    "min": 1,
+    "max": 7,
+    "n": 7
+   },
+   "surface.main_radius_px": {
+    "low": 5,
+    "mid": 8,
+    "high": 10,
+    "min": 4,
+    "max": 17,
+    "n": 7
+   },
+   "surface.shadows": {
+    "low": 3,
+    "mid": 3,
+    "high": 4,
+    "min": 2,
+    "max": 5,
+    "n": 7
+   },
+   "surface.bordered_share": {
+    "low": 0.34,
+    "mid": 0.39,
+    "high": 0.64,
+    "min": 0.06,
+    "max": 0.82,
+    "n": 7
+   },
+   "surface.shadowed_share": {
+    "low": 0.04,
+    "mid": 0.13,
+    "high": 0.28,
+    "min": 0.02,
+    "max": 0.61,
+    "n": 7
+   },
+   "layout.content_width_px": {
+    "low": 1282,
+    "mid": 1320,
+    "high": 1352,
+    "min": 1268,
+    "max": 1440,
+    "n": 7
+   },
+   "layout.gutter_px": {
+    "low": 44,
+    "mid": 60,
+    "high": 108,
+    "min": 0,
+    "max": 125,
+    "n": 7
+   },
+   "layout.gap_values": {
+    "low": 4.5,
+    "mid": 6,
+    "high": 7,
+    "min": 4,
+    "max": 11,
+    "n": 7
+   },
+   "layout.gap_median_px": {
+    "low": 10,
+    "mid": 16,
+    "high": 16,
+    "min": 8,
+    "max": 16,
+    "n": 7
+   },
+   "layout.gap_largest_px": {
+    "low": 50,
+    "mid": 80,
+    "high": 122.5,
+    "min": 24,
+    "max": 159,
+    "n": 7
+   },
+   "layout.gaps_on_4px_grid": {
+    "low": 0.69,
+    "mid": 0.87,
+    "high": 0.97,
+    "min": 0.57,
+    "max": 0.99,
+    "n": 7
+   },
+   "layout.padding_values": {
+    "low": 4,
+    "mid": 5,
+    "high": 6,
+    "min": 0,
+    "max": 8,
+    "n": 7
+   },
+   "layout.padding_median_px": {
+    "low": 11.25,
+    "mid": 14,
+    "high": 16,
+    "min": 6,
+    "max": 16,
+    "n": 6
+   },
+   "layout.even_gap_groups": {
+    "low": 0.74,
+    "mid": 0.89,
+    "high": 0.94,
+    "min": 0.65,
+    "max": 0.97,
+    "n": 7
+   },
+   "layout.even_size_groups": {
+    "low": 0.81,
+    "mid": 0.84,
+    "high": 0.91,
+    "min": 0.65,
+    "max": 0.99,
+    "n": 7
+   },
+   "layout.aligned_left_edges": {
+    "low": 0.26,
+    "mid": 0.34,
+    "high": 0.44,
+    "min": 0.22,
+    "max": 0.51,
+    "n": 7
+   },
+   "layout.button_height_px": {
+    "low": 32.5,
+    "mid": 36.5,
+    "high": 39.75,
+    "min": 24,
+    "max": 42,
+    "n": 6
+   },
+   "layout.button_heights": {
+    "low": 3,
+    "mid": 7,
+    "high": 9,
+    "min": 0,
+    "max": 11,
+    "n": 7
+   },
+   "layout.field_height_px": {
+    "low": 6,
+    "mid": 6,
+    "high": 6,
+    "min": 6,
+    "max": 6,
+    "n": 1
+   },
+   "layout.icon_size_px": {
+    "low": 16,
+    "mid": 18,
+    "high": 20,
+    "min": 15,
+    "max": 24,
+    "n": 7
+   },
+   "layout.icon_sizes": {
+    "low": 5,
+    "mid": 7,
+    "high": 8.5,
+    "min": 2,
+    "max": 10,
+    "n": 7
+   },
+   "layout.card_width_px": {
+    "low": 318.25,
+    "mid": 358.5,
+    "high": 419,
+    "min": 198,
+    "max": 720,
+    "n": 6
+   },
+   "layout.card_height_px": {
+    "low": 120.25,
+    "mid": 184,
+    "high": 204.25,
+    "min": 84,
+    "max": 582,
+    "n": 6
+   },
+   "layout.image_ratios": {
+    "low": 0.5,
+    "mid": 2,
+    "high": 2,
+    "min": 0,
+    "max": 2,
+    "n": 7
+   },
+   "layout.section_height_screens": {
+    "low": 0.87,
+    "mid": 1.02,
+    "high": 1.1,
+    "min": 0.37,
+    "max": 1.4,
+    "n": 7
+   },
+   "layout.section_height_variation": {
+    "low": 0.67,
+    "mid": 0.98,
+    "high": 1.18,
+    "min": 0.43,
+    "max": 2.07,
+    "n": 7
+   },
+   "layout.h1_px": {
+    "low": 48,
+    "mid": 50,
+    "high": 62,
+    "min": 32,
+    "max": 86,
+    "n": 7
+   },
+   "layout.h2_px": {
+    "low": 31,
+    "mid": 32,
+    "high": 44,
+    "min": 26,
+    "max": 72,
+    "n": 7
+   },
+   "layout.h3_px": {
+    "low": 22,
+    "mid": 24,
+    "high": 28,
+    "min": 19,
+    "max": 50,
+    "n": 7
+   },
+   "page.screens": {
+    "low": 7.1,
+    "mid": 8,
+    "high": 9.75,
+    "min": 6.9,
+    "max": 24.4,
+    "n": 7
+   },
+   "page.controls_per_screen": {
+    "low": 8.6,
+    "mid": 10.4,
+    "high": 16.1,
+    "min": 6.7,
+    "max": 24.4,
+    "n": 7
+   },
+   "page.animated": {
+    "low": 0,
+    "mid": 0,
+    "high": 0,
+    "min": 0,
+    "max": 1,
+    "n": 7
+   }
+  },
+  "mobile": {
+   "type.body_px": {
+    "low": 14.5,
+    "mid": 16,
+    "high": 16,
+    "min": 13,
+    "max": 18,
+    "n": 7
+   },
+   "type.largest_to_body": {
+    "low": 2.4,
+    "mid": 2.63,
+    "high": 3.01,
+    "min": 1.88,
+    "max": 3.2,
+    "n": 7
+   },
+   "type.scale_step": {
+    "low": 1.13,
+    "mid": 1.14,
+    "high": 1.25,
+    "min": 1.08,
+    "max": 1.38,
+    "n": 7
+   },
+   "type.sizes": {
+    "low": 6.5,
+    "mid": 8,
+    "high": 8.5,
+    "min": 6,
+    "max": 11,
+    "n": 7
+   },
+   "type.families": {
+    "low": 1,
+    "mid": 1,
+    "high": 1.5,
+    "min": 1,
+    "max": 3,
+    "n": 7
+   },
+   "type.weights": {
+    "low": 3.5,
+    "mid": 4,
+    "high": 4.5,
+    "min": 3,
+    "max": 12,
+    "n": 7
+   },
+   "type.line_length": {
+    "low": 41,
+    "mid": 43,
+    "high": 44,
+    "min": 32,
+    "max": 106,
+    "n": 5
+   },
+   "type.line_height": {
+    "low": 1.5,
+    "mid": 1.56,
+    "high": 1.6,
+    "min": 1.4,
+    "max": 1.75,
+    "n": 5
+   },
+   "first_screen.image_share": {
+    "low": 0,
+    "mid": 0,
+    "high": 0.01,
+    "min": 0,
+    "max": 0.04,
+    "n": 7
+   },
+   "first_screen.accent_share": {
+    "low": 0,
+    "mid": 0.01,
+    "high": 0.03,
+    "min": 0,
+    "max": 0.07,
+    "n": 7
+   },
+   "first_screen.empty_share": {
+    "low": 0.19,
+    "mid": 0.28,
+    "high": 0.53,
+    "min": 0,
+    "max": 0.8,
+    "n": 7
+   },
+   "first_screen.controls": {
+    "low": 5,
+    "mid": 5,
+    "high": 11,
+    "min": 2,
+    "max": 70,
+    "n": 7
+   },
+   "first_screen.words": {
+    "low": 59,
+    "mid": 61,
+    "high": 108,
+    "min": 24,
+    "max": 341,
+    "n": 7
+   },
+   "colour.hue_families": {
+    "low": 1,
+    "mid": 1,
+    "high": 2.5,
+    "min": 1,
+    "max": 4,
+    "n": 7
+   },
+   "surface.radii": {
+    "low": 5,
+    "mid": 6,
+    "high": 6.5,
+    "min": 1,
+    "max": 7,
+    "n": 7
+   },
+   "surface.main_radius_px": {
+    "low": 4.5,
+    "mid": 6,
+    "high": 8,
+    "min": 4,
+    "max": 12,
+    "n": 7
+   },
+   "surface.shadows": {
+    "low": 2,
+    "mid": 3,
+    "high": 4,
+    "min": 2,
+    "max": 5,
+    "n": 7
+   },
+   "surface.bordered_share": {
+    "low": 0.36,
+    "mid": 0.4,
+    "high": 0.46,
+    "min": 0.12,
+    "max": 0.76,
+    "n": 7
+   },
+   "surface.shadowed_share": {
+    "low": 0.1,
+    "mid": 0.14,
+    "high": 0.27,
+    "min": 0.03,
+    "max": 0.55,
+    "n": 7
+   },
+   "layout.content_width_px": {
+    "low": 346,
+    "mid": 358,
+    "high": 358,
+    "min": 325,
+    "max": 359,
+    "n": 7
+   },
+   "layout.gutter_px": {
+    "low": 16,
+    "mid": 16,
+    "high": 22,
+    "min": 16,
+    "max": 33,
+    "n": 7
+   },
+   "layout.gap_values": {
+    "low": 5.5,
+    "mid": 7,
+    "high": 7,
+    "min": 5,
+    "max": 7,
+    "n": 7
+   },
+   "layout.gap_median_px": {
+    "low": 10,
+    "mid": 16,
+    "high": 16,
+    "min": 8,
+    "max": 16,
+    "n": 7
+   },
+   "layout.gap_largest_px": {
+    "low": 40,
+    "mid": 49,
+    "high": 80,
+    "min": 32,
+    "max": 111,
+    "n": 7
+   },
+   "layout.gaps_on_4px_grid": {
+    "low": 0.76,
+    "mid": 0.91,
+    "high": 0.95,
+    "min": 0.59,
+    "max": 1,
+    "n": 7
+   },
+   "layout.padding_values": {
+    "low": 4.5,
+    "mid": 5,
+    "high": 5,
+    "min": 1,
+    "max": 5,
+    "n": 7
+   },
+   "layout.padding_median_px": {
+    "low": 10,
+    "mid": 12,
+    "high": 16,
+    "min": 4,
+    "max": 16,
+    "n": 7
+   },
+   "layout.even_gap_groups": {
+    "low": 0.66,
+    "mid": 0.67,
+    "high": 0.77,
+    "min": 0.43,
+    "max": 0.97,
+    "n": 7
+   },
+   "layout.even_size_groups": {
+    "low": 0.83,
+    "mid": 0.9,
+    "high": 0.91,
+    "min": 0.41,
+    "max": 0.92,
+    "n": 7
+   },
+   "layout.aligned_left_edges": {
+    "low": 0.59,
+    "mid": 0.64,
+    "high": 0.69,
+    "min": 0.35,
+    "max": 0.87,
+    "n": 7
+   },
+   "layout.button_height_px": {
+    "low": 34,
+    "mid": 36,
+    "high": 40,
+    "min": 24,
+    "max": 64,
+    "n": 7
+   },
+   "layout.button_heights": {
+    "low": 3,
+    "mid": 7,
+    "high": 8.5,
+    "min": 1,
+    "max": 12,
+    "n": 7
+   },
+   "layout.field_height_px": {
+    "low": 23,
+    "mid": 40,
+    "high": 46.5,
+    "min": 6,
+    "max": 53,
+    "n": 3
+   },
+   "layout.icon_size_px": {
+    "low": 16,
+    "mid": 16,
+    "high": 20,
+    "min": 15,
+    "max": 24,
+    "n": 7
+   },
+   "layout.icon_sizes": {
+    "low": 3.5,
+    "mid": 5,
+    "high": 7.5,
+    "min": 2,
+    "max": 8,
+    "n": 7
+   },
+   "layout.card_width_px": {
+    "low": 270,
+    "mid": 294,
+    "high": 328,
+    "min": 216,
+    "max": 342,
+    "n": 5
+   },
+   "layout.card_height_px": {
+    "low": 149,
+    "mid": 224,
+    "high": 307,
+    "min": 124,
+    "max": 475,
+    "n": 5
+   },
+   "layout.image_ratios": {
+    "low": 0.5,
+    "mid": 2,
+    "high": 2,
+    "min": 0,
+    "max": 2,
+    "n": 7
+   },
+   "layout.section_height_screens": {
+    "low": 0.48,
+    "mid": 0.61,
+    "high": 1.85,
+    "min": 0.27,
+    "max": 2.18,
+    "n": 7
+   },
+   "layout.section_height_variation": {
+    "low": 0.73,
+    "mid": 1.11,
+    "high": 1.18,
+    "min": 0.42,
+    "max": 2.83,
+    "n": 7
+   },
+   "layout.h1_px": {
+    "low": 32,
+    "mid": 40,
+    "high": 45,
+    "min": 30,
+    "max": 56,
+    "n": 7
+   },
+   "layout.h2_px": {
+    "low": 27,
+    "mid": 30,
+    "high": 34,
+    "min": 26,
+    "max": 38,
+    "n": 7
+   },
+   "layout.h3_px": {
+    "low": 19,
+    "mid": 22,
+    "high": 26,
+    "min": 13,
+    "max": 32,
+    "n": 7
+   },
+   "page.screens": {
+    "low": 10.15,
+    "mid": 11.5,
+    "high": 15.1,
+    "min": 6.7,
+    "max": 41.8,
+    "n": 7
+   },
+   "page.controls_per_screen": {
+    "low": 6,
+    "mid": 6.8,
+    "high": 8.75,
+    "min": 4.6,
+    "max": 9.4,
+    "n": 7
+   },
+   "page.animated": {
+    "low": 0,
+    "mid": 0,
+    "high": 0,
+    "min": 0,
+    "max": 1,
+    "n": 7
+   }
+  }
+ },
+ "sites": [
+  {
+   "url": "https://linear.app/pricing",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 15,
+     "largest_px": 72,
+     "h1_px": 48,
+     "largest_to_body": 4.8,
+     "sizes": 6,
+     "scale_step": 1.5,
+     "families": 1,
+     "weights": 3,
+     "line_length": null,
+     "line_height": null
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.87,
+     "text_share": 0.13,
+     "accent_hues": 1,
+     "controls": 14,
+     "words": 108
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": true,
+     "page_saturation": 0.11
+    },
+    "surface": {
+     "radii": 1,
+     "main_radius_px": 12,
+     "shadows": 3,
+     "bordered_share": 0.39,
+     "shadowed_share": 0.61
+    },
+    "layout": {
+     "content_width_px": 1344,
+     "gutter_px": 48,
+     "gap_values": 4,
+     "gap_median_px": 16,
+     "gap_largest_px": 116,
+     "gaps_on_4px_grid": 0.57,
+     "padding_values": 0,
+     "padding_median_px": null,
+     "even_gap_groups": 0.92,
+     "even_size_groups": 0.99,
+     "aligned_left_edges": 0.46,
+     "button_height_px": 32,
+     "button_heights": 1,
+     "field_height_px": null,
+     "icon_size_px": 16,
+     "icon_sizes": 4,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 0,
+     "image_ratio": null,
+     "section_height_screens": 1.09,
+     "section_height_variation": 0.98,
+     "h1_px": 48,
+     "h2_px": 72,
+     "h3_px": 24
+    },
+    "page": {
+     "screens": 6.9,
+     "words": 640,
+     "images": 0,
+     "controls": 63,
+     "controls_per_screen": 9.1,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 13,
+     "largest_px": 38,
+     "h1_px": 48,
+     "largest_to_body": 2.92,
+     "sizes": 6,
+     "scale_step": 1.08,
+     "families": 1,
+     "weights": 3,
+     "line_length": null,
+     "line_height": null
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0,
+     "empty_share": 0.8,
+     "text_share": 0.19,
+     "accent_hues": 0,
+     "controls": 5,
+     "words": 24
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": true,
+     "page_saturation": 0.11
+    },
+    "surface": {
+     "radii": 1,
+     "main_radius_px": 12,
+     "shadows": 3,
+     "bordered_share": 0.4,
+     "shadowed_share": 0.55
+    },
+    "layout": {
+     "content_width_px": 358,
+     "gutter_px": 16,
+     "gap_values": 7,
+     "gap_median_px": 16,
+     "gap_largest_px": 100,
+     "gaps_on_4px_grid": 0.59,
+     "padding_values": 1,
+     "padding_median_px": 8,
+     "even_gap_groups": 0.65,
+     "even_size_groups": 0.9,
+     "aligned_left_edges": 0.87,
+     "button_height_px": 64,
+     "button_heights": 1,
+     "field_height_px": 40,
+     "icon_size_px": 16,
+     "icon_sizes": 3,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 0,
+     "image_ratio": null,
+     "section_height_screens": 0.61,
+     "section_height_variation": 1.12,
+     "h1_px": 48,
+     "h2_px": 38,
+     "h3_px": 24
+    },
+    "page": {
+     "screens": 9.1,
+     "words": 408,
+     "images": 0,
+     "controls": 56,
+     "controls_per_screen": 6.2,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://stripe.com/pricing",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 15,
+     "largest_px": 56,
+     "h1_px": 32,
+     "largest_to_body": 3.73,
+     "sizes": 11,
+     "scale_step": 1.13,
+     "families": 1,
+     "weights": 4,
+     "line_length": 62,
+     "line_height": 1.6
+    },
+    "first_screen": {
+     "image_share": 0.08,
+     "accent_share": 0.16,
+     "empty_share": 0.5,
+     "text_share": 0.3,
+     "accent_hues": 3,
+     "controls": 105,
+     "words": 499
+    },
+    "colour": {
+     "hue_families": 2,
+     "dark_page": false,
+     "page_saturation": 0.5
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 17,
+     "shadows": 3,
+     "bordered_share": 0.31,
+     "shadowed_share": 0.13
+    },
+    "layout": {
+     "content_width_px": 1288,
+     "gutter_px": 120,
+     "gap_values": 4,
+     "gap_median_px": 8,
+     "gap_largest_px": 24,
+     "gaps_on_4px_grid": 0.98,
+     "padding_values": 5,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.97,
+     "even_size_groups": 0.9,
+     "aligned_left_edges": 0.42,
+     "button_height_px": 24,
+     "button_heights": 7,
+     "field_height_px": null,
+     "icon_size_px": 16,
+     "icon_sizes": 10,
+     "card_width_px": 365,
+     "card_height_px": 175,
+     "image_ratios": 2,
+     "image_ratio": 1.93,
+     "section_height_screens": 0.78,
+     "section_height_variation": 2.07,
+     "h1_px": 32,
+     "h2_px": 26,
+     "h3_px": 19
+    },
+    "page": {
+     "screens": 24.4,
+     "words": 5556,
+     "images": 55,
+     "controls": 432,
+     "controls_per_screen": 17.7,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 15,
+     "largest_px": 48,
+     "h1_px": 32,
+     "largest_to_body": 3.2,
+     "sizes": 11,
+     "scale_step": 1.13,
+     "families": 1,
+     "weights": 4,
+     "line_length": 43,
+     "line_height": 1.6
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0.01,
+     "empty_share": 0.28,
+     "text_share": 0.45,
+     "accent_hues": 1,
+     "controls": 70,
+     "words": 341
+    },
+    "colour": {
+     "hue_families": 2,
+     "dark_page": false,
+     "page_saturation": 0.5
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 8,
+     "shadows": 2,
+     "bordered_share": 0.32,
+     "shadowed_share": 0.12
+    },
+    "layout": {
+     "content_width_px": 350,
+     "gutter_px": 20,
+     "gap_values": 5,
+     "gap_median_px": 8,
+     "gap_largest_px": 32,
+     "gaps_on_4px_grid": 0.97,
+     "padding_values": 5,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.97,
+     "even_size_groups": 0.91,
+     "aligned_left_edges": 0.71,
+     "button_height_px": 24,
+     "button_heights": 7,
+     "field_height_px": null,
+     "icon_size_px": 16,
+     "icon_sizes": 8,
+     "card_width_px": 270,
+     "card_height_px": 224,
+     "image_ratios": 2,
+     "image_ratio": 0.85,
+     "section_height_screens": 0.27,
+     "section_height_variation": 2.83,
+     "h1_px": 32,
+     "h2_px": 26,
+     "h3_px": 13
+    },
+    "page": {
+     "screens": 41.8,
+     "words": 5492,
+     "images": 55,
+     "controls": 390,
+     "controls_per_screen": 9.3,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.notion.com/pricing",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 64,
+     "h1_px": 64,
+     "largest_to_body": 4,
+     "sizes": 8,
+     "scale_step": 1.45,
+     "families": 1,
+     "weights": 4,
+     "line_length": 89,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0.02,
+     "empty_share": 0.64,
+     "text_share": 0.26,
+     "accent_hues": 1,
+     "controls": 12,
+     "words": 174
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 8,
+     "shadows": 2,
+     "bordered_share": 0.82,
+     "shadowed_share": 0.02
+    },
+    "layout": {
+     "content_width_px": 1276,
+     "gutter_px": 125,
+     "gap_values": 6,
+     "gap_median_px": 8,
+     "gap_largest_px": 80,
+     "gaps_on_4px_grid": 0.75,
+     "padding_values": 6,
+     "padding_median_px": 6,
+     "even_gap_groups": 0.89,
+     "even_size_groups": 0.84,
+     "aligned_left_edges": 0.51,
+     "button_height_px": 34,
+     "button_heights": 5,
+     "field_height_px": null,
+     "icon_size_px": 18,
+     "icon_sizes": 8,
+     "card_width_px": 198,
+     "card_height_px": 84,
+     "image_ratios": 2,
+     "image_ratio": 2,
+     "section_height_screens": 0.37,
+     "section_height_variation": 1.36,
+     "h1_px": 64,
+     "h2_px": 32,
+     "h3_px": 22
+    },
+    "page": {
+     "screens": 8,
+     "words": 822,
+     "images": 9,
+     "controls": 54,
+     "controls_per_screen": 6.7,
+     "animated": 1
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 42,
+     "h1_px": 42,
+     "largest_to_body": 2.63,
+     "sizes": 6,
+     "scale_step": 1.38,
+     "families": 1,
+     "weights": 4,
+     "line_length": 41,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0.02,
+     "empty_share": 0.71,
+     "text_share": 0.23,
+     "accent_hues": 1,
+     "controls": 5,
+     "words": 61
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 5,
+     "shadows": 2,
+     "bordered_share": 0.76,
+     "shadowed_share": 0.07
+    },
+    "layout": {
+     "content_width_px": 358,
+     "gutter_px": 16,
+     "gap_values": 6,
+     "gap_median_px": 8,
+     "gap_largest_px": 40,
+     "gaps_on_4px_grid": 0.83,
+     "padding_values": 5,
+     "padding_median_px": 4,
+     "even_gap_groups": 0.73,
+     "even_size_groups": 0.8,
+     "aligned_left_edges": 0.64,
+     "button_height_px": 36,
+     "button_heights": 5,
+     "field_height_px": null,
+     "icon_size_px": 16,
+     "icon_sizes": 7,
+     "card_width_px": 294,
+     "card_height_px": 475,
+     "image_ratios": 2,
+     "image_ratio": 2,
+     "section_height_screens": 0.44,
+     "section_height_variation": 1.11,
+     "h1_px": 42,
+     "h2_px": 26,
+     "h3_px": 22
+    },
+    "page": {
+     "screens": 6.7,
+     "words": 457,
+     "images": 4,
+     "controls": 46,
+     "controls_per_screen": 6.8,
+     "animated": 1
+    }
+   }
+  },
+  {
+   "url": "https://slack.com/pricing",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 14,
+     "largest_px": 50,
+     "h1_px": 50,
+     "largest_to_body": 3.57,
+     "sizes": 9,
+     "scale_step": 1.2,
+     "families": 2,
+     "weights": 3,
+     "line_length": 550,
+     "line_height": 1.56
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0.03,
+     "empty_share": 0.63,
+     "text_share": 0.29,
+     "accent_hues": 1,
+     "controls": 40,
+     "words": 248
+    },
+    "colour": {
+     "hue_families": 4,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 5,
+     "main_radius_px": 4,
+     "shadows": 5,
+     "bordered_share": 0.75,
+     "shadowed_share": 0.02
+    },
+    "layout": {
+     "content_width_px": 1440,
+     "gutter_px": 0,
+     "gap_values": 8,
+     "gap_median_px": 16,
+     "gap_largest_px": 129,
+     "gaps_on_4px_grid": 0.63,
+     "padding_values": 8,
+     "padding_median_px": 11,
+     "even_gap_groups": 0.67,
+     "even_size_groups": 0.65,
+     "aligned_left_edges": 0.34,
+     "button_height_px": 42,
+     "button_heights": 10,
+     "field_height_px": null,
+     "icon_size_px": 20,
+     "icon_sizes": 6,
+     "card_width_px": 307,
+     "card_height_px": 102,
+     "image_ratios": 1,
+     "image_ratio": 1.96,
+     "section_height_screens": 1.02,
+     "section_height_variation": 0.99,
+     "h1_px": 50,
+     "h2_px": 32,
+     "h3_px": 50
+    },
+    "page": {
+     "screens": 9.2,
+     "words": 967,
+     "images": 13,
+     "controls": 224,
+     "controls_per_screen": 24.4,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 14,
+     "largest_px": 32,
+     "h1_px": 32,
+     "largest_to_body": 2.29,
+     "sizes": 9,
+     "scale_step": 1.14,
+     "families": 2,
+     "weights": 3,
+     "line_length": 106,
+     "line_height": 1.56
+    },
+    "first_screen": {
+     "image_share": 0.04,
+     "accent_share": 0.07,
+     "empty_share": 0.36,
+     "text_share": 0.46,
+     "accent_hues": 1,
+     "controls": 14,
+     "words": 127
+    },
+    "colour": {
+     "hue_families": 4,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 5,
+     "main_radius_px": 4,
+     "shadows": 5,
+     "bordered_share": 0.4,
+     "shadowed_share": 0.14
+    },
+    "layout": {
+     "content_width_px": 359,
+     "gutter_px": 16,
+     "gap_values": 5,
+     "gap_median_px": 16,
+     "gap_largest_px": 111,
+     "gaps_on_4px_grid": 0.69,
+     "padding_values": 5,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.43,
+     "even_size_groups": 0.41,
+     "aligned_left_edges": 0.54,
+     "button_height_px": 32,
+     "button_heights": 9,
+     "field_height_px": null,
+     "icon_size_px": 20,
+     "icon_sizes": 5,
+     "card_width_px": 328,
+     "card_height_px": 149,
+     "image_ratios": 1,
+     "image_ratio": 0.9,
+     "section_height_screens": 1.6,
+     "section_height_variation": 0.82,
+     "h1_px": 32,
+     "h2_px": 28,
+     "h3_px": 32
+    },
+    "page": {
+     "screens": 11.5,
+     "words": 643,
+     "images": 13,
+     "controls": 108,
+     "controls_per_screen": 9.4,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.figma.com/pricing/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 86,
+     "h1_px": 86,
+     "largest_to_body": 4.78,
+     "sizes": 8,
+     "scale_step": 1.54,
+     "families": 1,
+     "weights": 9,
+     "line_length": 65,
+     "line_height": 1.4
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.03,
+     "text_share": 0.31,
+     "accent_hues": 1,
+     "controls": 15,
+     "words": 169
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 8,
+     "shadows": 3,
+     "bordered_share": 0.06,
+     "shadowed_share": 0.06
+    },
+    "layout": {
+     "content_width_px": 1320,
+     "gutter_px": 60,
+     "gap_values": 6,
+     "gap_median_px": 12,
+     "gap_largest_px": 60,
+     "gaps_on_4px_grid": 0.95,
+     "padding_values": 4,
+     "padding_median_px": 12,
+     "even_gap_groups": 0.96,
+     "even_size_groups": 0.91,
+     "aligned_left_edges": 0.27,
+     "button_height_px": 39,
+     "button_heights": 11,
+     "field_height_px": null,
+     "icon_size_px": 24,
+     "icon_sizes": 7,
+     "card_width_px": 720,
+     "card_height_px": 193,
+     "image_ratios": 0,
+     "image_ratio": null,
+     "section_height_screens": 1.1,
+     "section_height_variation": 0.84,
+     "h1_px": 86,
+     "h2_px": 56,
+     "h3_px": 32
+    },
+    "page": {
+     "screens": 10.3,
+     "words": 1365,
+     "images": 72,
+     "controls": 149,
+     "controls_per_screen": 14.5,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 56,
+     "h1_px": 56,
+     "largest_to_body": 3.11,
+     "sizes": 8,
+     "scale_step": 1.29,
+     "families": 1,
+     "weights": 12,
+     "line_length": 32,
+     "line_height": 1.4
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.2,
+     "text_share": 0.42,
+     "accent_hues": 0,
+     "controls": 8,
+     "words": 89
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 7,
+     "main_radius_px": 8,
+     "shadows": 2,
+     "bordered_share": 0.12,
+     "shadowed_share": 0.03
+    },
+    "layout": {
+     "content_width_px": 342,
+     "gutter_px": 24,
+     "gap_values": 7,
+     "gap_median_px": 12,
+     "gap_largest_px": 60,
+     "gaps_on_4px_grid": 0.91,
+     "padding_values": 4,
+     "padding_median_px": 12,
+     "even_gap_groups": 0.67,
+     "even_size_groups": 0.9,
+     "aligned_left_edges": 0.67,
+     "button_height_px": 36,
+     "button_heights": 12,
+     "field_height_px": 53,
+     "icon_size_px": 24,
+     "icon_sizes": 4,
+     "card_width_px": 342,
+     "card_height_px": 307,
+     "image_ratios": 0,
+     "image_ratio": null,
+     "section_height_screens": 0.52,
+     "section_height_variation": 1.24,
+     "h1_px": 56,
+     "h2_px": 36,
+     "h3_px": 28
+    },
+    "page": {
+     "screens": 17.9,
+     "words": 1227,
+     "images": 72,
+     "controls": 147,
+     "controls_per_screen": 8.2,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://plausible.io/#pricing",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 48,
+     "h1_px": 48,
+     "largest_to_body": 2.67,
+     "sizes": 9,
+     "scale_step": 1.2,
+     "families": 1,
+     "weights": 5,
+     "line_length": 71,
+     "line_height": 1.78
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0.04,
+     "empty_share": 0,
+     "text_share": 0.39,
+     "accent_hues": 2,
+     "controls": 7,
+     "words": 168
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": false,
+     "page_saturation": 0.2
+    },
+    "surface": {
+     "radii": 5,
+     "main_radius_px": 6,
+     "shadows": 3,
+     "bordered_share": 0.37,
+     "shadowed_share": 0.26
+    },
+    "layout": {
+     "content_width_px": 1268,
+     "gutter_px": 96,
+     "gap_values": 5,
+     "gap_median_px": 16,
+     "gap_largest_px": 40,
+     "gaps_on_4px_grid": 0.99,
+     "padding_values": 4,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.65,
+     "even_size_groups": 0.78,
+     "aligned_left_edges": 0.22,
+     "button_height_px": null,
+     "button_heights": 0,
+     "field_height_px": 6,
+     "icon_size_px": 20,
+     "icon_sizes": 2,
+     "card_width_px": 352,
+     "card_height_px": 208,
+     "image_ratios": 2,
+     "image_ratio": 4.1,
+     "section_height_screens": 0.95,
+     "section_height_variation": 0.5,
+     "h1_px": 48,
+     "h2_px": 30,
+     "h3_px": 24
+    },
+    "page": {
+     "screens": 7.1,
+     "words": 1100,
+     "images": 9,
+     "controls": 74,
+     "controls_per_screen": 10.4,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 30,
+     "h1_px": 30,
+     "largest_to_body": 1.88,
+     "sizes": 7,
+     "scale_step": 1.2,
+     "families": 1,
+     "weights": 5,
+     "line_length": 44,
+     "line_height": 1.75
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0.04,
+     "empty_share": 0,
+     "text_share": 0.42,
+     "accent_hues": 1,
+     "controls": 2,
+     "words": 58
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": false,
+     "page_saturation": 0.2
+    },
+    "surface": {
+     "radii": 5,
+     "main_radius_px": 6,
+     "shadows": 3,
+     "bordered_share": 0.4,
+     "shadowed_share": 0.23
+    },
+    "layout": {
+     "content_width_px": 358,
+     "gutter_px": 16,
+     "gap_values": 7,
+     "gap_median_px": 16,
+     "gap_largest_px": 40,
+     "gaps_on_4px_grid": 1,
+     "padding_values": 5,
+     "padding_median_px": 12,
+     "even_gap_groups": 0.67,
+     "even_size_groups": 0.92,
+     "aligned_left_edges": 0.63,
+     "button_height_px": 40,
+     "button_heights": 1,
+     "field_height_px": 6,
+     "icon_size_px": 20,
+     "icon_sizes": 2,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 2,
+     "image_ratio": 4.1,
+     "section_height_screens": 2.18,
+     "section_height_variation": 0.63,
+     "h1_px": 30,
+     "h2_px": 30,
+     "h3_px": 20
+    },
+    "page": {
+     "screens": 12.3,
+     "words": 1092,
+     "images": 9,
+     "controls": 72,
+     "controls_per_screen": 5.8,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://twenty.com/pricing",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 60,
+     "h1_px": 60,
+     "largest_to_body": 3.75,
+     "sizes": 8,
+     "scale_step": 1.13,
+     "families": 3,
+     "weights": 4,
+     "line_length": null,
+     "line_height": null
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0,
+     "empty_share": 0.19,
+     "text_share": 0.3,
+     "accent_hues": 1,
+     "controls": 11,
+     "words": 179
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 7,
+     "main_radius_px": 4,
+     "shadows": 5,
+     "bordered_share": 0.52,
+     "shadowed_share": 0.29
+    },
+    "layout": {
+     "content_width_px": 1360,
+     "gutter_px": 40,
+     "gap_values": 11,
+     "gap_median_px": 16,
+     "gap_largest_px": 159,
+     "gaps_on_4px_grid": 0.87,
+     "padding_values": 6,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.81,
+     "even_size_groups": 0.83,
+     "aligned_left_edges": 0.25,
+     "button_height_px": 40,
+     "button_heights": 8,
+     "field_height_px": null,
+     "icon_size_px": 15,
+     "icon_sizes": 9,
+     "card_width_px": 437,
+     "card_height_px": 582,
+     "image_ratios": 2,
+     "image_ratio": 3.18,
+     "section_height_screens": 1.4,
+     "section_height_variation": 0.43,
+     "h1_px": 60,
+     "h2_px": 32,
+     "h3_px": 22
+    },
+    "page": {
+     "screens": 7.1,
+     "words": 614,
+     "images": 10,
+     "controls": 57,
+     "controls_per_screen": 8.1,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 40,
+     "h1_px": 40,
+     "largest_to_body": 2.5,
+     "sizes": 8,
+     "scale_step": 1.13,
+     "families": 3,
+     "weights": 4,
+     "line_length": null,
+     "line_height": null
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0,
+     "empty_share": 0.17,
+     "text_share": 0.39,
+     "accent_hues": 1,
+     "controls": 5,
+     "words": 60
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 7,
+     "main_radius_px": 4,
+     "shadows": 5,
+     "bordered_share": 0.52,
+     "shadowed_share": 0.3
+    },
+    "layout": {
+     "content_width_px": 325,
+     "gutter_px": 33,
+     "gap_values": 7,
+     "gap_median_px": 16,
+     "gap_largest_px": 49,
+     "gaps_on_4px_grid": 0.93,
+     "padding_values": 5,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.8,
+     "even_size_groups": 0.85,
+     "aligned_left_edges": 0.35,
+     "button_height_px": 40,
+     "button_heights": 8,
+     "field_height_px": null,
+     "icon_size_px": 15,
+     "icon_sizes": 8,
+     "card_width_px": 216,
+     "card_height_px": 124,
+     "image_ratios": 2,
+     "image_ratio": 1,
+     "section_height_screens": 2.1,
+     "section_height_variation": 0.42,
+     "h1_px": 40,
+     "h2_px": 32,
+     "h3_px": 18
+    },
+    "page": {
+     "screens": 11.2,
+     "words": 606,
+     "images": 10,
+     "controls": 51,
+     "controls_per_screen": 4.6,
+     "animated": 0
+    }
+   }
+  }
+ ]
+}

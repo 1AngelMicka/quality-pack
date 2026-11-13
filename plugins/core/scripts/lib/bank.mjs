@@ -12,7 +12,7 @@ export const BANK_DIR = join(dirname(fileURLToPath(import.meta.url)), "..", ".."
 export function loadBank(dir = BANK_DIR) {
   const types = {};
   if (!existsSync(dir)) return { types };
-  for (const f of readdirSync(dir).filter((x) => x.endsWith(".json")).sort()) {
+  for (const f of readdirSync(dir).filter((x) => x.endsWith(".json") && x !== "calibration.json").sort()) {
     const t = JSON.parse(readFileSync(join(dir, f), "utf8"));
     const id = t.id || f.replace(/\.json$/, "");
     const pf = join(dir, "profiles", `${id}.json`);
