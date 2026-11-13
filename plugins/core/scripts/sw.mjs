@@ -756,8 +756,8 @@ async function main() {
       if (rest[0] === "calibrate") {
         const limit = Number(opt("limit", "0")) || 0;
         const parallel = Number(opt("parallel", "4")) || 4;
-        if (!rest[1]) die("Usage: sw.mjs bank calibrate <type|all> [--limit N] [--parallel N]");
-        return out(await calibrateBank(rest[1], { cwd, limit, parallel }));
+        if (!rest[1]) die("Usage: sw.mjs bank calibrate <type|all> [--limit N] [--parallel N] [--craft-only]");
+        return out(await calibrateBank(rest[1], { cwd, limit, parallel, craftOnly: process.argv.includes("--craft-only") }));
       }
       if (rest[0] === "measure") {
         const limit = Number(opt("limit", "0")) || 0;
