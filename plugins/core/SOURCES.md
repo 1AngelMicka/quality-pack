@@ -49,6 +49,7 @@ The design skills (`design-screens`, `design-direction`, `design-review`) and th
 | Spacing audit engine, spacing laws, list of signs of generated UI | the author's own `deslop-ui` skill (ported, translated) | MIT, same author |
 | Scroll animation: native techniques, support table, libraries, rules | MDN, Chrome for Developers, web.dev, WebKit blog, scroll-driven-animations.style (Apache-2.0), NN/g "Scrolljacking 101" (2023) and "What Parallax Lacks" (2019), WCAG 2.2 Understanding 2.2.2, 2.3.1, 2.3.3, Val Head (A List Apart) on vestibular triggers, library READMEs and licences | facts restated; see SOURCES.md, batch 2 |
 | Shader backgrounds: still frame with reduced motion, pause off-screen | scrollshaders.com (observed behaviour) | proprietary site, idea only |
+| Interactive 3D: poster first, render on demand, disposal, budgets, keyboard and no-drag alternative | three.js manual ("How to dispose of objects"), React Three Fiber docs ("Scaling performance"), modelviewer.dev, gltf-transform.dev, WCAG 2.2 (1.1.1, 2.1.1, 2.3.3, 2.5.7), NN/g "Scrolljacking 101" (2023). The budget numbers are the pack's working limits, not a standard | `scroll-animation` (`references/3d.md`); three.js, React Three Fiber, drei, glTF Transform MIT; model-viewer Apache-2.0 |
 
 Every link examined for the pack, with its status and licence: `SOURCES.md` at the root of the repository.
 

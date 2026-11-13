@@ -15,7 +15,11 @@ Checked in November 2026 (licence files, prices, last releases). Licences and pr
 | [react-spring](https://github.com/pmndrs/react-spring) | reveal, scrub, parallax | MIT | opt-in | usable |
 | [Anime.js](https://animejs.com) v4 `onScroll` | reveal, scrub, text | MIT | add it yourself | usable |
 | [react-scroll-parallax](https://github.com/jscottsmith/react-scroll-parallax) | parallax, scrub | MIT | none | usable with your own guard |
-| [three.js](https://threejs.org), [drei ScrollControls](https://github.com/pmndrs/drei), [r3f-scroll-rig](https://github.com/14islands/r3f-scroll-rig) | 3D | MIT | yours | recommended for 3D |
+| [three.js](https://threejs.org) 0.187, [React Three Fiber](https://github.com/pmndrs/react-three-fiber) 9 (React 19; v8 for React 18), [drei](https://github.com/pmndrs/drei) 10 | 3D scenes and objects | MIT | yours | recommended for 3D: see [3d.md](3d.md) |
+| [`<model-viewer>`](https://modelviewer.dev) 4 | one 3D model to turn, with poster, lazy loading, `alt`, keyboard | Apache-2.0 | auto-rotate is yours to guard | recommended for a single model |
+| [glTF Transform](https://gltf-transform.dev) (CLI and library), [meshoptimizer](https://github.com/zeux/meshoptimizer) | compress models and textures before shipping | MIT | not applicable | recommended |
+| drei `ScrollControls` | 3D on its own virtual scroller | MIT | yours | only for a page that is the scene: anchors and find-in-page stop working |
+| [r3f-scroll-rig](https://github.com/14islands/r3f-scroll-rig), [gltfjsx](https://github.com/pmndrs/gltfjsx) | 3D synced with page scroll; model to React component | MIT | yours | usable with care: no release since 2025 and 2024 |
 | [dotLottie web](https://github.com/LottieFiles/dotlottie-web) | Lottie scrub | MIT | yours | recommended for Lottie |
 | [Rive web runtime](https://github.com/rive-app/rive-wasm) | Rive driven by scroll | MIT runtime (the editor is freemium) | yours | usable |
 | [Swup](https://swup.js.org) + a11y plugin | page transitions | MIT | plugin handles focus, announcements, reduced motion | recommended |

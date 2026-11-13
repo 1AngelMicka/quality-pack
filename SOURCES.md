@@ -140,7 +140,12 @@ Quatre recherches : bibliothèques JavaScript, techniques CSS natives, ressource
 | [GSAP](https://gsap.com) et [greensock/gsap-skills](https://github.com/greensock/gsap-skills) | ScrollTrigger, SplitText, ScrollSmoother | gratuit, licence propriétaire Webflow (interdit dans les constructeurs visuels concurrents) ; skills MIT |
 | [Lenis](https://github.com/darkroomengineering/lenis) 1.3.27+ | smooth scroll, pages vitrines seulement | MIT |
 | [Scrollama](https://github.com/russellsamora/scrollama) | scrollytelling par étapes | MIT |
-| [three.js](https://threejs.org), [drei](https://github.com/pmndrs/drei), [r3f-scroll-rig](https://github.com/14islands/r3f-scroll-rig), [pmndrs/examples](https://github.com/pmndrs/examples) | scènes 3D au scroll | MIT |
+| [three.js](https://threejs.org), [React Three Fiber](https://github.com/pmndrs/react-three-fiber), [drei](https://github.com/pmndrs/drei), [pmndrs/examples](https://github.com/pmndrs/examples) | scènes et objets 3D interactifs, au scroll ou non (référence `3d.md`, vérifié le 2026-11-13) | MIT |
+| [`<model-viewer>`](https://modelviewer.dev) (Google) | un modèle 3D à faire tourner, en une balise | Apache-2.0 |
+| [glTF Transform](https://gltf-transform.dev), [meshoptimizer](https://github.com/zeux/meshoptimizer) | compression des modèles et textures | MIT |
+| [Poly Haven](https://polyhaven.com) | modèles, environnements HDR et textures gratuits | CC0 |
+| [Khronos glTF Sample Assets](https://github.com/KhronosGroup/glTF-Sample-Assets) | modèles d'essai | une licence par modèle (à lire à chaque fois) |
+| [r3f-scroll-rig](https://github.com/14islands/r3f-scroll-rig), [gltfjsx](https://github.com/pmndrs/gltfjsx) | 3D synchronisée au scroll ; modèle vers composant React | MIT, sans version depuis 2025 et 2024 : avec précaution |
 | [dotLottie web](https://github.com/LottieFiles/dotlottie-web) | Lottie piloté par le scroll | MIT |
 | [Swup](https://swup.js.org) + plugin a11y, Astro view transitions | transitions de page accessibles | MIT |
 | VueUse, motion-v, Svelte (transitions, svelte-inview) | équivalents Vue et Svelte | MIT |
