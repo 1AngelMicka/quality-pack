@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- **Interactive 3D in the `scroll-animation` skill.** The 3D part was one paragraph; it is now a reference of its own (`references/3d.md`): which tool to pick (`<model-viewer>` for one model, React Three Fiber in React, three.js elsewhere), recipes with code, the poster image that comes before the canvas, rendering on demand, model compression, tying the scene to the page scroll without replacing it, working budgets for phones, keyboard access, and nine rules (3D-01 to 3D-09). Licences and versions checked on 2026-11-13.
+
 ## 0.8.4 — 2026-11-13
 
 - **A marketplace listing that can be understood.** Listings cut each description after about 45 characters, so the eight plugins read as "Shipwright: takes a site…" and seven times "Shipwright module for…". Each description now starts with what the plugin is: "Start here: the main Shipwright plugin, the only one you need" for `sw`, "Optional add-on for Next.js / React projects" and the like for the seven others, which also say to install `sw` first.

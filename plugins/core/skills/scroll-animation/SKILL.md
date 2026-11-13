@@ -1,6 +1,6 @@
 ---
 name: scroll-animation
-description: "Builds scroll animations that work for everyone: reveals on enter, scroll-linked (scrubbed) motion, progress bars, parallax, sticky and pinned scenes, horizontal sections, text reveals, scrollytelling steps, snapping, image sequences and video scrubbing, 3D scenes, Lottie and Rive driven by scroll, page and section transitions, smooth scrolling. Picks native CSS first (scroll-driven animations, view transitions, scroll snap), then a free library only when needed, with reduced motion, performance and no scroll hijacking, and proves it with measures. Use whenever a page needs anything that moves with scrolling. FR : animation au scroll, apparition au défilement, parallaxe, section épinglée, défilement horizontal, scrollytelling, smooth scroll, transitions de page."
+description: "Builds scroll animations that work for everyone: reveals on enter, scroll-linked (scrubbed) motion, progress bars, parallax, sticky and pinned scenes, horizontal sections, text reveals, scrollytelling steps, snapping, image sequences and video scrubbing, 3D scenes and interactive 3D objects (three.js, React Three Fiber, model-viewer), Lottie and Rive driven by scroll, page and section transitions, smooth scrolling. Picks native CSS first (scroll-driven animations, view transitions, scroll snap), then a free library only when needed, with reduced motion, performance and no scroll hijacking, and proves it with measures. Use whenever a page needs anything that moves with scrolling. FR : animation au scroll, apparition au défilement, parallaxe, section épinglée, défilement horizontal, scrollytelling, smooth scroll, transitions de page, 3D interactive, objet 3D à faire tourner, three.js."
 ---
 
 # Scroll animation
@@ -30,12 +30,12 @@ Native first. Since October 2026 CSS scroll-driven animations work in Chrome, Ed
 | Scrollytelling steps | IntersectionObserver per step, a sticky graphic | Scrollama |
 | Snapping sections or carousels | `scroll-snap-type` (prefer `proximity` for tall sections) | Lenis snap, Swiper (carousels) |
 | Image sequence or video scrub | canvas + preloaded frames driven by a `scroll()` value | scrolly-video; GSAP ScrollTrigger |
-| 3D scene | — | three.js; drei `ScrollControls`; r3f-scroll-rig |
+| 3D object or scene | — | `<model-viewer>` for one model; React Three Fiber + drei in React; three.js elsewhere — see [references/3d.md](references/3d.md) |
 | Lottie or Rive on scroll | — | dotLottie web (`setFrame` from scroll progress); Rive runtime inputs |
 | Page and section transitions | View Transitions API (`document.startViewTransition`, `@view-transition { navigation: auto }`) | Swup with its a11y plugin; Astro view transitions |
 | Smooth scrolling | none (native scrolling) | Lenis 1.3.27+ (reduced motion on by default) on persuasive pages only |
 
-Recipes with code for each line: [references/techniques.md](references/techniques.md). Libraries, licences and the agent resources (official skills, MCP servers, docs for LLMs): [references/libraries.md](references/libraries.md).
+Recipes with code for each line: [references/techniques.md](references/techniques.md). Interactive 3D (poster first, render on demand, models, budgets, keyboard): [references/3d.md](references/3d.md). Libraries, licences and the agent resources (official skills, MCP servers, docs for LLMs): [references/libraries.md](references/libraries.md).
 
 ## 2. Build
 
@@ -71,5 +71,6 @@ Recipes with code for each line: [references/techniques.md](references/technique
 | SCRL-07 | Durations | 200–500 ms for reveals, linear when scrubbed | NN/g animation duration |
 | SCRL-08 | Mobile heights | `svh`/`lvh` for pinned scenes | web.dev viewport units |
 | SCRL-09 | Restraint | one or two scroll moments per page; never every section on the same reveal | NN/g parallax; generic-look research |
+| SCRL-10 | 3D | poster image first, 0 frames drawn when nothing moves, page scroll kept over the canvas, rotation by keyboard; rules 3D-01 to 3D-09 | [references/3d.md](references/3d.md) |
 
 Sources: [SOURCES.md](../../SOURCES.md).

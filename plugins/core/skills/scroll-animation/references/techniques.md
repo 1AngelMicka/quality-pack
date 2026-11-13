@@ -204,7 +204,9 @@ Keep the sequence short and small (150 decoded 1080p frames are about 1.2 GB of 
 
 ## 3D scene
 
-three.js (MIT) with React Three Fiber and drei's `ScrollControls` (its own virtual scroller) or r3f-scroll-rig (syncs with page scroll). Render only when something changes, stop when the canvas is off-screen or the tab is hidden, cap the pixel ratio on phones, and give a still image with reduced motion. Keyboard and anchors are not handled by `ScrollControls`: keep real content outside the canvas.
+Full reference, with code: [3d.md](3d.md) — which tool to pick (`<model-viewer>`, React Three Fiber, three.js), the poster image that comes first, rendering on demand, models and compression, tying the scene to the scroll, budgets for phones, keyboard access.
+
+In short: a poster image in the HTML and the 3D code loaded only near the viewport; a frame drawn only when something changes, none off-screen or in a hidden tab; pixel ratio capped at 2; the wheel and vertical touch drag still scroll the page; a still pose with reduced motion. drei's `ScrollControls` replaces the page scroll with its own scroller (anchors and find-in-page stop working): prefer a scroll progress value read from the page.
 
 ## Lottie and Rive
 
