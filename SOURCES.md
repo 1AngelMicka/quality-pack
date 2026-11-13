@@ -500,3 +500,28 @@ Left out because the notes mark them as unverified or because the skill does not
 | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | MIT, but a fixed catalogue of styles and palettes gives recognisable outputs; content not read |
 | Linear "quality" post | URL returned 404; nothing sourced |
 | French Wikipedia page on signs of generated text | not found |
+
+## Lot 4 — banque de références (recherche du 2026-11-12)
+
+La banque (`plugins/core/bank/`) décrit, par type de site, des sites reconnus comme excellents. Elle ne contient que des adresses, des descriptions écrites pour le pack et des mesures : aucune capture d'écran de sites tiers, qui sont protégées par le droit d'auteur. Chaque fichier liste ses propres sources dans `sources`, avec leur mode d'accès.
+
+| Source | Rôle | Accès |
+| --- | --- | --- |
+| [Awwwards](https://www.awwwards.com/websites/) (Site of the Day, Honorable Mention, catégories) | reconnaissance datée des sites | gratuit |
+| [Webby Awards](https://winners.webbyawards.com/) | lauréats 2024 à 2026 | gratuit |
+| [WebAwards](https://www.webaward.org/) | lauréats « Small Business » pour les commerces de proximité | gratuit |
+| [One Page Love](https://onepagelove.com), [SaaS Landing Page](https://saaslandingpage.com), [recent.design](https://recent.design), [Typewolf](https://www.typewolf.com) | sélection éditoriale ; dates pas toujours affichées | gratuit |
+| [Baymard Institute](https://baymard.com/blog), articles publics | attentes d'une boutique en ligne | gratuit (les rapports complets sont payants : non utilisés) |
+| [Nielsen Norman Group](https://www.nngroup.com/articles/) | attentes : prix affichés, formulaires | gratuit |
+
+Écartés : Mobbin, Refero, Pageflows (payants ou freemium), Lapa Ninja (bloque les robots), toute capture d'écran.
+
+Limites connues : les règles `expects` sont en majorité des règles de bon sens marquées non vérifiées ; la source d'une reconnaissance est souvent la page de catégorie et non la fiche du site ; les sites changent, la mesure et la calibration sont à refaire avant chaque version. Une première passe automatique (105 agents) n'avait vérifié que 4 familles de sites ; la banque vient d'une seconde passe ciblée, un agent par groupe de types, chaque site chargé avant d'être gardé.
+
+## Lot 5 — lien envoyé le 2026-11-12
+
+| Lien | Rôle | Licence | Statut |
+| --- | --- | --- | --- |
+| [GoogleChrome/modern-web-guidance](https://github.com/GoogleChrome/modern-web-guidance) | 228 guides sur les fonctions récentes de la plateforme web (dialog, popover, positionnement par ancre, container queries, view transitions, validation de formulaires, Core Web Vitals, sécurité), avec compatibilité navigateurs et solutions de repli ; commande `legacy-scan` pour repérer les anciens motifs | Apache-2.0 | proposé comme outil compagnon au kickoff ; ses guides ne sont pas copiés dans le pack, pour rester à jour |
+
+Lu le 2026-11-12 par l'API GitHub : dépôt créé en mars 2026, dernier envoi le 2026-11-10, non archivé, porté par les équipes Chrome, Edge, Firefox et MDN. Gratuit. Points d'attention : demande Node 22 ; chaque recherche lance son paquet avec `npx` ; le README ne dit rien d'une éventuelle télémétrie (non vérifié) ; la description de son skill demande à passer en premier sur toute tâche HTML ou CSS, ce que le pack ne suit pas. Le post X qui le signalait n'a pas été lu.

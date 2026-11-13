@@ -30,6 +30,14 @@ One address per kind of screen: the landing page, a work screen with data, a for
 
 Each failed check lists the elements. Results go to the audit run as `craft.json` when the project has `.quality/project.json`. Also run `qp look` (how generic the page looks) and `qp deslop` (spacing): the three do not overlap.
 
+Then the finishing passes, on each key screen:
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs" stress http://localhost:3000/app
+```
+
+It shows the screen in the conditions it was not built in: every data request slow, every data request failing, every label three times longer, 320 px wide, dark scheme, keyboard only, scripts off. Each pass has a screenshot and what could be detected: a blank screen while waiting, an uncaught error, no error message or no way to retry, sideways scrolling, text cut without an ellipsis, a focus trap. Read the screenshots: the tool sees that an error message exists, not whether it helps.
+
 ## 2. Finish what cannot be measured
 
 Work through [references/details.md](references/details.md) on the key screens. The parts that matter most:
@@ -70,13 +78,21 @@ Rules and word lists in English and French: [references/copy.md](references/copy
 - Break the pattern of three: three cards, three-word headings, three sentences of equal length. Use two or four when that is what is true, and vary lengths.
 - Remove the words in the lists unless they carry a fact. `qp scan` flags them in the source; `qp look` flags an em-dash rate above 8 per 1,000 words (15 in French, where a dash in an aside is normal).
 
-## 5. Check again, and report
+## 5. A second pair of eyes
+
+Measures find defects; they do not see whether the screen is good. Before reporting, ask a `qp:art-director` agent to review the desktop and phone screenshots of each key screen, with the brief and the site type. It returns at most seven concrete changes, most of them removals, and what it could not see. Show them to the user, apply the ones they accept, and measure again.
+
+For a screen that carries the product (public home page, pricing, the main work screen), one version is not enough: use the `design-variants` skill, which builds several, has them compared blind, and lets the user choose. To see how far a screen is from what the user admires, `qp gap <url>` compares it in numbers with the project's references (`qp profile <url> <url> --save`) or with the reference bank of its site type (`qp gap <url> --type <type>`).
+
+## 6. Check again, and report
 
 Run the measure again, at most three passes, then report with numbers and without an invented score:
 
 ```
 Screens: <addresses>
-Before → after: must <n> → <n>, should <n> → <n>
+Finish (qp craft), before → after: must <n> → <n>, should <n> → <n>
+Hard conditions (qp stress): must <n>, should <n> · screens run: <n> of <n>
+Art director: <changes applied> · declined: <changes and why>
 Fixed: <3 to 6 points, with the root cause (token, component)>
 Kept on purpose: <check and the reason, written in DESIGN.md>
 Not measured, checked by hand: <states, waiting, undo, dark theme, keyboard>

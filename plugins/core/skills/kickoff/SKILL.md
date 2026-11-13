@@ -22,13 +22,13 @@ Use AskUserQuestion when available (at most 4 questions per call), otherwise ask
 
 Round 1:
 - Surface mode of the screens (has_ui): `persuade` (landing and marketing pages), `operate` (app screens, dashboards, forms) or `read` (documentation). It decides how strict the generic-look check is. Recommend `persuade` for `vitrine`, `operate` otherwise.
-- Profile: `vitrine` (showcase site), `webapp`, `saas`, `mobile`, `api`. Recommend the detected one first and give `profile_why`. When detect lists `app_signals` (state, file input, desktop shell, service worker…), the UI is an application: never recommend `vitrine`.
+- Profile: `vitrine` (showcase site), `webapp`, `saas`, `mobile`, `desktop` (Tauri or Electron app), `api`. Recommend the detected one first and give `profile_why`. When detect lists `app_signals` (state, file input, desktop shell, service worker…), the UI is an application: never recommend `vitrine`.
 - Report language: fr or en.
 - Country of the publisher (drives legal obligations; default FR).
-- Stacks: confirm the detected ones (nextjs, node-api, infra-vps, expo, capacitor, …).
+- Stacks: confirm the detected ones (nextjs, node-api, infra-vps, expo, capacitor, tauri, electron, …).
 
 Round 2:
-- Flags (multiSelect): list the detected flags in the question and ask which are wrong or missing. Flags: has_ui, has_backend, has_auth, has_user_data, has_db, has_uploads, has_external_api, has_webhooks, has_email, has_payments, uses_paid_services, public_web, self_hosted, multilingual, dark_mode, multi_tenant (customers are organisations with members), has_subscriptions (plans that renew), native_app (an installed iOS or Android app).
+- Flags (multiSelect): list the detected flags in the question and ask which are wrong or missing. Flags: has_ui, has_backend, has_auth, has_user_data, has_db, has_uploads, has_external_api, has_webhooks, has_email, has_payments, uses_paid_services, public_web, self_hosted, multilingual, dark_mode, multi_tenant (customers are organisations with members), has_subscriptions (plans that renew), native_app (an installed iOS or Android app), desktop_app (an installed desktop app: Tauri, Electron).
 - Companion tools (multiSelect), recommended according to the profile and the project size. See "Companion tools" below. Never install them without the user's yes.
 - Auditor model: `opus` (recommended: finds what cheaper models miss, such as violations that only show once data is loaded), `fable`, or `inherit` (same as the session). Do not offer `sonnet` or `haiku`: they gave wrong evidence and stayed on empty screens in real audits. Set one of them only if the user asks for it by name.
 
@@ -63,6 +63,12 @@ Skip what does not apply; each takes a few minutes now and saves a rebuild later
 
 **Subscriptions (has_subscriptions).** Ask for the rules before any billing code, and write them in the spec or `.quality/project.json` › `notes`: plans and limits in numbers, trial (length, card or not, what happens at the end), grace period after a failed payment, what happens to data on downgrade, countries sold to.
 
+**Webhooks (has_webhooks).** List each endpoint under `webhooks` (`{ "path": "/api/webhooks/stripe", "provider": "stripe" }`): `qp webhooks` then checks, on local or staging, that an unsigned or wrongly signed event is refused.
+
+**Facts (public pages).** Ask for the real figures, quotes (with the person's agreement), customer names and certifications the site may show, each with its source and date, and record them in `.quality/facts.json` (`{ "facts": [{ "claim": "1,240 teams", "source": "admin dashboard", "date": "2026-11-10" }] }`). Never fill it yourself: a claim without a fact from the user is not shown.
+
+**Desktop app (desktop_app).** Ask why a desktop app, the target systems and which ones the team can build and test on, the distribution, and where data lives (the `desktop-app` skill).
+
 **Mobile app (native_app).** Ask the approach, the application id, the platforms, the sales model and storefronts, whether a Mac is available, and what must work offline; write them under `mobile` (format in the `mobile-app` skill). Draft `mobile.flows` from the key tasks.
 
 ## 5. Write the files
@@ -88,6 +94,7 @@ Offer only those that fit. Give the commands; run them only if the user says yes
 | [Graphify](https://github.com/Graphify-Labs/graphify) | project size medium or large | Claude asks a local code graph instead of searching and re-reading files. The code graph is built locally with no LLM call. | `uv tool install graphifyy` (or `pipx install graphifyy`), then `graphify install --project`, then `qp graph refresh`. Optional: `graphify hook install` rebuilds it on every commit. |
 | [RTK](https://github.com/rtk-ai/rtk), Apache-2.0 edition `rtk-oss` | long sessions, any size | Compresses the output of everyday shell commands (git, tests, ls) before Claude reads it. Telemetry is off by default. | `brew install rtk-ai/tap/rtk-oss`, or `curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh \| RTK_EDITION=oss sh`, then `rtk init -g`. It adds a global hook to Claude Code: say so. |
 | [Cloudflare security-audit](https://github.com/cloudflare/security-audit-skill) | has_auth, has_payments or has_user_data | In-depth security audit for major releases (criterion SEC-11). It is thorough and uses many tokens: run it before a release, not every day. | `npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit` |
+| [Modern Web Guidance](https://github.com/GoogleChrome/modern-web-guidance), Apache-2.0 | has_ui, any size | Guides from the Chrome, Edge, Firefox and MDN teams on current web platform features (dialog and popover, anchor positioning, container queries, view transitions, form validation, Core Web Vitals), with browser support and fallbacks, so that Claude does not reach for an old pattern or a library where the platform now does the job. `legacy-scan` lists old patterns in an existing codebase. It needs Node 22 and runs its package through `npx` at each search: say so. Its own skill asks to be run first on every HTML or CSS task: the pack's order still applies (screens, then direction, then code), and its guides are used when a component or a platform feature is being written. | `npx modern-web-guidance@latest install` (interactive), or the Claude Code plugin from its repository |
 | [Taste Skill](https://github.com/Leonxlnx/taste-skill) | profile `vitrine` | A strong anti-generic design method for showcase and marketing sites. | `npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"` |
 | [Framelink Figma MCP](https://github.com/GLips/Figma-Context-MCP), MIT | the client has mock-ups in Figma | Claude reads the layout, components and styles of a Figma frame instead of guessing from a screenshot. It sends usage analytics by default: say so and set `FRAMELINK_TELEMETRY=off`. | needs a Figma personal access token; see its README for the MCP configuration |
 | [reanimate](https://github.com/NiazMorshed2007/reanimate) | the user wants a precise animation inspired by a reference | Records a reference animation and rebuilds it, measuring the gap. Use it as inspiration, never to copy someone's site. | `npx skills add NiazMorshed2007/reanimate -g` |

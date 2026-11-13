@@ -1,0 +1,148 @@
+{
+  "id": "personal-site",
+  "label": {
+    "fr": "Site personnel et CV",
+    "en": "Personal site and CV"
+  },
+  "expects": [
+    {
+      "rule": "The home page says who the person is in one or two sentences and links to what they have made or written; a short bio and a link to a résumé are the common pattern.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A skip link or equivalent lets keyboard users bypass the repeated header (WCAG 2.4.1, level A).",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html",
+      "verified": true
+    },
+    {
+      "rule": "Text can be enlarged to 200% without loss of content or function (WCAG 1.4.4, level AA).",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html",
+      "verified": true
+    },
+    {
+      "rule": "Content reflows to a 320 CSS pixel width without scrolling in two directions (WCAG 1.4.10, level AA).",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+      "verified": true
+    },
+    {
+      "rule": "Writing is subscribable: an RSS or Atom feed link is shown, as listed on personalsit.es for most entries.",
+      "source": "https://personalsit.es/",
+      "verified": true
+    },
+    {
+      "rule": "Pages carry a date or an updated mark so readers can judge how current a post or a CV is.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Contact is a plain email or profile link; the CV is available as a web page and not only as a file download.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "4 of 7 use one typeface family (Bobby Hiltz a system font, llimllib notes Georgia, Melike Turgut Agrandir, Mathias Adolfsson Inter); the other 3 pair a display or slab face with a text face.",
+    "5 of 7 are text first, with no image or one image on the first screen (Lynn Fisher, Ben Myers, Bobby Hiltz, Hazel Weakly, llimllib notes); Melike Turgut and Mathias Adolfsson lead with graphics or work.",
+    "5 of 7 are on a light background (#e4e2d7, #fff, #f3e7eb, #fffff8, #eaece5) and 2 of 7 on a dark one (#2c0943, #080808).",
+    "3 of 7 set the name in very large type (Lynn Fisher 96 px, Hazel Weakly 172 px, Ben Myers 56 px); Bobby Hiltz uses a 36 px heading.",
+    "Navigation is three to six links on 4 of 7 (Lynn Fisher six, Ben Myers six plus a Menu, Bobby Hiltz three, Hazel Weakly four plus four); Mathias Adolfsson has one link.",
+    "3 of 7 show a theme or settings control on the first screen (Lynn Fisher, Hazel Weakly, Ben Myers' Menu), and 2 of 7 show RSS (Lynn Fisher, llimllib notes).",
+    "Personality sits in small details: a version mark, a webring badge, an 88x31 button, glossy icons in the title, a command-K search.",
+    "7 of 7 show no cookie banner or newsletter popup on the first screen."
+  ],
+  "sites": [
+    {
+      "name": "Lynn Fisher",
+      "url": "https://lynnandtonic.com/",
+      "why": "Paper-textured beige (#e4e2d7) page with no image: a 96 px two-line name in a decorative display face (Hubano Rough), tagline in Sydonia, six links as a contents list with dot leaders and roman numerals (About to Gifs, RSS among them), a version mark v. XIX and a sun icon for the theme.",
+      "recognition": "Website Design Awards, Site of the Day, 2025-07-19 (overall 9.0/10)",
+      "source": "https://websitedesignawards.com/site/6b7df597-a2cd-41ac-adc5-15ceb7557eae",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Ben Myers",
+      "url": "https://benmyers.dev/",
+      "why": "Deep purple (#2c0943) page: header with logo, Writing, Encyclopedia, About, Blogroll, Mastodon, Bluesky and a Menu button; 56 px heavy 'Howdy! I'm Ben.' with a yellow-highlighted tagline; a light card with two bio paragraphs, links to Résumé and about, and a round headshot. Inter with Nexa.",
+      "recognition": "Listed on personalsit.es (no date shown), checked 2026-11-12",
+      "source": "https://personalsit.es/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Bobby Hiltz",
+      "url": "https://bobbyhiltz.com/",
+      "why": "Plain white page in a system font with browser-default blue underlined links: name and Posts, About, Subscribe on one line, a 36 px Welcome heading, one sentence, a dithered black-and-white photo with a caption, two bio paragraphs. Footer has webring links and an 88x31 badge.",
+      "recognition": "Listed on personalsit.es (no date shown), checked 2026-11-12",
+      "source": "https://personalsit.es/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Hazel Weakly",
+      "url": "https://hazelweakly.me/",
+      "why": "Pale pink (#f3e7eb) page with a 172 px two-line name in a thin display face (Italiana) in the middle, Home, Blog, Media Listing and About Me at the top with a dark-mode icon, and Calendar, Contact, Résumé and Speaker Rider at the bottom, set in Zilla Slab. No image.",
+      "recognition": "Listed on personalsit.es (no date shown), checked 2026-11-12",
+      "source": "https://personalsit.es/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "llimllib notes",
+      "url": "https://notes.billmill.org",
+      "why": "Cream (#fffff8) page set in Georgia: breadcrumb and a search box with a Ctrl-K hint, links to everything, link blog, music blog and blog blog each with an orange RSS icon, then a 'Recent activity' list with topic path, date and NEW or UPDATED tags. An expandable tree of all notes follows.",
+      "recognition": "Listed on personalsit.es (no date shown), checked 2026-11-12",
+      "source": "https://personalsit.es/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Melike Turgut",
+      "url": "https://meliketurgut.com/",
+      "why": "Pale grey-green (#eaece5) screen with the words 'me' and 'like' in olive Agrandir spread across the full width and eight glossy 3D icons between them. Name, role and city at the top corners, a three-line intro at bottom left and Email, LinkedIn and X at bottom right. Eight story chapters follow.",
+      "recognition": "Minimal Gallery, published 2026-11-06",
+      "source": "https://minimal.gallery/melike-turgut/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Mathias Adolfsson",
+      "url": "https://mathiasadolfsson.dev/",
+      "why": "Near-black (#080808) screen: name and 'Independent Creative Engineer' top-left, About top-right in 12 px Inter, and a curved carousel of client site screens (Tentipi centred, Bonza and Mikuta at the edges) with the client name under it. Little text; the work is the page.",
+      "recognition": "Minimal Gallery, published 2026-11-07",
+      "source": "https://minimal.gallery/mathias-adolfsson/",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A hero with a gradient, a headshot in a circle and 'Hi, I'm ... a full-stack developer' repeated from template themes.",
+    "Skill percentage bars and technology logo grids in place of describing what was made.",
+    "A résumé that exists only as a PDF download.",
+    "A newsletter popup or cookie banner covering a page with no tracking.",
+    "A theme switch that resets on every page or ignores the system preference.",
+    "No dates on posts or projects.",
+    "A contact form with no email fallback."
+  ],
+  "sources": [
+    {
+      "name": "personalsit.es",
+      "url": "https://personalsit.es/",
+      "access": "free"
+    },
+    {
+      "name": "Minimal Gallery",
+      "url": "https://minimal.gallery/",
+      "access": "free"
+    },
+    {
+      "name": "SiteInspire, Personal",
+      "url": "https://www.siteinspire.com/",
+      "access": "free"
+    },
+    {
+      "name": "W3C, WCAG 2.2 Understanding 2.4.1, 1.4.4, 1.4.10",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html",
+      "access": "free"
+    },
+    {
+      "name": "Website Design Awards, Lynn Fisher",
+      "url": "https://websitedesignawards.com/site/6b7df597-a2cd-41ac-adc5-15ceb7557eae",
+      "access": "free"
+    }
+  ]
+}

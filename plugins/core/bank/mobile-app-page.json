@@ -1,0 +1,137 @@
+{
+  "id": "mobile-app-page",
+  "label": {
+    "fr": "Page de présentation d'une application mobile",
+    "en": "Marketing page of a mobile app"
+  },
+  "expects": [
+    {
+      "rule": "The first screen says what the app does in one headline and shows the official App Store and Google Play badges (or a QR code on desktop) without scrolling.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Show real screens of the app, not abstract illustrations, with a caption saying what each screen does.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "If the app is not released, say so plainly (Coming soon, Launching autumn 2026) and offer a waitlist or early-access link instead of dead store badges.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Price, free tier or free credits, and the platforms supported are stated on the page.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Privacy and data handling are summarised and linked, above all for finance, health and messaging apps.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The page works on a phone first: pointer targets of at least 24 by 24 CSS px (WCAG 2.2 minimum), 44 by 44 px for the main download button as a house target, no horizontal scroll, no desktop-only hover.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "Motion and loaders must not block the first screen; offer a way to skip an intro.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "7 of 7 pair two named typefaces; 4 of 7 (GoShuin, Wispr Flow, ACTL, Serus) set the headline in a serif or a display serif and the rest in a sans-serif.",
+    "The headline is large: 96 to 122 px on 5 of 7 (GoShuin, Fighter Ready, Wispr Flow, VOID, ACTL); Grassfeld uses 58 px and Serus 40 px.",
+    "The first screen holds fewer than 45 words on 6 of 7; Fighter Ready carries more because of its section nav and intro paragraph.",
+    "One filled or outlined button is the main action on 6 of 7; only 1 of 7 (GoShuin) shows an App Store link on the first screen, so most pages ask for sign-up, a waitlist or a download by platform.",
+    "A phone mockup appears on the first screen of 2 of 7 (Grassfeld, VOID); the rest use a type-led layout, a 3D scene, a book cover or a live input box.",
+    "3 of 7 use a dark background (Fighter Ready, VOID, ACTL) and 4 of 7 a light or warm one; each has one accent: orange, lime, lime, lilac or blue.",
+    "Navigation has three to five links on 5 of 7; 3 of 7 add a skip control, intro loader or cover to open before the content.",
+    "2 of 7 show a cookie banner over the first screen."
+  ],
+  "sites": [
+    {
+      "name": "GoShuin",
+      "url": "https://aestudio.studio/goshuin/en",
+      "why": "Split first screen on a warm off-white (#e7e5df): a 114 px serif GoShuin title, tagline and two underlined text links (App Store, Explore the app) on the left, a closed journal cover on the right. Headings set in Georgia, UI in a system sans-serif; a page counter at the bottom.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-21",
+      "source": "https://www.awwwards.com/sites/goshuin-every-stamp-a-memory",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Fighter Ready",
+      "url": "https://fighterready.com/",
+      "why": "Starts with a black (#080808) loader with logo and a 'Lacing up' percentage, then a 122 px two-line headline in Barlow Condensed with Inter body, orange (#ff6a00) button, section nav, early-access link and a launch-date line. The page runs about 14 screens.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-17",
+      "source": "https://www.awwwards.com/sites/fighter-ready",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Grassfeld",
+      "url": "https://www.grassfeld.com",
+      "why": "White-to-light-blue panel: a 58 px heavy headline set in Right Grotesk at left with one dark Get Started button, a phone showing the budget screen with floating cards at right. Header has five links and a flag toggle; a cookie banner covers the lower third. Manrope for body.",
+      "recognition": "Awwwards Honorable Mention, 2025-06-09",
+      "source": "https://www.awwwards.com/sites/grassfeld",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Wispr Flow",
+      "url": "https://wisprflow.ai/",
+      "why": "Centred 96 px headline in EB Garamond with an italic second line on pale yellow (#ffffeb), a lilac (#f0d7ff) button with dark outline, a platforms line, and looping text ribbons around a waveform pill. No image; Figtree for the interface. Green announcement bar above the header.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-19",
+      "source": "https://www.awwwards.com/sites/wispr-flow",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "VOID Messenger",
+      "url": "https://void.sbs/",
+      "why": "Black screen with a huge all-caps lime (#e7ff56) headline in QB One with two padlock icons, a phone lock-screen mockup under it, a floating pill nav of four links plus a lime Subscribe button, and a feature tab strip with a Skip the intro button. Gilroy for text.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-22",
+      "source": "https://www.awwwards.com/sites/void-messenger",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "ACTL",
+      "url": "https://actl.me/",
+      "why": "Navy (#0a2952) screen: a 105 px bold serif headline in cream, one short paragraph and a lime (#aaf136) Join via WhatsApp button at left, a 3D tennis court taking the right half, a 01/03 slide counter. Header has four links and an outlined button. Body in Montreal.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-05",
+      "source": "https://www.awwwards.com/sites/actl",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Serus",
+      "url": "https://serus.ai/",
+      "why": "Near-white (#fafafa) first screen with a 40 px serif greeting in Reckless above a single rounded search box (attach, Search tips, model selector), a privacy line under it, Log in, a black waitlist button and a lilac sign-up button in the header. A cookie card sits bottom left.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-01",
+      "source": "https://www.awwwards.com/sites/serus",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A grid of identical feature cards with an icon, a three-word title and one sentence.",
+    "Phone mockups showing blurred or invented screens instead of the real interface.",
+    "Store badges that link to a page that does not exist yet.",
+    "Purple-to-blue gradient hero with floating glass cards and no product screen.",
+    "Fake review counts, invented download numbers or unnamed 'trusted by' logos.",
+    "Unskippable full-screen intro or loader before the headline."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Mobile & Apps",
+      "url": "https://www.awwwards.com/websites/mobile-apps/",
+      "access": "free"
+    },
+    {
+      "name": "W3C, Understanding Target Size (Minimum)",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, per-site pages (GoShuin, Fighter Ready, Grassfeld, Wispr Flow, VOID, ACTL, Serus)",
+      "url": "https://www.awwwards.com/websites/mobile-apps/",
+      "access": "free"
+    }
+  ]
+}

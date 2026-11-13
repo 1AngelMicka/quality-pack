@@ -216,3 +216,46 @@ export async function authProbe(project, { base } = {}) {
   return { available: true, base: baseUrl, target: where, summary: { checks: Object.keys(checks).length, must_failed: must, should_failed: should }, checks,
     note: `Sent ${8 + (limitedAt ? limitedAt - 4 : n)} failed logins to ${cfg.login.path}. The test account may now be locked. Not covered: password reset, signup, one-time codes, session invalidation on logout (see the security-testing skill).` };
 }
+
+// ---------------------------------------------------------------------------------------------------------
+// Webhooks: an event that is not signed, or signed with the wrong secret, must be refused before anything is
+// done with it. A handler that accepts it lets anyone grant themselves a paid plan. Played on local or staging.
+// project.json › webhooks: [ { "path": "/api/webhooks/stripe", "provider": "stripe" } ]
+const PROVIDERS = {
+  stripe: { header: "stripe-signature", forged: () => `t=${Math.floor(Date.now() / 1000)},v1=${"0".repeat(64)}`, body: { id: "evt_qp_probe", object: "event", type: "checkout.session.completed", data: { object: { id: "cs_qp_probe", customer: "cus_qp_probe", payment_status: "paid", metadata: { plan: "pro" } } } } },
+  github: { header: "x-hub-signature-256", forged: () => `sha256=${"0".repeat(64)}`, body: { zen: "qp probe", hook_id: 1 } },
+  paddle: { header: "paddle-signature", forged: () => `ts=${Math.floor(Date.now() / 1000)};h1=${"0".repeat(64)}`, body: { event_id: "evt_qp_probe", event_type: "subscription.activated", data: { id: "sub_qp_probe", status: "active" } } },
+  lemonsqueezy: { header: "x-signature", forged: () => "0".repeat(64), body: { meta: { event_name: "subscription_created" }, data: { id: "qp-probe" } } },
+  generic: { header: "x-signature", forged: () => "0".repeat(64), body: { id: "qp-probe", type: "probe" } },
+};
+
+export async function webhookProbe(project, { base } = {}) {
+  const hooks = project?.webhooks;
+  if (!Array.isArray(hooks) || !hooks.length) return { available: true, errors: ["no webhooks in .quality/project.json: declare each endpoint, for example { \"path\": \"/api/webhooks/stripe\", \"provider\": \"stripe\" }"] };
+  const baseUrl = base || project.urls?.local || project.urls?.staging;
+  if (!baseUrl) return { available: true, errors: ["no URL: pass --base <url> or set urls.local or urls.staging in .quality/project.json"] };
+  const where = classifyTarget(baseUrl, project);
+  if (where !== "local" && where !== "staging") return { available: true, errors: [`${baseUrl} is not a local or staging address. This check sends forged events: it only runs on localhost or on the staging URL declared in project.json.`] };
+  const checks = {};
+  const send = async (url, headers, body) => {
+    try { const res = await fetch(url, { method: "POST", headers: { "content-type": "application/json", ...headers }, body: JSON.stringify(body), redirect: "manual", signal: AbortSignal.timeout(20000) }); return { status: res.status }; }
+    catch (e) { return { error: String(e.cause?.code || e.message).slice(0, 120) }; }
+  };
+  const judge = (r) => r.error ? { ok: false, value: `no answer (${r.error})` } : r.status >= 400 && r.status < 500 ? { ok: true, value: `refused with HTTP ${r.status}` }
+    : r.status >= 500 ? { ok: false, value: `HTTP ${r.status}: the handler failed instead of refusing` } : { ok: false, value: `accepted with HTTP ${r.status}` };
+  for (const [i, h] of hooks.entries()) {
+    if (!h?.path) return { available: true, errors: [`webhooks[${i}]: path is required`] };
+    const p = PROVIDERS[h.provider] || PROVIDERS.generic;
+    const header = (h.signature_header || p.header).toLowerCase();
+    const body = h.body || p.body;
+    const url = new URL(h.path, baseUrl);
+    const name = h.path.replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "");
+    const unsigned = judge(await send(url, {}, body));
+    checks[`${name}_unsigned`] = { level: "must", ...unsigned, rule: `${h.path}: an event with no signature is refused (4xx) before anything is done with it` };
+    const forged = judge(await send(url, { [header]: p.forged() }, body));
+    checks[`${name}_forged`] = { level: "must", ...forged, rule: `${h.path}: an event signed with the wrong secret is refused (4xx)` };
+  }
+  const must = Object.entries(checks).filter(([, c]) => !c.ok).map(([k]) => k);
+  return { available: true, base: baseUrl, target: where, summary: { checks: Object.keys(checks).length, must_failed: must, should_failed: [] }, checks,
+    note: "Not covered: a correctly signed event replayed twice (idempotency), events arriving out of order, and what the handler grants. Play those with the provider's test tools (test clock, CLI)." };
+}

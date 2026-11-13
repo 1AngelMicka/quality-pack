@@ -8,7 +8,7 @@ description: "Quality pack build rules for SaaS: accounts, subscriptions and act
 
 Apply these rules while you build. Domains or criteria whose `applies_if` flags are false in `.quality/project.json` do not apply to this project. Before you call a task done, check your work against the criteria of the domains you touched: each one must be true and verifiable.
 
-If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps, qp-expo, qp-capacitor), its rules skill adds stack-specific rules on top of these.
+If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps, qp-expo, qp-capacitor, qp-tauri, qp-electron), its rules skill adds stack-specific rules on top of these.
 
 ## Accounts, teams and access (ACC)
 
@@ -59,7 +59,7 @@ Done means:
 
 - [BLOCKER] SUB-01: Entitlements come from a server table updated by webhook, never from the browser. Check: Open the payment return address without paying, or send a changed plan from the browser: no entitlement granted.
 - [BLOCKER] SUB-02: Every plan limit is enforced server-side. Check: Direct API call beyond the limit (projects, members, usage): refused with a clear message.
-- [BLOCKER] SUB-03: Failed payment: email, in-app banner and a written grace period. Check: Test clock with a declined card: email with a link to fix the card, visible banner, access kept during the stated period then cut as written.
+- [BLOCKER] SUB-03: Failed payment: email, in-app banner and a written grace period. Check: billing.json (`qp billing`): at each stage (trial, first payment, declined renewal, cancellation) the app's answer matches what project.json › billing.probe expects; no stage where the app disagrees with Stripe. Then by hand: the email with a link to fix the card, the visible banner, access cut as written after the grace period.
 - [major] SUB-04: Trial: terms stated at signup, reminder before the end, defined end of trial. Check: Trial length and what follows visible before signup; reminder email a few days before the end; behaviour without a card tested.
 - [major] SUB-05: Plan change: amount due now and at next renewal shown before confirming. Check: Preview compared with the invoice issued; a downgrade deletes no data without saying so.
 - [BLOCKER] SUB-06: Cancellation online, in three steps at most from the account, confirmed by email. Check: Steps counted from the account settings; confirmation email with the effective date; no need to call or write.

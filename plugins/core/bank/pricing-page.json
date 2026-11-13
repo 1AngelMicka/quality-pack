@@ -1,0 +1,136 @@
+{
+  "id": "pricing-page",
+  "label": {
+    "fr": "Page de prix",
+    "en": "Pricing page"
+  },
+  "expects": [
+    {
+      "rule": "Show prices. When a B2B offer is too configurable to price exactly, show sample prices for typical cases rather than nothing; Nielsen called missing prices on B2B sites the number one web design mistake of 2002.",
+      "source": "https://www.nngroup.com/articles/show-prices-for-common-scenarios/",
+      "verified": true
+    },
+    {
+      "rule": "Plans sit side by side as cards with the price, the billing unit (per user, per month) and one primary button each; three to four plans, with the enterprise plan using a separate contact action.",
+      "source": "https://www.vezadigital.com/post/best-saas-pricing-page-examples",
+      "verified": true
+    },
+    {
+      "rule": "A monthly and yearly toggle states the saving as a number or percentage, and the default is visible.",
+      "source": "https://www.vezadigital.com/post/best-saas-pricing-page-examples",
+      "verified": true
+    },
+    {
+      "rule": "A feature comparison table follows the cards, and its plan headers stay visible while the visitor scrolls.",
+      "source": "https://www.nngroup.com/articles/comparison-tables/",
+      "verified": true
+    },
+    {
+      "rule": "Usage-based prices give exact rates (for example a percentage plus a fixed fee) and an example or a calculator.",
+      "source": "https://www.vezadigital.com/post/best-saas-pricing-page-examples",
+      "verified": true
+    },
+    {
+      "rule": "An FAQ under the table answers billing, refunds, seats, limits and taxes in plain sentences.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The recommended plan is marked once, and the free tier or trial states what is limited.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "Plan cards or columns sit in one row on 7 of 7 pages: four on Linear, Slack and Plausible, three on Twenty and Figma, and Notion's cards are 3 plus Enterprise.",
+    "Prices are real figures with currency and unit on 6 of 7; Stripe gives percentage-plus-fixed-fee rates; Enterprise shows Custom or a contact button on 5 of 7.",
+    "A billing toggle (monthly or yearly) is present on 5 of 7 (Linear, Notion, Figma, Plausible, Twenty), placed above or inside the cards, and 3 of those state the saving (20%, 2 months free, -25%).",
+    "The title is 32 to 72px on 7 of 7 and takes one to three lines; 3 of 7 are left-aligned (Linear, Stripe, Figma).",
+    "A plan is flagged on 2 of 7 (Notion Recommended, Slack Best value); the others mark none.",
+    "One typeface family per page on 7 of 7 (Twenty adds a mono for labels and Notion a serif for 1% of text).",
+    "Customer logos appear between title and plans on 2 of 7 (Notion, Slack); cookie banners cover part of the first screen on 4 of 7."
+  ],
+  "sites": [
+    {
+      "name": "Linear",
+      "url": "https://linear.app/pricing",
+      "why": "Near-black page (#08090a), a 48px title, then four plan columns (Free $0, Basic $10, Business $16 per user per month, Enterprise Custom) each with a feature checklist; a Billed yearly switch sits inside the paid plans. Get started and Contact sales buttons at the foot of the columns. All in Inter. Comparison table below.",
+      "recognition": "Cited in Veza Digital's pricing page examples, 2026-03-06",
+      "source": "https://www.vezadigital.com/post/best-saas-pricing-page-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Stripe",
+      "url": "https://stripe.com/pricing",
+      "why": "Shown here in French. Pale blue page (#f6f9fc), a two-line headline in a sans (sohne-var), a white card with exact rates (1,5 % + 0,25 € for standard EEA cards, 2,5 % + 0,25 € for UK cards) beside a dark navy card for custom pricing, a purple Démarrer button, then tabs for pricing, custom pricing and FAQ.",
+      "recognition": "Cited in Veza Digital's pricing page examples, 2026-03-06",
+      "source": "https://www.vezadigital.com/post/best-saas-pricing-page-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Notion",
+      "url": "https://www.notion.com/pricing",
+      "why": "White page, a 64px headline in Inter, a Trusted by row of five logos, a Pay monthly / Pay yearly switch with a Save up to 20% note and a currency selector, then plan cards with per member per month prices; Business carries a Recommended tag. Comparison table and FAQ below.",
+      "recognition": "Cited in Veza Digital's pricing page examples, 2026-03-06",
+      "source": "https://www.vezadigital.com/post/best-saas-pricing-page-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Slack",
+      "url": "https://slack.com/pricing",
+      "why": "White page, a centred 50px headline, a row of six customer logos, then four plan columns (Free €0, Pro €4.13 with the €8.25 struck through, Business+ €9 under a Best value tab, Enterprise+ €45) with a promotional badge, per user per month text and outlined or purple buttons.",
+      "recognition": "Cited in Veza Digital's pricing page examples, 2026-03-06",
+      "source": "https://www.vezadigital.com/post/best-saas-pricing-page-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Figma",
+      "url": "https://www.figma.com/pricing/",
+      "why": "White page, announcement pill, a 72px two-line headline in a sans (figmaSans), a strip listing ten Figma products, a currency selector, then Starter, Professional and Organization columns with prices per seat type (Full €16, Dev €12 per month) and a Monthly / Annual switch. Cookie panel covers the right.",
+      "recognition": "Cited in Veza Digital's pricing page examples, 2026-03-06",
+      "source": "https://www.vezadigital.com/post/best-saas-pricing-page-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Plausible Analytics",
+      "url": "https://plausible.io/#pricing",
+      "why": "Pricing is a section of the home page: a headline about traffic-based plans, a 30-day trial line, a pageview slider from 10k to 10M+, a Monthly / Yearly switch with a 2 months free tag, three cards at €9, €14 and €19 with trial buttons, and a dark Enterprise card with Custom and Contact us. Set in a system sans-serif.",
+      "recognition": "Cited in Veza Digital's pricing page examples, 2026-03-06",
+      "source": "https://www.vezadigital.com/post/best-saas-pricing-page-examples",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Twenty",
+      "url": "https://twenty.com/pricing",
+      "why": "Light grey page, a two-line serif title (Simple Pricing), a Monthly / Yearly -25% switch and a Self-hosting checkbox, then three cards: Pro $9 per user per month, Organization $39 outlined in blue, Enterprise from $50k per year, each with small illustrations. Nav includes a GitHub stars count.",
+      "recognition": "Listed in SaaSUI's Twenty entry (27 real screens), 2026, opened 2026-11-12",
+      "source": "https://www.saasui.design/application/twenty",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "No prices at all and a single Contact sales button for every plan.",
+    "Three identical cards with different checkmark lists and no billing unit, so the real cost per user is unclear.",
+    "A comparison table of icons only, with no text on what each limit is.",
+    "A toggle that defaults to the yearly price without saying that the price is billed yearly.",
+    "Dark patterns: countdowns that reset, a pre-selected paid add-on, or a free plan hidden in small grey text.",
+    "Plan names that do not tell who each plan is for (Basic, Plus, Pro, Ultra, Max) with no description line."
+  ],
+  "sources": [
+    {
+      "name": "Nielsen Norman Group, Show Prices for Common Scenarios (2006)",
+      "url": "https://www.nngroup.com/articles/show-prices-for-common-scenarios/",
+      "access": "free"
+    },
+    {
+      "name": "Veza Digital, best SaaS pricing page examples (2026)",
+      "url": "https://www.vezadigital.com/post/best-saas-pricing-page-examples",
+      "access": "free"
+    },
+    {
+      "name": "SaaSUI, SaaS pricing page examples",
+      "url": "https://www.saasui.design/saas-pricing-page-examples",
+      "access": "free"
+    }
+  ]
+}

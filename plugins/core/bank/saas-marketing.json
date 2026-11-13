@@ -1,0 +1,144 @@
+{
+  "id": "saas-marketing",
+  "label": {
+    "fr": "Site vitrine d'un logiciel (SaaS)",
+    "en": "SaaS marketing site"
+  },
+  "expects": [
+    {
+      "rule": "The first screen states what the product does and for whom in one headline and one supporting line, with a primary action and a secondary one (try, and talk to sales or book a demo).",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A real product screenshot or live interface is visible on or just below the first screen, not only an abstract illustration.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Customer proof (logos, a named quote, a case study) appears near the top and names real companies.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Pricing information (plans, a range or typical cases) is shown and reachable from the main navigation in one click, and the navigation has no more than about seven items.",
+      "source": "https://www.nngroup.com/articles/show-price/",
+      "verified": true
+    },
+    {
+      "rule": "Features are grouped by the job they do for the visitor, each with a visual of the actual product.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Login and demo or sign-up links stay visible in the header on every page.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The page loads fast and does not hide its text behind animation: the headline is readable before scripts finish.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "Headline of 8 words or fewer on 5 of 8 sites; Relato, Parloa and Linear run longer.",
+    "The first screen holds fewer than 60 words on 7 of 8 sites and at most two buttons; Linear and Raycast show a single action or none beside the nav.",
+    "6 of 8 sites show a header login link and a demo, trial or download button; Nucleo and Raycast use Buy or Download instead.",
+    "Typefaces: 2 or 3 named families on 8 of 8; 5 of 8 pair a sans with a serif or a mono face.",
+    "The headline is set at 54 to 80px on 7 of 8 sites (Nucleo uses heavy capitals across the full width).",
+    "A real or mocked product interface is visible on the first screen on 3 of 8 (Linear, Relato, incident.io); the rest lead with art or photography.",
+    "Backgrounds: 4 of 8 are white or near-white, 3 near-black or dark; one accent colour (orange or red on 4 of 8)."
+  ],
+  "sites": [
+    {
+      "name": "Relato",
+      "url": "https://www.relato.com/",
+      "why": "White page (#ffffff), headline in a large dark plum (#400a24) grotesque (Antique Legacy) at left, a pill label above, orange trial button plus a text link, and at right a kanban-style diagram of human and AI agent cards. About 40 words.",
+      "recognition": "Listed on SaaS Landing Page gallery, opened 2026-11-12 (listing date not shown)",
+      "source": "https://saaslandingpage.com/relato/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "incident.io",
+      "url": "https://incident.io/",
+      "why": "Announcement bar, then a centred two-line serif headline (STKBureauSerif, 80px) on white (#ffffff), one line of support, an orange-red (#f25533) demo button and a pale second button; a pale peach panel with a product image starts below.",
+      "recognition": "Listed on SaaS Landing Page gallery, opened 2026-11-12 (listing date not shown)",
+      "source": "https://saaslandingpage.com/incident-io/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Raycast",
+      "url": "https://www.raycast.com/",
+      "why": "Near-black page (#07080a), a floating nav with a Download button, and a full-bleed abstract artwork of diagonal red, white and blue streaks behind a centred two-line headline set in Inter. No product screen on the first view.",
+      "recognition": "Listed on SaaS Landing Page gallery, opened 2026-11-12 (listing date not shown)",
+      "source": "https://saaslandingpage.com/raycast-keyboard/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Nucleo",
+      "url": "https://nucleoapp.com/",
+      "why": "Light grey page (#fafafa) with a single-line headline in heavy capitals set in Geist across the full width, one letter replaced by an icon, then large tiles showing live icon grids from three families. Five-item header, purple Buy button.",
+      "recognition": "Listed on SaaS Landing Page gallery, opened 2026-11-12 (listing date not shown)",
+      "source": "https://saaslandingpage.com/nucleo/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "TwelveLabs",
+      "url": "https://www.twelvelabs.io/",
+      "why": "Dark photographic backdrop of blurred video thumbnails drifting across the screen, a two-line left-aligned headline in a geometric sans (Milling Duplex), a two-line subhead and two buttons, Try Free and Talk to Sales. Cookie panel covers the right.",
+      "recognition": "Listed on SaaS Landing Page gallery, opened 2026-11-12 (listing date not shown)",
+      "source": "https://saaslandingpage.com/twelvelabs/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Parloa",
+      "url": "https://www.parloa.com/",
+      "why": "Full-bleed warm-toned photograph of a woman wearing an earbud fills the first screen, with a thin nav (Login, Book a demo) over it. A large privacy panel covers the lower half. Below, a serif headline (Season Serif) and a chat mock-up.",
+      "recognition": "Listed on SaaS Landing Page gallery, opened 2026-11-12 (listing date not shown)",
+      "source": "https://saaslandingpage.com/parloa/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Speakeasy",
+      "url": "https://www.speakeasy.com/",
+      "why": "Light grey page (#fafafa), a boxed announcement tag in mono capitals, a two-line light serif headline (Tobias) at left, a paragraph of four lines, and a large ASCII-character artwork at right. Nav has a Talk to us button with a gradient edge.",
+      "recognition": "Typewolf Site of the Day, 2025-12-08",
+      "source": "https://www.typewolf.com/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Linear",
+      "url": "https://linear.app/",
+      "why": "Near-black page (#08090a), a left-aligned two-line headline in Inter at 64px, a two-line subhead, then a real issue view (sidebar, activity, properties) starting at the bottom edge. Nav: Product, Resources, Customers, Pricing, Now, Contact, Log in, Sign up.",
+      "recognition": "Cited as a best-in-class developer-facing site in Veza Digital article, 2026-09-03",
+      "source": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A hero with a gradient blob or abstract 3D shape and no view of the product.",
+    "Three identical feature cards with an icon, a two-word title and one line of text, repeated down the page.",
+    "A headline made of buzzwords (\"supercharge\", \"unlock\", \"seamless\") that does not say what the product does.",
+    "Fake or anonymous testimonials and logo walls of companies that are not customers.",
+    "Pricing hidden behind a contact form with no range, number or plan names.",
+    "Text that appears only after a scroll animation runs, so the page looks empty without scripts or with reduced motion."
+  ],
+  "sources": [
+    {
+      "name": "SaaS Landing Page",
+      "url": "https://www.saaslandingpage.com/",
+      "access": "free"
+    },
+    {
+      "name": "Typewolf, Site of the Day",
+      "url": "https://www.typewolf.com/",
+      "access": "free"
+    },
+    {
+      "name": "Veza Digital, best devtool website design examples (2026)",
+      "url": "https://www.vezadigital.com/post/best-devtool-website-design-examples",
+      "access": "free"
+    }
+  ]
+}

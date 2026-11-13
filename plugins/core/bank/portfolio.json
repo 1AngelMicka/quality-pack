@@ -1,0 +1,156 @@
+{
+  "id": "portfolio",
+  "label": {
+    "fr": "Portfolio",
+    "en": "Portfolio"
+  },
+  "expects": [
+    {
+      "rule": "The first screen shows who the person is, what they do and real work, not an intro animation. Users spent 57% of viewing time above the fold in NN/g's 2018 study.",
+      "source": "https://www.nngroup.com/articles/scrolling-and-attention/",
+      "verified": true
+    },
+    {
+      "rule": "Body and caption text reaches a contrast ratio of at least 4.5:1 (3:1 for large text), including grey text on photographs.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "Menu links, filters and contact links are at least 24 by 24 CSS pixels or spaced so they are easy to hit on a phone.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "Each project has a title, a year, the person's role and a way to open it as a page of its own that can be shared by link.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Contact (email or form) is reachable from every page without scrolling back to the top.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Work is shown at a size where it can be judged: images are not cropped to thumbnails smaller than about a third of the screen width on desktop.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The site stays usable without hover: project names and filters work by touch and keyboard (all functionality operable through a keyboard interface).",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html",
+      "verified": true
+    }
+  ],
+  "traits": [
+    "4 of 8 use a single typeface family (Fred Lord, Sam Thies, Félix Péault, Kalok Yeung); the other 4 use two, often a serif or mono beside a grotesque.",
+    "3 of 8 (Sam Thies, Maximilian Kaspar, Carter Ogunsola) set the interface in a monospace.",
+    "6 of 8 show work on the first screen: a full-bleed photo or video (Olivia Plender, Sam Thies, Alicia Dubuis), a scatter or grid of images (Fred Lord, Félix Péault), or a project frame (Kalok Yeung).",
+    "Navigation is two or three links, in small text, on 6 of 8 (Index, About or Info, News, Projects, Series).",
+    "The first screen carries one to three sentences of text on 6 of 8; case-study copy is on project pages.",
+    "3 of 8 have a dark background (#171209, #121212, #1e1e1e) and 3 a white or near-white one; Olivia Plender is a full photograph and Félix Péault a gradient. Colour comes from the work.",
+    "3 of 8 (Fred Lord, Alicia Dubuis, Kalok Yeung) show an email address on the first screen.",
+    "Projects are listed as an index with number, title, tags or year on 4 of 8 (Fred Lord, Alicia Dubuis, Maximilian Kaspar, Carter Ogunsola)."
+  ],
+  "sites": [
+    {
+      "name": "Frédéric Lord",
+      "url": "https://fredericlord.com/",
+      "why": "Dark brown (#171209) page, all in Inter at small size: header with name and clock, Index and Information links, a short intro with email, then project screenshots scattered at different sizes with numbered captions and a table of number, project, industry, type and year.",
+      "recognition": "SiteInspire, added 2026-11-11",
+      "source": "https://www.siteinspire.com/website/13679-frederic-lord",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Olivia Plender",
+      "url": "https://oliviaplender.org/",
+      "why": "Full-bleed film still of women aiming wooden guns, with seven project titles centred over it in white Excelsior serif; header has the name, Index, News and About in a small sans-serif. No other text; the image is the page.",
+      "recognition": "SiteInspire, added 2026-11-10",
+      "source": "https://www.siteinspire.com/website/13670-olivia-plender",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Sam Thies",
+      "url": "https://samthies.com/",
+      "why": "Full-bleed video of a dirt road seen through a windscreen, with one centred tagline and a three-link nav (Projects, Shop, About) in small monospace type (Quadrant Text Mono) over it. Page background #121212; project tiles come after the video.",
+      "recognition": "SiteInspire, added 2026-09-30",
+      "source": "https://www.siteinspire.com/website/13642-sam-thies",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Alicia Dubuis",
+      "url": "https://aliciadubuis.com/",
+      "why": "White top bar with name, 'Photographer & Director', agent, email, Read More and an Overview / Index switch; a full-width close photograph of two soaps fills the screen under it. Jannon serif with ABC Camera Plain. The Index view lists numbered projects with date range and image count.",
+      "recognition": "SiteInspire, added 2026-09-30",
+      "source": "https://www.siteinspire.com/website/13640-alicia-dubuis",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Félix Péault",
+      "url": "https://felixpeault.com/",
+      "why": "Blue-to-green gradient over a pale pink (#f7eeec) page: one centred street photograph, huge F and P letters down the left edge, Series, Elsewhere and Info at right, and a centred 45 px bold statement. All in Suisse Intl Condensed. A grid of titled image links follows.",
+      "recognition": "SiteInspire, added 2026-09-28",
+      "source": "https://www.siteinspire.com/website/13634-felix-peault",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Maximilian Kaspar",
+      "url": "https://www.maximiliankaspar.com/",
+      "why": "White page ruled into four columns, name, photos and about in small monospace at top, and a 100 px lowercase headline set in Bugrino stating the job and employer at the bottom. No image on the first screen; Neue Montreal for text. A project list with title, tags, year and a plus icon follows.",
+      "recognition": "SiteInspire, added 2026-09-22",
+      "source": "https://www.siteinspire.com/website/13623-maximilian-kaspar",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Carter Ogunsola",
+      "url": "https://carterogunsola.com/",
+      "why": "Charcoal (#1e1e1e) screen with a 100% counter while it loads, then live status lines (clock, load time, people online) in PP Neue Montreal Mono and Oracle. Nav of About, Lab, Writing, Studio, Contact, command-K search, a Light/Dark/System switch, and 17 selected works as a text list.",
+      "recognition": "Minimal Gallery, published 2026-11-05",
+      "source": "https://minimal.gallery/carter-ogunsola/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Kalok Yeung",
+      "url": "https://www.kalokyeung.com/",
+      "why": "White page: a narrow left column with name and tagline in grey, a project list with colour swatches and a blue button carrying the email address; the rest is a tall portrait screenshot of one project in a black frame, with a feed below. All in Kern.",
+      "recognition": "Minimal Gallery, published 2026-11-02",
+      "source": "https://minimal.gallery/kalok-yeung/",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A full-screen intro or loader that hides the work for several seconds.",
+    "A hero with a slogan such as 'I craft digital experiences' and no project visible on the first screen.",
+    "A grid of identical rounded cards with the same shadow and a gradient, as in common portfolio templates.",
+    "Custom cursors or scroll hijacking that break normal scrolling, keyboard use or touch.",
+    "Project images without text alternatives or captions, and thumbnails too small to judge the work.",
+    "Contact only through a hover menu or a form with no visible email address.",
+    "Skill bars and percentage charts for abilities."
+  ],
+  "sources": [
+    {
+      "name": "SiteInspire, Portfolio",
+      "url": "https://www.siteinspire.com/websites/categories/portfolio",
+      "access": "free"
+    },
+    {
+      "name": "Minimal Gallery",
+      "url": "https://minimal.gallery/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Portfolio",
+      "url": "https://www.awwwards.com/websites/portfolio/",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, Scrolling and Attention",
+      "url": "https://www.nngroup.com/articles/scrolling-and-attention/",
+      "access": "free"
+    },
+    {
+      "name": "W3C, WCAG 2.2 Understanding 1.4.3 and 2.5.8",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "access": "free"
+    }
+  ]
+}

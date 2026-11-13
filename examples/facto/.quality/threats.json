@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "reviewed": "2026-11-12",
+  "system": "Freelancers keep their invoices in Facto; each customer account sees only its own.",
+  "assets": [
+    {
+      "id": "A1",
+      "name": "Sessions and passwords",
+      "kind": "secret"
+    },
+    {
+      "id": "A2",
+      "name": "Each customer's documents",
+      "kind": "personal-data"
+    },
+    {
+      "id": "A3",
+      "name": "Payment provider keys",
+      "kind": "secret"
+    },
+    {
+      "id": "A4",
+      "name": "Usage-billed services (email, AI)",
+      "kind": "money"
+    }
+  ],
+  "actors": [
+    "anonymous",
+    "member",
+    "admin of a customer",
+    "support staff",
+    "third party (payment provider, login provider)"
+  ],
+  "entry_points": [
+    {
+      "id": "E1",
+      "what": "POST /api/login",
+      "auth": "none"
+    },
+    {
+      "id": "E2",
+      "what": "/api/invoices and /api/invoices/{id}",
+      "auth": "member",
+      "owner": "customer"
+    },
+    {
+      "id": "E3",
+      "what": "POST /webhooks/stripe",
+      "auth": "signature"
+    }
+  ],
+  "trust_boundaries": [
+    "internet → app",
+    "app → database",
+    "app → third-party APIs",
+    "customer A ↔ customer B",
+    "member → admin"
+  ],
+  "abuse_cases": [
+    {
+      "id": "AB1",
+      "actor": "member",
+      "text": "As a member I read another customer’s invoice by changing the id.",
+      "entry": [
+        "E2"
+      ],
+      "response": "mitigate",
+      "test": "access check: invoice",
+      "priority": "before-launch",
+      "status": "done"
+    },
+    {
+      "id": "AB2",
+      "actor": "anonymous",
+      "text": "As a visitor I guess passwords or find out which emails have an account.",
+      "entry": [
+        "E1"
+      ],
+      "response": "mitigate",
+      "test": "qp auth",
+      "priority": "before-launch",
+      "status": "done"
+    },
+    {
+      "id": "AB3",
+      "actor": "anonymous",
+      "text": "As a visitor I send a forged payment webhook to get a paid plan.",
+      "entry": [
+        "E3"
+      ],
+      "response": "mitigate",
+      "test": "qp webhooks",
+      "priority": "before-launch",
+      "status": "done"
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "id": "documentation",
+  "label": {
+    "fr": "Site de documentation",
+    "en": "Documentation site"
+  },
+  "expects": [
+    {
+      "rule": "Content is organised around four distinct needs: tutorials (learning), how-to guides (a task), reference (facts) and explanation (concepts), and each page serves one of them.",
+      "source": "https://diataxis.fr/",
+      "verified": true
+    },
+    {
+      "rule": "Pages are written in second person, active voice, with sentence-case headings and link text that says where the link goes.",
+      "source": "https://developers.google.com/style/highlights",
+      "verified": true
+    },
+    {
+      "rule": "Pages are short and scannable: users read about 20% of the words on an average page, so put the answer and the next step first and cut the rest.",
+      "source": "https://www.nngroup.com/articles/how-little-do-users-read/",
+      "verified": true
+    },
+    {
+      "rule": "Search is reachable from every page, with a keyboard shortcut (Ctrl or Cmd+K), and a persistent side navigation shows where the page sits.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Code samples can be copied in one click, name the language, and let the reader switch language or framework when several apply.",
+      "source": "https://draft.dev/learn/12-documentation-examples-every-developer-tool-can-learn-from",
+      "verified": true
+    },
+    {
+      "rule": "Every page shows its last update date and offers a way to report an error or edit the page.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A getting-started path leads a new reader to a first working result in a few steps, from the home page.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Body text keeps a line length of 50 to 75 characters and works in light and dark themes.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "A left tree, a content column and an on-page list sit side by side on 3 of 8 first screens (Kubernetes, Next.js, Tailscale); Vercel has the tree only; Stripe, Docker, Netlify and Vue open on a landing grid or hero.",
+    "A search field or search button is on the first screen on 8 of 8; a keyboard hint (/, Ctrl K, command K) is shown on 4 of 8 (Stripe, Vue, Next.js, Vercel).",
+    "One sans-serif family for text on 8 of 8 (Inter, Geist, Open Sans, Roboto Flex, Instrument Sans) with a mono face for code.",
+    "The docs home is an index of entry points on 5 of 8 (Stripe, Docker, Netlify, Kubernetes, Vercel); Vue opens on a hero with four buttons.",
+    "A copyable code block or command is on the first screen on 2 of 8 (Stripe, Vercel).",
+    "Page title of 32 to 56px on 7 of 8 sites; Vue's marketing headline is 76px.",
+    "An AI helper in the first screen on 5 of 8 (Stripe, Docker, Next.js, Vercel, Netlify; Tailscale offers Copy as Markdown instead).",
+    "Feedback or edit controls are visible on the first screen on 2 of 8 (Next.js, Kubernetes); a last-validated date on 1 (Tailscale)."
+  ],
+  "sites": [
+    {
+      "name": "Stripe Docs",
+      "url": "https://docs.stripe.com/",
+      "why": "Pale blue header band with a search field showing a / shortcut, an Ask AI button and a product tab row; a 32px Documentation title with a dotted pattern, a blue Get started button, three columns of task links (Payments, Revenue, Developers), then a Try it out panel with a dark copyable CLI snippet. System sans-serif text and a mono face for code.",
+      "recognition": "Listed first in draft.dev '12 Documentation Examples Every Developer Tool Can Learn From', updated 2025-09-05",
+      "source": "https://draft.dev/learn/12-documentation-examples-every-developer-tool-can-learn-from",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Kubernetes Documentation",
+      "url": "https://kubernetes.io/docs/home/",
+      "why": "Blue header with a version menu and a theme switch, an event notice, then a three-column page: collapsible tree on the left (Getting started, Concepts, Tasks, Tutorials, Reference), breadcrumb and a two-column grid of grey topic cards in the middle, Create an issue on the right. All in Open Sans.",
+      "recognition": "draft.dev '12 Documentation Examples', updated 2025-09-05",
+      "source": "https://draft.dev/learn/12-documentation-examples-every-developer-tool-can-learn-from",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Docker Docs",
+      "url": "https://docs.docker.com/",
+      "why": "Bright blue header with four links, a Gordon AI button and Search, a 40px 'How can we help?' title over a large ask-anything input, five example questions as pills, then four cards (Get started, Guides, Manuals, Reference) with one line each. Roboto Flex, light grey (#f9fafb) page.",
+      "recognition": "draft.dev '12 Documentation Examples', updated 2025-09-05",
+      "source": "https://draft.dev/learn/12-documentation-examples-every-developer-tool-can-learn-from",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Vue.js",
+      "url": "https://vuejs.org",
+      "why": "White page, search with a Ctrl K hint, header links Docs, Playground, Ecosystem, About, Support with theme and social icons, a 76px two-line headline with 'Progressive' in a green-to-blue gradient, four buttons (Why Vue, Get Started, Install, a security-updates link), then three feature columns. Inter.",
+      "recognition": "draft.dev '12 Documentation Examples', updated 2025-09-05",
+      "source": "https://draft.dev/learn/12-documentation-examples-every-developer-tool-can-learn-from",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Next.js Docs",
+      "url": "https://nextjs.org/docs",
+      "why": "Off-white page (#fafafa) in Geist Sans, a 40px title, a Copy page button, left sidebar with a router switch and a version selector, long-form text with 'How to use the docs', and a right column of on-page links plus Give feedback and Edit this page on GitHub. Search shows a command-K hint.",
+      "recognition": "draft.dev '12 Documentation Examples', updated 2025-09-05",
+      "source": "https://draft.dev/learn/12-documentation-examples-every-developer-tool-can-learn-from",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Vercel Docs",
+      "url": "https://vercel.com/docs",
+      "why": "Off-white page, a sidebar with a search field and a command-K hint, a 56px headline 'Ship anything with Vercel', three buttons, a tabbed terminal block with a copy button (npm i -g vercel, login), and below an Agent Prompt box. Sidebar groups: Start, Build AI apps, Run agents and backends.",
+      "recognition": "draft.dev '12 Documentation Examples', updated 2025-09-05",
+      "source": "https://draft.dev/learn/12-documentation-examples-every-developer-tool-can-learn-from",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Netlify Docs",
+      "url": "https://docs.netlify.com/",
+      "why": "White page with a nine-item header including AI, a blue announcement bar, a 48px title, three cards (Create a new project, Build with AI, Start with a framework), a teal deploy button and an outlined Set up domain, and a mono WHAT'S NEW label. Ask Netlify button bottom right.",
+      "recognition": "draft.dev '12 Documentation Examples', updated 2025-09-05",
+      "source": "https://draft.dev/learn/12-documentation-examples-every-developer-tool-can-learn-from",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Tailscale Docs",
+      "url": "https://tailscale.com/kb/start",
+      "why": "Quickstart page under the marketing header: sidebar tree, search field, breadcrumb, a 36px title, 'Last validated: Jan 5, 2026' with Copy as Markdown and View as Markdown links, a welcome sentence and an embedded video, and an On this page list at right. Privacy banner at the bottom.",
+      "recognition": "draft.dev '12 Documentation Examples', updated 2025-09-05",
+      "source": "https://draft.dev/learn/12-documentation-examples-every-developer-tool-can-learn-from",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A marketing hero with a large illustration and slogan on the docs home, pushing the entry points below the first screen.",
+    "Documentation as one long page or a PDF, with no search, no side navigation and no anchors for headings.",
+    "Mixing tutorial, task steps, reference and explanation in the same page, so no reader finds the one thing they came for.",
+    "Code shown as an image, or without a copy button and language label.",
+    "Dead-end pages: no last update date, no next step, no way to report a mistake.",
+    "Low-contrast grey body text and small type to look 'clean', hard to read in dark mode.",
+    "Search that only matches exact titles, or that is hidden behind a menu on phones."
+  ],
+  "sources": [
+    {
+      "name": "draft.dev, 12 Documentation Examples Every Developer Tool Can Learn From",
+      "url": "https://draft.dev/learn/12-documentation-examples-every-developer-tool-can-learn-from",
+      "access": "free"
+    },
+    {
+      "name": "Diátaxis",
+      "url": "https://diataxis.fr/",
+      "access": "free"
+    },
+    {
+      "name": "Google developer documentation style guide, highlights",
+      "url": "https://developers.google.com/style/highlights",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, How little do users read?",
+      "url": "https://www.nngroup.com/articles/how-little-do-users-read/",
+      "access": "free"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "id": "luxury-brand",
+  "label": {
+    "fr": "Marque de luxe et haut de gamme",
+    "en": "Luxury and high-end brand"
+  },
+  "expects": [
+    {
+      "rule": "The first screen states the brand and one idea in a short line, with imagery of the product or its making; the visitor should not need to scroll to know what the house sells.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Product and craft photography is large, consistent in lighting and crop, and sharp on high-density phone screens.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Where products are sold online, price, edition size or availability and delivery terms are stated plainly; luxury shoppers still leave over distrust (19% of abandoned carts cite distrust with card details, per Baymard).",
+      "source": "https://baymard.com/lists/cart-abandonment-rate",
+      "verified": true
+    },
+    {
+      "rule": "A route to a boutique, appointment or advisor is one click from any page (Find a Boutique, Book an appointment).",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Currency and language choices are offered in the header; copy exists in the languages of the main markets.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Motion triggered by scrolling or interaction can be turned off or follows the reduced-motion setting (WCAG 2.3.3, level AAA); keep a skip link and do not hide content behind animation.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html",
+      "verified": true
+    },
+    {
+      "rule": "Legal, shipping and returns information stays reachable and readable even when the visual style is minimal.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "Of the 6 seen on screenshots, 5 put one photograph, video or two split photographs across the whole first screen (Spyker, ESR, Unimatic, Deadly Ponies, AgnesToth); Forge showed a black loader.",
+    "4 of 6 had a cookie box or pop-up over the picture on load (Spyker, Unimatic, Deadly Ponies, AgnesToth).",
+    "The first-screen headline is under 10 words on 4 of 6 (3 to 5 words on Spyker, ESR, AgnesToth); the rest is a link or a label.",
+    "All 6 use two typefaces, one of them condensed, serif or monospace for the display line and the nav; uppercase small type is used for links on 4.",
+    "Navigation is short: 3 to 6 text links on 4 of 6 (Unimatic, Deadly Ponies, AgnesToth, ESR); Spyker hides it behind an icon.",
+    "Cart control in the header of 4 of 6 (Spyker bag icon, Unimatic, Deadly Ponies, AgnesToth with a (0) count); a currency choice is shown on 2 (Deadly Ponies, AgnesToth).",
+    "Palette is black, white or one neutral, with the product supplying colour; no first screen uses gradients or a bright brand colour on the interface.",
+    "Two of the added sites (Cartier microsite, Odyssee) were read from page text only, so their measures are not counted here."
+  ],
+  "sites": [
+    {
+      "name": "Spyker Cars",
+      "url": "https://spykercars.com",
+      "why": "Full-screen close-up of a car's red leather interior under a small line and a four-word capitalised headline in condensed Futura, one white button (Discover the C8 Preliator XXV Coupe), menu icon left, logo centre, bag icon right; a cookie box covers the lower left. Swiss 721 for small text.",
+      "recognition": "Awwwards Site of the Day, 2026-10-30",
+      "source": "https://www.awwwards.com/sites/spyker-cars",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Forge Automotive",
+      "url": "https://forgeautomotive.co.uk/",
+      "why": "The screenshot caught a black loading screen: a small logo, a spaced-capital line about bespoke vehicles being built on distinction, desire and identity, and a progress bar. The page then runs a portrait photograph row (Lamborghini, Porsche, Defender). GeistSans with a serif display face.",
+      "recognition": "Awwwards Site of the Day, 2026-10-25",
+      "source": "https://www.awwwards.com/sites/forge-automotive",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "ESR Bespoke",
+      "url": "https://www.esrbespoke.au/",
+      "why": "Dark video of a grey sports car in a city street under a large white 'Exceptional is our standard' (two lines), name and 'Automotive Group' across the top, five nav links stacked in a column, a small description in capitals, Unmute and Our story links. Two typefaces; no button.",
+      "recognition": "Awwwards Site of the Day, 2026-10-23",
+      "source": "https://www.awwwards.com/sites/esr-bespoke",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Unimatic",
+      "url": "https://www.unimaticwatches.com/",
+      "why": "Dark brown ground with four watches on white truffles, a pill nav (New in, Watches, Straps, Accessories, Our world, Find us), Search, Account, Wishlist and Cart pills in mono type, bold sans headline at the lower left; a cookie box covers the bottom. Hero on the Langhe collection.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-23",
+      "source": "https://www.awwwards.com/sites/unimatic",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Deadly Ponies",
+      "url": "https://deadlyponies.com",
+      "why": "Split screen: a suede trainer left, a woven tote right, each with an underlined link; thin banner 'Complimentary express shipping worldwide', serif wordmark, Bags, Shoes, Accessories, EUR, bag icon; a pop-up about shipping outside New Zealand covers the middle.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-09",
+      "source": "https://www.awwwards.com/sites/deadly-ponies",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "AgnesToth",
+      "url": "https://agnestoth.com",
+      "why": "Blurred full-screen video of a green woven handbag; four nav links left, logo centre, Log in, Cart (0), EUR and an outlined Enquire button right; large serif headline 'House of Luxurious Embroidery' bottom left, partly hidden by a cookie box. Jost and FreightBig Pro.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-06",
+      "source": "https://www.awwwards.com/sites/agnestoth",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Cartier, Le Choeur des Pierres",
+      "url": "https://www.cartier.com/en-fr/lechoeurdespierres",
+      "why": "High-jewellery microsite: header with Contact us, Services, English/Francais toggle, Find a Boutique and a Discover menu of eight categories (High Jewellery to The Maison). The page's own text is mostly menus; the story is told with gemstones in WebGL. (not seen on a screenshot)",
+      "recognition": "Awwwards Site of the Day, 2026-10-20",
+      "source": "https://www.awwwards.com/sites/cartier-le-choeur-des-pierres",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Odyssee",
+      "url": "https://www.odysseeclinic.com.au/",
+      "why": "Medical aesthetics clinic in Sydney: close-up portrait, headline 'Medical aesthetics for timeless results', a button to booking, nav of Treatments, Concerns, About, Book Consultation; phone, email, address as text. Navy and off-white. No prices. (not seen on a screenshot)",
+      "recognition": "Awwwards Site of the Day, 2026-10-08",
+      "source": "https://www.awwwards.com/sites/odyssee",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "Stock photography or generic renders that could belong to any brand.",
+    "A full-screen consent, newsletter or country pop-up that appears before any product is visible.",
+    "Scroll-jacking or heavy intro animation that delays access to navigation.",
+    "Gold gradients, serif fonts and thin hairlines used as decoration with no product behind them.",
+    "Discount banners and countdown timers that contradict the positioning of the house.",
+    "Text set in light grey on photographs, unreadable on phones.",
+    "Menus with more than eight top-level labels."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Luxury",
+      "url": "https://www.awwwards.com/websites/luxury/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Fashion",
+      "url": "https://www.awwwards.com/websites/fashion/",
+      "access": "free"
+    },
+    {
+      "name": "Baymard Institute, Cart Abandonment Rate Statistics",
+      "url": "https://baymard.com/lists/cart-abandonment-rate",
+      "access": "free"
+    }
+  ]
+}

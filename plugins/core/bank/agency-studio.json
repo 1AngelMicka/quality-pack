@@ -1,0 +1,151 @@
+{
+  "id": "agency-studio",
+  "label": {
+    "fr": "Agence et studio",
+    "en": "Agency and studio"
+  },
+  "expects": [
+    {
+      "rule": "Selected work is visible on the first screen, as a grid or index with client, title and year or category, and each project opens on its own page.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Largest Contentful Paint is 2.5 seconds or less at the 75th percentile; image-heavy studio sites are the ones most likely to miss it.",
+      "source": "https://web.dev/articles/lcp",
+      "verified": true
+    },
+    {
+      "rule": "Text keeps a contrast ratio of at least 4.5:1 (3:1 for large text), including white text over photographs and video.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "Heavy motion has an off switch: users who prefer reduced motion get the animation disabled unless it is essential (WCAG 2.3.3, level AAA).",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html",
+      "verified": true
+    },
+    {
+      "rule": "The studio says in one line what it does and for whom, and shows how to start a project (email or short form) on every page.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Team or about page names the people and the location; a studio with no named person reads as anonymous.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A way to skip the repeated header (a skip link, landmarks or headings) and keyboard access to the menu, as several listed sites provide.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html",
+      "verified": true
+    }
+  ],
+  "traits": [
+    "7 of 8 use one or two typefaces (3 of 8 only one: Boc.Studio, Studio OL, Arrova); AUGE Experience uses three.",
+    "6 of 8 put work on the first screen: a project grid (AUGE, Boc.Studio, Core-A), one large photograph (Établissements, Scullion, IWONDERU).",
+    "5 of 8 set the studio name as oversized type (AUGE, Studio OL, Scullion, Arrova, IWONDERU's blackletter W).",
+    "4 of 8 open with an intro, counter or colour screen before the content (AUGE, Boc.Studio, Arrova, and Studio OL's blur-in).",
+    "5 of 8 sit on an off-white or light grey (#edeee5, #f7f4ef, #f2ecdf, #f1f1f1, #fff); 2 of 8 are near-black (Boc.Studio, Core-A); Scullion uses a saturated blue panel. None uses a gradient or cards.",
+    "Navigation is two or three links on 5 of 8 (Info, Projects, Work, About, Contact); Core-A has six and Scullion hides its links behind Menu.",
+    "4 of 8 show a city, coordinates, a clock or an address in text (Boc.Studio, Core-A, Studio OL, Arrova).",
+    "Project captions give client, title and a category or year (AUGE, Établissements, Core-A, IWONDERU)."
+  ],
+  "sites": [
+    {
+      "name": "AUGE Experience",
+      "url": "https://auge-xp.com/",
+      "why": "Opens on black with a huge white condensed AUGE and an italic serif 'Experience' above a 0-100 counter, then an off-white (#edeee5) page with a grid of about 20 project covers labelled with client and a type (Website, Installation). Three faces: Neue Montreal, Greed, Farnham Display.",
+      "recognition": "Awwwards Site of the Day and Developer Award, 2026-11-12 (7.33/10)",
+      "source": "https://www.awwwards.com/sites/auge-experience",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Établissements",
+      "url": "https://etablissements.studio/",
+      "why": "Off-white (#f7f4ef) page with a handwritten-script logo centred, Info at left and Projects at right in small caps, one portrait photograph of wrapped packages in the middle, and a caption with the client and its disciplines. Caslon italic with Sweet Sans. Under 15 words in total.",
+      "recognition": "SiteInspire, added 2026-11-10",
+      "source": "https://www.siteinspire.com/website/13659-etablissements",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Boc.Studio",
+      "url": "https://boc.studio/",
+      "why": "Opens on a full orange screen with the black logo, then a dark (#181d21) page: a repeating line 'Creative brand studio, Create, refresh and boost' with Barcelona coordinates, then a Work list with an All filter. One typeface, PP Mori; the page runs about three screens.",
+      "recognition": "SiteInspire, added 2026-10-02",
+      "source": "https://www.siteinspire.com/website/13648-bocstudio",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Core-A Studios",
+      "url": "https://www.coreastudios.com/",
+      "why": "Near-black (#161515) screen: logo and a rotating menu (VFX, Updates, Work, Team, Directors) at left, a wide video project with a large bold title running off the edge, list and grid toggles, an Info button, a Kr/En switch and a local clock. Lausanne with Record Disc; about 45 screens long.",
+      "recognition": "SiteInspire, added 2026-10-01",
+      "source": "https://www.siteinspire.com/website/13646-core-a-studios",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "IWONDERU Studios",
+      "url": "https://www.iwonderu.se/",
+      "why": "Light grey (#f1f1f1) page: a huge blackletter W logo top-left, a band with name, 'Est. 2016', 'Retouch & Post-Production' and Work, About, Contact, then a half-width close photograph of eye make-up with a brand caption. Portrait serif with Die Grotesk.",
+      "recognition": "SiteInspire, added 2026-10-01",
+      "source": "https://www.siteinspire.com/website/13644-iwonderu-studios",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Studio OL",
+      "url": "https://ol.studio/",
+      "why": "Beige (#f2ecdf) page with STUDIO OL in a huge serif across the full width, a blurred image behind a three-line centred bio, and a signature; About and Contact links. One typeface, Adobe Caslon. Screenshot caught mid-transition, so the work is not yet visible.",
+      "recognition": "SiteInspire, added 2026-09-25",
+      "source": "https://www.siteinspire.com/website/13632-studio-ol",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Scullion Architects",
+      "url": "https://scullion.ie/",
+      "why": "Split screen: a courtyard photograph with the large white letters SCUL across it, and a saturated blue panel holding a second, smaller photograph. Only a yellow MENU link shows; Projects, News, About and contact details sit in the menu. Founders Grotesk with Victor Serif.",
+      "recognition": "SiteInspire, added 2026-09-25",
+      "source": "https://www.siteinspire.com/website/13630-scullion-architects",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Arrova",
+      "url": "https://arrova.eu/",
+      "why": "Opens on a white screen with a giant black bold '_a' cut off at the bottom right; the page text lists both office addresses, phone and email, then names such as Memorandum and Atelier. One typeface, Neue Haas Display. First screen caught mid-intro, so the featured project is not shown.",
+      "recognition": "SiteInspire, added 2026-11-11",
+      "source": "https://www.siteinspire.com/website/13680-arrova",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A reel or WebGL scene that hides the work and the way to contact the studio for several seconds.",
+    "Gradient hero with a claim such as 'We build digital experiences that drive growth' and no project visible.",
+    "Client logo walls with no case studies behind them.",
+    "Three-column feature cards with icons describing 'Strategy, Design, Development'.",
+    "Scroll-jacked horizontal sections and custom cursors with no reduced-motion fallback.",
+    "Project pages with only a hero image and a paragraph of generic process text.",
+    "Contact reduced to a form with no visible email address or location."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Design Agencies",
+      "url": "https://www.awwwards.com/websites/design-agencies/",
+      "access": "free"
+    },
+    {
+      "name": "SiteInspire",
+      "url": "https://www.siteinspire.com/",
+      "access": "free"
+    },
+    {
+      "name": "web.dev, Largest Contentful Paint",
+      "url": "https://web.dev/articles/lcp",
+      "access": "free"
+    },
+    {
+      "name": "W3C, WCAG 2.2 Understanding 1.4.3 and 2.3.3",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "access": "free"
+    }
+  ]
+}

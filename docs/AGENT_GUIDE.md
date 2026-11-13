@@ -4,7 +4,7 @@ You are an AI agent helping a user install, configure or use quality-pack. Follo
 
 ## What it is, in one paragraph
 
-quality-pack is a set of Claude Code plugins. While the user codes, it gives Claude build rules across 28 quality domains. On demand, it audits the project (226 checks, each with evidence), plays the user's key tasks on a phone and a desktop, and writes a report with two scores out of 10 (experience; engineering and operations), with fixes by priority. It also reduces token usage. It is distributed as a Claude Code **plugin marketplace**, not as an npm package: never try `npm install quality-pack`.
+quality-pack is a set of Claude Code plugins. While the user codes, it gives Claude build rules across 28 quality domains. On demand, it audits the project (247 checks, each with evidence), plays the user's key tasks on a phone and a desktop, and writes a report with two scores out of 10 (experience; engineering and operations), with fixes by priority. It also reduces token usage. It is distributed as a Claude Code **plugin marketplace**, not as an npm package: never try `npm install quality-pack`.
 
 ## 0. Find out where the user is
 

@@ -1,0 +1,1902 @@
+{
+ "type": "health-wellness",
+ "version": 1,
+ "measured": "2026-11-12",
+ "summary": {
+  "n": 8,
+  "desktop": {
+   "type.body_px": {
+    "low": 15.75,
+    "mid": 16.5,
+    "high": 18,
+    "min": 14,
+    "max": 21,
+    "n": 8
+   },
+   "type.largest_to_body": {
+    "low": 4.4,
+    "mid": 4.49,
+    "high": 5.05,
+    "min": 3.81,
+    "max": 5.63,
+    "n": 8
+   },
+   "type.scale_step": {
+    "low": 1.19,
+    "mid": 1.24,
+    "high": 1.33,
+    "min": 1.11,
+    "max": 3.05,
+    "n": 8
+   },
+   "type.sizes": {
+    "low": 10.25,
+    "mid": 12,
+    "high": 13.5,
+    "min": 6,
+    "max": 22,
+    "n": 8
+   },
+   "type.families": {
+    "low": 1,
+    "mid": 1.5,
+    "high": 2,
+    "min": 1,
+    "max": 4,
+    "n": 8
+   },
+   "type.weights": {
+    "low": 2,
+    "mid": 3.5,
+    "high": 4,
+    "min": 1,
+    "max": 5,
+    "n": 8
+   },
+   "type.line_length": {
+    "low": 45.25,
+    "mid": 56.5,
+    "high": 78.5,
+    "min": 35,
+    "max": 92,
+    "n": 8
+   },
+   "type.line_height": {
+    "low": 1.45,
+    "mid": 1.5,
+    "high": 1.61,
+    "min": 1.3,
+    "max": 1.8,
+    "n": 8
+   },
+   "first_screen.image_share": {
+    "low": 0,
+    "mid": 0.03,
+    "high": 0.18,
+    "min": 0,
+    "max": 0.47,
+    "n": 8
+   },
+   "first_screen.accent_share": {
+    "low": 0,
+    "mid": 0.01,
+    "high": 0.03,
+    "min": 0,
+    "max": 0.86,
+    "n": 8
+   },
+   "first_screen.empty_share": {
+    "low": 0.06,
+    "mid": 0.46,
+    "high": 0.86,
+    "min": 0,
+    "max": 0.88,
+    "n": 8
+   },
+   "first_screen.controls": {
+    "low": 9.5,
+    "mid": 13,
+    "high": 18,
+    "min": 3,
+    "max": 22,
+    "n": 8
+   },
+   "first_screen.words": {
+    "low": 58.75,
+    "mid": 77.5,
+    "high": 107.5,
+    "min": 44,
+    "max": 116,
+    "n": 8
+   },
+   "colour.hue_families": {
+    "low": 1,
+    "mid": 1.5,
+    "high": 3,
+    "min": 0,
+    "max": 3,
+    "n": 8
+   },
+   "surface.radii": {
+    "low": 4.5,
+    "mid": 5.5,
+    "high": 6,
+    "min": 2,
+    "max": 8,
+    "n": 8
+   },
+   "surface.main_radius_px": {
+    "low": 15,
+    "mid": 24,
+    "high": 36.5,
+    "min": 12,
+    "max": 100,
+    "n": 8
+   },
+   "surface.shadows": {
+    "low": 1,
+    "mid": 3.5,
+    "high": 4.5,
+    "min": 0,
+    "max": 8,
+    "n": 8
+   },
+   "surface.bordered_share": {
+    "low": 0.09,
+    "mid": 0.39,
+    "high": 0.46,
+    "min": 0.05,
+    "max": 0.87,
+    "n": 8
+   },
+   "surface.shadowed_share": {
+    "low": 0.07,
+    "mid": 0.1,
+    "high": 0.18,
+    "min": 0,
+    "max": 0.52,
+    "n": 8
+   },
+   "layout.content_width_px": {
+    "low": 1318.25,
+    "mid": 1347.5,
+    "high": 1409,
+    "min": 1248,
+    "max": 1440,
+    "n": 8
+   },
+   "layout.gutter_px": {
+    "low": 12,
+    "mid": 34,
+    "high": 62.75,
+    "min": 0,
+    "max": 112,
+    "n": 8
+   },
+   "layout.gap_values": {
+    "low": 5.5,
+    "mid": 7,
+    "high": 9.25,
+    "min": 3,
+    "max": 10,
+    "n": 8
+   },
+   "layout.gap_median_px": {
+    "low": 12,
+    "mid": 14,
+    "high": 31,
+    "min": 4,
+    "max": 32,
+    "n": 8
+   },
+   "layout.gap_largest_px": {
+    "low": 31,
+    "mid": 69.5,
+    "high": 113.25,
+    "min": 25,
+    "max": 251,
+    "n": 8
+   },
+   "layout.gaps_on_4px_grid": {
+    "low": 0.4,
+    "mid": 0.55,
+    "high": 0.69,
+    "min": 0,
+    "max": 0.89,
+    "n": 8
+   },
+   "layout.padding_values": {
+    "low": 4.75,
+    "mid": 6,
+    "high": 6.25,
+    "min": 3,
+    "max": 11,
+    "n": 8
+   },
+   "layout.padding_median_px": {
+    "low": 13,
+    "mid": 16,
+    "high": 24,
+    "min": 8,
+    "max": 48,
+    "n": 8
+   },
+   "layout.even_gap_groups": {
+    "low": 0.5,
+    "mid": 0.65,
+    "high": 0.78,
+    "min": 0.15,
+    "max": 1,
+    "n": 8
+   },
+   "layout.even_size_groups": {
+    "low": 0.53,
+    "mid": 0.63,
+    "high": 0.71,
+    "min": 0.48,
+    "max": 0.94,
+    "n": 8
+   },
+   "layout.aligned_left_edges": {
+    "low": 0.15,
+    "mid": 0.2,
+    "high": 0.23,
+    "min": 0.05,
+    "max": 0.32,
+    "n": 8
+   },
+   "layout.button_height_px": {
+    "low": 47.75,
+    "mid": 50,
+    "high": 58,
+    "min": 44,
+    "max": 65,
+    "n": 8
+   },
+   "layout.button_heights": {
+    "low": 2.75,
+    "mid": 5.5,
+    "high": 6,
+    "min": 2,
+    "max": 9,
+    "n": 8
+   },
+   "layout.field_height_px": {
+    "low": 41.5,
+    "mid": 47,
+    "high": 47.5,
+    "min": 36,
+    "max": 48,
+    "n": 3
+   },
+   "layout.icon_size_px": {
+    "low": 16.75,
+    "mid": 21.5,
+    "high": 24,
+    "min": 14,
+    "max": 26,
+    "n": 6
+   },
+   "layout.icon_sizes": {
+    "low": 1.5,
+    "mid": 4.5,
+    "high": 6.5,
+    "min": 0,
+    "max": 8,
+    "n": 8
+   },
+   "layout.card_width_px": {
+    "low": 348,
+    "mid": 384,
+    "high": 536.5,
+    "min": 288,
+    "max": 640,
+    "n": 7
+   },
+   "layout.card_height_px": {
+    "low": 291,
+    "mid": 358,
+    "high": 441.5,
+    "min": 273,
+    "max": 495,
+    "n": 7
+   },
+   "layout.image_ratios": {
+    "low": 2.75,
+    "mid": 4.5,
+    "high": 8,
+    "min": 1,
+    "max": 15,
+    "n": 8
+   },
+   "layout.section_height_screens": {
+    "low": 0.99,
+    "mid": 1.05,
+    "high": 1.18,
+    "min": 0.93,
+    "max": 5.09,
+    "n": 8
+   },
+   "layout.section_height_variation": {
+    "low": 0.43,
+    "mid": 0.57,
+    "high": 0.81,
+    "min": 0.2,
+    "max": 1.81,
+    "n": 7
+   },
+   "layout.h1_px": {
+    "low": 69,
+    "mid": 80,
+    "high": 85,
+    "min": 17,
+    "max": 104,
+    "n": 7
+   },
+   "layout.h2_px": {
+    "low": 33,
+    "mid": 46.5,
+    "high": 64,
+    "min": 24,
+    "max": 64,
+    "n": 8
+   },
+   "layout.h3_px": {
+    "low": 22.5,
+    "mid": 30,
+    "high": 31.5,
+    "min": 18,
+    "max": 40,
+    "n": 6
+   },
+   "page.screens": {
+    "low": 8.73,
+    "mid": 11.45,
+    "high": 15.13,
+    "min": 6.3,
+    "max": 22.2,
+    "n": 8
+   },
+   "page.controls_per_screen": {
+    "low": 2.58,
+    "mid": 4.7,
+    "high": 5.98,
+    "min": 1.2,
+    "max": 7.1,
+    "n": 8
+   },
+   "page.animated": {
+    "low": 0,
+    "mid": 0,
+    "high": 0.5,
+    "min": 0,
+    "max": 16,
+    "n": 8
+   }
+  },
+  "mobile": {
+   "type.body_px": {
+    "low": 16,
+    "mid": 16,
+    "high": 16.5,
+    "min": 14,
+    "max": 18,
+    "n": 8
+   },
+   "type.largest_to_body": {
+    "low": 2.71,
+    "mid": 3.03,
+    "high": 3.16,
+    "min": 2.43,
+    "max": 3.56,
+    "n": 8
+   },
+   "type.scale_step": {
+    "low": 1.13,
+    "mid": 1.25,
+    "high": 1.27,
+    "min": 1.11,
+    "max": 2.56,
+    "n": 8
+   },
+   "type.sizes": {
+    "low": 8.75,
+    "mid": 10.5,
+    "high": 12.5,
+    "min": 5,
+    "max": 14,
+    "n": 8
+   },
+   "type.families": {
+    "low": 1,
+    "mid": 1.5,
+    "high": 2,
+    "min": 1,
+    "max": 4,
+    "n": 8
+   },
+   "type.weights": {
+    "low": 2,
+    "mid": 3.5,
+    "high": 4,
+    "min": 1,
+    "max": 5,
+    "n": 8
+   },
+   "type.line_length": {
+    "low": 34.75,
+    "mid": 37.5,
+    "high": 41.5,
+    "min": 33,
+    "max": 47,
+    "n": 8
+   },
+   "type.line_height": {
+    "low": 1.45,
+    "mid": 1.5,
+    "high": 1.61,
+    "min": 1.3,
+    "max": 1.8,
+    "n": 8
+   },
+   "first_screen.image_share": {
+    "low": 0.01,
+    "mid": 0.03,
+    "high": 0.19,
+    "min": 0,
+    "max": 0.47,
+    "n": 8
+   },
+   "first_screen.accent_share": {
+    "low": 0,
+    "mid": 0.03,
+    "high": 0.06,
+    "min": 0,
+    "max": 0.67,
+    "n": 8
+   },
+   "first_screen.empty_share": {
+    "low": 0.02,
+    "mid": 0.36,
+    "high": 0.64,
+    "min": 0,
+    "max": 0.72,
+    "n": 8
+   },
+   "first_screen.controls": {
+    "low": 5.75,
+    "mid": 7.5,
+    "high": 10.5,
+    "min": 3,
+    "max": 15,
+    "n": 8
+   },
+   "first_screen.words": {
+    "low": 46,
+    "mid": 56.5,
+    "high": 75.75,
+    "min": 45,
+    "max": 96,
+    "n": 8
+   },
+   "colour.hue_families": {
+    "low": 1,
+    "mid": 1.5,
+    "high": 3,
+    "min": 0,
+    "max": 3,
+    "n": 8
+   },
+   "surface.radii": {
+    "low": 5,
+    "mid": 5,
+    "high": 6,
+    "min": 2,
+    "max": 12,
+    "n": 8
+   },
+   "surface.main_radius_px": {
+    "low": 12,
+    "mid": 24,
+    "high": 49,
+    "min": 8,
+    "max": 844,
+    "n": 8
+   },
+   "surface.shadows": {
+    "low": 1,
+    "mid": 3,
+    "high": 4.75,
+    "min": 0,
+    "max": 7,
+    "n": 8
+   },
+   "surface.bordered_share": {
+    "low": 0.09,
+    "mid": 0.37,
+    "high": 0.44,
+    "min": 0.04,
+    "max": 0.87,
+    "n": 8
+   },
+   "surface.shadowed_share": {
+    "low": 0.07,
+    "mid": 0.08,
+    "high": 0.18,
+    "min": 0,
+    "max": 0.51,
+    "n": 8
+   },
+   "layout.content_width_px": {
+    "low": 351.5,
+    "mid": 356,
+    "high": 367.75,
+    "min": 306,
+    "max": 390,
+    "n": 8
+   },
+   "layout.gutter_px": {
+    "low": 0.75,
+    "mid": 12,
+    "high": 17,
+    "min": 0,
+    "max": 54,
+    "n": 8
+   },
+   "layout.gap_values": {
+    "low": 6,
+    "mid": 7,
+    "high": 9,
+    "min": 2,
+    "max": 10,
+    "n": 8
+   },
+   "layout.gap_median_px": {
+    "low": 7,
+    "mid": 12,
+    "high": 17.5,
+    "min": 3,
+    "max": 20,
+    "n": 8
+   },
+   "layout.gap_largest_px": {
+    "low": 28.75,
+    "mid": 36,
+    "high": 44.25,
+    "min": 16,
+    "max": 90,
+    "n": 8
+   },
+   "layout.gaps_on_4px_grid": {
+    "low": 0.43,
+    "mid": 0.52,
+    "high": 0.62,
+    "min": 0,
+    "max": 0.66,
+    "n": 8
+   },
+   "layout.padding_values": {
+    "low": 4,
+    "mid": 4,
+    "high": 6.25,
+    "min": 3,
+    "max": 7,
+    "n": 8
+   },
+   "layout.padding_median_px": {
+    "low": 11,
+    "mid": 15,
+    "high": 24,
+    "min": 6,
+    "max": 32,
+    "n": 8
+   },
+   "layout.even_gap_groups": {
+    "low": 0.47,
+    "mid": 0.61,
+    "high": 0.77,
+    "min": 0.24,
+    "max": 1,
+    "n": 8
+   },
+   "layout.even_size_groups": {
+    "low": 0.61,
+    "mid": 0.8,
+    "high": 0.89,
+    "min": 0.25,
+    "max": 0.94,
+    "n": 8
+   },
+   "layout.aligned_left_edges": {
+    "low": 0.26,
+    "mid": 0.41,
+    "high": 0.49,
+    "min": 0.14,
+    "max": 0.64,
+    "n": 8
+   },
+   "layout.button_height_px": {
+    "low": 47.5,
+    "mid": 53,
+    "high": 56,
+    "min": 44,
+    "max": 68,
+    "n": 8
+   },
+   "layout.button_heights": {
+    "low": 3,
+    "mid": 5,
+    "high": 6.25,
+    "min": 2,
+    "max": 8,
+    "n": 8
+   },
+   "layout.field_height_px": {
+    "low": 41.5,
+    "mid": 47,
+    "high": 47.5,
+    "min": 36,
+    "max": 48,
+    "n": 3
+   },
+   "layout.icon_size_px": {
+    "low": 16.75,
+    "mid": 21.5,
+    "high": 24,
+    "min": 14,
+    "max": 25,
+    "n": 6
+   },
+   "layout.icon_sizes": {
+    "low": 1.5,
+    "mid": 4,
+    "high": 5.75,
+    "min": 0,
+    "max": 8,
+    "n": 8
+   },
+   "layout.card_width_px": {
+    "low": 276.5,
+    "mid": 308,
+    "high": 328,
+    "min": 204,
+    "max": 350,
+    "n": 8
+   },
+   "layout.card_height_px": {
+    "low": 184.25,
+    "mid": 317,
+    "high": 440.5,
+    "min": 141,
+    "max": 588,
+    "n": 8
+   },
+   "layout.image_ratios": {
+    "low": 1.75,
+    "mid": 3.5,
+    "high": 4.5,
+    "min": 1,
+    "max": 12,
+    "n": 8
+   },
+   "layout.section_height_screens": {
+    "low": 0.84,
+    "mid": 1,
+    "high": 1.15,
+    "min": 0.36,
+    "max": 7.07,
+    "n": 8
+   },
+   "layout.section_height_variation": {
+    "low": 0.68,
+    "mid": 0.77,
+    "high": 0.95,
+    "min": 0.61,
+    "max": 2.22,
+    "n": 7
+   },
+   "layout.h1_px": {
+    "low": 42,
+    "mid": 50,
+    "high": 53.5,
+    "min": 16,
+    "max": 57,
+    "n": 7
+   },
+   "layout.h2_px": {
+    "low": 22.25,
+    "mid": 33,
+    "high": 41.5,
+    "min": 20,
+    "max": 48,
+    "n": 8
+   },
+   "layout.h3_px": {
+    "low": 21,
+    "mid": 24,
+    "high": 28.5,
+    "min": 18,
+    "max": 32,
+    "n": 6
+   },
+   "page.screens": {
+    "low": 11.93,
+    "mid": 13.7,
+    "high": 16.08,
+    "min": 8.5,
+    "max": 27.5,
+    "n": 8
+   },
+   "page.controls_per_screen": {
+    "low": 2.48,
+    "mid": 3.05,
+    "high": 3.35,
+    "min": 0.9,
+    "max": 4.8,
+    "n": 8
+   },
+   "page.animated": {
+    "low": 0,
+    "mid": 0,
+    "high": 0.5,
+    "min": 0,
+    "max": 14,
+    "n": 8
+   }
+  }
+ },
+ "sites": [
+  {
+   "url": "https://www.bevel.health/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 80,
+     "h1_px": 80,
+     "largest_to_body": 4.44,
+     "sizes": 8,
+     "scale_step": 1.33,
+     "families": 1,
+     "weights": 4,
+     "line_length": 35,
+     "line_height": 1.3
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0.01,
+     "empty_share": 0,
+     "text_share": 0.19,
+     "accent_hues": 1,
+     "controls": 8,
+     "words": 74
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": false,
+     "page_saturation": 0.2
+    },
+    "surface": {
+     "radii": 8,
+     "main_radius_px": 16,
+     "shadows": 6,
+     "bordered_share": 0.05,
+     "shadowed_share": 0.52
+    },
+    "layout": {
+     "content_width_px": 1351,
+     "gutter_px": 65,
+     "gap_values": 6,
+     "gap_median_px": 32,
+     "gap_largest_px": 91,
+     "gaps_on_4px_grid": 0.89,
+     "padding_values": 4,
+     "padding_median_px": 24,
+     "even_gap_groups": 0.98,
+     "even_size_groups": 0.94,
+     "aligned_left_edges": 0.22,
+     "button_height_px": 44,
+     "button_heights": 2,
+     "field_height_px": null,
+     "icon_size_px": 24,
+     "icon_sizes": 3,
+     "card_width_px": 384,
+     "card_height_px": 358,
+     "image_ratios": 15,
+     "image_ratio": 1,
+     "section_height_screens": 1.3,
+     "section_height_variation": 0.64,
+     "h1_px": 80,
+     "h2_px": 24,
+     "h3_px": 40
+    },
+    "page": {
+     "screens": 15,
+     "words": 1205,
+     "images": 122,
+     "controls": 28,
+     "controls_per_screen": 1.9,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 50,
+     "h1_px": 50,
+     "largest_to_body": 2.78,
+     "sizes": 8,
+     "scale_step": 1.28,
+     "families": 1,
+     "weights": 4,
+     "line_length": 33,
+     "line_height": 1.3
+    },
+    "first_screen": {
+     "image_share": 0.04,
+     "accent_share": 0.06,
+     "empty_share": 0,
+     "text_share": 0.46,
+     "accent_hues": 1,
+     "controls": 5,
+     "words": 60
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": false,
+     "page_saturation": 0.2
+    },
+    "surface": {
+     "radii": 12,
+     "main_radius_px": 8,
+     "shadows": 7,
+     "bordered_share": 0.04,
+     "shadowed_share": 0.51
+    },
+    "layout": {
+     "content_width_px": 388,
+     "gutter_px": 1,
+     "gap_values": 7,
+     "gap_median_px": 17,
+     "gap_largest_px": 43,
+     "gaps_on_4px_grid": 0.45,
+     "padding_values": 3,
+     "padding_median_px": 24,
+     "even_gap_groups": 1,
+     "even_size_groups": 0.94,
+     "aligned_left_edges": 0.35,
+     "button_height_px": 44,
+     "button_heights": 2,
+     "field_height_px": null,
+     "icon_size_px": 24,
+     "icon_sizes": 3,
+     "card_width_px": 278,
+     "card_height_px": 179,
+     "image_ratios": 12,
+     "image_ratio": 0.56,
+     "section_height_screens": 1.13,
+     "section_height_variation": 0.77,
+     "h1_px": 50,
+     "h2_px": 20,
+     "h3_px": 32
+    },
+    "page": {
+     "screens": 14.2,
+     "words": 1190,
+     "images": 105,
+     "controls": 26,
+     "controls_per_screen": 1.8,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.instituteofhealth.com/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 15,
+     "largest_px": 78,
+     "h1_px": 58,
+     "largest_to_body": 5.2,
+     "sizes": 12,
+     "scale_step": 1.27,
+     "families": 1,
+     "weights": 2,
+     "line_length": 76,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.86,
+     "text_share": 0.14,
+     "accent_hues": 0,
+     "controls": 10,
+     "words": 44
+    },
+    "colour": {
+     "hue_families": 0,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 100,
+     "shadows": 0,
+     "bordered_share": 0.08,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 1440,
+     "gutter_px": 0,
+     "gap_values": 6,
+     "gap_median_px": 12,
+     "gap_largest_px": 28,
+     "gaps_on_4px_grid": 0.72,
+     "padding_values": 6,
+     "padding_median_px": 10,
+     "even_gap_groups": 0.65,
+     "even_size_groups": 0.65,
+     "aligned_left_edges": 0.32,
+     "button_height_px": 65,
+     "button_heights": 5,
+     "field_height_px": null,
+     "icon_size_px": null,
+     "icon_sizes": 0,
+     "card_width_px": 365,
+     "card_height_px": 488,
+     "image_ratios": 3,
+     "image_ratio": 0.75,
+     "section_height_screens": 1.14,
+     "section_height_variation": 0.97,
+     "h1_px": 58,
+     "h2_px": 50,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 13.3,
+     "words": 959,
+     "images": 94,
+     "controls": 37,
+     "controls_per_screen": 2.8,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 40,
+     "h1_px": 40,
+     "largest_to_body": 2.5,
+     "sizes": 12,
+     "scale_step": 1.13,
+     "families": 1,
+     "weights": 2,
+     "line_length": 46,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.72,
+     "text_share": 0.28,
+     "accent_hues": 0,
+     "controls": 15,
+     "words": 45
+    },
+    "colour": {
+     "hue_families": 0,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 100,
+     "shadows": 0,
+     "bordered_share": 0.07,
+     "shadowed_share": 0
+    },
+    "layout": {
+     "content_width_px": 390,
+     "gutter_px": 0,
+     "gap_values": 9,
+     "gap_median_px": 8,
+     "gap_largest_px": 32,
+     "gaps_on_4px_grid": 0.64,
+     "padding_values": 4,
+     "padding_median_px": 8,
+     "even_gap_groups": 0.61,
+     "even_size_groups": 0.82,
+     "aligned_left_edges": 0.47,
+     "button_height_px": 68,
+     "button_heights": 5,
+     "field_height_px": null,
+     "icon_size_px": null,
+     "icon_sizes": 0,
+     "card_width_px": 346,
+     "card_height_px": 463,
+     "image_ratios": 2,
+     "image_ratio": 0.75,
+     "section_height_screens": 1,
+     "section_height_variation": 1.03,
+     "h1_px": 40,
+     "h2_px": 23,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 13.2,
+     "words": 962,
+     "images": 98,
+     "controls": 42,
+     "controls_per_screen": 3.2,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://pomegranate.health/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 21,
+     "largest_px": 80,
+     "h1_px": 80,
+     "largest_to_body": 3.81,
+     "sizes": 6,
+     "scale_step": 3.05,
+     "families": 2,
+     "weights": 4,
+     "line_length": 86,
+     "line_height": 1.3
+    },
+    "first_screen": {
+     "image_share": 0.18,
+     "accent_share": 0.03,
+     "empty_share": 0,
+     "text_share": 0.18,
+     "accent_hues": 1,
+     "controls": 3,
+     "words": 55
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 2,
+     "main_radius_px": 32,
+     "shadows": 1,
+     "bordered_share": 0.87,
+     "shadowed_share": 0.07
+    },
+    "layout": {
+     "content_width_px": 1323,
+     "gutter_px": 62,
+     "gap_values": 3,
+     "gap_median_px": 31,
+     "gap_largest_px": 251,
+     "gaps_on_4px_grid": 0,
+     "padding_values": 3,
+     "padding_median_px": 8,
+     "even_gap_groups": 1,
+     "even_size_groups": 0.5,
+     "aligned_left_edges": 0.18,
+     "button_height_px": 64,
+     "button_heights": 2,
+     "field_height_px": null,
+     "icon_size_px": 26,
+     "icon_sizes": 2,
+     "card_width_px": null,
+     "card_height_px": null,
+     "image_ratios": 1,
+     "image_ratio": 0.66,
+     "section_height_screens": 5.09,
+     "section_height_variation": null,
+     "h1_px": 80,
+     "h2_px": 64,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 6.7,
+     "words": 475,
+     "images": 11,
+     "controls": 8,
+     "controls_per_screen": 1.2,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 55,
+     "h1_px": 55,
+     "largest_to_body": 3.06,
+     "sizes": 5,
+     "scale_step": 2.56,
+     "families": 2,
+     "weights": 4,
+     "line_length": 37,
+     "line_height": 1.3
+    },
+    "first_screen": {
+     "image_share": 0.16,
+     "accent_share": 0.06,
+     "empty_share": 0,
+     "text_share": 0.34,
+     "accent_hues": 1,
+     "controls": 3,
+     "words": 53
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": true,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 2,
+     "main_radius_px": 32,
+     "shadows": 1,
+     "bordered_share": 0.87,
+     "shadowed_share": 0.07
+    },
+    "layout": {
+     "content_width_px": 306,
+     "gutter_px": 54,
+     "gap_values": 3,
+     "gap_median_px": 19,
+     "gap_largest_px": 19,
+     "gaps_on_4px_grid": 0,
+     "padding_values": 4,
+     "padding_median_px": 6,
+     "even_gap_groups": 1,
+     "even_size_groups": 0.25,
+     "aligned_left_edges": 0.24,
+     "button_height_px": 56,
+     "button_heights": 3,
+     "field_height_px": null,
+     "icon_size_px": 25,
+     "icon_sizes": 2,
+     "card_width_px": 316,
+     "card_height_px": 141,
+     "image_ratios": 1,
+     "image_ratio": 0.66,
+     "section_height_screens": 7.07,
+     "section_height_variation": null,
+     "h1_px": 55,
+     "h2_px": 46,
+     "h3_px": null
+    },
+    "page": {
+     "screens": 8.5,
+     "words": 471,
+     "images": 11,
+     "controls": 8,
+     "controls_per_screen": 0.9,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.rejuv-health.com/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 17,
+     "largest_px": 77,
+     "h1_px": 17,
+     "largest_to_body": 4.53,
+     "sizes": 22,
+     "scale_step": 1.11,
+     "families": 4,
+     "weights": 1,
+     "line_length": 47,
+     "line_height": 1.8
+    },
+    "first_screen": {
+     "image_share": 0.04,
+     "accent_share": 0,
+     "empty_share": 0.08,
+     "text_share": 0.07,
+     "accent_hues": 0,
+     "controls": 18,
+     "words": 81
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 3,
+     "main_radius_px": 50,
+     "shadows": 4,
+     "bordered_share": 0.45,
+     "shadowed_share": 0.15
+    },
+    "layout": {
+     "content_width_px": 1400,
+     "gutter_px": 20,
+     "gap_values": 10,
+     "gap_median_px": 31,
+     "gap_largest_px": 123,
+     "gaps_on_4px_grid": 0.32,
+     "padding_values": 5,
+     "padding_median_px": 14,
+     "even_gap_groups": 0.65,
+     "even_size_groups": 0.48,
+     "aligned_left_edges": 0.21,
+     "button_height_px": 47,
+     "button_heights": 6,
+     "field_height_px": 47,
+     "icon_size_px": null,
+     "icon_sizes": 0,
+     "card_width_px": 436,
+     "card_height_px": 495,
+     "image_ratios": 11,
+     "image_ratio": 1.01,
+     "section_height_screens": 1.05,
+     "section_height_variation": 0.57,
+     "h1_px": 17,
+     "h2_px": 43,
+     "h3_px": 20
+    },
+    "page": {
+     "screens": 22.2,
+     "words": 1223,
+     "images": 152,
+     "controls": 96,
+     "controls_per_screen": 4.3,
+     "animated": 16
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 50,
+     "h1_px": 16,
+     "largest_to_body": 3.13,
+     "sizes": 14,
+     "scale_step": 1.13,
+     "families": 4,
+     "weights": 1,
+     "line_length": 40,
+     "line_height": 1.8
+    },
+    "first_screen": {
+     "image_share": 0.47,
+     "accent_share": 0,
+     "empty_share": 0.03,
+     "text_share": 0.21,
+     "accent_hues": 0,
+     "controls": 6,
+     "words": 46
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 5,
+     "main_radius_px": 844,
+     "shadows": 4,
+     "bordered_share": 0.38,
+     "shadowed_share": 0.16
+    },
+    "layout": {
+     "content_width_px": 352,
+     "gutter_px": 0,
+     "gap_values": 10,
+     "gap_median_px": 20,
+     "gap_largest_px": 90,
+     "gaps_on_4px_grid": 0.55,
+     "padding_values": 4,
+     "padding_median_px": 14,
+     "even_gap_groups": 0.61,
+     "even_size_groups": 0.58,
+     "aligned_left_edges": 0.49,
+     "button_height_px": 46,
+     "button_heights": 6,
+     "field_height_px": 47,
+     "icon_size_px": null,
+     "icon_sizes": 0,
+     "card_width_px": 322,
+     "card_height_px": 588,
+     "image_ratios": 6,
+     "image_ratio": 1,
+     "section_height_screens": 1.23,
+     "section_height_variation": 0.71,
+     "h1_px": 16,
+     "h2_px": 32,
+     "h3_px": 20
+    },
+    "page": {
+     "screens": 27.5,
+     "words": 1464,
+     "images": 170,
+     "controls": 74,
+     "controls_per_screen": 2.7,
+     "animated": 14
+    }
+   }
+  },
+  {
+   "url": "https://www.hevahealth.com/",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 14,
+     "largest_px": 60,
+     "h1_px": 104,
+     "largest_to_body": 4.29,
+     "sizes": 13,
+     "scale_step": 1.14,
+     "families": 2,
+     "weights": 5,
+     "line_length": 40,
+     "line_height": 1.63
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0,
+     "empty_share": 0.88,
+     "text_share": 0.12,
+     "accent_hues": 0,
+     "controls": 14,
+     "words": 109
+    },
+    "colour": {
+     "hue_families": 2,
+     "dark_page": false,
+     "page_saturation": 0.75
+    },
+    "surface": {
+     "radii": 5,
+     "main_radius_px": 16,
+     "shadows": 4,
+     "bordered_share": 0.41,
+     "shadowed_share": 0.26
+    },
+    "layout": {
+     "content_width_px": 1304,
+     "gutter_px": 16,
+     "gap_values": 8,
+     "gap_median_px": 12,
+     "gap_largest_px": 32,
+     "gaps_on_4px_grid": 0.67,
+     "padding_values": 7,
+     "padding_median_px": 24,
+     "even_gap_groups": 0.52,
+     "even_size_groups": 0.87,
+     "aligned_left_edges": 0.16,
+     "button_height_px": 48,
+     "button_heights": 6,
+     "field_height_px": 48,
+     "icon_size_px": 14,
+     "icon_sizes": 6,
+     "card_width_px": 331,
+     "card_height_px": 395,
+     "image_ratios": 4,
+     "image_ratio": 0.4,
+     "section_height_screens": 0.97,
+     "section_height_variation": 0.44,
+     "h1_px": 104,
+     "h2_px": 36,
+     "h3_px": 30
+    },
+    "page": {
+     "screens": 9.4,
+     "words": 1630,
+     "images": 26,
+     "controls": 48,
+     "controls_per_screen": 5.1,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 14,
+     "largest_px": 34,
+     "h1_px": 44,
+     "largest_to_body": 2.43,
+     "sizes": 9,
+     "scale_step": 1.25,
+     "families": 2,
+     "weights": 5,
+     "line_length": 34,
+     "line_height": 1.63
+    },
+    "first_screen": {
+     "image_share": 0.01,
+     "accent_share": 0,
+     "empty_share": 0.68,
+     "text_share": 0.31,
+     "accent_hues": 0,
+     "controls": 9,
+     "words": 93
+    },
+    "colour": {
+     "hue_families": 2,
+     "dark_page": false,
+     "page_saturation": 0.75
+    },
+    "surface": {
+     "radii": 5,
+     "main_radius_px": 16,
+     "shadows": 3,
+     "bordered_share": 0.41,
+     "shadowed_share": 0.25
+    },
+    "layout": {
+     "content_width_px": 354,
+     "gutter_px": 16,
+     "gap_values": 7,
+     "gap_median_px": 12,
+     "gap_largest_px": 32,
+     "gaps_on_4px_grid": 0.66,
+     "padding_values": 6,
+     "padding_median_px": 24,
+     "even_gap_groups": 0.49,
+     "even_size_groups": 0.9,
+     "aligned_left_edges": 0.5,
+     "button_height_px": 56,
+     "button_heights": 7,
+     "field_height_px": 48,
+     "icon_size_px": 14,
+     "icon_sizes": 5,
+     "card_width_px": 300,
+     "card_height_px": 433,
+     "image_ratios": 3,
+     "image_ratio": 0.4,
+     "section_height_screens": 1,
+     "section_height_variation": 0.65,
+     "h1_px": 44,
+     "h2_px": 34,
+     "h3_px": 24
+    },
+    "page": {
+     "screens": 14.7,
+     "words": 1614,
+     "images": 26,
+     "controls": 42,
+     "controls_per_screen": 2.9,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.functionhealth.com",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 80,
+     "h1_px": 80,
+     "largest_to_body": 5,
+     "sizes": 12,
+     "scale_step": 1.21,
+     "families": 2,
+     "weights": 3,
+     "line_length": 92,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0.47,
+     "accent_share": 0.04,
+     "empty_share": 0.37,
+     "text_share": 0.08,
+     "accent_hues": 1,
+     "controls": 18,
+     "words": 107
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0.88
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 12,
+     "shadows": 8,
+     "bordered_share": 0.37,
+     "shadowed_share": 0.12
+    },
+    "layout": {
+     "content_width_px": 1436,
+     "gutter_px": 0,
+     "gap_values": 9,
+     "gap_median_px": 4,
+     "gap_largest_px": 110,
+     "gaps_on_4px_grid": 0.43,
+     "padding_values": 11,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.71,
+     "even_size_groups": 0.63,
+     "aligned_left_edges": 0.13,
+     "button_height_px": 50,
+     "button_heights": 9,
+     "field_height_px": 36,
+     "icon_size_px": 24,
+     "icon_sizes": 8,
+     "card_width_px": 288,
+     "card_height_px": 280,
+     "image_ratios": 7,
+     "image_ratio": 1,
+     "section_height_screens": 0.93,
+     "section_height_variation": 1.81,
+     "h1_px": 80,
+     "h2_px": 64,
+     "h3_px": 18
+    },
+    "page": {
+     "screens": 15.5,
+     "words": 1829,
+     "images": 47,
+     "controls": 87,
+     "controls_per_screen": 5.6,
+     "animated": 2
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 57,
+     "h1_px": 57,
+     "largest_to_body": 3.56,
+     "sizes": 11,
+     "scale_step": 1.26,
+     "families": 2,
+     "weights": 3,
+     "line_length": 47,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0.29,
+     "accent_share": 0.06,
+     "empty_share": 0.2,
+     "text_share": 0.32,
+     "accent_hues": 1,
+     "controls": 12,
+     "words": 96
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0.88
+    },
+    "surface": {
+     "radii": 5,
+     "main_radius_px": 12,
+     "shadows": 7,
+     "bordered_share": 0.36,
+     "shadowed_share": 0.09
+    },
+    "layout": {
+     "content_width_px": 361,
+     "gutter_px": 8,
+     "gap_values": 7,
+     "gap_median_px": 4,
+     "gap_largest_px": 40,
+     "gaps_on_4px_grid": 0.49,
+     "padding_values": 7,
+     "padding_median_px": 12,
+     "even_gap_groups": 0.7,
+     "even_size_groups": 0.62,
+     "aligned_left_edges": 0.26,
+     "button_height_px": 50,
+     "button_heights": 8,
+     "field_height_px": 36,
+     "icon_size_px": 16,
+     "icon_sizes": 8,
+     "card_width_px": 272,
+     "card_height_px": 272,
+     "image_ratios": 4,
+     "image_ratio": 0.94,
+     "section_height_screens": 0.56,
+     "section_height_variation": 2.22,
+     "h1_px": 57,
+     "h2_px": 48,
+     "h3_px": 18
+    },
+    "page": {
+     "screens": 20.2,
+     "words": 1821,
+     "images": 40,
+     "controls": 77,
+     "controls_per_screen": 3.8,
+     "animated": 2
+    }
+   }
+  },
+  {
+   "url": "https://impilo.health",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 90,
+     "h1_px": 90,
+     "largest_to_body": 5.63,
+     "sizes": 15,
+     "scale_step": 1.2,
+     "families": 1,
+     "weights": 2,
+     "line_length": 56,
+     "line_height": 1.6
+    },
+    "first_screen": {
+     "image_share": 0.18,
+     "accent_share": 0,
+     "empty_share": 0.54,
+     "text_share": 0.28,
+     "accent_hues": 1,
+     "controls": 12,
+     "words": 116
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 12,
+     "shadows": 1,
+     "bordered_share": 0.5,
+     "shadowed_share": 0.07
+    },
+    "layout": {
+     "content_width_px": 1344,
+     "gutter_px": 48,
+     "gap_values": 10,
+     "gap_median_px": 16,
+     "gap_largest_px": 48,
+     "gaps_on_4px_grid": 0.68,
+     "padding_values": 6,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.45,
+     "even_size_groups": 0.63,
+     "aligned_left_edges": 0.26,
+     "button_height_px": 56,
+     "button_heights": 3,
+     "field_height_px": null,
+     "icon_size_px": 19,
+     "icon_sizes": 8,
+     "card_width_px": 637,
+     "card_height_px": 302,
+     "image_ratios": 2,
+     "image_ratio": 1.34,
+     "section_height_screens": 1.04,
+     "section_height_variation": 0.2,
+     "h1_px": 90,
+     "h2_px": 64,
+     "h3_px": 30
+    },
+    "page": {
+     "screens": 6.3,
+     "words": 646,
+     "images": 8,
+     "controls": 45,
+     "controls_per_screen": 7.1,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 52,
+     "h1_px": 52,
+     "largest_to_body": 3.25,
+     "sizes": 14,
+     "scale_step": 1.11,
+     "families": 1,
+     "weights": 2,
+     "line_length": 38,
+     "line_height": 1.6
+    },
+    "first_screen": {
+     "image_share": 0.02,
+     "accent_share": 0,
+     "empty_share": 0.51,
+     "text_share": 0.47,
+     "accent_hues": 0,
+     "controls": 6,
+     "words": 70
+    },
+    "colour": {
+     "hue_families": 1,
+     "dark_page": false,
+     "page_saturation": 0
+    },
+    "surface": {
+     "radii": 6,
+     "main_radius_px": 12,
+     "shadows": 1,
+     "bordered_share": 0.52,
+     "shadowed_share": 0.07
+    },
+    "layout": {
+     "content_width_px": 350,
+     "gutter_px": 20,
+     "gap_values": 9,
+     "gap_median_px": 12,
+     "gap_largest_px": 48,
+     "gaps_on_4px_grid": 0.61,
+     "padding_values": 4,
+     "padding_median_px": 16,
+     "even_gap_groups": 0.4,
+     "even_size_groups": 0.77,
+     "aligned_left_edges": 0.64,
+     "button_height_px": 56,
+     "button_heights": 3,
+     "field_height_px": null,
+     "icon_size_px": 19,
+     "icon_sizes": 8,
+     "card_width_px": 350,
+     "card_height_px": 362,
+     "image_ratios": 1,
+     "image_ratio": 1.34,
+     "section_height_screens": 0.36,
+     "section_height_variation": 0.86,
+     "h1_px": 52,
+     "h2_px": 40,
+     "h3_px": 30
+    },
+    "page": {
+     "screens": 12,
+     "words": 623,
+     "images": 8,
+     "controls": 39,
+     "controls_per_screen": 3.2,
+     "animated": 0
+    }
+   }
+  },
+  {
+   "url": "https://www.healthplus.cz/en/home",
+   "ok": true,
+   "desktop": {
+    "type": {
+     "body_px": 18,
+     "largest_px": 80,
+     "h1_px": null,
+     "largest_to_body": 4.44,
+     "sizes": 11,
+     "scale_step": 1.33,
+     "families": 1,
+     "weights": 4,
+     "line_length": 57,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0.86,
+     "empty_share": 0.86,
+     "text_share": 0.05,
+     "accent_hues": 1,
+     "controls": 22,
+     "words": 60
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": false,
+     "page_saturation": 0.67
+    },
+    "surface": {
+     "radii": 5,
+     "main_radius_px": 32,
+     "shadows": 3,
+     "bordered_share": 0.09,
+     "shadowed_share": 0.06
+    },
+    "layout": {
+     "content_width_px": 1248,
+     "gutter_px": 112,
+     "gap_values": 4,
+     "gap_median_px": 12,
+     "gap_largest_px": 25,
+     "gaps_on_4px_grid": 0.42,
+     "padding_values": 6,
+     "padding_median_px": 48,
+     "even_gap_groups": 0.15,
+     "even_size_groups": 0.54,
+     "aligned_left_edges": 0.05,
+     "button_height_px": 50,
+     "button_heights": 6,
+     "field_height_px": null,
+     "icon_size_px": 16,
+     "icon_sizes": 6,
+     "card_width_px": 640,
+     "card_height_px": 273,
+     "image_ratios": 5,
+     "image_ratio": 1.69,
+     "section_height_screens": 1,
+     "section_height_variation": 0.42,
+     "h1_px": null,
+     "h2_px": 24,
+     "h3_px": 32
+    },
+    "page": {
+     "screens": 9.6,
+     "words": 4313,
+     "images": 115,
+     "controls": 68,
+     "controls_per_screen": 7.1,
+     "animated": 0
+    }
+   },
+   "mobile": {
+    "type": {
+     "body_px": 16,
+     "largest_px": 48,
+     "h1_px": null,
+     "largest_to_body": 3,
+     "sizes": 10,
+     "scale_step": 1.25,
+     "families": 1,
+     "weights": 4,
+     "line_length": 35,
+     "line_height": 1.5
+    },
+    "first_screen": {
+     "image_share": 0,
+     "accent_share": 0.67,
+     "empty_share": 0.62,
+     "text_share": 0.16,
+     "accent_hues": 1,
+     "controls": 10,
+     "words": 46
+    },
+    "colour": {
+     "hue_families": 3,
+     "dark_page": false,
+     "page_saturation": 0.67
+    },
+    "surface": {
+     "radii": 5,
+     "main_radius_px": 32,
+     "shadows": 3,
+     "bordered_share": 0.09,
+     "shadowed_share": 0.07
+    },
+    "layout": {
+     "content_width_px": 358,
+     "gutter_px": 16,
+     "gap_values": 2,
+     "gap_median_px": 3,
+     "gap_largest_px": 16,
+     "gaps_on_4px_grid": 0.38,
+     "padding_values": 7,
+     "padding_median_px": 32,
+     "even_gap_groups": 0.24,
+     "even_size_groups": 0.89,
+     "aligned_left_edges": 0.14,
+     "button_height_px": 48,
+     "button_heights": 5,
+     "field_height_px": null,
+     "icon_size_px": 24,
+     "icon_sizes": 5,
+     "card_width_px": 204,
+     "card_height_px": 186,
+     "image_ratios": 4,
+     "image_ratio": 1.79,
+     "section_height_screens": 0.93,
+     "section_height_variation": 0.61,
+     "h1_px": null,
+     "h2_px": 20,
+     "h3_px": 24
+    },
+    "page": {
+     "screens": 11.7,
+     "words": 4299,
+     "images": 20,
+     "controls": 56,
+     "controls_per_screen": 4.8,
+     "animated": 0
+    }
+   }
+  }
+ ]
+}

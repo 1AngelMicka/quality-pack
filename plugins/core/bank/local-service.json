@@ -1,0 +1,145 @@
+{
+  "id": "local-service",
+  "label": {
+    "fr": "Commerce et service de proximité",
+    "en": "Local service business"
+  },
+  "expects": [
+    {
+      "rule": "The phone number is in the header as a tap-to-call link on every page, and next to the main button.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The first screen says what the business does and where (trade and town or area) in the headline.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Opening hours, address and service area are plain text and easy to find, with special closures stated.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "One primary action (quote, appointment, call) with a short form: name, phone, a message.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Trust signals are real: licence or registration numbers, named reviews, before-and-after photographs of actual work.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Prices or a clear statement on how quotes work (free site visit, fixed price, from-prices) are published.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Emergency or out-of-hours availability is stated with the number to use.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "Of the 5 sites seen on a screenshot, 3 (DC, Alaskan, West Side) put a phone or call control on the first screen; the 3 others lead with an image and a headline.",
+    "2 of 5 put the trade and the place in the first headline (DC: Chorley and Lancashire; Alaskan: Arizona).",
+    "4 of 5 use real photographs of premises, staff, work or products (DC, Altufan, West Side, Steve); Alaskan uses an illustrated background.",
+    "3 of 5 use one typeface for the whole page (DC Satoshi, West Side Poppins, Steve Roboto); Altufan pairs a serif with Inter; Alaskan uses three.",
+    "One saturated accent colour on the main button: green #344c3a, orange #ff8e0a or #c33d04, blue #004795.",
+    "2 of 5 had a cookie box over the first screen on load (DC, Steve); hours and addresses sit lower, in text, on the 4 that state them.",
+    "Reviews or ratings with a platform named appear on 2 of 8 (DC, Alaskan); South Cliff shows a single patient review; LAVA, Rendezvous and South Cliff were checked from page text only."
+  ],
+  "sites": [
+    {
+      "name": "DC Carpentry & Construction",
+      "url": "https://dcspaces.co.uk/",
+      "why": "Cream (#f4f1e9) page, nav with phone and a green (#344c3a) Free quote button, large white headline naming trade and area over a photo of a lit brick extension, two buttons (services, quote); cookie bar at the bottom. One typeface, Satoshi. Hours, address, projects and reviews lower.",
+      "recognition": "Awwwards Nominee, 2026-11-12 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/dc-carpentry-construction",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Altufan Ulu Law Office",
+      "url": "https://altufanulu.com/en/",
+      "why": "Law firm in Istanbul: dark grey-toned photograph of an office and meeting table, serif headline 'Trusted, fast and strategic legal services' at left, an outlined Our Story button and one sentence, six nav links and a TR switch. Victor Serif with Inter. Contact is below the first screen.",
+      "recognition": "Awwwards Nominee, 2026-11-11 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/altufan-ulu-law-office",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "West Side Pharmacy & Compounding",
+      "url": "https://www.westsidepharmacybenton.com/",
+      "why": "Dark (#0c0f17) page with a left icon column (Call South Street, Call Military Road, Transfer to Us, Online Refill, Services), a banner photo of staff and a customer with 'Preventative Healthcare Solutions', and a row of video tiles. Poppins throughout. Hours and addresses as text lower.",
+      "recognition": "WebAwards Best Small Business Website, 2025",
+      "source": "https://www.webaward.org/winner/37636/west-side-pharmacy--compounding-wins-2025-webaward-for-west-side-pharmacy.html",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Alaskan Air Conditioning, Heating, Plumbing & Electrical",
+      "url": "https://www.alaskanac.com/",
+      "why": "Blue (#004795) screen with icicle edge: location picker, Book online here, nav, orange (#ff8e0a) phone button, 'over 7,000 reviews' with Google and Facebook stars, capital headline naming four trades and the state, Get a quote and Call buttons. Illustrated, no photograph.",
+      "recognition": "WebAwards Best Small Business Website, 2022",
+      "source": "https://www.webaward.org/winner/36296/mogermedia-inc-wins-2022-webaward-for-alaskan-air-conditioning--heating.html",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Steve the Bike Guy",
+      "url": "https://stevethebikeguy.com/",
+      "why": "White header under a blue sale and moving banner, utility links (Schedule, Visit, Contact), black hero with a mountain bike photograph, 'New Bikes from SCOTT' in Roboto and an orange-red (#c33d04) button; cookie box over the lower left. Hours, address and phone in the footer; closure dates stated.",
+      "recognition": "WebAwards Best Small Business Website, 2023",
+      "source": "https://www.webaward.org/winner/36705/sundin-associates-wins-2023-webaward-for-steve-the-bike-guy.html",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "LAVA dental",
+      "url": "https://lavadental.lv/en",
+      "why": "One-page site for a dental studio in Riga: headline 'Dentistry that will make you smile', a Make an appointment button, phone, address and weekly hours as text, price list and FAQ in the menu, before-and-after photographs, language switch en/lv/ru. (not seen on a screenshot)",
+      "recognition": "Awwwards Honorable Mention, 2026-01-19",
+      "source": "https://www.awwwards.com/sites/lava-dental",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "South Cliff Dental Group",
+      "url": "https://southcliffdentalgroup.com/",
+      "why": "Group of dental practices: headline 'Award Winning Dental Practices' above a grid of award and partner logos, a Call us now button that links to an emergency page rather than showing a number, no addresses or hours on the home page, one patient review. 3D navigation. (not seen on a screenshot)",
+      "recognition": "Awwwards Honorable Mention, 2026-06-16",
+      "source": "https://www.awwwards.com/sites/south-cliff-dental-group",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Rendezvous Barbers",
+      "url": "https://www.myrendezvous.ca/",
+      "why": "Toronto barbershops: headline on short hair styles, five shops each with its own address, phone number and Learn more link, hours listed (Mon-Fri 10-20), Book now buttons near the top and bottom (some link to #), photographs of barbers at work and client haircuts. (not seen on a screenshot)",
+      "recognition": "Awwwards Honorable Mention, 2024-07-31",
+      "source": "https://www.awwwards.com/sites/rendezvous-barbers",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "A service-area list, testimonial or team section still filled with template placeholder text.",
+    "Booking buttons that link to '#' or to nothing.",
+    "A phone number visible only in the footer, or only as an image.",
+    "Stock photographs of smiling workers instead of the real work and premises.",
+    "Three consent checkboxes and five fields in a quote form for a first enquiry.",
+    "Opening hours missing, or displayed without closure notices.",
+    "Menus with a dozen entries and several dropdowns for a business with five services."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Small Business",
+      "url": "https://www.awwwards.com/websites/small-business/",
+      "access": "free"
+    },
+    {
+      "name": "WebAwards, Best Small Business Website",
+      "url": "https://webaward.org/category/Small_Business/best-small_business-websites.html",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Dental and Beauty listings",
+      "url": "https://www.awwwards.com/inspiration_search/dental/",
+      "access": "free"
+    }
+  ]
+}

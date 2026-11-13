@@ -320,7 +320,7 @@ async function around(url, headInfo) {
 const list = (a, n = 5) => a.slice(0, n).join("; ");
 
 // Measures → checks. Each check: value (what was measured), ok, level ("must" or "should"), rule (the house rule).
-export function scoreCraft(m, { mode = "operate" } = {}) {
+export function scoreCraft(m, { mode = "operate", calibration = null } = {}) {
   const d = m.desktop, mob = m.mobile, checks = {};
   const add = (id, level, ok, value, rule, samples) => { checks[id] = { level, ok, value, rule, ...(samples?.length ? { samples: samples.slice(0, 8) } : {}) }; };
   const t = d.type, s = d.surfaces, mo = d.motion, me = d.media, h = d.head;
@@ -401,14 +401,26 @@ export function scoreCraft(m, { mode = "operate" } = {}) {
     add("not_found_page", "should", a.not_found.is_404 ? !a.not_found.default_page && a.not_found.has_way_back : true, a.not_found.default_page ? "the server's or the framework's default error page" : a.not_found.has_way_back ? "own page with a way back" : "no link back to the site",
       "the 404 page is the product's own: its look, a sentence in its voice, a way back");
   }
+  // Calibration on the reference bank: how often the sites recognised as excellent fail each check. A "should"
+  // that many of them fail does not separate excellent from average: it becomes advice and is no longer counted.
+  const advice = [];
+  for (const [id, c] of Object.entries(checks)) {
+    const cal = calibration?.craft?.[id];
+    if (!cal || cal.n < 10) continue;
+    c.excellent_sites_failing = `${Math.round(cal.fail_rate * 100)} % of ${cal.n}`;
+    if (c.level === "should" && (calibration.advice || []).includes(id)) { c.level = "advice"; if (!c.ok) advice.push(id); }
+  }
   const must = Object.entries(checks).filter(([, c]) => c.level === "must" && !c.ok).map(([k]) => k);
   const should = Object.entries(checks).filter(([, c]) => c.level === "should" && !c.ok).map(([k]) => k);
   const signals = [];
   if (me.lucide >= 4 && me.lucide === me.icons && strokeKinds === 1) signals.push("every icon is an unmodified Lucide icon (the default set of generated interfaces): pick a set that fits the brand or adjust stroke and size");
-  return { version: CRAFT_VERSION, summary: { checks: Object.keys(checks).length, must_failed: must, should_failed: should }, signals, checks };
+  return { version: CRAFT_VERSION, summary: { checks: Object.keys(checks).length, must_failed: must, should_failed: should, advice }, signals, checks,
+    calibrated: calibration ? `on ${calibration.sites} sites of the reference bank, ${calibration.measured}` : "not calibrated (no plugins/core/bank/calibration.json)" };
 }
 
-export async function craftAt(urls, { cwd, mode = "operate" } = {}) {
+export async function craftAt(urls, { cwd, mode = "operate", calibration } = {}) {
+  // undefined: use the pack's calibration file; null: measure without it (used when calibrating).
+  if (calibration === undefined) calibration = process.env.QP_NO_CALIBRATION ? null : (await import("./bank.mjs")).loadCalibration();
   const tools = await loadBrowserTools(cwd);
   if (!tools) return { available: false, hint: "Playwright is not available. Run `node <qp.mjs> browser-setup` once (pack cache, not the project)." };
   const browser = await launch(tools.chromium);
@@ -433,17 +445,17 @@ export async function craftAt(urls, { cwd, mode = "operate" } = {}) {
       }
       if (failed) { pages.push({ url, error: failed }); continue; }
       m.around = await around(url, m.desktop.head);
-      pages.push({ url, ...scoreCraft(m, { mode }), measures: m });
+      pages.push({ url, ...scoreCraft(m, { mode, calibration }), measures: m });
     }
   } finally { await browser.close(); }
   return { available: true, version: CRAFT_VERSION, mode, pages,
-    reading: "must: a visible defect or something that breaks use. should: finish; a deliberate exception is fine if the report says why." };
+    reading: "must: a visible defect or something that breaks use. should: finish; a deliberate exception is fine if the report says why. advice: a finish rule that many sites recognised as excellent do not follow either (excellent_sites_failing): apply it when it helps, it is not counted." };
 }
 
 export function compactCraft(result) {
   if (!result.pages) return result;
   return { mode: result.mode, version: result.version, full_report: "craft.json", reading: result.reading,
-    pages: result.pages.map((p) => p.error ? p : { url: p.url, summary: p.summary, signals: p.signals,
-      failed: Object.fromEntries(Object.entries(p.checks).filter(([, c]) => !c.ok).map(([k, c]) => [k, { level: c.level, value: c.value, rule: c.rule, samples: c.samples }])),
+    pages: result.pages.map((p) => p.error ? p : { url: p.url, summary: p.summary, signals: p.signals, calibrated: p.calibrated,
+      failed: Object.fromEntries(Object.entries(p.checks).filter(([, c]) => !c.ok).map(([k, c]) => [k, { level: c.level, value: c.value, rule: c.rule, samples: c.samples, excellent_sites_failing: c.excellent_sites_failing }])),
       passed: Object.entries(p.checks).filter(([, c]) => c.ok).map(([k]) => k) }) };
 }

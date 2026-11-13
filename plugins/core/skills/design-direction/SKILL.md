@@ -9,6 +9,13 @@ A direction that holds is traced: a reference the client likes → a word → a 
 
 CLI: `node "${CLAUDE_PLUGIN_ROOT}/scripts/qp.mjs"`, written `qp` below. Talk to the user in their language. Write the results into `DESIGN.md` (template: `${CLAUDE_PLUGIN_ROOT}/templates/DESIGN.md`) and token files.
 
+## Before the references: the site type, and numbers
+
+Two commands turn "I like this site" into something that can be checked later.
+
+- `qp bank` lists site types (restaurant, online shop, SaaS marketing site, documentation…); `qp bank <type>` gives what visitors of that type expect, real sites recognised as excellent with what to look at on each, their shared traits, and what to avoid. Read it before asking the user for references, and offer two or three of its sites when the user has none. They are examples to learn from; nothing is copied from them.
+- `qp profile <url> <url> --save` measures the references the user names and writes `.quality/references.json`: type scale, number of typefaces, how much of the first screen is image, colour, empty space, density of controls, and the range the references share. Later, `qp gap <url>` lists where a screen of the project falls outside that range. A gap is a question to settle with the user (close it, or keep it and say why in `DESIGN.md`), never a defect by itself.
+
 ## 1. Surface mode
 
 Ask, or confirm from `.quality/project.json` › `surface`, which kind of surface the screens are. Record it in project.json.

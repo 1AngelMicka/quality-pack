@@ -1,0 +1,149 @@
+{
+  "id": "culture-museum-music",
+  "label": {
+    "fr": "Culture, musée et musique",
+    "en": "Culture, museum and music"
+  },
+  "expects": [
+    {
+      "rule": "Plan your visit information (opening hours, prices, accessibility, current programme) is easy to find. A 2026 benchmark of 50 cultural institution sites found Plan Your Visit pages scored lowest of all page types, 67.8 on average.",
+      "source": "https://pantheon.io/state-museum-digital-2026-benchmark",
+      "verified": true
+    },
+    {
+      "rule": "Design for the phone first: the same benchmark measured mobile performance at 40.6 against 57.8 on desktop, a gap of 17.2 points. The source is a hosting vendor, so treat the figures as indicative.",
+      "source": "https://pantheon.io/state-museum-digital-2026-benchmark",
+      "verified": true
+    },
+    {
+      "rule": "Ticketing and event discovery have as few steps as possible. The benchmark says leading museums remove friction there.",
+      "source": "https://pantheon.io/state-museum-digital-2026-benchmark",
+      "verified": true
+    },
+    {
+      "rule": "Audio that starts on its own for more than 3 seconds comes with a control to pause or stop it, or to set its volume separately from the system volume (WCAG 2.2 criterion 1.4.2).",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html",
+      "verified": true
+    },
+    {
+      "rule": "Each exhibition, concert or show page states its dates and times as text, with the venue and a booking link.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Artists and labels put the latest release or next date in the first screen, with the streaming or ticket link one click away.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Collections and archives are searchable text with image descriptions, not only large images.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "5 of 8 first screens are led by a photograph or artwork of people (Van Morrison, Rude Ingénierie, NY Phil, Die Antwoord, Lady Gaga); Kalkbrenner uses a small portrait inside the name.",
+    "The name or title is the largest element on 5 of 8, between 133 and 201 px or spanning the width (Kalkbrenner, Van Morrison, NY Phil, Die Antwoord, Lady Gaga).",
+    "Text on the first screen stays under 40 words on 6 of 8; Kalkbrenner, Die Antwoord, OSI and Sleutelaar carry one line or none.",
+    "5 of 8 use black or near-black as the page colour (Van Morrison, Rude Ingénierie, Die Antwoord, Lady Gaga, NY Phil header); the rest are white, pale grey or a single flat colour.",
+    "3 of 8 open with a loader or an intro that must finish before content shows (OSI, Sleutelaar, and Rude Ingénierie's moving grid).",
+    "4 of 8 put practical or commercial links in the first screen: Get Tickets and Donate (NY Phil), Subscribe and Order vinyl (Van Morrison), Shop and Cart (Lady Gaga), Store (Kalkbrenner).",
+    "Audio is integrated but controlled: Kalkbrenner shows 'Sound OFF', OSI asks the visitor to turn audio on, as WCAG 1.4.2 expects."
+  ],
+  "sites": [
+    {
+      "name": "Paul Kalkbrenner",
+      "url": "https://www.paulkalkbrenner.net/",
+      "why": "White page with the name 'Paul Kalkbrenner' at 133 px in bold ABC Diatype, a small black-and-white portrait inserted between the two words; menu of eight items across the top, a 'Now playing' track control and 'Sound OFF' at the bottom, one sentence of text. One typeface, no colour.",
+      "recognition": "Awwwards Site of the Day, 2026-09-02",
+      "source": "https://www.awwwards.com/sites/paul-kalkbrenner",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Van Morrison",
+      "url": "https://vanmorrison.com/",
+      "why": "Full-bleed photograph of the singer at a keyboard on a pink curtain, 'VAN MORRISON' at 201 px in white Oswald, a three-link menu with streaming icons and a Subscribe button, an orange card for a vinyl and CD release (Order vinyl and CD). Cookie box at left. Inria Serif for text.",
+      "recognition": "Awwwards Honorable Mention, 2026-07-10",
+      "source": "https://www.awwwards.com/sites/van-morrison",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Théâtre Rude Ingénierie",
+      "url": "https://www.rudeingenierie.com/fr",
+      "why": "Near-black (#0a0600) field of square photographs of stage shows, drifting and mixed with red squares; company name at top, Menu and Liste links, filters (Tout, Immersifs, Installations) at the bottom. Titles such as Libre // Dire oui show over images. One typeface (Host Grotesk).",
+      "recognition": "Awwwards Honorable Mention, 2026-09-04",
+      "source": "https://www.awwwards.com/sites/theatre-rude-ingenierie",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "New York Philharmonic, Welcome Gustavo",
+      "url": "https://www.nyphil.org/discover/gustavo",
+      "why": "Black header with the orchestra's logo, Donate, account and search, 'Get Tickets' and 'Full Calendar' links; below, a yellow panel with 'NEW YORK'S NEW MAESTRO' in a black condensed face around a cut-out conductor in a black box. Cookie bar at the bottom.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-03",
+      "source": "https://www.awwwards.com/sites/new-yorks-new-maestro",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "OSI 90th Anniversary",
+      "url": "https://storia.osi.swiss/",
+      "why": "Pale grey (#e4e6e7) screen with soft pink and orange gradients and faint vertical lines; only the small 90 OSI logo and the line 'Celebriamo 89 anni, per un'esperienza ottimale attiva l'audio'. Almarena Display type. No menu on the loading screen.",
+      "recognition": "Awwwards Honorable Mention, 2026-07-17",
+      "source": "https://www.awwwards.com/sites/osi-90th-anniversary",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Archive for Hans Sleutelaar",
+      "url": "https://sleutelaar.xyz/",
+      "why": "On capture only a near-black (#0d0d0d) screen with a thin progress line, the word SLEUTELAAR and a counter (71); the loaded page is white with a menu (Biografie, Index, Gedichten, Archief) and a short Dutch biography in ABC Monument Grotesk (not seen beyond the loader).",
+      "recognition": "Awwwards Honorable Mention, 2026-09-30",
+      "source": "https://www.awwwards.com/sites/archive-for-hans-sleutelaar",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "DIE ANTWOORD",
+      "url": "https://www.dieantwoord.com/",
+      "why": "Black bars above and below a split screen: a grey painted portrait of the two members on the left with the band name in a ragged white face, a flat orange painted panel on the right with 'ZAMA ZAMA' and 'World tour 2027, watch this space'. No menu, no text beyond those lines.",
+      "recognition": "Awwwards Honorable Mention, 2026-07-07",
+      "source": "https://www.awwwards.com/sites/die-antwoord",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Lady Gaga, A Digital Home for a Global Pop Icon",
+      "url": "https://www.ladygaga.com/",
+      "why": "Full-bleed red-tinted video of a face with glitch lines; 'A YEAR OF' in a serif and 'MAYHEM' in a distressed white display face, menu (Latest, Music, Shop, Projects, Live), Account, Cart, a strip of about 20 release thumbnails at the bottom, cookie box at left.",
+      "recognition": "Webby Award 2025, Entertainment, General Desktop & Mobile Sites",
+      "source": "https://winners.webbyawards.com/2025/websites-and-mobile-sites/general-desktop-mobile-sites/entertainment/339814/lady-gaga--a-digital-home-for-a-global-pop-icon",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "Opening hours, prices or the programme only inside an image or a PDF.",
+    "Music that starts on arrival with no visible pause control.",
+    "A full-screen intro animation the visitor must wait for before reaching dates or tickets.",
+    "Embedding a third-party streaming widget as the only content of the home page.",
+    "Large uncaptioned images with no text alternative, so the collection cannot be read by a screen reader.",
+    "A Plan your visit page buried in the footer on a museum site."
+  ],
+  "sources": [
+    {
+      "name": "Pantheon and Urban Insight, State of Museum Digital 2026 benchmark",
+      "url": "https://pantheon.io/state-museum-digital-2026-benchmark",
+      "access": "free"
+    },
+    {
+      "name": "W3C, Understanding SC 1.4.2 Audio Control",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Culture & Education and Music & Sound",
+      "url": "https://www.awwwards.com/websites/culture-education/",
+      "access": "free"
+    },
+    {
+      "name": "Webby Awards winners",
+      "url": "https://winners.webbyawards.com/",
+      "access": "free"
+    }
+  ]
+}

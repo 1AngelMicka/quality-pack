@@ -1,0 +1,196 @@
+{
+  "name": "facto",
+  "language": "en",
+  "profile": "saas",
+  "country": "FR",
+  "stacks": [],
+  "package_manager": "npm",
+  "promise": "For freelancers, Facto keeps invoices in one list so that they know who has paid.",
+  "out_of_scope": [
+    "real payments",
+    "sending email"
+  ],
+  "success_metric": "first invoice sent",
+  "flags": [
+    "has_ui",
+    "has_backend",
+    "has_auth",
+    "has_user_data",
+    "has_db",
+    "has_payments",
+    "has_subscriptions",
+    "has_webhooks",
+    "public_web",
+    "multi_tenant"
+  ],
+  "surface": "operate",
+  "audit_model": "opus",
+  "urls": {
+    "local": "http://localhost:4310",
+    "staging": "",
+    "production": ""
+  },
+  "work_screens": [
+    "The invoice list once invoices exist"
+  ],
+  "flows": [
+    {
+      "id": "see-demo-invoices",
+      "name": "Look at the demo invoice list",
+      "steps": [
+        {
+          "name": "Home",
+          "goto": "/"
+        },
+        {
+          "name": "Open the demo",
+          "click": "role=link[name=\"Demo\"]"
+        },
+        {
+          "name": "Invoices are listed",
+          "expect": "text=NORD-2026-001"
+        }
+      ]
+    },
+    {
+      "id": "log-in-and-list",
+      "name": "Log in and see my invoices",
+      "steps": [
+        {
+          "name": "Login page",
+          "goto": "/login"
+        },
+        {
+          "name": "Type the email",
+          "fill": {
+            "selector": "role=textbox[name=\"Email\"]",
+            "value": "alice@atelier-nord.test"
+          }
+        },
+        {
+          "name": "Type the password",
+          "fill": {
+            "selector": "internal:label=\"Password\"i",
+            "value": "alice-fixture-pass"
+          }
+        },
+        {
+          "name": "Log in",
+          "click": "role=button[name=\"Log in\"]"
+        },
+        {
+          "name": "The list opens",
+          "expect": "text=Your invoices"
+        },
+        {
+          "name": "My invoices are listed",
+          "expect": "text=NORD-2026-002"
+        }
+      ]
+    }
+  ],
+  "access": {
+    "accounts": {
+      "alice": {
+        "login": [
+          {
+            "goto": "/login"
+          },
+          {
+            "fill": {
+              "selector": "role=textbox[name=\"Email\"]",
+              "value": "alice@atelier-nord.test"
+            }
+          },
+          {
+            "fill": {
+              "selector": "internal:label=\"Password\"i",
+              "value": "alice-fixture-pass"
+            }
+          },
+          {
+            "click": "role=button[name=\"Log in\"]"
+          },
+          {
+            "expect": "text=Your invoices"
+          }
+        ]
+      },
+      "bob": {
+        "login": [
+          {
+            "goto": "/login"
+          },
+          {
+            "fill": {
+              "selector": "role=textbox[name=\"Email\"]",
+              "value": "bob@studio-sud.test"
+            }
+          },
+          {
+            "fill": {
+              "selector": "internal:label=\"Password\"i",
+              "value": "bob-fixture-pass"
+            }
+          },
+          {
+            "click": "role=button[name=\"Log in\"]"
+          },
+          {
+            "expect": "text=Your invoices"
+          }
+        ]
+      }
+    },
+    "checks": [
+      {
+        "id": "invoice",
+        "path": "/api/invoices/inv_nord_1",
+        "owner": "alice",
+        "denied_to": [
+          "bob",
+          "anonymous"
+        ],
+        "secret": "NORD-2026-001"
+      },
+      {
+        "id": "invoice-list",
+        "path": "/api/invoices",
+        "owner": "alice",
+        "denied_to": [
+          "anonymous"
+        ],
+        "secret": "NORD-2026-001"
+      }
+    ]
+  },
+  "auth_probe": {
+    "login": {
+      "path": "/api/login"
+    },
+    "known_email": "alice@atelier-nord.test",
+    "attempts": 12
+  },
+  "webhooks": [
+    {
+      "path": "/webhooks/stripe",
+      "provider": "stripe"
+    }
+  ],
+  "seo": {
+    "keywords": [
+      {
+        "page": "/",
+        "keyword": "invoicing software for freelancers"
+      },
+      {
+        "page": "/pricing",
+        "keyword": "price invoicing software"
+      }
+    ],
+    "search_console": {
+      "verified": "",
+      "sitemap_submitted": ""
+    }
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "id": "fintech",
+  "label": {
+    "fr": "Fintech, banque et assurance",
+    "en": "Fintech, bank and insurance"
+  },
+  "expects": [
+    {
+      "rule": "Say who you are and who regulates you where a visitor can find it quickly: licence, regulator and legal entity name are in the footer at minimum, and on the first screen when the product moves money.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "State fees and rates plainly, with the condition next to the number (an asterisk that leads to a visible footnote); 40% of shoppers who left a cart blamed extra costs and 12% could not see the total up front.",
+      "source": "https://baymard.com/lists/cart-abandonment-rate",
+      "verified": true
+    },
+    {
+      "rule": "Show distrust-reducing signals before any card or identity form: 19% of abandoned carts cite distrust of the site with card details.",
+      "source": "https://baymard.com/lists/cart-abandonment-rate",
+      "verified": true
+    },
+    {
+      "rule": "The main action (Get a quote, Get started, Apply) is one button on the first screen, repeated in the header.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Social proof is specific and checkable: named store ratings with a count, named customers, named partners; no unexplained percentages.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Forms are short and forgiving: 17% abandon over a long or complicated checkout and 17% over errors or crashes.",
+      "source": "https://baymard.com/lists/cart-abandonment-rate",
+      "verified": true
+    },
+    {
+      "rule": "Important notices (service disruptions, travel warnings, outages) appear in a banner above the header, in plain text.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "6 of 6 have one filled button as the main action (Apply, Get a quote, Get Tuyo, Start Running), repeated in the header on 5 of them.",
+    "The headline is 60 to 80 px on the 5 sites measured (Moto 64, Possible 80, Tuyo 60, Xapo 61, Run 80) and states the benefit or the category in under 12 words.",
+    "The 5 measured sites use one or two typefaces (Moto, Possible, Tuyo and Xapo one family each, Run two).",
+    "4 of 6 sit on a dark or deeply coloured background (Moto, Tuyo, Xapo, Run) and one on bright blue; only Butter is off-white.",
+    "2 of 6 (Tuyo, Run) show the product interface on the first screen; Possible shows a member photograph, Butter trip photographs, Moto and Xapo no product.",
+    "3 of 6 put a notice or gate before the content: Xapo a legal modal, Butter a travel notice banner, Possible a cookie banner.",
+    "3 of 6 (Tuyo, Xapo, Run) give figures on the first screen (rating and user count, a 4.6% rate with an asterisk, sample dashboard numbers).",
+    "Navigation has three to five items plus Log in or an apply button on 5 of 6."
+  ],
+  "sites": [
+    {
+      "name": "Moto Finance",
+      "url": "https://www.moto-card.com/",
+      "why": "Near-black (#080808) first screen with a slow 3D box scene and no photograph; world clocks sit in the four corners, headline 'Built for modern wealth' in 64 px uppercase Neue Montreal (one typeface), nav of Membership and Partnership plus an Apply for Access button. '0 FX fees' appears lower.",
+      "recognition": "Awwwards Site of the Day and Developer Award, 2026-09-24",
+      "source": "https://www.awwwards.com/websites/finance/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Possible Finance",
+      "url": "https://www.possiblefinance.com/",
+      "why": "Split first screen: bright blue panel with an 80 px headline set in Haffer (asterisk on 'cash fast') and a photograph of a smiling member with a name caption. Header has Log in and a green (#00ec25) Apply now; four benefit columns below; cookie banner. Licence only in the footer.",
+      "recognition": "Awwwards Honorable Mention, 2025-08-28",
+      "source": "https://www.awwwards.com/websites/finance/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Butter Insurance",
+      "url": "https://butterinsurance.com.au/",
+      "why": "Opens on a yellow loader with the logo, then an off-white (#f9f3ef) page: a notice banner above the header, headline 'Travel Insurance for Every Adventure', six photographed trip scenarios, one Get a quote button, casual copy; header holds Login and Get insured.",
+      "recognition": "Awwwards Honorable Mention, 2024-08-16",
+      "source": "https://www.awwwards.com/websites/insurance/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Tuyo",
+      "url": "https://tuyo.com/",
+      "why": "Black rounded panel with a soft pink-green glow: 60 px headline 'Your money companion' in SF Pro Rounded, four one-line benefits, a pill with 4.5+ rating, 100K+ users and Apple Pay, and a green (#00ff59) Get Tuyo button. A phone with a balance screen starts under the panel on white.",
+      "recognition": "Awwwards Honorable Mention, 2025-09-19",
+      "source": "https://www.awwwards.com/websites/bank/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Xapo Bank",
+      "url": "https://www.xapobank.com/en",
+      "why": "A white modal gate comes first, stating the bank is regulated in Gibraltar with a legal notice and an Enter the website button (burnt orange, #c34818). Behind it, a dark brown (#090402) page with a 61 px Helvetica Now Display headline pairing 'Bitcoin' with '4.6%* on USD, paid in BTC'.",
+      "recognition": "Awwwards Honorable Mention, 2024-10-25",
+      "source": "https://www.awwwards.com/websites/bank/",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Run Payments",
+      "url": "https://runpayments.io/",
+      "why": "Deep purple gradient with an 80 px Basis Grotesque Pro headline, one sentence and a lilac (#c4b5fd) Start Running button; at right a white dashboard mock with a weekly chart and three figures. Tabs For Partners and For Merchants above the nav; Sign up and Log in.",
+      "recognition": "Awwwards Honorable Mention, 2025-03-05",
+      "source": "https://www.awwwards.com/websites/payments/",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "Unexplained headline numbers (for example a satisfaction rate above 100%) or invented user counts.",
+    "Rates, fees or returns with an asterisk and no visible footnote.",
+    "Stock photos of smiling people at laptops as the only imagery.",
+    "Hiding the regulator, licence and legal entity behind several clicks.",
+    "Neon gradients, glowing coins and dark-mode crypto styling on a product that holds ordinary savings.",
+    "Long sign-up forms asking for identity data before the visitor has seen pricing."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Finance",
+      "url": "https://www.awwwards.com/websites/finance/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Bank",
+      "url": "https://www.awwwards.com/websites/bank/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Insurance",
+      "url": "https://www.awwwards.com/websites/insurance/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Payments",
+      "url": "https://www.awwwards.com/websites/payments/",
+      "access": "free"
+    },
+    {
+      "name": "Baymard Institute, Cart Abandonment Rate Statistics",
+      "url": "https://baymard.com/lists/cart-abandonment-rate",
+      "access": "free"
+    }
+  ]
+}

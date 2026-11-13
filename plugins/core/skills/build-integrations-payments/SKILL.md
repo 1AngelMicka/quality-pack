@@ -8,7 +8,7 @@ description: "Quality pack build rules for Integrations, payments and costs (Int
 
 Apply these rules while you build. Domains or criteria whose `applies_if` flags are false in `.quality/project.json` do not apply to this project. Before you call a task done, check your work against the criteria of the domains you touched: each one must be true and verifiable.
 
-If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps, qp-expo, qp-capacitor), its rules skill adds stack-specific rules on top of these.
+If a stack module of the quality pack is installed (qp-nextjs, qp-node-api, qp-vps, qp-expo, qp-capacitor, qp-tauri, qp-electron), its rules skill adds stack-specific rules on top of these.
 
 ## Integrations (INT)
 
@@ -25,7 +25,7 @@ Rules:
 
 Done means:
 
-- [BLOCKER] INT-01: Webhook signatures verified (only if: has_webhooks). Check: Each handler verifies the signature against the raw body before any processing.
+- [BLOCKER] INT-01: Webhook signatures verified (only if: has_webhooks). Check: webhooks.json: every endpoint declared in project.json › webhooks refuses an unsigned event and a wrongly signed one (4xx, never 2xx or 5xx). Also read the code: the signature is verified on the raw body before any processing.
 - [major] INT-02: Webhook events processed only once (only if: has_webhooks). Check: Event ID stored; a replay creates no duplicate.
 - [major] INT-03: External responses validated and service outages handled. Check: Schema on responses; degraded behaviour when the service is down.
 - [major] INT-04: Emails authenticated (SPF, DKIM, DMARC) and not flagged as spam (only if: has_email). Check: DNS records checked; test send to Gmail and Outlook.

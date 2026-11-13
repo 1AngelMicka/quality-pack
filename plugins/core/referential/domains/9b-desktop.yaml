@@ -1,0 +1,102 @@
+group: desktop
+label: {fr: "Application de bureau", en: "Desktop app"}
+domains:
+
+  - id: desktop-ux
+    code: DUX
+    label: {fr: "Expérience de bureau", en: "Desktop experience"}
+    summary: {fr: "Fenêtre, menus, raccourcis, fichiers, hors-ligne : ce qu'on attend d'une application installée sur un ordinateur.", en: "Window, menus, shortcuts, files, offline: what people expect from an app installed on a computer."}
+    applies_if: [desktop_app]
+    build:
+      - {fr: "Une application de bureau n'est pas un site dans une fenêtre : elle démarre vite, marche sans réseau pour ce qui est local, et suit les habitudes du système (menus, raccourcis, glisser-déposer, fichiers récents).", en: "A desktop app is not a site in a window: it starts fast, works without network for what is local, and follows the system's habits (menus, shortcuts, drag and drop, recent files)."}
+      - {fr: "Fenêtre : taille minimale fixée, mise en page utilisable de la taille minimale au plein écran, taille et position retenues d'un lancement à l'autre, y compris avec plusieurs écrans.", en: "Window: a minimum size is set, the layout works from the minimum size to full screen, size and position are remembered between launches, including with several displays."}
+      - {fr: "Raccourcis du système respectés (enregistrer, annuler, rétablir, fermer, quitter, préférences), avec Cmd sur macOS et Ctrl ailleurs ; chaque action des menus est aussi dans l'interface.", en: "System shortcuts honoured (save, undo, redo, close, quit, preferences), with Cmd on macOS and Ctrl elsewhere; every menu action is also in the interface."}
+      - {fr: "Aucune perte de travail : enregistrement automatique ou avertissement avant de fermer avec des changements, reprise après un plantage.", en: "No lost work: autosave or a warning before closing with changes, recovery after a crash."}
+      - {fr: "Fichiers : dialogues natifs pour ouvrir et enregistrer, glisser-déposer accepté, chemins longs et caractères accentués gérés, rien d'écrit hors des dossiers choisis par l'utilisateur ou du dossier de données de l'app.", en: "Files: native dialogs to open and save, drag and drop accepted, long paths and accented characters handled, nothing written outside the folders the user chose or the app's data folder."}
+      - {fr: "Les opérations longues n'immobilisent pas la fenêtre : progression affichée, annulation possible.", en: "Long operations do not freeze the window: progress shown, cancel possible."}
+      - {fr: "Thème clair et sombre suivant le système ; mise à l'échelle de l'affichage (125 %, 150 %, 200 %) sans flou ni texte coupé.", en: "Light and dark theme following the system; display scaling (125 %, 150 %, 200 %) without blur or clipped text."}
+    criteria:
+      - id: DUX-01
+        severity: blocker
+        check: {method: auto, tool: flow_run}
+        label: {fr: "Chaque tâche clé va au bout dans la vraie fenêtre", en: "Every key task completes in the real window"}
+        verify: {fr: "flows.json joué avec `qp flows --attach <port>` sur l'application lancée (pas seulement dans un navigateur) : tous les flows terminés. Dire sur quel système.", en: "flows.json played with `qp flows --attach <port>` on the running app (not only in a browser): every flow completed. Say on which system."}
+      - id: DUX-02
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Fenêtre utilisable à toutes les tailles, état retenu", en: "Window usable at every size, state remembered"}
+        verify: {fr: "Taille minimale définie dans la configuration ; captures à la taille minimale et en plein écran sans contenu coupé ; taille et position retrouvées après relance.", en: "Minimum size set in the configuration; screenshots at the minimum size and full screen with no clipped content; size and position restored after relaunch."}
+      - id: DUX-03
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Raccourcis et menus du système respectés", en: "System shortcuts and menus honoured"}
+        verify: {fr: "Enregistrer, annuler, rétablir, copier, coller, fermer, quitter et préférences répondent aux raccourcis du système sur chaque plateforme visée ; menu de l'application présent sur macOS.", en: "Save, undo, redo, copy, paste, close, quit and preferences answer the system's shortcuts on each target platform; application menu present on macOS."}
+      - id: DUX-04
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Aucun travail perdu à la fermeture ou après un plantage", en: "No work lost on close or after a crash"}
+        verify: {fr: "Fermer la fenêtre avec des changements : enregistrés ou avertissement. Tuer le processus en cours de saisie puis relancer : le travail est retrouvé ou proposé.", en: "Close the window with changes: saved, or a warning. Kill the process while editing then relaunch: the work is back or offered."}
+      - id: DUX-05
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Fichiers gérés comme le système l'attend", en: "Files handled the way the system expects"}
+        verify: {fr: "Dialogues natifs ; glisser-déposer ; un fichier au nom accentué, long ou sur un autre disque s'ouvre ; un fichier absent ou verrouillé donne un message clair ; rien d'écrit hors des dossiers autorisés.", en: "Native dialogs; drag and drop; a file with an accented or long name, or on another drive, opens; a missing or locked file gives a clear message; nothing written outside the allowed folders."}
+      - id: DUX-06
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Fonctionne sans réseau pour ce qui est local", en: "Works without network for what is local"}
+        verify: {fr: "Réseau coupé : l'app démarre, les données locales s'ouvrent et se modifient, ce qui demande le réseau le dit sans bloquer le reste.", en: "Network off: the app starts, local data opens and can be changed, what needs the network says so without blocking the rest."}
+      - id: DUX-07
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Opérations longues sans gel, avec progression et annulation", en: "Long operations without freezing, with progress and cancel"}
+        verify: {fr: "Lancer l'opération la plus lourde sur de vraies données : la fenêtre répond toujours, la progression avance, l'annulation fonctionne.", en: "Run the heaviest operation on real data: the window still answers, progress moves, cancel works."}
+      - id: DUX-08
+        severity: minor
+        check: {method: inspect}
+        label: {fr: "Démarrage rapide, thème du système et mise à l'échelle suivis", en: "Fast start, system theme and scaling followed"}
+        verify: {fr: "Fenêtre utilisable en moins de 2 secondes à froid ; thème sombre du système suivi ; affichage net à 150 % et 200 %.", en: "Window usable in under 2 seconds cold; the system's dark theme followed; sharp display at 150 % and 200 %."}
+
+  - id: desktop-release
+    code: DRL
+    label: {fr: "Publication et sécurité de bureau", en: "Desktop release and security"}
+    summary: {fr: "Isolation entre la page et le système, signature, mises à jour, installation et désinstallation.", en: "Isolation between the page and the system, signing, updates, install and uninstall."}
+    applies_if: [desktop_app]
+    build:
+      - {fr: "La page n'accède au système que par une courte liste de fonctions nommées (commandes Tauri, script de préchargement Electron) ; chacune valide ses arguments comme une route de serveur.", en: "The page reaches the system only through a short list of named functions (Tauri commands, Electron preload script); each validates its arguments like a server route."}
+      - {fr: "Tauri : politique de sécurité du contenu définie, permissions par fenêtre limitées aux dossiers, commandes et hôtes utilisés. Electron : contextIsolation activée, nodeIntegration désactivée, bac à sable conservé, aucune page en http.", en: "Tauri: content security policy set, per-window permissions narrowed to the folders, commands and hosts used. Electron: contextIsolation on, nodeIntegration off, sandbox kept, no http page."}
+      - {fr: "Installeurs signés (Windows) et notariés (macOS) ; sinon le système met en garde ou refuse.", en: "Installers signed (Windows) and notarised (macOS); otherwise the system warns or refuses."}
+      - {fr: "Mises à jour signées, servies en https, vérifiées avant installation ; l'utilisateur sait quelle version il a et ce qui a changé.", en: "Updates signed, served over https, verified before install; the user knows which version they have and what changed."}
+      - {fr: "Secrets dans le trousseau du système, jamais en clair dans un fichier de configuration ; aucun secret dans le paquet livré.", en: "Secrets in the system keychain, never in clear in a configuration file; no secret in the shipped package."}
+      - {fr: "Données de l'utilisateur dans le dossier prévu par le système ; la désinstallation les laisse ou les retire selon ce qui est annoncé.", en: "User data in the folder the system provides; uninstalling keeps or removes it as announced."}
+    criteria:
+      - id: DRL-01
+        severity: blocker
+        check: {method: auto, tool: desktop_release_scan}
+        label: {fr: "Isolation entre la page et le système en place", en: "Isolation between the page and the system in place"}
+        verify: {fr: "desktop-check.json : aucun « must » en échec (politique de sécurité du contenu, permissions ou liste d'API, accès distant, nodeIntegration, contextIsolation, sécurité web, mises à jour signées et en https, identifiant de l'app).", en: "desktop-check.json: no failed \"must\" (content security policy, permissions or API list, remote access, nodeIntegration, contextIsolation, web security, signed https updates, app identifier)."}
+      - id: DRL-02
+        severity: major
+        check: {method: auto, tool: desktop_release_scan}
+        label: {fr: "Signature, mises à jour et permissions resserrées", en: "Signing, updates and narrowed permissions"}
+        verify: {fr: "desktop-check.json : chaque « should » en échec est corrigé ou justifié (signature Windows et macOS, mise à jour prévue, permissions larges, bac à sable, script de préchargement).", en: "desktop-check.json: each failed \"should\" is fixed or justified (Windows and macOS signing, updater, broad permissions, sandbox, preload script)."}
+      - id: DRL-03
+        severity: blocker
+        check: {method: inspect}
+        label: {fr: "Chaque fonction exposée à la page valide ses arguments", en: "Every function exposed to the page validates its arguments"}
+        verify: {fr: "Lire chaque commande Tauri ou fonction du script de préchargement : chemins restreints aux dossiers autorisés (pas de « .. »), tailles bornées, aucune exécution de commande construite à partir d'une entrée.", en: "Read every Tauri command or preload function: paths restricted to allowed folders (no \"..\"), sizes bounded, no command built from input and executed."}
+      - id: DRL-04
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Installeurs acceptés par le système sur chaque plateforme visée", en: "Installers accepted by the system on each target platform"}
+        verify: {fr: "Installer la version publiée sur une machine propre : pas d'avertissement SmartScreen bloquant sous Windows, ouverture sans contournement sous macOS ; l'app se lance et se désinstalle proprement.", en: "Install the released build on a clean machine: no blocking SmartScreen warning on Windows, opens without a workaround on macOS; the app launches and uninstalls cleanly."}
+      - id: DRL-05
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Mise à jour testée de bout en bout, version et nouveautés visibles", en: "Update tested end to end, version and changes visible"}
+        verify: {fr: "Installer la version précédente, publier une version de test, vérifier que la mise à jour se télécharge, se vérifie et s'installe ; le numéro de version et les nouveautés sont affichés dans l'app.", en: "Install the previous version, publish a test release, check the update downloads, verifies and installs; the version number and the changes are shown in the app."}
+      - id: DRL-06
+        severity: major
+        check: {method: inspect}
+        label: {fr: "Secrets dans le trousseau du système, données au bon endroit", en: "Secrets in the system keychain, data in the right place"}
+        verify: {fr: "Chercher les jetons et clés dans les fichiers de l'app après connexion : aucun en clair. Les données sont dans le dossier d'application du système, pas à côté de l'exécutable.", en: "Look for tokens and keys in the app's files after signing in: none in clear. Data lives in the system's application data folder, not next to the executable."}

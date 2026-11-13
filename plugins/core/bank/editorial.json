@@ -1,0 +1,166 @@
+{
+  "id": "editorial",
+  "label": {
+    "fr": "Blog, magazine et éditorial",
+    "en": "Blog, magazine and editorial"
+  },
+  "expects": [
+    {
+      "rule": "Body text lines hold 50 to 75 characters, and no more than 80; setting max-width near 70ch keeps lines in range.",
+      "source": "https://baymard.com/blog/line-length-readability",
+      "verified": true
+    },
+    {
+      "rule": "Line spacing for body text is 120% to 145% of the point size (Butterick).",
+      "source": "https://practicaltypography.com/line-spacing.html",
+      "verified": true
+    },
+    {
+      "rule": "Butterick advises an average line length of 45 to 90 characters including spaces, with two to three alphabets as a rough check.",
+      "source": "https://practicaltypography.com/line-length.html",
+      "verified": true
+    },
+    {
+      "rule": "Body text has a contrast ratio of at least 4.5:1 against its background (3:1 for large text), including grey captions and dates.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "Text can be enlarged to 200% without loss of content or function (WCAG 1.4.4).",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html",
+      "verified": true
+    },
+    {
+      "rule": "Body text is at least 16 CSS pixels on phones.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Every article shows its title, author, date and an estimated reading time before the first paragraph; article cards show read time, as Fried Egg Golf does.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The article page has one reading column, with images, pull quotes and related links outside the text measure.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A feed or a subscribe link is visible, and archives or issues can be browsed by date or topic.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "3 of 6 screenshotted sites use one typeface family (Fried Egg Golf, Cassandra Vale, The Surfer's Journal); 2 use two (Extremists on Both Sides, The boring blog) and Rozalia Boma uses four.",
+    "4 of 6 are led by one large image: a photograph (Fried Egg Golf, Cassandra Vale), an illustration (The boring blog) or a magazine cover (The Surfer's Journal).",
+    "The first screen holds under 40 words outside the navigation on all 6, so the reading starts on the next screen.",
+    "Display type is large: 179 px (Cassandra Vale), 85 px (The boring blog), 57 px (Fried Egg Golf), 40 px (Extremists on Both Sides).",
+    "Navigation runs from 2 to 7 items: 2 on The boring blog and Cassandra Vale, 5 on The Surfer's Journal, 7 to 8 on Fried Egg Golf and Rozalia Boma.",
+    "1 of 6 is on near-black (#131313); the others use a pale ground (#fdfcff, mint, lilac, off-white) or a photograph; Fried Egg Golf sets one yellow accent (#ffea5d) on a photograph.",
+    "2 of 6 open with an animated intro (a typewriter title, a loading counter).",
+    "2 of 6 give a way to browse by date, issue or topic on the first screen (The Surfer's Journal year and issue counter, Fried Egg Golf category pills)."
+  ],
+  "sites": [
+    {
+      "name": "Extremists on Both Sides",
+      "url": "https://both-sides.the7eye.org.il/en/",
+      "why": "Near-white (#fdfcff) page: language button top-left, three partner logos top-right, a 40 px serif title (Discordia) with a right-aligned subtitle in Assistant, then two columns of small coloured squares running down. Below: intro paragraphs, a legend, filters and a methodology link.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-15",
+      "source": "https://www.awwwards.com/sites/extremists-on-both-sides",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "The boring blog",
+      "url": "https://www.theboringblog.ai/",
+      "why": "Pale sky-toned screen with a typewriter-style serif title ('The' with a caret, set in Fraunces at 85 px) and a painted illustration of a boy writing in the grass beside a cat. Links to Posts, Subscribe and Read the blog; a 'Drag to turn' hint. Under 15 words of text.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-14",
+      "source": "https://www.awwwards.com/sites/the-boring-blog",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Fried Egg Golf",
+      "url": "https://www.thefriedegg.com/",
+      "why": "Full-bleed photograph of a golfer with a bold yellow (#ffea5d) headline and subhead bottom-left, a Read button, four story thumbnails bottom-right, and a row of seven yellow pill links (Competitive Golf, Architecture, Pro Shop). Menu and search at left, Join the Club at right. Type: Grey.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-29",
+      "source": "https://www.awwwards.com/sites/fried-egg-golf",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Cassandra Vale",
+      "url": "https://thecassandravale.com/",
+      "why": "Full-bleed dark portrait photograph, the name CASSANDRA VALE in white 179 px Monument across the bottom, a rule-framed strip 'Character, Fashion, Attitude' and one line 'stories in motion, branded editorial'. CASS, Instagram and Contact sit in white boxes at the top corners; page black #131313.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-09",
+      "source": "https://www.awwwards.com/sites/cassandra-vale",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Rozalia Boma, Writer",
+      "url": "https://rozaliabomawrites.com/",
+      "why": "A loading counter first, then a lilac (#f5dafb) page; the capture caught a dark purple wipe with holographic stickers (butterfly, phone, heart) and a yellow diagonal banner. Nav of Home, Author, Books, Blog, Guestbook, Play, Contact and Get my book; four typefaces, Plus Jakarta Sans main.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-08",
+      "source": "https://www.awwwards.com/sites/rozalia-boma-writer",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "The Surfer's Journal Archives",
+      "url": "https://archives.surfersjournal.com/",
+      "why": "Pale mint-green page: Issues, Collections and Search at left, wordmark centred, Subscribe and Library at right, then one magazine cover (issue 35.5, a surfer in a wave) centred, with the year 2026, an All (188) filter and the issue number below. Practice serif. A cover grid by year follows.",
+      "recognition": "SiteInspire, added 2026-09-29",
+      "source": "https://www.siteinspire.com/website/13639-the-surfers-journal-archives",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "AI in Design Report 2026",
+      "url": "https://stateofaidesign.com/",
+      "why": "Research report built as a Framer page: title 'AI in Design Report 2026', a one-line subhead, a byline by Designer Fund with Foundation Capital, a Scroll to read link and nav of About, Tools, Craft, Teams and five case studies. Counters animate on load (not seen on a screenshot).",
+      "recognition": "Awwwards Site of the Day, 2026-08-26 (7.4/10)",
+      "source": "https://www.awwwards.com/sites/ai-in-design-report-2026",
+      "checked": "2026-11-12"
+    },
+    {
+      "name": "Chicago.com",
+      "url": "https://chicago.com/",
+      "why": "Local news and guides site of a public media group: headline 'Join the conversation on your block', a Get started button, a phone mockup, nav of Guides, Communities, Partners, News, Donate and Sign In, then guide cards with author and date and a news carousel (not seen on a screenshot).",
+      "recognition": "Awwwards Honorable Mention, 2026-08-17",
+      "source": "https://www.awwwards.com/sites/chicago-com",
+      "checked": "2026-11-12"
+    }
+  ],
+  "avoid": [
+    "Lines wider than 80 characters, or full-width text across a desktop screen.",
+    "Light grey text on white, or text laid over a photograph without a darkening layer.",
+    "Body text smaller than 16 px, or line height below 1.4.",
+    "Card grids where every post has the same stock image, a category pill and a 'Read more' button.",
+    "Newsletter or cookie popups that cover the article before the first paragraph.",
+    "Infinite scroll with no footer, no archive and no way to reach older posts.",
+    "Pages with no author, no date or no reading time."
+  ],
+  "sources": [
+    {
+      "name": "Baymard Institute, Readability: The Optimal Line Length",
+      "url": "https://baymard.com/blog/line-length-readability",
+      "access": "free"
+    },
+    {
+      "name": "Butterick's Practical Typography, Line length and Line spacing",
+      "url": "https://practicaltypography.com/line-length.html",
+      "access": "free"
+    },
+    {
+      "name": "W3C, WCAG 2.2 Understanding 1.4.3 and 1.4.4",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Magazine / Newspaper / Blog",
+      "url": "https://www.awwwards.com/websites/magazine-newspaper-blog/",
+      "access": "free"
+    },
+    {
+      "name": "SiteInspire, Editorial",
+      "url": "https://www.siteinspire.com/websites/categories/editorial",
+      "access": "free"
+    }
+  ]
+}

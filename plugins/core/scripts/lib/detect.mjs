@@ -60,6 +60,7 @@ export function detect(cwd, stacks) {
   if (has(deps, ["expo", "react-native", "@capacitor/*"]) || file("capacitor.config.ts") || file("capacitor.config.json") || file("pubspec.yaml")) add("native_app", "mobile framework (Expo, React Native, Capacitor or Flutter)");
   if (has(deps, ["stripe", "@lemonsqueezy/*", "@paddle/*", "@polar-sh/*"])) add("has_subscriptions", "payment SDK (confirm the product sells subscriptions)");
   if (has(deps, ["@clerk/*", "@workos-inc/*", "better-auth"]) && /organi[sz]ation|workspace|tenant/i.test(JSON.stringify(Object.keys(deps)))) add("multi_tenant", "organisation feature of the auth library (confirm)");
+  if (file("src-tauri") || has(deps, ["electron", "@tauri-apps/api", "@tauri-apps/cli"])) add("desktop_app", "Tauri folder or Electron dependency");
   if (has(deps, ["nodemailer", "resend", "@sendgrid/mail", "postmark", "@react-email/*", "mailgun.js", "brevo", "@getbrevo/*"])) add("has_email", "email library");
   if (has(deps, ["openai", "@anthropic-ai/sdk", "@google/generative-ai", "ai", "replicate"])) { add("uses_paid_services", "AI SDK"); add("has_external_api", "AI API"); }
   if (has(deps, ["axios", "ky", "got", "undici"])) add("has_external_api", "HTTP client (check what it calls)");
@@ -72,6 +73,7 @@ export function detect(cwd, stacks) {
   let profile = "webapp";
   let profileWhy = "UI with a server, a database or accounts";
   if (has(deps, ["expo", "react-native", "@capacitor/*"])) { profile = "mobile"; profileWhy = "React Native, Expo or Capacitor"; }
+  else if (flags.has("desktop_app")) { profile = "desktop"; profileWhy = "Tauri or Electron"; }
   else if (flags.has("has_payments")) { profile = "saas"; profileWhy = "payment SDK"; }
   else if (!flags.has("has_ui") && flags.has("has_backend")) { profile = "api"; profileWhy = "server without UI"; }
   else if (flags.has("has_ui") && !flags.has("has_backend") && !flags.has("has_db") && !flags.has("has_auth")) {

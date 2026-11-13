@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fragile</title>
+<style>
+  body { font-family: sans-serif; margin: 0; }
+  .bar { display: flex; gap: 8px; padding: 12px; width: 900px; }
+  .bar button { white-space: nowrap; padding: 10px 16px; }
+  .card h2 { width: 160px; height: 24px; overflow: hidden; white-space: nowrap; margin: 12px; }
+</style></head>
+<body>
+  <div class="bar"><button>Save the report</button><button>Export as a file</button><button>Share with the team</button><button>Print this page</button><button>Archive the month</button></div>
+  <main><div class="card"><h2>Monthly report</h2></div><div id="list"></div></main>
+  <script>
+    // No waiting state and no error handling: the list stays empty, and a failed request is not caught.
+    fetch("/api/items").then((r) => r.json()).then((items) => { document.getElementById("list").innerHTML = items.map((i) => "<p>" + i + "</p>").join(""); });
+  </script>
+</body></html>

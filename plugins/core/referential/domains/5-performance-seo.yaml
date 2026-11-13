@@ -13,6 +13,12 @@ domains:
       - {fr: "Pas de requête en boucle (N+1) ; pagination de toute liste qui peut grandir.", en: "No query in a loop (N+1); paginate every list that can grow."}
       - {fr: "Compression gzip ou brotli et cache HTTP sur les ressources statiques.", en: "gzip or brotli compression and HTTP caching on static assets."}
     criteria:
+      - id: PRF-07
+        severity: major
+        check: {method: auto, tool: perf_run}
+        applies_if: [has_ui]
+        label: {fr: "Chargement tenu sur un téléphone ralenti", en: "Loading holds on a throttled phone"}
+        verify: {fr: "perf.json sur les pages principales : aucun « must » en échec (affichage principal sous 4 s, saut de mise en page de 0,1 au plus, moins de 600 ms de blocage, moins de 700 kB de scripts) ; chaque « should » corrigé ou justifié.", en: "perf.json on the main pages: no failed \"must\" (largest paint under 4 s, layout shift of 0.1 at most, under 600 ms of blocking, under 700 kB of scripts); each \"should\" fixed or justified."}
       - id: PRF-01
         severity: major
         check: {method: auto, tool: lighthouse}
@@ -59,6 +65,11 @@ domains:
       - {fr: "Le contenu important est dans le HTML servi (rendu serveur ou statique), pas seulement généré côté client.", en: "Important content is in the served HTML (server or static rendering), not only client-generated."}
       - {fr: "Fournir sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons et manifest.", en: "Provide sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons and manifest."}
       - {fr: "Les pages privées et de préproduction ne sont pas indexables.", en: "Private and staging pages are not indexable."}
+      - {fr: "Choisir les recherches sur lesquelles on veut ressortir avant d'écrire les pages : une expression principale par page, tirée des mots des clients, notée dans .quality/project.json › seo.keywords. Deux pages ne visent jamais la même expression.", en: "Choose the searches to be found for before writing the pages: one main phrase per page, taken from customers' words, recorded in .quality/project.json › seo.keywords. Two pages never target the same phrase."}
+      - {fr: "Chaque page cible porte son expression dans le titre, le h1, la description, l'adresse et le premier paragraphe, dans une phrase naturelle ; jamais de liste de mots-clés ni de répétition forcée.", en: "Each target page carries its phrase in the title, the h1, the description, the address and the first paragraph, in a natural sentence; never a list of keywords or forced repetition."}
+      - {fr: "Titre de 15 à 60 caractères et description de 70 à 160 caractères, écrits pour chaque page : ce que la page apporte, puis le nom du site.", en: "Title of 15 to 60 characters and description of 70 to 160 characters, written for each page: what the page offers, then the site's name."}
+      - {fr: "Le sitemap.xml est généré à partir des vraies pages, ne liste que des adresses canoniques qui répondent 200, porte des dates lastmod réelles et est déclaré dans robots.txt.", en: "sitemap.xml is generated from the real pages, lists only canonical addresses that answer 200, carries real lastmod dates and is declared in robots.txt."}
+      - {fr: "Au lancement : déclarer le site dans Google Search Console (propriété de domaine vérifiée par DNS de préférence), y envoyer le sitemap, puis contrôler l'indexation ; noter les dates dans project.json › seo.search_console.", en: "At launch: declare the site in Google Search Console (domain property verified by DNS preferably), submit the sitemap there, then check indexing; record the dates in project.json › seo.search_console."}
     criteria:
       - id: SEO-01
         severity: blocker
@@ -90,6 +101,21 @@ domains:
         check: {method: inspect}
         label: {fr: "Données structurées adaptées au type de site", en: "Structured data suited to the site type"}
         verify: {fr: "JSON-LD Organization, LocalBusiness, Product ou Article selon le cas, validé.", en: "JSON-LD Organization, LocalBusiness, Product or Article as relevant, validated."}
+      - id: SEO-08
+        severity: blocker
+        check: {method: auto, tool: seo_pages}
+        label: {fr: "Sitemap complet et sain, titre et description remplis sur chaque page", en: "Complete and sound sitemap, title and description filled on every page"}
+        verify: {fr: "seo.json : aucun « must » en échec (sitemap présent, adresses du bon domaine qui répondent 200 et sont indexables, robots.txt qui ne bloque pas le site, titre et description présents, titres uniques).", en: "seo.json: no failed \"must\" (sitemap present, addresses on the right domain that answer 200 and are indexable, robots.txt not blocking the site, title and description present, unique titles)."}
+      - id: SEO-09
+        severity: major
+        check: {method: auto, tool: seo_pages}
+        label: {fr: "Chaque recherche visée a sa page, et la page porte l'expression", en: "Each target search has its page, and the page carries the phrase"}
+        verify: {fr: "seo.json › keywords : project.json › seo.keywords déclare une expression principale par page ; chacune est dans le titre et le h1, et dans au moins deux endroits parmi la description, le premier paragraphe et l'adresse ; aucune expression visée par deux pages. Longueurs de titre et de description tenues.", en: "seo.json › keywords: project.json › seo.keywords declares one main phrase per page; each is in the title and the h1, and in at least two of description, first paragraph and address; no phrase targeted by two pages. Title and description lengths kept."}
+      - id: SEO-10
+        severity: major
+        check: {method: auto, tool: seo_pages}
+        label: {fr: "Site déclaré dans Google Search Console, sitemap envoyé", en: "Site declared in Google Search Console, sitemap submitted"}
+        verify: {fr: "project.json › seo.search_console donne la date de vérification de la propriété et la date d'envoi du sitemap, confirmées par l'utilisateur ; le rapport d'indexation ne montre pas d'erreur sur les pages du sitemap.", en: "project.json › seo.search_console gives the date the property was verified and the date the sitemap was submitted, confirmed by the user; the indexing report shows no error on the sitemap's pages."}
       - id: SEO-07
         severity: minor
         check: {method: inspect}
