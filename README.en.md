@@ -89,6 +89,23 @@ A prototype to show people may skip stages; the skill then says what is missing 
 /plugin install sw-electron@shipwright    # Electron desktop app
 ```
 
+**Without typing a `/plugin` command** (an agent cannot run them itself):
+
+```bash
+# A. No installation, from a clone of the repository: read the skills and run the commands
+node <clone>/plugins/core/scripts/sw.mjs skills          # the list of skills and agents
+node <clone>/plugins/core/scripts/sw.mjs skill kickoff   # one skill, ready to follow
+
+# B. Write the project's settings: Claude Code offers the plugin the next time the project is opened
+node <clone>/plugins/core/scripts/sw.mjs enable --modules nextjs,vps
+
+# C. On the command line, from a terminal outside Claude Code
+claude plugin marketplace add 1AngelMicka/quality-pack
+claude plugin install sw@shipwright
+```
+
+Details are in the [agent guide](docs/AGENT_GUIDE.md).
+
 **3. Restart Claude Code** (or run `/reload-plugins`), open your project and run:
 
 ```

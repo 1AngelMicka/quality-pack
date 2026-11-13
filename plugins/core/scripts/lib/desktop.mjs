@@ -126,6 +126,6 @@ export function desktopChecks(root) {
   const must = Object.entries(checks).filter(([, c]) => c.level === "must" && !c.ok).map(([k]) => k);
   const should = Object.entries(checks).filter(([, c]) => c.level === "should" && !c.ok).map(([k]) => k);
   return { kind, summary: { checks: Object.keys(checks).length, must_failed: must, should_failed: should }, checks,
-    not_covered: ["the signed installers themselves and whether the system accepts them (SmartScreen, Gatekeeper)", "behaviour in the real window: key tasks, window size and state, menus, shortcuts, files (play them with qp flows --attach)", "what each exposed command does with its arguments",
+    not_covered: ["the signed installers themselves and whether the system accepts them (SmartScreen, Gatekeeper)", "behaviour in the real window: key tasks, window size and state, menus, shortcuts, files (play them with sw flows --attach)", "what each exposed command does with its arguments",
       "licences of bundled binaries"], note: kind === "unknown" ? "No Tauri folder (src-tauri) and no electron dependency found." : "Read from the project files." };
 }

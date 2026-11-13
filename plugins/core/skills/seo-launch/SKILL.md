@@ -1,6 +1,6 @@
 ---
 name: seo-launch
-description: "Gets the public pages of a site found on search engines, from the choice of keywords to the launch: picks the searches to be found for (one main phrase per page), writes each page's title, meta description, h1 and first paragraph around it, builds sitemap.xml and robots.txt, declares the site in Google Search Console and submits the sitemap, then checks indexing. Measures it with qp seo. Use when public pages are written or changed, before a launch, when the user mentions SEO, keywords, Google, Search Console, sitemap, title tag, meta description, ranking or indexing. FR : référencement, SEO, mots-clés, Google Search Console, sitemap.xml, balise title, meta description, indexation, ressortir sur Google."
+description: "Gets the public pages of a site found on search engines, from the choice of keywords to the launch: picks the searches to be found for (one main phrase per page), writes each page's title, meta description, h1 and first paragraph around it, builds sitemap.xml and robots.txt, declares the site in Google Search Console and submits the sitemap, then checks indexing. Measures it with sw seo. Use when public pages are written or changed, before a launch, when the user mentions SEO, keywords, Google, Search Console, sitemap, title tag, meta description, ranking or indexing. FR : référencement, SEO, mots-clés, Google Search Console, sitemap.xml, balise title, meta description, indexation, ressortir sur Google."
 ---
 
 # SEO launch

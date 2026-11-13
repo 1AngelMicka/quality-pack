@@ -19,7 +19,7 @@ These rules add to the core build skills of Shipwright.
 - Updates with the updater plugin: public key in the configuration, private key only in CI, https endpoints.
 - Windows signing and macOS notarisation done in CI; no key or certificate in the repository.
 - Never run a project generator with --force in a non-empty folder.
-- To check the interface in the real window on Windows: start the app with WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222, then qp flows --attach 9222 and qp deslop --attach 9222.
+- To check the interface in the real window on Windows: start the app with WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222, then sw flows --attach 9222 and sw deslop --attach 9222.
 
 ## Check commands
 

@@ -89,6 +89,23 @@ Un prototype à montrer peut sauter des étapes ; le skill dit alors ce qui manq
 /plugin install sw-electron@shipwright    # Application de bureau Electron
 ```
 
+**Sans taper de commande `/plugin`** (un agent ne peut pas les lancer lui-même) :
+
+```bash
+# A. Sans installation, depuis un clone du dépôt : lire les skills et lancer les commandes
+node <clone>/plugins/core/scripts/sw.mjs skills          # la liste des skills et des agents
+node <clone>/plugins/core/scripts/sw.mjs skill kickoff   # un skill, prêt à être suivi
+
+# B. Écrire les réglages du projet : Claude Code proposera le plugin à la prochaine ouverture
+node <clone>/plugins/core/scripts/sw.mjs enable --modules nextjs,vps
+
+# C. En ligne de commande, depuis un terminal hors de Claude Code
+claude plugin marketplace add 1AngelMicka/quality-pack
+claude plugin install sw@shipwright
+```
+
+Le détail est dans le [guide pour agents](docs/AGENT_GUIDE.md).
+
 **3. Redémarre Claude Code** (ou tape `/reload-plugins`), ouvre ton projet et lance :
 
 ```

@@ -77,7 +77,7 @@
         "E1"
       ],
       "response": "mitigate",
-      "test": "qp auth",
+      "test": "sw auth",
       "priority": "before-launch",
       "status": "done"
     },
@@ -89,7 +89,7 @@
         "E3"
       ],
       "response": "mitigate",
-      "test": "qp webhooks",
+      "test": "sw webhooks",
       "priority": "before-launch",
       "status": "done"
     }

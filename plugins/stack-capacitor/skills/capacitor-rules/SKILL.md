@@ -19,7 +19,7 @@ These rules add to the core build skills of Shipwright.
 - Android back button handled (App.addListener('backButton')): it returns to the previous screen and only closes the app from home.
 - No hover as the only way to act; touch feedback under 100 ms; no 300 ms delay (touch-action: manipulation).
 - Run `npx cap sync` after any plugin change and commit the android/ and ios/ folders.
-- The same key tasks are played in the browser (qp flows) and on a device (qp mobile flows).
+- The same key tasks are played in the browser (sw flows) and on a device (sw mobile flows).
 
 ## Check commands
 

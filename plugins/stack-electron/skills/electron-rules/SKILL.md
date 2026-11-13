@@ -19,7 +19,7 @@ These rules add to the core build skills of Shipwright.
 - Heavy work in a utility process or a worker, never in the main process, which would freeze every window.
 - Signed updates (electron-updater or update-electron-app), installers signed and notarised in CI.
 - Secrets with safeStorage or the system keychain; data in app.getPath('userData').
-- To check the interface in the real window: start the app with --remote-debugging-port=9222, then qp flows --attach 9222.
+- To check the interface in the real window: start the app with --remote-debugging-port=9222, then sw flows --attach 9222.
 
 ## Check commands
 

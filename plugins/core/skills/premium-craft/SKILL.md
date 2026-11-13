@@ -90,8 +90,8 @@ Run the measure again, at most three passes, then report with numbers and withou
 
 ```
 Screens: <addresses>
-Finish (qp craft), before → after: must <n> → <n>, should <n> → <n>
-Hard conditions (qp stress): must <n>, should <n> · screens run: <n> of <n>
+Finish (sw craft), before → after: must <n> → <n>, should <n> → <n>
+Hard conditions (sw stress): must <n>, should <n> · screens run: <n> of <n>
 Art director: <changes applied> · declined: <changes and why>
 Fixed: <3 to 6 points, with the root cause (token, component)>
 Kept on purpose: <check and the reason, written in DESIGN.md>

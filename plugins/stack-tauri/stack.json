@@ -77,8 +77,8 @@
    "en": "Never run a project generator with --force in a non-empty folder."
   },
   {
-   "fr": "Pour vérifier l'interface dans la vraie fenêtre sous Windows : lancer l'app avec WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222, puis qp flows --attach 9222 et qp deslop --attach 9222.",
-   "en": "To check the interface in the real window on Windows: start the app with WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222, then qp flows --attach 9222 and qp deslop --attach 9222."
+   "fr": "Pour vérifier l'interface dans la vraie fenêtre sous Windows : lancer l'app avec WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222, puis sw flows --attach 9222 et sw deslop --attach 9222.",
+   "en": "To check the interface in the real window on Windows: start the app with WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=9222, then sw flows --attach 9222 and sw deslop --attach 9222."
   }
  ],
  "qp_stack": true,

@@ -40,14 +40,40 @@ Then: restart Claude Code, or type `/reload-plugins`.
 
 **Check:** typing `/sw:` should list `kickoff`, `audit`, `fix` and `handoff`. If not, open `/plugin`, look at **Installed** and the **Errors** tab.
 
-If you can run shell commands but not slash commands, the CLI equivalent is:
+### If you cannot type slash commands
+
+`/plugin` commands are typed by the user: an agent cannot run them. Three other ways, from the lightest to the most complete. Say which one you use.
+
+**A. No installation: read the skills and run the CLI from a clone.** Works in any coding agent, and inside a session that is already open.
+
+```bash
+git clone --depth 1 https://github.com/1AngelMicka/quality-pack.git <somewhere outside the project>
+node <clone>/plugins/core/scripts/sw.mjs skills            # every skill and agent, with a description and its file
+node <clone>/plugins/core/scripts/sw.mjs skill kickoff     # one skill, paths filled in, ready to follow
+node <clone>/plugins/core/scripts/sw.mjs skill from-zero
+```
+
+Follow the text that `skill` prints as if the plugin had loaded it. Where it names another skill or a `/sw:` command, read that one the same way. A skill listed with `asked_by_the_user_only` is a command (`/sw:kickoff`, `/sw:audit`, `/sw:fix`…): run it only when the user asked for it. What you lose compared with the installed plugin: the hooks (the secrets guard before a commit) and the automatic loading of skills, so read `workflow` and `from-zero` yourself at the start. If the plugin is already installed, the same script is in Claude Code's plugin cache and no clone is needed.
+
+**B. Write the project's settings, so that Claude Code offers the plugin.**
+
+```bash
+node <clone>/plugins/core/scripts/sw.mjs enable --modules nextjs,vps
+```
+
+It adds the marketplace and the plugins to `.claude/settings.json` of the project and keeps what is already there. Claude Code reads that file when the project is opened: the user restarts the session there and accepts the marketplace. The file can be committed to share the setup with a team. Until the restart, keep using A.
+
+**C. The command line**, from a terminal outside any Claude Code session:
 
 ```bash
 claude plugin marketplace add 1AngelMicka/quality-pack
 claude plugin install sw@shipwright
+claude plugin install sw-nextjs@shipwright
 ```
 
-Add `--scope project` to both to share the setup with a team through `.claude/settings.json`, which they then commit.
+`claude plugin install` takes `--scope project` to write the project's settings instead of the user's. Inside a Claude Code session the `claude` command refuses to start; do not work around that, use A or B, or ask the user to run these three lines in a terminal. The plugin is active after a restart of the session or `/reload-plugins`.
+
+Checked on Claude Code 2.1.45: A, B (the file written is the one `claude plugin install --scope project` writes) and C.
 
 ## 2. Optional extras
 
