@@ -114,28 +114,31 @@ export function summarizeCalibration(pages, { mode } = {}) {
     frequent_must: Object.entries(craft).filter(([, k]) => k.level === "must" && k.n >= 10 && k.fail_rate >= 0.2).map(([id, k]) => `${id} (${Math.round(k.fail_rate * 100)} %)`).sort() };
 }
 
-export async function calibrateBank(type, { cwd, limit = 0, dir = BANK_DIR, file = CALIBRATION_FILE, parallel = 4 } = {}) {
+export async function calibrateBank(type, { cwd, limit = 0, dir = BANK_DIR, file = CALIBRATION_FILE, parallel = 4, craftOnly = false } = {}) {
   const { craftAt } = await import("./craft.mjs");
   const { lookAt } = await import("./look.mjs");
   const bank = loadBank(dir);
   const ids = type === "all" ? Object.keys(bank.types) : [type];
+  const unknown = ids.find((id) => !bank.types[id]);
+  if (unknown) return { errors: [`Unknown site type "${unknown}"`] };
   const prev = loadCalibration(file) || { pages: [] };
   const pages = prev.pages.filter((p) => !ids.includes(p.type));
-  for (const id of ids) {
-    const t = bank.types[id];
-    if (!t) return { errors: [`Unknown site type "${id}"`] };
-    const urls = t.sites.map((s) => s.url).slice(0, limit || undefined);
-    // The sites of the bank are public pages meant to convince or to be read: measured in "persuade" mode.
-    const craft = await inParallel(urls, parallel, (slice) => craftAt(slice, { cwd, mode: "persuade", calibration: null }));
-    if (!craft.available) return craft;
-    const look = await inParallel(urls, parallel, (slice) => lookAt(slice, { cwd, mode: "persuade" }));
-    urls.forEach((url, i) => {
-      const c = craft.pages[i], l = look.pages?.[i];
-      if (!c || c.error === "not measured") { pages.push({ type: id, url, error: "not measured" }); return; }
-      if (c?.error) { pages.push({ type: id, url, error: c.error }); return; }
-      pages.push({ type: id, url, craft: { checks: Object.fromEntries(Object.entries(c.checks).map(([k, v]) => [k, { level: v.level, ok: v.ok }])) },
-        look: l && !l.error ? { tier: l.tier, points: l.points, signals: l.counted } : null });
-    });
+  // All the sites of all the types share the workers: a type of eight sites does not leave workers idle.
+  const jobs = ids.flatMap((id) => bank.types[id].sites.map((s) => s.url).slice(0, limit || undefined).map((url) => ({ type: id, url })));
+  const urls = [...new Set(jobs.map((j) => j.url))];
+  // The sites of the bank are public pages meant to convince or to be read: measured in "persuade" mode.
+  const craft = await inParallel(urls, parallel, (slice) => craftAt(slice, { cwd, mode: "persuade", calibration: null }));
+  if (!craft.available) return craft;
+  // craftOnly: after a change to the craft measures alone, the look of each site is kept from the last calibration.
+  const kept = new Map(prev.pages.filter((p) => p.look).map((p) => [p.url, p.look]));
+  const look = craftOnly ? null : await inParallel(urls, parallel, (slice) => lookAt(slice, { cwd, mode: "persuade" }));
+  const at = new Map(urls.map((u, i) => [u, i]));
+  for (const { type: id, url } of jobs) {
+    const c = craft.pages[at.get(url)], l = look?.pages?.[at.get(url)];
+    if (!c || c.error === "not measured") { pages.push({ type: id, url, error: "not measured" }); continue; }
+    if (c.error) { pages.push({ type: id, url, error: c.error }); continue; }
+    pages.push({ type: id, url, craft: { checks: Object.fromEntries(Object.entries(c.checks).map(([k, v]) => [k, { level: v.level, ok: v.ok }])) },
+      look: craftOnly ? kept.get(url) || null : l && !l.error ? { tier: l.tier, points: l.points, signals: l.counted } : null });
   }
   const summary = summarizeCalibration(pages, { mode: "persuade" });
   writeFileSync(file, JSON.stringify({ measured: new Date().toISOString().slice(0, 10), advice_rate: ADVICE_RATE, ...summary, pages }, null, 1) + "\n");
