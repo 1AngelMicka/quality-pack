@@ -47,7 +47,7 @@ Reduce the look traits to 4 or 5 mood words, refined with the client (synonyms h
 
 ## 4. Style tiles before layouts
 
-Make 2 or 3 style tiles: one HTML page each, with the type scale, the palette in use, buttons, inputs, a card, a list item and a photo treatment, and no page layout. Put them in `.quality/design/tiles/`. Show them side by side; the client picks or mixes. Iterating on a tile is much faster than on a mock-up because style is separate from layout.
+Make 2 or 3 style tiles: one HTML page each, with the type scale, the palette in use, buttons, inputs, a card, a list item and a photo treatment, and no page layout. Put them in `.quality/design/tiles/`. Show them side by side with `node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" tiles`: it serves the folder, captures each tile on desktop and phone, writes a contact sheet (`_sheet/index.html`, `_sheet/sheet.png`) and reports fonts that are declared but not loaded. The client picks or mixes. Iterating on a tile is much faster than on a mock-up because style is separate from layout.
 
 For consumer apps and persuasive pages, look for a concept from the product's own world before choosing styles (a running app built around an athletics track, a sleep app as a village falling asleep): it drives type, colour, imagery and motion, and keeps the result from looking like every other product. Make the 2 or 3 tiles real alternatives, then pick; committing to the first idea is what makes generated design predictable.
 

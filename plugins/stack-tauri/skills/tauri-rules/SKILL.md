@@ -24,7 +24,7 @@ These rules add to the core build skills of Shipwright.
 
 ## Check commands
 
-Used by `/sw:audit`. `{pm}` is the project's package manager, `{url}` the app URL, `{host}` its host name.
+Used by `/sw:audit`. `{pm}` is the project's package manager, `{url}` the app URL, `{api_url}` the API URL (project.json `api_url`, the app URL when absent), `{host}` its host name.
 
 | Check | Command | Passes if |
 | --- | --- | --- |
