@@ -133,6 +133,94 @@ export async function browserChecks(urls, { cwd = process.cwd(), outDir } = {}) 
     note: "Only the pages as they load. What happens after the user acts (files added, tabs, dialogs) is in flows.json (`sw.mjs flows`)." };
 }
 
+// --- Shared by look, craft, stress and deslop: what the page really showed, --before and --as <account> -------
+
+// A local address: a development server, where some rules (404 status, absolute share image) cannot hold yet.
+export const isLocalUrl = (u) => { try { return /^(localhost|127(\.\d+){3}|\[::1\]|0\.0\.0\.0)$|\.(localhost|test)$/i.test(new URL(u).hostname); } catch { return false; } };
+
+// Two addresses show the same screen when origin, path (trailing slash aside) and hash route match. A query
+// added on the way (?next=/app) is ignored, a different path or hash route (#/login) is not.
+export function sameScreen(requested, final) {
+  try {
+    const a = new URL(requested), b = new URL(final);
+    const path = (u) => u.pathname.replace(/\/+$/, "") || "/";
+    const route = (u) => u.hash.replace(/^#\/?/, "").replace(/\/+$/, "");
+    const hashRoute = (u) => /^#\//.test(u.hash);
+    return a.origin === b.origin && path(a) === path(b) && (!(hashRoute(a) || hashRoute(b)) || route(a) === route(b));
+  } catch { return requested === final; }
+}
+
+// Responses that say the page was not the one meant: refused (401, 403) or rate-limited (429).
+export function watchDenied(page, list) {
+  page.on("response", (res) => { const s = res.status(); if ([401, 403, 429].includes(s) && list.length < 20) list.push({ status: s, url: res.url().slice(0, 200) }); });
+}
+
+// What the browser really measured, compared with what was asked. `warnings` is empty when it is the same screen.
+export function reachOf(requested, final, denied = []) {
+  const r = { requested, final: final || requested, same_screen: !final || sameScreen(requested, final), denied: denied.slice(0, 10), warnings: [] };
+  if (!r.same_screen) r.warnings.push(`NOT THE REQUESTED SCREEN: asked for ${requested}, the browser ended on ${r.final} (a redirect, often to the login page). Every measure below is of that page: do not read it as a pass. Use --as <account> (access.accounts in project.json) or --before.`);
+  if (r.denied.length) {
+    const codes = [...new Set(r.denied.map((d) => d.status))].join(", ");
+    r.warnings.push(`${r.denied.length} response(s) ${codes} while measuring, first ${r.denied[0].url}${r.denied.some((d) => d.status === 429) ? ": the app's rate limit refused requests (too many logins?). Wait a minute; --as logs in once per command" : ": part of the page may be missing"}.`);
+  }
+  return r;
+}
+
+// Every value of a repeatable option (--before a --before b), removed from the argument list.
+export function takeAll(args, name) {
+  const values = [];
+  for (let i = args.indexOf(`--${name}`); i !== -1; i = args.indexOf(`--${name}`)) { values.push(args[i + 1]); args.splice(i, 2); }
+  return values.filter((v) => v != null);
+}
+
+// --before: code, or a file of code, run in the page before its own scripts on every load (same as sw deslop --before).
+export function readBefore(list = [], base = process.cwd()) {
+  return list.map((b) => { const f = join(base, b); try { return existsSync(b) ? readFileSync(b, "utf8") : existsSync(f) ? readFileSync(f, "utf8") : b; } catch { return b; } });
+}
+
+const fromEnv = (v) => typeof v !== "string" ? v : v.replace(/\$\{env:([A-Z0-9_]+)\}/g, (_, n) => {
+  if (process.env[n] == null) throw new Error(`environment variable ${n} is not set`);
+  return process.env[n];
+});
+
+// --as <account>: the session of an account declared in project.json › access.accounts. Login steps (same syntax
+// as flows) are played once, in their own context, and the storage they leave (cookies, localStorage) is reused by
+// every measure of the command; headers and cookies given in the project file are sent as they are.
+export async function accountSession(browser, project, name, { root, base }) {
+  const accounts = project?.access?.accounts || {};
+  const acc = accounts[name];
+  if (!acc) throw new Error(`--as ${name}: no access.accounts.${name} in .quality/project.json (${Object.keys(accounts).join(", ") || "no account declared"})`);
+  const headers = {};
+  for (const [k, v] of Object.entries(acc.headers || {})) headers[k.toLowerCase()] = String(fromEnv(v));
+  if (acc.cookies) headers.cookie = typeof acc.cookies === "string" ? fromEnv(acc.cookies) : Object.entries(acc.cookies).map(([k, v]) => `${k}=${fromEnv(v)}`).join("; ");
+  let storageState = null;
+  if (Array.isArray(acc.login) && acc.login.length) {
+    const { act } = await import("./flows.mjs");
+    const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, baseURL: base, ...(Object.keys(headers).length ? { extraHTTPHeaders: headers } : {}) });
+    const page = await ctx.newPage();
+    const denied = [];
+    watchDenied(page, denied);
+    try {
+      for (const [i, step] of acc.login.entries()) {
+        try { await act(page, step, root); await page.waitForLoadState("networkidle", { timeout: 3000 }).catch(() => {}); }
+        catch (e) { throw new Error(`--as ${name}: login step ${i + 1} failed${denied.some((d) => d.status === 429) ? " (the app answered 429: too many logins, wait a minute)" : ""}: ${String(e.message).split("\n")[0].slice(0, 200)}`); }
+      }
+      storageState = await ctx.storageState();
+    } finally { await ctx.close(); }
+  }
+  return { account: name, storageState, headers };
+}
+
+// A browser context for a measure, with the account's session and the --before scripts.
+export async function measureContext(browser, options = {}, { session = null, before = [] } = {}) {
+  const extra = {};
+  if (session?.storageState) extra.storageState = session.storageState;
+  if (session?.headers && Object.keys(session.headers).length) extra.extraHTTPHeaders = session.headers;
+  const ctx = await browser.newContext({ ...options, ...extra });
+  for (const source of before) await ctx.addInitScript(source);
+  return ctx;
+}
+
 // One-time install of Playwright, axe-core and Chromium into the pack's cache.
 export function setupCommands() {
   return [

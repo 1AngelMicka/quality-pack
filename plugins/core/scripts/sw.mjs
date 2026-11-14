@@ -75,16 +75,22 @@
 //                                            .quality/facts.json (facts.json in the run)
 //   node sw.mjs record <flow-id> [--name "…"] [--start /path] [--device desktop|mobile] [--from recorded.js]
 //                                            Record a key task by doing it in a browser; saves it as a flow in project.json
-//   node sw.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]
+//   node sw.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json] [--before code|file.js] [--as account]
 //                                            How the page looks, measured: generic "AI-made" signals (weighted, never one alone),
-//                                            font sizes and families, radii, line length and height, small targets, accent share,
-//                                            reduced motion (look.json). --baseline: controls lost since an earlier look.json (redesign guard)
-//   node sw.mjs craft <url> [url...] [--mode persuade|operate|read]
+//                                            point of view (none when nothing was decided), font sizes and families, radii, line
+//                                            length and height, small targets, accent share, reduced motion (look.json). Tier "low"
+//                                            = few generic signs, not "good". project.json › motion: "rich" (or per path) turns
+//                                            LOOK-ANIMATE-ALL into information. --baseline: controls lost since an earlier look.json
+//   node sw.mjs craft <url> [url...] [--mode persuade|operate|read] [--before code|file.js] [--as account]
 //                                            Finish of the rendered page, measured: typography details, focus and hover states,
-//                                            transitions, images, icons, site icon, share image, 404 page (craft.json)
-//   node sw.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script]
+//                                            controls the click reaches, transitions, images, icons, site icon, share image, 404
+//                                            page (craft.json). On localhost, 404 status and share image are "to check in preproduction"
+//   node sw.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script] [--before code|file.js] [--as account]
 //                                            Finishing passes: the screen with a slow network, a failing server, texts three times
 //                                            longer, 320 px wide, dark scheme, keyboard only, scripts off (stress.json, screenshots)
+//                                            look, craft, stress and deslop say when the browser ended elsewhere (a redirect to the
+//                                            login page) and list 401, 403 and 429 answers. --before: code run before the page's
+//                                            scripts (repeatable). --as: log in once with project.json › access.accounts.<account>
 //   node sw.mjs profile <url> [url...] [--save]
 //                                            Visual profile of a page in numbers (type scale, typefaces, first screen, colours,
 //                                            surfaces, density). --save: keep them as the project's references (.quality/references.json)
@@ -98,9 +104,13 @@
 //                                            for a blind jury; --tally ranks them from the votes. --mode: how the screen is measured
 //                                            (persuade for a public page, operate for a work screen, read for content); by default
 //                                            project.json › surface
-//   node sw.mjs deslop <url|file.html> [--widths …] [--click sel] [--before file.js] [--tauri] [--dark] [--attach port]
+//   node sw.mjs deslop <url|file.html> [--widths …] [--click sel] [--before file.js] [--tauri] [--dark] [--attach port] [--as account]
 //                                            Spacing, alignment and execution audit of the rendered page, with installed
-//                                            Chrome or Edge (deslop.json, screenshots per width)
+//                                            Chrome or Edge (deslop.json, screenshots per width). A deliberate exception:
+//                                            data-sw-intended="<rule>: reason" on the element, reported as intended
+//   node sw.mjs tiles [dir]                  Style tiles (default .quality/design/tiles) served on a local port, captured on a
+//                                            desktop and a phone, shown side by side (_sheet/index.html, sheet.png), with the
+//                                            fonts each tile declares but does not load
 //   node sw.mjs tokens [file.tokens.json...] Check design tokens (DTCG 2025.10): references, units, tiers, contrast per theme, sRGB gamut
 //   node sw.mjs browser-setup                Install Playwright, axe-core and Chromium once, in the pack's cache (not the project)
 //   node sw.mjs assemble                     Merge agent results, score, write .quality/AUDIT.md and .quality/report.html
@@ -744,17 +754,27 @@ async function main() {
       const run = currentRun();
       const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
       if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
-      if (!rest.length) die("Usage: sw.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]");
+      const { takeAll, readBefore } = await import("./lib/browser.mjs");
+      const before = readBefore(takeAll(rest, "before"), here);
+      const as = opt("as");
       const baselinePath = opt("baseline");
+      if (!rest.length) die("Usage: sw.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json] [--before \"code or file.js\"] [--as <account>]");
       const baseline = baselinePath ? JSON.parse(readFileSync(resolve(here, baselinePath), "utf8")) : null;
-      const result = await lookAt(rest, { cwd, mode, baseline, slopWords: [...(ref.slop_words.fr || []), ...(ref.slop_words.en || [])] });
+      const urls = rest.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href);
+      const result = await lookAt(urls, { cwd, mode, baseline, before, as, project, slopWords: [...(ref.slop_words.fr || []), ...(ref.slop_words.en || [])] });
+      if (result.errors) { out(result); process.exitCode = 2; return; }
       if (project && result.pages) {
         const d = join(auditsDir(), run);
         mkdirSync(d, { recursive: true });
         writeFileSync(join(d, "look.json"), JSON.stringify(result, null, 2));
       }
-      return out(result.pages ? { mode, version: result.version, full_report: "look.json", pages: result.pages.map(({ measures, ...p }) => ({ ...p,
-        checks: Object.fromEntries(Object.entries(p.checks || {}).map(([k, c]) => [k, { value: c.value, ok: c.ok, rule: c.rule }])) })) } : result);
+      const warnings = (result.pages || []).flatMap((p) => (p.warnings || []).map((w) => `${p.url}: ${w}`));
+      out(result.pages ? { ...(warnings.length ? { warnings } : {}), mode, version: result.version, ...(as ? { as } : {}), full_report: "look.json",
+        tier_meaning: "low = few signs of a generic look, not a good design. point_of_view \"none\" = no visual decision found (one plain family, flat type scale, nothing to see in the first screen, one hue).",
+        pages: result.pages.map(({ measures, ...p }) => ({ ...p,
+          checks: Object.fromEntries(Object.entries(p.checks || {}).map(([k, c]) => [k, { value: c.value, ok: c.ok, rule: c.rule, ...(c.samples ? { samples: c.samples } : {}) }])) })) } : result);
+      if ((result.pages || []).some((p) => p.reach && !p.reach.same_screen)) process.exitCode = 2;
+      return;
     }
     case "craft": {
       const { craftAt, compactCraft } = await import("./lib/craft.mjs");
@@ -763,15 +783,22 @@ async function main() {
       const run = currentRun();
       const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
       if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
-      if (!rest.length) die("Usage: sw.mjs craft <url> [url...] [--mode persuade|operate|read]");
+      const { takeAll, readBefore } = await import("./lib/browser.mjs");
+      const before = readBefore(takeAll(rest, "before"), here);
+      const as = opt("as");
+      if (!rest.length) die("Usage: sw.mjs craft <url> [url...] [--mode persuade|operate|read] [--before \"code or file.js\"] [--as <account>]");
       const urls = rest.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href);
-      const result = await craftAt(urls, { cwd, mode });
+      const result = await craftAt(urls, { cwd, mode, before, as, project });
+      if (result.errors) { out(result); process.exitCode = 2; return; }
       if (project && result.pages) {
         const d = join(auditsDir(), run);
         mkdirSync(d, { recursive: true });
         writeFileSync(join(d, "craft.json"), JSON.stringify(result, null, 2));
       }
-      return out(compactCraft(result));
+      const warnings = (result.pages || []).flatMap((p) => (p.warnings || []).map((w) => `${p.url}: ${w}`));
+      out({ ...(warnings.length ? { warnings } : {}), ...compactCraft(result) });
+      if ((result.pages || []).some((p) => p.reach && !p.reach.same_screen)) process.exitCode = 2;
+      return;
     }
     case "stress": {
       const { stressAt, PASSES } = await import("./lib/stress.mjs");
@@ -780,14 +807,17 @@ async function main() {
       const only = (opt("only") || PASSES.join(",")).split(",").map((x) => x.trim()).filter(Boolean);
       const bad = only.filter((x) => !PASSES.includes(x));
       if (bad.length) die(`--only: unknown pass ${bad.join(", ")} (${PASSES.join(", ")})`);
-      if (!rest[0]) die("Usage: sw.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script]");
+      const { takeAll, readBefore } = await import("./lib/browser.mjs");
+      const before = readBefore(takeAll(rest, "before"), here);
+      const as = opt("as");
+      if (!rest[0]) die("Usage: sw.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script] [--before \"code or file.js\"] [--as <account>]");
       const url = /^[a-z]+:\/\//i.test(rest[0]) ? rest[0] : pathToFileURL(resolve(here, rest[0])).href;
       const { mkdtempSync } = await import("node:fs");
       const { tmpdir } = await import("node:os");
       // Outside a project, screenshots go to a temporary folder, never into the current directory.
       const d = project ? join(auditsDir(), run) : mkdtempSync(join(tmpdir(), "qp-stress-"));
       const flags = project ? resolveFlags(project.flags, ref) : new Set();
-      const result = await stressAt(url, { cwd, outDir: d, root: cwd, only, darkExpected: flags.has("dark_mode"), publicPage: (project?.surface || "") === "persuade" || project?.profile === "vitrine" });
+      const result = await stressAt(url, { cwd, outDir: d, root: cwd, only, darkExpected: flags.has("dark_mode"), publicPage: (project?.surface || "") === "persuade" || project?.profile === "vitrine", before, as, project });
       if (result.passes && project) {
         mkdirSync(d, { recursive: true });
         // One file for the run, one entry per screen.
@@ -796,9 +826,9 @@ async function main() {
         all.pages = [...all.pages.filter((p) => p.url !== result.url), result];
         writeFileSync(file, JSON.stringify(all, null, 2));
       }
-      out(result.passes ? { url: result.url, baseline: result.baseline, summary: result.summary, failed: Object.fromEntries(Object.entries(result.passes).filter(([, c]) => !c.ok)),
+      out(result.passes ? { ...(result.warnings ? { warnings: result.warnings } : {}), url: result.url, ...(as ? { as } : {}), baseline: result.baseline, summary: result.summary, failed: Object.fromEntries(Object.entries(result.passes).filter(([, c]) => !c.ok)),
         passed: Object.entries(result.passes).filter(([, c]) => c.ok).map(([k]) => k), skipped: result.skipped, by_eye: result.by_eye, screenshots: join(d, "stress"), note: result.note } : result);
-      if (result.errors?.length || result.summary?.must_failed.length) process.exitCode = 2;
+      if (result.errors?.length || result.summary?.must_failed.length || (result.reach && !result.reach.same_screen)) process.exitCode = 2;
       return;
     }
     case "profile": {
@@ -890,28 +920,71 @@ async function main() {
       const { spawnSync } = await import("node:child_process");
       const run = currentRun();
       const project = loadProject(cwd);
-      if (!rest.length) die('Usage: sw.mjs deslop <url|file.html> [--widths 375,768,1440,1920] [--click "selector"] [--before file.js] [--tauri] [--dark] [--attach port]');
+      const as = opt("as");
+      if (!rest.length) die('Usage: sw.mjs deslop <url|file.html> [--widths 375,768,1440,1920] [--click "selector"] [--before file.js] [--tauri] [--dark] [--attach port] [--as <account>]');
       const outDir = project ? join(auditsDir(), run, "deslop") : join(qualityDir(cwd), "deslop");
       const script = fileURLToPath(new URL("./deslop/audit.mjs", import.meta.url));
       const args = [...rest];
       if (!args.includes("--widths") && !args.includes("--attach")) args.push("--widths", "375,768,1440,1920");
+      // --as <account>: log in once (Playwright, login steps of project.json › access.accounts), then hand the
+      // session to the audit, which reuses it at every width: one login per command, not one per width.
+      let sessionFile = null;
+      if (as) {
+        const target = rest.find((a) => /^https?:\/\//i.test(a));
+        if (!target) die("--as needs the address of a served page (http:// or https://)");
+        const { loadBrowserTools, launch, accountSession } = await import("./lib/browser.mjs");
+        const tools = await loadBrowserTools(cwd);
+        if (!tools) die("--as plays the account's login steps with Playwright, which is not available. Run `node <sw.mjs> browser-setup` once (pack cache, not the project).");
+        const browser = await launch(tools.chromium);
+        let session;
+        try { session = await accountSession(browser, project, as, { root: cwd, base: new URL(target).origin }); } catch (e) { await browser.close(); die(String(e.message)); }
+        await browser.close();
+        const { mkdtempSync } = await import("node:fs");
+        const { tmpdir } = await import("node:os");
+        sessionFile = join(mkdtempSync(join(tmpdir(), "sw-session-")), "session.json");
+        writeFileSync(sessionFile, JSON.stringify(session));
+        args.push("--session", sessionFile);
+      }
       const audit = () => spawnSync(process.execPath, [script, ...args, "--out", outDir, "--json"], { cwd: here, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
       let r = audit();
       // On a busy machine the browser sometimes fails to start in time: one more try before giving up.
       if (r.status !== 0 && /did not start|timed out|ECONNREFUSED|ECONNRESET/i.test(r.stderr || "")) r = audit();
+      if (sessionFile) { const { rmSync } = await import("node:fs"); try { rmSync(join(sessionFile, ".."), { recursive: true, force: true }); } catch { /* temporary folder */ } }
       if (r.status !== 0) die((r.stderr || r.stdout || "deslop failed").trim());
       const reports = JSON.parse(r.stdout);
       const result = { widths: reports.map((x) => ({ width: x.viewport.width, counts: x.counts, text_length: x.textLength, js_errors: x.errors.length,
+        ...(x.reach ? { measured_url: x.reach.final } : {}),
         screenshots: { fold: relative(cwd, x.screenshots.fold), full: relative(cwd, x.screenshots.full) },
         findings: x.findings.map((f) => ({ rule: f.rule, severity: f.severity, count: f.count, fix: f.fix, examples: f.examples.slice(0, 3) })),
+        ...(x.intended?.length ? { intended: x.intended } : {}),
+        ...(x.notChecked?.length ? { not_checked: x.notChecked } : {}),
         system: { spacing_values: x.stats.spacing.distinct, off_scale_percent: x.stats.spacing.offScaleShare, font_sizes: x.stats.fontSizes.map(([v]) => v).sort((a, b) => a - b) } })) };
       result.total = result.widths.reduce((t, w) => ({ high: t.high + w.counts.high, med: t.med + w.counts.med, low: t.low + w.counts.low }), { high: 0, med: 0, low: 0 });
-      result.warnings = result.widths.filter((w) => w.text_length < 40).map((w) => `${w.width}px: page almost empty — the intended state was not reached (use --click or --before)`);
+      // A redirect (to the login page, most often) means another page was measured: said first, and never a pass.
+      const off = reports.filter((x) => x.reach && !x.reach.same_screen);
+      const denied = reports.flatMap((x) => x.reach?.denied || []);
+      result.warnings = [
+        ...(off.length ? [`NOT THE REQUESTED SCREEN: asked for ${off[0].reach.requested}, the browser ended on ${off[0].reach.final} at ${off.map((x) => `${x.viewport.width}px`).join(", ")}. These counts are about that page: do not read them as a pass. Use --as <account> (access.accounts in project.json) or --before.`] : []),
+        ...(denied.length ? [`${denied.length} response(s) ${[...new Set(denied.map((x) => x.status))].join(", ")} while measuring, first ${denied[0].url}${denied.some((x) => x.status === 429) ? ": the app's rate limit refused requests; wait a minute (--as logs in once for every width)" : ""}`] : []),
+        ...result.widths.filter((w) => w.text_length < 40).map((w) => `${w.width}px: page almost empty — the intended state was not reached (use --click or --before)`),
+      ];
+      if (off.length) result.verdict = "not measured: redirected away from the requested screen";
       if (project) {
         writeFileSync(join(auditsDir(), run, "deslop.json"), JSON.stringify(result, null, 2));
         recordSavings(join(auditsDir(), run), estimateTokens(r.stdout), estimateTokens(JSON.stringify(result)));
       }
-      return out({ ...result, full_report: relative(cwd, join(outDir, "report.json")) });
+      out(off.length || denied.length ? { warnings: result.warnings, ...result, full_report: relative(cwd, join(outDir, "report.json")) } : { ...result, full_report: relative(cwd, join(outDir, "report.json")) });
+      if (off.length) process.exitCode = 2;
+      return;
+    }
+    case "tiles": {
+      // Style tiles of the design-direction skill, served on a local port, captured and shown side by side.
+      const { showTiles } = await import("./lib/tiles.mjs");
+      const dir = rest[0] ? resolve(here, rest[0]) : join(qualityDir(cwd), "design", "tiles");
+      const result = await showTiles(dir, { cwd, root: cwd });
+      out(result);
+      if (result.errors || result.problems) process.exitCode = 2;
+      return;
     }
     case "tokens": {
       const { checkTokens } = await import("./lib/tokens.mjs");

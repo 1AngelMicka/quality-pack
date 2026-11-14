@@ -48,7 +48,11 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" deslop http://localhost:5173/ --widt
 
 It takes a URL or a local HTML file and uses the installed Chrome or Edge, with nothing to install (set `CHROME_PATH` if neither is found; needs Node 22 or later). It returns the findings per width, the spacing and type system actually used, and screenshots at each width. In a project with `.quality/project.json`, results go to the current audit run (`deslop.json`, screenshots in `deslop/`); otherwise to `.quality/deslop/`. Each run overwrites the previous one in the same folder: copy the JSON aside before a fix if you want a before/after.
 
-For how generic the page looks, the type scale, line length, accent share and reduced motion, also run `sw look <url>`. The audit does not measure contrast, keyboard focus, hover states or baselines: check those separately (axe in `sw browser` and `sw flows`).
+For how generic the page looks, the type scale, line length, accent share and reduced motion, also run `sw look <url>`. Its tier "low" means few signs of a generic look, not a good design: read its `point_of_view` too ("none" when nothing was decided). The audit does not measure contrast, keyboard focus, hover states or baselines: check those separately (axe in `sw browser` and `sw flows`).
+
+If the browser ends on another address than the one asked for (a redirect to the login page, most often), the result starts with `NOT THE REQUESTED SCREEN`, carries `verdict: "not measured"` and exits with code 2: the counts are about that other page, never a pass. Answers 401, 403 and 429 seen while measuring are listed in `warnings` (429: the app's rate limit, often from logging in again and again).
+
+Groups that are rotated, skewed or 3D-transformed (on the element or an ancestor) are not measured by `control-row-drift`, `left-edge-drift` and `uneven-siblings`: their boxes are taken after the transform. They are listed under `not_checked`, so a tilt chosen on purpose is not reported as a drift. The label of a checkbox or radio, or a label that holds its own field, is not treated as a heading by `proximity-inverted`.
 
 Useful options:
 
@@ -57,7 +61,8 @@ Useful options:
 | Open a menu or a tab before measuring | `--click "selector"` (repeatable) |
 | Test the dark theme | `--dark` |
 | Tauri app shown without a backend | `--tauri`, see below |
-| Inject a state (localStorage, mock) | `--before "code or file.js"` (repeatable) |
+| Inject a state (localStorage, mock) | `--before "code or file.js"` (repeatable; `sw look`, `sw craft` and `sw stress` take it too) |
+| A screen behind a login | `--as <account>`: plays `access.accounts.<account>.login` of `.quality/project.json` once and reuses the session at every width (`sw craft`, `sw stress` and `sw look` take it too) |
 | Measure a window already open, with its real data | `--attach <port>` |
 
 If the rendering is only reachable in a page the script cannot open, evaluate `${CLAUDE_PLUGIN_ROOT}/scripts/deslop/measure.js` in the browser's JavaScript tool: it returns the same report for the state on screen.
@@ -93,7 +98,7 @@ Fix `high` findings first, then `med`. Re-read each finding on the screenshot: i
 
 - Fix the token or the source component rather than each occurrence, without `!important` or an arbitrary value added to silence a rule.
 - If the project has a consistent scale that is not a multiple of 4 (say 22 and 26 px repeated through tokens), `off-scale` does not apply: do not rename everything.
-- For a deliberate exception, put `data-deslop-ignore` on the element and give the user the reason.
+- For a deliberate exception, put `data-sw-intended="<rule>: <reason>"` on the element or an ancestor (several: `uneven-inset: cloth binding; control-row-drift: tilted sheet`, or `*` for every rule). The report lists it under `intended` with the reason instead of a finding, and you give the user that reason. `data-deslop-ignore` still leaves an element out of the measure entirely, without a trace: prefer `data-sw-intended`.
 - Run the audit again, three passes at most. If findings remain, report them rather than going round in circles.
 
 ## 6. Report
