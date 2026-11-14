@@ -8,6 +8,17 @@
   "promise": "For <whom>, <product> <does what> so that <outcome>.",
   "out_of_scope": [],
   "success_metric": "",
+  "evidence": [
+    { "what": "Stage 0 proof that someone wants it, e.g. 8 of 12 freelancers interviewed asked for it", "source": "notes/interviews.md", "date": "" }
+  ],
+  "desktop": {
+    "why": "Only with desktop_app: why not a web app (local files, heavy processing, offline, system integration)",
+    "shell": "tauri",
+    "systems": ["windows", "macos"],
+    "build_and_test_on": ["windows"],
+    "distribution": "direct download, signed installer, auto-update",
+    "data": "local only, or synced with the server (then saas-foundations and security-testing apply to it)"
+  },
   "flags": ["has_ui", "has_backend", "has_auth", "has_user_data", "has_db"],
   "expected_load": { "concurrent_users": null, "notes": "" },
   "design_direction": "See DESIGN.md",

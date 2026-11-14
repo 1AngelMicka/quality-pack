@@ -23,7 +23,7 @@ Each step is usable before the next one starts. Do not reorder 1 and 2 after the
 | 6. Self-service account | Profile, security, notifications, billing, plan change, cancellation | Cancellation in three steps at most |
 | 7. Leaving | Export in a machine-readable format, account deletion | Both run on a test account |
 | 8. Support tools | Admin area with time-boxed, logged impersonation | Log line after one use |
-| 9. Public pages | Pricing that matches checkout, security page, legal pages | Amounts compared with checkout |
+| 9. Public pages | Pricing that matches checkout, security page, legal pages. A minimal home page (what the product does, a button to create an account) already exists from the first key task (`from-zero` stage 3) | Amounts compared with checkout; the root address without a session is not only a login form |
 | 10. Operations pages | Status page, dated changelog | Linked from the footer |
 
 Not before a customer asks for it by contract: SSO/SAML, SCIM, custom roles, one database per customer, a SOC 2 audit. Say so when the user asks for them on day one, and keep the door open (roles on the membership, an audit log from the start).

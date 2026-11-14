@@ -25,8 +25,8 @@ Say this at the start, once. Three things stay with people:
 | --- | --- | --- | --- |
 | 0 | Promise and evidence | conversation | One sentence: for whom, which problem, which outcome. At least one piece of evidence the user can show (people asked, a waiting list, a paid pilot, their own daily need). No evidence: say so and let the user decide; do not invent a market. |
 | 1 | Kickoff | `/sw:kickoff` | `.quality/project.json` (profile, flags, 2 to 5 key tasks), `DESIGN.md` started, what is out of scope written. |
-| 2 | Foundations | `saas-foundations` steps 1 and 2, `security-testing` step 1 | Customer model chosen; two test accounts seeded; `sw access` passes on the first resource; `sw threats` passes; `sw supply` has no failed must; CI runs build and tests. |
-| 3 | First key task, end to end | build skills, `design-screens` | The main task works with real data from a fresh account, on phone and desktop: `sw flows` completes. Plain styling is fine here. |
+| 2 | Foundations | `saas-foundations` steps 1 and 2, `security-testing` step 1 | Customer model chosen; two test accounts seeded; `sw access` passes on the first resource; `sw threats` passes; `sw supply` has no failed must; CI runs build and tests. Before the first push (which waits for the user's yes), the proof is provisional: the workflow file is written and each of its commands passes locally, run one by one; say "provisional" in the gate and replace it with the first green run once the repository is pushed. |
+| 3 | First key task, end to end | build skills, `design-screens` | The main task works with real data from a fresh account, on phone and desktop: `sw flows` completes. Profile `saas` with `public_web`: a minimal public home page exists (what the product does, for whom, a button to create an account), and the root address opened without a session is not only a login form. Styling stays neutral until stage 4, and neutral styling is never shown as a result (see below). |
 | 4 | Direction | `design-direction`, `sw bank`, `sw profile` | The site type's expectations read (`sw bank <type>`); the user's references measured (`sw profile <url> <url> --save`); one direction chosen by the user; tokens checked (`sw tokens`); fonts and icons recorded with their licences. |
 | 5 | Screens | `design-screens`, `design-review`, `deslop-ui` | Every key task within its effort budgets (`sw flows`: no `over_budget`); the ergonomist's serious findings fixed; `sw deslop` with no high finding. |
 | 6 | Money | `saas-foundations` steps 3 to 7 | Plans and rules written; the life cycle is played (`sw billing`: trial end, first payment, declined renewal, cancellation, with the app agreeing at each stage) and forged webhooks are refused (`sw webhooks`); limits enforced on the server; every service email received; cancellation in three steps. |
@@ -35,6 +35,13 @@ Say this at the start, once. Three things stay with people:
 | 9 | People | `user-testing` | Five people from the audience did the key tasks unaided; what blocked them is fixed or listed. |
 | 10 | Launch | `/sw:audit`, `security-testing`, `seo-launch` | Public pages ready to be found: keywords chosen, `sw seo` with no failed must, site declared in Search Console and sitemap submitted. Full audit: no open blocker in either score; `sw access`, `sw auth` and `sw dast` clean on staging; backups restored once; monitoring alerts reach a person; legal pages published; rollback tried. |
 | 11 | After | `/sw:audit --incremental`, `/sw:handoff` | An audit at each release; the threat model reviewed when an entry point, a role or a third party is added. |
+
+### Neutral styling is not a result
+
+Until stage 4 the screens carry no visual decision, and the measures (`sw look`, `sw deslop`, `sw craft`) find nothing wrong with a page that has no design at all: "low" in `sw look` means few signs of a generic look, not a good look. So:
+
+- Never present a neutral screen to the user as the result. When you show that a task works, say first that the look is not designed yet.
+- Any screen a visitor sees (public home page, sign-up, pricing, the main work screen) goes through the `design-variants` skill before it is presented as designed: several versions, a blind jury, the user's choice. For a `saas` with `public_web`, run it on the home page as soon as stage 4 has a direction, not at stage 7.
 
 Stages 4 and 5 can swap for a showcase site (direction first). Stage 8 can run beside 5 to 7 once the web key tasks are stable. Nothing else moves: in particular, 2 before 3 (isolation is not retrofitted), 5 before 7 (finish on a badly organised screen is wasted), and the rules of 6 before its code.
 
@@ -57,7 +64,7 @@ Stage 7 is where average products stop early. List the key screens (the pages of
 
 ## When the user wants to go faster
 
-A prototype to show people is a legitimate goal: stages 0, 1, 3, then 9, with plain styling and fake payments. Say what is missing for a launch (2, 6, 10) and write it in `.quality/project.json` › `out_of_scope`, so that a demo is not mistaken for a product.
+A prototype to show people is a legitimate goal: stages 0, 1, 3, then 9, with neutral styling (shown as such, never as the design) and fake payments. Say what is missing for a launch (2, 6, 10) and write it in `.quality/project.json` › `out_of_scope`, so that a demo is not mistaken for a product.
 
 What cannot be skipped once real people put real data in: stage 2 (isolation, accounts, threat model), the service emails for account recovery, backups, and the legal pages.
 

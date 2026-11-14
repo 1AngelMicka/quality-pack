@@ -35,6 +35,7 @@ Round 2:
 Then in plain text, in one message:
 - The promise in one sentence: for whom, which problem, which outcome. Offer a draft based on what you read; the user corrects it.
 - What is out of scope, the success metric, the expected load (concurrent users, peaks).
+- The evidence that someone wants it (stage 0 of the `from-zero` skill): people who asked, a waiting list, a paid pilot, their own daily need. Write each piece under `evidence` with its source and date; an empty list means none yet, and you say so.
 - If has_ui: the visual direction, following the `design-direction` skill (it can run now or later). In short: ask for 2 or 3 reference sites or apps they like, and for each: what they like in how it **looks** and in how it is **organised** (screen structure, navigation, where the tools are). Then three words for the mood, and what they never want to see. Do not propose a default style.
 
 ## 3. Key tasks (has_ui)
@@ -67,13 +68,13 @@ Skip what does not apply; each takes a few minutes now and saves a rebuild later
 
 **Facts (public pages).** Ask for the real figures, quotes (with the person's agreement), customer names and certifications the site may show, each with its source and date, and record them in `.quality/facts.json` (`{ "facts": [{ "claim": "1,240 teams", "source": "admin dashboard", "date": "2026-11-10" }] }`). Never fill it yourself: a claim without a fact from the user is not shown.
 
-**Desktop app (desktop_app).** Ask why a desktop app, the target systems and which ones the team can build and test on, the distribution, and where data lives (the `desktop-app` skill).
+**Desktop app (desktop_app).** Ask why a desktop app, the target systems and which ones the team can build and test on, the distribution, and where data lives (the `desktop-app` skill). Write the answers under `desktop` (format in `${CLAUDE_PLUGIN_ROOT}/templates/project.json`).
 
 **Mobile app (native_app).** Ask the approach, the application id, the platforms, the sales model and storefronts, whether a Mac is available, and what must work offline; write them under `mobile` (format in the `mobile-app` skill). Draft `mobile.flows` from the key tasks.
 
 ## 5. Write the files
 
-1. `.quality/project.json`, following `${CLAUDE_PLUGIN_ROOT}/templates/project.json`. Include `package_manager` from detect, `audit_model`, `surface`, the `urls` (local, staging, production) the user knows, `work_screens`, `flows`, and `access`, `auth_probe` and `mobile` when step 4 produced them.
+1. `.quality/project.json`, following `${CLAUDE_PLUGIN_ROOT}/templates/project.json`. Include `package_manager` from detect, `audit_model`, `surface`, the `urls` (local, staging, production) the user knows, `work_screens`, `flows`, `evidence`, and `access`, `auth_probe`, `desktop` and `mobile` when step 4 produced them.
 2. If has_ui and there is no `DESIGN.md`: create it from `${CLAUDE_PLUGIN_ROOT}/templates/DESIGN.md`, filled with the direction above. Fill "What we borrow" with principles you can see on a screen, for phone and desktop separately (the audit checks them, criterion ERG-08). Leave tokens the user has not chosen as "to define", never invent a palette silently.
 3. Add the section from `${CLAUDE_PLUGIN_ROOT}/templates/CLAUDE.section.md` to the project's `CLAUDE.md` (create the file if missing; replace the section if it already exists).
 4. Add `.quality/audits/*/screens/`, `.quality/audits/*/flows/`, `.quality/audits/*/logs/` and `.quality/logs/` to `.gitignore`. Keep the rest of `.quality/` versioned so scores can be compared over time.
