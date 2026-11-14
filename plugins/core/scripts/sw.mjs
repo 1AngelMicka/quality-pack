@@ -7,10 +7,15 @@
 //   node sw.mjs skills                       Without the plugin loaded: list the skills and agents, with their files
 //   node sw.mjs skill <name> [notes]         Print one skill (or an agent's brief) with its paths filled in, ready to follow
 //   node sw.mjs enable [--modules a,b]       Write the project's .claude/settings.json so that Claude Code offers the plugin
+//                                            (offering is not installing: install below is the sure path)
 //   node sw.mjs install [--modules a,b] [--scope user|project]
 //                                            Install the marketplace, the main plugin and the modules of the technologies found in
-//                                            the project, with Claude Code's command line. Changes the user's Claude Code
-//                                            configuration: only when the user asked. Then the user types /reload-plugins
+//                                            the project or declared in project.json › stacks, with Claude Code's command line.
+//                                            Changes the user's Claude Code configuration: only when the user asked. Then the user
+//                                            types /reload-plugins. The sure path: accepting the marketplace after enable does not
+//                                            always install the plugin
+//   node sw.mjs doctor                       Is Shipwright really there for this project? Marketplace known, sw@shipwright installed
+//                                            (user or project scope), enabled here, modules, hooks declared, versions. Read only
 //   node sw.mjs plan [scope...] [--incremental]
 //                                            Applicable criteria for /sw:audit, written to .quality/audits/<run>/plan.json.
 //                                            scope: group, domain, criterion IDs, "blockers" or "quick" (automatic checks only).
@@ -18,7 +23,8 @@
 //                                            Each audit gets its own run folder: 2026-11-11, then 2026-11-11-2 for a second one that day.
 //   node sw.mjs run <label> "<command>"      Run a command, keep the full log on disk, print only a compact summary
 //   node sw.mjs graph [refresh]              Graphify status (installed, fresh, recommended for this size) or code-only refresh
-//   node sw.mjs scan                         Static scans of the source (placeholder, hollow wording, debug leftovers)
+//   node sw.mjs scan                         Static scans of the source (placeholder, hollow wording, debug leftovers). Leaves out
+//                                            docs/, reports/, research_notes/ and project.json › scan_exclude ("!docs" scans docs/ again)
 //   node sw.mjs web <url>                    HTTP checks: headers, compression, cache, SEO metadata, robots, sitemap
 //   node sw.mjs seo [url] [--limit N]        Search readiness of the public pages: sitemap (found, declared, every address answers and is
 //                                            indexable), title and meta description of each page (filled, length, unique), one h1,
@@ -77,9 +83,11 @@
 //   node sw.mjs bank [type] | bank measure <type|all> | bank calibrate <type|all> [--limit N]
 //                                            Reference bank: excellent sites by type, why they are, their measured profile;
 //                                            calibrate runs sw craft and sw look on them, so that a rule most of them break becomes advice
-//   node sw.mjs variants <name> <url> <url> [url...] | variants <name> --tally
+//   node sw.mjs variants <name> <url> <url> [url...] [--mode persuade|operate|read] | variants <name> --tally
 //                                            Several versions of one screen: screenshots under shuffled letters, measures, pairs
-//                                            for a blind jury; --tally ranks them from the votes
+//                                            for a blind jury; --tally ranks them from the votes. --mode: how the screen is measured
+//                                            (persuade for a public page, operate for a work screen, read for content); by default
+//                                            project.json › surface
 //   node sw.mjs deslop <url|file.html> [--widths …] [--click sel] [--before file.js] [--tauri] [--dark] [--attach port]
 //                                            Spacing, alignment and execution audit of the rendered page, with installed
 //                                            Chrome or Edge (deslop.json, screenshots per width)
@@ -191,7 +199,10 @@ async function plan(scope, run, incremental = false) {
   const appUrl = project.urls?.production || project.urls?.staging || project.urls?.local || "";
   let host = "";
   try { host = appUrl ? new URL(appUrl).host : ""; } catch { /* invalid URL */ }
-  const fill = (cmd) => cmd.replaceAll("{pm}", project.package_manager || "npm").replaceAll("{url}", appUrl || "{url}").replaceAll("{host}", host || "{host}");
+  // {api_url}: where the API answers when it is not at the app's address (a Vite front on 5173, the API on 3001).
+  const api = project.api_url && typeof project.api_url === "object" ? project.api_url.production || project.api_url.staging || project.api_url.local : project.api_url;
+  const apiUrl = (api || appUrl || "").replace(/\/+$/, "");
+  const fill = (cmd) => cmd.replaceAll("{pm}", project.package_manager || "npm").replaceAll("{api_url}", apiUrl || "{api_url}").replaceAll("{url}", appUrl || "{url}").replaceAll("{host}", host || "{host}");
   const flags = resolveFlags(project.flags, ref);
   const profile = ref.profiles[project.profile];
   const tokens = new Set(scope.map((s) => s.toLowerCase()));
@@ -223,7 +234,7 @@ async function plan(scope, run, incremental = false) {
           item.tool = c.check.tool;
           const provider = ref.checks[c.check.tool]?.provider;
           const st = stacks.find((s) => s.checks?.[c.check.tool]);
-          if (st) Object.assign(item, { command: fill(st.checks[c.check.tool].run), pass_if: st.checks[c.check.tool].pass_if, from_stack: st.stack });
+          if (st) Object.assign(item, { command: fill(st.checks[c.check.tool].run), pass_if: fill(st.checks[c.check.tool].pass_if), from_stack: st.stack });
           if (provider === "core") item.evidence_from = EVIDENCE[c.check.tool] || "run it yourself (see verify)";
           else if (!st) item.note = "No installed stack module maps this check: find the project's equivalent command or inspect, and say so in the evidence.";
         }
@@ -413,7 +424,8 @@ async function main() {
     case "scan": {
       const { scan, compactScan } = await import("./lib/scan.mjs");
       const run = currentRun();
-      const result = scan(cwd, ref);
+      const exclude = loadProject(cwd)?.scan_exclude;
+      const result = scan(cwd, ref, { exclude: Array.isArray(exclude) ? exclude : [] });
       const short = compactScan(result);
       if (loadProject(cwd)) {
         const d = join(auditsDir(), run);
@@ -779,12 +791,17 @@ async function main() {
       const { MODES } = await import("./lib/look.mjs");
       const project = loadProject(cwd);
       const tally = flag("tally");
-      const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
+      const asked = opt("mode");
+      const mode = asked || project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate");
       if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
       const [name, ...urls] = rest;
-      if (!name) die("Usage: sw.mjs variants <name> <url> <url> [url...]   |   sw.mjs variants <name> --tally");
+      if (!name) die("Usage: sw.mjs variants <name> <url> <url> [url...] [--mode persuade|operate|read]   |   sw.mjs variants <name> --tally");
       if (tally) { const r = tallyVariants(name, { root: cwd }); out(r); if (r.errors) process.exitCode = 2; return; }
       const r = await shootVariants(name, urls.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href), { root: cwd, cwd, mode });
+      if (!r.errors && r.available !== false) {
+        r.mode = mode;
+        r.mode_from = asked ? "--mode" : project?.surface ? "project.json › surface (a public page is measured with --mode persuade)" : "default";
+      }
       out(r);
       if (r.errors) process.exitCode = 2;
       return;
@@ -912,10 +929,16 @@ async function main() {
       const scope = opt("scope", "user");
       let detected = [];
       try { detected = detect(cwd, findStacks(cwd)).stacks || []; } catch { /* a project that cannot be read installs the main plugin only */ }
-      const r = installPlugins({ cwd, modules, detected, scope });
+      let declared = [];
+      try { declared = loadProject(cwd)?.stacks || []; } catch { /* unreadable project.json: detected stacks only */ }
+      const r = installPlugins({ cwd, modules, detected, declared: Array.isArray(declared) ? declared : [], scope });
       out(r);
       if (r.error || r.failed?.length) process.exit(1);
       return;
+    }
+    case "doctor": {
+      const { doctor } = await import("./lib/doctor.mjs");
+      return out(doctor({ cwd }));
     }
     case "enable": {
       const { enableInProject } = await import("./lib/standalone.mjs");

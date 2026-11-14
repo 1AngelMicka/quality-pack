@@ -97,12 +97,19 @@ node <clone>/plugins/core/scripts/sw.mjs skills          # la liste des skills e
 node <clone>/plugins/core/scripts/sw.mjs skill kickoff   # un skill, prêt à être suivi
 
 # B. Écrire les réglages du projet : Claude Code proposera le plugin à la prochaine ouverture
+#    (le proposer ne suffit pas toujours : accepter la marketplace ne l'installe pas forcément)
 node <clone>/plugins/core/scripts/sw.mjs enable --modules nextjs,vps
 
-# C. Installation complète par l'agent, quand tu la lui demandes (marketplace, plugin, modules détectés)
+# C. Installation complète par l'agent, quand tu la lui demandes (marketplace, plugin, modules détectés
+#    ou déclarés dans .quality/project.json) : le chemin sûr
 node <clone>/plugins/core/scripts/sw.mjs install
 # puis tu tapes /reload-plugins : c'est la seule chose qu'un agent ne peut pas faire à ta place
+
+# Vérifier ce qui est vraiment installé et activé pour le projet (lecture seule)
+node <clone>/plugins/core/scripts/sw.mjs doctor
 ```
+
+Avec B, la marketplace peut être ajoutée à la réouverture sans que le plugin `sw@shipwright` soit installé : aucune commande `/sw:`, aucun skill, aucun hook. C est le chemin sûr ; `sw.mjs doctor` dit où on en est.
 
 Le détail est dans le [guide pour agents](docs/AGENT_GUIDE.md).
 

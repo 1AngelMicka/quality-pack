@@ -31,5 +31,5 @@ Used by `/sw:audit`. `{pm}` is the project's package manager, `{url}` the app UR
 | test_run | `{pm} test` | exit code 0 |
 | e2e | `{pm} run test:e2e` | exit code 0 (API tests against a test database) |
 | deps_audit | `{pm} audit --audit-level=high` | no high or critical advisory |
-| license_check | `npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'` | exit code 0 |
-| load_test | `npx --yes autocannon -c 100 -d 30 {url}/health` | 0 errors; then repeat on the 3 busiest routes |
+| license_check | `npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'` | exit code 0. If npx --yes is not allowed, install it once as a dev dependency ({pm} add -D license-checker-rseidelsohn) and run it without --yes |
+| load_test | `npx --yes autocannon -c 100 -d 30 {api_url}/health` | 0 errors; then repeat on the 3 busiest routes. The address is project.json › api_url (the API's own address, e.g. http://localhost:3001), or the app URL when the API is served there. If npx --yes is not allowed, install the tool once as a dev dependency ({pm} add -D autocannon) and run it without --yes |
