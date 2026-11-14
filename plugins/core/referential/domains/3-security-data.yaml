@@ -82,13 +82,13 @@ domains:
         check: {method: auto, tool: threat_model}
         applies_if: [has_backend]
         label: {fr: "Modèle de menaces écrit, complet et à jour", en: "Threat model written, complete and current"}
-        verify: {fr: "`sw threats` : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois.", en: "`sw threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open \"before launch\"; reviewed within 6 months."}
+        verify: {fr: "`sw threats` (sans option : la porte du lancement) : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois. Pendant la construction, `sw threats --check` ne vérifie que la forme.", en: "`sw threats` (no option: the launch gate): no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open \"before launch\"; reviewed within 6 months. While building, `sw threats --check` checks the shape only."}
       - id: SEC-13
         severity: blocker
         check: {method: auto, tool: auth_probe}
         applies_if: [has_auth]
         label: {fr: "La connexion résiste aux essais répétés et ne dit pas quels comptes existent", en: "Login resists repeated guesses and does not say which accounts exist"}
-        verify: {fr: "auth.json : même réponse pour un compte connu et inconnu ; mots de passe faux en série ralentis, refusés ou verrouillés. Vérifier à la main la même chose sur la réinitialisation, l'inscription et les codes à usage unique.", en: "auth.json: same answer for a known and an unknown account; wrong passwords in a row slowed, refused or locked. Check the same by hand on password reset, signup and one-time codes."}
+        verify: {fr: "auth.json : la sonde atteint la connexion (confirmé par le bon mot de passe, password_env) ; même réponse pour un compte connu et inconnu, à la connexion et, si déclarées, à l'inscription et à la réinitialisation ; mots de passe faux en série ralentis, refusés ou verrouillés ; aucun contrôle utile dans `skipped`. Limite par compte (et pas seulement par adresse IP) : non vérifiable par cette sonde, la lire dans le code ou les réglages. Vérifier à la main les codes à usage unique, et l'inscription et la réinitialisation si elles ne sont pas déclarées.", en: "auth.json: the probe reaches the login (confirmed with the right password, password_env); same answer for a known and an unknown account on login and, when declared, on sign-up and password reset; wrong passwords in a row slowed, refused or locked; no useful check left in `skipped`. Limit per account (not only per IP): not verifiable by this probe, read it in the code or settings. Check one-time codes by hand, and sign-up and reset when they are not declared."}
       - id: SEC-14
         severity: major
         check: {method: auto, tool: dast_scan}

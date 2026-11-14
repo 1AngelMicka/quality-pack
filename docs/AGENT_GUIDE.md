@@ -115,7 +115,7 @@ Cheaper options to mention:
 | `/sw:` commands missing after install | Restart Claude Code or run `/reload-plugins`. Check `/plugin` → Installed and the Errors tab. |
 | Adding the marketplace fails | git is missing, or there is no GitHub SSH key: set `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` and retry. |
 | `node: command not found` in a hook | Install Node.js 18+ and make sure `node` is on the PATH, then restart Claude Code. |
-| A file write is blocked "as a secret" | Intended: the pack blocks API keys and passwords in code. Move the value to an environment variable. If it is truly not secret, add the comment `qp-allow-secret` on that line. |
+| A file write is blocked "as a secret" | Intended: the pack blocks API keys and passwords in code. Move the value to an environment variable. If it is truly not secret, add the comment `sw-allow-secret` on that line. |
 | Browser checks "not checked" | Playwright or axe-core missing (`sw.mjs browser-setup`), or the app is not running. Start the app locally or add a staging URL in `.quality/project.json` under `urls`. |
 | A key task stops at a step | `flows.json` in the audit folder names the step and the error. Fix the selector in `.quality/project.json` › `flows` (`sw.mjs flows --check`), or the bug if it is real. |
 | The audit "redoes everything" | Normal on the first audit, after a pack update, after 30 days, or outside a Git repository. |

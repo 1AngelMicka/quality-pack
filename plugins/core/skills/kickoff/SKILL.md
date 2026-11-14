@@ -51,7 +51,7 @@ If the user would rather show the task than describe it, offer `sw record <flow-
 - Steps take one action each: `goto`, `click`, `fill`, `select`, `check`, `upload`, `press`, `hover`, `wait_for`, `wait`, `expect`, `scroll`. Mark the steps where the user makes a choice with `"decision": true`.
 - Selectors use Playwright syntax. Prefer what the user sees: `role=button[name="Save"]`, `role=tab[name="Layout"]`, `text=Saved`; then labels and `data-testid`; avoid CSS classes. Every step acts on the first element its selector matches; when a step fails, `flows.json` says how many elements matched (0, or n with the first hidden or disabled) and whether the screen looks empty. In JSON a regular expression needs a doubled backslash (`name=/F-\\d+/`): `sw flows --check` warns when one looks lost.
 - `preview` and `primary` are selectors for the result and the main action; leave them out when the task has none.
-- Test data goes in `.quality/fixtures/`. Use files from the repository or ask the user for some; never use personal files without their yes. Credentials come from environment variables: `"value": "${env:QP_TEST_PASSWORD}"`.
+- Test data goes in `.quality/fixtures/`. Use files from the repository or ask the user for some; never use personal files without their yes. Credentials come from environment variables: `"value": "${env:SW_TEST_PASSWORD}"`.
 - Devices default to `["mobile", "desktop"]`. Keep both unless the product truly exists on one only.
 - A task needs no account: a task on a public page (the home page demo, pricing, sign-up) is just its steps from `goto "/"`, with no sign-in.
 - A task that starts from a fresh account uses `${unique}` in its values (`"value": "test+${unique}@example.com"`): it is replaced by a different value at every run (each device, variant and colour scheme), the same for all the steps of that run.
@@ -66,9 +66,9 @@ If the user would rather show the task than describe it, offer `sw record <flow-
 
 Skip what does not apply; each takes a few minutes now and saves a rebuild later. For a product starting from nothing, the `from-zero` skill gives the order of the whole path.
 
-**Accounts (has_auth).** Ask for two test accounts that belong to two different customers (and, if multi_tenant, a member and an admin of the same one), created by seed, never real ones. Then draft `access` in `.quality/project.json` from the routes you read: one check per kind of resource, each with its owner and who must be refused. Format in the `saas-foundations` skill. Passwords and tokens come from environment variables (`${env:QP_TEST_PASSWORD}`). On a new project with no route yet, write the two accounts and add the checks with the first resource. Also draft `auth_probe` (the login route and a disposable account) for `sw auth`.
+**Accounts (has_auth).** Ask for two test accounts that belong to two different customers (and, if multi_tenant, a member and an admin of the same one), created by seed, never real ones. Then draft `access` in `.quality/project.json` from the routes you read: one check per kind of resource, each with its owner and who must be refused. Format in the `saas-foundations` skill. Passwords and tokens come from environment variables (`${env:SW_TEST_PASSWORD}`). On a new project with no route yet, write the two accounts and add the checks with the first resource. Also draft `auth_probe` (the login route and a disposable account) for `sw auth`.
 
-**Threat model (has_backend).** Copy `${CLAUDE_PLUGIN_ROOT}/templates/threats.json` to `.quality/threats.json` and rewrite it with the user for this product, following the `security-testing` skill: assets, actors, entry points, one abuse case or more per entry point, a response and a test for each. `sw threats` must pass. Do not leave the template's examples in place.
+**Threat model (has_backend).** Copy `${CLAUDE_PLUGIN_ROOT}/templates/threats.json` to `.quality/threats.json` and rewrite it with the user for this product, following the `security-testing` skill: assets, actors, entry points, one abuse case or more per entry point, a response and a test for each. `sw threats --check` must pass (cases open before launch are expected now; `sw threats` alone is the launch gate). Do not leave the template's examples in place.
 
 **Subscriptions (has_subscriptions).** Ask for the rules before any billing code, and write them in the spec or `.quality/project.json` › `notes`: plans and limits in numbers, trial (length, card or not, what happens at the end), grace period after a failed payment, what happens to data on downgrade, countries sold to.
 
@@ -92,7 +92,7 @@ Skip what does not apply; each takes a few minutes now and saves a rebuild later
 1. `sw flows --check` validates them without a browser. Fix every error.
 2. If the app runs (try `urls.local` with `curl -sI`), play them: `sw flows`. If Playwright is missing, ask the user whether to run `sw browser-setup`: it downloads Playwright, axe-core and Chromium once into the pack's cache, not into the project.
 3. Fix the selectors until every run says `completed`. A flow that cannot finish because of a real bug is a finding: keep the flow and tell the user.
-4. If you wrote them: `sw access --check`, `sw threats` and `sw mobile flows --check` validate the declarations without touching the app. Play `sw access` when the app runs locally.
+4. If you wrote them: `sw access --check`, `sw threats --check` and `sw mobile flows --check` validate the declarations without touching the app. Play `sw access` when the app runs locally.
 
 ## 7. Companion tools
 

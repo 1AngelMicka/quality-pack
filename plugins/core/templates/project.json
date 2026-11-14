@@ -27,6 +27,13 @@
   "companions": ["graphify"],
   "urls": { "local": "http://localhost:3000", "staging": "", "production": "" },
   "api_url": "",
+  "auth_probe": {
+    "login": { "path": "/api/auth/login", "body": { "email": "{email}", "password": "{password}" } },
+    "signup": { "path": "/api/auth/signup", "body": { "email": "{email}", "password": "{password}" } },
+    "reset": { "path": "/api/auth/password-reset", "body": { "email": "{email}" } },
+    "known_email": "probe@test.local",
+    "password_env": "SW_TEST_PASSWORD"
+  },
   "work_screens": ["The screens where the real work happens, e.g. the editor once photos are added"],
   "flows": [
     {

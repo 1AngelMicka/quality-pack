@@ -37,15 +37,21 @@
 //                                            by task id (--replace starts over); --pause waits S seconds between tasks
 //   node sw.mjs access [--base URL] [--check] [--allow-production]
 //                                            Access control played for real: each resource declared in project.json › access is
-//                                            requested by its owner, then by the accounts that must not reach it (access.json)
+//                                            requested by its owner, then by the accounts that must not reach it (access.json).
+//                                            --check: validates the declaration only (no check yet is a warning); exit 2 when not ok
 //   node sw.mjs dast [url] [--minutes N] [--allow-production]
 //                                            Passive security scan of the running app with OWASP ZAP's baseline, in Docker (zap.json)
-//   node sw.mjs auth [--base URL]            Login of the running app: same answer for known and unknown accounts, wrong passwords
-//                                            slowed or refused (auth.json). Sends failed logins: local or staging only
+//   node sw.mjs auth [--base URL]            Login of the running app: the right password first (password_env), same answer for known
+//                                            and unknown accounts (also on sign-up and reset when declared), wrong passwords slowed or
+//                                            refused (auth.json). Sends failed logins: local or staging only
 //   node sw.mjs supply                       Supply chain read from the repository: lockfile, release cooldown, install scripts,
 //                                            pinned CI actions, env files (supply.json)
-//   node sw.mjs threats [--check]            Check the threat model (.quality/threats.json): every entry point has an abuse
-//                                            case, every abuse case a response and a test
+//   node sw.mjs threats [--check | --gate launch]
+//                                            Threat model (.quality/threats.json). --check: is it well formed (every entry point has an
+//                                            abuse case, every abuse case a response and a test)? Exit 0 when it is, open cases allowed.
+//                                            No option or --gate launch: is it ready for launch? Also fails on cases open before launch
+//   node sw.mjs guard-test                   Play known cases through the secrets guard hook (keys in code, .env, allow marker,
+//                                            unreadable input) and report each pass or fail
 //   node sw.mjs mobile flows [flow-id...]    Installed app: turn project.json › mobile.flows into Maestro flows (.maestro/qp/)
 //                                            and play them on the running emulator, simulator or device (mobile.json)
 //   node sw.mjs mobile audit                 Installed app, Android: the screen shown on the running device or emulator, read with adb:
@@ -62,7 +68,9 @@
 //                                            must be refused (webhooks.json). Local or staging only
 //   node sw.mjs billing [--wait seconds]     Subscription life cycle played in Stripe's test mode with a test clock: trial, first
 //                                            payment, declined renewal, cancellation; the app is asked what it believes at each
-//                                            stage (billing.json). Needs a Stripe TEST key in the environment
+//                                            stage (billing.json). Needs a Stripe TEST key in the environment. billing.trial "app": the
+//                                            app holds the trial, asked before any subscription; billing.subscription_metadata is set
+//                                            on the test subscription
 //   node sw.mjs facts <url> [url...]         Figures, quotes and customer names shown on public pages, each to be traced to
 //                                            .quality/facts.json (facts.json in the run)
 //   node sw.mjs record <flow-id> [--name "…"] [--start /path] [--device desktop|mobile] [--from recorded.js]
@@ -509,7 +517,12 @@ async function main() {
       const project = requireProject();
       if (flag("check")) {
         const v = validateAccess(project);
-        return out({ ok: !v.errors.length, errors: v.errors, accounts: Object.keys(v.accounts), checks: v.checks.map((c) => ({ id: c.id, request: `${c.method} ${c.path}`, owner: c.owner, denied_to: c.denied_to })) });
+        const ok = !v.errors.length;
+        out({ ok, errors: v.errors, warnings: v.warnings, accounts: Object.keys(v.accounts),
+          checks: v.checks.map((c) => ({ id: c.id, request: `${c.method} ${c.path}`, owner: c.owner, ...(c.scope === "self" ? { scope: "self", markers: c.markers.length } : {}), denied_to: c.denied_to })) });
+        // The exit code follows ok.
+        if (!ok) process.exitCode = 2;
+        return;
       }
       const run = currentRun();
       const result = await runAccess(project, { root: cwd, base: opt("base"), allowProduction: flag("allow-production") });
@@ -559,14 +572,59 @@ async function main() {
       return;
     }
     case "threats": {
+      // Two questions: --check asks "is the model well formed?" (open cases are expected while building);
+      // no option, or --gate launch, asks "can we launch?" and also fails on cases still open before launch.
       const { validateThreats } = await import("./lib/security.mjs");
-      flag("check");
+      const shapeOnly = flag("check");
+      const gate = opt("gate");
+      if (gate != null && gate !== "launch") die(`Unknown gate "${gate}": the only gate is launch (sw.mjs threats --gate launch).`);
+      if (shapeOnly && gate) die("Choose one question: --check (is the model well formed?) or --gate launch (can we launch?).");
       const file = join(qualityDir(cwd), "threats.json");
       let model = null;
       try { model = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : null; } catch (e) { die(`.quality/threats.json is not valid JSON: ${e.message}`); }
       const result = validateThreats(model);
-      out({ file: relative(cwd, file).split("\\").join("/"), ...result });
-      if (!result.ok || result.summary?.open_before_launch.length) process.exitCode = 2;
+      const open = result.summary?.open_before_launch || [];
+      const ok = shapeOnly ? result.ok : result.ok && !open.length;
+      const answer = shapeOnly
+        ? (result.ok ? `yes: the model is well formed${open.length ? ` (${open.length} case(s) still open before launch: expected while building, they fail \`sw threats\` without --check)` : ""}` : "no: fix the errors")
+        : !result.ok ? "no: the model is not well formed, fix the errors" : open.length ? `no: ${open.length} abuse case(s) still open before launch` : "yes: the model is well formed and no case is open before launch";
+      out({ file: relative(cwd, file).split("\\").join("/"),
+        question: shapeOnly ? "is the threat model well formed? (--check)" : "is the threat model ready for launch? (--gate launch)",
+        answer, ok, model_ok: result.ok, errors: result.errors, warnings: result.warnings, ...(result.summary ? { summary: result.summary } : {}) });
+      if (!ok) process.exitCode = 2;
+      return;
+    }
+    case "guard-test": {
+      // Known cases played through the hook script itself, as Claude Code would call it. The keys are fake and
+      // assembled here so that this file never holds one.
+      const { spawnSync } = await import("node:child_process");
+      const hook = fileURLToPath(new URL("./hooks/secrets-guard.mjs", import.meta.url));
+      const tail = "a1B2c3D4e5F6g7H8i9J0k1L2";
+      const live = ["sk", "live", tail].join("_"), test = ["sk", "test", tail].join("_"), restricted = ["rk", "test", tail].join("_");
+      const hookSecret = ["whsec", tail + "m3N4"].join("_");
+      const write = (file, content) => JSON.stringify({ tool_name: "Write", tool_input: { file_path: file, content } });
+      const cases = [
+        ["live secret key in code is blocked", write("/p/src/config.ts", `const stripe = new Stripe("${live}");`), 2],
+        ["test secret key in code is blocked", write("/p/src/config.ts", `const stripe = new Stripe("${test}");`), 2],
+        ["restricted test key in code is blocked", write("/p/src/pay.ts", `const k = "${restricted}";`), 2],
+        ["webhook secret in a README is blocked", write("/p/README.md", `STRIPE_WEBHOOK_SECRET=${hookSecret}`), 2],
+        ["key in .env.example is blocked", write("/p/.env.example", `STRIPE_SECRET_KEY=${live}`), 2],
+        ["key in .env is allowed", write("/p/.env", `STRIPE_SECRET_KEY=${live}`), 0],
+        ["test key in .env.local is allowed", write("/p/.env.local", `STRIPE_SECRET_KEY=${test}`), 0],
+        ["key in an Edit is blocked", JSON.stringify({ tool_name: "Edit", tool_input: { file_path: "/p/a.ts", old_string: "x", new_string: `k = "${test}"` } }), 2],
+        ["sw-allow-secret allows a deliberate value", write("/p/a.ts", `const k = "${test}"; // sw-allow-secret`), 0],
+        ["qp-allow-secret (former marker) still allows it", write("/p/a.ts", `const k = "${test}"; // qp-allow-secret`), 0],
+        ["environment reference is allowed", write("/p/a.ts", "const k = process.env.STRIPE_SECRET_KEY;"), 0],
+        ["unreadable input passes with a message on stderr", `{"tool_input": {"file_path": "/p/a.ts", "content": "${live}"`, 0, /not valid JSON/],
+      ];
+      const results = cases.map(([name, input, want, stderrWant]) => {
+        const r = spawnSync(process.execPath, [hook], { input, encoding: "utf8", timeout: 10000 });
+        const pass = r.status === want && (!stderrWant || stderrWant.test(r.stderr || "")) && (want !== 2 || /sw-allow-secret/.test(r.stderr || ""));
+        return { case: name, expected_exit: want, exit: r.status, pass, ...(pass ? {} : { stderr: String(r.stderr || r.error?.message || "").trim().slice(0, 300) }) };
+      });
+      const failed = results.filter((r) => !r.pass).map((r) => r.case);
+      out({ hook: relative(cwd, hook).split("\\").join("/"), ok: !failed.length, passed: results.length - failed.length, failed, cases: results });
+      if (failed.length) process.exitCode = 2;
       return;
     }
     case "mobile": {
@@ -654,7 +712,9 @@ async function main() {
       const project = requireProject();
       const run = currentRun();
       // The Stripe address can only be replaced by a local one, for the pack's own tests.
-      const local = process.env.QP_STRIPE_API && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(process.env.QP_STRIPE_API) ? process.env.QP_STRIPE_API : undefined;
+      // SW_STRIPE_API, or its former name QP_STRIPE_API.
+      const stand = process.env.SW_STRIPE_API || process.env.QP_STRIPE_API;
+      const local = stand && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(stand) ? stand : undefined;
       const result = await playBilling(project, { apiBase: local, wait: Number(opt("wait", "20")) * 1000 });
       if (result.stages?.length) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "billing.json"), JSON.stringify(result, null, 2)); }
       out(result);
