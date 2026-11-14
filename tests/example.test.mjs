@@ -58,7 +58,9 @@ test("reference project: every defect planted in the draft is found, and the car
   has(d.webhooks.out.summary.must_failed, "webhooks_stripe_unsigned", "webhooks_stripe_forged");
   has(d.seo.out.summary.must_failed, "sitemap_present", "description_present", "title_unique", "keywords_on_page");
   const dc = d.craft.out.pages[0].summary.must_failed;
-  has(dc, "focus_visible", "input_font_size", "favicon", "not_found_status");
+  has(dc, "focus_visible", "input_font_size", "favicon");
+  // A local address: the soft 404 is to check in preproduction, not a failure of the draft.
+  has(d.craft.out.pages[0].summary.to_check_in_preproduction || [], "not_found_status");
   has(d.stress.out.summary.must_failed, "failing_no_crash", "long_no_overflow", "narrow_reflow");
   has(d.stress.out.summary.should_failed, "slow_indicator", "failing_message");
   assert.ok(d.facts.out.summary.untraced >= 3, JSON.stringify(d.facts.out.summary));

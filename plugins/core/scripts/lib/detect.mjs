@@ -1,7 +1,8 @@
 // Guess stacks, flags and profile from an existing project. Suggestions only: /sw:kickoff confirms them with the user.
 import { existsSync, readFileSync, statSync } from "node:fs";
-import { join, extname } from "node:path";
-import { listFiles } from "./scan.mjs";
+import { join, extname, resolve } from "node:path";
+import { listFiles, DEFAULT_EXCLUDE } from "./scan.mjs";
+import { gitRoot } from "./git.mjs";
 
 // Signs that the UI is an application (it keeps state or takes files), not a showcase site.
 const APP_DEPS = ["zustand", "redux", "@reduxjs/toolkit", "jotai", "valtio", "mobx", "pinia", "vuex", "xstate", "@tanstack/react-query",
@@ -31,6 +32,22 @@ function appSignals(cwd, deps, file) {
     if (seen.size === APP_CODE.length) break;
   }
   return out;
+}
+
+// Source code of the product. Notes, reports and Shipwright's own files (.quality/) are not code: a project
+// with only those is still a new project.
+const SOURCE = /\.(m?[jt]sx?|cjs|vue|svelte|astro|html|css|scss|py|php|rb|go|rs|java|kt|swift|cs|dart|sql|prisma)$/i;
+const NOT_PRODUCT = [...DEFAULT_EXCLUDE, ".quality", ".claude", ".github"];
+export const sourceFiles = (cwd) => listFiles(cwd).filter((f) => SOURCE.test(f) && !NOT_PRODUCT.some((d) => f === d || f.startsWith(`${d}/`)));
+
+// Where the Git repository of the project starts. A project folder inside someone's home repository (or with no
+// repository at all) would get its .gitignore and commits in the wrong place: say so.
+function gitInfo(cwd) {
+  const root = gitRoot(cwd);
+  const norm = (p) => { const n = resolve(p).replace(/\\/g, "/").replace(/\/$/, ""); return process.platform === "win32" ? n.toLowerCase() : n; };
+  if (!root) return { git_root: null, warning: "No Git repository: run git init in the project folder before writing .gitignore or committing .quality/." };
+  if (norm(root) !== norm(cwd)) return { git_root: root, warning: `The project is inside the Git repository of a parent folder (${root}), not its own: run git init in the project folder first, or confirm with the user that the parent repository is intended.` };
+  return { git_root: root, warning: null };
 }
 
 const has = (deps, names) => names.some((n) => n.endsWith("*") ? Object.keys(deps).some((d) => d.startsWith(n.slice(0, -1))) : n in deps);
@@ -70,8 +87,16 @@ export function detect(cwd, stacks) {
   if (has(deps, ["next", "astro", "nuxt", "@remix-run/*", "gatsby"])) add("public_web", "server-rendered web framework (confirm the site is public)");
 
   const signals = flags.has("has_ui") ? appSignals(cwd, deps, file) : [];
+  const source = sourceFiles(cwd).length;
+  const isNew = source === 0;
   let profile = "webapp";
   let profileWhy = "UI with a server, a database or accounts";
+  let profileDefault = false;
+  // Nothing found: the profile is a default to confirm with the user, not a conclusion.
+  if (!flags.size && !matched.length) {
+    profileDefault = true;
+    profileWhy = isNew ? "default for an empty project: nothing detected yet, ask the user" : "default: no UI, server, database or accounts detected, ask the user";
+  }
   if (has(deps, ["expo", "react-native", "@capacitor/*"])) { profile = "mobile"; profileWhy = "React Native, Expo or Capacitor"; }
   else if (flags.has("desktop_app")) { profile = "desktop"; profileWhy = "Tauri or Electron"; }
   else if (flags.has("has_payments")) { profile = "saas"; profileWhy = "payment SDK"; }
@@ -81,6 +106,8 @@ export function detect(cwd, stacks) {
     else { profile = "vitrine"; profileWhy = "UI without server, database, accounts, state or file input"; }
   }
 
+  const git = gitInfo(cwd);
   return { package_manager: pm, name: pkg?.name || null, stacks: matched, flags: [...flags].sort(), why, profile, profile_why: profileWhy,
-    app_signals: signals, scripts: pkg?.scripts || {}, is_new_project: !pkg && !file(".git") };
+    profile_default: profileDefault, app_signals: signals, scripts: pkg?.scripts || {}, source_files: source, is_new_project: isNew,
+    git_root: git.git_root, warnings: git.warning ? [git.warning] : [] };
 }

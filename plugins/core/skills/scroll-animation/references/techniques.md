@@ -2,7 +2,9 @@
 
 Each recipe starts from content that is visible and still, then adds motion only where it is welcome and supported. Browser support (November 2026): CSS scroll-driven animations in Chrome and Edge 115+, Safari 26+, Firefox 159+; View Transitions within a page everywhere, across pages in Chrome, Edge and Safari (Firefox partial); `scroll-state()` queries, scroll-triggered animations (`timeline-trigger`) and CSS carousels in Chromium only — use them as extras, never for content.
 
-Contents: [Guard](#the-guard) · [Reveal](#reveal-once-on-enter) · [Scrub](#scrubbed-motion) · [Progress bar](#reading-progress-bar) · [Parallax](#parallax) · [Sticky scene](#sticky-and-pinned-scene) · [Horizontal](#horizontal-section) · [Text](#text-reveal) · [Steps](#scrollytelling-steps) · [Snap](#snapping) · [Image sequence and video](#image-sequence-and-video-scrub) · [3D](#3d-scene) · [Lottie and Rive](#lottie-and-rive) · [Transitions](#page-and-section-transitions) · [Smooth scroll](#smooth-scrolling)
+Trigger or scrub: most recipes below trigger (an animation with its own duration starts once, when the element arrives); the scrubbed ones (progress, parallax, pinned scene, horizontal, image sequence) are for effects where the position is the information, within a third of a screen of scroll per step (skill, section 1).
+
+Contents: [Guard](#the-guard) · [Motion toggle](#motion-toggle) · [Reveal](#reveal-once-on-enter) · [Scrub](#scrubbed-motion) · [Progress bar](#reading-progress-bar) · [Parallax](#parallax) · [Sticky scene](#sticky-and-pinned-scene) · [Horizontal](#horizontal-section) · [Text](#text-reveal) · [Steps](#scrollytelling-steps) · [Snap](#snapping) · [Image sequence and video](#image-sequence-and-video-scrub) · [3D](#3d-scene) · [Lottie and Rive](#lottie-and-rive) · [Transitions](#page-and-section-transitions) · [Smooth scroll](#smooth-scrolling)
 
 ## The guard
 
@@ -25,6 +27,34 @@ motionOK.addEventListener("change", (e) => (e.matches ? startScrollEffects() : s
 ```
 
 Do not use a blanket `animation: none !important` for reduced motion: it breaks `animationend` logic. Remove movement (translate, scale, parallax) and keep a short fade if the change needs to be noticed.
+
+## Motion toggle
+
+For a very animated page: a visible button in the header that starts from the system setting, lets the visitor override it both ways, and remembers the choice. It also pauses everything it covers (WCAG 2.2.2). The guard then reads a class on `<html>` instead of the media query alone.
+
+```html
+<button type="button" id="motion-toggle" aria-pressed="true">Animations</button>
+```
+
+```js
+const sys = matchMedia("(prefers-reduced-motion: reduce)");
+const saved = (() => { try { return localStorage.getItem("motion"); } catch { return null; } })();
+let on = saved ? saved === "on" : !sys.matches;
+const btn = document.getElementById("motion-toggle");
+function apply() {
+  document.documentElement.classList.toggle("motion", on);
+  btn.setAttribute("aria-pressed", String(on));
+  on ? startScrollEffects() : stopScrollEffects();          // stop also pauses loops, videos and 3D
+}
+btn.addEventListener("click", () => { on = !on; try { localStorage.setItem("motion", on ? "on" : "off"); } catch {} apply(); });
+apply();
+```
+
+```css
+html.motion .reveal:not(.in) { opacity: 0; translate: 0 24px; }   /* every effect is scoped under html.motion */
+```
+
+The page is still readable before the script runs (no `motion` class yet). Until the visitor presses the button, a reduced-motion system setting keeps the page still, as rule 3 requires.
 
 ## Reveal once on enter
 
@@ -61,7 +91,7 @@ if (matchMedia("(prefers-reduced-motion: no-preference)").matches) {
 
 ## Scrubbed motion
 
-Motion follows the scroll position, forwards and backwards. Use linear timing.
+Motion follows the scroll position, forwards and backwards, and stops when scrolling stops. Use it only where the position is the information, with linear timing.
 
 ```css
 .card-image { animation: zoom-out linear both; animation-timeline: view(); animation-range: cover 0% cover 100%; }
@@ -109,10 +139,10 @@ Wrappers between `.hero-bg` and the page scroller use `overflow: clip`, not `hid
 
 ## Sticky and pinned scene
 
-A tall container gives the scroll distance; a sticky child stays on screen while a named timeline drives the steps.
+By default, trigger each step: the stage stays sticky, IntersectionObserver on invisible step markers sets the step, and each change plays a timed transition (as in [Steps](#scrollytelling-steps)). Scrub with a named timeline only for a short scene the visitor paces. Either way, the container is about a third of a screen per step plus one screen: four steps make `calc(100svh + 4 * 33svh)`, three screens at most.
 
 ```css
-.scene { height: 300svh; view-timeline: --scene block; }            /* about 3 screens at most */
+.scene { height: calc(100svh + 4 * 33svh); view-timeline: --scene block; }   /* 4 steps, a third of a screen each */
 .scene-stage { position: sticky; top: 0; height: 100svh; overflow: clip; }
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
@@ -121,7 +151,7 @@ A tall container gives the scroll distance; a sticky child stays on screen while
 }
 ```
 
-With reduced motion, the container should not keep its 300svh height with nothing happening: drop the height and show the stages one after another.
+With reduced motion, the container should not keep its tall height with nothing happening: drop the height and show the stages one after another.
 
 ## Horizontal section
 
@@ -162,7 +192,7 @@ GSAP SplitText adds the ARIA by itself; Splitting.js does not.
 
 ## Scrollytelling steps
 
-Steps of text scroll past a sticky graphic; each step changes the graphic. Step changes are discrete, so IntersectionObserver (or Scrollama) fits better than a scroll timeline.
+Steps of text scroll past a sticky graphic; each step triggers a change of the graphic, which plays with its own duration (up to about 1.2 s) and finishes even if the visitor stops scrolling. Step changes are discrete, so IntersectionObserver (or Scrollama) fits better than a scroll timeline. Keep each step's text block short: about a third of a screen of scroll between two steps.
 
 ```js
 const graphic = document.querySelector(".story-graphic");

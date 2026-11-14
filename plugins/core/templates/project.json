@@ -8,6 +8,17 @@
   "promise": "For <whom>, <product> <does what> so that <outcome>.",
   "out_of_scope": [],
   "success_metric": "",
+  "evidence": [
+    { "what": "Stage 0 proof that someone wants it, e.g. 8 of 12 freelancers interviewed asked for it", "source": "notes/interviews.md", "date": "" }
+  ],
+  "desktop": {
+    "why": "Only with desktop_app: why not a web app (local files, heavy processing, offline, system integration)",
+    "shell": "tauri",
+    "systems": ["windows", "macos"],
+    "build_and_test_on": ["windows"],
+    "distribution": "direct download, signed installer, auto-update",
+    "data": "local only, or synced with the server (then saas-foundations and security-testing apply to it)"
+  },
   "flags": ["has_ui", "has_backend", "has_auth", "has_user_data", "has_db"],
   "expected_load": { "concurrent_users": null, "notes": "" },
   "design_direction": "See DESIGN.md",
@@ -15,6 +26,14 @@
   "audit_model": "opus",
   "companions": ["graphify"],
   "urls": { "local": "http://localhost:3000", "staging": "", "production": "" },
+  "api_url": "",
+  "auth_probe": {
+    "login": { "path": "/api/auth/login", "body": { "email": "{email}", "password": "{password}" } },
+    "signup": { "path": "/api/auth/signup", "body": { "email": "{email}", "password": "{password}" } },
+    "reset": { "path": "/api/auth/password-reset", "body": { "email": "{email}" } },
+    "known_email": "probe@test.local",
+    "password_env": "SW_TEST_PASSWORD"
+  },
   "work_screens": ["The screens where the real work happens, e.g. the editor once photos are added"],
   "flows": [
     {
@@ -31,6 +50,19 @@
         { "name": "Save", "click": "role=button[name=\"Save\"]" },
         { "name": "Saved", "expect": "text=Saved" }
       ]
-    }
+    },
+    {
+      "id": "sign-up",
+      "name": "Create an account from the home page",
+      "steps": [
+        { "name": "Home", "goto": "/" },
+        { "name": "Start", "click": "role=link[name=\"Sign up\"]" },
+        { "name": "Email", "fill": { "selector": "role=textbox[name=\"Email\"]", "value": "test+${unique}@example.com" } },
+        { "name": "Password", "fill": { "selector": "role=textbox[name=\"Password\"]", "value": "${env:QP_TEST_PASSWORD}" } },
+        { "name": "Create", "click": "role=button[name=\"Create my account\"]", "login": true },
+        { "name": "Welcome", "expect": "text=Welcome" }
+      ]
+    },
+    { "id": "export-pdf", "name": "Export an invoice as PDF", "status": "planned" }
   ]
 }

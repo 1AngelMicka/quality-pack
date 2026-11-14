@@ -7,6 +7,17 @@ import { spawnSync } from "node:child_process";
 const SKIP_DIRS = new Set(["node_modules", ".git", ".next", ".nuxt", ".svelte-kit", ".output", "dist", "build", "out",
   "coverage", ".turbo", ".vercel", ".quality", "graphify-out", "vendor", ".cache", "public/build", "storybook-static", ".expo",
   "target", ".venv", "venv", "__pycache__", "Pods", ".gradle", "DerivedData", "test-results", "playwright-report"]);
+// Working documents that are not shipped: research, reports, notes. `sw scan` leaves them out by default;
+// project.json › scan_exclude adds folders or files (a trailing /** or / is optional, * matches within a name).
+export const DEFAULT_EXCLUDE = ["docs", "reports", "research_notes"];
+export function excluder(patterns = []) {
+  const res = patterns.filter((p) => typeof p === "string" && p.trim()).map((p) => {
+    const clean = p.trim().replace(/\\/g, "/").replace(/^\.\//, "").replace(/\/(\*\*)?$/, "");
+    const body = clean.split("/").map((seg) => seg === "**" ? ".*" : seg.replace(/[.+^${}()|[\]]/g, "\\$&").replace(/\*/g, "[^/]*").replace(/\?/g, "[^/]")).join("/");
+    return new RegExp(`^${body}(/|$)`, "i");
+  });
+  return (rel) => res.some((re) => re.test(rel));
+}
 const CODE_EXT = new Set([".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".vue", ".svelte", ".astro"]);
 const TEXT_EXT = new Set([...CODE_EXT, ".html", ".md", ".mdx", ".json", ".yml", ".yaml"]);
 const MAX_SIZE = 512 * 1024;
@@ -70,8 +81,13 @@ const DEBUG = [
   [/^\s*debugger\s*;?\s*$/, "debugger"],
 ];
 
-export function scan(root, ref) {
-  const files = listFiles(root);
+export function scan(root, ref, { exclude = [] } = {}) {
+  // "!docs" in scan_exclude scans a default folder again (a documentation site whose product is docs/).
+  const keep = new Set(exclude.filter((p) => typeof p === "string" && p.startsWith("!")).map((p) => p.slice(1).replace(/\/(\*\*)?$/, "")));
+  const patterns = [...DEFAULT_EXCLUDE.filter((d) => !keep.has(d)), ...exclude.filter((p) => typeof p === "string" && !p.startsWith("!"))];
+  const excluded = excluder(patterns);
+  const all = listFiles(root);
+  const files = all.filter((f) => !excluded(f));
   const findings = { placeholder_scan: [], slop_wording_scan: [], debug_leftovers_scan: [] };
   const slop = [...(ref.slop_words.fr || []), ...(ref.slop_words.en || [])].map((s) => new RegExp(s, "i"));
   const cap = (arr, item) => { if (arr.length < 200) arr.push(item); };
@@ -118,13 +134,13 @@ export function scan(root, ref) {
       }
     });
   }
-  return { root, files_scanned: files.length, findings,
+  return { root, files_scanned: files.length, excluded: { patterns, files: all.length - files.length }, findings,
     summary: Object.fromEntries(Object.entries(findings).map(([k, v]) => [k, v.length])) };
 }
 
 // What the CLI prints: counts and the first findings of each kind. The full list stays in scan.json.
 export function compactScan(result, perKind = 8) {
-  return { summary: result.summary, files_scanned: result.files_scanned, full_list: "scan.json",
+  return { summary: result.summary, files_scanned: result.files_scanned, excluded: result.excluded, full_list: "scan.json",
     findings: Object.fromEntries(Object.entries(result.findings).map(([k, v]) => [k, v.slice(0, perKind)])) };
 }
 

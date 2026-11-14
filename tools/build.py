@@ -34,7 +34,7 @@ N_DOMAINS = sum(len(g["domains"]) for g in _GROUPS)
 PLUGINS = {
     "core": {"name": "sw", "description": f"Start here: the main Shipwright plugin, the only one you need. Takes a site, web app, SaaS, desktop or mobile app from the idea to the launch. Stages with a gate each, build skills across {N_DOMAINS} domains, key tasks played on phone and desktop, security tried, rendering measured, two scores with evidence. /sw:kickoff, /sw:audit, /sw:fix. Shipwright : mène un site, une application web, un SaaS, une application de bureau ou mobile de l'idée au lancement, avec la preuve à chaque étape."},
     "stack-nextjs": {"name": "sw-nextjs", "description": "Optional add-on for Next.js / React projects: rules for Next.js, React, TypeScript and Tailwind. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les projets Next.js, React, TypeScript, Tailwind."},
-    "stack-node-api": {"name": "sw-node-api", "description": "Optional add-on for Node API projects: Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les API Node."},
+    "stack-node-api": {"name": "sw-node-api", "description": "Optional add-on for Node API projects: Fastify or Express, PostgreSQL with Prisma or pg, Redis and Socket.io when used. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les API Node."},
     "stack-expo": {"name": "sw-expo", "description": "Optional add-on for Expo / React Native apps (iOS, Android). Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les apps Expo et React Native."},
     "stack-capacitor": {"name": "sw-capacitor", "description": "Optional add-on for Capacitor mobile apps: a web app shipped as an iOS and Android app. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les apps Capacitor."},
     "stack-tauri": {"name": "sw-tauri", "description": "Optional add-on for Tauri desktop apps. Install the main plugin Sw first, then add this one only if the project uses it. Module optionnel pour les applications de bureau Tauri."},
@@ -115,7 +115,7 @@ def build_stack_skills():
              f"# {st['label']['en']}", "", "These rules add to the core build skills of Shipwright.", "", "## Rules", ""]
         L += [f"- {r['en']}" for r in st.get("rules", [])]
         L += ["", "## Check commands", "",
-              "Used by `/sw:audit`. `{pm}` is the project's package manager, `{url}` the app URL, `{host}` its host name.", "",
+              "Used by `/sw:audit`. `{pm}` is the project's package manager, `{url}` the app URL, `{api_url}` the API URL (project.json `api_url`, the app URL when absent), `{host}` its host name.", "",
               "| Check | Command | Passes if |", "| --- | --- | --- |"]
         for k, v in st.get("checks", {}).items():
             cmd = v["run"].replace("|", "\\|")

@@ -20,13 +20,17 @@ function claude(args, cwd) {
   return { ok: r.status === 0, missing: !!r.error && r.error.code === "ENOENT", full: text, text: text.split(/\r?\n/).filter(Boolean).slice(-2).join(" ").slice(0, 300) };
 }
 
-export function installPlugins({ cwd, modules = [], detected = [], scope = "user" } = {}) {
+// A stack name (node-api, infra-vps) or a module name (sw-vps, vps) → the plugin name.
+export const moduleOf = (s) => { const m = s.startsWith("sw-") ? s : `sw-${s.replace(/^infra-/, "")}`; return m; };
+
+export function installPlugins({ cwd, modules = [], detected = [], declared = [], scope = "user" } = {}) {
   if (!["user", "project", "local"].includes(scope)) return { error: `Unknown scope "${scope}": user, project or local` };
-  const asked = modules.map((m) => (m.startsWith("sw-") ? m : `sw-${m}`));
+  const asked = modules.map(moduleOf);
   const unknown = asked.filter((m) => !MODULES.includes(m));
   if (unknown.length) return { error: `Unknown module(s): ${unknown.join(", ")}`, known: MODULES.filter((m) => m !== "sw") };
-  // The main plugin, the modules asked for, and the ones whose technology was found in the project.
-  const wanted = [...new Set(["sw", ...asked, ...detected.map((s) => `sw-${s}`).filter((m) => MODULES.includes(m))])];
+  // The main plugin, the modules asked for, the ones whose technology was found in the project, and the stacks
+  // already confirmed in .quality/project.json (a project without code yet declares them before they can be found).
+  const wanted = [...new Set(["sw", ...asked, ...[...detected, ...declared].map(moduleOf).filter((m) => MODULES.includes(m))])];
 
   const version = claude(["--version"], cwd);
   if (!version.ok) return { error: version.missing || /not recognized|not found/i.test(version.text)

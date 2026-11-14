@@ -7,10 +7,15 @@
 //   node sw.mjs skills                       Without the plugin loaded: list the skills and agents, with their files
 //   node sw.mjs skill <name> [notes]         Print one skill (or an agent's brief) with its paths filled in, ready to follow
 //   node sw.mjs enable [--modules a,b]       Write the project's .claude/settings.json so that Claude Code offers the plugin
+//                                            (offering is not installing: install below is the sure path)
 //   node sw.mjs install [--modules a,b] [--scope user|project]
 //                                            Install the marketplace, the main plugin and the modules of the technologies found in
-//                                            the project, with Claude Code's command line. Changes the user's Claude Code
-//                                            configuration: only when the user asked. Then the user types /reload-plugins
+//                                            the project or declared in project.json › stacks, with Claude Code's command line.
+//                                            Changes the user's Claude Code configuration: only when the user asked. Then the user
+//                                            types /reload-plugins. The sure path: accepting the marketplace after enable does not
+//                                            always install the plugin
+//   node sw.mjs doctor                       Is Shipwright really there for this project? Marketplace known, sw@shipwright installed
+//                                            (user or project scope), enabled here, modules, hooks declared, versions. Read only
 //   node sw.mjs plan [scope...] [--incremental]
 //                                            Applicable criteria for /sw:audit, written to .quality/audits/<run>/plan.json.
 //                                            scope: group, domain, criterion IDs, "blockers" or "quick" (automatic checks only).
@@ -18,26 +23,35 @@
 //                                            Each audit gets its own run folder: 2026-11-11, then 2026-11-11-2 for a second one that day.
 //   node sw.mjs run <label> "<command>"      Run a command, keep the full log on disk, print only a compact summary
 //   node sw.mjs graph [refresh]              Graphify status (installed, fresh, recommended for this size) or code-only refresh
-//   node sw.mjs scan                         Static scans of the source (placeholder, hollow wording, debug leftovers)
+//   node sw.mjs scan                         Static scans of the source (placeholder, hollow wording, debug leftovers). Leaves out
+//                                            docs/, reports/, research_notes/ and project.json › scan_exclude ("!docs" scans docs/ again)
 //   node sw.mjs web <url>                    HTTP checks: headers, compression, cache, SEO metadata, robots, sitemap
 //   node sw.mjs seo [url] [--limit N]        Search readiness of the public pages: sitemap (found, declared, every address answers and is
 //                                            indexable), title and meta description of each page (filled, length, unique), one h1,
 //                                            the keywords of project.json › seo.keywords carried by their page, Search Console (seo.json)
 //   node sw.mjs browser <url> [url...]       Playwright checks of pages as they load, at 6 widths
-//   node sw.mjs flows [flow-id...] [--base URL] [--check] [--attach port]
+//   node sw.mjs flows [flow-id...] [--base URL] [--check] [--attach port] [--run R] [--pause S] [--replace]
 //                                            Play the key tasks declared in project.json step by step, on a phone and a
-//                                            desktop: screenshot, axe-core and effort measures at every step (flows.json)
+//                                            desktop: screenshot, axe-core and effort measures at every step (flows.json).
+//                                            Without --run: in .quality/flows/, never in an audit run. Results are merged
+//                                            by task id (--replace starts over); --pause waits S seconds between tasks
 //   node sw.mjs access [--base URL] [--check] [--allow-production]
 //                                            Access control played for real: each resource declared in project.json › access is
-//                                            requested by its owner, then by the accounts that must not reach it (access.json)
+//                                            requested by its owner, then by the accounts that must not reach it (access.json).
+//                                            --check: validates the declaration only (no check yet is a warning); exit 2 when not ok
 //   node sw.mjs dast [url] [--minutes N] [--allow-production]
 //                                            Passive security scan of the running app with OWASP ZAP's baseline, in Docker (zap.json)
-//   node sw.mjs auth [--base URL]            Login of the running app: same answer for known and unknown accounts, wrong passwords
-//                                            slowed or refused (auth.json). Sends failed logins: local or staging only
+//   node sw.mjs auth [--base URL]            Login of the running app: the right password first (password_env), same answer for known
+//                                            and unknown accounts (also on sign-up and reset when declared), wrong passwords slowed or
+//                                            refused (auth.json). Sends failed logins: local or staging only
 //   node sw.mjs supply                       Supply chain read from the repository: lockfile, release cooldown, install scripts,
 //                                            pinned CI actions, env files (supply.json)
-//   node sw.mjs threats [--check]            Check the threat model (.quality/threats.json): every entry point has an abuse
-//                                            case, every abuse case a response and a test
+//   node sw.mjs threats [--check | --gate launch]
+//                                            Threat model (.quality/threats.json). --check: is it well formed (every entry point has an
+//                                            abuse case, every abuse case a response and a test)? Exit 0 when it is, open cases allowed.
+//                                            No option or --gate launch: is it ready for launch? Also fails on cases open before launch
+//   node sw.mjs guard-test                   Play known cases through the secrets guard hook (keys in code, .env, allow marker,
+//                                            unreadable input) and report each pass or fail
 //   node sw.mjs mobile flows [flow-id...]    Installed app: turn project.json › mobile.flows into Maestro flows (.maestro/qp/)
 //                                            and play them on the running emulator, simulator or device (mobile.json)
 //   node sw.mjs mobile audit                 Installed app, Android: the screen shown on the running device or emulator, read with adb:
@@ -54,21 +68,29 @@
 //                                            must be refused (webhooks.json). Local or staging only
 //   node sw.mjs billing [--wait seconds]     Subscription life cycle played in Stripe's test mode with a test clock: trial, first
 //                                            payment, declined renewal, cancellation; the app is asked what it believes at each
-//                                            stage (billing.json). Needs a Stripe TEST key in the environment
+//                                            stage (billing.json). Needs a Stripe TEST key in the environment. billing.trial "app": the
+//                                            app holds the trial, asked before any subscription; billing.subscription_metadata is set
+//                                            on the test subscription
 //   node sw.mjs facts <url> [url...]         Figures, quotes and customer names shown on public pages, each to be traced to
 //                                            .quality/facts.json (facts.json in the run)
 //   node sw.mjs record <flow-id> [--name "…"] [--start /path] [--device desktop|mobile] [--from recorded.js]
 //                                            Record a key task by doing it in a browser; saves it as a flow in project.json
-//   node sw.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]
+//   node sw.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json] [--before code|file.js] [--as account]
 //                                            How the page looks, measured: generic "AI-made" signals (weighted, never one alone),
-//                                            font sizes and families, radii, line length and height, small targets, accent share,
-//                                            reduced motion (look.json). --baseline: controls lost since an earlier look.json (redesign guard)
-//   node sw.mjs craft <url> [url...] [--mode persuade|operate|read]
+//                                            point of view (none when nothing was decided), font sizes and families, radii, line
+//                                            length and height, small targets, accent share, reduced motion (look.json). Tier "low"
+//                                            = few generic signs, not "good". project.json › motion: "rich" (or per path) turns
+//                                            LOOK-ANIMATE-ALL into information. --baseline: controls lost since an earlier look.json
+//   node sw.mjs craft <url> [url...] [--mode persuade|operate|read] [--before code|file.js] [--as account]
 //                                            Finish of the rendered page, measured: typography details, focus and hover states,
-//                                            transitions, images, icons, site icon, share image, 404 page (craft.json)
-//   node sw.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script]
+//                                            controls the click reaches, transitions, images, icons, site icon, share image, 404
+//                                            page (craft.json). On localhost, 404 status and share image are "to check in preproduction"
+//   node sw.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script] [--before code|file.js] [--as account]
 //                                            Finishing passes: the screen with a slow network, a failing server, texts three times
 //                                            longer, 320 px wide, dark scheme, keyboard only, scripts off (stress.json, screenshots)
+//                                            look, craft, stress and deslop say when the browser ended elsewhere (a redirect to the
+//                                            login page) and list 401, 403 and 429 answers. --before: code run before the page's
+//                                            scripts (repeatable). --as: log in once with project.json › access.accounts.<account>
 //   node sw.mjs profile <url> [url...] [--save]
 //                                            Visual profile of a page in numbers (type scale, typefaces, first screen, colours,
 //                                            surfaces, density). --save: keep them as the project's references (.quality/references.json)
@@ -77,12 +99,18 @@
 //   node sw.mjs bank [type] | bank measure <type|all> | bank calibrate <type|all> [--limit N]
 //                                            Reference bank: excellent sites by type, why they are, their measured profile;
 //                                            calibrate runs sw craft and sw look on them, so that a rule most of them break becomes advice
-//   node sw.mjs variants <name> <url> <url> [url...] | variants <name> --tally
+//   node sw.mjs variants <name> <url> <url> [url...] [--mode persuade|operate|read] | variants <name> --tally
 //                                            Several versions of one screen: screenshots under shuffled letters, measures, pairs
-//                                            for a blind jury; --tally ranks them from the votes
-//   node sw.mjs deslop <url|file.html> [--widths …] [--click sel] [--before file.js] [--tauri] [--dark] [--attach port]
+//                                            for a blind jury; --tally ranks them from the votes. --mode: how the screen is measured
+//                                            (persuade for a public page, operate for a work screen, read for content); by default
+//                                            project.json › surface
+//   node sw.mjs deslop <url|file.html> [--widths …] [--click sel] [--before file.js] [--tauri] [--dark] [--attach port] [--as account]
 //                                            Spacing, alignment and execution audit of the rendered page, with installed
-//                                            Chrome or Edge (deslop.json, screenshots per width)
+//                                            Chrome or Edge (deslop.json, screenshots per width). A deliberate exception:
+//                                            data-sw-intended="<rule>: reason" on the element, reported as intended
+//   node sw.mjs tiles [dir]                  Style tiles (default .quality/design/tiles) served on a local port, captured on a
+//                                            desktop and a phone, shown side by side (_sheet/index.html, sheet.png), with the
+//                                            fonts each tile declares but does not load
 //   node sw.mjs tokens [file.tokens.json...] Check design tokens (DTCG 2025.10): references, units, tiers, contrast per theme, sRGB gamut
 //   node sw.mjs browser-setup                Install Playwright, axe-core and Chromium once, in the pack's cache (not the project)
 //   node sw.mjs assemble                     Merge agent results, score, write .quality/AUDIT.md and .quality/report.html
@@ -191,7 +219,10 @@ async function plan(scope, run, incremental = false) {
   const appUrl = project.urls?.production || project.urls?.staging || project.urls?.local || "";
   let host = "";
   try { host = appUrl ? new URL(appUrl).host : ""; } catch { /* invalid URL */ }
-  const fill = (cmd) => cmd.replaceAll("{pm}", project.package_manager || "npm").replaceAll("{url}", appUrl || "{url}").replaceAll("{host}", host || "{host}");
+  // {api_url}: where the API answers when it is not at the app's address (a Vite front on 5173, the API on 3001).
+  const api = project.api_url && typeof project.api_url === "object" ? project.api_url.production || project.api_url.staging || project.api_url.local : project.api_url;
+  const apiUrl = (api || appUrl || "").replace(/\/+$/, "");
+  const fill = (cmd) => cmd.replaceAll("{pm}", project.package_manager || "npm").replaceAll("{api_url}", apiUrl || "{api_url}").replaceAll("{url}", appUrl || "{url}").replaceAll("{host}", host || "{host}");
   const flags = resolveFlags(project.flags, ref);
   const profile = ref.profiles[project.profile];
   const tokens = new Set(scope.map((s) => s.toLowerCase()));
@@ -223,7 +254,7 @@ async function plan(scope, run, incremental = false) {
           item.tool = c.check.tool;
           const provider = ref.checks[c.check.tool]?.provider;
           const st = stacks.find((s) => s.checks?.[c.check.tool]);
-          if (st) Object.assign(item, { command: fill(st.checks[c.check.tool].run), pass_if: st.checks[c.check.tool].pass_if, from_stack: st.stack });
+          if (st) Object.assign(item, { command: fill(st.checks[c.check.tool].run), pass_if: fill(st.checks[c.check.tool].pass_if), from_stack: st.stack });
           if (provider === "core") item.evidence_from = EVIDENCE[c.check.tool] || "run it yourself (see verify)";
           else if (!st) item.note = "No installed stack module maps this check: find the project's equivalent command or inspect, and say so in the evidence.";
         }
@@ -413,7 +444,8 @@ async function main() {
     case "scan": {
       const { scan, compactScan } = await import("./lib/scan.mjs");
       const run = currentRun();
-      const result = scan(cwd, ref);
+      const exclude = loadProject(cwd)?.scan_exclude;
+      const result = scan(cwd, ref, { exclude: Array.isArray(exclude) ? exclude : [] });
       const short = compactScan(result);
       if (loadProject(cwd)) {
         const d = join(auditsDir(), run);
@@ -456,23 +488,38 @@ async function main() {
       return out(result);
     }
     case "flows": {
-      const { playFlows, compactFlows, validateFlows } = await import("./lib/flows.mjs");
+      const { playFlows, compactFlows, validateFlows, mergeFlowResults, staleShots, removeShots } = await import("./lib/flows.mjs");
       const project = requireProject();
       if (flag("check")) {
         const v = validateFlows(project);
-        return out({ ok: !v.errors.length, errors: v.errors, flows: v.flows.map((f) => ({ id: f.id, name: f.name, devices: f.devices, steps: f.steps.length })) });
+        return out({ ok: !v.errors.length, errors: v.errors, warnings: v.warnings, planned: v.planned,
+          flows: v.flows.map((f) => ({ id: f.id, name: f.name, ...(f.status ? { status: f.status } : {}), devices: f.devices, steps: f.steps.length })) });
       }
-      const run = currentRun();
+      // With --run the results go into that audit run; without it, into the working folder .quality/flows/, so that a
+      // check after a fix never changes the evidence of an audit already assembled.
+      const run = opt("run") || opt("date");
       const base = opt("base");
       const attach = opt("attach");
-      const d = join(auditsDir(), run);
-      const result = await playFlows(project, { root: cwd, outDir: d, base, only: rest, budgets: ref.scoring.flow_budgets, attach });
-      const short = compactFlows(result);
-      if (result.flows) {
-        mkdirSync(d, { recursive: true });
-        writeFileSync(join(d, "flows.json"), JSON.stringify(result, null, 2));
-        recordSavings(d, estimateTokens(JSON.stringify(result, null, 2)), estimateTokens(JSON.stringify(short, null, 2)));
-      }
+      const pauseArg = opt("pause");
+      const pause = pauseArg == null ? 0 : Number(pauseArg);
+      if (!(pause >= 0)) die("--pause takes a number of seconds");
+      const replace = flag("replace");
+      const d = run ? join(auditsDir(), run) : join(qualityDir(cwd), "flows");
+      const result = await playFlows(project, { root: cwd, outDir: d, base, only: rest, budgets: ref.scoring.flow_budgets, attach, pause,
+        log: (m) => process.stderr.write(m + "\n") });
+      if (!result.flows) return out(result);
+      mkdirSync(d, { recursive: true });
+      if (!run && !existsSync(join(d, ".gitignore"))) writeFileSync(join(d, ".gitignore"), "# Working results of sw flows, not audit evidence\n*\n");
+      // Tasks played now replace their earlier results in the same file; the others are kept (--replace: start over).
+      const file = join(d, "flows.json");
+      let previous = null;
+      if (!replace && existsSync(file)) { try { previous = JSON.parse(readFileSync(file, "utf8")); } catch { /* unreadable: replaced */ } }
+      const keep = new Set(validateFlows(project).flows.filter((f) => f.status !== "planned").map((f) => f.id));
+      const merged = mergeFlowResults(previous, result, keep);
+      removeShots(cwd, staleShots(previous, merged));
+      writeFileSync(file, JSON.stringify(merged, null, 2));
+      const short = compactFlows(merged, { report: relative(cwd, file).split("\\").join("/"), screenshots: relative(cwd, join(d, "flows")).split("\\").join("/") + "/" });
+      recordSavings(d, estimateTokens(JSON.stringify(merged, null, 2)), estimateTokens(JSON.stringify(short, null, 2)));
       return out(short);
     }
     case "access": {
@@ -480,7 +527,12 @@ async function main() {
       const project = requireProject();
       if (flag("check")) {
         const v = validateAccess(project);
-        return out({ ok: !v.errors.length, errors: v.errors, accounts: Object.keys(v.accounts), checks: v.checks.map((c) => ({ id: c.id, request: `${c.method} ${c.path}`, owner: c.owner, denied_to: c.denied_to })) });
+        const ok = !v.errors.length;
+        out({ ok, errors: v.errors, warnings: v.warnings, accounts: Object.keys(v.accounts),
+          checks: v.checks.map((c) => ({ id: c.id, request: `${c.method} ${c.path}`, owner: c.owner, ...(c.scope === "self" ? { scope: "self", markers: c.markers.length } : {}), denied_to: c.denied_to })) });
+        // The exit code follows ok.
+        if (!ok) process.exitCode = 2;
+        return;
       }
       const run = currentRun();
       const result = await runAccess(project, { root: cwd, base: opt("base"), allowProduction: flag("allow-production") });
@@ -530,14 +582,59 @@ async function main() {
       return;
     }
     case "threats": {
+      // Two questions: --check asks "is the model well formed?" (open cases are expected while building);
+      // no option, or --gate launch, asks "can we launch?" and also fails on cases still open before launch.
       const { validateThreats } = await import("./lib/security.mjs");
-      flag("check");
+      const shapeOnly = flag("check");
+      const gate = opt("gate");
+      if (gate != null && gate !== "launch") die(`Unknown gate "${gate}": the only gate is launch (sw.mjs threats --gate launch).`);
+      if (shapeOnly && gate) die("Choose one question: --check (is the model well formed?) or --gate launch (can we launch?).");
       const file = join(qualityDir(cwd), "threats.json");
       let model = null;
       try { model = existsSync(file) ? JSON.parse(readFileSync(file, "utf8")) : null; } catch (e) { die(`.quality/threats.json is not valid JSON: ${e.message}`); }
       const result = validateThreats(model);
-      out({ file: relative(cwd, file).split("\\").join("/"), ...result });
-      if (!result.ok || result.summary?.open_before_launch.length) process.exitCode = 2;
+      const open = result.summary?.open_before_launch || [];
+      const ok = shapeOnly ? result.ok : result.ok && !open.length;
+      const answer = shapeOnly
+        ? (result.ok ? `yes: the model is well formed${open.length ? ` (${open.length} case(s) still open before launch: expected while building, they fail \`sw threats\` without --check)` : ""}` : "no: fix the errors")
+        : !result.ok ? "no: the model is not well formed, fix the errors" : open.length ? `no: ${open.length} abuse case(s) still open before launch` : "yes: the model is well formed and no case is open before launch";
+      out({ file: relative(cwd, file).split("\\").join("/"),
+        question: shapeOnly ? "is the threat model well formed? (--check)" : "is the threat model ready for launch? (--gate launch)",
+        answer, ok, model_ok: result.ok, errors: result.errors, warnings: result.warnings, ...(result.summary ? { summary: result.summary } : {}) });
+      if (!ok) process.exitCode = 2;
+      return;
+    }
+    case "guard-test": {
+      // Known cases played through the hook script itself, as Claude Code would call it. The keys are fake and
+      // assembled here so that this file never holds one.
+      const { spawnSync } = await import("node:child_process");
+      const hook = fileURLToPath(new URL("./hooks/secrets-guard.mjs", import.meta.url));
+      const tail = "a1B2c3D4e5F6g7H8i9J0k1L2";
+      const live = ["sk", "live", tail].join("_"), test = ["sk", "test", tail].join("_"), restricted = ["rk", "test", tail].join("_");
+      const hookSecret = ["whsec", tail + "m3N4"].join("_");
+      const write = (file, content) => JSON.stringify({ tool_name: "Write", tool_input: { file_path: file, content } });
+      const cases = [
+        ["live secret key in code is blocked", write("/p/src/config.ts", `const stripe = new Stripe("${live}");`), 2],
+        ["test secret key in code is blocked", write("/p/src/config.ts", `const stripe = new Stripe("${test}");`), 2],
+        ["restricted test key in code is blocked", write("/p/src/pay.ts", `const k = "${restricted}";`), 2],
+        ["webhook secret in a README is blocked", write("/p/README.md", `STRIPE_WEBHOOK_SECRET=${hookSecret}`), 2],
+        ["key in .env.example is blocked", write("/p/.env.example", `STRIPE_SECRET_KEY=${live}`), 2],
+        ["key in .env is allowed", write("/p/.env", `STRIPE_SECRET_KEY=${live}`), 0],
+        ["test key in .env.local is allowed", write("/p/.env.local", `STRIPE_SECRET_KEY=${test}`), 0],
+        ["key in an Edit is blocked", JSON.stringify({ tool_name: "Edit", tool_input: { file_path: "/p/a.ts", old_string: "x", new_string: `k = "${test}"` } }), 2],
+        ["sw-allow-secret allows a deliberate value", write("/p/a.ts", `const k = "${test}"; // sw-allow-secret`), 0],
+        ["qp-allow-secret (former marker) still allows it", write("/p/a.ts", `const k = "${test}"; // qp-allow-secret`), 0],
+        ["environment reference is allowed", write("/p/a.ts", "const k = process.env.STRIPE_SECRET_KEY;"), 0],
+        ["unreadable input passes with a message on stderr", `{"tool_input": {"file_path": "/p/a.ts", "content": "${live}"`, 0, /not valid JSON/],
+      ];
+      const results = cases.map(([name, input, want, stderrWant]) => {
+        const r = spawnSync(process.execPath, [hook], { input, encoding: "utf8", timeout: 10000 });
+        const pass = r.status === want && (!stderrWant || stderrWant.test(r.stderr || "")) && (want !== 2 || /sw-allow-secret/.test(r.stderr || ""));
+        return { case: name, expected_exit: want, exit: r.status, pass, ...(pass ? {} : { stderr: String(r.stderr || r.error?.message || "").trim().slice(0, 300) }) };
+      });
+      const failed = results.filter((r) => !r.pass).map((r) => r.case);
+      out({ hook: relative(cwd, hook).split("\\").join("/"), ok: !failed.length, passed: results.length - failed.length, failed, cases: results });
+      if (failed.length) process.exitCode = 2;
       return;
     }
     case "mobile": {
@@ -625,7 +722,9 @@ async function main() {
       const project = requireProject();
       const run = currentRun();
       // The Stripe address can only be replaced by a local one, for the pack's own tests.
-      const local = process.env.QP_STRIPE_API && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(process.env.QP_STRIPE_API) ? process.env.QP_STRIPE_API : undefined;
+      // SW_STRIPE_API, or its former name QP_STRIPE_API.
+      const stand = process.env.SW_STRIPE_API || process.env.QP_STRIPE_API;
+      const local = stand && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(stand) ? stand : undefined;
       const result = await playBilling(project, { apiBase: local, wait: Number(opt("wait", "20")) * 1000 });
       if (result.stages?.length) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "billing.json"), JSON.stringify(result, null, 2)); }
       out(result);
@@ -655,17 +754,27 @@ async function main() {
       const run = currentRun();
       const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
       if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
-      if (!rest.length) die("Usage: sw.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json]");
+      const { takeAll, readBefore } = await import("./lib/browser.mjs");
+      const before = readBefore(takeAll(rest, "before"), here);
+      const as = opt("as");
       const baselinePath = opt("baseline");
+      if (!rest.length) die("Usage: sw.mjs look <url> [url...] [--mode persuade|operate|read] [--baseline old-look.json] [--before \"code or file.js\"] [--as <account>]");
       const baseline = baselinePath ? JSON.parse(readFileSync(resolve(here, baselinePath), "utf8")) : null;
-      const result = await lookAt(rest, { cwd, mode, baseline, slopWords: [...(ref.slop_words.fr || []), ...(ref.slop_words.en || [])] });
+      const urls = rest.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href);
+      const result = await lookAt(urls, { cwd, mode, baseline, before, as, project, slopWords: [...(ref.slop_words.fr || []), ...(ref.slop_words.en || [])] });
+      if (result.errors) { out(result); process.exitCode = 2; return; }
       if (project && result.pages) {
         const d = join(auditsDir(), run);
         mkdirSync(d, { recursive: true });
         writeFileSync(join(d, "look.json"), JSON.stringify(result, null, 2));
       }
-      return out(result.pages ? { mode, version: result.version, full_report: "look.json", pages: result.pages.map(({ measures, ...p }) => ({ ...p,
-        checks: Object.fromEntries(Object.entries(p.checks || {}).map(([k, c]) => [k, { value: c.value, ok: c.ok, rule: c.rule }])) })) } : result);
+      const warnings = (result.pages || []).flatMap((p) => (p.warnings || []).map((w) => `${p.url}: ${w}`));
+      out(result.pages ? { ...(warnings.length ? { warnings } : {}), mode, version: result.version, ...(as ? { as } : {}), full_report: "look.json",
+        tier_meaning: "low = few signs of a generic look, not a good design. point_of_view \"none\" = no visual decision found (one plain family, flat type scale, nothing to see in the first screen, one hue).",
+        pages: result.pages.map(({ measures, ...p }) => ({ ...p,
+          checks: Object.fromEntries(Object.entries(p.checks || {}).map(([k, c]) => [k, { value: c.value, ok: c.ok, rule: c.rule, ...(c.samples ? { samples: c.samples } : {}) }])) })) } : result);
+      if ((result.pages || []).some((p) => p.reach && !p.reach.same_screen)) process.exitCode = 2;
+      return;
     }
     case "craft": {
       const { craftAt, compactCraft } = await import("./lib/craft.mjs");
@@ -674,15 +783,22 @@ async function main() {
       const run = currentRun();
       const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
       if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
-      if (!rest.length) die("Usage: sw.mjs craft <url> [url...] [--mode persuade|operate|read]");
+      const { takeAll, readBefore } = await import("./lib/browser.mjs");
+      const before = readBefore(takeAll(rest, "before"), here);
+      const as = opt("as");
+      if (!rest.length) die("Usage: sw.mjs craft <url> [url...] [--mode persuade|operate|read] [--before \"code or file.js\"] [--as <account>]");
       const urls = rest.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href);
-      const result = await craftAt(urls, { cwd, mode });
+      const result = await craftAt(urls, { cwd, mode, before, as, project });
+      if (result.errors) { out(result); process.exitCode = 2; return; }
       if (project && result.pages) {
         const d = join(auditsDir(), run);
         mkdirSync(d, { recursive: true });
         writeFileSync(join(d, "craft.json"), JSON.stringify(result, null, 2));
       }
-      return out(compactCraft(result));
+      const warnings = (result.pages || []).flatMap((p) => (p.warnings || []).map((w) => `${p.url}: ${w}`));
+      out({ ...(warnings.length ? { warnings } : {}), ...compactCraft(result) });
+      if ((result.pages || []).some((p) => p.reach && !p.reach.same_screen)) process.exitCode = 2;
+      return;
     }
     case "stress": {
       const { stressAt, PASSES } = await import("./lib/stress.mjs");
@@ -691,14 +807,17 @@ async function main() {
       const only = (opt("only") || PASSES.join(",")).split(",").map((x) => x.trim()).filter(Boolean);
       const bad = only.filter((x) => !PASSES.includes(x));
       if (bad.length) die(`--only: unknown pass ${bad.join(", ")} (${PASSES.join(", ")})`);
-      if (!rest[0]) die("Usage: sw.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script]");
+      const { takeAll, readBefore } = await import("./lib/browser.mjs");
+      const before = readBefore(takeAll(rest, "before"), here);
+      const as = opt("as");
+      if (!rest[0]) die("Usage: sw.mjs stress <url> [--only slow,failing,long,narrow,dark,keyboard,no_script] [--before \"code or file.js\"] [--as <account>]");
       const url = /^[a-z]+:\/\//i.test(rest[0]) ? rest[0] : pathToFileURL(resolve(here, rest[0])).href;
       const { mkdtempSync } = await import("node:fs");
       const { tmpdir } = await import("node:os");
       // Outside a project, screenshots go to a temporary folder, never into the current directory.
       const d = project ? join(auditsDir(), run) : mkdtempSync(join(tmpdir(), "qp-stress-"));
       const flags = project ? resolveFlags(project.flags, ref) : new Set();
-      const result = await stressAt(url, { cwd, outDir: d, root: cwd, only, darkExpected: flags.has("dark_mode"), publicPage: (project?.surface || "") === "persuade" || project?.profile === "vitrine" });
+      const result = await stressAt(url, { cwd, outDir: d, root: cwd, only, darkExpected: flags.has("dark_mode"), publicPage: (project?.surface || "") === "persuade" || project?.profile === "vitrine", before, as, project });
       if (result.passes && project) {
         mkdirSync(d, { recursive: true });
         // One file for the run, one entry per screen.
@@ -707,9 +826,9 @@ async function main() {
         all.pages = [...all.pages.filter((p) => p.url !== result.url), result];
         writeFileSync(file, JSON.stringify(all, null, 2));
       }
-      out(result.passes ? { url: result.url, baseline: result.baseline, summary: result.summary, failed: Object.fromEntries(Object.entries(result.passes).filter(([, c]) => !c.ok)),
+      out(result.passes ? { ...(result.warnings ? { warnings: result.warnings } : {}), url: result.url, ...(as ? { as } : {}), baseline: result.baseline, summary: result.summary, failed: Object.fromEntries(Object.entries(result.passes).filter(([, c]) => !c.ok)),
         passed: Object.entries(result.passes).filter(([, c]) => c.ok).map(([k]) => k), skipped: result.skipped, by_eye: result.by_eye, screenshots: join(d, "stress"), note: result.note } : result);
-      if (result.errors?.length || result.summary?.must_failed.length) process.exitCode = 2;
+      if (result.errors?.length || result.summary?.must_failed.length || (result.reach && !result.reach.same_screen)) process.exitCode = 2;
       return;
     }
     case "profile": {
@@ -779,12 +898,17 @@ async function main() {
       const { MODES } = await import("./lib/look.mjs");
       const project = loadProject(cwd);
       const tally = flag("tally");
-      const mode = opt("mode", project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate"));
+      const asked = opt("mode");
+      const mode = asked || project?.surface || (project?.profile === "vitrine" ? "persuade" : "operate");
       if (!MODES.includes(mode)) die(`--mode must be one of ${MODES.join(", ")}`);
       const [name, ...urls] = rest;
-      if (!name) die("Usage: sw.mjs variants <name> <url> <url> [url...]   |   sw.mjs variants <name> --tally");
+      if (!name) die("Usage: sw.mjs variants <name> <url> <url> [url...] [--mode persuade|operate|read]   |   sw.mjs variants <name> --tally");
       if (tally) { const r = tallyVariants(name, { root: cwd }); out(r); if (r.errors) process.exitCode = 2; return; }
       const r = await shootVariants(name, urls.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href), { root: cwd, cwd, mode });
+      if (!r.errors && r.available !== false) {
+        r.mode = mode;
+        r.mode_from = asked ? "--mode" : project?.surface ? "project.json › surface (a public page is measured with --mode persuade)" : "default";
+      }
       out(r);
       if (r.errors) process.exitCode = 2;
       return;
@@ -796,28 +920,71 @@ async function main() {
       const { spawnSync } = await import("node:child_process");
       const run = currentRun();
       const project = loadProject(cwd);
-      if (!rest.length) die('Usage: sw.mjs deslop <url|file.html> [--widths 375,768,1440,1920] [--click "selector"] [--before file.js] [--tauri] [--dark] [--attach port]');
+      const as = opt("as");
+      if (!rest.length) die('Usage: sw.mjs deslop <url|file.html> [--widths 375,768,1440,1920] [--click "selector"] [--before file.js] [--tauri] [--dark] [--attach port] [--as <account>]');
       const outDir = project ? join(auditsDir(), run, "deslop") : join(qualityDir(cwd), "deslop");
       const script = fileURLToPath(new URL("./deslop/audit.mjs", import.meta.url));
       const args = [...rest];
       if (!args.includes("--widths") && !args.includes("--attach")) args.push("--widths", "375,768,1440,1920");
+      // --as <account>: log in once (Playwright, login steps of project.json › access.accounts), then hand the
+      // session to the audit, which reuses it at every width: one login per command, not one per width.
+      let sessionFile = null;
+      if (as) {
+        const target = rest.find((a) => /^https?:\/\//i.test(a));
+        if (!target) die("--as needs the address of a served page (http:// or https://)");
+        const { loadBrowserTools, launch, accountSession } = await import("./lib/browser.mjs");
+        const tools = await loadBrowserTools(cwd);
+        if (!tools) die("--as plays the account's login steps with Playwright, which is not available. Run `node <sw.mjs> browser-setup` once (pack cache, not the project).");
+        const browser = await launch(tools.chromium);
+        let session;
+        try { session = await accountSession(browser, project, as, { root: cwd, base: new URL(target).origin }); } catch (e) { await browser.close(); die(String(e.message)); }
+        await browser.close();
+        const { mkdtempSync } = await import("node:fs");
+        const { tmpdir } = await import("node:os");
+        sessionFile = join(mkdtempSync(join(tmpdir(), "sw-session-")), "session.json");
+        writeFileSync(sessionFile, JSON.stringify(session));
+        args.push("--session", sessionFile);
+      }
       const audit = () => spawnSync(process.execPath, [script, ...args, "--out", outDir, "--json"], { cwd: here, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
       let r = audit();
       // On a busy machine the browser sometimes fails to start in time: one more try before giving up.
       if (r.status !== 0 && /did not start|timed out|ECONNREFUSED|ECONNRESET/i.test(r.stderr || "")) r = audit();
+      if (sessionFile) { const { rmSync } = await import("node:fs"); try { rmSync(join(sessionFile, ".."), { recursive: true, force: true }); } catch { /* temporary folder */ } }
       if (r.status !== 0) die((r.stderr || r.stdout || "deslop failed").trim());
       const reports = JSON.parse(r.stdout);
       const result = { widths: reports.map((x) => ({ width: x.viewport.width, counts: x.counts, text_length: x.textLength, js_errors: x.errors.length,
+        ...(x.reach ? { measured_url: x.reach.final } : {}),
         screenshots: { fold: relative(cwd, x.screenshots.fold), full: relative(cwd, x.screenshots.full) },
         findings: x.findings.map((f) => ({ rule: f.rule, severity: f.severity, count: f.count, fix: f.fix, examples: f.examples.slice(0, 3) })),
+        ...(x.intended?.length ? { intended: x.intended } : {}),
+        ...(x.notChecked?.length ? { not_checked: x.notChecked } : {}),
         system: { spacing_values: x.stats.spacing.distinct, off_scale_percent: x.stats.spacing.offScaleShare, font_sizes: x.stats.fontSizes.map(([v]) => v).sort((a, b) => a - b) } })) };
       result.total = result.widths.reduce((t, w) => ({ high: t.high + w.counts.high, med: t.med + w.counts.med, low: t.low + w.counts.low }), { high: 0, med: 0, low: 0 });
-      result.warnings = result.widths.filter((w) => w.text_length < 40).map((w) => `${w.width}px: page almost empty — the intended state was not reached (use --click or --before)`);
+      // A redirect (to the login page, most often) means another page was measured: said first, and never a pass.
+      const off = reports.filter((x) => x.reach && !x.reach.same_screen);
+      const denied = reports.flatMap((x) => x.reach?.denied || []);
+      result.warnings = [
+        ...(off.length ? [`NOT THE REQUESTED SCREEN: asked for ${off[0].reach.requested}, the browser ended on ${off[0].reach.final} at ${off.map((x) => `${x.viewport.width}px`).join(", ")}. These counts are about that page: do not read them as a pass. Use --as <account> (access.accounts in project.json) or --before.`] : []),
+        ...(denied.length ? [`${denied.length} response(s) ${[...new Set(denied.map((x) => x.status))].join(", ")} while measuring, first ${denied[0].url}${denied.some((x) => x.status === 429) ? ": the app's rate limit refused requests; wait a minute (--as logs in once for every width)" : ""}`] : []),
+        ...result.widths.filter((w) => w.text_length < 40).map((w) => `${w.width}px: page almost empty — the intended state was not reached (use --click or --before)`),
+      ];
+      if (off.length) result.verdict = "not measured: redirected away from the requested screen";
       if (project) {
         writeFileSync(join(auditsDir(), run, "deslop.json"), JSON.stringify(result, null, 2));
         recordSavings(join(auditsDir(), run), estimateTokens(r.stdout), estimateTokens(JSON.stringify(result)));
       }
-      return out({ ...result, full_report: relative(cwd, join(outDir, "report.json")) });
+      out(off.length || denied.length ? { warnings: result.warnings, ...result, full_report: relative(cwd, join(outDir, "report.json")) } : { ...result, full_report: relative(cwd, join(outDir, "report.json")) });
+      if (off.length) process.exitCode = 2;
+      return;
+    }
+    case "tiles": {
+      // Style tiles of the design-direction skill, served on a local port, captured and shown side by side.
+      const { showTiles } = await import("./lib/tiles.mjs");
+      const dir = rest[0] ? resolve(here, rest[0]) : join(qualityDir(cwd), "design", "tiles");
+      const result = await showTiles(dir, { cwd, root: cwd });
+      out(result);
+      if (result.errors || result.problems) process.exitCode = 2;
+      return;
     }
     case "tokens": {
       const { checkTokens } = await import("./lib/tokens.mjs");
@@ -912,10 +1079,16 @@ async function main() {
       const scope = opt("scope", "user");
       let detected = [];
       try { detected = detect(cwd, findStacks(cwd)).stacks || []; } catch { /* a project that cannot be read installs the main plugin only */ }
-      const r = installPlugins({ cwd, modules, detected, scope });
+      let declared = [];
+      try { declared = loadProject(cwd)?.stacks || []; } catch { /* unreadable project.json: detected stacks only */ }
+      const r = installPlugins({ cwd, modules, detected, declared: Array.isArray(declared) ? declared : [], scope });
       out(r);
       if (r.error || r.failed?.length) process.exit(1);
       return;
+    }
+    case "doctor": {
+      const { doctor } = await import("./lib/doctor.mjs");
+      return out(doctor({ cwd }));
     }
     case "enable": {
       const { enableInProject } = await import("./lib/standalone.mjs");

@@ -97,12 +97,19 @@ node <clone>/plugins/core/scripts/sw.mjs skills          # la liste des skills e
 node <clone>/plugins/core/scripts/sw.mjs skill kickoff   # un skill, prêt à être suivi
 
 # B. Écrire les réglages du projet : Claude Code proposera le plugin à la prochaine ouverture
+#    (le proposer ne suffit pas toujours : accepter la marketplace ne l'installe pas forcément)
 node <clone>/plugins/core/scripts/sw.mjs enable --modules nextjs,vps
 
-# C. Installation complète par l'agent, quand tu la lui demandes (marketplace, plugin, modules détectés)
+# C. Installation complète par l'agent, quand tu la lui demandes (marketplace, plugin, modules détectés
+#    ou déclarés dans .quality/project.json) : le chemin sûr
 node <clone>/plugins/core/scripts/sw.mjs install
 # puis tu tapes /reload-plugins : c'est la seule chose qu'un agent ne peut pas faire à ta place
+
+# Vérifier ce qui est vraiment installé et activé pour le projet (lecture seule)
+node <clone>/plugins/core/scripts/sw.mjs doctor
 ```
+
+Avec B, la marketplace peut être ajoutée à la réouverture sans que le plugin `sw@shipwright` soit installé : aucune commande `/sw:`, aucun skill, aucun hook. C est le chemin sûr ; `sw.mjs doctor` dit où on en est.
 
 Le détail est dans le [guide pour agents](docs/AGENT_GUIDE.md).
 
@@ -332,7 +339,7 @@ Commite `.quality/` pour garder l'historique des notes. Les captures d'écran et
 | L'ajout de la marketplace échoue | Vérifie que `git` est installé. Sans clé SSH GitHub, définis `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` et réessaie. |
 | Les vérifications navigateur sont « non vérifiées » | Lance `sw.mjs browser-setup` (étape 4), et vérifie que l'appli tourne en local ou renseigne une URL de préproduction dans `.quality/project.json`. |
 | Une tâche clé s'arrête à une étape | `flows.json` donne l'étape et l'erreur. Corrige le sélecteur dans `.quality/project.json` › `flows` (`sw.mjs flows --check` le valide), ou corrige le bug s'il est réel. |
-| Une écriture est bloquée comme secret | Mets la valeur dans une variable d'environnement. Si ce n'est vraiment pas un secret, ajoute `qp-allow-secret` en commentaire sur la ligne. |
+| Une écriture est bloquée comme secret | Mets la valeur dans une variable d'environnement. Si ce n'est vraiment pas un secret, ajoute `sw-allow-secret` en commentaire sur la ligne. |
 | L'audit incrémental refait tout | C'est voulu au premier audit, après une mise à jour du pack, si le dernier audit complet a plus de 30 jours, ou hors d'un dépôt Git. |
 | Graphify n'est pas utilisé | Vérifie `graphify --version`, puis `node <chemin du plugin>/scripts/sw.mjs graph` dans ton projet. |
 

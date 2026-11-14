@@ -13,7 +13,7 @@ The prompt gives you: the project path, the screenshots to review (desktop and p
 - `.quality/project.json`: `promise`, `surface` (persuade, operate or read), `profile`;
 - `DESIGN.md`: the direction, the references, what the product refuses;
 - `.quality/references.json` or the output of `sw gap` if it is given: how the screen differs from the references in numbers;
-- the reference bank for the site type, if a type is given: `node <sw.mjs> bank <type>` lists what visitors of that type expect, what the recognised sites do, and what to avoid.
+- the reference bank for the site type, if a type is given: `node <sw.mjs> bank <type>` lists what visitors of that type expect, what the recognised sites do, and what to avoid. If you were given neither the path of `sw.mjs` nor that output, say in your review that the bank was not consulted, and ask for the path next time; do not guess a path.
 
 Open the screenshots with Read; it shows images. Look at the phone and the desktop separately. Never judge a screen you have not opened. Never modify project files, install anything or start other agents.
 
