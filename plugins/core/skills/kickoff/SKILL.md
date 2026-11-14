@@ -50,14 +50,14 @@ If the user would rather show the task than describe it, offer `sw record <flow-
 - Steps take one action each: `goto`, `click`, `fill`, `select`, `check`, `upload`, `press`, `hover`, `wait_for`, `wait`, `expect`, `scroll`. Mark the steps where the user makes a choice with `"decision": true`.
 - Selectors use Playwright syntax. Prefer what the user sees: `role=button[name="Save"]`, `role=tab[name="Layout"]`, `text=Saved`; then labels and `data-testid`; avoid CSS classes.
 - `preview` and `primary` are selectors for the result and the main action; leave them out when the task has none.
-- Test data goes in `.quality/fixtures/`. Use files from the repository or ask the user for some; never use personal files without their yes. Credentials come from environment variables: `"value": "${env:QP_TEST_PASSWORD}"`.
+- Test data goes in `.quality/fixtures/`. Use files from the repository or ask the user for some; never use personal files without their yes. Credentials come from environment variables: `"value": "${env:SW_TEST_PASSWORD}"`.
 - Devices default to `["mobile", "desktop"]`. Keep both unless the product truly exists on one only.
 
 ## 4. Accounts, threats and mobile (when they apply)
 
 Skip what does not apply; each takes a few minutes now and saves a rebuild later. For a product starting from nothing, the `from-zero` skill gives the order of the whole path.
 
-**Accounts (has_auth).** Ask for two test accounts that belong to two different customers (and, if multi_tenant, a member and an admin of the same one), created by seed, never real ones. Then draft `access` in `.quality/project.json` from the routes you read: one check per kind of resource, each with its owner and who must be refused. Format in the `saas-foundations` skill. Passwords and tokens come from environment variables (`${env:QP_TEST_PASSWORD}`). On a new project with no route yet, write the two accounts and add the checks with the first resource. Also draft `auth_probe` (the login route and a disposable account) for `sw auth`.
+**Accounts (has_auth).** Ask for two test accounts that belong to two different customers (and, if multi_tenant, a member and an admin of the same one), created by seed, never real ones. Then draft `access` in `.quality/project.json` from the routes you read: one check per kind of resource, each with its owner and who must be refused. Format in the `saas-foundations` skill. Passwords and tokens come from environment variables (`${env:SW_TEST_PASSWORD}`). On a new project with no route yet, write the two accounts and add the checks with the first resource. Also draft `auth_probe` (the login route and a disposable account) for `sw auth`.
 
 **Threat model (has_backend).** Copy `${CLAUDE_PLUGIN_ROOT}/templates/threats.json` to `.quality/threats.json` and rewrite it with the user for this product, following the `security-testing` skill: assets, actors, entry points, one abuse case or more per entry point, a response and a test for each. `sw threats` must pass. Do not leave the template's examples in place.
 

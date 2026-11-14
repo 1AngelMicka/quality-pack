@@ -11,7 +11,7 @@ The method is the one of the OWASP Threat Modeling Cheat Sheet, reduced to what 
 | 1. What are we building? | `system`, `assets`, `actors`, `entry_points`, `trust_boundaries` | every route group, webhook, upload and admin screen is an entry point |
 | 2. What can go wrong? | `abuse_cases`, one line each, from the six questions below | every entry point has at least one abuse case |
 | 3. What do we do about it? | `response`, `test` or `why`, `priority` on each abuse case | no abuse case is left without a response |
-| 4. Did we do enough? | run `sw threats`, then give the file to a second reader | no error, and the open cases are known |
+| 4. Did we do enough? | run `sw threats --check` (well formed?), then give the file to a second reader; `sw threats` with no option is the launch gate | no error, and the open cases are known; none open before launch at launch |
 
 A diagram is optional. If one helps, draw boxes for actors, processes and data stores, arrows for data flows, and a dotted line wherever trust changes. A photo of a whiteboard is enough.
 
@@ -39,7 +39,8 @@ Fields of one abuse case:
 | `text` | at least 15 characters | "As a member I read another customer's invoice by changing the id." Who, what harm, how |
 | `entry` | required; a string or a list; each value must be an existing entry point id | `["E2"]` |
 | `response` | one of `mitigate`, `eliminate`, `transfer`, `accept` | see "Responses" |
-| `test` | required when `response` is `mitigate` | `access check: <id>`, `sw auth`, a test file path with what it asserts, or `manual: <how>` |
+| `test` | required when `response` is `mitigate` | `access check: <id>`, `sw auth`, a test file path with what it asserts, or `manual: <how>` (`manuel : <comment>` in French) |
+| `by_hand` | optional; `true` counts the case as tested by hand, whatever the wording of `test` | `true` |
 | `why` | required when `response` is `accept` | the reason, who decided, when to revisit |
 | `priority` | optional; if present, one of `before-launch`, `before-paying-customers`, `accepted` | see "Priority" |
 | `status` | only the value `open` has a meaning | `open` until the test passes, then any other word, for example `done` |

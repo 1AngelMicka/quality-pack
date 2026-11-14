@@ -637,8 +637,8 @@
   },
   "auth_probe": {
    "provider": "core",
-   "fr": "Connexion de l'application en marche (sw auth) : même réponse pour un compte connu et inconnu, mots de passe faux en série ralentis ou refusés. Local ou préproduction seulement",
-   "en": "Login of the running app (sw auth): same answer for known and unknown accounts, wrong passwords in a row slowed or refused. Local or staging only"
+   "fr": "Connexion de l'application en marche (sw auth) : bonne connexion d'abord, même réponse pour un compte connu et inconnu (connexion, inscription et réinitialisation si déclarées), mots de passe faux en série ralentis ou refusés (par compte ou par IP : non distinguable par la sonde). Local ou préproduction seulement",
+   "en": "Login of the running app (sw auth): the right login first, same answer for known and unknown accounts (login, and sign-up and reset when declared), wrong passwords in a row slowed or refused (per account or per IP: the probe cannot tell). Local or staging only"
   },
   "dast_scan": {
    "provider": "core",
@@ -652,8 +652,8 @@
   },
   "threat_model": {
    "provider": "core",
-   "fr": "Modèle de menaces vérifié (sw threats) : points d'entrée couverts, réponse et test pour chaque cas d'abus",
-   "en": "Threat model checked (sw threats): entry points covered, a response and a test for each abuse case"
+   "fr": "Modèle de menaces vérifié (sw threats) : points d'entrée couverts, réponse et test pour chaque cas d'abus, aucun cas ouvert avant le lancement (--check : la forme seulement)",
+   "en": "Threat model checked (sw threats): entry points covered, a response and a test for each abuse case, no case open before launch (--check: the shape only)"
   },
   "mobile_flow_run": {
    "provider": "core",
@@ -2804,8 +2804,8 @@
         "en": "Threat model written, complete and current"
        },
        "verify": {
-        "fr": "`sw threats` : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois.",
-        "en": "`sw threats`: no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open \"before launch\"; reviewed within 6 months."
+        "fr": "`sw threats` (sans option : la porte du lancement) : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois. Pendant la construction, `sw threats --check` ne vérifie que la forme.",
+        "en": "`sw threats` (no option: the launch gate): no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open \"before launch\"; reviewed within 6 months. While building, `sw threats --check` checks the shape only."
        }
       },
       {
@@ -2823,8 +2823,8 @@
         "en": "Login resists repeated guesses and does not say which accounts exist"
        },
        "verify": {
-        "fr": "auth.json : même réponse pour un compte connu et inconnu ; mots de passe faux en série ralentis, refusés ou verrouillés. Vérifier à la main la même chose sur la réinitialisation, l'inscription et les codes à usage unique.",
-        "en": "auth.json: same answer for a known and an unknown account; wrong passwords in a row slowed, refused or locked. Check the same by hand on password reset, signup and one-time codes."
+        "fr": "auth.json : la sonde atteint la connexion (confirmé par le bon mot de passe, password_env) ; même réponse pour un compte connu et inconnu, à la connexion et, si déclarées, à l'inscription et à la réinitialisation ; mots de passe faux en série ralentis, refusés ou verrouillés ; aucun contrôle utile dans `skipped`. Limite par compte (et pas seulement par adresse IP) : non vérifiable par cette sonde, la lire dans le code ou les réglages. Vérifier à la main les codes à usage unique, et l'inscription et la réinitialisation si elles ne sont pas déclarées.",
+        "en": "auth.json: the probe reaches the login (confirmed with the right password, password_env); same answer for a known and an unknown account on login and, when declared, on sign-up and password reset; wrong passwords in a row slowed, refused or locked; no useful check left in `skipped`. Limit per account (not only per IP): not verifiable by this probe, read it in the code or settings. Check one-time codes by hand, and sign-up and reset when they are not declared."
        }
       },
       {
