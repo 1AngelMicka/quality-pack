@@ -577,8 +577,8 @@
   },
   "flow_run": {
    "provider": "core",
-   "fr": "Tâches clés jouées pas à pas sur téléphone et ordinateur (Playwright) : capture, axe-core et mesures d'effort à chaque étape",
-   "en": "Key tasks played step by step on phone and desktop (Playwright): screenshot, axe-core and effort measures at every step"
+   "fr": "Tâches clés jouées pas à pas sur téléphone et ordinateur (Playwright) : capture, axe-core, mesures d'effort et textes « undefined », « null », « NaN » ou « [object Object] » visibles à chaque étape ; tâches « planned » comptées non construites",
+   "en": "Key tasks played step by step on phone and desktop (Playwright): screenshot, axe-core, effort measures and texts showing undefined, null, NaN or [object Object] at every step; planned tasks counted as not built"
   },
   "spacing_audit": {
    "provider": "core",

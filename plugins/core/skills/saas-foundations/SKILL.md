@@ -106,7 +106,7 @@ All of these exist before launch, in the product's voice and look, with a text v
 - Name the activation event with the user: the first time someone gets what the product promises ("first invoice sent", "first collage saved"). Record it in `.quality/project.json` (`success_metric` or a note) and emit it in the code, with sign-up and first payment, so the funnel can be read. Billing events are recorded on the server.
 - A fresh account never lands on a blank screen: an empty state with one action, or sample data it can delete.
 - No forced tour. If the first screen needs a tour, the screen is the problem (see the `design-screens` skill).
-- Declare a flow that starts from a fresh account and ends on the activation event; `sw flows` plays it on phone and desktop.
+- Declare a flow that starts from a fresh account and ends on the activation event; `sw flows` plays it on phone and desktop. Sign up with `${unique}` in the address (`test+${unique}@example.com`), so that each run creates its own account.
 - Do not quote conversion or activation benchmarks: the published figures contradict each other. Measure the product's own funnel.
 
 ## 6 to 10. Account, leaving, support, public pages
