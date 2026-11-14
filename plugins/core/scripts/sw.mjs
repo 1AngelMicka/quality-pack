@@ -30,9 +30,11 @@
 //                                            indexable), title and meta description of each page (filled, length, unique), one h1,
 //                                            the keywords of project.json › seo.keywords carried by their page, Search Console (seo.json)
 //   node sw.mjs browser <url> [url...]       Playwright checks of pages as they load, at 6 widths
-//   node sw.mjs flows [flow-id...] [--base URL] [--check] [--attach port]
+//   node sw.mjs flows [flow-id...] [--base URL] [--check] [--attach port] [--run R] [--pause S] [--replace]
 //                                            Play the key tasks declared in project.json step by step, on a phone and a
-//                                            desktop: screenshot, axe-core and effort measures at every step (flows.json)
+//                                            desktop: screenshot, axe-core and effort measures at every step (flows.json).
+//                                            Without --run: in .quality/flows/, never in an audit run. Results are merged
+//                                            by task id (--replace starts over); --pause waits S seconds between tasks
 //   node sw.mjs access [--base URL] [--check] [--allow-production]
 //                                            Access control played for real: each resource declared in project.json › access is
 //                                            requested by its owner, then by the accounts that must not reach it (access.json)
@@ -468,23 +470,38 @@ async function main() {
       return out(result);
     }
     case "flows": {
-      const { playFlows, compactFlows, validateFlows } = await import("./lib/flows.mjs");
+      const { playFlows, compactFlows, validateFlows, mergeFlowResults, staleShots, removeShots } = await import("./lib/flows.mjs");
       const project = requireProject();
       if (flag("check")) {
         const v = validateFlows(project);
-        return out({ ok: !v.errors.length, errors: v.errors, flows: v.flows.map((f) => ({ id: f.id, name: f.name, devices: f.devices, steps: f.steps.length })) });
+        return out({ ok: !v.errors.length, errors: v.errors, warnings: v.warnings, planned: v.planned,
+          flows: v.flows.map((f) => ({ id: f.id, name: f.name, ...(f.status ? { status: f.status } : {}), devices: f.devices, steps: f.steps.length })) });
       }
-      const run = currentRun();
+      // With --run the results go into that audit run; without it, into the working folder .quality/flows/, so that a
+      // check after a fix never changes the evidence of an audit already assembled.
+      const run = opt("run") || opt("date");
       const base = opt("base");
       const attach = opt("attach");
-      const d = join(auditsDir(), run);
-      const result = await playFlows(project, { root: cwd, outDir: d, base, only: rest, budgets: ref.scoring.flow_budgets, attach });
-      const short = compactFlows(result);
-      if (result.flows) {
-        mkdirSync(d, { recursive: true });
-        writeFileSync(join(d, "flows.json"), JSON.stringify(result, null, 2));
-        recordSavings(d, estimateTokens(JSON.stringify(result, null, 2)), estimateTokens(JSON.stringify(short, null, 2)));
-      }
+      const pauseArg = opt("pause");
+      const pause = pauseArg == null ? 0 : Number(pauseArg);
+      if (!(pause >= 0)) die("--pause takes a number of seconds");
+      const replace = flag("replace");
+      const d = run ? join(auditsDir(), run) : join(qualityDir(cwd), "flows");
+      const result = await playFlows(project, { root: cwd, outDir: d, base, only: rest, budgets: ref.scoring.flow_budgets, attach, pause,
+        log: (m) => process.stderr.write(m + "\n") });
+      if (!result.flows) return out(result);
+      mkdirSync(d, { recursive: true });
+      if (!run && !existsSync(join(d, ".gitignore"))) writeFileSync(join(d, ".gitignore"), "# Working results of sw flows, not audit evidence\n*\n");
+      // Tasks played now replace their earlier results in the same file; the others are kept (--replace: start over).
+      const file = join(d, "flows.json");
+      let previous = null;
+      if (!replace && existsSync(file)) { try { previous = JSON.parse(readFileSync(file, "utf8")); } catch { /* unreadable: replaced */ } }
+      const keep = new Set(validateFlows(project).flows.filter((f) => f.status !== "planned").map((f) => f.id));
+      const merged = mergeFlowResults(previous, result, keep);
+      removeShots(cwd, staleShots(previous, merged));
+      writeFileSync(file, JSON.stringify(merged, null, 2));
+      const short = compactFlows(merged, { report: relative(cwd, file).split("\\").join("/"), screenshots: relative(cwd, join(d, "flows")).split("\\").join("/") + "/" });
+      recordSavings(d, estimateTokens(JSON.stringify(merged, null, 2)), estimateTokens(JSON.stringify(short, null, 2)));
       return out(short);
     }
     case "access": {

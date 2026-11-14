@@ -43,6 +43,19 @@
         { "name": "Save", "click": "role=button[name=\"Save\"]" },
         { "name": "Saved", "expect": "text=Saved" }
       ]
-    }
+    },
+    {
+      "id": "sign-up",
+      "name": "Create an account from the home page",
+      "steps": [
+        { "name": "Home", "goto": "/" },
+        { "name": "Start", "click": "role=link[name=\"Sign up\"]" },
+        { "name": "Email", "fill": { "selector": "role=textbox[name=\"Email\"]", "value": "test+${unique}@example.com" } },
+        { "name": "Password", "fill": { "selector": "role=textbox[name=\"Password\"]", "value": "${env:QP_TEST_PASSWORD}" } },
+        { "name": "Create", "click": "role=button[name=\"Create my account\"]", "login": true },
+        { "name": "Welcome", "expect": "text=Welcome" }
+      ]
+    },
+    { "id": "export-pdf", "name": "Export an invoice as PDF", "status": "planned" }
   ]
 }

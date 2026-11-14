@@ -49,10 +49,18 @@ Ask, in plain text:
 Then draft the flows yourself from the code (button labels, field labels, routes); do not make the user write selectors. Format: see `flows` in `${CLAUDE_PLUGIN_ROOT}/templates/project.json`.
 If the user would rather show the task than describe it, offer `sw record <flow-id> --name "<the task in their words>" [--start /path] [--device mobile]`: a browser opens, they do the task and close the window, and the flow is saved in `.quality/project.json` with the selectors Playwright picked. Then add `decision`, `preview` and `primary` yourself, and copy the files they uploaded into `.quality/fixtures/`.
 - Steps take one action each: `goto`, `click`, `fill`, `select`, `check`, `upload`, `press`, `hover`, `wait_for`, `wait`, `expect`, `scroll`. Mark the steps where the user makes a choice with `"decision": true`.
-- Selectors use Playwright syntax. Prefer what the user sees: `role=button[name="Save"]`, `role=tab[name="Layout"]`, `text=Saved`; then labels and `data-testid`; avoid CSS classes.
+- Selectors use Playwright syntax. Prefer what the user sees: `role=button[name="Save"]`, `role=tab[name="Layout"]`, `text=Saved`; then labels and `data-testid`; avoid CSS classes. Every step acts on the first element its selector matches; when a step fails, `flows.json` says how many elements matched (0, or n with the first hidden or disabled) and whether the screen looks empty. In JSON a regular expression needs a doubled backslash (`name=/F-\\d+/`): `sw flows --check` warns when one looks lost.
 - `preview` and `primary` are selectors for the result and the main action; leave them out when the task has none.
 - Test data goes in `.quality/fixtures/`. Use files from the repository or ask the user for some; never use personal files without their yes. Credentials come from environment variables: `"value": "${env:QP_TEST_PASSWORD}"`.
 - Devices default to `["mobile", "desktop"]`. Keep both unless the product truly exists on one only.
+- A task needs no account: a task on a public page (the home page demo, pricing, sign-up) is just its steps from `goto "/"`, with no sign-in.
+- A task that starts from a fresh account uses `${unique}` in its values (`"value": "test+${unique}@example.com"`): it is replaced by a different value at every run (each device, variant and colour scheme), the same for all the steps of that run.
+- Mark the sign-in steps of a task with `"login": true`: the next colour scheme of the same task and device keeps the session and starts where the sign-in led, instead of signing in again.
+- Test data used up by a task (quotes accepted, invoices cancelled) is reset by commands: `flows_setup` at the top of `project.json` runs once before the tasks (`"flows_setup": "npm run seed"`), and `"setup"` in a task runs before each of its runs.
+- To play a task in a given interface state, set `"storage": { "theme": "registre" }` (put in `localStorage` before the first step), or `"variants": [{ "id": "registre", "storage": { "theme": "registre" } }, …]` to play it once per state.
+- A task not built yet gets `"status": "planned"` (steps can wait): `sw flows` skips it unless it is named and reports it under `not_built`, not as failed.
+- Dark is played when `flags` has `dark_mode`; without the flag, `sw flows` looks at the first screen in dark and, if its colours change, plays dark too and says to add the flag.
+- `sw flows` writes to `.quality/flows/` (a working folder, not committed); `sw flows --run <run>` writes to that audit run. Results are merged by task id, so tasks can be played in batches (`--pause <seconds>` between tasks for an app that limits sign-ins; `--replace` starts the file over).
 
 ## 4. Accounts, threats and mobile (when they apply)
 
