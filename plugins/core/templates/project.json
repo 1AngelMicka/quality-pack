@@ -15,6 +15,7 @@
   "audit_model": "opus",
   "companions": ["graphify"],
   "urls": { "local": "http://localhost:3000", "staging": "", "production": "" },
+  "api_url": "",
   "work_screens": ["The screens where the real work happens, e.g. the editor once photos are added"],
   "flows": [
     {

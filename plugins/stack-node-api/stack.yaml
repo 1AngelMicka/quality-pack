@@ -10,8 +10,8 @@ checks:
   test_run: {run: "{pm} test", pass_if: "exit code 0"}
   e2e: {run: "{pm} run test:e2e", pass_if: "exit code 0 (API tests against a test database)"}
   deps_audit: {run: "{pm} audit --audit-level=high", pass_if: "no high or critical advisory"}
-  license_check: {run: "npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'", pass_if: "exit code 0"}
-  load_test: {run: "npx --yes autocannon -c 100 -d 30 {url}/health", pass_if: "0 errors; then repeat on the 3 busiest routes"}
+  license_check: {run: "npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'", pass_if: "exit code 0. If npx --yes is not allowed, install it once as a dev dependency ({pm} add -D license-checker-rseidelsohn) and run it without --yes"}
+  load_test: {run: "npx --yes autocannon -c 100 -d 30 {api_url}/health", pass_if: "0 errors; then repeat on the 3 busiest routes. The address is project.json › api_url (the API's own address, e.g. http://localhost:3001), or the app URL when the API is served there. If npx --yes is not allowed, install the tool once as a dev dependency ({pm} add -D autocannon) and run it without --yes"}
 
 rules:
   - {fr: "Schéma de validation sur chaque route (schéma JSON Fastify ou Zod) : body, params, querystring et headers utiles.", en: "Validation schema on every route (Fastify JSON schema or Zod): body, params, querystring and relevant headers."}

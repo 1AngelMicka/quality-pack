@@ -63,6 +63,8 @@ node <clone>/plugins/core/scripts/sw.mjs enable --modules nextjs,vps
 
 It adds the marketplace and the plugins to `.claude/settings.json` of the project and keeps what is already there. Claude Code reads that file when the project is opened: the user restarts the session there and accepts the marketplace. The file can be committed to share the setup with a team. Until the restart, keep using A.
 
+Accepting the marketplace does not always install the plugin: in a real project the marketplace was added on reopening, but `sw@shipwright` was not installed, so no `/sw:` command, skill or hook appeared. B offers the plugin; it does not guarantee it. When the user asked for the installation, C is the sure path. After reopening, check with `node <clone>/plugins/core/scripts/sw.mjs doctor`: it reads Claude Code's files (read only) and says whether the marketplace is known, `sw@shipwright` installed (user or project scope) and enabled for this project, which modules, which hooks are declared, and the versions.
+
 **C. Install it yourself, when the user asked you to install Shipwright.**
 
 ```bash
@@ -81,7 +83,7 @@ claude plugin marketplace add 1AngelMicka/quality-pack
 claude plugin install sw@shipwright
 ```
 
-**Which one.** The user gave you the repository link and asked to use or install Shipwright: clone, run C, ask for `/reload-plugins`, and start working with A meanwhile. The user only wants to try it, or there is no `claude` command: A, then B.
+**Which one.** The user gave you the repository link and asked to use or install Shipwright: clone, run C, ask for `/reload-plugins`, and start working with A meanwhile. The user only wants to try it, or there is no `claude` command: A, then B. Whatever the path, `sw.mjs doctor` tells what is really installed and enabled before you say Shipwright is there.
 
 Checked on Claude Code 2.1.45: A, B (the file written is the one `claude plugin install --scope project` writes) and C run from inside a session. Not checked: that `/reload-plugins` starts the hooks without reopening the session.
 
