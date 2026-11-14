@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Mon entreprise (test fixture)</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 16px/1.5 Georgia, serif; color: #222; background: #fafafa; }
+  main { max-width: 640px; margin: 0 auto; padding: 32px 16px; }
+  form { display: block; }
+  .field { display: block; margin: 0 0 16px; }
+  .field input[type=text] { display: block; width: 100%; height: 44px; padding: 0 12px; font: inherit; border: 1px solid #999; border-radius: 4px; }
+  /* [29] checkbox label: 16px above, 24px below (the save button sits further away, on purpose) */
+  label.case { display: flex; gap: 8px; align-items: center; margin: 16px 0 24px; }
+  .after-for { margin: 16px 0 24px; }
+  button { display: block; height: 44px; padding: 0 16px; font: inherit; border: 0; border-radius: 4px; background: #234; color: #fff; }
+  /* [37] a sheet tilted on purpose, two fields of different widths on one row, same height in the style sheet */
+  .sheet { margin: 48px 0; padding: 24px; background: #fff; border: 1px solid #ccc; transform: rotate(2deg); }
+  .sheet h2 { margin: 0 0 16px; }
+  .row { display: flex; gap: 12px; }
+  .row input { height: 46px; padding: 0 12px; font: inherit; border: 1px solid #999; border-radius: 4px; }
+  .row .wide { width: 360px; } .row .narrow { width: 90px; }
+  /* [39] cards laid at an angle, one rotation each */
+  .desk { display: flex; flex-direction: column; gap: 20px; margin: 48px 0; }
+  .card { padding: 16px 24px; background: #fff; border: 1px solid #ccc; }
+  .card:nth-child(1) { transform: rotate(-1deg); } .card:nth-child(2) { transform: rotate(2deg); } .card:nth-child(3) { transform: rotate(-1.5deg); } .card:nth-child(4) { transform: rotate(1deg); }
+  /* [43] a bound book: 36px left (a 14px cloth band), 20px right */
+  .book { margin: 48px 0; padding: 20px 20px 20px 36px; background: #fff; border: 1px solid #ccc; border-left: 14px solid #7a2e1e; }
+  .uneven { margin: 48px 0; padding: 20px 20px 20px 36px; background: #fff; border: 1px solid #ccc; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Mon entreprise</h1>
+  <form>
+    <label class="field">Raison sociale <input type="text" value="Atelier Martin"></label>
+    <label class="field">Ville <input type="text" value="Nantes"></label>
+    <label class="case"><input type="checkbox" checked> J'ai opté pour le versement libératoire</label>
+    <input type="radio" id="r1" name="r"><label for="r1" class="after-for">Facturer en euros</label>
+    <button type="button">Enregistrer</button>
+  </form>
+
+  <div class="sheet">
+    <h2>Facture</h2>
+    <div class="row"><input class="wide" type="text" value="Désignation de la prestation"><input class="narrow" type="text" value="12"></div>
+  </div>
+
+  <div class="desk">
+    <div class="card">Fiche du client, notes de la réunion</div>
+    <div class="card">Devis signé du mois de mars</div>
+    <div class="card">Relevé des heures passées</div>
+    <div class="card">Liste des achats à refacturer</div>
+  </div>
+
+  <div class="book" data-sw-intended="uneven-inset: cloth binding drawn on the left">
+    <p>Livre des recettes, tenu jour après jour, relié de toile.</p>
+  </div>
+  <div class="uneven">
+    <p>Une boîte dont la marge gauche est plus grande, sans raison.</p>
+  </div>
+</main>
+</body>
+</html>

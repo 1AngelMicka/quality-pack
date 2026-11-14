@@ -582,18 +582,18 @@
   },
   "spacing_audit": {
    "provider": "core",
-   "fr": "Audit de l'espacement et de l'alignement du rendu (sw deslop) : proximité, écarts entre frères, bords, boîtes, contrôles, débordements, à 375, 768, 1440 et 1920 px",
-   "en": "Spacing and alignment audit of the rendered page (sw deslop): proximity, sibling gaps, edges, boxes, controls, overflow, at 375, 768, 1440 and 1920 px"
+   "fr": "Audit de l'espacement et de l'alignement du rendu (sw deslop) : proximité, écarts entre frères, bords, boîtes, contrôles, débordements, à 375, 768, 1440 et 1920 px ; une redirection hors de l'écran demandé est signalée, jamais lue comme un succès ; exceptions voulues déclarées par data-sw-intended",
+   "en": "Spacing and alignment audit of the rendered page (sw deslop): proximity, sibling gaps, edges, boxes, controls, overflow, at 375, 768, 1440 and 1920 px; a redirect away from the requested screen is reported, never read as a pass; intended exceptions declared with data-sw-intended"
   },
   "generic_look_scan": {
    "provider": "core",
-   "fr": "Mesure du rendu dans le navigateur : signaux de rendu générique pondérés, tailles et familles de police, rayons, longueur et interlignage des lignes, petites cibles",
-   "en": "Rendered page measured in the browser: weighted generic-look signals, font sizes and families, radii, line length and height, small targets"
+   "fr": "Mesure du rendu dans le navigateur : signaux de rendu générique pondérés, absence de parti pris visuel, tailles et familles de police, rayons, longueur et interlignage des lignes, petites cibles. Un niveau « low » veut dire peu de signes de rendu générique, pas un bon design",
+   "en": "Rendered page measured in the browser: weighted generic-look signals, no visual point of view, font sizes and families, radii, line length and height, small targets. A \"low\" tier means few signs of a generic look, not a good design"
   },
   "craft_scan": {
    "provider": "core",
-   "fr": "Finitions du rendu mesurées dans le navigateur (sw craft) : typographie, focus et survol, transitions, images, icônes, icône du site, image de partage, page 404",
-   "en": "Finish of the rendered page measured in the browser (sw craft): typography, focus and hover, transitions, images, icons, site icon, share image, 404 page"
+   "fr": "Finitions du rendu mesurées dans le navigateur (sw craft) : typographie, focus et survol, contrôles que le clic atteint, transitions, images, icônes, icône du site, image de partage, page 404 (lue après les scripts) ; sur une adresse locale, statut 404 et image de partage sont à vérifier en préproduction",
+   "en": "Finish of the rendered page measured in the browser (sw craft): typography, focus and hover, controls the click reaches, transitions, images, icons, site icon, share image, 404 page (read after scripts); on a local address, 404 status and share image are to check in preproduction"
   },
   "desktop_release_scan": {
    "provider": "core",

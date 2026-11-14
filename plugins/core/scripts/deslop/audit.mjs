@@ -4,7 +4,7 @@
 // Ported from the deslop-ui skill (same author as the pack).
 //
 //   node audit.mjs <url|file.html> [--widths 375,768,1440,1920] [--out folder] [--wait 800]
-//                  [--click "selector"]... [--before "code or file.js"] [--tauri] [--dark] [--json]
+//                  [--click "selector"]... [--before "code or file.js"] [--tauri] [--dark] [--session session.json] [--json]
 //   node audit.mjs --attach 9222 [--widths 1280]   measures the current state of an already open window
 import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -27,6 +27,7 @@ function parseArgs(argv) {
     else if (arg === '--before') opts.before.push(rest.shift());
     else if (arg === '--tauri') opts.before.push(join(HERE, 'tauri-stub.js'));
     else if (arg === '--attach') opts.attach = Number(rest.shift());
+    else if (arg === '--session') opts.session = rest.shift();
     else if (arg === '--dark') opts.dark = true;
     else if (arg === '--json') opts.json = true;
     else if (!opts.target) opts.target = arg;
@@ -127,11 +128,13 @@ async function auditWidth(cdp, session, opts, url, width, measure, outDir) {
   await cdp.send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: width < 768 }, session);
 
   const errors = [];
+  const denied = [];
   let inflight = 0;
   let lastActivity = Date.now();
   const listener = (msg) => {
     if (msg.sessionId !== session) return;
     if (msg.method === 'Network.requestWillBeSent') { inflight++; lastActivity = Date.now(); }
+    if (msg.method === 'Network.responseReceived' && [401, 403, 429].includes(msg.params.response.status) && denied.length < 20) denied.push({ status: msg.params.response.status, url: String(msg.params.response.url).slice(0, 200) });
     if (msg.method === 'Network.loadingFinished' || msg.method === 'Network.loadingFailed') { inflight = Math.max(0, inflight - 1); lastActivity = Date.now(); }
     if (msg.method === 'Runtime.exceptionThrown') {
       const details = msg.params.exceptionDetails;
@@ -175,7 +178,22 @@ async function auditWidth(cdp, session, opts, url, width, measure, outDir) {
   const fullPath = join(outDir, `w${width}-full.png`);
   writeFileSync(foldPath, Buffer.from(fold.data, 'base64'));
   writeFileSync(fullPath, Buffer.from(full.data, 'base64'));
-  return { ...result.result.value, errors, screenshots: { fold: foldPath, full: fullPath } };
+  const value = result.result.value;
+  // The screen measured must be the one asked for: a redirect (to a login page, most often) is reported, never
+  // silently measured in its place.
+  const reach = url ? { requested: url, final: value.url, same_screen: sameScreen(url, value.url), denied } : null;
+  return { ...value, errors, reach, screenshots: { fold: foldPath, full: fullPath } };
+}
+
+// Same origin, path (trailing slash aside) and hash route; a query added on the way is ignored. Same rule as lib/browser.mjs.
+function sameScreen(requested, final) {
+  try {
+    const a = new URL(requested), b = new URL(final);
+    const path = (u) => u.pathname.replace(/\/+$/, '') || '/';
+    const route = (u) => u.hash.replace(/^#\/?/, '').replace(/\/+$/, '');
+    const hashRoute = (u) => /^#\//.test(u.hash);
+    return a.origin === b.origin && path(a) === path(b) && (!(hashRoute(a) || hashRoute(b)) || route(a) === route(b));
+  } catch { return requested === final; }
 }
 
 function formatReport(reports, outDir) {
@@ -185,6 +203,8 @@ function formatReport(reports, outDir) {
   for (const r of reports) {
     lines.push(`\n## ${r.viewport.width}px: ${r.counts.high} high, ${r.counts.med} med, ${r.counts.low} low (${r.scanned} elements)`);
     lines.push(`Screenshots: ${r.screenshots.fold} | ${r.screenshots.full}`);
+    if (r.reach && !r.reach.same_screen) lines.push(`WARNING: NOT THE REQUESTED SCREEN. Asked for ${r.reach.requested}, the browser ended on ${r.reach.final}: this result is about that page. See --session (sw deslop --as <account>) and --before.`);
+    if (r.reach?.denied.length) lines.push(`WARNING: ${r.reach.denied.length} response(s) ${[...new Set(r.reach.denied.map((d) => d.status))].join(', ')} while measuring, first ${r.reach.denied[0].url}`);
     if (r.textLength < 40) lines.push(`WARNING: page almost empty (${r.textLength} characters). This result is worthless: the intended state was not reached. See --click and --before.`);
     if (r.errors.length) lines.push(`WARNING: ${r.errors.length} JS error(s), the rendering may be incomplete: ${[...new Set(r.errors)].slice(0, 3).join(' | ')}`);
     if (r.truncated) lines.push('WARNING: analysis limited to the first 6000 elements.');
@@ -202,6 +222,8 @@ function formatReport(reports, outDir) {
       }
     }
     if (repeated) lines.push(`(+ ${repeated} findings already listed at another width)`);
+    for (const i of r.intended || []) lines.push(`[intended] ${i.rule}: ${i.where}: ${i.detail} (reason: ${i.reason})`);
+    for (const n of r.notChecked || []) lines.push(`[not checked] ${n.rule}: ${n.where}: ${n.detail}`);
     if (!r.findings.length) lines.push('No measurable finding. Look at the screenshots anyway: hierarchy cannot be measured.');
     const s = r.stats;
     lines.push(`System: ${s.spacing.distinct} spacing values (${s.spacing.offScaleShare}% off scale), top ${s.spacing.top.slice(0, 6).map(([v, n]) => `${v}px x${n}`).join(', ')}`);
@@ -209,6 +231,20 @@ function formatReport(reports, outDir) {
   }
   lines.push(`\nFull report: ${join(outDir, 'report.json')}`);
   return lines.join('\n');
+}
+
+// --session file.json: a logged-in session written by `sw deslop --as <account>` (Playwright storage state plus
+// headers): cookies, localStorage per origin (set before the page's scripts) and extra request headers.
+async function useSession(cdp, sessionId, s) {
+  const cookies = (s.storageState?.cookies || []).map(({ name, value, domain, path, expires, httpOnly, secure, sameSite }) =>
+    ({ name, value, domain, path, httpOnly, secure, ...(sameSite ? { sameSite } : {}), ...(expires > 0 ? { expires } : {}) }));
+  if (cookies.length) await cdp.send('Network.setCookies', { cookies }, sessionId);
+  for (const o of s.storageState?.origins || []) {
+    if (!o.localStorage?.length) continue;
+    const source = `(() => { if (location.origin !== ${JSON.stringify(o.origin)}) return; try { for (const [k, v] of ${JSON.stringify(o.localStorage.map((x) => [x.name, x.value]))}) if (localStorage.getItem(k) === null) localStorage.setItem(k, v); } catch {} })();`;
+    await cdp.send('Page.addScriptToEvaluateOnNewDocument', { source }, sessionId);
+  }
+  if (s.headers && Object.keys(s.headers).length) await cdp.send('Network.setExtraHTTPHeaders', { headers: s.headers }, sessionId);
 }
 
 async function attachedTarget(port) {
@@ -248,6 +284,7 @@ async function main() {
     const { sessionId } = await cdp.send('Target.attachToTarget', { targetId, flatten: true });
     for (const domain of ['Page', 'Runtime', 'Network']) await cdp.send(`${domain}.enable`, {}, sessionId);
     if (opts.dark) await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'dark' }] }, sessionId);
+    if (opts.session) await useSession(cdp, sessionId, JSON.parse(readFileSync(opts.session, 'utf8')));
     for (const before of opts.before) {
       const source = existsSync(before) ? readFileSync(before, 'utf8') : before;
       await cdp.send('Page.addScriptToEvaluateOnNewDocument', { source }, sessionId);
