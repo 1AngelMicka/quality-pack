@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- **Performance:** new build rules and two criteria. PRF-08: search and filters wait for the end of typing, cancel the previous request and never send the same request twice. PRF-09: slow queries are logged and read with EXPLAIN ANALYZE, and the main routes read only the columns they need. PRF-04 also asks for unused dependencies to be removed (knip).
+- **design-direction:** a step to keep the user's design corrections as rules with their reason in DESIGN.md › "Corrections" (DIR-10), only what the user said or chose, approved before writing.
+
 ## 0.9.0 — 2026-11-15
 
 Fixes from the first real pilot (an invoicing SaaS built from zero with Shipwright, 59 feedback entries).

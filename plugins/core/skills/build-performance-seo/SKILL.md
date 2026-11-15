@@ -21,6 +21,9 @@ Rules:
 - Self-hosted fonts, useful subset, font-display: swap.
 - No query in a loop (N+1); paginate every list that can grow.
 - gzip or brotli compression and HTTP caching on static assets.
+- Search and filters: send the request 250 to 300 ms after the last keystroke (debounce), cancel the previous one (AbortController), and never send the same request twice at once (a query cache such as TanStack Query or SWR).
+- Read only the columns you need (no SELECT *, no full record sent to the client); log slow queries and read the plan of the slowest with EXPLAIN ANALYZE.
+- Remove unused dependencies (knip, free) before trying to slim down the others.
 
 Done means:
 
@@ -28,9 +31,11 @@ Done means:
 - [major] PRF-01: Core Web Vitals within budget on mobile (LCP, INP, CLS) (only if: has_ui). Check: Lighthouse mobile on main pages; field data if available.
 - [major] PRF-02: No N+1 query or unpaginated list (only if: has_db). Check: Read data access inside loops; log the queries of one page.
 - [major] PRF-03: Images optimised, sized and lazy-loaded (only if: has_ui). Check: Modern formats, srcset or image component, width and height present.
-- [minor] PRF-04: JavaScript shipped to the client within budget (only if: has_ui). Check: Bundle analysis; heavy dependencies replaced or loaded on demand.
+- [minor] PRF-04: JavaScript shipped to the client within budget (only if: has_ui). Check: Bundle analysis; heavy dependencies replaced or loaded on demand; unused dependencies removed (`npx knip` reports none, or each one left is justified).
 - [minor] PRF-05: Compression and HTTP caching active on static assets. Check: content-encoding and cache-control headers on JS, CSS, images, fonts.
 - [minor] PRF-06: API response time measured and reasonable (only if: has_backend). Check: p95 of main routes under 500 ms under normal load.
+- [minor] PRF-08: Search and typing without extra requests (only if: has_ui, has_backend). Check: With the Network tab open: a word typed in search or a filter sends one request after the typing pause, and the previous one is cancelled; on page load, no identical request is sent twice.
+- [minor] PRF-09: Slow queries found, columns read limited to what is needed (only if: has_db). Check: Slow-query log on (PostgreSQL: log_min_duration_statement or pg_stat_statements); the slowest read with EXPLAIN ANALYZE and fixed or justified; no SELECT * and no full record returned on the main routes.
 
 ## SEO and meta (SEO)
 

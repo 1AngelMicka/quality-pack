@@ -544,3 +544,16 @@ Un projet pilote a suivi le parcours de bout en bout et noté ce qui manquait. L
 | [Graphify](https://github.com/Graphify-Labs/graphify) | extra `graphifyy[sql]` pour les fichiers SQL ; appels de méthode non reliés (constat du pilote, Graphify 0.9.103) | Apache-2.0 | intégré (skill `workflow`) |
 | [MDN, prefers-reduced-motion](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion), WCAG 2.2 Understanding 2.2.2 et 2.3.3 | vérifier le réglage de l'auteur avant de montrer ; bouton Animations qui sert de pause | MDN CC-BY-SA, W3C | intégré (`scroll-animation`, SCRL-12) |
 | Retour du pilote sur le défilement piloté (2026-11) et NN/g « Scrolljacking 101 » (2023) | déclenchement par défaut, pilotage limité aux effets où la position compte, budget d'un tiers d'écran par étape | constat de terrain ; NN/g accès libre | intégré (`scroll-animation`, SCRL-11 ; `references/3d.md`) |
+
+## Lot 7 — vidéos envoyées le 2026-11-15 (vérifié le 2026-11-15)
+
+Une vidéo listait 31 consignes de vitesse (24 lisibles à l'écran, le reste réservé à un « kit » obtenu en commentant : non suivi). La plupart étaient déjà couvertes par le domaine performance ; les cinq manquantes sont ajoutées. Une autre présentait emilkowalski/skills, déjà cité plus haut ; seule l'idée de son skill learn-taste est reprise, réécrite.
+
+| Lien | Rôle | Licence | Statut |
+| --- | --- | --- | --- |
+| [knip](https://github.com/webpro-nl/knip) | dépendances, exports et fichiers inutilisés (PRF-04) | ISC, gratuit | cité, actif (envoi le 2026-11-13) |
+| [TanStack Query](https://github.com/TanStack/query), [SWR](https://github.com/vercel/swr) | cache de requêtes : pas deux fois la même requête en même temps (PRF-08) | MIT | cités |
+| [MDN, AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController) | annuler la requête de recherche précédente (PRF-08) | MDN CC-BY-SA | cité |
+| [PostgreSQL, journalisation](https://www.postgresql.org/docs/current/runtime-config-logging.html), [pg_stat_statements](https://www.postgresql.org/docs/current/pgstatstatements.html), [EXPLAIN](https://www.postgresql.org/docs/current/sql-explain.html) | repérer et lire les requêtes lentes (PRF-09) | licence PostgreSQL | cité |
+| [emilkowalski/skills, learn-taste](https://github.com/emilkowalski/skills/tree/main/skills/learn-taste) | idée : transformer les corrections de design d'une session en règles avec leur raison dans DESIGN.md (`design-direction`, DIR-10) | MIT | idée reprise, texte réécrit |
+| Délai de 250 à 300 ms avant la recherche | réglage maison, sans validation publiée | — | réglage ajustable |

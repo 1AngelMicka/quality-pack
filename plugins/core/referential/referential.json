@@ -3717,6 +3717,18 @@
       {
        "fr": "Compression gzip ou brotli et cache HTTP sur les ressources statiques.",
        "en": "gzip or brotli compression and HTTP caching on static assets."
+      },
+      {
+       "fr": "Recherche et filtres : lancer la requête 250 à 300 ms après la dernière frappe (debounce), annuler la précédente (AbortController) et ne jamais envoyer deux fois la même requête en même temps (cache de requêtes comme TanStack Query ou SWR).",
+       "en": "Search and filters: send the request 250 to 300 ms after the last keystroke (debounce), cancel the previous one (AbortController), and never send the same request twice at once (a query cache such as TanStack Query or SWR)."
+      },
+      {
+       "fr": "Ne lire que les colonnes utiles (pas de SELECT * ni d'enregistrement complet renvoyé au client) ; journaliser les requêtes lentes et lire le plan des plus lentes avec EXPLAIN ANALYZE.",
+       "en": "Read only the columns you need (no SELECT *, no full record sent to the client); log slow queries and read the plan of the slowest with EXPLAIN ANALYZE."
+      },
+      {
+       "fr": "Retirer les dépendances inutilisées (knip, gratuit) avant de chercher à alléger les autres.",
+       "en": "Remove unused dependencies (knip, free) before trying to slim down the others."
       }
      ],
      "criteria": [
@@ -3809,8 +3821,8 @@
         "en": "JavaScript shipped to the client within budget"
        },
        "verify": {
-        "fr": "Analyse du bundle ; dépendances lourdes remplacées ou chargées à la demande.",
-        "en": "Bundle analysis; heavy dependencies replaced or loaded on demand."
+        "fr": "Analyse du bundle ; dépendances lourdes remplacées ou chargées à la demande ; dépendances inutilisées retirées (`npx knip` sans dépendance signalée, ou chaque reste justifié).",
+        "en": "Bundle analysis; heavy dependencies replaced or loaded on demand; unused dependencies removed (`npx knip` reports none, or each one left is justified)."
        }
       },
       {
@@ -3845,6 +3857,43 @@
        "verify": {
         "fr": "p95 des routes principales sous 500 ms en conditions normales.",
         "en": "p95 of main routes under 500 ms under normal load."
+       }
+      },
+      {
+       "id": "PRF-08",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_ui",
+        "has_backend"
+       ],
+       "label": {
+        "fr": "Recherche et saisie sans requêtes en trop",
+        "en": "Search and typing without extra requests"
+       },
+       "verify": {
+        "fr": "Onglet Réseau ouvert : un mot tapé dans la recherche ou un filtre donne une requête après la pause de frappe, la précédente est annulée ; au chargement d'une page, aucune requête identique en double.",
+        "en": "With the Network tab open: a word typed in search or a filter sends one request after the typing pause, and the previous one is cancelled; on page load, no identical request is sent twice."
+       }
+      },
+      {
+       "id": "PRF-09",
+       "severity": "minor",
+       "check": {
+        "method": "inspect"
+       },
+       "applies_if": [
+        "has_db"
+       ],
+       "label": {
+        "fr": "Requêtes lentes repérées, colonnes lues limitées au besoin",
+        "en": "Slow queries found, columns read limited to what is needed"
+       },
+       "verify": {
+        "fr": "Journal des requêtes lentes actif (PostgreSQL : log_min_duration_statement ou pg_stat_statements) ; les plus lentes lues avec EXPLAIN ANALYZE et corrigées ou justifiées ; pas de SELECT * ni d'enregistrement complet renvoyé sur les routes principales.",
+        "en": "Slow-query log on (PostgreSQL: log_min_duration_statement or pg_stat_statements); the slowest read with EXPLAIN ANALYZE and fixed or justified; no SELECT * and no full record returned on the main routes."
        }
       }
      ]
