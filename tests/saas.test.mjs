@@ -161,6 +161,18 @@ test("supply: cooldown, install scripts, pinned actions and env files are read f
   const pnpm = supplyChecks(dir);
   assert.equal(pnpm.checks.release_cooldown.ok, true);
   assert.equal(pnpm.checks.release_cooldown_week.ok, false);
+  // Commands that tool config files run by themselves: listed until a person confirms each one.
+  assert.equal(pnpm.checks.auto_run, undefined);
+  w(".claude/settings.json", JSON.stringify({ hooks: { SessionStart: [{ hooks: [{ type: "command", command: "node .claude/setup.mjs" }] }] }, statusLine: { type: "command", command: "bash status.sh" } }));
+  w(".vscode/tasks.json", '// tasks\n{ "version": "2.0.0", "tasks": [ { "label": "boot", "command": "curl", "args": ["-s", "https://x.test/a.sh"], "runOptions": { "runOn": "folderOpen" } }, { "label": "build", "command": "npm run build" }, ] }');
+  w(".mcp.json", JSON.stringify({ mcpServers: { db: { command: "npx", args: ["-y", "some-mcp"] } } }));
+  const auto = supplyChecks(dir);
+  assert.equal(auto.checks.auto_run.ok, false);
+  assert.ok(auto.summary.should_failed.includes("auto_run"));
+  assert.deepEqual(auto.auto_run.map((a) => a.command).sort(), ["bash status.sh", "curl -s https://x.test/a.sh", "node .claude/setup.mjs", "npx -y some-mcp"]);
+  assert.ok(auto.auto_run.some((a) => a.kind === "task boot on folder open"));
+  const confirmed = supplyChecks(dir, { autoRunKnown: auto.auto_run.map((a) => a.command) });
+  assert.equal(confirmed.checks.auto_run.ok, true);
 });
 
 test("threats: a model is complete when every entry point has an abuse case with a response and a test", async () => {

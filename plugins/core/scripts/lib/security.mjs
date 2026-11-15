@@ -1,6 +1,6 @@
 // Three security checks with no dependency:
 //  - supplyChecks: what the repository says about its supply chain (lockfile, release cooldown, install
-//    scripts, pinned CI actions, env files). The 2025-2026 npm incidents all lived a few hours and ran in
+//    scripts, pinned CI actions, env files, commands that tool config files run by themselves). The 2025-2026 npm incidents all lived a few hours and ran in
 //    install scripts: a cooldown and blocked scripts stop them.
 //  - validateThreats: the threat model of the project (.quality/threats.json) is complete enough to be useful.
 //  - authProbe: the login of the running app resists guessing and does not say which accounts exist.
@@ -12,7 +12,57 @@ import { spawnSync } from "node:child_process";
 const read = (p) => { try { return readFileSync(p, "utf8"); } catch { return null; } };
 
 // ---------------------------------------------------------------------------------------------------------
-export function supplyChecks(root) {
+// JSON with comments and trailing commas (VS Code's tasks.json, Claude Code settings written by hand).
+export function parseJsonc(text) {
+  let out = "", inStr = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i], d = text[i + 1];
+    if (inStr) { out += c; if (c === "\\") { out += d ?? ""; i++; } else if (c === '"') inStr = false; continue; }
+    if (c === '"') { inStr = true; out += c; continue; }
+    if (c === "/" && d === "/") { while (i < text.length && text[i] !== "\n") i++; out += "\n"; continue; }
+    if (c === "/" && d === "*") { i += 2; while (i < text.length && !(text[i] === "*" && text[i + 1] === "/")) i++; i++; continue; }
+    out += c;
+  }
+  return JSON.parse(out.replace(/,(\s*[}\]])/g, "$1"));
+}
+
+// Commands that a repository's tool configuration runs without anyone typing them: Claude Code hooks, status
+// line and key helper, MCP servers declared for the project, VS Code tasks run when the folder opens. A cloned
+// repository can carry them; the npm worm of May 2026 wrote itself into .claude/settings.json and
+// .vscode/tasks.json so it ran again after the package was removed.
+export function autoRunCommands(root) {
+  const found = [];
+  const load = (rel) => { const t = read(join(root, rel)); if (t == null) return null; try { return parseJsonc(t); } catch { found.push({ file: rel, kind: "unreadable", command: "not valid JSON: read it by hand" }); return null; } };
+  const cmd = (c, args) => [c, ...(Array.isArray(args) ? args : [])].filter((x) => typeof x === "string" && x).join(" ");
+  for (const rel of [".claude/settings.json", ".claude/settings.local.json"]) {
+    const s = load(rel);
+    if (!s || typeof s !== "object") continue;
+    for (const [event, groups] of Object.entries(s.hooks || {})) {
+      for (const g of Array.isArray(groups) ? groups : []) for (const h of Array.isArray(g?.hooks) ? g.hooks : []) {
+        if (h?.command) found.push({ file: rel, kind: `hook ${event}${g.matcher ? ` (${g.matcher})` : ""}`, command: String(h.command) });
+        else if (h?.url) found.push({ file: rel, kind: `hook ${event}`, command: `HTTP call to ${h.url}` });
+      }
+    }
+    if (s.statusLine?.command) found.push({ file: rel, kind: "status line", command: String(s.statusLine.command) });
+    for (const k of ["apiKeyHelper", "awsAuthRefresh", "awsCredentialExport", "otelHeadersHelper"]) if (typeof s[k] === "string") found.push({ file: rel, kind: k, command: s[k] });
+    for (const [name, m] of Object.entries(s.extraKnownMarketplaces || {})) {
+      const src = m?.source || {};
+      found.push({ file: rel, kind: `plugin marketplace ${name}`, command: src.repo || src.url || src.path || JSON.stringify(src) });
+    }
+  }
+  const mcp = load(".mcp.json");
+  for (const [name, m] of Object.entries(mcp?.mcpServers || {})) {
+    found.push({ file: ".mcp.json", kind: `MCP server ${name}`, command: m?.command ? cmd(m.command, m.args) : m?.url ? `remote ${m.url}` : JSON.stringify(m) });
+  }
+  const tasks = load(".vscode/tasks.json");
+  for (const t of Array.isArray(tasks?.tasks) ? tasks.tasks : []) {
+    if (t?.runOptions?.runOn !== "folderOpen") continue;
+    found.push({ file: ".vscode/tasks.json", kind: `task ${t.label || "(no label)"} on folder open`, command: cmd(t.command, t.args) || JSON.stringify(t) });
+  }
+  return found;
+}
+
+export function supplyChecks(root, { autoRunKnown = [] } = {}) {
   const checks = {};
   const add = (id, level, ok, value, rule, where) => { checks[id] = { level, ok, value, rule, ...(where ? { where } : {}) }; };
   const has = (f) => existsSync(join(root, f));
@@ -79,10 +129,19 @@ export function supplyChecks(root) {
   if (pkg || has(".env") || has(".env.example")) add("env_files", "must", trackedEnv.length === 0 && (envIgnored || !has(".env")), trackedEnv.length ? `tracked by git: ${trackedEnv.join(", ")}` : envIgnored ? ".env files are ignored" : has(".env") ? ".env exists and is not in .gitignore" : "no .env file",
     ".env files are never committed (.env.example with empty values is the only one in the repository)");
   const bots = ["dependabot.yml", "dependabot.yaml"].some((f) => has(join(".github", f))) || ["renovate.json", "renovate.json5", ".renovaterc", ".renovaterc.json"].some(has) || has(join(".github", "renovate.json"));
+  // Commands run by tool config files. Each one is read by a person and listed in project.json › auto_run_known.
+  const auto = autoRunCommands(root);
+  const known = new Set((Array.isArray(autoRunKnown) ? autoRunKnown : []).map(String));
+  const unknown = auto.filter((a) => !known.has(a.command));
+  if (auto.length) add("auto_run", "should", unknown.length === 0,
+    unknown.length ? `${unknown.length} command(s) run by themselves and not yet confirmed` : `${auto.length} command(s) run by themselves, all confirmed`,
+    "every command that .claude/settings.json, .mcp.json or .vscode/tasks.json runs by itself has been read and is expected: copy each confirmed command into project.json › auto_run_known. Read them in any cloned repository before opening it with an agent or an editor",
+    unknown.slice(0, 8).map((a) => `${a.file} › ${a.kind}: ${a.command.slice(0, 160)}`).join("; "));
   if (pkg) add("update_bot", "should", bots, bots ? "Dependabot or Renovate configured" : "no update bot", "dependency updates arrive as pull requests (Dependabot or Renovate), with a cooldown that matches the package manager's");
   const must = Object.entries(checks).filter(([, c]) => c.level === "must" && !c.ok).map(([k]) => k);
   const should = Object.entries(checks).filter(([, c]) => c.level === "should" && !c.ok).map(([k]) => k);
   return { summary: { checks: Object.keys(checks).length, must_failed: must, should_failed: should }, checks,
+    ...(auto.length ? { auto_run: auto } : {}),
     note: "Read from the repository files. Known vulnerabilities in dependencies are a separate check (deps_audit)." };
 }
 

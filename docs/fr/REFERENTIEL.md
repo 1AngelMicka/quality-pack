@@ -81,6 +81,8 @@ _S'applique si : Le projet a une interface utilisateur_
 - Un état vide explique la situation et propose l'action suivante.
 - Un message d'erreur dit ce qui s'est passé et comment s'en sortir, sans code technique brut.
 - Toute action de plus d'une seconde montre un retour visuel ; toute action destructive demande confirmation ou permet d'annuler.
+- Un champ de mot de passe a un bouton pour l'afficher, qui ne vide pas le champ et que le lecteur d'écran annonce.
+- Une page longue (article, documentation, liste) propose un retour en haut ou garde la navigation à portée ; une facture, un reçu ou un document qu'on imprime a une feuille d'impression (@media print) sans menus ni boutons.
 - Les formulaires gardent la saisie en cas d'erreur et affichent l'erreur à côté du champ.
 
 **Critères d'audit**
@@ -104,6 +106,7 @@ _S'applique si : Le projet a une interface utilisateur_
 
 - Écrire des phrases courtes, concrètes, au vocabulaire de l'utilisateur, pas à celui du code.
 - Aucun texte de remplissage (lorem ipsum, « Votre titre ici ») ni chiffre inventé en production.
+- Les pages légales, la documentation et les articles affichent leur date de dernière mise à jour.
 - Un seul ton et une seule façon de nommer chaque chose dans tout le projet.
 
 **Critères d'audit**
@@ -335,6 +338,8 @@ _S'applique si : Le projet a une interface utilisateur_
 - Les réglages suivent l'ordre de la tâche, une décision à la fois, avec une option conseillée déjà choisie ; les réglages avancés sont à part.
 - Un thème, un modèle ou une valeur par défaut n'écrase jamais un choix de l'utilisateur sans le dire et sans permettre d'annuler.
 - Concevoir le téléphone et l'ordinateur séparément : chacun a sa propre organisation, pas la même page étirée ou rétrécie.
+- Un carrousel ou une rangée qui défile à l'horizontale laisse dépasser l'élément suivant (environ un quart à un tiers de sa largeur), pour qu'on voie qu'il y a une suite.
+- Ce que l'utilisateur doit voir n'a pas l'air d'une publicité : pas de bandeau coloré en haut ou sur le côté, pas d'encart animé, pas de format d'annonce ; on l'intègre au contenu, près de la tâche.
 - Reprendre des références nommées dans DESIGN.md leur organisation (structure d'écran, navigation, gestes), pas seulement leurs couleurs.
 
 **Critères d'audit**
@@ -365,7 +370,7 @@ Protection des secrets, validation des entrées, permissions, limitation des req
 - Limiter le débit sur la connexion, l'inscription, la réinitialisation de mot de passe, les formulaires et les routes coûteuses.
 - Requêtes base de données paramétrées ou ORM ; jamais de concaténation de chaînes.
 - Écrire le modèle de menaces au cadrage (.quality/threats.json) : ce qu'un attaquant veut, par où l'on entre, ce qui peut mal tourner, ce qu'on fait pour chaque cas. Le relire à chaque nouveau point d'entrée, type de donnée, rôle ou service tiers.
-- Chaîne d'approvisionnement : fichier de verrouillage commité, délai de 7 jours avant d'installer une nouvelle version, scripts d'installation bloqués, actions de CI épinglées par empreinte de commit.
+- Chaîne d'approvisionnement : fichier de verrouillage commité, délai de 7 jours avant d'installer une nouvelle version, scripts d'installation bloqués, actions de CI épinglées par empreinte de commit ; chaque commande que .claude/settings.json, .mcp.json ou .vscode/tasks.json lance toute seule est lue et attendue, aussi dans un dépôt cloné avant de l'ouvrir.
 - Les tests actifs (mots de passe faux, scans avec attaque) ne visent que le poste local ou la préproduction, avec des comptes de test jetables et l'accord de l'utilisateur ; en production, lecture seule.
 - Headers : CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.
 
@@ -387,7 +392,7 @@ Protection des secrets, validation des entrées, permissions, limitation des req
 | SEC-12 | Modèle de menaces écrit, complet et à jour | Majeur | `sw threats` (sans option : la porte du lancement) : aucun point d'entrée sans cas d'abus, chaque cas a une réponse et, s'il est atténué, un test ; aucun cas ouvert « avant le lancement » ; relu depuis moins de 6 mois. Pendant la construction, `sw threats --check` ne vérifie que la forme. (auto `threat_model`) |
 | SEC-13 | La connexion résiste aux essais répétés et ne dit pas quels comptes existent | Bloquant | auth.json : la sonde atteint la connexion (confirmé par le bon mot de passe, password_env) ; même réponse pour un compte connu et inconnu, à la connexion et, si déclarées, à l'inscription et à la réinitialisation ; mots de passe faux en série ralentis, refusés ou verrouillés ; aucun contrôle utile dans `skipped`. Limite par compte (et pas seulement par adresse IP) : non vérifiable par cette sonde, la lire dans le code ou les réglages. Vérifier à la main les codes à usage unique, et l'inscription et la réinitialisation si elles ne sont pas déclarées. (auto `auth_probe`) |
 | SEC-14 | Scan passif de l'application sans alerte haute ni moyenne | Majeur | zap.json (OWASP ZAP, scan de base) : aucune alerte haute ; chaque alerte moyenne corrigée ou expliquée. Un scan propre veut dire « rien trouvé par cet outil », pas « sûr ». (auto `dast_scan`) |
-| SEC-15 | Chaîne d'approvisionnement verrouillée | Majeur | supply.json : aucun « must » en échec (fichier de verrouillage commité, délai avant installation, scripts d'installation, actions de CI épinglées, permissions des workflows, fichiers .env). (auto `supply_scan`) |
+| SEC-15 | Chaîne d'approvisionnement verrouillée | Majeur | supply.json : aucun « must » en échec (fichier de verrouillage commité, délai avant installation, scripts d'installation, actions de CI épinglées, permissions des workflows, fichiers .env) ; chaque commande lancée toute seule par la configuration des outils confirmée dans project.json › auto_run_known. (auto `supply_scan`) |
 | SEC-16 | Un chercheur sait où signaler une faille | Mineur | /.well-known/security.txt en HTTPS avec Contact et Expires (date à venir, moins d'un an) ; une page dit quoi signaler, sur quel périmètre, et sous quel délai on répond. (lecture) |
 | SEC-17 | Test d'intrusion par une personne indépendante avant les premiers clients payants | Majeur | Rapport daté d'un testeur extérieur à l'équipe, périmètre signé, failles corrigées et retestées. Les outils automatiques ne couvrent ni la logique métier ni les attaques enchaînées. (manuel) |
 
@@ -401,6 +406,7 @@ _S'applique si : Collecte de données personnelles (formulaires, comptes, analyt
 
 - Ne collecter que les données nécessaires à la promesse ; chaque champ demandé a une raison.
 - Tenir à jour la liste des données, leur finalité, leur durée de conservation et les sous-traitants.
+- Aucune case de consentement (newsletter, partenaires, conditions) n'est cochée d'avance ; chaque consentement est un choix séparé.
 - Aucun cookie ou traceur non essentiel avant consentement ; refuser aussi simple qu'accepter.
 - Permettre à l'utilisateur d'exporter et de supprimer ses données.
 - Ne jamais écrire de données personnelles dans les logs.
@@ -571,7 +577,7 @@ _S'applique si : Pages publiques destinées à être trouvées sur le web_
 
 - Chaque page publique a un titre et une description uniques, une URL lisible et une balise canonique.
 - Le contenu important est dans le HTML servi (rendu serveur ou statique), pas seulement généré côté client.
-- Fournir sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons et manifest.
+- Fournir sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons et manifest ; image de partage de 1200 × 630 px, le texte important loin des bords.
 - Les pages privées et de préproduction ne sont pas indexables.
 - Choisir les recherches sur lesquelles on veut ressortir avant d'écrire les pages : une expression principale par page, tirée des mots des clients, notée dans .quality/project.json › seo.keywords. Deux pages ne visent jamais la même expression.
 - Chaque page cible porte son expression dans le titre, le h1, la description, l'adresse et le premier paragraphe, dans une phrase naturelle ; jamais de liste de mots-clés ni de répétition forcée.

@@ -4,6 +4,8 @@
 
 - **Performance:** new build rules and two criteria. PRF-08: search and filters wait for the end of typing, cancel the previous request and never send the same request twice. PRF-09: slow queries are logged and read with EXPLAIN ANALYZE, and the main routes read only the columns they need. PRF-04 also asks for unused dependencies to be removed (knip).
 - **design-direction:** a step to keep the user's design corrections as rules with their reason in DESIGN.md › "Corrections" (DIR-10), only what the user said or chose, approved before writing.
+- **`sw supply` lists the commands a repository's tool configuration runs by itself** (`auto_run`): Claude Code hooks, status line and helpers in `.claude/settings.json`, MCP servers in `.mcp.json`, VS Code tasks run when the folder opens. Each one stays a "should" until it is confirmed in `project.json` › `auto_run_known`. Run it on a cloned repository before opening it: the npm worm of May 2026 hid there.
+- From a recap of 18 design and web reels: list items staggered by 30 to 50 ms, exits about 20 % shorter, ease-in-out for moves, the same element carried between two states (premium-craft); a carousel shows the next item, and what matters does not look like an ad (ergonomics); a button to show the password, a way back to the top on long pages, a print stylesheet for invoices, the last-updated date on legal pages and docs; consent boxes never ticked in advance; a 1200 × 630 share image.
 - `sw auth`: a login refused the same way in under 30 ms (was 10 ms) counts as not reached, so a slow CI machine no longer makes the check flaky.
 
 ## 0.9.0 — 2026-11-15

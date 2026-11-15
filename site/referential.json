@@ -647,7 +647,7 @@
   },
   "supply_scan": {
    "provider": "core",
-   "fr": "Chaîne d'approvisionnement lue dans le dépôt (sw supply) : fichier de verrouillage, délai avant installation, scripts d'installation, actions de CI épinglées, fichiers .env",
+   "fr": "Chaîne d'approvisionnement lue dans le dépôt (sw supply) : commandes lancées toutes seules par la configuration des outils, fichier de verrouillage, délai avant installation, scripts d'installation, actions de CI épinglées, fichiers .env",
    "en": "Supply chain read from the repository (sw supply): lockfile, release cooldown, install scripts, pinned CI actions, .env files"
   },
   "threat_model": {
@@ -1066,6 +1066,14 @@
        "en": "Any action over one second shows feedback; any destructive action asks for confirmation or can be undone."
       },
       {
+       "fr": "Un champ de mot de passe a un bouton pour l'afficher, qui ne vide pas le champ et que le lecteur d'écran annonce.",
+       "en": "A password field has a button to show it, which does not clear the field and is announced by screen readers."
+      },
+      {
+       "fr": "Une page longue (article, documentation, liste) propose un retour en haut ou garde la navigation à portée ; une facture, un reçu ou un document qu'on imprime a une feuille d'impression (@media print) sans menus ni boutons.",
+       "en": "A long page (article, documentation, list) offers a way back to the top or keeps navigation within reach; an invoice, receipt or document people print has a print stylesheet (@media print) without menus or buttons."
+      },
+      {
        "fr": "Les formulaires gardent la saisie en cas d'erreur et affichent l'erreur à côté du champ.",
        "en": "Forms keep the input on error and show the error next to the field."
       }
@@ -1185,6 +1193,10 @@
       {
        "fr": "Aucun texte de remplissage (lorem ipsum, « Votre titre ici ») ni chiffre inventé en production.",
        "en": "No filler text (lorem ipsum, 'Your title here') or invented figures in production."
+      },
+      {
+       "fr": "Les pages légales, la documentation et les articles affichent leur date de dernière mise à jour.",
+       "en": "Legal pages, documentation and articles show the date they were last updated."
       },
       {
        "fr": "Un seul ton et une seule façon de nommer chaque chose dans tout le projet.",
@@ -2399,6 +2411,14 @@
        "en": "Design the phone and the desktop separately: each gets its own layout, not the same page stretched or shrunk."
       },
       {
+       "fr": "Un carrousel ou une rangée qui défile à l'horizontale laisse dépasser l'élément suivant (environ un quart à un tiers de sa largeur), pour qu'on voie qu'il y a une suite.",
+       "en": "A carousel or a row that scrolls sideways lets the next item show (about a quarter to a third of its width), so people see there is more."
+      },
+      {
+       "fr": "Ce que l'utilisateur doit voir n'a pas l'air d'une publicité : pas de bandeau coloré en haut ou sur le côté, pas d'encart animé, pas de format d'annonce ; on l'intègre au contenu, près de la tâche.",
+       "en": "What the user must see does not look like an ad: no coloured strip at the top or side, no animated box, no ad format; it sits in the content, next to the task."
+      },
+      {
        "fr": "Reprendre des références nommées dans DESIGN.md leur organisation (structure d'écran, navigation, gestes), pas seulement leurs couleurs.",
        "en": "Take from the references named in DESIGN.md their organisation (screen structure, navigation, gestures), not only their colours."
       }
@@ -2592,8 +2612,8 @@
        "en": "Write the threat model at kickoff (.quality/threats.json): what an attacker wants, where input enters, what can go wrong, what is done about each case. Review it at every new entry point, kind of data, role or third party."
       },
       {
-       "fr": "Chaîne d'approvisionnement : fichier de verrouillage commité, délai de 7 jours avant d'installer une nouvelle version, scripts d'installation bloqués, actions de CI épinglées par empreinte de commit.",
-       "en": "Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash."
+       "fr": "Chaîne d'approvisionnement : fichier de verrouillage commité, délai de 7 jours avant d'installer une nouvelle version, scripts d'installation bloqués, actions de CI épinglées par empreinte de commit ; chaque commande que .claude/settings.json, .mcp.json ou .vscode/tasks.json lance toute seule est lue et attendue, aussi dans un dépôt cloné avant de l'ouvrir.",
+       "en": "Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash; every command that .claude/settings.json, .mcp.json or .vscode/tasks.json runs by itself is read and expected, also in a cloned repository before opening it."
       },
       {
        "fr": "Les tests actifs (mots de passe faux, scans avec attaque) ne visent que le poste local ou la préproduction, avec des comptes de test jetables et l'accord de l'utilisateur ; en production, lecture seule.",
@@ -2858,8 +2878,8 @@
         "en": "Supply chain locked down"
        },
        "verify": {
-        "fr": "supply.json : aucun « must » en échec (fichier de verrouillage commité, délai avant installation, scripts d'installation, actions de CI épinglées, permissions des workflows, fichiers .env).",
-        "en": "supply.json: no failed \"must\" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files)."
+        "fr": "supply.json : aucun « must » en échec (fichier de verrouillage commité, délai avant installation, scripts d'installation, actions de CI épinglées, permissions des workflows, fichiers .env) ; chaque commande lancée toute seule par la configuration des outils confirmée dans project.json › auto_run_known.",
+        "en": "supply.json: no failed \"must\" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files); every command that tool configuration runs by itself confirmed in project.json › auto_run_known."
        }
       },
       {
@@ -2922,6 +2942,10 @@
       {
        "fr": "Tenir à jour la liste des données, leur finalité, leur durée de conservation et les sous-traitants.",
        "en": "Keep an up-to-date list of data, purpose, retention period and processors."
+      },
+      {
+       "fr": "Aucune case de consentement (newsletter, partenaires, conditions) n'est cochée d'avance ; chaque consentement est un choix séparé.",
+       "en": "No consent box (newsletter, partners, terms) is ticked in advance; each consent is a separate choice."
       },
       {
        "fr": "Aucun cookie ou traceur non essentiel avant consentement ; refuser aussi simple qu'accepter.",
@@ -3922,8 +3946,8 @@
        "en": "Important content is in the served HTML (server or static rendering), not only client-generated."
       },
       {
-       "fr": "Fournir sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons et manifest.",
-       "en": "Provide sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons and manifest."
+       "fr": "Fournir sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons et manifest ; image de partage de 1200 × 630 px, le texte important loin des bords.",
+       "en": "Provide sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons and manifest; a 1200 × 630 px share image, with important text away from the edges."
       },
       {
        "fr": "Les pages privées et de préproduction ne sont pas indexables.",

@@ -11,7 +11,7 @@ Marker used below: **(nv)** means the rule comes from memory in the research not
 | `sw auth` | login only: same status and message for a known and an unknown account, timing as a warning, repeated wrong passwords slowed or refused. Cookie flags (`HttpOnly`, `SameSite`, `Secure` over HTTPS) when `auth_probe.password_env` names the environment variable holding the test account's password | sign-up, reset, one-time codes, everything below |
 | `sw access` | declared resources requested by the owner, by the accounts in `denied_to` and by a visitor | mass assignment, list isolation, routes not declared |
 | `sw dast` | passive ZAP scan: headers, cookie flags on pages reached without login, information leaks | anything behind login, any attack |
-| `sw supply` | lockfile, cooldown, install scripts, pinned actions, `.env` tracked by git | secrets inside the bundle, logs, backups, database roles |
+| `sw supply` | lockfile, cooldown, install scripts, pinned actions, `.env` tracked by git, commands run by `.claude/settings.json`, `.mcp.json` and `.vscode/tasks.json` | secrets inside the bundle, logs, backups, database roles |
 
 ## Password policy
 

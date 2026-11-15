@@ -47,7 +47,7 @@ Rules:
 
 - Every public page has a unique title and description, a readable URL and a canonical tag.
 - Important content is in the served HTML (server or static rendering), not only client-generated.
-- Provide sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons and manifest.
+- Provide sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons and manifest; a 1200 × 630 px share image, with important text away from the edges.
 - Private and staging pages are not indexable.
 - Choose the searches to be found for before writing the pages: one main phrase per page, taken from customers' words, recorded in .quality/project.json › seo.keywords. Two pages never target the same phrase.
 - Each target page carries its phrase in the title, the h1, the description, the address and the first paragraph, in a natural sentence; never a list of keywords or forced repetition.

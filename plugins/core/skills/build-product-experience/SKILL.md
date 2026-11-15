@@ -57,6 +57,8 @@ Rules:
 - An empty state explains the situation and offers the next action.
 - An error message says what happened and how to recover, without raw technical codes.
 - Any action over one second shows feedback; any destructive action asks for confirmation or can be undone.
+- A password field has a button to show it, which does not clear the field and is announced by screen readers.
+- A long page (article, documentation, list) offers a way back to the top or keeps navigation within reach; an invoice, receipt or document people print has a print stylesheet (@media print) without menus or buttons.
 - Forms keep the input on error and show the error next to the field.
 
 Done means:
@@ -78,6 +80,7 @@ Rules:
 
 - Write short, concrete sentences in the user's vocabulary, not the code's.
 - No filler text (lorem ipsum, 'Your title here') or invented figures in production.
+- Legal pages, documentation and articles show the date they were last updated.
 - One tone and one name for each thing across the whole project.
 
 Done means:

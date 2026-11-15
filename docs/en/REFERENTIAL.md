@@ -81,6 +81,8 @@ _Applies if: The project has a user interface_
 - An empty state explains the situation and offers the next action.
 - An error message says what happened and how to recover, without raw technical codes.
 - Any action over one second shows feedback; any destructive action asks for confirmation or can be undone.
+- A password field has a button to show it, which does not clear the field and is announced by screen readers.
+- A long page (article, documentation, list) offers a way back to the top or keeps navigation within reach; an invoice, receipt or document people print has a print stylesheet (@media print) without menus or buttons.
 - Forms keep the input on error and show the error next to the field.
 
 **Audit criteria**
@@ -104,6 +106,7 @@ _Applies if: The project has a user interface_
 
 - Write short, concrete sentences in the user's vocabulary, not the code's.
 - No filler text (lorem ipsum, 'Your title here') or invented figures in production.
+- Legal pages, documentation and articles show the date they were last updated.
 - One tone and one name for each thing across the whole project.
 
 **Audit criteria**
@@ -335,6 +338,8 @@ _Applies if: The project has a user interface_
 - Settings follow the order of the task, one decision at a time, with a recommended option already selected; advanced settings are set apart.
 - A theme, template or default never overwrites a user's choice without saying so and offering undo.
 - Design the phone and the desktop separately: each gets its own layout, not the same page stretched or shrunk.
+- A carousel or a row that scrolls sideways lets the next item show (about a quarter to a third of its width), so people see there is more.
+- What the user must see does not look like an ad: no coloured strip at the top or side, no animated box, no ad format; it sits in the content, next to the task.
 - Take from the references named in DESIGN.md their organisation (screen structure, navigation, gestures), not only their colours.
 
 **Audit criteria**
@@ -365,7 +370,7 @@ Secret protection, input validation, permissions, rate limiting and security hea
 - Rate-limit login, sign-up, password reset, forms and expensive routes.
 - Parameterised database queries or ORM; never string concatenation.
 - Write the threat model at kickoff (.quality/threats.json): what an attacker wants, where input enters, what can go wrong, what is done about each case. Review it at every new entry point, kind of data, role or third party.
-- Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash.
+- Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash; every command that .claude/settings.json, .mcp.json or .vscode/tasks.json runs by itself is read and expected, also in a cloned repository before opening it.
 - Active tests (wrong passwords, attack scans) only target the local machine or staging, with disposable test accounts and the user's agreement; on production, read-only.
 - Headers: CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.
 
@@ -387,7 +392,7 @@ Secret protection, input validation, permissions, rate limiting and security hea
 | SEC-12 | Threat model written, complete and current | Major | `sw threats` (no option: the launch gate): no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open "before launch"; reviewed within 6 months. While building, `sw threats --check` checks the shape only. (auto `threat_model`) |
 | SEC-13 | Login resists repeated guesses and does not say which accounts exist | Blocker | auth.json: the probe reaches the login (confirmed with the right password, password_env); same answer for a known and an unknown account on login and, when declared, on sign-up and password reset; wrong passwords in a row slowed, refused or locked; no useful check left in `skipped`. Limit per account (not only per IP): not verifiable by this probe, read it in the code or settings. Check one-time codes by hand, and sign-up and reset when they are not declared. (auto `auth_probe`) |
 | SEC-14 | Passive scan of the running app with no high or medium alert | Major | zap.json (OWASP ZAP baseline): no high alert; each medium alert fixed or explained. A clean scan means "nothing found by this tool", not "secure". (auto `dast_scan`) |
-| SEC-15 | Supply chain locked down | Major | supply.json: no failed "must" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files). (auto `supply_scan`) |
+| SEC-15 | Supply chain locked down | Major | supply.json: no failed "must" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files); every command that tool configuration runs by itself confirmed in project.json › auto_run_known. (auto `supply_scan`) |
 | SEC-16 | A researcher knows where to report a flaw | Minor | /.well-known/security.txt over HTTPS with Contact and Expires (future date, under a year); a page says what to report, in which scope, and how fast you answer. (inspection) |
 | SEC-17 | Penetration test by an independent person before the first paying customers | Major | Dated report from a tester outside the team, signed scope, flaws fixed and retested. Automatic tools cover neither business logic nor chained attacks. (manual) |
 
@@ -401,6 +406,7 @@ _Applies if: Collects personal data (forms, accounts, analytics)_
 
 - Collect only the data the promise needs; every requested field has a reason.
 - Keep an up-to-date list of data, purpose, retention period and processors.
+- No consent box (newsletter, partners, terms) is ticked in advance; each consent is a separate choice.
 - No non-essential cookie or tracker before consent; refusing as easy as accepting.
 - Let users export and delete their data.
 - Never write personal data into logs.
@@ -571,7 +577,7 @@ _Applies if: Public pages meant to be found on the web_
 
 - Every public page has a unique title and description, a readable URL and a canonical tag.
 - Important content is in the served HTML (server or static rendering), not only client-generated.
-- Provide sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons and manifest.
+- Provide sitemap.xml, robots.txt, OpenGraph, Twitter Card, favicons and manifest; a 1200 × 630 px share image, with important text away from the edges.
 - Private and staging pages are not indexable.
 - Choose the searches to be found for before writing the pages: one main phrase per page, taken from customers' words, recorded in .quality/project.json › seo.keywords. Two pages never target the same phrase.
 - Each target page carries its phrase in the title, the h1, the description, the address and the first paragraph, in a natural sentence; never a list of keywords or forced repetition.

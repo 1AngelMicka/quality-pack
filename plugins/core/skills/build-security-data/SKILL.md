@@ -22,7 +22,7 @@ Rules:
 - Rate-limit login, sign-up, password reset, forms and expensive routes.
 - Parameterised database queries or ORM; never string concatenation.
 - Write the threat model at kickoff (.quality/threats.json): what an attacker wants, where input enters, what can go wrong, what is done about each case. Review it at every new entry point, kind of data, role or third party.
-- Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash.
+- Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash; every command that .claude/settings.json, .mcp.json or .vscode/tasks.json runs by itself is read and expected, also in a cloned repository before opening it.
 - Active tests (wrong passwords, attack scans) only target the local machine or staging, with disposable test accounts and the user's agreement; on production, read-only.
 - Headers: CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.
 
@@ -42,7 +42,7 @@ Done means:
 - [major] SEC-12: Threat model written, complete and current (only if: has_backend). Check: `sw threats` (no option: the launch gate): no entry point without an abuse case, each case has a response and, when mitigated, a test; no case open "before launch"; reviewed within 6 months. While building, `sw threats --check` checks the shape only.
 - [BLOCKER] SEC-13: Login resists repeated guesses and does not say which accounts exist (only if: has_auth). Check: auth.json: the probe reaches the login (confirmed with the right password, password_env); same answer for a known and an unknown account on login and, when declared, on sign-up and password reset; wrong passwords in a row slowed, refused or locked; no useful check left in `skipped`. Limit per account (not only per IP): not verifiable by this probe, read it in the code or settings. Check one-time codes by hand, and sign-up and reset when they are not declared.
 - [major] SEC-14: Passive scan of the running app with no high or medium alert (only if: has_backend_or_public). Check: zap.json (OWASP ZAP baseline): no high alert; each medium alert fixed or explained. A clean scan means "nothing found by this tool", not "secure".
-- [major] SEC-15: Supply chain locked down. Check: supply.json: no failed "must" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files).
+- [major] SEC-15: Supply chain locked down. Check: supply.json: no failed "must" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files); every command that tool configuration runs by itself confirmed in project.json › auto_run_known.
 - [minor] SEC-16: A researcher knows where to report a flaw (only if: public_web). Check: /.well-known/security.txt over HTTPS with Contact and Expires (future date, under a year); a page says what to report, in which scope, and how fast you answer.
 - [major] SEC-17: Penetration test by an independent person before the first paying customers (only if: has_payments). Check: Dated report from a tester outside the team, signed scope, flaws fixed and retested. Automatic tools cover neither business logic nor chained attacks.
 
@@ -56,6 +56,7 @@ Rules:
 
 - Collect only the data the promise needs; every requested field has a reason.
 - Keep an up-to-date list of data, purpose, retention period and processors.
+- No consent box (newsletter, partners, terms) is ticked in advance; each consent is a separate choice.
 - No non-essential cookie or tracker before consent; refusing as easy as accepting.
 - Let users export and delete their data.
 - Never write personal data into logs.

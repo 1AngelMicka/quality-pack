@@ -45,7 +45,8 @@
 //                                            and unknown accounts (also on sign-up and reset when declared), wrong passwords slowed or
 //                                            refused (auth.json). Sends failed logins: local or staging only
 //   node sw.mjs supply                       Supply chain read from the repository: lockfile, release cooldown, install scripts,
-//                                            pinned CI actions, env files (supply.json)
+//                                            pinned CI actions, env files, commands run by .claude/settings.json, .mcp.json
+//                                            or .vscode/tasks.json (confirm each in project.json › auto_run_known) (supply.json)
 //   node sw.mjs threats [--check | --gate launch]
 //                                            Threat model (.quality/threats.json). --check: is it well formed (every entry point has an
 //                                            abuse case, every abuse case a response and a test)? Exit 0 when it is, open cases allowed.
@@ -575,7 +576,7 @@ async function main() {
     case "supply": {
       const { supplyChecks } = await import("./lib/security.mjs");
       const run = currentRun();
-      const result = supplyChecks(cwd);
+      const result = supplyChecks(cwd, { autoRunKnown: loadProject(cwd)?.auto_run_known });
       if (loadProject(cwd)) { const d = join(auditsDir(), run); mkdirSync(d, { recursive: true }); writeFileSync(join(d, "supply.json"), JSON.stringify(result, null, 2)); }
       out({ summary: result.summary, failed: Object.fromEntries(Object.entries(result.checks).filter(([, c]) => !c.ok)), passed: Object.entries(result.checks).filter(([, c]) => c.ok).map(([k]) => k), note: result.note });
       if (result.summary.must_failed.length) process.exitCode = 2;
