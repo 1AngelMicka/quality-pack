@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.9.0 — 2026-11-15
 
 Fixes from the first real pilot (an invoicing SaaS built from zero with Shipwright, 59 feedback entries).
 
