@@ -176,7 +176,7 @@ const median = (a) => { const s = [...a].sort((x, y) => x - y); return s.length 
 const rand = () => Math.random().toString(36).slice(2, 10);
 
 // Below this, a refusal of an existing account did not hash anything: the request was turned away before the password check.
-export const FAST_REFUSAL_MS = 10;
+export const FAST_REFUSAL_MS = 30;
 // Statuses that say "this request was not accepted as a login attempt" (forbidden, no such route, wrong method or
 // type, expired CSRF token) rather than "wrong credentials". 400 and 422 also answer a malformed or incomplete body.
 const GATE = new Set([403, 404, 405, 415, 419]);
