@@ -97,12 +97,19 @@ node <clone>/plugins/core/scripts/sw.mjs skills          # the list of skills an
 node <clone>/plugins/core/scripts/sw.mjs skill kickoff   # one skill, ready to follow
 
 # B. Write the project's settings: Claude Code offers the plugin the next time the project is opened
+#    (offering is not always enough: accepting the marketplace does not always install the plugin)
 node <clone>/plugins/core/scripts/sw.mjs enable --modules nextjs,vps
 
-# C. Full installation by the agent, when you ask for it (marketplace, plugin, detected modules)
+# C. Full installation by the agent, when you ask for it (marketplace, plugin, modules detected
+#    or declared in .quality/project.json): the sure path
 node <clone>/plugins/core/scripts/sw.mjs install
 # then you type /reload-plugins: the one thing an agent cannot do for you
+
+# Check what is really installed and enabled for the project (read only)
+node <clone>/plugins/core/scripts/sw.mjs doctor
 ```
+
+With B, the marketplace can be added on reopening without `sw@shipwright` being installed: no `/sw:` command, no skill, no hook. C is the sure path; `sw.mjs doctor` says where things stand.
 
 Details are in the [agent guide](docs/AGENT_GUIDE.md).
 
@@ -332,7 +339,7 @@ Commit `.quality/` to keep the score history. Screenshots and logs are heavy: ad
 | Adding the marketplace fails | Check `git` is installed. Without a GitHub SSH key, set `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` and retry. |
 | Browser checks are "not checked" | Run `sw.mjs browser-setup` (step 4), and make sure the app runs locally or set a staging URL in `.quality/project.json`. |
 | A key task stops at a step | `flows.json` gives the step and the error. Fix the selector in `.quality/project.json` › `flows` (`sw.mjs flows --check` validates it), or fix the bug if it is real. |
-| A write is blocked as a secret | Move the value to an environment variable. If it really is not a secret, add `qp-allow-secret` in a comment on that line. |
+| A write is blocked as a secret | Move the value to an environment variable. If it really is not a secret, add `sw-allow-secret` in a comment on that line. |
 | The incremental audit redoes everything | Intended on the first audit, after a pack update, when the last full audit is older than 30 days, or outside a Git repository. |
 | Graphify is not used | Check `graphify --version`, then run `node <plugin path>/scripts/sw.mjs graph` in your project. |
 

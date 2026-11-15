@@ -9,6 +9,9 @@ const git = (cwd, args, keepLeading = false) => {
 
 export const gitHead = (cwd) => git(cwd, ["rev-parse", "HEAD"]);
 
+// Top folder of the Git repository that holds cwd (forward slashes), or null outside any repository.
+export const gitRoot = (cwd) => git(cwd, ["rev-parse", "--show-toplevel"]);
+
 // Files changed since a commit, plus uncommitted and untracked files.
 export function changedSince(cwd, commit) {
   if (!commit || git(cwd, ["cat-file", "-e", `${commit}^{commit}`]) === null) return null;

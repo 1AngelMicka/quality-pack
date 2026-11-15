@@ -23,7 +23,7 @@ Each step is usable before the next one starts. Do not reorder 1 and 2 after the
 | 6. Self-service account | Profile, security, notifications, billing, plan change, cancellation | Cancellation in three steps at most |
 | 7. Leaving | Export in a machine-readable format, account deletion | Both run on a test account |
 | 8. Support tools | Admin area with time-boxed, logged impersonation | Log line after one use |
-| 9. Public pages | Pricing that matches checkout, security page, legal pages | Amounts compared with checkout |
+| 9. Public pages | Pricing that matches checkout, security page, legal pages. A minimal home page (what the product does, a button to create an account) already exists from the first key task (`from-zero` stage 3) | Amounts compared with checkout; the root address without a session is not only a login form |
 | 10. Operations pages | Status page, dated changelog | Linked from the footer |
 
 Not before a customer asks for it by contract: SSO/SAML, SCIM, custom roles, one database per customer, a SOC 2 audit. Say so when the user asks for them on day one, and keep the door open (roles on the membership, an audit log from the start).
@@ -41,8 +41,8 @@ Read [references/tenancy.md](references/tenancy.md) before writing the first tab
 "access": {
   "accounts": {
     "alice": { "login": [{ "goto": "/login" }, { "fill": { "selector": "role=textbox[name=\"Email\"]", "value": "alice@test.local" } },
-                          { "fill": { "selector": "role=textbox[name=\"Password\"]", "value": "${env:QP_TEST_PASSWORD}" } }, { "click": "role=button[name=\"Log in\"]" }, { "expect": "text=Dashboard" }] },
-    "bob":   { "headers": { "Authorization": "Bearer ${env:QP_TEST_BOB_TOKEN}" } }
+                          { "fill": { "selector": "role=textbox[name=\"Password\"]", "value": "${env:SW_TEST_PASSWORD}" } }, { "click": "role=button[name=\"Log in\"]" }, { "expect": "text=Dashboard" }] },
+    "bob":   { "headers": { "Authorization": "Bearer ${env:SW_TEST_BOB_TOKEN}" } }
   },
   "checks": [
     { "id": "invoice", "path": "/api/invoices/inv_alice_1", "owner": "alice", "denied_to": ["bob", "anonymous"], "secret": "ACME-2026-001" },
@@ -54,7 +54,15 @@ Read [references/tenancy.md](references/tenancy.md) before writing the first tab
 
 `sw access` asks for each resource as its owner (it must answer, and contain `secret` when given), then as every account in `denied_to` and as a visitor. Refused means 401, 403, 404 or a redirect. A 200 with the owner's answer, or an accepted write, is a leak and the command exits with code 2. Declare one check per kind of resource and per role, and two for writes (update, delete). Alice and Bob belong to two different customers; for roles, add a member and an admin of the same customer. Run it on local or staging; it refuses production unless the user agreed. Put the same command in CI so a leak blocks deployment.
 
-A clean result covers the declared resources only. When you add a kind of resource, add its check in the same change.
+Some routes answer "my data" to everyone and take no identifier (`/api/me`, `/api/summary`, an export of the account): Bob gets a 200 with his own figures, which is right. Declare them with `"scope": "self"` and `markers`, texts only the owner's answer contains, seeded on purpose for that account and stable over time (a customer name, an invoice number), never a field name or an amount that changes:
+
+```json
+{ "id": "summary", "path": "/api/summary", "owner": "alice", "scope": "self", "markers": ["Atelier Alice SARL", "INV-ALICE-0001"] }
+```
+
+The owner must get every marker; each other account (by default all declared accounts and the visitor, or those in `denied_to`) may get any answer, refused or not, as long as it contains none of them. Reads (GET) only.
+
+On a new project with no route yet, write the two accounts and `"checks": []`: `sw access --check` validates the accounts and warns that no check exists yet (exit code 0); it exits with code 2 only when `ok` is false. A clean result covers the declared resources only. When you add a kind of resource, add its check in the same change.
 
 ## 2. Accounts
 
@@ -63,8 +71,13 @@ A clean result covers the declared resources only. When you add a kind of resour
 - A failed login, a reset request and a sign-up answer the same way whether the account exists or not, and repeated failures are slowed or refused. Declare the probe and run `sw auth` (local or staging only: it sends wrong passwords and may lock the test account):
 
 ```json
-"auth_probe": { "login": { "path": "/api/auth/login", "body": { "email": "{email}", "password": "{password}" } }, "known_email": "probe@test.local", "password_env": "QP_TEST_PASSWORD" }
+"auth_probe": { "login": { "path": "/api/auth/login", "body": { "email": "{email}", "password": "{password}" } }, "known_email": "probe@test.local", "password_env": "SW_TEST_PASSWORD",
+  "signup": { "path": "/api/auth/sign-up", "body": { "email": "{email}", "password": "{password}", "name": "Probe" } },
+  "reset": { "path": "/api/auth/forgot-password", "body": { "email": "{email}" } },
+  "unknown_email": "nobody@test.local" }
 ```
+
+With `password_env`, the probe logs in with the right password first and stops with an error if it is refused: a request turned away before the login (no `Origin`, no CSRF token) would otherwise make every check pass. It sends `Origin` equal to the tested address by default; other headers go in `headers` of each route. Without `password_env`, 403 on every attempt or the same refusal in a few milliseconds is reported as "the probe does not reach the login", an error. `signup` and `reset` are each played three times with `known_email` and three times with a fresh unknown address (`unknown_email` with `+sw…` added, or an `example.invalid` one): status, body and time are compared. Sign-up creates accounts for those unknown addresses. Every check the probe could not run is listed in `skipped`. The login limit is checked from one address: whether it counts per account or only per IP cannot be told by the probe, check it in the auth library's settings.
 
 - Verify the email before invitations, card-less trials and anything sensitive. Reset links and codes are random, single-use and short-lived, and never bypass the second factor.
 - Logout and password change end the sessions on the server. Sessions are listed in the account, with remote sign-out.
@@ -89,6 +102,13 @@ Read [references/billing.md](references/billing.md) before the first checkout. T
              "expect": { "trialing": { "access": true }, "active": { "access": true }, "past_due": { "access": true, "banner": "payment" }, "canceled": { "access": false } } } }
 ```
 
+Two options follow the app's real path more closely:
+
+- `"subscription_metadata": { "account_id": "acct_test_alice" }` is set on the test subscription, as the app's Checkout sets it, so that the webhook links the subscription to a named test account. The probe can then ask by account (`?account=acct_test_alice`) instead of by Stripe customer. The probe URL may use `{customer}` and `{subscription}`.
+- `"trial": "app"` when the app holds the trial from sign-up with no subscription at Stripe: the probe is asked first, before any subscription exists, and must give `expect.app_trial` (or `expect.trialing`); then the subscription starts with no Stripe trial and the rest is played as usual.
+
+Known limits: the Checkout page itself is not played (the subscription is created through the API), and the end of an app-held trial runs on the app's clock, which the Stripe test clock does not move: test access after the last trial day in the app (a trial end date in the past on a test account).
+
 ```bash
 node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" billing
 ```
@@ -106,7 +126,7 @@ All of these exist before launch, in the product's voice and look, with a text v
 - Name the activation event with the user: the first time someone gets what the product promises ("first invoice sent", "first collage saved"). Record it in `.quality/project.json` (`success_metric` or a note) and emit it in the code, with sign-up and first payment, so the funnel can be read. Billing events are recorded on the server.
 - A fresh account never lands on a blank screen: an empty state with one action, or sample data it can delete.
 - No forced tour. If the first screen needs a tour, the screen is the problem (see the `design-screens` skill).
-- Declare a flow that starts from a fresh account and ends on the activation event; `sw flows` plays it on phone and desktop.
+- Declare a flow that starts from a fresh account and ends on the activation event; `sw flows` plays it on phone and desktop. Sign up with `${unique}` in the address (`test+${unique}@example.com`), so that each run creates its own account.
 - Do not quote conversion or activation benchmarks: the published figures contradict each other. Measure the product's own funnel.
 
 ## 6 to 10. Account, leaving, support, public pages

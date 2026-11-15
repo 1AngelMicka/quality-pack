@@ -1,8 +1,8 @@
 {
  "stack": "node-api",
  "label": {
-  "fr": "API Node (Fastify ou Express, Prisma, PostgreSQL, Redis, Socket.io)",
-  "en": "Node API (Fastify or Express, Prisma, PostgreSQL, Redis, Socket.io)"
+  "fr": "API Node (Fastify ou Express, PostgreSQL avec Prisma ou pg, Redis et Socket.io si utilisés)",
+  "en": "Node API (Fastify or Express, PostgreSQL with Prisma or pg, Redis and Socket.io when used)"
  },
  "detect": {
   "package_json_deps_any": [
@@ -35,11 +35,11 @@
   },
   "license_check": {
    "run": "npx --yes license-checker-rseidelsohn --summary --failOn 'GPL;AGPL'",
-   "pass_if": "exit code 0"
+   "pass_if": "exit code 0. If npx --yes is not allowed, install it once as a dev dependency ({pm} add -D license-checker-rseidelsohn) and run it without --yes"
   },
   "load_test": {
-   "run": "npx --yes autocannon -c 100 -d 30 {url}/health",
-   "pass_if": "0 errors; then repeat on the 3 busiest routes"
+   "run": "npx --yes autocannon -c 100 -d 30 {api_url}/health",
+   "pass_if": "0 errors; then repeat on the 3 busiest routes. The address is project.json › api_url (the API's own address, e.g. http://localhost:3001), or the app URL when the API is served there. If npx --yes is not allowed, install the tool once as a dev dependency ({pm} add -D autocannon) and run it without --yes"
   }
  },
  "rules": [
@@ -52,24 +52,32 @@
    "en": "Security plugins: @fastify/helmet, @fastify/rate-limit, @fastify/cors with an explicit origin list (or helmet, express-rate-limit, cors)."
   },
   {
-   "fr": "Socket.io : authentifier à la connexion, valider chaque événement reçu, limiter le débit par socket, adaptateur Redis dès qu'il y a plus d'une instance.",
-   "en": "Socket.io: authenticate on connection, validate every incoming event, rate-limit per socket, Redis adapter as soon as there is more than one instance."
+   "fr": "Si le projet utilise Socket.io : authentifier à la connexion, valider chaque événement reçu, limiter le débit par socket, adaptateur Redis dès qu'il y a plus d'une instance.",
+   "en": "If the project uses Socket.io: authenticate on connection, validate every incoming event, rate-limit per socket, Redis adapter as soon as there is more than one instance."
   },
   {
-   "fr": "Prisma : migrations avec prisma migrate, jamais db push en production ; $queryRaw uniquement avec paramètres ; prisma.$transaction pour les écritures liées.",
-   "en": "Prisma: migrations with prisma migrate, never db push in production; $queryRaw only with parameters; prisma.$transaction for related writes."
+   "fr": "Si le projet utilise Prisma : migrations avec prisma migrate, jamais db push en production ; $queryRaw uniquement avec paramètres ; prisma.$transaction pour les écritures liées.",
+   "en": "If the project uses Prisma: migrations with prisma migrate, never db push in production; $queryRaw only with parameters; prisma.$transaction for related writes."
   },
   {
-   "fr": "Redis : mot de passe, liaison locale, clés avec expiration pour les données temporaires.",
-   "en": "Redis: password, local binding, keys with expiry for temporary data."
+   "fr": "Si le projet utilise le pilote pg : requêtes paramétrées seulement ($1, $2), jamais de SQL construit par concaténation ; migrations SQL versionnées appliquées par un seul outil ; un seul Pool par processus, fermé à l'arrêt.",
+   "en": "If the project uses the pg driver: parameterised queries only ($1, $2), never SQL built by concatenation; versioned SQL migrations applied by one tool; one Pool per process, closed on shutdown."
+  },
+  {
+   "fr": "Données de plusieurs clients dans les mêmes tables : règles par ligne de PostgreSQL (RLS activée et forcée), l'application connectée avec un rôle sans BYPASSRLS ni propriété des tables, le client posé par transaction avec set_config('app.org_id', $1, true) dans une seule fonction (withOrg) que toutes les routes utilisent. Exemples Prisma et pg : references/row-level-security.md.",
+   "en": "Several customers in the same tables: PostgreSQL row-level security (enabled and forced), the app connected as a role that neither bypasses RLS nor owns the tables, the customer set per transaction with set_config('app.org_id', $1, true) in one function (withOrg) that every route uses. Prisma and pg examples: references/row-level-security.md."
+  },
+  {
+   "fr": "Si le projet utilise Redis : mot de passe, liaison locale, clés avec expiration pour les données temporaires.",
+   "en": "If the project uses Redis: password, local binding, keys with expiry for temporary data."
   },
   {
    "fr": "Logs structurés avec pino, sans données personnelles ; identifiant de requête dans chaque log.",
    "en": "Structured logs with pino, no personal data; request ID in every log line."
   },
   {
-   "fr": "Route /health qui vérifie la base et Redis ; gestion de SIGTERM avec fermeture propre.",
-   "en": "/health route that checks database and Redis; SIGTERM handling with clean shutdown."
+   "fr": "Route /health qui vérifie la base (et Redis s'il est utilisé) ; gestion de SIGTERM avec fermeture propre.",
+   "en": "/health route that checks the database (and Redis when used); SIGTERM handling with clean shutdown."
   }
  ],
  "qp_stack": true,

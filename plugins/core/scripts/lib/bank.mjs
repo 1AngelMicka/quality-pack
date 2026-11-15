@@ -6,8 +6,13 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { summarize } from "./profile.mjs";
 
 export const BANK_DIR = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "bank");
+
+// A site whose description says it was not seen on a screenshot (only a loader, a blocked page, or nothing):
+// what was measured there is not the page described, so it stays out of the measured profile.
+export const notSeen = (site) => /\(not seen (on a screenshot|beyond [^)]*)\)/i.test(site?.why || "");
 
 export function loadBank(dir = BANK_DIR) {
   const types = {};
@@ -17,7 +22,13 @@ export function loadBank(dir = BANK_DIR) {
     const id = t.id || f.replace(/\.json$/, "");
     const pf = join(dir, "profiles", `${id}.json`);
     const measured = existsSync(pf) ? JSON.parse(readFileSync(pf, "utf8")) : null;
-    types[id] = { ...t, id, profile: measured?.summary || null, measured: measured?.measured || null, measured_sites: measured?.sites || [] };
+    const unseen = new Set((t.sites || []).filter(notSeen).map((s) => s.url));
+    const sites = measured?.sites || [];
+    let profile = measured?.summary || null;
+    const excluded = sites.filter((s) => s.ok && unseen.has(s.url)).map((s) => s.url);
+    // Profiles measured before this rule still count those sites: the profile is summarised again without them.
+    if (excluded.length) profile = summarize(sites.filter((s) => s.ok && s.desktop && s.mobile && !unseen.has(s.url)));
+    types[id] = { ...t, id, profile, measured: measured?.measured || null, measured_sites: sites, profile_excludes: excluded };
   }
   return { types };
 }
@@ -48,7 +59,8 @@ export function listBank(bank, type) {
   const t = bank.types[type];
   if (!t) return { errors: [`Unknown site type "${type}". Types: ${Object.keys(bank.types).join(", ")}`] };
   return { id: t.id, label: t.label, expects: t.expects, traits: t.traits || [], sites: t.sites, avoid: t.avoid, sources: t.sources || [],
-    profile: t.profile ? { measured: t.measured, sites: t.profile.n, desktop: t.profile.desktop, mobile: t.profile.mobile } : null,
+    profile: t.profile ? { measured: t.measured, sites: t.profile.n, desktop: t.profile.desktop, mobile: t.profile.mobile,
+      ...(t.profile_excludes?.length ? { left_out: t.profile_excludes, left_out_why: "described as not seen on a screenshot: what was measured there is not the page described" } : {}) } : null,
     note: "Open two or three of these sites before designing: the descriptions say what to look at. They are references to learn from, never to copy." };
 }
 
@@ -75,7 +87,8 @@ export async function measureBank(type, { cwd, limit = 0, dir = BANK_DIR, parall
     const urls = t.sites.map((s) => s.url).slice(0, limit || undefined);
     const r = await inParallel(urls, parallel, (slice) => profileAt(slice, { cwd }));
     if (!r.available) return r;
-    const ok = r.pages.filter((p) => !p.error && p.desktop && p.mobile);
+    const unseen = new Set(t.sites.filter(notSeen).map((s) => s.url));
+    const ok = r.pages.filter((p) => !p.error && p.desktop && p.mobile && !unseen.has(p.url));
     const file = join(dir, "profiles", `${id}.json`);
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(file, JSON.stringify({ type: id, version: PROFILE_VERSION, measured: new Date().toISOString().slice(0, 10), summary: summarize(ok),

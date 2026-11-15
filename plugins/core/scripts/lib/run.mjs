@@ -8,7 +8,8 @@ import { join, relative } from "node:path";
 
 const SIGNAL = /\b(error|errors|fail|failed|failing|failure|exception|traceback|panic|fatal|warn|warning|vulnerab\w*|critical|high|denied|refused|timeout|cannot|not found|undefined|unexpected)\b|✗|✖|×|❌|\bFAIL\b|\bERR!/i;
 const NOISE = /^\s*$|node_modules\/|^\s+at\s.+\(node:internal|^\s*\^+\s*$/;
-export const estimateTokens = (text) => Math.ceil((text || "").length / 4);
+export const SHORT_OUTPUT = 20;
+export const estimateTokens =(text) => Math.ceil((text || "").length / 4);
 
 export function summarize(output, { maxSignal = 40, tail = 15 } = {}) {
   const lines = output.split(/\r?\n/);
@@ -48,11 +49,16 @@ export function runCommand(label, command, { cwd, logDir, timeoutMs = 15 * 60 * 
   mkdirSync(logDir, { recursive: true });
   const logFile = join(logDir, `${safe}.log`);
   writeFileSync(logFile, `$ ${command}\n# exit ${r.status ?? "killed"} after ${Math.round((Date.now() - started) / 1000)} s\n\n${output}`);
-  const summary = summarize(output);
+  // A short output costs less as it is than as a summary: under SHORT_OUTPUT lines it is returned whole.
+  const kept = output.replace(/\s+$/, "");
+  const lines = kept ? kept.split(/\r?\n/) : [];
+  const summary = lines.length <= SHORT_OUTPUT ? { total_lines: lines.length, output: lines.map((l) => (l.length > 300 ? l.slice(0, 300) + "…" : l)) } : summarize(output);
   const result = {
     label, command, exit_code: r.status, timed_out: r.error?.code === "ETIMEDOUT" || r.signal === "SIGTERM",
     duration_s: Math.round((Date.now() - started) / 100) / 10, log: relative(cwd, logFile), ...summary,
   };
+  // Callers in the same process may still read signal_lines; it is left out of the printed JSON (the output is whole).
+  if (result.output) Object.defineProperty(result, "signal_lines", { value: result.output, enumerable: false });
   const returned = estimateTokens(JSON.stringify(result));
   result.tokens = { full_output: estimateTokens(output), returned, saved: Math.max(0, estimateTokens(output) - returned) };
   if (record) recordSavings(join(logDir, ".."), result.tokens.full_output, result.tokens.returned);

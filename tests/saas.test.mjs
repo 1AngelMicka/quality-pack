@@ -55,7 +55,8 @@ test("craft: site icon, share image and 404 page are checked on a served site", 
   try {
     const dir = mkdtempSync(join(tmpdir(), "qp-craft-"));
     const a = (await run(dir, ["craft", `http://localhost:${soft.address().port}/`, "--mode", "persuade"])).out.pages[0];
-    assert.ok(a.summary.must_failed.includes("not_found_status"));
+    // On localhost a soft 404 is "to check in preproduction" (a development server answers 200 to any address).
+    assert.ok(a.summary.to_check_in_preproduction.includes("not_found_status") && !a.summary.must_failed.includes("not_found_status"));
     assert.ok(a.summary.must_failed.includes("favicon"));
     assert.ok(a.summary.must_failed.includes("share_image"));
     const b = (await run(dir, ["craft", `http://localhost:${good.address().port}/`, "--mode", "persuade"])).out.pages[0];

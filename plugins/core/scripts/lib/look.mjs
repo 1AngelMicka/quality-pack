@@ -2,7 +2,7 @@
 // "AI-made" look, the type system actually used, line length and line height of prose, small targets.
 // Signals are weighted and read together: one signal alone never fails a page. In "operate" mode
 // (app screens, dashboards, forms), a conventional layout is not a defect: only quality signals count.
-import { loadBrowserTools, launch } from "./browser.mjs";
+import { loadBrowserTools, launch, measureContext, accountSession, watchDenied, reachOf } from "./browser.mjs";
 
 export const LOOK_VERSION = "2026-11";
 export const MODES = ["persuade", "operate", "read"];
@@ -56,14 +56,50 @@ function measurePage() {
   }
   const sections = [...document.querySelectorAll("section, main > div")].filter(visible);
   const animated = all.filter((e) => getComputedStyle(e).animationName !== "none").length;
-  const prose = [...document.querySelectorAll("p, li")].filter((e) => visible(e) && e.textContent.trim().length > 120);
+  // Prose: a p or li that holds text only. One that contains blocks (a whole layout in a list item) is not a
+  // paragraph. Lines are counted from the boxes of the text itself, not from the height of the element.
+  const BLOCKISH = /^(block|flex|grid|table|list-item|flow-root)$/;
+  const prose = [...document.querySelectorAll("p, li")].filter((e) => visible(e) && e.textContent.trim().length > 120
+    && ![...e.querySelectorAll("*")].some((c) => BLOCKISH.test(getComputedStyle(c).display) || /^(IMG|SVG|VIDEO|CANVAS|PICTURE)$/i.test(c.tagName)));
+  const textLines = (e, lh) => {
+    const range = document.createRange();
+    range.selectNodeContents(e);
+    const tops = [...range.getClientRects()].filter((r) => r.width >= 1 && r.height >= 1).map((r) => r.top).sort((a, b) => a - b);
+    let n = 0, last = -Infinity;
+    for (const t of tops) if (t > last + lh * 0.5) { n++; last = t; }
+    return Math.max(1, n);
+  };
   const longLines = [], tightLines = [];
   for (const p of prose) {
     const s = getComputedStyle(p), fs = parseFloat(s.fontSize), lh = s.lineHeight === "normal" ? fs * 1.2 : parseFloat(s.lineHeight);
-    const lines = Math.max(1, Math.round(p.getBoundingClientRect().height / lh));
-    const perLine = Math.round(p.textContent.trim().length / lines);
-    if (lines > 1 && perLine > 80) longLines.push(perLine);
+    const lines = textLines(p, lh);
+    const perLine = Math.round(p.textContent.replace(/\s+/g, " ").trim().length / lines);
+    if (lines > 1 && perLine > 80) longLines.push({ perLine, sample: `${p.tagName.toLowerCase()}${typeof p.className === "string" && p.className.trim() ? "." + p.className.trim().split(/\s+/)[0] : ""} "${p.textContent.trim().replace(/\s+/g, " ").slice(0, 40)}" ~${perLine} characters per line over ${lines} lines` });
     if (lh / fs < 1.45) tightLines.push(Math.round((lh / fs) * 100) / 100);
+  }
+  // Point of view: what a page with no design decision looks like (one family and no display face, a flat type
+  // scale, nothing to see in the first screen, a single hue). Not a generic signal: it is the absence of any.
+  const sizeChars = {};
+  for (const e of textEls) { const k = Math.round(parseFloat(getComputedStyle(e).fontSize)); sizeChars[k] = (sizeChars[k] || 0) + ownText(e).length; }
+  const bodySize = Number(Object.entries(sizeChars).sort((a, b) => b[1] - a[1])[0]?.[0]) || 16;
+  const maxSize = Math.max(0, ...textEls.filter((e) => ownText(e).length >= 2).map((e) => parseFloat(getComputedStyle(e).fontSize)));
+  const firstOf = (e) => getComputedStyle(e).fontFamily.split(",")[0].replace(/["']/g, "").trim().toLowerCase();
+  const headingFamilies = [...new Set(headings.map(firstOf))];
+  const firstScreenVisuals = all.filter((e) => {
+    const r = e.getBoundingClientRect();
+    if (r.top >= innerHeight || r.bottom <= 0 || r.width * r.height < vw * innerHeight * 0.02) return false;
+    return /^(IMG|PICTURE|VIDEO|CANVAS|IFRAME|svg)$/.test(e.tagName) || /url\(/.test(getComputedStyle(e).backgroundImage);
+  }).length;
+  const hueSet = new Set();
+  for (const e of all) {
+    const s = getComputedStyle(e);
+    for (const c of [s.color, s.backgroundColor, parseFloat(s.borderTopWidth) > 0 ? s.borderTopColor : null, ...(s.backgroundImage.match(/rgba?\([^)]*\)/g) || [])]) {
+      if (!c) continue;
+      const v = rgb(c);
+      if (v.length > 3 && v[3] < 0.3) continue;
+      const x = hsl(v);
+      if (x.s > 0.25 && x.l > 0.12 && x.l < 0.9) hueSet.add(Math.round(x.h / 30) % 12);
+    }
   }
   const interactive = all.filter((e) => e.matches("a[href], button, input:not([type=hidden]), select, textarea, [role=button], [role=tab], [role=checkbox], [role=switch]"));
   const inProse = (e) => e.tagName === "A" && e.closest("p, li") && !e.closest("nav");
@@ -118,7 +154,9 @@ function measurePage() {
     side_stripes: stripes, side_stripe_hues: stripeHues.size, nested_cards: nestedCards, icon_tiles: iconTiles, numbered_labels: numberedLabels, pulsing_dots: pulsingDots,
     italic_accent_h1: italicAccent, page_bg: pageBg, words: wordCount, em_dashes: emDashes, lang: (document.documentElement.lang || "").slice(0, 2).toLowerCase(),
     eyebrows, badge_before_h1: badgeBeforeH1, card_triplets: cardTriplets, sections: sections.length, animated,
-    prose_blocks: prose.length, long_lines: longLines.length, long_line_max: longLines.length ? Math.max(...longLines) : 0, tight_line_height: tightLines.length,
+    prose_blocks: prose.length, long_lines: longLines.length, long_line_max: longLines.length ? Math.max(...longLines.map((l) => l.perLine)) : 0,
+    long_line_samples: longLines.sort((a, b) => b.perLine - a.perLine).slice(0, 5).map((l) => l.sample), tight_line_height: tightLines.length,
+    body_size: bodySize, max_text_size: maxSize, heading_families: headingFamilies, first_screen_visuals: firstScreenVisuals, hues: hueSet.size,
     targets_under_24: small(24).slice(0, 8).map((e) => `${e.tagName.toLowerCase()} "${(e.textContent || e.getAttribute("aria-label") || "").trim().slice(0, 24)}" ${Math.round(e.getBoundingClientRect().width)}x${Math.round(e.getBoundingClientRect().height)}`),
     targets_under_44: small(44).length, interactive: interactive.length,
     visible_text: headings.map((h) => h.textContent).concat([...document.querySelectorAll("button, p")].slice(0, 200).map((e) => e.textContent)).join("\n").slice(0, 20000) };
@@ -127,7 +165,7 @@ function measurePage() {
 const GENERIC_FONTS = ["inter", "geist", "roboto", "open sans", "lato", "arial", "helvetica", "system-ui", "-apple-system", "segoe ui", "poppins", "montserrat"];
 
 // Turn raw measures into weighted signals. Thresholds are house settings (no published validation), dated LOOK_VERSION.
-export function scoreLook(m, { mode = "persuade", slopWords = [] } = {}) {
+export function scoreLook(m, { mode = "persuade", slopWords = [], motion = null } = {}) {
   const desk = m.desktop || m.mobile, mob = m.mobile || m.desktop;
   const sig = [];
   const add = (id, kind, weight, evidence) => sig.push({ id, kind, weight, evidence });
@@ -149,7 +187,8 @@ export function scoreLook(m, { mode = "persuade", slopWords = [] } = {}) {
   if (desk.icon_tiles >= 3) add("LOOK-ICONTILES", "generic", 1, `${desk.icon_tiles} headings topped by a rounded icon tile`);
   if (desk.numbered_labels >= 3) add("LOOK-NUMBERED", "generic", 1, `${desk.numbered_labels} "01 / 02 / 03" labels (number only real steps)`);
   if (desk.pulsing_dots) add("LOOK-PULSE", "generic", 1, `${desk.pulsing_dots} small element(s) pulsing forever (a dot must show a real state)`);
-  if (desk.italic_accent_h1) add("LOOK-ITALIC", "generic", 1, "serif headline with one word in italics");
+  // Alone, an italic word in a serif headline is a legitimate editorial choice: it weighs only next to other signals.
+  if (desk.italic_accent_h1) add("LOOK-ITALIC", "generic", 1, "serif headline with one word in italics (counts only together with other generic signals: alone, it is a legitimate choice)");
   const bg = desk.page_bg;
   if (bg && p && bg.l > 0.9 && bg.s > 0.15 && bg.h >= 25 && bg.h <= 60 && p.h >= 5 && p.h <= 30 && p.s > 0.4) add("LOOK-PALETTE", "generic", 1, "cream page with a terracotta accent");
   else if (bg && p && bg.l < 0.1 && p.h >= 70 && p.h <= 150 && p.s > 0.7 && p.l > 0.45) add("LOOK-PALETTE", "generic", 1, "near-black page with an acid-green accent");
@@ -157,10 +196,28 @@ export function scoreLook(m, { mode = "persuade", slopWords = [] } = {}) {
   const dashRate = desk.words >= 150 ? (desk.em_dashes / desk.words) * 1000 : 0;
   if (dashRate > (desk.lang === "fr" ? 15 : 8)) add("LOOK-EMDASH", "quality", 1, `${desk.em_dashes} em dashes in ${desk.words} words`);
   if (desk.emoji_in_ui.length) add("LOOK-EMOJI", "quality", 1, `emoji used as icons: ${desk.emoji_in_ui.slice(0, 3).join(", ")}`);
-  if (desk.sections >= 4 && desk.animated >= desk.sections) add("LOOK-ANIMATE-ALL", "quality", 1, `${desk.animated} animated elements for ${desk.sections} sections`);
+  if (desk.sections >= 4 && desk.animated >= desk.sections) {
+    if (motion === "rich") add("LOOK-ANIMATE-ALL", "info", 0, `${desk.animated} animated elements for ${desk.sections} sections: rich motion declared in .quality/project.json › motion, not counted (reduced motion and content without animation are still checked)`);
+    else add("LOOK-ANIMATE-ALL", "quality", 1, `${desk.animated} animated elements for ${desk.sections} sections`);
+  }
   const words = slopWords.map((w) => new RegExp(w, "i")).filter((re) => re.test(desk.visible_text)).map((re) => desk.visible_text.match(re)[0]);
   if (words.length) add("LOOK-COPY", "quality", Math.min(2, words.length), `hollow wording: ${[...new Set(words)].slice(0, 5).join(", ")}`);
-  const counted = sig.filter((s) => mode === "persuade" || s.kind === "quality");
+  // No point of view: three of these four signs together. Reported beside the tier, never added to it: a page
+  // with no design decision has no generic signal either, which is why a "low" tier does not mean "good".
+  const SYSTEM_FONTS = ["system-ui", "-apple-system", "blinkmacsystemfont", "segoe ui", "roboto", "helvetica", "helvetica neue", "arial", "sans-serif", "serif", "times new roman", "times", "ui-sans-serif", "ui-serif", "georgia", "verdana", "tahoma"];
+  const fams = desk.families.filter((f) => f.share > 0.02);
+  const plain = [];
+  if (desk.body_size != null) {
+    if (top && (SYSTEM_FONTS.includes(top.name) || (fams.length <= 1 && (desk.heading_families || []).every((f) => f === top.name)))) plain.push(SYSTEM_FONTS.includes(top.name) ? `system or default font (${top.name})` : `one family (${top.name}) and no display face for headings`);
+    const ratio = desk.body_size ? desk.max_text_size / desk.body_size : 0;
+    if (ratio < 2.5) plain.push(`largest text ${Math.round(desk.max_text_size)}px for ${desk.body_size}px body text (ratio ${ratio.toFixed(1)}, under 2.5)`);
+    if (!desk.first_screen_visuals) plain.push("no image, illustration or product view in the first screen");
+    if (desk.hues <= 1) plain.push(desk.hues ? "a single hue" : "no colour at all");
+  }
+  const pointOfView = desk.body_size == null ? null : plain.length >= 3 ? "none" : plain.length === 2 ? "weak" : "present";
+  if (pointOfView === "none") add("LOOK-PLAIN", "bland", 0, `no visual point of view: ${plain.join("; ")}`);
+  const counted0 = sig.filter((s) => s.weight > 0 && (mode === "persuade" || s.kind === "quality"));
+  const counted = counted0.filter((s) => s.id !== "LOOK-ITALIC" || counted0.some((o) => o.id !== "LOOK-ITALIC"));
   const points = counted.reduce((t, s) => t + s.weight, 0);
   const tier = points >= 4 ? "strong" : points >= 2 ? "some" : "low";
   // Execution checks that hold in every mode.
@@ -168,7 +225,8 @@ export function scoreLook(m, { mode = "persuade", slopWords = [] } = {}) {
     font_sizes: { value: desk.font_sizes.length, sizes: desk.font_sizes, ok: desk.font_sizes.length <= 8, rule: "8 font sizes or fewer per page (house setting)" },
     font_families: { value: desk.families.filter((f) => f.share > 0.02).length, ok: desk.families.filter((f) => f.share > 0.02).length <= 2, rule: "2 families or fewer, plus monospace if needed" },
     radii: { value: desk.radii.length, ok: desk.radii.length <= 5, rule: "5 distinct radii or fewer (house setting)" },
-    line_length: { value: desk.long_line_max, ok: desk.long_lines === 0, rule: "prose lines of 80 characters or fewer (WCAG 1.4.8)" },
+    line_length: { value: desk.long_line_max, ok: desk.long_lines === 0, ...(desk.long_line_samples?.length ? { samples: desk.long_line_samples } : {}),
+      rule: "prose lines of 80 characters or fewer (WCAG 1.4.8); counted on the text's own lines, paragraphs and list items holding blocks are not prose" },
     line_height: { value: desk.tight_line_height, ok: desk.tight_line_height === 0, rule: "prose line height at least 1.5 (WCAG 1.4.8 / 1.4.12)" },
     targets_24: { value: mob.targets_under_24.length, samples: mob.targets_under_24, ok: mob.targets_under_24.length === 0, rule: "no target under 24×24 px on phone (WCAG 2.5.8)" },
     targets_44: { value: mob.targets_under_44, ok: mob.interactive === 0 || mob.targets_under_44 / mob.interactive <= 0.2, rule: "primary controls 44×44 px on phone; at most 20 % of controls under 44 px (house setting)" },
@@ -190,8 +248,10 @@ export function scoreLook(m, { mode = "persuade", slopWords = [] } = {}) {
       rule: "with prefers-reduced-motion: reduce, most animations stop or become fades (house setting: at least half of them)" };
   }
   return { version: LOOK_VERSION, mode, tier, points, signals: sig, counted: counted.map((s) => s.id), checks,
-    reading: mode === "persuade" ? "0–1 point: low, 2–3: some generic signals, 4+: strong. One signal alone is never a defect."
-      : "Operate and read modes count quality signals only: a conventional layout is right for app screens (Jakob's law)." };
+    point_of_view: pointOfView, ...(plain.length ? { point_of_view_signs: plain } : {}),
+    tier_meaning: "The tier counts signs of a generic, template look. \"low\" means few such signs, not a good design: a page with no design decision at all is also \"low\". Read point_of_view and look at the screenshots.",
+    reading: mode === "persuade" ? "0–1 point: low (few generic signals, which does not make the page good), 2–3: some generic signals, 4+: strong. One signal alone is never a defect."
+      : "Operate and read modes count quality signals only: a conventional layout is right for app screens (Jakob's law). A low tier is not a verdict on quality." };
 }
 
 // Injected before any page script: records wheel and touch listeners that are not passive on the page root
@@ -246,25 +306,48 @@ export function compareInventory(before = [], after = []) {
   return { missing: before.filter((x) => !now.has(x)), added: after.filter((x) => !before.includes(x)).length, before: before.length, after: after.length };
 }
 
-export async function lookAt(urls, { cwd, mode = "persuade", slopWords = [], baseline = null } = {}) {
+// .quality/project.json › motion: "rich" for the whole site, or per path ({ "/": "rich", "/app/*": "calm", "*": "calm" }):
+// exact path first, then the longest "prefix/*" key, then "*".
+export function motionFor(motion, url) {
+  if (!motion) return null;
+  if (typeof motion === "string") return motion;
+  if (typeof motion !== "object") return null;
+  let path = "/";
+  try { path = new URL(url).pathname.replace(/\/+$/, "") || "/"; } catch { /* keep / */ }
+  const norm = (k) => k.replace(/\/+$/, "") || "/";
+  const exact = Object.keys(motion).find((k) => !k.endsWith("*") && norm(k) === path);
+  if (exact) return motion[exact];
+  const prefix = Object.keys(motion).filter((k) => k.endsWith("/*") && (path + "/").startsWith(k.slice(0, -1))).sort((a, b) => b.length - a.length)[0];
+  return prefix ? motion[prefix] : motion["*"] ?? null;
+}
+
+export async function lookAt(urls, { cwd, mode = "persuade", slopWords = [], baseline = null, before = [], as = null, project = null } = {}) {
   const tools = await loadBrowserTools(cwd);
   if (!tools) return { available: false, hint: "Playwright is not available. Run `node <sw.mjs> browser-setup` once (pack cache, not the project)." };
   const browser = await launch(tools.chromium);
   const pages = [];
   try {
+    let session = null;
+    if (as) { try { session = await accountSession(browser, project, as, { root: cwd, base: new URL(urls[0]).origin }); } catch (e) { return { available: true, errors: [String(e.message)] }; } }
+    const ctxFor = (options) => measureContext(browser, options, { session, before });
     for (const url of urls) {
       const m = {};
+      const denied = [];
+      let final = null;
       for (const [k, vp] of [["mobile", { width: 390, height: 844, isMobile: true, hasTouch: true }], ["desktop", { width: 1440, height: 900 }]]) {
-        const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, isMobile: !!vp.isMobile, hasTouch: !!vp.hasTouch });
+        const ctx = await ctxFor({ viewport: { width: vp.width, height: vp.height }, isMobile: !!vp.isMobile, hasTouch: !!vp.hasTouch });
         const page = await ctx.newPage();
+        watchDenied(page, denied);
         try { await page.goto(url, { waitUntil: "networkidle", timeout: 30000 }); } catch (e) { if (!/Timeout/i.test(e.message)) { m.error = String(e.message).slice(0, 200); await ctx.close(); break; } }
         m[k] = await page.evaluate(measurePage);
+        if (k === "desktop" || !final) final = page.url();
         await ctx.close();
       }
       if (m.error) { pages.push({ url, error: m.error }); continue; }
+      const reach = reachOf(url, final, denied);
       // The same page with reduced motion requested: animations should mostly stop, and the whole content must
       // be readable once scrolled through. Scroll listeners are recorded from the start to spot scroll hijacking.
-      const rctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
+      const rctx = await ctxFor({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
       await rctx.addInitScript(SCROLL_PROBE);
       const rpage = await rctx.newPage();
       try { await rpage.goto(url, { waitUntil: "networkidle", timeout: 30000 }); } catch { /* measured as loaded */ }
@@ -272,13 +355,14 @@ export async function lookAt(urls, { cwd, mode = "persuade", slopWords = [], bas
       m.scroll = await scrollThrough(rpage).catch(() => null);
       await rctx.close();
       if (reduced != null) m.reduced_motion = { normal: m.desktop.animated, reduced };
-      const scored = scoreLook(m, { mode, slopWords });
+      const scored = scoreLook(m, { mode, slopWords, motion: motionFor(project?.motion, url) });
       for (const k of ["mobile", "desktop"]) delete m[k].visible_text;
-      const page = { url, ...scored, measures: m };
+      const page = { url, ...(reach.warnings.length ? { warnings: reach.warnings } : {}), reach, ...scored, measures: m };
+      if (!reach.same_screen) page.tier = `not measured: redirected (${scored.tier} on ${reach.final})`;
       const base = baseline?.pages?.find((p) => p.url === url) || (baseline?.pages?.length === 1 && urls.length === 1 ? baseline.pages[0] : null);
       if (base?.measures?.desktop?.inventory) page.redesign_guard = compareInventory(base.measures.desktop.inventory, m.desktop.inventory);
       pages.push(page);
     }
   } finally { await browser.close(); }
-  return { available: true, version: LOOK_VERSION, mode, pages };
+  return { available: true, version: LOOK_VERSION, mode, ...(as ? { as } : {}), pages };
 }

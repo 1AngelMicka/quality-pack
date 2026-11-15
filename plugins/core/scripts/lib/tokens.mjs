@@ -108,6 +108,17 @@ const ROLE = (name) => {
   return null;
 };
 
+// A colour made to sit on one other colour: on-X (or on.X) and X-inverse are the text on X. They are paired with
+// X only, X counting as their background, never with the page backgrounds they do not touch.
+export function pairedWith(rel) {
+  const segs = rel.split(".");
+  const last = segs.at(-1).toLowerCase();
+  if (last.startsWith("on-") && last.length > 3) return [...segs.slice(0, -1), segs.at(-1).slice(3)].join(".");
+  if (last.endsWith("-inverse") && last.length > 8) return [...segs.slice(0, -1), segs.at(-1).slice(0, -8)].join(".");
+  if (segs.length >= 2 && segs.at(-2).toLowerCase() === "on") return [...segs.slice(0, -2), segs.at(-1)].join(".");
+  return null;
+}
+
 export function checkTokens(doc) {
   const { tokens, errors } = flatten(doc);
   const warnings = [];
@@ -133,7 +144,21 @@ export function checkTokens(doc) {
     // Primitives (raw palette steps) are not paired: only the colours that carry a role are.
     const inTheme = [...resolved].filter(([n, r]) => r.type === "color" && prefix.every((p, i) => tokens.get(n).path[i] === p)
       && (prefix.length > 0 || (TIERS[tokens.get(n).path[0]] ?? 1) >= 1));
-    const by = (role) => inTheme.filter(([n]) => ROLE(n.split(".").slice(prefix.length).join(".")) === role);
+    const rel = (n) => n.split(".").slice(prefix.length).join(".");
+    const byRel = new Map(inTheme.map(([n, r]) => [rel(n), [n, r]]));
+    const paired = new Set();
+    for (const [fgName, fg] of inTheme) {
+      const base = pairedWith(rel(fgName));
+      if (!base) continue;
+      paired.add(fgName);
+      const target = byRel.get(base);
+      if (!target) { warnings.push(`${fgName}: no colour "${base}" in this theme to pair it with (on-X and X-inverse are checked on X only)`); continue; }
+      const fgc = parseColor(fg.value), bgc = parseColor(target[1].value);
+      if (!fgc || !bgc) continue;
+      const ratio = contrast(fgc, bgc);
+      contrastRows.push({ theme, fg: fgName, bg: target[0], ratio, need: 4.5, ok: ratio >= 4.5, paired: true });
+    }
+    const by = (role) => inTheme.filter(([n]) => !paired.has(n) && ROLE(rel(n)) === role);
     for (const [bgName, bg] of by("bg")) {
       const bgc = parseColor(bg.value);
       for (const [fgName, fg] of [...by("fg"), ...by("line")]) {

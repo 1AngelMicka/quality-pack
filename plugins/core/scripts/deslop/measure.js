@@ -1,6 +1,7 @@
 // Measures the rendered interface (spacing, alignment, signs of generated UI) with no dependency.
 // Evaluated as is in a page, it returns a JSON object: it is the engine of audit.mjs, and it can also be
-// pasted into a browser's JavaScript evaluation tool. To keep a deliberate exception: data-deslop-ignore on the element.
+// pasted into a browser's JavaScript evaluation tool. A deliberate exception: data-sw-intended="<rule>: reason" on the
+// element or an ancestor (listed as intended, with the reason), or data-deslop-ignore to leave an element out entirely.
 // Ported from the deslop-ui skill (same author as the pack).
 (() => {
   const RULES = {
@@ -54,14 +55,55 @@
 
   const found = new Map();
   const seen = new Map();
+  const intended = [];
+  const notChecked = [];
+  // An exception the design makes on purpose, with its reason, on the element or an ancestor:
+  //   data-sw-intended="uneven-inset: cloth binding on the left; control-row-drift: tilted sheet"
+  // "*" names every rule. The report lists it as intended, with the reason, instead of a finding.
+  const intent = (rule, el) => {
+    for (let cur = el; cur && cur.nodeType === 1; cur = cur.parentElement) {
+      const raw = cur.getAttribute('data-sw-intended');
+      if (!raw) continue;
+      for (const part of raw.split(';')) {
+        const i = part.indexOf(':');
+        const rules = (i < 0 ? part : part.slice(0, i)).split(',').map((r) => r.trim()).filter(Boolean);
+        if (rules.includes(rule) || rules.includes('*')) return (i < 0 ? '' : part.slice(i + 1).trim()) || 'no reason given';
+      }
+    }
+    return null;
+  };
   const add = (rule, el, detail) => {
     const owner = el || document;
     if (!seen.has(owner)) seen.set(owner, new Set());
     const key = `${rule}|${detail}`;
     if (seen.get(owner).has(key)) return;
     seen.get(owner).add(key);
+    const reason = el ? intent(rule, el) : null;
+    if (reason) { intended.push({ rule, where: describe(el), detail, reason }); return; }
     if (!found.has(rule)) found.set(rule, []);
     found.get(rule).push({ where: el ? describe(el) : 'page', detail });
+  };
+  // Rotated, skewed or 3D-transformed (the element or an ancestor): getBoundingClientRect gives the box around the
+  // transformed shape, so heights, gaps and edges no longer describe the layout. Alignment rules skip these groups
+  // and say so (notChecked) rather than report a tilt chosen on purpose as a drift.
+  const tiltCache = new Map();
+  const tilted = (el) => {
+    if (!el || el === document.body || el === document.documentElement) return false;
+    if (tiltCache.has(el)) return tiltCache.get(el);
+    const s = css(el);
+    const m = s.transform && s.transform !== 'none' ? s.transform.match(/^matrix(3d)?\(([^)]+)\)/) : null;
+    let own = !!s.rotate && s.rotate !== 'none' && !/^0(deg|rad|turn)?$/.test(s.rotate.trim());
+    if (m) {
+      const v = m[2].split(',').map(Number);
+      // 2D: b or c not zero. 3D: any rotation or perspective term (a translateZ alone is not a tilt).
+      own = own || (m[1] ? [1, 2, 3, 4, 6, 7, 8, 9, 11].some((i) => Math.abs(v[i]) > 1e-3) : Math.abs(v[1]) > 1e-3 || Math.abs(v[2]) > 1e-3);
+    }
+    const result = own || tilted(el.parentElement);
+    tiltCache.set(el, result);
+    return result;
+  };
+  const skipTilted = (rule, el, detail) => {
+    if (notChecked.length < 20 && !notChecked.some((n) => n.rule === rule && n.where === describe(el))) notChecked.push({ rule, where: describe(el), detail: `${detail} (rotated or 3D-transformed: boxes measured after the transform, not checked)` });
   };
 
   const px = (v) => parseFloat(v) || 0;
@@ -256,6 +298,14 @@
   }
   for (const el of elements) {
     if (!el.matches('h1,h2,h3,h4,h5,h6,[role=heading],label,legend') || !inFlow(el)) continue;
+    // A label that holds its own control, or the label of a checkbox or radio, ends the group before it: it
+    // introduces nothing below (often the save button, rightly further away).
+    if (el.tagName === 'LABEL') {
+      const control = el.control || el.querySelector('input,select,textarea');
+      if (el.querySelector('input,select,textarea,button,[role=checkbox],[role=radio],[role=switch]') || (control && /^(checkbox|radio)$/.test(control.type))) continue;
+      const sibling = el.previousElementSibling;
+      if (sibling && sibling.matches('input[type=checkbox],input[type=radio],[role=checkbox],[role=radio],[role=switch]')) continue;
+    }
     let prev = neighbour(el, -1);
     const next = neighbour(el, 1);
     if (!prev || !next) continue;
@@ -297,7 +347,11 @@
     const groups = clusters(gaps);
     const spread = Math.max(...gaps) - Math.min(...gaps);
     const nearMiss = groups.length === 2 && groups[1] - groups[0] <= 6 && groups[1] / Math.max(1, groups[0]) < 1.5;
-    if ((groups.length >= 3 && spread >= 4) || nearMiss) add('uneven-siblings', parent, `gaps ${gaps.join(', ')}px`);
+    const tilt = kids.some(tilted);
+    if ((groups.length >= 3 && spread >= 4) || nearMiss) {
+      if (tilt) skipTilted('uneven-siblings', parent, `gaps ${gaps.join(', ')}px`);
+      else add('uneven-siblings', parent, `gaps ${gaps.join(', ')}px`);
+    }
 
     if (axis === 'y' && !landmark) {
       const firsts = kids.map((k) => firstTextLeft(k));
@@ -306,7 +360,11 @@
       const centered = Math.max(...centers) - Math.min(...centers) <= 1.5;
       if (lefts.every((v) => v !== null) && !centered) {
         const drift = Math.max(...lefts) - Math.min(...lefts);
-        if (drift > 1.5 && drift <= 10) add('left-edge-drift', parent, `text starts at ${lefts.map(round).join(', ')}px (drift ${round(drift)}px)`);
+        const detail = `text starts at ${lefts.map(round).join(', ')}px (drift ${round(drift)}px)`;
+        if (drift > 1.5 && drift <= 10) {
+          if (tilt || firsts.some((f) => tilted(f.node.parentElement))) skipTilted('left-edge-drift', parent, detail);
+          else add('left-edge-drift', parent, detail);
+        }
       }
     }
   }
@@ -429,7 +487,11 @@
       if (a.bottom <= b.top || b.bottom <= a.top) continue;
       const dh = Math.abs(a.height - b.height);
       const dc = Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2);
-      if ((dh > 0.5 && dh <= 12) || dc > 1.5) add('control-row-drift', parent, `heights ${round(a.height)} and ${round(b.height)}px, axis offset ${round(dc)}px`);
+      if ((dh > 0.5 && dh <= 12) || dc > 1.5) {
+        const detail = `heights ${round(a.height)} and ${round(b.height)}px, axis offset ${round(dc)}px`;
+        if (tilted(controls[i - 1]) || tilted(controls[i])) skipTilted('control-row-drift', parent, detail);
+        else add('control-row-drift', parent, detail);
+      }
     }
   }
 
@@ -581,6 +643,8 @@
     truncated: usable.size >= MAX_ELEMENTS,
     counts,
     findings,
+    intended,
+    notChecked,
     stats: {
       spacing: { distinct: spacing.size, offScaleShare: total ? round(offCount / total * 100) : 0, top: top(spacing, 10) },
       fontSizes: top(fontSizes, 10),

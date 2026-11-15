@@ -18,12 +18,18 @@ const env = (v) => typeof v !== "string" ? v : v.replace(/\$\{env:([A-Z0-9_]+)\}
   return process.env[n];
 });
 
-// Check the access block of a project file. Returns normalised accounts and checks, and readable errors; never throws.
+// Check the access block of a project file. Returns normalised accounts and checks, readable errors and warnings;
+// never throws. An empty checks list is a warning: a new project declares its accounts before its first route.
+//
+// A check has one of two scopes:
+//  - "owner" (the default): the resource belongs to its owner; every account in denied_to must be refused.
+//  - "self": a route that answers "my data" to everyone (/api/me, /api/summary). Nobody is refused: each other
+//    account gets its own answer, which must contain none of the owner's markers (texts seeded on purpose, stable).
 export function validateAccess(project) {
-  const errors = [];
+  const errors = [], warnings = [];
   const a = project?.access;
-  if (a == null) return { accounts: {}, checks: [], errors };
-  if (typeof a !== "object" || Array.isArray(a)) return { accounts: {}, checks: [], errors: ["access must be an object with accounts and checks"] };
+  if (a == null) return { accounts: {}, checks: [], errors, warnings };
+  if (typeof a !== "object" || Array.isArray(a)) return { accounts: {}, checks: [], errors: ["access must be an object with accounts and checks"], warnings };
   const accounts = a.accounts && typeof a.accounts === "object" ? a.accounts : {};
   const names = Object.keys(accounts);
   if (names.length < 2) errors.push("access.accounts: at least two accounts are needed (one that owns the data, one that must not see it)");
@@ -36,7 +42,8 @@ export function validateAccess(project) {
   }
   const checks = [];
   const ids = new Set();
-  if (!Array.isArray(a.checks) || !a.checks.length) errors.push("access.checks: must be a non-empty list");
+  if (a.checks != null && !Array.isArray(a.checks)) errors.push("access.checks: must be a list");
+  else if (!a.checks?.length) warnings.push("access.checks: no check yet. Add one per kind of resource with the first route that has an owner; `sw access` has nothing to play until then");
   else a.checks.forEach((c, i) => {
     const where = `access.checks[${i}]${c?.id ? ` (${c.id})` : ""}`;
     if (!c || typeof c !== "object") { errors.push(`${where}: must be an object`); return; }
@@ -44,19 +51,30 @@ export function validateAccess(project) {
     if (ids.has(id)) errors.push(`${where}: duplicate id`);
     ids.add(id);
     const method = String(c.method || "GET").toUpperCase();
+    const scope = c.scope ?? "owner";
     if (!METHODS.includes(method)) errors.push(`${where}: unknown method ${c.method}`);
     if (!c.path || typeof c.path !== "string") errors.push(`${where}: path is required (for example /api/invoices/123)`);
     if (!c.owner || !(c.owner in accounts)) errors.push(`${where}: owner must be one of the declared accounts`);
-    const denied = c.denied_to || [];
+    if (scope !== "owner" && scope !== "self") errors.push(`${where}: scope must be "owner" (others are refused) or "self" (each account gets its own data)`);
+    const markers = [].concat(c.markers ?? [], c.secret != null ? [c.secret] : []);
+    if (markers.some((m) => typeof m !== "string" || !m)) errors.push(`${where}: markers must be non-empty texts`);
+    let denied = c.denied_to;
+    if (scope === "self") {
+      if (method !== "GET") errors.push(`${where}: scope "self" is for reads (GET): the answers are compared`);
+      if (!markers.length) errors.push(`${where}: scope "self" needs markers: texts only the owner's answer contains (a customer name, an invoice number seeded for that account, stable over time)`);
+      // By default every other account and the visitor.
+      if (denied == null) denied = names.filter((n) => n !== c.owner).concat(ANONYMOUS);
+    }
+    denied = denied || [];
     if (!Array.isArray(denied) || !denied.length) errors.push(`${where}: denied_to must list at least one account (or "${ANONYMOUS}")`);
     for (const d of Array.isArray(denied) ? denied : []) {
       if (d !== ANONYMOUS && !(d in accounts)) errors.push(`${where}: denied_to names an unknown account "${d}"`);
       if (d === c.owner) errors.push(`${where}: the owner cannot also be in denied_to`);
     }
     checks.push({ id, name: c.name || `${method} ${c.path}`, method, path: c.path, owner: c.owner, denied_to: Array.isArray(denied) ? denied : [],
-      body: c.body, secret: c.secret, owner_status: c.owner_status });
+      body: c.body, secret: c.secret, markers, scope, owner_status: c.owner_status });
   });
-  return { accounts, checks, errors, login_path: a.login_path || null };
+  return { accounts, checks, errors, warnings, login_path: a.login_path || null };
 }
 
 // Play the login steps of the accounts that have some, and return their cookies and optional bearer token.
@@ -122,13 +140,24 @@ async function request(base, check, session) {
 // Was the request refused? "denied", "leak" (the data came back), or "unclear" (a 200 that is neither the owner's
 // answer nor an obvious refusal: usually an app shell or a soft error page — read it).
 export function verdict(check, res, ownerRes) {
+  const markers = check.markers || (check.secret ? [check.secret] : []);
+  const found = () => markers.filter((m) => res.body.includes(m));
   if (res.error) return { verdict: "error", why: res.error };
+  // "My data" routes: any answer is fine as long as none of the owner's markers is in it.
+  if (check.scope === "self") {
+    if (res.status >= 500) return { verdict: "unclear", why: `HTTP ${res.status}: the server failed` };
+    const f = found();
+    if (f.length) return { verdict: "leak", why: `HTTP ${res.status} and the answer contains ${check.owner}'s ${f.map((m) => `"${m}"`).join(", ")}` };
+    return { verdict: "own", why: `HTTP ${res.status} without any of ${check.owner}'s markers` };
+  }
   if (DENIED.has(res.status)) return { verdict: "denied", why: `HTTP ${res.status}` };
   if (res.status >= 300 && res.status < 400) return { verdict: "denied", why: `redirected to ${res.location || "another page"}` };
   if (res.status >= 500) return { verdict: "unclear", why: `HTTP ${res.status}: the server failed instead of refusing` };
-  if (check.secret) return res.body.includes(check.secret)
-    ? { verdict: "leak", why: `HTTP ${res.status} and the answer contains "${check.secret}"` }
-    : { verdict: "denied", why: `HTTP ${res.status} without "${check.secret}"` };
+  if (markers.length) {
+    const f = found();
+    return f.length ? { verdict: "leak", why: `HTTP ${res.status} and the answer contains ${f.map((m) => `"${m}"`).join(", ")}` }
+      : { verdict: "denied", why: `HTTP ${res.status} without ${markers.map((m) => `"${m}"`).join(", ")}` };
+  }
   if (WRITES.has(check.method)) return { verdict: "leak", why: `HTTP ${res.status}: the write was accepted` };
   if (ownerRes && !ownerRes.error && res.body === ownerRes.body && res.bytes > 0) return { verdict: "leak", why: `HTTP ${res.status} with the same answer as the owner` };
   return { verdict: "unclear", why: `HTTP ${res.status} with a different answer from the owner's: add "secret" (a text only the owner should get) to decide` };
@@ -137,7 +166,8 @@ export function verdict(check, res, ownerRes) {
 export async function runAccess(project, { root, base, allowProduction = false } = {}) {
   const v = validateAccess(project);
   if (v.errors.length) return { available: true, errors: v.errors };
-  if (!v.checks.length) return { available: true, errors: ["no access block in .quality/project.json: declare two accounts and the resources each must not reach (see /sw:kickoff)"] };
+  if (!v.checks.length) return { available: true, errors: [project?.access ? "access.checks is empty: nothing to play yet. Add one check per kind of resource with the first route that has an owner (see the saas-foundations skill)"
+    : "no access block in .quality/project.json: declare two accounts and the resources each must not reach (see /sw:kickoff)"] };
   const baseUrl = base || project.urls?.local || project.urls?.staging;
   if (!baseUrl) return { available: true, errors: ["no URL: pass --base <url> or set urls.local or urls.staging in .quality/project.json"] };
   const prod = project.urls?.production;
@@ -154,7 +184,7 @@ export async function runAccess(project, { root, base, allowProduction = false }
   sessions[ANONYMOUS] = { headers: {} };
   const results = [];
   for (const check of v.checks) {
-    const entry = { id: check.id, name: check.name, method: check.method, path: check.path, owner: check.owner, attempts: [] };
+    const entry = { id: check.id, name: check.name, method: check.method, path: check.path, owner: check.owner, ...(check.scope === "self" ? { scope: "self" } : {}), attempts: [] };
     const os = sessions[check.owner];
     let ownerRes = null;
     if (os.error) entry.setup_error = `owner ${check.owner}: ${os.error}`;
@@ -163,10 +193,12 @@ export async function runAccess(project, { root, base, allowProduction = false }
       if (!WRITES.has(check.method)) {
         ownerRes = await request(baseUrl, check, os);
         const want = check.owner_status || null;
-        const ok = !ownerRes.error && (want ? ownerRes.status === want : ownerRes.status >= 200 && ownerRes.status < 300) && (!check.secret || ownerRes.body.includes(check.secret));
+        // Every marker must be in the owner's own answer, or its absence elsewhere proves nothing.
+        const missing = ownerRes.error ? [] : (check.markers || []).filter((m) => !ownerRes.body.includes(m));
+        const ok = !ownerRes.error && (want ? ownerRes.status === want : ownerRes.status >= 200 && ownerRes.status < 300) && !missing.length;
         entry.owner_result = { status: ownerRes.status ?? null, ok, error: ownerRes.error };
         if (!ok) entry.setup_error = ownerRes.error ? `owner ${check.owner}: ${ownerRes.error}`
-          : check.secret && ownerRes.status < 300 && !ownerRes.body.includes(check.secret) ? `owner ${check.owner} does not get "${check.secret}": the check proves nothing until it does`
+          : missing.length && ownerRes.status < 300 ? `owner ${check.owner} does not get ${missing.map((m) => `"${m}"`).join(", ")}: the check proves nothing until it does`
           : `owner ${check.owner} gets HTTP ${ownerRes.status}: the check proves nothing until the owner can reach the resource`;
       }
     }
@@ -183,6 +215,7 @@ export async function runAccess(project, { root, base, allowProduction = false }
   return { available: true, base: baseUrl, accounts: Object.keys(v.accounts).concat(ANONYMOUS),
     session_errors: Object.entries(sessions).filter(([, s]) => s.error).map(([n, s]) => `${n}: ${s.error}`), checks: results,
     summary: { checks: results.length, attempts: attempts.length, denied: attempts.filter((a) => a.verdict === "denied").length,
+      own_data_only: attempts.filter((a) => a.verdict === "own").length,
       leaks: list("leak"), unclear: list("unclear"), errors: list("error"), setup_errors: results.filter((r) => r.setup_error).map((r) => `${r.id}: ${r.setup_error}`) },
     note: "Only the resources declared in project.json › access are tried. A clean result covers those, not every route: declare one check per kind of resource (and per role)." };
 }

@@ -35,6 +35,7 @@ Round 2:
 Then in plain text, in one message:
 - The promise in one sentence: for whom, which problem, which outcome. Offer a draft based on what you read; the user corrects it.
 - What is out of scope, the success metric, the expected load (concurrent users, peaks).
+- The evidence that someone wants it (stage 0 of the `from-zero` skill): people who asked, a waiting list, a paid pilot, their own daily need. Write each piece under `evidence` with its source and date; an empty list means none yet, and you say so.
 - If has_ui: the visual direction, following the `design-direction` skill (it can run now or later). In short: ask for 2 or 3 reference sites or apps they like, and for each: what they like in how it **looks** and in how it is **organised** (screen structure, navigation, where the tools are). Then three words for the mood, and what they never want to see. Do not propose a default style.
 
 ## 3. Key tasks (has_ui)
@@ -48,18 +49,26 @@ Ask, in plain text:
 Then draft the flows yourself from the code (button labels, field labels, routes); do not make the user write selectors. Format: see `flows` in `${CLAUDE_PLUGIN_ROOT}/templates/project.json`.
 If the user would rather show the task than describe it, offer `sw record <flow-id> --name "<the task in their words>" [--start /path] [--device mobile]`: a browser opens, they do the task and close the window, and the flow is saved in `.quality/project.json` with the selectors Playwright picked. Then add `decision`, `preview` and `primary` yourself, and copy the files they uploaded into `.quality/fixtures/`.
 - Steps take one action each: `goto`, `click`, `fill`, `select`, `check`, `upload`, `press`, `hover`, `wait_for`, `wait`, `expect`, `scroll`. Mark the steps where the user makes a choice with `"decision": true`.
-- Selectors use Playwright syntax. Prefer what the user sees: `role=button[name="Save"]`, `role=tab[name="Layout"]`, `text=Saved`; then labels and `data-testid`; avoid CSS classes.
+- Selectors use Playwright syntax. Prefer what the user sees: `role=button[name="Save"]`, `role=tab[name="Layout"]`, `text=Saved`; then labels and `data-testid`; avoid CSS classes. Every step acts on the first element its selector matches; when a step fails, `flows.json` says how many elements matched (0, or n with the first hidden or disabled) and whether the screen looks empty. In JSON a regular expression needs a doubled backslash (`name=/F-\\d+/`): `sw flows --check` warns when one looks lost.
 - `preview` and `primary` are selectors for the result and the main action; leave them out when the task has none.
-- Test data goes in `.quality/fixtures/`. Use files from the repository or ask the user for some; never use personal files without their yes. Credentials come from environment variables: `"value": "${env:QP_TEST_PASSWORD}"`.
+- Test data goes in `.quality/fixtures/`. Use files from the repository or ask the user for some; never use personal files without their yes. Credentials come from environment variables: `"value": "${env:SW_TEST_PASSWORD}"`.
 - Devices default to `["mobile", "desktop"]`. Keep both unless the product truly exists on one only.
+- A task needs no account: a task on a public page (the home page demo, pricing, sign-up) is just its steps from `goto "/"`, with no sign-in.
+- A task that starts from a fresh account uses `${unique}` in its values (`"value": "test+${unique}@example.com"`): it is replaced by a different value at every run (each device, variant and colour scheme), the same for all the steps of that run.
+- Mark the sign-in steps of a task with `"login": true`: the next colour scheme of the same task and device keeps the session and starts where the sign-in led, instead of signing in again.
+- Test data used up by a task (quotes accepted, invoices cancelled) is reset by commands: `flows_setup` at the top of `project.json` runs once before the tasks (`"flows_setup": "npm run seed"`), and `"setup"` in a task runs before each of its runs.
+- To play a task in a given interface state, set `"storage": { "theme": "registre" }` (put in `localStorage` before the first step), or `"variants": [{ "id": "registre", "storage": { "theme": "registre" } }, …]` to play it once per state.
+- A task not built yet gets `"status": "planned"` (steps can wait): `sw flows` skips it unless it is named and reports it under `not_built`, not as failed.
+- Dark is played when `flags` has `dark_mode`; without the flag, `sw flows` looks at the first screen in dark and, if its colours change, plays dark too and says to add the flag.
+- `sw flows` writes to `.quality/flows/` (a working folder, not committed); `sw flows --run <run>` writes to that audit run. Results are merged by task id, so tasks can be played in batches (`--pause <seconds>` between tasks for an app that limits sign-ins; `--replace` starts the file over).
 
 ## 4. Accounts, threats and mobile (when they apply)
 
 Skip what does not apply; each takes a few minutes now and saves a rebuild later. For a product starting from nothing, the `from-zero` skill gives the order of the whole path.
 
-**Accounts (has_auth).** Ask for two test accounts that belong to two different customers (and, if multi_tenant, a member and an admin of the same one), created by seed, never real ones. Then draft `access` in `.quality/project.json` from the routes you read: one check per kind of resource, each with its owner and who must be refused. Format in the `saas-foundations` skill. Passwords and tokens come from environment variables (`${env:QP_TEST_PASSWORD}`). On a new project with no route yet, write the two accounts and add the checks with the first resource. Also draft `auth_probe` (the login route and a disposable account) for `sw auth`.
+**Accounts (has_auth).** Ask for two test accounts that belong to two different customers (and, if multi_tenant, a member and an admin of the same one), created by seed, never real ones. Then draft `access` in `.quality/project.json` from the routes you read: one check per kind of resource, each with its owner and who must be refused. Format in the `saas-foundations` skill. Passwords and tokens come from environment variables (`${env:SW_TEST_PASSWORD}`). On a new project with no route yet, write the two accounts and add the checks with the first resource. Also draft `auth_probe` (the login route and a disposable account) for `sw auth`.
 
-**Threat model (has_backend).** Copy `${CLAUDE_PLUGIN_ROOT}/templates/threats.json` to `.quality/threats.json` and rewrite it with the user for this product, following the `security-testing` skill: assets, actors, entry points, one abuse case or more per entry point, a response and a test for each. `sw threats` must pass. Do not leave the template's examples in place.
+**Threat model (has_backend).** Copy `${CLAUDE_PLUGIN_ROOT}/templates/threats.json` to `.quality/threats.json` and rewrite it with the user for this product, following the `security-testing` skill: assets, actors, entry points, one abuse case or more per entry point, a response and a test for each. `sw threats --check` must pass (cases open before launch are expected now; `sw threats` alone is the launch gate). Do not leave the template's examples in place.
 
 **Subscriptions (has_subscriptions).** Ask for the rules before any billing code, and write them in the spec or `.quality/project.json` › `notes`: plans and limits in numbers, trial (length, card or not, what happens at the end), grace period after a failed payment, what happens to data on downgrade, countries sold to.
 
@@ -67,13 +76,13 @@ Skip what does not apply; each takes a few minutes now and saves a rebuild later
 
 **Facts (public pages).** Ask for the real figures, quotes (with the person's agreement), customer names and certifications the site may show, each with its source and date, and record them in `.quality/facts.json` (`{ "facts": [{ "claim": "1,240 teams", "source": "admin dashboard", "date": "2026-11-10" }] }`). Never fill it yourself: a claim without a fact from the user is not shown.
 
-**Desktop app (desktop_app).** Ask why a desktop app, the target systems and which ones the team can build and test on, the distribution, and where data lives (the `desktop-app` skill).
+**Desktop app (desktop_app).** Ask why a desktop app, the target systems and which ones the team can build and test on, the distribution, and where data lives (the `desktop-app` skill). Write the answers under `desktop` (format in `${CLAUDE_PLUGIN_ROOT}/templates/project.json`).
 
 **Mobile app (native_app).** Ask the approach, the application id, the platforms, the sales model and storefronts, whether a Mac is available, and what must work offline; write them under `mobile` (format in the `mobile-app` skill). Draft `mobile.flows` from the key tasks.
 
 ## 5. Write the files
 
-1. `.quality/project.json`, following `${CLAUDE_PLUGIN_ROOT}/templates/project.json`. Include `package_manager` from detect, `audit_model`, `surface`, the `urls` (local, staging, production) the user knows, `work_screens`, `flows`, and `access`, `auth_probe` and `mobile` when step 4 produced them.
+1. `.quality/project.json`, following `${CLAUDE_PLUGIN_ROOT}/templates/project.json`. Include `package_manager` from detect, `audit_model`, `surface`, the `urls` (local, staging, production) the user knows, `work_screens`, `flows`, `evidence`, and `access`, `auth_probe`, `desktop` and `mobile` when step 4 produced them.
 2. If has_ui and there is no `DESIGN.md`: create it from `${CLAUDE_PLUGIN_ROOT}/templates/DESIGN.md`, filled with the direction above. Fill "What we borrow" with principles you can see on a screen, for phone and desktop separately (the audit checks them, criterion ERG-08). Leave tokens the user has not chosen as "to define", never invent a palette silently.
 3. Add the section from `${CLAUDE_PLUGIN_ROOT}/templates/CLAUDE.section.md` to the project's `CLAUDE.md` (create the file if missing; replace the section if it already exists).
 4. Add `.quality/audits/*/screens/`, `.quality/audits/*/flows/`, `.quality/audits/*/logs/` and `.quality/logs/` to `.gitignore`. Keep the rest of `.quality/` versioned so scores can be compared over time.
@@ -83,7 +92,7 @@ Skip what does not apply; each takes a few minutes now and saves a rebuild later
 1. `sw flows --check` validates them without a browser. Fix every error.
 2. If the app runs (try `urls.local` with `curl -sI`), play them: `sw flows`. If Playwright is missing, ask the user whether to run `sw browser-setup`: it downloads Playwright, axe-core and Chromium once into the pack's cache, not into the project.
 3. Fix the selectors until every run says `completed`. A flow that cannot finish because of a real bug is a finding: keep the flow and tell the user.
-4. If you wrote them: `sw access --check`, `sw threats` and `sw mobile flows --check` validate the declarations without touching the app. Play `sw access` when the app runs locally.
+4. If you wrote them: `sw access --check`, `sw threats --check` and `sw mobile flows --check` validate the declarations without touching the app. Play `sw access` when the app runs locally.
 
 ## 7. Companion tools
 

@@ -1,5 +1,44 @@
 # Changelog
 
+## Unreleased
+
+Fixes from the first real pilot (an invoicing SaaS built from zero with Shipwright, 59 feedback entries).
+
+**Security checks that said "pass" without proving anything**
+- **`sw auth` reached the login for real.** It sent no `Origin` header, so a library like Better Auth refused every attempt before looking at the password, and the three checks came back green. It now sends `Origin` by default, logs in with the right password first when `password_env` is set, stops with an error when every attempt is refused the same way (403, or identical fast refusals), and lists every check it could not run under `skipped`.
+- **`sw auth` probes sign-up and password reset** (`auth_probe.signup`, `auth_probe.reset`): a known and an unknown address must get the same status, body and timing. The pilot's sign-up revealed whether an address existed; only the audit's code reading had caught it.
+- The login rate-limit check says it cannot tell a per-account limit from a per-IP one.
+- **Secrets guard:** blocks Stripe test keys (`sk_test_`, `rk_test_`) outside `.env` files too; says on stderr when its input is not JSON; new `sw guard-test` plays known cases through it. The allow marker is now `sw-allow-secret` (`qp-allow-secret` still works) and the test password variable `SW_TEST_PASSWORD`.
+- `sw access`: a `"scope": "self"` check for routes that answer "my data" to every account (the other accounts must get none of the owner's markers); an empty check list at kickoff is a warning; exit codes follow `ok`.
+- `sw threats --check` validates the model; `sw threats` alone is the launch gate. Kickoff and from-zero name the right one. Manual tests written `manuel` are counted.
+- `sw billing`: `subscription_metadata` on the test subscription and `trial: "app"` for a trial held by the app.
+
+**Measures that read the wrong page, or saw nothing**
+- **look, craft, stress and deslop say when they were redirected** (to a login page, typically) instead of returning a clean empty report, and record 401, 403 and 429 answers. `--as <account>` signs in with the accounts already declared for `sw access`, and `--before` works on all four.
+- **New `click_reached` check in `sw craft`:** every visible button, link and field must receive the click at its centre. A 3D-tilted demo had silently stopped answering clicks while every measure stayed green.
+- **`sw look` reports a page with no point of view** (`point_of_view`: system or single font, small title ratio, nothing visual in the first screen, one hue), and says that tier "low" means few generic signs, not a good design. `motion: "rich"` in project.json turns the "everything animates" signal into information.
+- `sw deslop`: no more findings on checkbox labels, rotated or 3D-transformed elements; `data-sw-intended="<rule>: reason"` shows a deliberate exception with its reason.
+- `sw craft` on a local address: 404 status and share image become "to check in preproduction"; the 404 page is judged as rendered, after scripts. `sw web` no longer takes a development server's HTML fallback for `robots.txt` or a sitemap. `sw look` measures real lines of text.
+- New `sw tiles`: serves and captures the style tiles side by side, and reports fonts that do not load.
+
+**Key tasks (`sw flows`)**
+- `${unique}` for a fresh account on every run, `"status": "planned"` for tasks not built yet, `storage` and `variants` to play a task in several UI states, `flows_setup` to seed data before the tasks.
+- Results are merged by task into the run's `flows.json` (`--replace` to start over, `--pause` between tasks); without `--run` they go to `.quality/flows/` and never into a finished audit.
+- One sign-in per task and device, reused across colour schemes; dark is played when the page has a dark theme, even without the flag.
+- A failed step names its selector and how many elements matched, and says when the screen looks empty. Visible "undefined", "null", "NaN" and "[object Object]" texts are reported.
+
+**Commands**
+- New `sw doctor`: is the marketplace known, the plugin installed and enabled for this project, which modules and hooks, which versions.
+- `sw install` also installs the modules of the stacks declared in project.json; `sw enable` says that `sw install` is the sure path.
+- `sw detect`: no invented reason on an empty project, the Git root with a warning when it is not the project folder, "new project" means no source code.
+- `sw tokens` pairs `on-X` and `X-inverse` with `X` only. `sw scan` skips `docs/`, `reports/`, `research_notes/` and reads `scan_exclude`. `sw run` returns short outputs as they are. `sw graph` advises a refresh only when the graph is recommended. `sw bank` leaves out sites never seen on a screenshot. `api_url` in project.json for the API stack's commands.
+
+**Skills**
+- from-zero: neutral styling is never shown as a result, any screen a visitor sees goes through design-variants first; a minimal public home page from step 3 for a SaaS with a public site; a provisional CI proof before the first push. Workflow moves design-variants earlier and says when the code graph helps.
+- scroll-animation: **trigger by default, scrub only where position matters**, with a scroll budget; rich motion allowed when written down; check the author's own reduced-motion setting before showing, and an Animations toggle for very animated pages.
+- node-api: row-level security with a per-transaction context for `pg` and Prisma; Redis and Socket.io rules apply only when used. tauri: a Vite + React single-page app shared between web and desktop.
+- Kickoff and the project template: `evidence` for the proof of demand, `desktop` for the desktop answers. The art director is given the reference bank.
+
 ## 0.8.5 — 2026-11-13
 
 - **Interactive 3D in the `scroll-animation` skill.** The 3D part was one paragraph; it is now a reference of its own (`references/3d.md`): which tool to pick (`<model-viewer>` for one model, React Three Fiber in React, three.js elsewhere), recipes with code, the poster image that comes before the canvas, rendering on demand, model compression, tying the scene to the page scroll without replacing it, working budgets for phones, keyboard access, and nine rules (3D-01 to 3D-09). Licences and versions checked on 2026-11-13.

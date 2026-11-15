@@ -120,7 +120,8 @@ export function validateThreats(model) {
     if (Number.isNaN(age)) errors.push("reviewed: must be a date (YYYY-MM-DD)");
     else if (age > 180) warnings.push(`last reviewed ${model.reviewed}: review it again (new entry point, new kind of data, new role or new third party)`);
   } else errors.push("reviewed: date of the last review (YYYY-MM-DD)");
-  const manual = model.abuse_cases.filter((a) => /^manual\b/i.test(a.test || "")).length;
+  // A test played by hand: "manual: …", "manuel : …" (projects written in French), or "by_hand": true.
+  const manual = model.abuse_cases.filter((a) => a?.by_hand === true || /^\s*(manual|manuel)\b/i.test(a?.test || "")).length;
   return { ok: !errors.length, errors, warnings,
     summary: { assets: model.assets.length, entry_points: model.entry_points.length, abuse_cases: model.abuse_cases.length,
       open_before_launch: open.filter((o) => o.priority === "before-launch").map((o) => `${o.id}: ${o.text}`), open_later: open.filter((o) => o.priority !== "before-launch").length,
@@ -146,24 +147,60 @@ export function classifyTarget(url, project) {
 const fill = (v, vars) => typeof v === "string" ? v.replace(/\{(email|password)\}/g, (_, k) => vars[k]) : Array.isArray(v) ? v.map((x) => fill(x, vars))
   : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, fill(x, vars)])) : v;
 
-async function attempt(base, login, vars) {
-  const headers = { accept: "application/json, text/html;q=0.9", ...(login.headers || {}) };
-  const form = login.form === true;
-  const body = fill(login.body || { email: "{email}", password: "{password}" }, vars);
+// Every request carries an Origin equal to the tested site, as a browser's would: auth libraries and CSRF guards
+// (Better Auth among them) refuse a POST without one before looking at the password. route.headers can override it.
+function headersFor(base, route) {
+  const headers = { accept: "application/json, text/html;q=0.9", origin: new URL(base).origin };
+  for (const [k, v] of Object.entries(route.headers || {})) headers[k.toLowerCase()] = String(v);
+  return headers;
+}
+
+async function attempt(base, route, vars, defaultBody = { email: "{email}", password: "{password}" }) {
+  const headers = headersFor(base, route);
+  const form = route.form === true;
+  const body = fill(route.body || defaultBody, vars);
   headers["content-type"] = form ? "application/x-www-form-urlencoded" : "application/json";
   const started = performance.now();
   try {
-    const res = await fetch(new URL(login.path, base), { method: login.method || "POST", headers, redirect: "manual", signal: AbortSignal.timeout(20000),
+    const res = await fetch(new URL(route.path, base), { method: route.method || "POST", headers, redirect: "manual", signal: AbortSignal.timeout(20000),
       body: form ? new URLSearchParams(body).toString() : JSON.stringify(body) });
     const text = await res.text().catch(() => "");
+    // An answer that repeats the address ("we sent a link to x@y") does not differ between accounts for that reason.
+    const neutral = vars.email ? text.split(vars.email).join("{email}") : text;
     return { status: res.status, ms: Math.round(performance.now() - started), bytes: text.length, location: res.headers.get("location") || "",
-      shape: text.replace(/[0-9a-f]{16,}|\d{6,}/gi, "#").slice(0, 400), cookies: res.headers.getSetCookie?.() || [], retry_after: res.headers.get("retry-after") };
+      shape: neutral.replace(/[0-9a-f]{16,}|\d{6,}/gi, "#").slice(0, 400), cookies: res.headers.getSetCookie?.() || [], retry_after: res.headers.get("retry-after") };
   } catch (e) { return { error: String(e.cause?.code || e.message).slice(0, 120) }; }
 }
 
 const median = (a) => { const s = [...a].sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
+const rand = () => Math.random().toString(36).slice(2, 10);
 
-// project.json › auth_probe: { login: { path, method?, body?, form? }, known_email, unknown_email?, attempts? }
+// Below this, a refusal of an existing account did not hash anything: the request was turned away before the password check.
+export const FAST_REFUSAL_MS = 10;
+// Statuses that say "this request was not accepted as a login attempt" (forbidden, no such route, wrong method or
+// type, expired CSRF token) rather than "wrong credentials". 400 and 422 also answer a malformed or incomplete body.
+const GATE = new Set([403, 404, 405, 415, 419]);
+const MALFORMED = new Set([400, 422]);
+
+// Does the probe reach the password check? A login refused before it (missing Origin, CSRF token, bot wall, wrong path)
+// answers the same thing to every attempt, and every comparison would then "pass".
+// Returns { error } when the probe clearly does not reach it, { warning } when it cannot tell, or null.
+export function unreached(known, unknown) {
+  const all = [...known, ...unknown].filter((x) => !x.error);
+  if (!all.length) return null;
+  const s = all[0].status;
+  const same = all.every((x) => x.status === s && x.shape === all[0].shape);
+  const dk = median(known.filter((x) => !x.error).map((x) => x.ms));
+  const hint = `Check auth_probe.login (path, method, body, form) and the headers the app expects (a CSRF token goes in login.headers), and declare password_env so the probe can confirm it reaches the login. Answer seen: ${all[0].shape.slice(0, 160)}`;
+  if (all.every((x) => x.status === 403)) return { error: `every failed login got HTTP 403: the request is refused before the password is checked, so the probe does not reach the login and proves nothing. ${hint}` };
+  if (same && GATE.has(s)) return { error: `every failed login got the same HTTP ${s}: that answers the request, not the password, so the probe does not reach the login and proves nothing. ${hint}` };
+  if (same && MALFORMED.has(s) && dk < FAST_REFUSAL_MS) return { error: `every failed login got the same HTTP ${s} in ${dk} ms, even for the account that exists: the body was refused before any password check (checking one takes longer), so the probe does not reach the login and proves nothing. ${hint}` };
+  if (same && dk < FAST_REFUSAL_MS) return { warning: `every failed login got the same answer (HTTP ${s}) in ${dk} ms, even for the account that exists: faster than checking a hashed password. Either the request is refused before the login, or passwords are not hashed with a slow function. Declare password_env so the probe can confirm it reaches the login.` };
+  return null;
+}
+
+// project.json › auth_probe: { login: { path, method?, body?, form?, headers? }, known_email, unknown_email?, attempts?,
+//   password_env?, signup?: { path, method?, body?, form?, headers? }, reset?: { path, method?, body?, form?, headers? } }
 export async function authProbe(project, { base } = {}) {
   const cfg = project?.auth_probe;
   if (!cfg?.login?.path || !cfg.known_email) return { available: true, errors: ["no auth_probe in .quality/project.json: declare login.path and known_email (a disposable test account: it may get locked)"] };
@@ -172,15 +209,53 @@ export async function authProbe(project, { base } = {}) {
   const where = classifyTarget(baseUrl, project);
   if (where !== "local" && where !== "staging") return { available: true, errors: [`${baseUrl} is not a local or staging address. This check sends wrong passwords on purpose and can lock accounts: it only runs on localhost or on the staging URL declared in project.json.`] };
   const n = Math.min(Math.max(Number(cfg.attempts) || 20, 5), 50);
-  const unknown = cfg.unknown_email || `qp-nobody-${Date.now().toString(36)}@example.invalid`;
-  const wrong = () => `qp-wrong-${Math.random().toString(36).slice(2, 10)}`;
-  const checks = {};
-  const add = (id, level, ok, value, rule) => { checks[id] = { level, ok, value, rule }; };
+  const unknown = cfg.unknown_email || `sw-nobody-${Date.now().toString(36)}@example.invalid`;
+  // A fresh address each time, for routes where the first request creates the account (sign-up).
+  const freshUnknown = () => cfg.unknown_email ? cfg.unknown_email.replace("@", `+sw${rand()}@`) : `sw-nobody-${rand()}@example.invalid`;
+  const wrong = () => `sw-wrong-${rand()}`;
+  const origin = new URL(baseUrl).origin;
+  const checks = {}, skipped = [], errors = [], warnings = [];
+  const add = (id, level, ok, value, rule, extra = {}) => { checks[id] = { level, ok, value, rule, ...extra }; };
+  const skip = (check, why) => skipped.push({ check, why });
+  const head = { available: true, base: baseUrl, target: where, origin_sent: cfg.login.headers && Object.keys(cfg.login.headers).some((k) => k.toLowerCase() === "origin") ? "from login.headers" : origin };
+  let failedLogins = 0, otherRequests = 0;
 
-  // 1. Does the answer differ between an account that exists and one that does not?
+  // 1. The right password first, when the environment gives it: it proves the probe reaches the login (a request
+  // refused before the password check would make every other check pass), and it comes before the wrong passwords,
+  // after which a login that defends itself would refuse it.
+  const pwEnv = cfg.password_env || null;
+  let reached = false, good = null;
+  if (pwEnv && process.env[pwEnv]) {
+    good = await attempt(baseUrl, cfg.login, { email: cfg.known_email, password: process.env[pwEnv] });
+    if (good.error) return { ...head, errors: [`login request failed: ${good.error}`] };
+    if (good.status >= 400) return { ...head, errors: [`the right password for ${cfg.known_email} (from ${pwEnv}) was refused with HTTP ${good.status}: the probe does not reach the login, so no other check would mean anything. Check auth_probe.login (path, method, body, form) and the headers the app expects (Origin is sent as ${head.origin_sent}; a CSRF token goes in login.headers). Answer: ${good.shape.slice(0, 160)}`] };
+    reached = true;
+    const session = (good.cookies || []).filter((c) => /sess|sid|token|auth|jwt/i.test(c.split("=")[0]));
+    if (session.length) {
+      const bad = session.filter((c) => !/;\s*httponly/i.test(c) || !/;\s*samesite=(lax|strict)/i.test(c) || (new URL(baseUrl).protocol === "https:" && !/;\s*secure/i.test(c))).map((c) => c.split("=")[0]);
+      add("session_cookie_flags", "must", bad.length === 0, bad.length ? `missing flags on: ${bad.join(", ")}` : `${session.length} session cookie(s) with HttpOnly and SameSite${new URL(baseUrl).protocol === "https:" ? " and Secure" : ""}`,
+        "session cookies are HttpOnly, SameSite=Lax or Strict, and Secure over HTTPS");
+    } else skip("session_cookie_flags", `the login (HTTP ${good.status}) set no cookie whose name looks like a session (sess, sid, token, auth, jwt): a token returned in the body is not checked by this probe`);
+  } else if (pwEnv) {
+    skip("session_cookie_flags", `${pwEnv} is not set in the environment: the probe could not log in with the right password`);
+    warnings.push(`${pwEnv} is not set: the probe could not confirm that it reaches the login with the right password.`);
+  } else {
+    skip("session_cookie_flags", "no auth_probe.password_env: the probe cannot log in with the right password, so it cannot read the session cookie");
+    warnings.push("no auth_probe.password_env: the probe could not confirm that it reaches the login with the right password.");
+  }
+
+  // 2. Does the answer differ between an account that exists and one that does not?
   const k = [], u = [];
   for (let i = 0; i < 4; i++) { k.push(await attempt(baseUrl, cfg.login, { email: cfg.known_email, password: wrong() })); u.push(await attempt(baseUrl, cfg.login, { email: unknown, password: wrong() })); }
-  if (k[0].error) return { available: true, errors: [`login request failed: ${k[0].error}`] };
+  failedLogins += 8;
+  if (k[0].error) return { ...head, errors: [`login request failed: ${k[0].error}`], skipped };
+  if (reached && good.status === k[0].status && good.shape === k[0].shape && good.location === k[0].location && good.cookies.length === k[0].cookies.length)
+    return { ...head, errors: [`the right and a wrong password for ${cfg.known_email} get the same answer (HTTP ${good.status}): the probe cannot tell a login from a refusal. Check auth_probe.login.`], skipped };
+  if (!reached) {
+    const why = unreached(k, u);
+    if (why?.error) return { ...head, errors: [why.error], skipped: [...skipped, ...["account_enumeration", "login_timing", "login_rate_limit", "signup_enumeration", "reset_enumeration"].map((check) => ({ check, why: "the probe does not reach the login" }))] };
+    if (why?.warning) warnings.push(why.warning);
+  }
   const sameStatus = k[0].status === u[0].status, sameShape = k[0].shape === u[0].shape && k[0].location === u[0].location;
   const dk = median(k.map((x) => x.ms)), du = median(u.map((x) => x.ms));
   const timing = Math.abs(dk - du) > Math.max(80, Math.min(dk, du));
@@ -188,33 +263,56 @@ export async function authProbe(project, { base } = {}) {
     "a failed login answers the same way whether the account exists or not (same status, same message)");
   add("login_timing", "should", !timing, `median ${dk} ms for a known account, ${du} ms for an unknown one`, "a failed login takes about the same time whether the account exists or not (hash a dummy password for unknown accounts)");
 
-  // 2. Session cookie flags, when the test account's password is given through the environment. Done before the
-  // wrong passwords: a login that defends itself would refuse the right one afterwards.
-  const pwEnv = cfg.password_env;
-  if (pwEnv && process.env[pwEnv]) {
-    const ok = await attempt(baseUrl, cfg.login, { email: cfg.known_email, password: process.env[pwEnv] });
-    const session = (ok.cookies || []).filter((c) => /sess|sid|token|auth|jwt/i.test(c.split("=")[0]));
-    if (session.length) {
-      const bad = session.filter((c) => !/;\s*httponly/i.test(c) || !/;\s*samesite=(lax|strict)/i.test(c) || (new URL(baseUrl).protocol === "https:" && !/;\s*secure/i.test(c))).map((c) => c.split("=")[0]);
-      add("session_cookie_flags", "must", bad.length === 0, bad.length ? `missing flags on: ${bad.join(", ")}` : `${session.length} session cookie(s) with HttpOnly and SameSite${new URL(baseUrl).protocol === "https:" ? " and Secure" : ""}`,
-        "session cookies are HttpOnly, SameSite=Lax or Strict, and Secure over HTTPS");
+  // 3. Sign-up and password reset, with an address that has an account and one that has none. Played before the
+  // wrong passwords in a row: a limit counted per address would otherwise refuse both and look like "same answer".
+  const compare = async (id, route, defaultBody, label) => {
+    if (!route) return skip(`${id}_enumeration`, `no auth_probe.${id}: ${label} was not tried (declare its path to compare a known and an unknown address)`);
+    if (!route.path) { errors.push(`auth_probe.${id}: path is required`); return; }
+    const kk = [], uu = [];
+    for (let i = 0; i < 3; i++) {
+      kk.push(await attempt(baseUrl, route, { email: cfg.known_email, password: `Sw-probe-${rand()}-${rand()}A1!` }, defaultBody));
+      uu.push(await attempt(baseUrl, route, { email: freshUnknown(), password: `Sw-probe-${rand()}-${rand()}A1!` }, defaultBody));
     }
-  }
+    otherRequests += 6;
+    const failed = [...kk, ...uu].find((x) => x.error);
+    if (failed) { errors.push(`${id}: request to ${route.path} failed: ${failed.error}`); skip(`${id}_enumeration`, "the request failed"); return; }
+    const all = [...kk, ...uu];
+    const refused = all.every((x) => x.status === 403) ? "HTTP 403" : all.every((x) => x.status === 429) ? "HTTP 429" : null;
+    if (refused) {
+      errors.push(`${id}: every request to ${route.path} got ${refused}: it is refused before the address is looked at (Origin, CSRF token, rate limit), so nothing was compared. Check auth_probe.${id}.`);
+      skip(`${id}_enumeration`, `every request got ${refused}`);
+      return;
+    }
+    const same = kk[0].status === uu[0].status && kk[0].shape === uu[0].shape && kk[0].location === uu[0].location;
+    const mk = median(kk.map((x) => x.ms)), mu = median(uu.map((x) => x.ms));
+    add(`${id}_enumeration`, "must", same, same ? `same answer for a known and an unknown address (HTTP ${kk[0].status})` : `known address: HTTP ${kk[0].status}, unknown address: HTTP ${uu[0].status}${kk[0].status === uu[0].status ? ", different message" : ""}`,
+      `${label} answers the same way whether the address has an account or not (same status, same message): the email tells the owner what happened`);
+    add(`${id}_timing`, "should", Math.abs(mk - mu) <= Math.max(80, Math.min(mk, mu)), `median ${mk} ms for a known address, ${mu} ms for an unknown one`,
+      `${label} takes about the same time whether the address has an account or not (send the email in the background)`);
+  };
+  await compare("signup", cfg.signup, { email: "{email}", password: "{password}" }, "sign-up");
+  await compare("reset", cfg.reset, { email: "{email}" }, "a password reset request");
 
-  // 3. Guessing: wrong passwords in a row on the test account must be slowed or refused.
+  // 4. Guessing: wrong passwords in a row on the test account must be slowed or refused.
   let limitedAt = null, last = null;
   for (let i = 1; i <= n; i++) {
     last = await attempt(baseUrl, cfg.login, { email: cfg.known_email, password: wrong() });
+    failedLogins++;
     if (last.error) break;
     if (last.status === 429 || last.status === 423 || last.retry_after || (last.status !== k[0].status && last.status >= 400) || last.ms > Math.max(2000, dk * 8)) { limitedAt = i + 4; break; }
   }
-  add("login_rate_limit", "must", limitedAt != null, limitedAt != null ? `refused or slowed after ${limitedAt} wrong passwords (HTTP ${last.status}${last.retry_after ? `, Retry-After ${last.retry_after}` : ""})` : `${n + 4} wrong passwords in a row, all answered normally`,
-    "wrong passwords in a row on one account are slowed, refused or locked (counted per account, not only per IP)");
+  // All the attempts leave from one address: a limit counted per IP and one counted per account look the same here.
+  add("login_rate_limit", "must", limitedAt != null, limitedAt != null ? `refused or slowed after ${limitedAt} wrong passwords (HTTP ${last.status}${last.retry_after ? `, Retry-After ${last.retry_after}` : ""}); per account or per IP: this probe cannot tell` : `${n + 4} wrong passwords in a row, all answered normally`,
+    "wrong passwords in a row on one account are slowed, refused or locked. Per account (not only per IP): not verifiable by this probe, which sends every attempt from one address; check it in the code or the auth library's settings",
+    { per_account: "not verifiable by this probe" });
 
   const must = Object.entries(checks).filter(([, c]) => c.level === "must" && !c.ok).map(([x]) => x);
   const should = Object.entries(checks).filter(([, c]) => c.level === "should" && !c.ok).map(([x]) => x);
-  return { available: true, base: baseUrl, target: where, summary: { checks: Object.keys(checks).length, must_failed: must, should_failed: should }, checks,
-    note: `Sent ${8 + (limitedAt ? limitedAt - 4 : n)} failed logins to ${cfg.login.path}. The test account may now be locked. Not covered: password reset, signup, one-time codes, session invalidation on logout (see the security-testing skill).` };
+  const covered = [cfg.signup ? "sign-up" : null, cfg.reset ? "password reset" : null].filter(Boolean).join(" and ");
+  return { ...head, reached: reached ? "confirmed: the right password logs in" : "not confirmed (no right password to try)",
+    summary: { checks: Object.keys(checks).length, must_failed: must, should_failed: should, skipped: skipped.map((s) => s.check) }, checks, skipped,
+    ...(errors.length ? { errors } : {}), ...(warnings.length ? { warnings } : {}),
+    note: `Sent ${failedLogins} failed logins${reached ? ", 1 successful one" : ""}${otherRequests ? ` and ${otherRequests} requests to ${covered}` : ""}. The test account may now be locked${cfg.signup ? ", and sign-up may have created accounts for the unknown addresses" : ""}. Not covered: one-time codes, session invalidation on logout and password change${cfg.signup ? "" : ", sign-up"}${cfg.reset ? "" : ", password reset"} (see the security-testing skill).` };
 }
 
 // ---------------------------------------------------------------------------------------------------------

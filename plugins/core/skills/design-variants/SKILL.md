@@ -79,7 +79,7 @@ If the jury split on most pairs, the versions are too close or the brief is uncl
 ## 6. Merge, then finish
 
 1. Carry into the chosen version what the others did better (`keeps`), one item at a time, and check after each that it still reads as one idea.
-2. Ask a `sw:art-director` agent for a review of the merged screen (desktop and phone screenshots, the brief, the site type): at most seven concrete changes, most of them removals. Apply the ones the user accepts.
+2. Ask a `sw:art-director` agent for a review of the merged screen (desktop and phone screenshots, the brief, the site type): at most seven concrete changes, most of them removals. Give it in the prompt: the project path, the screenshot paths, what the screen is for, the output file, the site type, and the absolute path of the CLI you run (`${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs`, resolved: the agent cannot find it alone and needs it for `sw bank <type>`), or paste the output of `sw bank <type>` into the prompt. Also give the references written in `DESIGN.md` (the sites, what is borrowed from each, the tokens); if `DESIGN.md` has none, say so in the prompt, so that the review is not read as a comparison with references. Apply the ones the user accepts.
 3. Compare with the target:
 
 ```bash

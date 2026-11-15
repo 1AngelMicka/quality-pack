@@ -6,7 +6,7 @@
 //
 // Two levels: "must" (a defect a visitor can see or that breaks use) and "should" (finish). A "should" that is
 // a deliberate choice is fine: say so in the report rather than changing the design to please the tool.
-import { loadBrowserTools, launch } from "./browser.mjs";
+import { loadBrowserTools, launch, measureContext, accountSession, watchDenied, reachOf, isLocalUrl } from "./browser.mjs";
 
 export const CRAFT_VERSION = 1;
 
@@ -216,6 +216,57 @@ function measureCraft() {
   };
 }
 
+// Click reached: every visible control must be what the pointer hits at its centre. A layer drawn over it (a
+// pseudo-element, a 3D-sorted sibling, a transparent overlay) leaves it on screen and dead to the mouse, and
+// keyboard checks never see it. Controls outside the screen are scrolled to first; the scroll is restored.
+function reachClicks(max = 150) {
+  const name = (e) => {
+    const t = (e.getAttribute("aria-label") || e.innerText || e.value || e.getAttribute("placeholder") || "").trim().replace(/\s+/g, " ").slice(0, 30);
+    const cls = typeof e.className === "string" && e.className.trim() ? `.${e.className.trim().split(/\s+/)[0]}` : "";
+    return `${e.tagName.toLowerCase()}${e.id ? `#${e.id}` : cls}${t ? ` "${t}"` : ""}`;
+  };
+  const sel = "a[href], button, input:not([type=hidden]), select, textarea, summary, [role=button], [role=link], [role=tab], [role=checkbox], [role=switch], [role=menuitem]";
+  const els = [...document.querySelectorAll(sel)].filter((e) => !e.disabled && !e.closest("[hidden], [aria-hidden='true'], dialog:not([open]), [inert], [data-craft-ignore]"));
+  const sx = window.scrollX, sy = window.scrollY;
+  const out = { checked: 0, covered: [] };
+  for (const e of els) {
+    if (out.checked >= max) break;
+    const s = getComputedStyle(e);
+    if (s.display === "none" || s.visibility !== "visible" || s.pointerEvents === "none") continue;
+    let o = 1;
+    for (let n = e; n && n !== document.documentElement; n = n.parentElement) o *= Number(getComputedStyle(n).opacity);
+    if (o < 0.05) continue;
+    let r = e.getBoundingClientRect();
+    if (r.width < 4 || r.height < 4) continue;
+    if (r.top < 0 || r.bottom > innerHeight || r.left < 0 || r.right > innerWidth) { e.scrollIntoView({ block: "center", inline: "nearest", behavior: "instant" }); r = e.getBoundingClientRect(); }
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    if (x < 0 || y < 0 || x >= innerWidth || y >= innerHeight) continue;
+    // A centre outside a clipping box (carousel, scroll area) is not on screen: not a cover.
+    let clipped = false;
+    for (let n = e.parentElement; n && n !== document.body && !clipped; n = n.parentElement) {
+      const ns = getComputedStyle(n);
+      if (ns.overflowX === "visible" && ns.overflowY === "visible") continue;
+      const nr = n.getBoundingClientRect();
+      clipped = x < nr.left || x > nr.right || y < nr.top || y > nr.bottom;
+    }
+    if (clipped) continue;
+    out.checked++;
+    const hit = document.elementFromPoint(x, y);
+    if (!hit || e.contains(hit) || hit.closest("label")?.control === e) continue;
+    out.covered.push(`${name(e)} covered by ${name(hit)} at ${Math.round(x)},${Math.round(y)}`);
+  }
+  window.scrollTo(sx, sy);
+  return out;
+}
+
+// The unknown address as a visitor sees it, once scripts ran: a single-page app draws its 404 page in the browser.
+function renderedNotFound() {
+  const text = (document.body?.innerText || "").replace(/\s+/g, " ").trim();
+  const here = location.href.split("#")[0];
+  const links = [...document.querySelectorAll("a[href]")].filter((a) => { try { const u = new URL(a.getAttribute("href"), location.href); return u.origin === location.origin && u.href.split("#")[0] !== here; } catch { return false; } });
+  return { text: text.slice(0, 3000), words: text.split(" ").filter(Boolean).length, links: links.length };
+}
+
 // Installed before the page loads: layout shifts (CLS) seen while it settles.
 const CLS_PROBE = `(() => { window.__qpCls = 0; try { new PerformanceObserver((l) => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__qpCls += e.value; }).observe({ type: "layout-shift", buffered: true }); } catch {} })();`;
 
@@ -305,9 +356,9 @@ async function hoverProbe(page, max = 12) {
   return { tried: Math.min(targets.length, max), no_change: dead, instant_change: instant };
 }
 
-async function head(url, timeout = 15000) {
+async function head(url, { timeout = 15000, headers = {} } = {}) {
   try {
-    const res = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(timeout) });
+    const res = await fetch(url, { redirect: "follow", headers, signal: AbortSignal.timeout(timeout) });
     const text = /text|json|xml/.test(res.headers.get("content-type") || "") ? await res.text() : "";
     return { status: res.status, type: res.headers.get("content-type") || "", bytes: Number(res.headers.get("content-length")) || text.length, text };
   } catch (e) { return { error: String(e.cause?.code || e.message).slice(0, 120) }; }
@@ -316,19 +367,26 @@ async function head(url, timeout = 15000) {
 const DEFAULT_404 = [/This page could not be found/i, /Cannot GET \//i, /<center>nginx/i, /Apache.*Server at/i, /^\s*Not Found\s*$/i, /The requested URL was not found on this server/i, /404: NOT_FOUND/, /Whitelabel Error Page/i];
 
 // What surrounds the page: its icon, its share image, and what a wrong address shows.
-async function around(url, headInfo) {
+// The status of the unknown address is read with a plain request that asks for a page (Accept: text/html, as a
+// browser does); its content is read in the browser when `rendered` is given (scripts ran, as a visitor sees it).
+export const missingUrl = (url) => `${new URL(url).origin}/qp-no-such-page-${Date.now().toString(36)}`;
+
+async function around(url, headInfo, { missingAt = null, rendered = null } = {}) {
   if (!/^https?:/.test(url)) return { skipped: "local file: icon, share image and error page are checked on a served site" };
   const origin = new URL(url).origin;
   const icon = await head(headInfo.icon || `${origin}/favicon.ico`);
   const og = headInfo.og_image ? await head(new URL(headInfo.og_image, url).href) : null;
-  const missing = await head(`${origin}/qp-no-such-page-${Date.now().toString(36)}`);
+  const missing = await head(missingAt || missingUrl(url), { headers: { accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8" } });
   const body = missing.text || "";
   const stripped = body.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const text = rendered ? rendered.text : stripped;
   return {
+    local: isLocalUrl(url),
     icon: { url: headInfo.icon || `${origin}/favicon.ico`, ok: icon.status === 200 && /image|octet/.test(icon.type), status: icon.status ?? icon.error },
     og_image: og ? { url: headInfo.og_image, ok: og.status === 200 && /image/.test(og.type), status: og.status ?? og.error, absolute: /^https?:\/\//.test(headInfo.og_image) } : null,
-    not_found: { status: missing.status ?? missing.error, is_404: missing.status === 404, default_page: DEFAULT_404.some((re) => re.test(body)) || (missing.status === 404 && stripped.length < 40),
-      has_way_back: /<a\s[^>]*href=["'](\/|\.\/|https?:\/\/[^"']+)["']/i.test(body), words: stripped.split(" ").filter(Boolean).length },
+    not_found: { status: missing.status ?? missing.error, is_404: missing.status === 404, read_in: rendered ? "browser, after scripts" : "raw HTML",
+      default_page: DEFAULT_404.some((re) => re.test(body) || re.test(text)) || (missing.status === 404 && text.length < 40),
+      has_way_back: rendered ? rendered.links > 0 : /<a\s[^>]*href=["'](\/|\.\/|https?:\/\/[^"']+)["']/i.test(body), words: text.split(" ").filter(Boolean).length },
   };
 }
 
@@ -410,11 +468,26 @@ export function scoreCraft(m, { mode = "operate", calibration = null } = {}) {
   if (a && !a.skipped) {
     add("favicon", "must", a.icon.ok, a.icon.ok ? "icon found" : `no icon (${a.icon.status})`, "the site has its own icon (link rel=icon or /favicon.ico)");
     add("touch_icon", "should", !!h.apple_touch_icon, h.apple_touch_icon ? "apple-touch-icon found" : "no apple-touch-icon", "an apple-touch-icon (180 px) for the phone home screen and bookmarks");
-    if (mode === "persuade") add("share_image", "must", !!a.og_image?.ok && a.og_image.absolute, !a.og_image ? "no og:image" : a.og_image.ok ? (a.og_image.absolute ? "og:image found" : "og:image is a relative address") : `og:image does not load (${a.og_image.status})`,
-      "public pages have a share image (og:image, absolute address, 1200 × 630) that loads");
-    add("not_found_status", "must", a.not_found.is_404, `a wrong address answers ${a.not_found.status}`, "an unknown address answers 404, not 200 (search engines and monitors rely on it)");
-    add("not_found_page", "should", a.not_found.is_404 ? !a.not_found.default_page && a.not_found.has_way_back : true, a.not_found.default_page ? "the server's or the framework's default error page" : a.not_found.has_way_back ? "own page with a way back" : "no link back to the site",
-      "the 404 page is the product's own: its look, a sentence in its voice, a way back");
+    // On a local address (localhost, 127.0.0.1, *.localhost, *.test) two rules depend on the deployment: a
+    // development server answers 200 to any address of a single-page app, and the absolute address of the share
+    // image does not exist before going live. Not met there, they are "to check in preproduction", not failures.
+    const pre = (ok) => (a.local && !ok ? "preproduction" : "must");
+    if (mode === "persuade") {
+      const shareOk = !!a.og_image?.ok && a.og_image.absolute;
+      add("share_image", a.og_image ? pre(shareOk) : "must", shareOk, !a.og_image ? "no og:image" : a.og_image.ok ? (a.og_image.absolute ? "og:image found" : "og:image is a relative address") : `og:image does not load (${a.og_image.status})`,
+        "public pages have a share image (og:image, absolute address, 1200 × 630) that loads");
+    }
+    add("not_found_status", pre(a.not_found.is_404), a.not_found.is_404, `a wrong address answers ${a.not_found.status}${a.local && !a.not_found.is_404 ? " on a development server: check it on the preproduction or production address" : ""}`,
+      "an unknown address answers 404, not 200 (search engines and monitors rely on it); the request asks for a page (Accept: text/html), as a browser does");
+    add("not_found_page", "should", a.not_found.is_404 || a.local ? !a.not_found.default_page && a.not_found.has_way_back : true, a.not_found.default_page ? "the server's or the framework's default error page" : a.not_found.has_way_back ? "own page with a way back" : "no link back to the site",
+      `the 404 page is the product's own: its look, a sentence in its voice, a way back (read ${a.not_found.read_in || "in the raw HTML"})`);
+  }
+  // Click reached, on the phone and the desktop.
+  const clicks = [["phone", mob?.click], ["desktop", d.click]].filter(([, c]) => c);
+  if (clicks.length) {
+    const covered = [...new Set(clicks.flatMap(([k, c]) => c.covered.map((x) => `${x} (${k})`)))];
+    add("click_reached", "must", covered.length === 0, `${covered.length} of ${clicks.reduce((t, [, c]) => t + c.checked, 0)} visible controls are covered at their centre`,
+      "every visible button, link and field receives the click: at its centre, the element under the pointer is the control itself or one of its children (nothing drawn over it, no 3D layer sorted in front)", covered);
   }
   // Calibration on the reference bank: how often the sites recognised as excellent fail each check. A "should"
   // that many of them fail does not separate excellent from average: it becomes advice and is no longer counted.
@@ -427,13 +500,14 @@ export function scoreCraft(m, { mode = "operate", calibration = null } = {}) {
   }
   const must = Object.entries(checks).filter(([, c]) => c.level === "must" && !c.ok).map(([k]) => k);
   const should = Object.entries(checks).filter(([, c]) => c.level === "should" && !c.ok).map(([k]) => k);
+  const preproduction = Object.entries(checks).filter(([, c]) => c.level === "preproduction").map(([k]) => k);
   const signals = [];
   if (me.lucide >= 4 && me.lucide === me.icons && strokeKinds === 1) signals.push("every icon is an unmodified Lucide icon (the default set of generated interfaces): pick a set that fits the brand or adjust stroke and size");
-  return { version: CRAFT_VERSION, summary: { checks: Object.keys(checks).length, must_failed: must, should_failed: should, advice }, signals, checks,
+  return { version: CRAFT_VERSION, summary: { checks: Object.keys(checks).length, must_failed: must, should_failed: should, advice, ...(preproduction.length ? { to_check_in_preproduction: preproduction } : {}) }, signals, checks,
     calibrated: calibration ? `on ${calibration.sites} sites of the reference bank, ${calibration.measured}` : "not calibrated (no plugins/core/bank/calibration.json)" };
 }
 
-export async function craftAt(urls, { cwd, mode = "operate", calibration } = {}) {
+export async function craftAt(urls, { cwd, mode = "operate", calibration, before = [], as = null, project = null } = {}) {
   // undefined: use the pack's calibration file; null: measure without it (used when calibrating).
   if (calibration === undefined) calibration = process.env.QP_NO_CALIBRATION ? null : (await import("./bank.mjs")).loadCalibration();
   const tools = await loadBrowserTools(cwd);
@@ -441,16 +515,22 @@ export async function craftAt(urls, { cwd, mode = "operate", calibration } = {})
   const browser = await launch(tools.chromium);
   const pages = [];
   try {
+    let session = null;
+    if (as) { try { session = await accountSession(browser, project, as, { root: cwd, base: new URL(urls[0]).origin }); } catch (e) { return { available: true, errors: [String(e.message)] }; } }
     for (const url of urls) {
       const m = {};
-      let failed = null;
+      let failed = null, final = null;
+      const denied = [];
       for (const [k, vp] of [["mobile", { width: 390, height: 844, isMobile: true, hasTouch: true, deviceScaleFactor: 2 }], ["desktop", { width: 1440, height: 900, deviceScaleFactor: 1 }]]) {
-        const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, isMobile: !!vp.isMobile, hasTouch: !!vp.hasTouch, deviceScaleFactor: vp.deviceScaleFactor });
+        const ctx = await measureContext(browser, { viewport: { width: vp.width, height: vp.height }, isMobile: !!vp.isMobile, hasTouch: !!vp.hasTouch, deviceScaleFactor: vp.deviceScaleFactor }, { session, before });
         await ctx.addInitScript(CLS_PROBE);
         const page = await ctx.newPage();
+        watchDenied(page, denied);
         try { await page.goto(url, { waitUntil: "networkidle", timeout: 30000 }); } catch (e) { if (!/Timeout/i.test(e.message)) { failed = String(e.message).split("\n")[0].slice(0, 200); await ctx.close(); break; } }
         await page.waitForTimeout(500);
         m[k] = await page.evaluate(measureCraft);
+        m[k].click = await page.evaluate(reachClicks).catch(() => null);
+        final = page.url();
         if (k === "desktop") {
           m.cls = await page.evaluate(() => window.__qpCls ?? null).catch(() => null);
           m.hover = await hoverProbe(page).catch(() => null);
@@ -459,18 +539,32 @@ export async function craftAt(urls, { cwd, mode = "operate", calibration } = {})
         await ctx.close();
       }
       if (failed) { pages.push({ url, error: failed }); continue; }
-      m.around = await around(url, m.desktop.head);
-      pages.push({ url, ...scoreCraft(m, { mode, calibration }), measures: m });
+      const reach = reachOf(url, final, denied);
+      // The unknown address, opened in the same browser: its 404 page is judged as rendered, after scripts.
+      let rendered = null, missingAt = null;
+      if (/^https?:/.test(url)) {
+        missingAt = missingUrl(url);
+        const ctx = await measureContext(browser, { viewport: { width: 1440, height: 900 } }, { session, before });
+        const page = await ctx.newPage();
+        try { await page.goto(missingAt, { waitUntil: "networkidle", timeout: 20000 }).catch((e) => { if (!/Timeout/i.test(e.message)) throw e; }); rendered = await page.evaluate(renderedNotFound); } catch { rendered = null; }
+        await ctx.close();
+      }
+      m.around = await around(url, m.desktop.head, { missingAt, rendered });
+      const scored = scoreCraft(m, { mode, calibration });
+      if (!reach.same_screen) scored.summary.verdict = `not measured: the browser ended on ${reach.final}, not on the requested screen`;
+      pages.push({ url, ...(reach.warnings.length ? { warnings: reach.warnings } : {}), reach, ...scored, measures: m });
     }
   } finally { await browser.close(); }
-  return { available: true, version: CRAFT_VERSION, mode, pages,
-    reading: "must: a visible defect or something that breaks use. should: finish; a deliberate exception is fine if the report says why. advice: a finish rule that many sites recognised as excellent do not follow either (excellent_sites_failing): apply it when it helps, it is not counted." };
+  return { available: true, version: CRAFT_VERSION, mode, ...(as ? { as } : {}), pages,
+    reading: "must: a visible defect or something that breaks use. should: finish; a deliberate exception is fine if the report says why. advice: a finish rule that many sites recognised as excellent do not follow either (excellent_sites_failing): apply it when it helps, it is not counted. preproduction: on a local address, a rule that depends on the deployment (404 status, absolute share image): check it on the preproduction address, it is not counted here." };
 }
 
 export function compactCraft(result) {
   if (!result.pages) return result;
-  return { mode: result.mode, version: result.version, full_report: "craft.json", reading: result.reading,
-    pages: result.pages.map((p) => p.error ? p : { url: p.url, summary: p.summary, signals: p.signals, calibrated: p.calibrated,
-      failed: Object.fromEntries(Object.entries(p.checks).filter(([, c]) => !c.ok).map(([k, c]) => [k, { level: c.level, value: c.value, rule: c.rule, samples: c.samples, excellent_sites_failing: c.excellent_sites_failing }])),
+  const pre = (c) => c.level === "preproduction";
+  return { mode: result.mode, version: result.version, ...(result.as ? { as: result.as } : {}), full_report: "craft.json", reading: result.reading,
+    pages: result.pages.map((p) => p.error ? p : { url: p.url, ...(p.warnings ? { warnings: p.warnings } : {}), summary: p.summary, signals: p.signals, calibrated: p.calibrated,
+      failed: Object.fromEntries(Object.entries(p.checks).filter(([, c]) => !c.ok && !pre(c)).map(([k, c]) => [k, { level: c.level, value: c.value, rule: c.rule, samples: c.samples, excellent_sites_failing: c.excellent_sites_failing }])),
+      ...(Object.values(p.checks).some(pre) ? { to_check_in_preproduction: Object.fromEntries(Object.entries(p.checks).filter(([, c]) => pre(c)).map(([k, c]) => [k, { value: c.value, rule: c.rule }])) } : {}),
       passed: Object.entries(p.checks).filter(([, c]) => c.ok).map(([k]) => k) }) };
 }

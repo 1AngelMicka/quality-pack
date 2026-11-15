@@ -54,6 +54,29 @@ export function parseHead(html) {
   };
 }
 
+const looksHtml = (body) => /^\s*(<!doctype\s+html|<html[\s>])/i.test(body || "");
+
+// Why a /robots.txt answer is not a robots file (null when it is one): text/plain or no type, never an HTML page.
+export function robotsProblem(res) {
+  if (!res.ok) return `not reachable (${res.error})`;
+  if (res.status !== 200) return `answers ${res.status}`;
+  const type = (res.headers?.["content-type"] || "").toLowerCase();
+  if (looksHtml(res.body) || /html/.test(type)) return "the server answers with an HTML page (a single-page app fallback), not a robots file";
+  if (type && !/^text\/plain|^text\/x-robots|octet-stream/.test(type)) return `served as ${type}, not text/plain`;
+  return null;
+}
+
+// Why a sitemap answer is not a sitemap (null when it is one): XML with <urlset> or <sitemapindex>.
+export function sitemapProblem(res) {
+  if (!res.ok) return `not reachable (${res.error})`;
+  if (res.status !== 200) return `answers ${res.status}`;
+  const type = (res.headers?.["content-type"] || "").toLowerCase();
+  if (looksHtml(res.body) || /html/.test(type)) return "the server answers with an HTML page (a single-page app fallback), not a sitemap";
+  if (type && !/xml|octet-stream|gzip/.test(type)) return `served as ${type}, not XML`;
+  if (!/<(urlset|sitemapindex)\b/.test(res.body || "")) return "no <urlset> or <sitemapindex>";
+  return null;
+}
+
 const SECURITY_HEADERS = ["strict-transport-security", "content-security-policy", "x-content-type-options",
   "referrer-policy", "permissions-policy", "x-frame-options", "cross-origin-opener-policy"];
 
@@ -87,13 +110,16 @@ export async function webChecks(url) {
     out.static_asset = a.ok ? { url: firstAsset, status: a.status, "content-encoding": a.headers["content-encoding"] ?? null,
       "cache-control": a.headers["cache-control"] ?? null } : { url: firstAsset, error: a.error };
   }
+  // A development server (Vite, a single-page app fallback) answers 200 with the home page for any address:
+  // robots.txt and sitemap.xml count only when they are really text and XML.
   const robots = await get(new URL("/robots.txt", page.url).href);
-  out.robots_txt = robots.ok && robots.status === 200 ? { present: true, disallow_all: /^\s*disallow:\s*\/\s*$/im.test(robots.body),
-    sitemaps: [...robots.body.matchAll(/^\s*sitemap:\s*(\S+)/gim)].map((m) => m[1]) } : { present: false };
+  const robotsWhy = robotsProblem(robots);
+  out.robots_txt = !robotsWhy ? { present: true, disallow_all: /^\s*disallow:\s*\/\s*$/im.test(robots.body),
+    sitemaps: [...robots.body.matchAll(/^\s*sitemap:\s*(\S+)/gim)].map((m) => m[1]) } : { present: false, why: robotsWhy };
   const sitemapUrl = out.robots_txt.sitemaps?.[0] || new URL("/sitemap.xml", page.url).href;
   const sm = await get(sitemapUrl);
-  out.sitemap = sm.ok && sm.status === 200 && /<(urlset|sitemapindex)\b/.test(sm.body)
-    ? { url: sitemapUrl, present: true, urls: (sm.body.match(/<loc>/g) || []).length } : { url: sitemapUrl, present: false };
+  const sitemapWhy = sitemapProblem(sm);
+  out.sitemap = !sitemapWhy ? { url: sitemapUrl, present: true, urls: (sm.body.match(/<loc>/g) || []).length } : { url: sitemapUrl, present: false, why: sitemapWhy };
   if (out.head.og.image) {
     const img = await get(abs(out.head.og.image), { body: false });
     out.og_image_status = img.ok ? img.status : img.error;

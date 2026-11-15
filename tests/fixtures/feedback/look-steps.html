@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Le voyage (test fixture)</title>
+<style>
+  body { margin: 0; font: 17px/1.6 Georgia, serif; color: #2b2622; background: #faf7f2; }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 64px; line-height: 1.1; margin: 0 0 24px; }
+  h1 em { color: #1d4ed8; }
+  ol.steps { list-style: none; padding: 0; display: grid; gap: 32px; }
+  ol.steps li { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .doc { padding: 16px; background: #fff; border: 1px solid #ddd; }
+  .doc h3 { margin: 0 0 8px; font-size: 18px; }
+  .doc p, .note { margin: 0; max-width: 34em; }
+  p.wide { max-width: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Un voyage <em>raconté</em> par ses papiers</h1>
+  <ol class="steps">
+    <li><div class="doc"><h3>Billet de train</h3><p>Paris, gare de Lyon, départ 7 h 12, voiture 14, place 82, côté fenêtre.</p></div><p class="note">Le premier matin, on part tôt pour arriver avant midi et poser les valises.</p></li>
+    <li><div class="doc"><h3>Reçu de l'hôtel</h3><p>Deux nuits, petit déjeuner compris, taxe de séjour réglée sur place en espèces.</p></div><p class="note">L'hôtel donne sur le port, la chambre est petite mais la vue est belle le soir.</p></li>
+    <li><div class="doc"><h3>Ticket du musée</h3><p>Entrée plein tarif, exposition temporaire comprise, valable toute la journée.</p></div><p class="note">Le musée ferme à 18 h, il faut garder deux heures pour la salle des cartes anciennes.</p></li>
+  </ol>
+  <p id="state">État au chargement.</p>
+  <p class="wide" id="long">Cette ligne de texte est volontairement très longue pour que le contrôle de longueur de ligne la trouve : elle court sur toute la largeur du conteneur, bien au-delà des quatre-vingts caractères conseillés, et elle continue encore un peu pour être sûre de passer sur plusieurs lignes à 1440 pixels de large, même avec une police à empattements de dix-sept pixels, ce qui fait beaucoup de caractères par ligne pour un lecteur.</p>
+</main>
+<script>
+  if (window.__swBefore) document.getElementById("state").textContent = "État préparé par --before : le tampon est posé sur le total de la facture.";
+</script>
+</body>
+</html>

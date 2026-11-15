@@ -493,7 +493,10 @@ test("access: a resource another account can read is reported as a leak", async 
   const { createServer } = await import("node:http");
   const { execFile } = await import("node:child_process");
   const { validateAccess, verdict } = await import("../plugins/core/scripts/lib/access.mjs");
-  assert.ok(validateAccess({ access: { accounts: { a: { headers: { x: "1" } } }, checks: [] } }).errors.length >= 2);
+  // One account is an error; no check yet is only a warning (a new project declares its accounts first).
+  const lone = validateAccess({ access: { accounts: { a: { headers: { x: "1" } } }, checks: [] } });
+  assert.equal(lone.errors.length, 1);
+  assert.equal(lone.warnings.length, 1);
   assert.equal(verdict({ method: "GET" }, { status: 302, location: "/login", body: "" }).verdict, "denied");
   assert.equal(verdict({ method: "GET" }, { status: 200, body: "<html>app</html>", bytes: 16 }, { status: 200, body: "{}" }).verdict, "unclear");
   // Notes API: note 1 checks its owner, note 2 forgets to (the classic bug), /admin only checks that someone is logged in.

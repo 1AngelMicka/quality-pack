@@ -11,7 +11,7 @@
 // What a tool cannot do is decide whether the empty state is good or the error message kind: read the screenshots.
 import { mkdirSync } from "node:fs";
 import { join, relative } from "node:path";
-import { loadBrowserTools, launch } from "./browser.mjs";
+import { loadBrowserTools, launch, measureContext, accountSession, watchDenied, reachOf } from "./browser.mjs";
 
 export const PASSES = ["slow", "failing", "long", "narrow", "dark", "keyboard", "no_script"];
 const DESKTOP = { width: 1440, height: 900 };
@@ -61,8 +61,9 @@ function lengthen() {
 
 const isData = (req) => ["xhr", "fetch"].includes(req.resourceType());
 
-async function open(browser, url, { context = {}, before } = {}) {
-  const ctx = await browser.newContext({ viewport: DESKTOP, ...context });
+// prepared: the account's session and the --before scripts, shared by every pass.
+async function openWith(browser, url, { context = {}, before, prepared = {} } = {}) {
+  const ctx = await measureContext(browser, { viewport: DESKTOP, ...context }, prepared);
   const page = await ctx.newPage();
   const errors = [];
   page.on("pageerror", (e) => { if (errors.length < 10) errors.push(String(e.message).split("\n")[0].slice(0, 160)); });
@@ -70,7 +71,7 @@ async function open(browser, url, { context = {}, before } = {}) {
   return { ctx, page, errors };
 }
 
-export async function stressAt(url, { cwd, outDir, root = cwd, only = PASSES, darkExpected = false, publicPage = false } = {}) {
+export async function stressAt(url, { cwd, outDir, root = cwd, only = PASSES, darkExpected = false, publicPage = false, before: scripts = [], as = null, project = null } = {}) {
   const tools = await loadBrowserTools(cwd);
   if (!tools) return { available: false, hint: "Playwright is not available. Run `node <sw.mjs> browser-setup` once (pack cache, not the project)." };
   const shots = outDir ? join(outDir, "stress") : null;
@@ -82,12 +83,18 @@ export async function stressAt(url, { cwd, outDir, root = cwd, only = PASSES, da
   const passes = {};
   const add = (id, level, ok, value, rule, extra = {}) => { passes[id] = { level, ok, value, rule, ...extra }; };
   try {
+    let session = null;
+    if (as) { try { session = await accountSession(browser, project, as, { root: cwd, base: new URL(url).origin }); } catch (e) { return { available: true, url, errors: [String(e.message)] }; } }
+    const prepared = { session, before: scripts };
+    const open = (b, u, o = {}) => openWith(b, u, { ...o, prepared });
     // Baseline: the page as it normally loads, and whether it asks a server for data.
     let dataRequests = 0;
-    const base = await open(browser, url, { before: (page) => page.on("request", (r) => { if (isData(r)) dataRequests++; }) });
+    const denied = [];
+    const base = await open(browser, url, { before: (page) => { watchDenied(page, denied); page.on("request", (r) => { if (isData(r)) dataRequests++; }); } });
     try { await goto(base.page); } catch (e) { await base.ctx.close(); return { available: true, url, errors: [`the page does not load: ${String(e.message).split("\n")[0].slice(0, 200)}`] }; }
     await base.page.waitForTimeout(400);
     const normal = await base.page.evaluate(look);
+    const reach = reachOf(url, base.page.url(), denied);
     const baseline = { chars: normal.chars, data_requests: dataRequests, screenshot: await shot(base.page, "normal") };
     await base.ctx.close();
 
@@ -216,7 +223,9 @@ export async function stressAt(url, { cwd, outDir, root = cwd, only = PASSES, da
     const should = Object.entries(passes).filter(([, c]) => c.level === "should" && !c.ok).map(([k]) => k);
     const skipped = [];
     if (!dataRequests) skipped.push("slow and failing: the page made no data request while loading (static page, or data rendered on the server)");
-    return { available: true, url, baseline, summary: { checks: Object.values(passes).filter((c) => c.level !== "info").length, must_failed: must, should_failed: should }, passes, skipped,
+    const summary = { checks: Object.values(passes).filter((c) => c.level !== "info").length, must_failed: must, should_failed: should };
+    if (!reach.same_screen) summary.verdict = `not measured: the browser ended on ${reach.final}, not on the requested screen`;
+    return { available: true, url, ...(reach.warnings.length ? { warnings: reach.warnings } : {}), reach, ...(as ? { as } : {}), baseline, summary, passes, skipped,
       by_eye: ["empty state: a fresh account or an empty list shows one clear action", "the error message says what happened in the user's words", "the skeleton matches the real layout", "dark theme: no black shadow on black, hairlines visible",
         "very long real data: 500 rows, a 3-line title, a name with no space"],
       note: "One screen in the state it loads in. Run it on each key screen, and after the steps that fill it when the screen starts empty." };

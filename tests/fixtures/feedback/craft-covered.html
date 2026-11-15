@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Invoice demo (test fixture)</title>
+<style>
+  body { margin: 0; font: 17px/1.6 Georgia, serif; color: #2b2622; background: #faf7f2; }
+  main { max-width: 720px; margin: 0 auto; padding: 32px 24px; }
+  .desk { position: relative; padding: 24px; }
+  /* The blotter, drawn over the sheet: the button stays visible through it, and dead to the mouse. */
+  .desk::after { content: ""; position: absolute; inset: 0; background: rgba(255, 255, 255, 0.01); }
+  button { height: 44px; padding: 0 16px; font: inherit; border: 0; border-radius: 4px; background: #234; color: #fff; }
+  button:focus-visible { outline: 2px solid #234; outline-offset: 2px; }
+  button:hover { background: #345; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Invoice</h1>
+  <p><button type="button" id="free">Preview</button></p>
+  <div class="desk"><button type="button" id="issue">Issue the invoice</button></div>
+</main>
+</body>
+</html>

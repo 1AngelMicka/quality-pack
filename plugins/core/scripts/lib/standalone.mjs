@@ -82,5 +82,6 @@ export function enableInProject(dir, modules = []) {
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, JSON.stringify(settings, null, 2) + "\n");
   return { written: file, enabled: wanted.map((w) => `${w}@${MARKETPLACE}`),
-    next: "Claude Code reads this file when the project is opened: the user restarts the session there and accepts the marketplace. Until then, use `sw.mjs skills` and `sw.mjs skill <name>`." };
+    next: "Claude Code reads this file when the project is opened: the user restarts the session there and accepts the marketplace. Until then, use `sw.mjs skills` and `sw.mjs skill <name>`.",
+    warning: "Accepting the marketplace does not always install the plugin: it may be added without sw@shipwright being installed, and then no /sw: command, skill or hook appears. The sure path is `sw.mjs install` (when the user asked for the installation), then /reload-plugins. After reopening, `sw.mjs doctor` says what is really installed and enabled." };
 }
