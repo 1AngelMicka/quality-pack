@@ -72,6 +72,18 @@ How to build each family: colour in [references/color.md](references/color.md); 
 3. Once a screen exists: `sw look <url>`. In persuade mode the generic tier should be `low`; the execution checks (font sizes, families, radii, line length and height, targets) should pass.
 4. Update `DESIGN.md`: mood words and principles, references (look and organisation), tokens table, never-list, motion.
 
+## 7. Keep the user's corrections
+
+Every design correction the user makes is something the next session will get wrong again unless it is written down. At the end of a session where the user corrected the look (when they ask, or before closing a design task), go through the conversation and turn those corrections into rules in `DESIGN.md` › "Corrections".
+
+- **What counts:** an explicit correction ("a shadow, not a border"), a value the user changed by hand in a file you wrote, a run of nudges ("smaller", "still too big", "ok": keep where they landed), a variant chosen or something removed, a non-obvious choice the user confirmed. Bugs, one screen's wording and misunderstandings of the task are not taste: leave them out.
+- **Only the user's taste.** Every rule comes from something the user said, edited or chose. Never add a rule because it is good practice.
+- **The reason.** Use the user's reason in their words. If they gave none, write a guess marked "(to confirm)" and ask; never write an invented reason as fact.
+- **The right level.** Not one card ("the pricing card has a shadow") and not everything ("never borders"), but the class: "raised surfaces (cards, menus, popovers) use `shadow-raised`, never a solid border". Use the project's own token names and values, and "always" or "never" rather than "prefer".
+- **Existing rules first.** If DESIGN.md already says the same thing, the rule failed: make it stricter (a number, a token) instead of adding a duplicate. If it says the opposite, show both and let the user choose.
+- **A check beats a sentence.** When a violation can be found in the code (a raw colour instead of a token, a forbidden value), add it to the tokens or a lint rule as well, so `sw tokens` or the linter catches it every time.
+- **Propose, then write.** Show the list of rules with their source and reason; write only what the user approves. Write each rule for an agent that was not in this session: no "as discussed", no "the card from earlier".
+
 ## Rules
 
 | ID | Rule | Threshold | Source |
@@ -85,5 +97,6 @@ How to build each family: colour in [references/color.md](references/color.md); 
 | DIR-07 | Motion | durations from tokens, 50–1000 ms; a reduced-motion alternative for any animated transform | Material 3 motion tokens; MDN |
 | DIR-08 | Tokens | valid DTCG 2025.10: types, units, resolved references, no cycle | DTCG Format 2025.10 |
 | DIR-09 | Type system | 2 families at most (plus monospace); 8 sizes at most per page | house setting |
+| DIR-10 | Corrections | every design correction of a session written in DESIGN.md as a class-level rule with its reason, approved by the user | idea from emilkowalski/skills (learn-taste) |
 
 House settings have no published validation: present them as adjustable. Sources: [SOURCES.md](../../SOURCES.md).

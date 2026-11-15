@@ -105,12 +105,13 @@ The token bands are in type-space-motion.md. These are the values for controls.
 | What | Value |
 | --- | --- |
 | Feedback on a control | Under 200 ms. Any interface animation under 300 ms. A 180 ms menu feels better than a 400 ms one |
-| Easing | Ease-out for enter and exit, with a custom curve: the CSS keywords are weak. No bounce or overshoot on routine actions, no `linear` on a transform |
+| Easing | Ease-out for enter and exit, with a custom curve: the CSS keywords are weak. Ease-in-out for something that moves from one place to another on screen. No bounce or overshoot on routine actions, no `linear` on a transform |
 | Press | `:active { transform: scale(0.97); }` (range 0.96 to 0.98) |
 | Enter | Never from `scale(0)`. Small popovers start at 0.9 or more, dialogs at about 0.8 or more. Origin at the trigger (`transform-origin` from the popover library's variable) |
 | Enter, content | From `translateY(8px)`, `blur(8px)`, opacity 0 |
-| Exit | Quieter than the entrance: opacity and about 4 px of blur |
-| Stagger | About 100 ms between blocks, about 80 ms between words |
+| Exit | Quieter and about 20 % shorter than the entrance: opacity and about 4 px of blur |
+| Stagger | About 100 ms between blocks, 30 to 50 ms between the items of a list, about 80 ms between words; past about ten items, the rest appear together |
+| Same element, two states | When a card becomes a page or a thumbnail becomes a viewer, move the element itself: View Transitions (`view-transition-name`) or Motion's `layoutId`, not one fade out and another fade in |
 | Tooltips | The first waits; the next ones in the same group show at once. About 125 ms, ease-out |
 | Icon swap (copy to check) | Opacity, scale and blur together. On a crossfade, `blur(2px)` hides an imperfect one |
 | Spring (drag, gesture) | Duration about 0.45 s, bounce 0. Apple's advice, not verified: bounce 0 by default, about 0.15 for some life, avoid more than about 0.4 |

@@ -79,6 +79,8 @@ domains:
       - {fr: "Un état vide explique la situation et propose l'action suivante.", en: "An empty state explains the situation and offers the next action."}
       - {fr: "Un message d'erreur dit ce qui s'est passé et comment s'en sortir, sans code technique brut.", en: "An error message says what happened and how to recover, without raw technical codes."}
       - {fr: "Toute action de plus d'une seconde montre un retour visuel ; toute action destructive demande confirmation ou permet d'annuler.", en: "Any action over one second shows feedback; any destructive action asks for confirmation or can be undone."}
+      - {fr: "Un champ de mot de passe a un bouton pour l'afficher, qui ne vide pas le champ et que le lecteur d'écran annonce.", en: "A password field has a button to show it, which does not clear the field and is announced by screen readers."}
+      - {fr: "Une page longue (article, documentation, liste) propose un retour en haut ou garde la navigation à portée ; une facture, un reçu ou un document qu'on imprime a une feuille d'impression (@media print) sans menus ni boutons.", en: "A long page (article, documentation, list) offers a way back to the top or keeps navigation within reach; an invoice, receipt or document people print has a print stylesheet (@media print) without menus or buttons."}
       - {fr: "Les formulaires gardent la saisie en cas d'erreur et affichent l'erreur à côté du champ.", en: "Forms keep the input on error and show the error next to the field."}
     criteria:
       - id: UX-01
@@ -120,6 +122,7 @@ domains:
     build:
       - {fr: "Écrire des phrases courtes, concrètes, au vocabulaire de l'utilisateur, pas à celui du code.", en: "Write short, concrete sentences in the user's vocabulary, not the code's."}
       - {fr: "Aucun texte de remplissage (lorem ipsum, « Votre titre ici ») ni chiffre inventé en production.", en: "No filler text (lorem ipsum, 'Your title here') or invented figures in production."}
+      - {fr: "Les pages légales, la documentation et les articles affichent leur date de dernière mise à jour.", en: "Legal pages, documentation and articles show the date they were last updated."}
       - {fr: "Un seul ton et une seule façon de nommer chaque chose dans tout le projet.", en: "One tone and one name for each thing across the whole project."}
     criteria:
       - id: CNT-01

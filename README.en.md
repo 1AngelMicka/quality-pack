@@ -16,7 +16,7 @@ Plugins for [Claude Code](https://claude.com/claude-code) that take a project **
 - **Plays instead of reading.** Your key tasks on phone and desktop, access control with two accounts, login, webhooks, the subscription life cycle, the screen with a slow network or a failing server.
 - **Measures the rendering in a real browser.** Spacing, finish, generic "AI-made" look, loading on a throttled phone, the gap to your references.
 - **Refuses what is invented.** No testimonial, figure, customer logo or badge without a fact you supplied.
-- **Scores honestly.** 37 domains, 247 criteria, two scores out of 10 (Experience; Engineering and operations). Every criterion needs evidence, and an open blocker caps the score.
+- **Scores honestly.** 37 domains, 249 criteria, two scores out of 10 (Experience; Engineering and operations). Every criterion needs evidence, and an open blocker caps the score.
 - **Stays frugal and quiet.** Rules loaded on demand, compact outputs, incremental audits. Free, open source, no telemetry, in English and French.
 
 **What it does not do, and says so**

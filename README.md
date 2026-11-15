@@ -16,7 +16,7 @@ Des plugins pour [Claude Code](https://claude.com/claude-code) qui accompagnent 
 - **Joue au lieu de relire.** Tes tâches clés sur téléphone et ordinateur, le contrôle d'accès avec deux comptes, la connexion, les webhooks, le cycle d'abonnement, l'écran avec un réseau lent ou un serveur en panne.
 - **Mesure le rendu dans un vrai navigateur.** Espacement, finitions, rendu générique « fait par IA », chargement sur téléphone ralenti, écart avec tes références.
 - **Refuse l'inventé.** Aucun témoignage, chiffre, logo de client ou badge sans un fait que tu as fourni.
-- **Note honnêtement.** 37 domaines, 247 critères, deux notes sur 10 (Expérience ; Technique et exploitation). Chaque critère exige une preuve, et un point bloquant ouvert plafonne la note.
+- **Note honnêtement.** 37 domaines, 249 critères, deux notes sur 10 (Expérience ; Technique et exploitation). Chaque critère exige une preuve, et un point bloquant ouvert plafonne la note.
 - **Reste économe et discret.** Règles chargées à la demande, sorties compactes, audits incrémentaux. Gratuit, open source, sans télémétrie, en français et en anglais.
 
 **Ce qu'il ne fait pas, et le dit**

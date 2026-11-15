@@ -31,6 +31,12 @@ Where the work happens, one line each: what the user decides there, in which ord
 - Default purple-to-blue gradients, glass cards everywhere, emoji used as icons
 - Generic sections: three vague benefits, invented testimonials, stock illustrations
 
+## Corrections
+
+Rules learned from the user's corrections, one line each: the rule (class of component, token or value, "always" or "never"), then why, in the user's words. A reason not yet confirmed ends with "(to confirm)".
+
+- <rule> — <why>
+
 ## Tokens
 
 To define. Colours, type scale, spacing scale, radius and shadows live in one place

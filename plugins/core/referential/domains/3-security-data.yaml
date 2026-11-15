@@ -13,7 +13,7 @@ domains:
       - {fr: "Limiter le débit sur la connexion, l'inscription, la réinitialisation de mot de passe, les formulaires et les routes coûteuses.", en: "Rate-limit login, sign-up, password reset, forms and expensive routes."}
       - {fr: "Requêtes base de données paramétrées ou ORM ; jamais de concaténation de chaînes.", en: "Parameterised database queries or ORM; never string concatenation."}
       - {fr: "Écrire le modèle de menaces au cadrage (.quality/threats.json) : ce qu'un attaquant veut, par où l'on entre, ce qui peut mal tourner, ce qu'on fait pour chaque cas. Le relire à chaque nouveau point d'entrée, type de donnée, rôle ou service tiers.", en: "Write the threat model at kickoff (.quality/threats.json): what an attacker wants, where input enters, what can go wrong, what is done about each case. Review it at every new entry point, kind of data, role or third party."}
-      - {fr: "Chaîne d'approvisionnement : fichier de verrouillage commité, délai de 7 jours avant d'installer une nouvelle version, scripts d'installation bloqués, actions de CI épinglées par empreinte de commit.", en: "Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash."}
+      - {fr: "Chaîne d'approvisionnement : fichier de verrouillage commité, délai de 7 jours avant d'installer une nouvelle version, scripts d'installation bloqués, actions de CI épinglées par empreinte de commit ; chaque commande que .claude/settings.json, .mcp.json ou .vscode/tasks.json lance toute seule est lue et attendue, aussi dans un dépôt cloné avant de l'ouvrir.", en: "Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash; every command that .claude/settings.json, .mcp.json or .vscode/tasks.json runs by itself is read and expected, also in a cloned repository before opening it."}
       - {fr: "Les tests actifs (mots de passe faux, scans avec attaque) ne visent que le poste local ou la préproduction, avec des comptes de test jetables et l'accord de l'utilisateur ; en production, lecture seule.", en: "Active tests (wrong passwords, attack scans) only target the local machine or staging, with disposable test accounts and the user's agreement; on production, read-only."}
       - {fr: "Headers : CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors.", en: "Headers: CSP, HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors."}
     criteria:
@@ -99,7 +99,7 @@ domains:
         severity: major
         check: {method: auto, tool: supply_scan}
         label: {fr: "Chaîne d'approvisionnement verrouillée", en: "Supply chain locked down"}
-        verify: {fr: "supply.json : aucun « must » en échec (fichier de verrouillage commité, délai avant installation, scripts d'installation, actions de CI épinglées, permissions des workflows, fichiers .env).", en: "supply.json: no failed \"must\" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files)."}
+        verify: {fr: "supply.json : aucun « must » en échec (fichier de verrouillage commité, délai avant installation, scripts d'installation, actions de CI épinglées, permissions des workflows, fichiers .env) ; chaque commande lancée toute seule par la configuration des outils confirmée dans project.json › auto_run_known.", en: "supply.json: no failed \"must\" (committed lockfile, release cooldown, install scripts, pinned CI actions, workflow permissions, .env files); every command that tool configuration runs by itself confirmed in project.json › auto_run_known."}
       - id: SEC-16
         severity: minor
         check: {method: inspect}
@@ -121,6 +121,7 @@ domains:
     build:
       - {fr: "Ne collecter que les données nécessaires à la promesse ; chaque champ demandé a une raison.", en: "Collect only the data the promise needs; every requested field has a reason."}
       - {fr: "Tenir à jour la liste des données, leur finalité, leur durée de conservation et les sous-traitants.", en: "Keep an up-to-date list of data, purpose, retention period and processors."}
+      - {fr: "Aucune case de consentement (newsletter, partenaires, conditions) n'est cochée d'avance ; chaque consentement est un choix séparé.", en: "No consent box (newsletter, partners, terms) is ticked in advance; each consent is a separate choice."}
       - {fr: "Aucun cookie ou traceur non essentiel avant consentement ; refuser aussi simple qu'accepter.", en: "No non-essential cookie or tracker before consent; refusing as easy as accepting."}
       - {fr: "Permettre à l'utilisateur d'exporter et de supprimer ses données.", en: "Let users export and delete their data."}
       - {fr: "Ne jamais écrire de données personnelles dans les logs.", en: "Never write personal data into logs."}

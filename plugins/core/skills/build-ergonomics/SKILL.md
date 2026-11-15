@@ -25,6 +25,8 @@ Rules:
 - Settings follow the order of the task, one decision at a time, with a recommended option already selected; advanced settings are set apart.
 - A theme, template or default never overwrites a user's choice without saying so and offering undo.
 - Design the phone and the desktop separately: each gets its own layout, not the same page stretched or shrunk.
+- A carousel or a row that scrolls sideways lets the next item show (about a quarter to a third of its width), so people see there is more.
+- What the user must see does not look like an ad: no coloured strip at the top or side, no animated box, no ad format; it sits in the content, next to the task.
 - Take from the references named in DESIGN.md their organisation (screen structure, navigation, gestures), not only their colours.
 
 Done means:

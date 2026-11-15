@@ -180,7 +180,7 @@ async function authApp() {
     seen.push({ url: req.url, origin: req.headers.origin });
     if (req.url === "/bad-body") return send(400, { error: "Invalid body" });
     if (req.headers.origin !== origin) return send(403, { message: "Missing or null Origin", code: "MISSING_OR_NULL_ORIGIN" });
-    await sleep(15); // the hash
+    await sleep(60); // the hash
     if (req.url === "/login") {
       const n = fails.get(b.email) || 0;
       if (n >= 10) return send(429, { error: "Too many attempts" });
