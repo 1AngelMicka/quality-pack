@@ -13,6 +13,20 @@
   },
   "blocker_cap": 3,
   "global_blocker_cap": 5.9,
+  "choices_still_count": [
+   "security",
+   "privacy",
+   "data",
+   "compliance",
+   "accessibility",
+   "accounts",
+   "subscriptions",
+   "payments",
+   "integrations",
+   "backups",
+   "mobile-release",
+   "desktop-release"
+  ],
   "unknown_counts_as": "fail",
   "flow_budgets": {
    "page_screens": {
@@ -1634,8 +1648,8 @@
         "method": "inspect"
        },
        "label": {
-        "fr": "Les animations sont utiles, discrètes et respectent prefers-reduced-motion",
-        "en": "Animations are useful, subtle and respect prefers-reduced-motion"
+        "fr": "Les animations servent le propos et respectent prefers-reduced-motion",
+        "en": "Animations serve the content and respect prefers-reduced-motion"
        },
        "verify": {
         "fr": "Lister les animations et leur rôle ; tester avec réduction des animations activée.",

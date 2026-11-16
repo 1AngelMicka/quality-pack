@@ -8,6 +8,9 @@
   "package_manager": "pnpm",
   "promise": "For <whom>, <product> <does what> so that <outcome>.",
   "out_of_scope": [],
+  "choices": [
+    { "id": "SCRL-09", "what": "Example: rich motion on the portfolio, every section animated", "why": "The user's words", "date": "" }
+  ],
   "success_metric": "",
   "evidence": [
     { "what": "Stage 0 proof that someone wants it, e.g. 8 of 12 freelancers interviewed asked for it", "source": "notes/interviews.md", "date": "" }

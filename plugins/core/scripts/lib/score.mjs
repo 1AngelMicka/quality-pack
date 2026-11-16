@@ -4,7 +4,7 @@
 // clean server no longer hides an interface people cannot use. The overall score is kept for history.
 import { allDomains, applies, resolveFlags } from "./ref.mjs";
 
-const STATUSES = new Set(["pass", "partial", "fail", "unknown", "na"]);
+const STATUSES = new Set(["pass", "partial", "fail", "unknown", "na", "chosen"]);
 const ORDER = { blocker: 0, major: 1, minor: 2 };
 const round1 = (x) => Math.round(x * 10) / 10;
 
@@ -24,6 +24,10 @@ export function compute(audit, ref) {
   const areas = ref.score_areas || {};
   const areaOf = Object.fromEntries(Object.entries(areas).flatMap(([k, a]) => a.domains.map((d) => [d, k])));
   const results = audit.results || {};
+  // A criterion the user chose to go beyond (project.json › choices) leaves the score and is listed apart,
+  // except in the domains where a choice puts other people at risk (data, money, security, access, law).
+  const stillCount = new Set(ref.scoring.choices_still_count || []);
+  const chosen = [];
   const domains = [];
   const issues = [];
   const raw = {};
@@ -42,6 +46,11 @@ export function compute(audit, ref) {
       let status = r.status || "unknown";
       if (!STATUSES.has(status)) throw new Error(`${c.id}: unknown status "${status}"`);
       if (status === "na") continue;
+      if (status === "chosen") {
+        chosen.push({ id: c.id, domain: d.id, label: c.label, why: r.choice || r.evidence || "", counted: stillCount.has(d.id) });
+        if (!stillCount.has(d.id)) continue;
+        status = STATUSES.has(r.measured) && !["chosen", "na"].includes(r.measured) ? r.measured : "fail";
+      }
       if (r.carried_from) carried++;
       if (c.severity === "blocker" && status === "partial") status = "fail"; // a blocker is met or not
       const value = status === "unknown" ? sv.fail : sv[status];
@@ -81,7 +90,7 @@ export function compute(audit, ref) {
   issues.sort((a, b) => ORDER[a.severity] - ORDER[b.severity]
     || Number(a.status === "unknown") - Number(b.status === "unknown") || a.id.localeCompare(b.id));
   return { run: audit.run || audit.date, date: audit.date, project: audit.project, profile: audit.profile, scores, global, global_capped: globalCapped,
-    open_blockers: openBlockers, carried, domains, issues, review: audit.review_findings || [], challenged: audit.challenged || [] };
+    open_blockers: openBlockers, carried, domains, issues, chosen, review: audit.review_findings || [], challenged: audit.challenged || [] };
 }
 
 const T = {
@@ -96,7 +105,8 @@ const T = {
     review: "Revue d'ergonomie", reviewIntro: "Problèmes relevés en parcourant les tâches clés (heuristiques de Nielsen, de Bastien et Scapin). Un problème critique fait échouer {id}, un majeur le plafonne à « partiel ». `/sw:fix` les corrige comme les autres.",
     problem: "Problème", where: "Où", rsev: { critical: "critique", major: "majeur", minor: "mineur" },
     challenge: "Contre-vérification", challengeIntro: "Critères réussis revus à la baisse en relisant les captures des parcours (« un utilisateur pressé s'en sortirait-il ? ») :",
-    st: { pass: "réussi", partial: "partiel", fail: "échec", unknown: "non vérifié", na: "sans objet" } },
+    chosenTitle: "Choix de l'utilisateur", chosenIntro: "Ce que l'utilisateur a voulu au-delà des réglages par défaut (`.quality/project.json` › `choices`). Hors note, sauf là où le choix expose d'autres personnes (sécurité, données, argent, accès, droit) : il y reste compté.", why: "Pourquoi", counted: "compté dans la note",
+    st: { pass: "réussi", partial: "partiel", fail: "échec", unknown: "non vérifié", na: "sans objet", chosen: "choisi" } },
   en: { title: "Quality audit report", global: "Overall score", profile: "Profile", domain: "Domain", score: "Score",
     trend: "Trend", blockers: "Blockers", toFix: "Fix next", unknown: "Not checked", na: "Not applicable",
     none: "None", criterion: "Criterion", severity: "Severity", fix: "Fix", area: "Score",
@@ -108,7 +118,8 @@ const T = {
     review: "Ergonomics review", reviewIntro: "Problems found while walking through the key tasks (Nielsen's heuristics, Bastien and Scapin's criteria). A critical problem fails {id}, a major one caps it at partial. `/sw:fix` fixes them like the other issues.",
     problem: "Problem", where: "Where", rsev: { critical: "critical", major: "major", minor: "minor" },
     challenge: "Counter-check", challengeIntro: "Passed criteria lowered after re-reading the flow screenshots (\"would a user in a hurry get through?\"):",
-    st: { pass: "pass", partial: "partial", fail: "fail", unknown: "not checked", na: "n/a" } },
+    chosenTitle: "User's choices", chosenIntro: "What the user wanted beyond the defaults (`.quality/project.json` › `choices`). Left out of the score, except where the choice puts other people at risk (security, data, money, access, law): there it still counts.", why: "Why", counted: "counted in the score",
+    st: { pass: "pass", partial: "partial", fail: "fail", unknown: "not checked", na: "n/a", chosen: "chosen" } },
 };
 
 export function grade(score, ref, lang) {
@@ -179,6 +190,10 @@ export function toMarkdown(report, ref, lang = "fr", previous = null) {
   if (report.challenged?.length) {
     L.push("", `## ${t.challenge}`, "", t.challengeIntro, "");
     for (const c of report.challenged) L.push(`- ${c.id}${t.sep}${t.st[c.from]} → ${t.st[c.to]}`);
+  }
+  if (report.chosen?.length) {
+    L.push("", `## ${t.chosenTitle}`, "", t.chosenIntro, "", `| ${t.criterion} | ${t.why} |`, "| --- | --- |");
+    for (const c of report.chosen) L.push(`| ${c.id} — ${c.label[lang]}${c.counted ? ` (${t.counted})` : ""} | ${cell(c.why || "—")} |`);
   }
   L.push(...table(report.issues.filter((i) => i.severity !== "blocker" && i.status !== "unknown"), t.toFix));
   L.push(...table(report.issues.filter((i) => i.severity !== "blocker" && i.status === "unknown"), t.unknown));

@@ -188,7 +188,7 @@ _Applies if: The project has a user interface_
 | SLP-02 | The visual direction is project-specific and documented | Major | DESIGN.md states the choices (mood, colours, type) and they show on screen; compare with default templates (raw shadcn, purple gradient, glass). DESIGN.md existing is not enough; following how the references are organised is checked by ERG-08. (inspection) |
 | SLP-03 | No decorative visual without information (generic illustrations, blobs, random icons) | Major | For each image or illustration: what real thing does it show? (inspection) |
 | SLP-04 | Sections answer a user question, not a template | Minor | Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits; look.json: tier "strong" in persuade mode = fail, "some" = partial, never on one signal alone; in operate mode only quality signals count. (inspection `generic_look_scan`) |
-| SLP-05 | Animations are useful, subtle and respect prefers-reduced-motion | Minor | List animations and their purpose; test with reduced motion enabled. (inspection) |
+| SLP-05 | Animations serve the content and respect prefers-reduced-motion | Minor | List animations and their purpose; test with reduced motion enabled. (inspection) |
 
 ### Responsive (RSP)
 

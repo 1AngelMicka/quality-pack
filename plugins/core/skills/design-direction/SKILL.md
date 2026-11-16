@@ -87,6 +87,8 @@ Every design correction the user makes is something the next session will get wr
 
 ## Rules
 
+**Defaults, never ceilings.** Every limit in this pack (number of animations, scroll budget, typefaces, radii, generic-look signals, durations…) is a default that gives a good result when nobody asks for more. When the user wants more, build it, and build it well: say its cost once in one sentence (speed, readability, accessibility), then write the choice in `.quality/project.json` › `choices` (`{ "id": "<rule, criterion or check>", "what": "…", "why": "<the user's words>", "date": "…" }`). The measures and the audit then report it as chosen, not as a defect. Never refuse, water down or quietly shrink what the user asked for. Visitors keep their own settings (reduced motion, zoom, keyboard): honouring them never limits what the author builds for everyone else.
+
 | ID | Rule | Threshold | Source |
 | --- | --- | --- | --- |
 | DIR-01 | Mood | 4–5 words, each a testable principle | NN/g mood boards |

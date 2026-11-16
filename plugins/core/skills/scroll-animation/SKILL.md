@@ -7,10 +7,10 @@ description: "Builds scroll animations that work for everyone: reveals on enter,
 
 Scroll animation helps when it tells a story, shows progress or reveals structure. It hurts on task pages, forms, apps and dense reading, and on phones more than on desktops. Check `.quality/project.json` › `surface`: in `operate` and `read`, keep scroll motion to progress feedback and small reveals; the big effects belong to `persuade` pages.
 
-Four rules come before any technique:
+The user decides how much moves. Everything below about restraint (number of moments, scroll budget, trigger or scrub, smooth scrolling) is a default: when the user wants more, build it, say the cost once, and write the choice in `.quality/project.json` › `choices` (for example `SCRL-09` for rich motion, `SCRL-11` for a long scrubbed scene). Four rules protect the visitor, never the amount of motion:
 
 1. **Content never depends on an animation.** Everything is readable with JavaScript off and with reduced motion requested. The hidden starting state (opacity 0, offset) only exists inside the enhancement, never as the default style.
-2. **Scrolling stays native.** Do not change scroll speed or direction, do not cancel wheel or touch events. Smooth-scroll libraries only on persuasive pages, and only if keyboard, anchors, find-in-page and reduced motion still work.
+2. **Scrolling stays native.** Do not change scroll speed or direction, do not cancel wheel or touch events. Smooth-scroll libraries by default on persuasive pages (elsewhere when the user asks), and always with keyboard, anchors, find-in-page and reduced motion still working.
 3. **Motion is optional.** Every scroll effect sits inside `@media (prefers-reduced-motion: no-preference)` (or the JS equivalent) and has a still version: the end state, or a short fade.
 4. **Animate `transform`, `opacity` and `filter` only.** They run off the main thread with CSS scroll timelines; width, height, top, left, colours and shadows cause layout or paint on every frame.
 
@@ -55,7 +55,7 @@ Recipes with code for each line: [references/techniques.md](references/technique
 - Between the animated element and the real scroller, use `overflow: clip`, not `overflow: hidden` (hidden creates a scroll container that captures `view()`).
 - For triggers: one IntersectionObserver for all reveals, `unobserve` after the reveal. Never do layout reads or writes in a `scroll` listener; `requestAnimationFrame` does not throttle scroll events. Wheel and touch listeners are `{ passive: true }`.
 - Pinned scenes: use `svh` or `lvh` heights, not `100vh` or `dvh` (they jump with the mobile toolbars); about a third of a screen of scroll per step and three screens at most in all (section 1); no long text inside a pinned scene.
-- Reveals: about 20–24 px of travel, 200–500 ms, ease-out; motion scrubbed by scroll uses linear timing. Not every section fades in: pick one or two moments, unless rich motion is a written choice (SCRL-09): the user asked for it, `DESIGN.md` says why and where, and `.quality/project.json` has `"motion": "rich"`. Even then, vary the effects instead of one reveal on every section.
+- Reveals: about 20–24 px of travel, 200–500 ms, ease-out; motion scrubbed by scroll uses linear timing. By default, one or two moments per page. When the user wants rich motion, every section can move: write it as a choice (`choices` › `SCRL-09`, and `"motion": "rich"`), and vary the effects rather than repeating one reveal.
 - Loops, marquees and anything that runs more than 5 seconds after being scrolled into view get a pause control (WCAG 2.2.2).
 - A very animated page (rich motion, or more than two scroll moments) gets a visible **Animations on/off** control in the header: it starts from the system setting, the visitor can override it either way, the choice is remembered, and it is the pause control for everything it covers. Recipe: [references/techniques.md](references/techniques.md#motion-toggle).
 - WebGL, video and image sequences: stop rendering when off-screen or when the tab is hidden; show a poster frame with reduced motion; mind memory (150 decoded 1080p frames are about 1.2 GB).
@@ -83,9 +83,9 @@ Recipes with code for each line: [references/techniques.md](references/technique
 | SCRL-06 | No flashing | at most 3 flashes per second | WCAG 2.3.1 |
 | SCRL-07 | Durations | 200–500 ms for reveals (up to about 1.2 s for a story step), linear when scrubbed | NN/g animation duration |
 | SCRL-08 | Mobile heights | `svh`/`lvh` for pinned scenes | web.dev viewport units |
-| SCRL-09 | Restraint | one or two scroll moments per page, unless rich motion is a written choice (`DESIGN.md` says why and where, `.quality/project.json` › `"motion": "rich"`, toggle of SCRL-12 present); never every section on the same reveal | NN/g parallax; generic-look research |
+| SCRL-09 | Restraint (default) | one or two scroll moments per page by default; any amount when the user wants rich motion (`choices` › `SCRL-09`, `"motion": "rich"`); vary the effects rather than one reveal on every section | NN/g parallax; generic-look research |
 | SCRL-10 | 3D | poster image first, 0 frames drawn when nothing moves, page scroll kept over the canvas, rotation by keyboard; rules 3D-01 to 3D-09 | [references/3d.md](references/3d.md) |
-| SCRL-11 | Trigger by default | scrub only where position is the information (progress, parallax, a short pinned scene); at most about a third of a screen of scroll per scrubbed step, three screens per pinned scene | NN/g "Scrolljacking 101" (2023); pilot project feedback (2026-11) |
+| SCRL-11 | Trigger by default | by default, scrub only where position is the information (progress, parallax, a short pinned scene), about a third of a screen per scrubbed step and three screens per pinned scene; longer or more scrubbed scenes when the user wants them (`choices` › `SCRL-11`) | NN/g "Scrolljacking 101" (2023); pilot project feedback (2026-11) |
 | SCRL-12 | Motion toggle and the author's setting | very animated pages have a visible Animations on/off control that starts from the system setting; the author's `prefers-reduced-motion` is checked before showing the result | WCAG 2.2.2, 2.3.3 |
 
 Sources: [SOURCES.md](../../SOURCES.md).

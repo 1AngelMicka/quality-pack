@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- **Defaults, never ceilings.** Every limit of the pack (scroll moments, scroll budget, smooth scrolling, typefaces, generic-look signals, craft checks…) is now a default the user can lift. Claude builds what the user wants, states the cost once and records it in `.quality/project.json` › `choices`. `sw look` and `sw craft` report a chosen signal or check as chosen; the audit has a new status `chosen`, left out of the score and listed under "User's choices", except in the domains where a choice puts other people at risk (security, privacy, data, compliance, accessibility, accounts, subscriptions, payments, integrations, backups, store and desktop release: `scoring.yaml` › `choices_still_count`).
+- The principle is written in the project's CLAUDE.md section, `workflow`, the design skills and the auditor. `scroll-animation` restates SCRL-09 and SCRL-11 as defaults; SLP-05 no longer asks for subtle motion, only motion that serves the content and respects reduced motion.
+
 ## 0.11.0 — 2026-11-16
 
 - **Pattern bank (`/sw:patterns`):** 154 entries the pack can propose, not only check: navigation (sticky, hiding or shrinking header, drawer, mega menu, bottom tab bar and six ways to animate its selected tab, rail, sidebar, command palette, floating contact button…), motion (the micro-settings of controls, rubber band, arc, success pulse, page transitions, scroll effects, marquee, magnetic button…), visual effects (glass, liquid glass, shader and particle backgrounds, grain, paper cut, 3D object, bento grid…), features, page sections, UX laws, 24 inspiration galleries and 20 component libraries with their verified licence and price. Each pattern says where it fits, when to avoid it and how to build it with free tools; filter with `--type` and `--surface`, or `search`.

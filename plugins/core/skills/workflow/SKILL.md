@@ -10,6 +10,8 @@ If `.quality/handoff.md` exists and is recent, read it first: it says where the 
 
 ## Before you write code
 
+**Defaults, never ceilings.** Every limit in this pack (number of animations, scroll budget, typefaces, radii, generic-look signals, durations…) is a default that gives a good result when nobody asks for more. When the user wants more, build it, and build it well: say its cost once in one sentence (speed, readability, accessibility), then write the choice in `.quality/project.json` › `choices` (`{ "id": "<rule, criterion or check>", "what": "…", "why": "<the user's words>", "date": "…" }`). The measures and the audit then report it as chosen, not as a defect. Never refuse, water down or quietly shrink what the user asked for. Visitors keep their own settings (reduced motion, zoom, keyboard): honouring them never limits what the author builds for everyone else.
+
 1. Restate the task in one or two sentences and list your assumptions. If something is ambiguous and a wrong guess would be costly, ask. Otherwise pick the most reasonable reading and say which one you took.
 2. For a new feature, write its acceptance criteria first (in the task, a spec file or the ticket): what the user can do, what they see in the empty, loading and error cases, what must never happen.
 3. Find every place your change must reach: callers, types, tests, fixtures, config, translations (see "Find code cheaply" below).

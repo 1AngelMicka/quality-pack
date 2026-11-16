@@ -52,7 +52,7 @@ Done means:
 - [major] SLP-02: The visual direction is project-specific and documented. Check: DESIGN.md states the choices (mood, colours, type) and they show on screen; compare with default templates (raw shadcn, purple gradient, glass). DESIGN.md existing is not enough; following how the references are organised is checked by ERG-08.
 - [major] SLP-03: No decorative visual without information (generic illustrations, blobs, random icons). Check: For each image or illustration: what real thing does it show?
 - [minor] SLP-04: Sections answer a user question, not a template. Check: Look for generic blocks: invented testimonials, 'Our values', grids of 3 vague benefits; look.json: tier "strong" in persuade mode = fail, "some" = partial, never on one signal alone; in operate mode only quality signals count.
-- [minor] SLP-05: Animations are useful, subtle and respect prefers-reduced-motion. Check: List animations and their purpose; test with reduced motion enabled.
+- [minor] SLP-05: Animations serve the content and respect prefers-reduced-motion. Check: List animations and their purpose; test with reduced motion enabled.
 
 ## Responsive (RSP)
 

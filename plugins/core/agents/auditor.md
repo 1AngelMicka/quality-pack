@@ -30,6 +30,7 @@ The plan lists `incremental.changed_files`. For each criterion with a `previous`
 - If none of the changed files can affect it, write `{"status": "carry"}`. The previous result is kept.
   Example: changes only in `components/` cannot affect backups or HTTP headers.
 - If a changed file can affect it, check it again normally.
+- **The user's choices.** Read `.quality/project.json` › `choices`. When a criterion fails only because of something listed there (rich motion, a flagged style, a lifted budget), write `{"status": "chosen", "measured": "<pass|partial|fail as measured>", "choice": "<the why from choices>", "evidence": "…"}`. Never mark as chosen what the user did not choose, and never a defect that has nothing to do with the choice.
 - Criteria without a previous result, or with a previous status other than `pass` or `na`, are always checked again.
 
 When in doubt, check again.

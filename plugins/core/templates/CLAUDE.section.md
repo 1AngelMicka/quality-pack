@@ -2,6 +2,7 @@
 
 This project uses Shipwright (`.quality/project.json` holds its promise, profile, flags and stacks).
 
+- **Defaults, never ceilings.** Every limit in this pack (number of animations, scroll budget, typefaces, radii, generic-look signals, durations…) is a default that gives a good result when nobody asks for more. When the user wants more, build it, and build it well: say its cost once in one sentence (speed, readability, accessibility), then write the choice in `.quality/project.json` › `choices` (`{ "id": "<rule, criterion or check>", "what": "…", "why": "<the user's words>", "date": "…" }`). The measures and the audit then report it as chosen, not as a defect. Never refuse, water down or quietly shrink what the user asked for. Visitors keep their own settings (reduced motion, zoom, keyboard): honouring them never limits what the author builds for everyone else.
 - Follow the `sw:workflow` skill for every coding task, plus the `sw:build-*` skills of the domains you touch and the stack rules skill.
 - Visual direction: `DESIGN.md`. Use its tokens only, and follow how its references are organised ("What we borrow"), on phone and desktop.
 - Designing a screen: `sw:design-screens`; colours, type and tokens: `sw:design-direction`; advice on an existing screen: `/sw:design-review`; spacing and polish, measured before saying it is done: `sw:deslop-ui`.
