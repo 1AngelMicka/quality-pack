@@ -25,6 +25,8 @@ Trigger is the default. A scrubbed sequence only advances while the visitor scro
 
 ## 2. Pick the technique
 
+To show the user what is possible before choosing, `sw patterns search scroll` and `sw patterns motion --surface persuade` list the scroll and page-transition patterns with where each fits.
+
 Native first. Since October 2026 CSS scroll-driven animations work in Chrome, Edge (115+), Safari (26+) and Firefox (159+) — Baseline "newly available" — so most effects need no library. Older browsers simply show the content without the effect, which is fine when rule 1 holds. Scroll-driven animations (`animation-timeline`) are scrub by nature; the native trigger is IntersectionObserver adding a class that starts a CSS transition or animation (`timeline-trigger` does it in CSS, Chromium only).
 
 | Effect | Trigger or scrub | Native (first choice) | Library, when native is not enough |

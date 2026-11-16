@@ -1,0 +1,271 @@
+{
+  "family": "effects",
+  "kind": "pattern",
+  "label": {
+    "fr": "Effets visuels",
+    "en": "Visual effects"
+  },
+  "summary": "Visual treatments that can define an identity. Several are flagged by the generic-look check when used by default: when one is chosen on purpose, write the choice and its reason in DESIGN.md.",
+  "entries": [
+    {
+      "id": "glassmorphism",
+      "label": {
+        "fr": "Verre dépoli",
+        "en": "Frosted glass"
+      },
+      "what": "Translucent panels that blur what is behind them.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Over a photo or a rich background where the layer must stay readable; macOS-like tools.",
+      "avoid_when": "Over plain backgrounds (it only adds blur); low-end phones; text over busy areas.",
+      "build": "backdrop-filter: blur(12px) saturate(1.2) with a fallback colour; keep contrast at 4.5:1 for text; small surfaces only.",
+      "checks": [
+        "sw look: LOOK-GLASS when used by default"
+      ]
+    },
+    {
+      "id": "liquid-glass",
+      "label": {
+        "fr": "Verre liquide",
+        "en": "Liquid glass"
+      },
+      "what": "Apple-style glass that bends and reflects what is behind it, with highlights on the edges.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "use_when": "A signature element: a logo, a tab bar, a single card on a rich background.",
+      "avoid_when": "Large surfaces and long lists; low-end devices.",
+      "build": "SVG displacement filter or WebGL shader on one element; test the frame rate; plain glass fallback. See the libraries family.",
+      "checks": [
+        "sw look: LOOK-GLASS"
+      ]
+    },
+    {
+      "id": "gradient-mesh",
+      "label": {
+        "fr": "Dégradé maillé",
+        "en": "Mesh gradient"
+      },
+      "what": "A soft background made of several blended colour spots.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Brand pages where the colours come from the identity.",
+      "avoid_when": "Purple-to-blue by default (flagged as generic); behind body text.",
+      "build": "Several radial-gradient layers or an SVG; colours from the tokens.",
+      "checks": [
+        "sw look: LOOK-GRADIENTS, LOOK-VIOLET"
+      ]
+    },
+    {
+      "id": "animated-shader-background",
+      "label": {
+        "fr": "Fond animé par shader",
+        "en": "Animated shader background"
+      },
+      "what": "A moving gradient or noise field rendered on the GPU behind a hero.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "ai-product",
+          "developer-tool",
+          "event-conference",
+          "saas-marketing"
+        ]
+      },
+      "use_when": "Launches, AI products, events, one hero.",
+      "avoid_when": "Behind text without a scrim; low-end phones; reading pages.",
+      "build": "WebGL canvas (Paper Shaders or ShaderGradient, see libraries), paused off screen and with reduced motion, a static image fallback."
+    },
+    {
+      "id": "particles-background",
+      "label": {
+        "fr": "Fond en particules",
+        "en": "Particles background"
+      },
+      "what": "Points or shapes that float and react to the pointer, sometimes forming text or a 3D shape.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "ai-product",
+          "developer-tool",
+          "agency-studio",
+          "event-conference"
+        ]
+      },
+      "use_when": "Tech launches and creative pages, one section.",
+      "avoid_when": "Behind body text; mobile pages where it costs battery.",
+      "build": "tsParticles or a canvas with requestAnimationFrame; few particles on phones; stopped with reduced motion."
+    },
+    {
+      "id": "grain-noise",
+      "label": {
+        "fr": "Grain",
+        "en": "Grain and noise"
+      },
+      "what": "A light film grain over flat colours, for warmth and a printed feel.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Editorial, food, culture, fashion.",
+      "avoid_when": "Dense interfaces and data.",
+      "build": "A small tiled noise PNG or an SVG feTurbulence at 3 to 8 % opacity, pointer-events: none."
+    },
+    {
+      "id": "paper-cut",
+      "label": {
+        "fr": "Papier découpé",
+        "en": "Paper cut"
+      },
+      "what": "Layers that look like cut paper, with soft shadows and slight relief.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ],
+        "types": [
+          "education",
+          "non-profit",
+          "mobile-app-page"
+        ]
+      },
+      "use_when": "Kids, education, crafts, playful apps.",
+      "avoid_when": "Professional tools.",
+      "build": "Stacked layers with two-layer shadows; SVG shapes with a subtle texture."
+    },
+    {
+      "id": "glow",
+      "label": {
+        "fr": "Lueur",
+        "en": "Glow"
+      },
+      "what": "A soft halo of colour around an element or behind a hero.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Dark themes for developer and AI products, on one focal element.",
+      "avoid_when": "On every card (flagged as generic); light themes.",
+      "build": "A blurred pseudo-element in the accent colour at low opacity.",
+      "checks": [
+        "sw look: LOOK-GLOW"
+      ]
+    },
+    {
+      "id": "3d-object",
+      "label": {
+        "fr": "Objet 3D interactif",
+        "en": "Interactive 3D object"
+      },
+      "what": "A product or logo in 3D that the user can rotate, or that turns with the scroll.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "ecommerce",
+          "luxury-brand",
+          "mobile-app-page",
+          "saas-marketing"
+        ]
+      },
+      "use_when": "Physical products, hardware, brand launches.",
+      "avoid_when": "When a photo says the same; first load on phones.",
+      "build": "model-viewer (Apache-2.0) or React Three Fiber; loaded on demand; static poster image.",
+      "see": "scroll-animation"
+    },
+    {
+      "id": "glass-metal-logo",
+      "label": {
+        "fr": "Logo en verre ou métal",
+        "en": "Glass or metal logo"
+      },
+      "what": "The logo rendered as a realistic 3D object of glass or chrome.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Launch pages, brand moments.",
+      "avoid_when": "Small sizes (favicon, header) where detail is lost.",
+      "build": "A rendered image or a WebGL material; the flat logo stays the reference."
+    },
+    {
+      "id": "bento-grid",
+      "label": {
+        "fr": "Grille bento",
+        "en": "Bento grid"
+      },
+      "what": "Features shown in boxes of different sizes arranged like a lunch box.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Products with features of unequal importance, each with a real visual.",
+      "avoid_when": "Equal boxes with an icon and two lines each (flagged as generic).",
+      "build": "CSS grid with spans; each box a different unit (screenshot crop, number, diagram).",
+      "checks": [
+        "sw look: LOOK-TRIPLETS, LOOK-ICONTILES"
+      ]
+    },
+    {
+      "id": "editorial-serif-italic",
+      "label": {
+        "fr": "Titre à empattements avec italique",
+        "en": "Serif headline with italics"
+      },
+      "what": "A large serif headline with one word in italics for emphasis.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Editorial, luxury, culture brands whose identity is literary.",
+      "avoid_when": "As a default look (flagged as generic since 2025).",
+      "build": "Choose the face for the subject and record it in DESIGN.md.",
+      "checks": [
+        "sw look: LOOK-ITALIC"
+      ]
+    },
+    {
+      "id": "dark-mode-toggle",
+      "label": {
+        "fr": "Bouton thème clair et sombre",
+        "en": "Light and dark toggle"
+      },
+      "what": "A control that switches the theme, following the system by default.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Apps, documentation, developer tools.",
+      "avoid_when": "Brand sites built around one atmosphere.",
+      "build": "Three states (system, light, dark) saved; no transition during the switch; dark built, not inverted.",
+      "checks": [
+        "UI-06",
+        "CRF-07"
+      ]
+    }
+  ]
+}

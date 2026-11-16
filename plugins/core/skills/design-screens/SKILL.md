@@ -38,6 +38,7 @@ Choose one of three shells, then a recipe. Details and transitions between width
 - One primary action per view. Secondary actions sit next to the content or in the top bar; rare ones in an overflow menu.
 - On a phone, the primary action sits in the lower half of the screen (a bottom action bar), at least 44×44 px. No target under 24×24 px anywhere (WCAG 2.5.8). People touch the centre of the screen most easily; corners need larger targets, and destructive actions sit away from frequent ones.
 - Navigation bars navigate, toolbars act: do not mix them.
+- For the navigation itself, `sw patterns navigation --surface <mode>` lists the options with where each fits: sticky or hiding header, drawer, mega menu, bottom tab bar and six ways to animate its selected tab, rail, sidebar, command palette, breadcrumbs, floating contact button. Patterns are choices, not requirements: offer the ones that fit with their cost ("use when", "avoid when"), let the user pick, and write each chosen one in `DESIGN.md` › "Chosen patterns" with its reason. A pattern the generic-look check flags (glass, glow, serif italics, badge above the headline…) is allowed once the user chose it: say so in one line, then build it well.
 
 ## 5. Settings and disclosure (SCR-06)
 

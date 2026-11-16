@@ -1,0 +1,296 @@
+{
+  "family": "sections",
+  "kind": "pattern",
+  "label": {
+    "fr": "Sections de page",
+    "en": "Page sections"
+  },
+  "summary": "Building blocks of public pages. Several are flagged as generic when used out of habit; each is fine when it answers a question the visitor has and carries real content.",
+  "entries": [
+    {
+      "id": "hero-product-shot",
+      "label": {
+        "fr": "Ouverture sur le produit",
+        "en": "Hero with the product"
+      },
+      "what": "The first screen shows the real product: a screenshot, a demo or the output.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "saas-marketing",
+          "ai-product",
+          "developer-tool",
+          "mobile-app-page"
+        ]
+      },
+      "use_when": "SaaS, apps, tools.",
+      "avoid_when": "Products with nothing visual yet.",
+      "build": "A real screen at a readable size, cropped on what matters."
+    },
+    {
+      "id": "hero-two-buttons",
+      "label": {
+        "fr": "Ouverture à deux boutons",
+        "en": "Hero with two buttons"
+      },
+      "what": "A headline with a primary and a secondary button side by side.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "When the two actions serve different visitors (try and see a demo).",
+      "avoid_when": "As a default (flagged as generic): one clear action is usually stronger.",
+      "build": "Primary filled, secondary as a text link or outline.",
+      "checks": [
+        "deslop tells: hero with two buttons"
+      ]
+    },
+    {
+      "id": "eyebrow-badge",
+      "label": {
+        "fr": "Badge au-dessus du titre",
+        "en": "Badge above the headline"
+      },
+      "what": "A small pill above the headline announcing news or a category.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Real news with a link (a launch, a release).",
+      "avoid_when": "Decoration (flagged as generic).",
+      "build": "A link to the news, removed when it is old.",
+      "checks": [
+        "sw look: LOOK-BADGE, LOOK-EYEBROWS"
+      ]
+    },
+    {
+      "id": "stat-band",
+      "label": {
+        "fr": "Bandeau de chiffres clés",
+        "en": "Stat band"
+      },
+      "what": "A row of three or four big figures with a label each.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Real, sourced, recent figures that matter to the visitor.",
+      "avoid_when": "Rounded or invented numbers (BRD-01); opening the page with them.",
+      "build": "Tabular figures, the source in a note.",
+      "checks": [
+        "BRD-01"
+      ]
+    },
+    {
+      "id": "three-steps",
+      "label": {
+        "fr": "Section en 3 étapes",
+        "en": "Three steps"
+      },
+      "what": "How it works in three numbered steps.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "When there really are three steps the visitor must understand.",
+      "avoid_when": "Numbers on things that are not a sequence (flagged as generic).",
+      "build": "Steps with a real visual each.",
+      "checks": [
+        "sw look: LOOK-NUMBERED"
+      ]
+    },
+    {
+      "id": "logo-wall",
+      "label": {
+        "fr": "Mur de logos clients",
+        "en": "Logo wall"
+      },
+      "what": "Logos of clients or press.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Real clients who agreed.",
+      "avoid_when": "Invented or unlicensed logos (BRD-01, LEG-06).",
+      "build": "Monochrome, same optical size; a marquee only with a pause.",
+      "checks": [
+        "BRD-01",
+        "LEG-06"
+      ]
+    },
+    {
+      "id": "testimonials",
+      "label": {
+        "fr": "Témoignages",
+        "en": "Testimonials"
+      },
+      "what": "Quotes from real customers with name, role and photo.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Real, specific quotes with permission.",
+      "avoid_when": "Generic praise or invented people (BRD-01).",
+      "build": "Specific result in the quote, a link to the source when public.",
+      "checks": [
+        "BRD-01"
+      ]
+    },
+    {
+      "id": "pricing-toggle",
+      "label": {
+        "fr": "Bascule mensuel ou annuel",
+        "en": "Monthly and yearly toggle"
+      },
+      "what": "A switch on the pricing page shows the price per month or per year.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "pricing-page",
+          "saas-marketing"
+        ]
+      },
+      "use_when": "Plans with both billing periods.",
+      "avoid_when": "When the saving is unclear.",
+      "build": "Sliding pill indicator, the saving in money, the same price at checkout.",
+      "checks": [
+        "SUB-08",
+        "PAY-06"
+      ]
+    },
+    {
+      "id": "comparison-table",
+      "label": {
+        "fr": "Tableau comparatif",
+        "en": "Comparison table"
+      },
+      "what": "Plans or products compared feature by feature.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "pricing-page",
+          "saas-marketing",
+          "ecommerce"
+        ]
+      },
+      "use_when": "Three or more plans, or a product against alternatives (honestly).",
+      "avoid_when": "Two plans (a list is enough).",
+      "build": "Sticky header row, ticks with text for screen readers, the recommended plan marked."
+    },
+    {
+      "id": "sticky-mobile-cta",
+      "label": {
+        "fr": "Bouton d'action collé en bas sur téléphone",
+        "en": "Sticky bottom action on phone"
+      },
+      "what": "The main action stays at the bottom of the phone screen while scrolling.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ],
+        "types": [
+          "ecommerce",
+          "hotel-travel",
+          "restaurant-cafe",
+          "event-conference"
+        ]
+      },
+      "use_when": "Product pages, bookings, sign-up pages.",
+      "avoid_when": "When it covers content or other fixed buttons.",
+      "build": "Safe-area padding, hidden while the keyboard is open."
+    },
+    {
+      "id": "cta-band",
+      "label": {
+        "fr": "Bandeau d'appel à l'action final",
+        "en": "Closing call to action"
+      },
+      "what": "A last section that repeats the main action at the end of the page.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Long pages.",
+      "avoid_when": "Short pages where the action is still visible.",
+      "build": "One action, a sentence that answers the last doubt."
+    },
+    {
+      "id": "carousel-peek",
+      "label": {
+        "fr": "Carrousel qui laisse dépasser",
+        "en": "Carousel with a peek"
+      },
+      "what": "The next card shows partly at the edge, which says there is more.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "use_when": "Collections on phone.",
+      "avoid_when": "Essential content hidden in later slides.",
+      "build": "About a quarter to a third of the next card visible; scroll-snap; arrows on desktop.",
+      "checks": [
+        "ergonomics: closure"
+      ]
+    },
+    {
+      "id": "newsletter-signup",
+      "label": {
+        "fr": "Inscription à la newsletter",
+        "en": "Newsletter signup"
+      },
+      "what": "A short form to receive news by email.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Editorial sites, brands with regular news.",
+      "avoid_when": "Pop-ups on arrival.",
+      "build": "One field, what and how often in one sentence, double opt-in, consent not pre-ticked.",
+      "checks": [
+        "PRV-03",
+        "LEG build rule"
+      ]
+    },
+    {
+      "id": "map-and-hours",
+      "label": {
+        "fr": "Carte et horaires",
+        "en": "Map and opening hours"
+      },
+      "what": "Address, map and opening hours on one block.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "restaurant-cafe",
+          "local-service",
+          "hotel-travel",
+          "health-wellness",
+          "culture-museum-music"
+        ]
+      },
+      "use_when": "Restaurants, shops, local services, venues.",
+      "avoid_when": "Online-only businesses.",
+      "build": "Static map image linking to a maps app (no heavy embed on load), hours in a table, LocalBusiness structured data."
+    }
+  ]
+}

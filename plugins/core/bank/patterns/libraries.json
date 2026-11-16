@@ -1,0 +1,236 @@
+{
+  "family": "libraries",
+  "kind": "library",
+  "label": {
+    "fr": "Bibliothèques de composants et d'effets",
+    "en": "Component and effect libraries"
+  },
+  "summary": "Free libraries to build the patterns with. Check the licence line before copying code: MIT and Apache-2.0 allow commercial use; a custom licence or \"not verified\" means read its terms first.",
+  "checked": "2026-11-16",
+  "entries": [
+    {
+      "id": "shadcn-ui",
+      "label": {
+        "fr": "shadcn/ui",
+        "en": "shadcn/ui"
+      },
+      "url": "https://ui.shadcn.com",
+      "what": "Accessible components (Radix and Tailwind) copied into the project.",
+      "licence": "MIT",
+      "access": "free",
+      "note": "Its default look is the most recognisable: change type, radius, colour and shadows (sw look)."
+    },
+    {
+      "id": "magic-ui",
+      "label": {
+        "fr": "Magic UI",
+        "en": "Magic UI"
+      },
+      "url": "https://magicui.design",
+      "what": "Animated components in the shadcn style: marquee, number ticker, bento grid, particles.",
+      "licence": "MIT (core)",
+      "access": "core free; Pro paid (do not use)"
+    },
+    {
+      "id": "aceternity-ui",
+      "label": {
+        "fr": "Aceternity UI",
+        "en": "Aceternity UI"
+      },
+      "url": "https://ui.aceternity.com",
+      "what": "Animated Tailwind and Motion components: spotlight, 3D cards, backgrounds.",
+      "licence": "own licence: end products allowed, no redistribution of the source; not open source",
+      "access": "100+ free components; paid tiers",
+      "note": "Use only the free components, in an end product; never in a template or kit you distribute."
+    },
+    {
+      "id": "daisyui",
+      "label": {
+        "fr": "daisyUI",
+        "en": "daisyUI"
+      },
+      "url": "https://daisyui.com",
+      "what": "Tailwind component classes and ready themes.",
+      "licence": "MIT",
+      "access": "free (the store sells templates)"
+    },
+    {
+      "id": "motion",
+      "label": {
+        "fr": "Motion",
+        "en": "Motion"
+      },
+      "url": "https://motion.dev",
+      "what": "Animation library for React and plain JavaScript: layout animations, springs, gestures, scroll.",
+      "licence": "MIT",
+      "access": "free; Motion+ paid (do not use)"
+    },
+    {
+      "id": "react-three-fiber",
+      "label": {
+        "fr": "React Three Fiber",
+        "en": "React Three Fiber"
+      },
+      "url": "https://github.com/pmndrs/react-three-fiber",
+      "what": "three.js in React, for 3D scenes and objects.",
+      "licence": "MIT",
+      "access": "free"
+    },
+    {
+      "id": "model-viewer",
+      "label": {
+        "fr": "model-viewer",
+        "en": "model-viewer"
+      },
+      "url": "https://modelviewer.dev",
+      "what": "A web component that shows a 3D model the user can rotate, with AR on phones.",
+      "licence": "Apache-2.0",
+      "access": "free"
+    },
+    {
+      "id": "tsparticles",
+      "label": {
+        "fr": "tsParticles",
+        "en": "tsParticles"
+      },
+      "url": "https://particles.js.org",
+      "what": "Particles, confetti and animated backgrounds.",
+      "licence": "MIT",
+      "access": "free"
+    },
+    {
+      "id": "paper-shaders",
+      "label": {
+        "fr": "Paper Shaders",
+        "en": "Paper Shaders"
+      },
+      "url": "https://shaders.paper.design",
+      "what": "Shader backgrounds as components with no dependency (mesh gradients, grain, waves).",
+      "licence": "Apache-2.0",
+      "access": "free (the Paper app is separate)"
+    },
+    {
+      "id": "shadergradient",
+      "label": {
+        "fr": "ShaderGradient",
+        "en": "ShaderGradient"
+      },
+      "url": "https://shadergradient.co",
+      "what": "Animated 3D gradients for React, Framer and Figma.",
+      "licence": "MIT per its README (no LICENSE file detected)",
+      "access": "code free; site pricing not verified"
+    },
+    {
+      "id": "liquid-glass-js",
+      "label": {
+        "fr": "liquid-glass-js",
+        "en": "liquid-glass-js"
+      },
+      "url": "https://github.com/dashersw/liquid-glass-js",
+      "what": "Apple's liquid glass effect in plain JavaScript.",
+      "licence": "MIT",
+      "access": "free"
+    },
+    {
+      "id": "reactdrops",
+      "label": {
+        "fr": "ReactDrops",
+        "en": "ReactDrops"
+      },
+      "url": "https://reactdrops.dev",
+      "what": "React effects, including a liquid glass logo built from an SVG or PNG.",
+      "licence": "ReactDrops Component License 1.0 (custom): end products allowed, keep the notices, no redistribution as a kit",
+      "access": "free status not verified"
+    },
+    {
+      "id": "originkit",
+      "label": {
+        "fr": "Originkit",
+        "en": "Originkit"
+      },
+      "url": "https://originkit.dev",
+      "what": "Animated components: text morph, particles, galleries.",
+      "licence": "not verified",
+      "access": "3 free copies a day; paid plans",
+      "note": "Licence of the components not verified: do not copy until its terms are read."
+    },
+    {
+      "id": "particles-casberry",
+      "label": {
+        "fr": "Particles (Casberry)",
+        "en": "Particles (Casberry)"
+      },
+      "url": "https://particles.casberry.in",
+      "what": "WebGL particle simulator that exports code: text and 3D shapes in particles.",
+      "licence": "not published",
+      "access": "not verified",
+      "note": "No licence: use it for ideas, build with tsParticles or three.js."
+    },
+    {
+      "id": "sonner",
+      "label": {
+        "fr": "Sonner",
+        "en": "Sonner"
+      },
+      "url": "https://github.com/emilkowalski/sonner",
+      "what": "Toasts with stacking and swipe to dismiss.",
+      "licence": "MIT",
+      "access": "free"
+    },
+    {
+      "id": "vaul",
+      "label": {
+        "fr": "Vaul",
+        "en": "Vaul"
+      },
+      "url": "https://github.com/emilkowalski/vaul",
+      "what": "Drawer (bottom sheet) for React with drag and snap points.",
+      "licence": "MIT",
+      "access": "free"
+    },
+    {
+      "id": "cmdk",
+      "label": {
+        "fr": "cmdk",
+        "en": "cmdk"
+      },
+      "url": "https://github.com/pacocoursey/cmdk",
+      "what": "Command palette component for React.",
+      "licence": "MIT",
+      "access": "free"
+    },
+    {
+      "id": "pagefind",
+      "label": {
+        "fr": "Pagefind",
+        "en": "Pagefind"
+      },
+      "url": "https://pagefind.app",
+      "what": "Static site search indexed at build time.",
+      "licence": "MIT",
+      "access": "free"
+    },
+    {
+      "id": "lottie-web",
+      "label": {
+        "fr": "lottie-web",
+        "en": "lottie-web"
+      },
+      "url": "https://github.com/airbnb/lottie-web",
+      "what": "Plays Lottie animations exported from After Effects.",
+      "licence": "MIT",
+      "access": "free"
+    },
+    {
+      "id": "emil-skills",
+      "label": {
+        "fr": "Skills d'Emil Kowalski",
+        "en": "Emil Kowalski's skills"
+      },
+      "url": "https://github.com/emilkowalski/skills",
+      "what": "Claude skills on animation and interface craft (animate, gestures, apple-design, choreograph, break-ui…), usable alongside this pack.",
+      "licence": "MIT",
+      "access": "free"
+    }
+  ]
+}

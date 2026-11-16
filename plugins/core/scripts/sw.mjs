@@ -100,6 +100,9 @@
 //   node sw.mjs bank [type] | bank measure <type|all> | bank calibrate <type|all> [--limit N]
 //                                            Reference bank: excellent sites by type, why they are, their measured profile;
 //                                            calibrate runs sw craft and sw look on them, so that a rule most of them break becomes advice
+//   node sw.mjs patterns [family|id] | patterns search <words> [--type <site-type>] [--surface persuade|operate|read|phone|desktop-app]
+//                                            Pattern bank: navigation, motion, effects, features, sections, UX laws, galleries and
+//                                            libraries the pack can propose, with where each fits, what it costs and how to build it
 //   node sw.mjs variants <name> <url> <url> [url...] [--mode persuade|operate|read] | variants <name> --tally
 //                                            Several versions of one screen: screenshots under shuffled letters, measures, pairs
 //                                            for a blind jury; --tally ranks them from the votes. --mode: how the screen is measured
@@ -893,6 +896,14 @@ async function main() {
         return out(await measureBank(rest[1], { cwd, limit, parallel }));
       }
       return out(listBank(loadBank(), rest[0]));
+    }
+    case "patterns": {
+      const { loadPatterns, listPatterns } = await import("./lib/patterns.mjs");
+      const type = opt("type");
+      const surface = opt("surface");
+      const r = listPatterns(loadPatterns(), rest, { type, surface });
+      if (r.errors) die(r.errors.join("\n"));
+      return out(r);
     }
     case "variants": {
       const { shootVariants, tallyVariants } = await import("./lib/variants.mjs");

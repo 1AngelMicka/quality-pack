@@ -216,6 +216,7 @@ Each `/sw:…` command runs Shipwright's tool for you: nothing else to type, and
 | `/sw:tokens` | Check design tokens: DTCG format, references, contrast in every theme, colours outside sRGB |
 | `/sw:tiles` | Show the style tiles side by side, on desktop and phone, to choose a direction |
 | `/sw:bank [type]` | Reference bank: per type of site, what visitors expect, sites recognised as excellent with the reason, what to avoid |
+| `/sw:patterns [family \| pattern]` | Pattern bank: everything Claude can propose for an interface (navigation, motion, visual effects, features, page sections, UX laws, inspiration galleries, free libraries), with where each pattern fits, what it costs and how to build it. `/sw:patterns navigation`, `/sw:patterns search glass` |
 | `/sw:profile <url> --save` · `/sw:gap <url>` | Measure the visual profile of references, then the gap between a screen and them, or the bank (`--type`) |
 | `/sw:variants <name> <url> <url>…` | Several versions of one screen: screenshots under shuffled letters, measures, pairs for a blind jury; `--tally` ranks them |
 
