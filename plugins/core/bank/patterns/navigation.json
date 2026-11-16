@@ -26,7 +26,8 @@
       "build": "position: sticky; top: 0 on the header, a z-index from the scale (--z-sticky), scroll-margin-top on anchors equal to its height plus 16 px, and focus never hidden under it.",
       "checks": [
         "premium-craft: anchors, z-index scale, focus not hidden"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "hide-on-scroll-header",
@@ -44,7 +45,8 @@
       },
       "use_when": "Reading pages and phone screens where height is precious.",
       "avoid_when": "App screens where the header holds tools used all the time.",
-      "build": "Compare scroll positions in a passive scroll listener or with an IntersectionObserver sentinel; translateY(-100%) with a 200 ms ease-out transition, never animate top. With prefers-reduced-motion: no movement, a plain state change."
+      "build": "Compare scroll positions in a passive scroll listener or with an IntersectionObserver sentinel; translateY(-100%) with a 200 ms ease-out transition, never animate top. With prefers-reduced-motion: no movement, a plain state change.",
+      "prevalence": "common"
     },
     {
       "id": "shrinking-header",
@@ -62,7 +64,8 @@
       "use_when": "Brand sites, restaurants, hotels, portfolios that open on a large header.",
       "avoid_when": "Apps and dashboards.",
       "build": "Two states switched by a class from an IntersectionObserver on the hero; animate transform and opacity only, or use a scroll-driven animation (animation-timeline: scroll()).",
-      "see": "scroll-animation"
+      "see": "scroll-animation",
+      "prevalence": "common"
     },
     {
       "id": "transparent-header-over-hero",
@@ -86,7 +89,8 @@
       },
       "use_when": "Hotels, travel, restaurants, luxury, events with a strong opening image.",
       "avoid_when": "When the text over the image cannot keep 4.5:1 contrast.",
-      "build": "A gradient scrim behind the header text for contrast; the solid state switches at the end of the hero."
+      "build": "A gradient scrim behind the header text for contrast; the solid state switches at the end of the hero.",
+      "prevalence": "common"
     },
     {
       "id": "mega-menu",
@@ -109,7 +113,8 @@
       },
       "use_when": "Sites with many sections: shops, SaaS with several products, public services, universities.",
       "avoid_when": "Fewer than about 12 destinations: a simple menu is faster.",
-      "build": "Opens on click (and on hover with a 150 to 300 ms intent delay), closes with Esc and on outside click, keyboard order follows the columns; disclosure button with aria-expanded."
+      "build": "Opens on click (and on hover with a 150 to 300 ms intent delay), closes with Esc and on outside click, keyboard order follows the columns; disclosure button with aria-expanded.",
+      "prevalence": "common"
     },
     {
       "id": "drawer-menu",
@@ -127,7 +132,8 @@
       },
       "use_when": "Any public site on phone with more than four or five destinations.",
       "avoid_when": "Apps with three to five main destinations: a bottom tab bar is faster to reach.",
-      "build": "A real <button> with aria-expanded and aria-controls, focus moved into the panel and trapped, Esc and a visible close button, scroll of the page locked, overscroll-behavior: contain. Slide 250 ms ease-out, exit 20 % shorter. With prefers-reduced-motion: no movement, a plain state change."
+      "build": "A real <button> with aria-expanded and aria-controls, focus moved into the panel and trapped, Esc and a visible close button, scroll of the page locked, overscroll-behavior: contain. Slide 250 ms ease-out, exit 20 % shorter. With prefers-reduced-motion: no movement, a plain state change.",
+      "prevalence": "standard"
     },
     {
       "id": "full-screen-menu",
@@ -149,7 +155,8 @@
       },
       "use_when": "Agencies, studios, portfolios, fashion and luxury brands where the menu is part of the show.",
       "avoid_when": "Sites people use to get something done quickly.",
-      "build": "Same accessibility as the drawer; links staggered by 30 to 50 ms; the whole menu readable at 200 % zoom."
+      "build": "Same accessibility as the drawer; links staggered by 30 to 50 ms; the whole menu readable at 200 % zoom.",
+      "prevalence": "everywhere"
     },
     {
       "id": "bottom-tab-bar",
@@ -171,7 +178,8 @@
         "MUX-04",
         "SCR-03"
       ],
-      "see": "design-screens"
+      "see": "design-screens",
+      "prevalence": "standard"
     },
     {
       "id": "tab-indicator-sliding-pill",
@@ -198,7 +206,8 @@
           "name": "emilkowalski/skills, animate recipes (MIT)",
           "url": "https://github.com/emilkowalski/skills"
         }
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "tab-indicator-icon-fill",
@@ -218,7 +227,8 @@
       "build": "Swap the outline and filled icon with opacity, a scale from 0.9 and blur(2px) together, under 200 ms; translateY(-2px) at most for the lift. With prefers-reduced-motion: no movement, a plain state change.",
       "checks": [
         "sw craft: icon_style"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "tab-indicator-expanding-label",
@@ -235,7 +245,8 @@
       },
       "use_when": "Bottom bars with four or five tabs and short names.",
       "avoid_when": "Long or translated names that change the width a lot; users who need labels to recognise icons (keep labels on all tabs then).",
-      "build": "Animate the pill with transform (scaleX on a background layer) or a layout animation, never width on the text itself; the label fades in after the pill, 200 to 250 ms total. With prefers-reduced-motion: no movement, a plain state change."
+      "build": "Animate the pill with transform (scaleX on a background layer) or a layout animation, never width on the text itself; the label fades in after the pill, 200 to 250 ms total. With prefers-reduced-motion: no movement, a plain state change.",
+      "prevalence": "common"
     },
     {
       "id": "tab-indicator-floating-notch",
@@ -252,7 +263,8 @@
       "use_when": "Playful consumer apps where the bar is part of the identity.",
       "avoid_when": "Work apps and anything used many times a day: it is slow and draws the eye at every change.",
       "build": "SVG path for the bar with the notch moved by transform, the disc on an arc (offset-path or two transforms); keep it under 300 ms. With prefers-reduced-motion: no movement, a plain state change.",
-      "cost": "high effort, distracting when repeated"
+      "cost": "high effort, distracting when repeated",
+      "prevalence": "rare"
     },
     {
       "id": "tab-indicator-liquid-bulge",
@@ -269,7 +281,8 @@
       "use_when": "Consumer apps with a playful or organic identity.",
       "avoid_when": "Work apps, frequent switching, low-end phones.",
       "build": "SVG path morph (Motion or a spring on the control points) or a gooey filter (blur plus contrast); test the frame rate on a low-end phone. With prefers-reduced-motion: no movement, a plain state change.",
-      "cost": "high effort, heavy on low-end phones"
+      "cost": "high effort, heavy on low-end phones",
+      "prevalence": "rare"
     },
     {
       "id": "tab-indicator-bubbles",
@@ -286,7 +299,8 @@
       "use_when": "Games, kids' apps, celebrations; once, not at every switch.",
       "avoid_when": "Anything used for work, and repeated switching.",
       "build": "A few absolutely positioned circles animated with transform and opacity, removed after the animation; or a Lottie or Rive file. With prefers-reduced-motion: no movement, a plain state change.",
-      "cost": "decorative; flagged as motion without information on frequent actions"
+      "cost": "decorative; flagged as motion without information on frequent actions",
+      "prevalence": "rare"
     },
     {
       "id": "navigation-rail",
@@ -303,7 +317,8 @@
       },
       "use_when": "Tablets and medium widths; apps with three to seven destinations.",
       "avoid_when": "Phones (use the bottom bar).",
-      "build": "Material 3 navigation rail pattern: 80 px wide, icon with label, selected state with an indicator; switch from the bottom bar at about 600 px."
+      "build": "Material 3 navigation rail pattern: 80 px wide, icon with label, selected state with an indicator; switch from the bottom bar at about 600 px.",
+      "prevalence": "standard"
     },
     {
       "id": "sidebar",
@@ -325,7 +340,8 @@
       },
       "use_when": "Apps and dashboards with more than five sections or nested sections.",
       "avoid_when": "Marketing pages.",
-      "build": "5 to 8 top-level items, groups with headings, collapsible to a rail with its state remembered; keyboard shortcut to toggle."
+      "build": "5 to 8 top-level items, groups with headings, collapsible to a rail with its state remembered; keyboard shortcut to toggle.",
+      "prevalence": "standard"
     },
     {
       "id": "command-palette",
@@ -344,7 +360,8 @@
       "use_when": "Apps with many screens or records, documentation, developer tools.",
       "avoid_when": "Small sites with a few pages.",
       "build": "A dialog with a combobox (role=combobox, listbox of results), arrow keys, Enter, Esc; recent items first; the shortcut shown with the platform's symbols. Libraries: cmdk (MIT).",
-      "see": "premium-craft"
+      "see": "premium-craft",
+      "prevalence": "common"
     },
     {
       "id": "site-search",
@@ -365,7 +382,8 @@
       "build": "Static sites: Pagefind (MIT) indexes at build time; apps: the database's full-text search. Debounce 250 to 300 ms, cancel the previous request, highlight the match.",
       "checks": [
         "PRF-08"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "breadcrumbs",
@@ -386,7 +404,8 @@
       "build": "<nav aria-label=\"Breadcrumb\"> with an ordered list, the current page with aria-current=\"page\"; BreadcrumbList structured data for search engines.",
       "checks": [
         "SEO-06"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "table-of-contents",
@@ -407,7 +426,8 @@
       },
       "use_when": "Articles, documentation, legal pages, long guides.",
       "avoid_when": "Short pages.",
-      "build": "Built from the h2 and h3; current section from an IntersectionObserver; sticky on desktop, collapsed at the top on phone."
+      "build": "Built from the h2 and h3; current section from an IntersectionObserver; sticky on desktop, collapsed at the top on phone.",
+      "prevalence": "standard"
     },
     {
       "id": "back-to-top",
@@ -427,7 +447,8 @@
       "build": "Appears after about two screens, a real link to #top or a button that moves focus to the top; smooth scroll only without prefers-reduced-motion.",
       "checks": [
         "UX build rule: long pages"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "floating-contact-button",
@@ -451,7 +472,8 @@
       },
       "use_when": "Local services, restaurants, real estate, shops where a quick question leads to a sale.",
       "avoid_when": "Apps and dashboards; pages where it covers content or a cookie banner on phone.",
-      "build": "Fixed bottom right with safe-area margins, never over the main action or form fields; a real button with a name; links tel:, mailto: or a chat. Hide it while the keyboard is open."
+      "build": "Fixed bottom right with safe-area margins, never over the main action or form fields; a real button with a name; links tel:, mailto: or a chat. Hide it while the keyboard is open.",
+      "prevalence": "common"
     },
     {
       "id": "floating-action-button",
@@ -468,7 +490,8 @@
       },
       "use_when": "Phone apps where one creation action dominates.",
       "avoid_when": "Screens with several equal actions; desktop (put the action in the toolbar).",
-      "build": "Material 3 FAB: 56 dp, bottom right, above the tab bar; extended FAB with a label when space allows."
+      "build": "Material 3 FAB: 56 dp, bottom right, above the tab bar; extended FAB with a label when space allows.",
+      "prevalence": "standard"
     },
     {
       "id": "skip-link",
@@ -490,7 +513,8 @@
       "checks": [
         "A11Y-02",
         "sw craft: skip_link"
-      ]
+      ],
+      "prevalence": "standard"
     }
   ]
 }

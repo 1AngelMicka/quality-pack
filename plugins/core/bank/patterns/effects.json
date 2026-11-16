@@ -8,6 +8,28 @@
   "summary": "Visual treatments that can define an identity. Several are flagged by the generic-look check when used by default: when one is chosen on purpose, write the choice and its reason in DESIGN.md.",
   "entries": [
     {
+      "id": "before-after",
+      "label": {
+        "fr": "Avant / après",
+        "en": "Before / after"
+      },
+      "what": "Two states of the same thing shown in one place: the visitor drags a handle, scrolls or taps to move from before to after.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "use_when": "Trades that transform something: renovation, cleaning, hairdressing, retouching, web redesign, landscaping, detailing.",
+      "avoid_when": "When the before is someone else's work shown without consent, or the after is not real.",
+      "build": "Two stacked images with clip-path driven by a range input (keyboard and touch for free) or by a scroll-driven animation; labels Before and After always visible; the still version shows both side by side.",
+      "checks": [
+        "RSP-03",
+        "BRD-01"
+      ],
+      "prevalence": "rare"
+    },
+    {
       "id": "glassmorphism",
       "label": {
         "fr": "Verre dépoli",
@@ -25,7 +47,8 @@
       "build": "backdrop-filter: blur(12px) saturate(1.2) with a fallback colour; keep contrast at 4.5:1 for text; small surfaces only.",
       "checks": [
         "sw look: LOOK-GLASS when used by default"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "liquid-glass",
@@ -45,7 +68,8 @@
       "build": "SVG displacement filter or WebGL shader on one element; test the frame rate; plain glass fallback. See the libraries family.",
       "checks": [
         "sw look: LOOK-GLASS"
-      ]
+      ],
+      "prevalence": "common"
     },
     {
       "id": "gradient-mesh",
@@ -64,7 +88,8 @@
       "build": "Several radial-gradient layers or an SVG; colours from the tokens.",
       "checks": [
         "sw look: LOOK-GRADIENTS, LOOK-VIOLET"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "animated-shader-background",
@@ -86,7 +111,8 @@
       },
       "use_when": "Launches, AI products, events, one hero.",
       "avoid_when": "Behind text without a scrim; low-end phones; reading pages.",
-      "build": "WebGL canvas (Paper Shaders or ShaderGradient, see libraries), paused off screen and with reduced motion, a static image fallback."
+      "build": "WebGL canvas (Paper Shaders or ShaderGradient, see libraries), paused off screen and with reduced motion, a static image fallback.",
+      "prevalence": "everywhere"
     },
     {
       "id": "particles-background",
@@ -108,7 +134,8 @@
       },
       "use_when": "Tech launches and creative pages, one section.",
       "avoid_when": "Behind body text; mobile pages where it costs battery.",
-      "build": "tsParticles or a canvas with requestAnimationFrame; few particles on phones; stopped with reduced motion."
+      "build": "tsParticles or a canvas with requestAnimationFrame; few particles on phones; stopped with reduced motion.",
+      "prevalence": "everywhere"
     },
     {
       "id": "grain-noise",
@@ -124,7 +151,8 @@
       },
       "use_when": "Editorial, food, culture, fashion.",
       "avoid_when": "Dense interfaces and data.",
-      "build": "A small tiled noise PNG or an SVG feTurbulence at 3 to 8 % opacity, pointer-events: none."
+      "build": "A small tiled noise PNG or an SVG feTurbulence at 3 to 8 % opacity, pointer-events: none.",
+      "prevalence": "common"
     },
     {
       "id": "paper-cut",
@@ -146,7 +174,8 @@
       },
       "use_when": "Kids, education, crafts, playful apps.",
       "avoid_when": "Professional tools.",
-      "build": "Stacked layers with two-layer shadows; SVG shapes with a subtle texture."
+      "build": "Stacked layers with two-layer shadows; SVG shapes with a subtle texture.",
+      "prevalence": "rare"
     },
     {
       "id": "glow",
@@ -165,7 +194,8 @@
       "build": "A blurred pseudo-element in the accent colour at low opacity.",
       "checks": [
         "sw look: LOOK-GLOW"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "3d-object",
@@ -188,7 +218,8 @@
       "use_when": "Physical products, hardware, brand launches.",
       "avoid_when": "When a photo says the same; first load on phones.",
       "build": "model-viewer (Apache-2.0) or React Three Fiber; loaded on demand; static poster image.",
-      "see": "scroll-animation"
+      "see": "scroll-animation",
+      "prevalence": "common"
     },
     {
       "id": "glass-metal-logo",
@@ -204,7 +235,8 @@
       },
       "use_when": "Launch pages, brand moments.",
       "avoid_when": "Small sizes (favicon, header) where detail is lost.",
-      "build": "A rendered image or a WebGL material; the flat logo stays the reference."
+      "build": "A rendered image or a WebGL material; the flat logo stays the reference.",
+      "prevalence": "rare"
     },
     {
       "id": "bento-grid",
@@ -223,7 +255,8 @@
       "build": "CSS grid with spans; each box a different unit (screenshot crop, number, diagram).",
       "checks": [
         "sw look: LOOK-TRIPLETS, LOOK-ICONTILES"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "editorial-serif-italic",
@@ -243,7 +276,8 @@
       "build": "Choose the face for the subject and record it in DESIGN.md.",
       "checks": [
         "sw look: LOOK-ITALIC"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "dark-mode-toggle",
@@ -265,7 +299,8 @@
       "checks": [
         "UI-06",
         "CRF-07"
-      ]
+      ],
+      "prevalence": "standard"
     }
   ]
 }

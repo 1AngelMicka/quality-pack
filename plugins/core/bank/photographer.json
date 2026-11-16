@@ -1,0 +1,161 @@
+{
+  "id": "photographer",
+  "label": {
+    "fr": "Photographe",
+    "en": "Photographer"
+  },
+  "expects": [
+    {
+      "rule": "A starting price is published: for weddings the lowest package with its hours of coverage, for portraits the session fee and the cheapest print or product.",
+      "source": "https://www.format.com/magazine/resources/photography/why-your-photography-portfolio-needs-pricing-list",
+      "verified": true
+    },
+    {
+      "rule": "The work fills the first screen: real commissioned images, edited to a tight selection, grouped by story, client or genre.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Where the photographer is based and how far they travel is stated near the top.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "One enquiry route on every page (check your date, get in touch) leading to a short form that asks the date, place and budget.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "What is delivered is described: hours of coverage, number of images, delivery time, albums or prints, usage rights for commercial work.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Proof from clients is real: named testimonials, client or press logos, published features.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "8 of 8 sites read state where the photographer is based (France, Bologna, Italy with destinations, Vancouver, Belgium, Seoul, Puerto Rico with a local time stamp).",
+    "0 of 8 show a price on the home page; Tatiana Braoun lists three packages by hours and media without price, Elina Kustlyvy asks for a budget range in the form.",
+    "Navigation is short: 2 items (Taras Yareha, Gregor Collienne), 3 (Adovasio, Elina Kustlyvy), 4 (Tatiana Braoun); only Siempreric and OFF-BEAT have deep menus.",
+    "4 of 8 have an on-site enquiry route (Tatiana 'Check your date' popup, Adovasio 'Check availability', Daniele & Marilia 'Book now' form, Elina form with budget ranges); 3 rely on a bare email link (Gregor Collienne, OFF-BEAT, Siempreric).",
+    "4 of 4 wedding sites read lead with weddings shown as couples' stories (named galleries on Adovasio, 'Real weddings' on Tatiana, Stories on Daniele & Marilia, a photo stack on Taras).",
+    "Type does the branding while the images stay neutral: white #ffffff and black with one muted green #435b45 (Tatiana Braoun, Satoshi with Cormorant), greys #bdbdbd (Adovasio), Hatton serif on #fafafa (Elina Kustlyvy), Neue Haas Grotesk on #101010 (Siempreric)."
+  ],
+  "sites": [
+    {
+      "name": "Tatiana Braoun",
+      "url": "https://tatianabraoun.com/",
+      "why": "Destination wedding photographer based in France: label 'wedding photography', headline 'For lovers who feel deeply', 'Based in France & worldwide', a SEE REAL WEDDINGS link, a 'Now taking booking for 2026 | 2027' block with a CHECK YOUR DATE popup form, and three packages described by hours and media (35 mm, 120 mm film, drone) without prices. White with muted green #435b45, Satoshi with Cormorant italics. Cookie banner defaults to off.",
+      "recognition": "Awwwards Honorable Mention, 2026-03-01",
+      "source": "https://www.awwwards.com/sites/tatiana-braoun-photographer",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Adovasio",
+      "url": "https://adovasio.it/",
+      "why": "Wedding photography studio in Italy (title names Tuscany, Lake Como, Amalfi Coast): headline 'Weddings that never fade', one line on an editorial, Italian approach, a Check availability button, then a grid of couples' galleries named by first names. Three-item nav (Portfolio, About, Contact), closing line 'Reach out to see if your date is available'. Greys #bdbdbd with a terracotta #c17957. No prices.",
+      "recognition": "Awwwards Site of the Day, 2026-03-05 (also Developer Award)",
+      "source": "https://www.awwwards.com/sites/adovasio",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Daniele & Marilia",
+      "url": "https://www.danieleandmarilia.com/",
+      "why": "Wedding photographer duo in Italy: three-line headline 'Insatiable, impactful & intentional', a Book now button in the top bar, a 'Featured on' row (Vogue, Brides, Harper's Bazaar), a numbered menu (Portfolio, Stories, Photobook), a 'Passport to Photography' list of destinations by month, and an enquiry form under 'Invest in the indelible'. No prices. Some headline letters render doubled in the page text.",
+      "recognition": "Awwwards Honorable Mention, 2025-09-09",
+      "source": "https://www.awwwards.com/sites/daniele-marilia",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Taras Yareha",
+      "url": "https://tarasyareha.com/",
+      "why": "Wedding photographer in Bologna: name, 'Wedding Photographer' and the city, then a stack of about 18 wedding photographs, some black and white, with no button on the first screen. Two-item nav (Works, Contact). Nothing else competes with the pictures; prices, travel area and an enquiry form are not on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2026-02-05",
+      "source": "https://www.awwwards.com/sites/taras-yareha",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Elina Kustlyvy",
+      "url": "https://www.elinakustlyvy.com/",
+      "why": "Product photographer in Vancouver working with brands in Los Angeles, Seattle and Toronto: the name and that sentence as headline, email and Instagram, a row of product shots (skincare, cosmetics, nail polish), services by kind (beauty, skincare, e-commerce), recent projects, five named client testimonials, and a form written as sentences ('My name is', 'The brand I am looking to photograph is') with budget ranges $1,500-3,000 to $8,000+. Hatton serif on #fafafa.",
+      "recognition": "Awwwards Honorable Mention, 2025-08-28",
+      "source": "https://www.awwwards.com/sites/product-photographer",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Gregor Collienne",
+      "url": "https://gregorcollienne.com/",
+      "why": "Portrait and commercial photographer in Belgium: 'Welcome.' and two sentences (based in Belgium, portraits, fine art, storytelling, available wherever the project is), a Contact Me button that opens an email, then a grid of about 140 thumbnails with a grid/list toggle, each linking to its project. Two-item nav (Overview, Work). No form, prices or client names.",
+      "recognition": "Awwwards Honorable Mention, 2026-07-01",
+      "source": "https://www.awwwards.com/sites/gregor-collienne",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Studio OFF-BEAT",
+      "url": "https://www.offbeat.kr/",
+      "why": "Portrait studio in Seoul, Korean and English side by side: headline 'Life shifts in OFF-BEAT moments, we capture that rhythm before it fades', two header photographs, then three work areas (Portrait, Project for brands such as 29CM x NIKE, Stage for performances), each with a View All link. Contact by studio email and Instagram; no prices, hours, address or booking. Off-white #fafafa and #0a0a0a with a red #d92d20.",
+      "recognition": "Awwwards Honorable Mention, 2026-03-18",
+      "source": "https://www.awwwards.com/sites/studio-off-beat",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Siempreric",
+      "url": "https://siemprericc.com/",
+      "why": "Eric Rojas, photographer and director from San Juan: 'PHOTOGRAPHER & DIRECTOR', a local time stamp (PR, AST), a light/dark switch and a list/grid toggle, a portrait as the first image, and the work grouped into Commissions, campaigns (adidas, Crocs x Young Miko, Medalla) and concert tours, plus tearsheets. Contact is a protected email link. Neue Haas Grotesk on #101010 and #f5f5f5.",
+      "recognition": "Awwwards Honorable Mention, 2026-02-21",
+      "source": "https://www.awwwards.com/sites/siempreric",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Avagyan Wedding Photography",
+      "url": "https://avagyanphoto.com/",
+      "why": "Wedding photographer Noro Avagyan in Italy, page titled 'Wedding Photographer in Italy'; the gallery listing describes an elegant, editorial approach. The page renders in a script only, so the layout, enquiry route and prices could not be read; its stylesheet is black, white and grey #c8c8c8. (not seen beyond the gallery listing)",
+      "recognition": "Awwwards Honorable Mention, 2025-12-29",
+      "source": "https://www.awwwards.com/sites/avagyan-wedding-photography",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "No price at all, not even a starting price, so every enquiry starts with 'how much?'.",
+    "A contact route that is only a bare or protected email address, with no form asking for date, place and budget.",
+    "Hundreds of unedited thumbnails instead of a tight selection grouped by story or client.",
+    "Loading counters and intro animations that hold the pictures back on phone.",
+    "Stock or AI images, or other photographers' work, mixed into the portfolio.",
+    "No word on where the photographer works or whether they travel.",
+    "Menus and headings that render broken in text (doubled letters, placeholder labels)."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, search 'wedding photographer'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=wedding%20photographer",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'portrait photographer'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=portrait%20photographer",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'photographer'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=photographer",
+      "access": "free"
+    },
+    {
+      "name": "Format Magazine, Why portrait and wedding photography websites need a pricing page",
+      "url": "https://www.format.com/magazine/resources/photography/why-your-photography-portfolio-needs-pricing-list",
+      "access": "free"
+    }
+  ]
+}

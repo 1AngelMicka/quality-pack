@@ -1,0 +1,143 @@
+{
+  "id": "cleaning-home-services",
+  "label": {
+    "fr": "Ménage et services à domicile",
+    "en": "Cleaning and home services"
+  },
+  "expects": [
+    {
+      "rule": "The first screen names the service and the area served (e.g. 'facade cleaning, Warsaw and surroundings'), not only a slogan.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The phone number is a tap-to-call link in the header and next to the main quote or booking button.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Prices are published (per hour, per lb, per room, from-prices) or the page says plainly how a quote is made (free site visit, quote within 24 hours).",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Any guarantee (re-clean, bond back, satisfaction) states its conditions and time limit in plain text, linked from where it is claimed.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Trust signals are checkable: trade body memberships, insurance, named reviews with the platform, photographs of real jobs.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The service area is listed as towns or postcodes, and booking or pickup confirms coverage from an address.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The booking or quote form asks for the minimum: name, phone or email, address or postcode, type of job.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "6 of 7 lead with a quote, schedule or call action in the header (Sweeping Corp, Mycie Elewacji, Zerorez, Port City, This is Neat, Laundry Loft); Pest Stop Boys relies on a header phone link and a 'Call today' text link.",
+    "5 of 7 show a phone number in the header or directly under the first button; This is Neat puts it only in the footer and Laundry Loft shows none.",
+    "Only 1 of 7 publishes prices on the home page (Laundry Loft: $1.79 per lb, free pickup from 34 lbs); 2 others use a promotion instead (Zerorez fourth room free, This is Neat 15% voucher).",
+    "4 of 7 name their service area as a list of towns or counties (Port City, Pest Stop Boys, This is Neat, Zerorez); Mycie Elewacji names one city and surroundings.",
+    "3 of 7 show reviews from a named platform or source (This is Neat Google 4.7, Port City Google reviews link, Pest Stop Boys Checkatrade badge); Sweeping Corp and Mycie Elewacji show none.",
+    "Trade body or certification logos appear on 3 of 7 (Sweeping Corp NAPSA and APWA, Pest Stop Boys BPCA, Zerorez Carpet and Rug Institute). All 7 were read as page text, not screenshots."
+  ],
+  "sites": [
+    {
+      "name": "Laundry Loft",
+      "url": "https://www.laundryloftnyc.com/",
+      "why": "Williamsburg laundromat: headline 'A laundromat you don't have to recover from', Schedule Pickup button in header and hero, English/Spanish switch, hours 8:00 to 23:00 daily and street address in text, wash and fold at $1.79 per lb, free pickup at 34 lbs or more, four subscription tiers. No phone number on the page.",
+      "recognition": "Awwwards Nominee, 2026-07-15",
+      "source": "https://www.awwwards.com/sites/laundry-loft",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Mycie Elewacji Warszawa",
+      "url": "https://www.mycieelewacjiwarszawa.com/",
+      "why": "Warsaw facade cleaning firm: headline names the trade, subheading 'Warszawa i okolice', Darmowa Wycena (free quote) button with the phone number right under it, five services with line icons, three recent-job photographs, a 'why trust us' list, four-field contact form (name, email, message, phone). No prices, no reviews.",
+      "recognition": "CSS Nectar Site of the Day, 2026-06-08",
+      "source": "https://cssnectar.com/css-gallery-inspiration/jasna-strona/",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Sweeping Corporation of America",
+      "url": "https://sweepingcorp.com/",
+      "why": "National power sweeping company: headline 'We're Sweeping Towards a Cleaner Future', 1-888-SWEEPING and Request a Quote in the header, Solutions and Markets menus, figures (1,750 vehicles, 600 municipalities, 60 facilities), trade body logo row, two-step Request a Meeting form, dated news. No reviews.",
+      "recognition": "Awwwards Honorable Mention, 2026-05-01",
+      "source": "https://www.awwwards.com/sites/sweeping-corp",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Port City Pest Control",
+      "url": "https://portcitypestsc.com/",
+      "why": "Pest control in the Charleston area: headline 'Your Trusted Partner for a Pest-Free Home and Business', no-contract promise, phone in the header, 'Get Started with a Quote' repeated about five times, three services, three named testimonials with a Google reviews link, counties and 15 towns listed, quote form with name, phone, email, comments.",
+      "recognition": "Awwwards Nominee, 2025-08-19",
+      "source": "https://www.awwwards.com/sites/port-city-pest-control",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Pest Stop Boys",
+      "url": "https://peststopboys.co.uk/",
+      "why": "Pest control for Brighton and Worthing: two-word headline 'We Stop.', clickable phone in the top bar, Checkatrade logo, menus by service, pest (insects, rodents, birds) and town, a process section promising visits the same day or within 24 hours, BPCA and Think Wildlife badges. No prices.",
+      "recognition": "Awwwards Site of the Day, 2020-02-23 (awarded on the beta address of the same site, built by Herdl)",
+      "source": "https://www.awwwards.com/sites/pest-stop-boys",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "This is Neat",
+      "url": "https://thisisneat.com.au/",
+      "why": "End-of-lease cleaning in Sydney and Melbourne: headline 'You move out, we clean up.' with a '72-hour bond back guarantee' whose conditions are on a linked terms page, Get a Quote in the header, Google 4.7 rating and six reviews, bond-cleaning checklists. Phone only in the footer.",
+      "recognition": "CSS Nectar gallery listing, 2017-02-11",
+      "source": "https://cssnectar.com/css-gallery-inspiration/this-is-neat-cleaning",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Zerorez Atlanta",
+      "url": "https://www.zerorezatlanta.com/",
+      "why": "Carpet and upholstery cleaning franchise: top banner offer (fourth room free in November), headline 'A Smarter, Lasting Clean', phone and Schedule Service in the header, residential and commercial service lists, free test-patch offer, three-field booking form, address and weekly hours in text. No reviews shown.",
+      "recognition": "WebAwards Best Small Business Website, 2016",
+      "source": "https://www.webaward.org/winner/32721/dynamix-wins-2016-webaward-for-zerorez.html",
+      "scale": "company",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A guarantee shown with an asterisk whose conditions (time limit, exclusions) are not linked or not stated anywhere.",
+    "A phone number only in the footer when booking is done by phone.",
+    "A business name and service area that only appear in a logo, with a slogan as the only headline.",
+    "Stock photographs of smiling cleaners instead of photographs of real jobs and real staff.",
+    "Award or directory links that point to a domain now parked or for sale; check the live domain still belongs to the business.",
+    "A quote form that asks for a full account, three consent boxes and a date before the customer knows the price range.",
+    "Badges such as 'Licensed & Insured' or 'Voted best' with no licence number or named source."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Laundry Loft",
+      "url": "https://www.awwwards.com/sites/laundry-loft",
+      "access": "free"
+    },
+    {
+      "name": "CSS Nectar, Services gallery",
+      "url": "https://cssnectar.com/css-gallery-inspiration/jasna-strona/",
+      "access": "free"
+    },
+    {
+      "name": "WebAwards, Best Small Business Website",
+      "url": "https://webaward.org/category/Small_Business/best-small_business-websites.html",
+      "access": "free"
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "id": "gaming-esports",
+  "label": {
+    "fr": "Jeu vidéo et e-sport",
+    "en": "Video games and esports"
+  },
+  "expects": [
+    {
+      "rule": "The first screen names the current game or the team's next match, with one action: wishlist, buy, play or watch.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Each game shows its platforms and links straight to the store page (Steam, console stores, app stores), not just platform logos.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A trailer or gameplay footage is playable on the page or one click away, with sound off by default.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A press kit page gives a fact sheet (release date, platforms, price, studio), logos and screenshots to download.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "An esports team lists its rosters per game, upcoming matches with date and time, and results, kept current.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Studio, contact and careers links are reachable from every page; community links (Discord, Twitch) are labelled.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "2 of 8 link to stores or show platforms per game (Milestone with PS5, Xbox, Steam, Epic and Switch icons; Glowing Cheetah with a Steam icon); none of the 8 has a wishlist button.",
+    "1 of 8 links a trailer per game (Milestone, to YouTube); the others show stills, illustrations or a playable page.",
+    "2 of 8 have a press kit link (Orma, Teka Teki); 1 has a careers page linked in the menu (Milestone).",
+    "Both esports teams (IGZIST, Flash Wolves) list divisions by game, players, sponsors and a merchandise section; only Flash Wolves shows a match score with date and time.",
+    "3 of 8 lead with a slogan rather than a game name (Ink 'Join the new era of gaming', Orma 'Lasciamo un'orma.', Glowing Cheetah 'We craft stories').",
+    "2 of 8 are not in English first (Orma in Italian, Flash Wolves in Traditional Chinese); Milestone offers an English and Italian switch."
+  ],
+  "sites": [
+    {
+      "name": "Milestone",
+      "url": "https://milestone.it/",
+      "why": "Italian racing-game developer: headline 'Hot Wheels Infinite Rush Out Now' with Watch the trailer, then a carousel of games each with release date and platform icons (PS5, Xbox Series, Steam, Epic, Switch). Menu Games, About us, News, Contact, Careers, EN/IT switch; news dated items for DLC and patches.",
+      "recognition": "Awwwards Nominee, 2025-12-30 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/milestone-games",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Orma Games",
+      "url": "https://orma.games/",
+      "why": "Small studio in Rome, page in Italian: headline 'Lasciamo un'orma.', top bar Giochi, Studio, Contatti, a catalogue of 3 titles (ECO tagged OUT NOW, two projects marked in development), side menu with Press kit and Newsletter, a contact form with an INVIA button. No store or wishlist button.",
+      "recognition": "Awwwards Nominee, 2026-08-12 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/orma-games",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "INK Games",
+      "url": "https://inkgames.com/",
+      "why": "Austin publisher: headline 'Join the new era of gaming', menu Games, Studio, Support with Login and Sign up, featured title Prize Kingdoms, a 'Play. Win. Earn.' three-step section, an octopus character illustration, a news block linking to 2024 and 2025 announcements. Cookie notice on load.",
+      "recognition": "Awwwards Site of the Day, 2025-10-14",
+      "source": "https://www.awwwards.com/sites/ink-games",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Glowing Cheetah Studios",
+      "url": "https://www.glowingcheetah.com/",
+      "why": "Father-and-son indie studio: headline 'We craft stories', menu Projects, Team, Contact, two project cards (the game Pigeon's Mission, a novel marked Coming soon) with View project links, a 'Footage from Pigeon's Mission' strip of level sketches, a founders' story, Steam, Discord, Twitch and YouTube icons, a plain email address.",
+      "recognition": "Awwwards Nominee, 2026-10-08 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/glowing-cheetah-studios",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Teka Teki Studios",
+      "url": "https://www.tekatekistudios.com/",
+      "why": "Indie studio page built as a desk of paper props: posters, sticky notes, a dog note and a developer photo on a table texture, no visible menu. A press kit page presents its game Two & Two: Agents, a two-player online co-op puzzle game, with capsule art only.",
+      "recognition": "Awwwards Honorable Mention, 2026-06-11",
+      "source": "https://www.awwwards.com/sites/teka-teki-studios",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "IGZIST",
+      "url": "https://igzist-gg.com/",
+      "why": "Japanese esports team: menu TEAM, MEMBER, STORE, EVENT, NEWS, VIDEOS, CONTACT with Twitter, YouTube and Twitch icons; divisions for VALORANT, Pokemon UNITE, Rainbow Six Siege, Apex Legends; player list, dated roster news (2026), merchandise with yen prices (T-shirt 4,900 yen), sponsor logos. No match calendar.",
+      "recognition": "Awwwards Honorable Mention, 2023-02-24",
+      "source": "https://www.awwwards.com/sites/igzist",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Flash Wolves",
+      "url": "https://www.flashwolves.com/",
+      "why": "Taiwanese esports team founded 2012, page in Traditional Chinese with English labels: menu TEAM, EVENTS, NEWS, MEDIA, SPONSOR, PRODUCT; a lead news story on a Hearthstone player's retirement, teams for Arena of Valor, Teamfight Tactics, Street Fighter 6, KartRider, one match result FW vs DCG 4:2 with date and time, sponsor logos including Red Bull.",
+      "recognition": "Awwwards Nominee, 2020-03-18 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/flash-wolves",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Twitch Rivals",
+      "url": "https://twitchrivals.com/",
+      "why": "Twitch's creator competition series: headline 'Beyond the win.', menu About, 3 New Series, FAQs, Brand Assets (zip download), Watch Now and View Schedule buttons, three series described (alt_arcade, hard_mode, casual_quest), partner logos. No event names, dates or prize amounts on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2026-06-26",
+      "source": "https://www.awwwards.com/sites/twitch-rivals",
+      "scale": "star",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "Platform logos with no link to the store page, so a player who wants the game has to search for it.",
+    "A home page for a tournament series with no event names, dates or prize amounts.",
+    "A press kit that holds one capsule image and no fact sheet, release date or screenshots.",
+    "An esports team page with rosters and merchandise but no upcoming match calendar.",
+    "A loading screen or sound toggle that must be passed before the game or studio is named.",
+    "Template placeholder text ('Lorem ipsum') left in a section near the footer, as seen on a recognised studio site.",
+    "Contact or press email addresses whose displayed text and link target differ."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Games & Entertainment",
+      "url": "https://www.awwwards.com/websites/games-entertainment/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'esports'",
+      "url": "https://www.awwwards.com/inspiration_search/esports/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'game developer'",
+      "url": "https://www.awwwards.com/inspiration_search/game-developer/",
+      "access": "free"
+    }
+  ]
+}

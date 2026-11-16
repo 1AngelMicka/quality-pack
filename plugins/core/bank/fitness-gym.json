@@ -1,0 +1,157 @@
+{
+  "id": "fitness-gym",
+  "label": {
+    "fr": "Salle de sport, yoga et coaching",
+    "en": "Gym, yoga and coaching"
+  },
+  "expects": [
+    {
+      "rule": "Membership and class prices are published (or at least an intro offer with its price), with commitment and cancellation terms.",
+      "source": "https://www.keepme.ai/case-studies/gym-faqs",
+      "verified": false
+    },
+    {
+      "rule": "A first step for newcomers is offered and priced: trial class, intro weeks, visit or first consultation, with one button to book it.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The class timetable can be read without an account, filterable by club, class type and teacher.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Each location shows its address, opening hours and facilities (pool, sauna, changing rooms, equipment).",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "An FAQ answers what prospects ask before visiting: what to bring, level needed, cancellation, accessibility.",
+      "source": "https://www.keepme.ai/case-studies/gym-faqs",
+      "verified": true
+    },
+    {
+      "rule": "Coaches and teachers are named with a photograph and their qualifications.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "5 of 8 put a newcomer step forward: trial class at 35 EUR and an intro month (Temple), 2 weeks for $59 (Yogamaya), a 5-step trial session (training BOXX), a trial session (Essor), a booked visit (Phive).",
+    "Only 3 of 8 show real prices on the home page (Temple, Essor, Yogamaya's intro offer); Core Atelier shows package cards with placeholder amounts, the others keep prices on a separate page.",
+    "3 of 8 state opening hours on the home page (Phive 06:30-22:00 in the hero, Temple, training BOXX per club); none of the 3 studios run by appointment do.",
+    "Booking lives in an account or app on 4 of 8 (Phive app, Casa Corpo on Bsport plus an iOS app, Core Atelier sign-in to book, Temple's own booking page); training BOXX and Essor use a form or phone.",
+    "3 of 8 are multi-site and name every club (Phive 5, Temple 5 with full addresses, training BOXX 3 with address, hours and phone each).",
+    "Strong single accents over dark or cream grounds: yellow #ffe000 with pink #ff004d (Phive), gold #c1a26c on #101010 (Temple), cream #f7e7de with brown #553623 (Core Atelier), teal #0b2a2b with sand #ebdbc2 (Yogamaya)."
+  ],
+  "sites": [
+    {
+      "name": "Phive",
+      "url": "https://phive.pt/en",
+      "why": "Premium club chain in Portugal: full-width photograph, 'It's not just fitness. It's living fully.', and the essentials as repeated hero lines (train every day, Coimbra, Leiria, Lisbon and Porto, 06:30am to 10pm); Sign up to a join flow, View all Clubs and Schedule a visit. Facilities listed (heated pool, sauna, Pilates studio), classes booked in the app. Yellow #ffe000, pink #ff004d, near-black #161003; PP Formula with Acid Grotesk; PT/EN. No prices on the home page.",
+      "recognition": "Awwwards Site of the Day, 2025-08-05 (also Developer Award, date not shown)",
+      "source": "https://www.awwwards.com/sites/phive-clubs",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Temple Noble Art",
+      "url": "https://www.temple-nobleart.com/",
+      "why": "Boxing gyms in Paris: top line 'Dès 80EUR le mois' with Découvrir & Réserver, headline 'Paris boxe ici.', Devenir Membre button and a Google rating of 4.8 from 1,700+ reviews. Prices stated (35 EUR trial, intro 95 EUR a month for 2 months, no commitment), five clubs with full addresses, hours, timetables per club, and a Calendly link for a phone call. Gold #c1a26c on #101010. French only.",
+      "recognition": "Awwwards Honorable Mention, 2021-02-08",
+      "source": "https://www.awwwards.com/sites/temple-noble-art",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Casa Corpo",
+      "url": "https://casacorpo.com/",
+      "why": "Boutique studio in Munich-Bogenhausen with reformer, Pilates, barre, hot yoga, HIIT, café and spa: 'Welcome to Casa Corpo', a studio photograph with Book now, a header Book now, and nine offer cards each with its own Book Now to /booking. A banner explains the move to Bsport and what existing members must do. Find us gives the district and a map link. Prices on a Pricing page; no hours or phone on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2025-03-28",
+      "source": "https://www.awwwards.com/sites/casa-corpo",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Core Atelier Pilates",
+      "url": "https://coreatelierpilates.com/",
+      "why": "Singapore Pilates studio with classes of three: hero image with Sign Up Now, a press strip (Vogue, Time Out...), testimonials, member area (packages, bookings, waitlist states), and a private-session request form (instructor, time of day, days, contact by email, WhatsApp or SMS) with a 24-48 h reply. Cream #f7e7de with brown #553623. Package prices show as 'S$.00' placeholders and the address only as 'Appointment Only'.",
+      "recognition": "Awwwards Honorable Mention, 2026-03-25",
+      "source": "https://www.awwwards.com/sites/core-atelier-pilates",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Yogamaya",
+      "url": "https://yogamaya.com/",
+      "why": "Yoga studio in New York: logo with the street address under it on every page, a scrolling bar for teacher trainings, illustrated GIF-style artwork (dancing yogis, a lady and tiger), an intro overlay '2 WEEKS for only $59'. Nav: Classes, Rates, Teacher Training, YMTV, Events, Studio. Phone, text number and email in the footer. Teal #0b2a2b and sand #ebdbc2, Dahlia display type. No booking button on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2025-05-30",
+      "source": "https://www.awwwards.com/sites/yogamaya",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "AlpineCore",
+      "url": "https://alpinecore.ch/",
+      "why": "Pilates in Geneva and Haute-Savoie plus mountain outings and retreats: 'Pilates & Montagne, Exercice haut perché' with a three-card carousel (classes, retreats, outings), group and private class cards each with a Planning link, a journal (recipes, layering advice) and Instagram. FR/EN. No prices, address or phone on the home page; booking only through the Planning page.",
+      "recognition": "Awwwards Honorable Mention, 2025-04-30",
+      "source": "https://www.awwwards.com/sites/alpinecore",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "training BOXX",
+      "url": "https://trainingboxx.jp/",
+      "why": "Semi-personal training gyms in Tokyo, Kawasaki and Osaka: logo and a 体験予約 (trial booking) button top right, headline naming the service, a four-image slideshow. The trial is explained in five steps (book by form or phone, no shoes needed, body-composition check, 40-minute session, feedback). Each club lists hours, address and phone; prices per club on /price/. Trainers, user interviews and FAQ in the nav.",
+      "recognition": "Awwwards Honorable Mention, 2022-04-15",
+      "source": "https://www.awwwards.com/sites/training-boxx-1",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Essor Fitness",
+      "url": "https://coachsportifecublens.com/",
+      "why": "Private personal-training studio in Ecublens near Lausanne: 'Coaching Sportif & Nutritionnel à Ecublens (VD)' with 4.85/5 from 60+ reviews, goals listed, two buttons for action and a trial session, both coaches named. Full prices (130 CHF a session, packs of 12, 24, 36, duo, nutrition) and insurance reimbursement stated. The trial buttons link back to the same page and the page ends with template questions.",
+      "recognition": "Awwwards Honorable Mention, 2026-01-03",
+      "source": "https://www.awwwards.com/sites/essor-fitness",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "Prices hidden behind 'contact us' or a sign-up wall, or package cards left with placeholder amounts.",
+    "A timetable that can only be seen after creating an account or installing the app.",
+    "Trial or call-to-action buttons that point back to the same page.",
+    "Stock photographs of models in generic gyms instead of the real rooms, equipment and coaches.",
+    "Opening hours and club addresses missing from the site, or one set of hours contradicting another.",
+    "Motivational slogans in place of what is offered, where, when and for how much.",
+    "Template FAQ or contact questions left unanswered at the bottom of the page."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, search 'gym'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=gym",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'pilates'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=pilates",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'yoga'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=yoga",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'fitness'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=fitness",
+      "access": "free"
+    },
+    {
+      "name": "Keepme, The crucial role of gym FAQs",
+      "url": "https://www.keepme.ai/case-studies/gym-faqs",
+      "access": "free"
+    }
+  ]
+}

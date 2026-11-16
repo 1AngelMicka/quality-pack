@@ -1,0 +1,137 @@
+{
+  "id": "creator-newsletter",
+  "label": {
+    "fr": "Créateur, newsletter et podcast",
+    "en": "Creator, newsletter and podcast"
+  },
+  "expects": [
+    {
+      "rule": "The first screen says in one line what the show or letter is about and how often it comes out (weekly, per season).",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "One primary way to follow (subscribe by email, or listen on named platforms) sits on the first screen and again at the end; platform buttons are labelled, not icon-only.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Episodes or issues are listed with title, date or number, and duration, newest first, with a way to play or read a sample without leaving the site.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The host or author is named with a photograph and a short bio.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Audience figures, sponsors and business enquiries are stated with numbers and a contact, for partners who arrive from outside.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The site lives on the creator's own domain and links to each platform feed, so the audience can be reached if a platform changes.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "4 of 7 name the host or hosts on the home page (Riveted with portraits and bios, CTRL SHIFT!, Beard Meats Food, Pete Sena); Rectangles gives a first name only and Wilson signs as the brand.",
+    "3 of 7 list episodes on the page (Riveted 8 with runtimes and Play/Preview, CTRL SHIFT! 10 with previews and transcripts, The Podcast Coach as case studies); the others link out to YouTube, Substack or an app.",
+    "Listen buttons: Riveted and CTRL SHIFT! give per-episode links to 4 and 11 platforms; Beard Meats Food links Apple, Spotify and YouTube in the footer; CTRL SHIFT!'s are mostly icon-only.",
+    "Only 2 of 7 have an email signup form on the home page (The Podcast Coach 'Stay in the Loop', CTRL SHIFT! subscribe in About); Pete Sena and Rectangles mention a newsletter without a form.",
+    "2 of 7 state an audience figure (Beard Meats Food 3,000,000 YouTube subscribers, CTRL SHIFT! Top Business Podcast badge). All 7 were read as page text, not screenshots."
+  ],
+  "sites": [
+    {
+      "name": "Riveted",
+      "url": "https://riveted.godfreydadich.com/",
+      "why": "Podcast by Godfrey Dadich Partners: heading 'Riveted', tagline 'True stories about telling stories', PlayTrailer button, two hosts with portraits and bios, 'Season 01, 8 Episodes' listed with guest photo, title, runtime, Play and Preview, per-episode links to Apple, Spotify, Google and Amazon Music, credits. No newsletter.",
+      "recognition": "One Page Love listing, 2024-03-09",
+      "source": "https://onepagelove.com/riveted",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "CTRL SHIFT!",
+      "url": "https://podcast.humbleteam.com/",
+      "why": "Podcast from the design studio Humbleteam: headline 'A podcast about pivoting', Apple 'Top Business Podcast' badge, ten episodes each with a short tagline, audio preview, transcript toggle and links to eleven platforms plus RSS (mostly icon-only), host named in About with a Subscribe button, keyboard graphic.",
+      "recognition": "Awwwards Site of the Day, 2023-01-07",
+      "source": "https://www.awwwards.com/sites/ctrl-shift-podcast",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Beard Meats Food",
+      "url": "https://www.beardmeatsfood.co.uk/",
+      "why": "Site of a UK eating-challenge YouTuber: wordmark split over three lines, tagline 'Let's get it.', menu Home, Youtube, Podcast, Shop, '3,000,000 YouTube subscribers' figure with a Subscribe button, weekly podcast block with the two hosts named, footer links to Apple, Spotify and YouTube, shop on an external store. No contact or business enquiries.",
+      "recognition": "One Page Love listing, 2025-09-26",
+      "source": "https://onepagelove.com/beard-meets-food",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Design's Group Chat (rectangles.fm)",
+      "url": "https://rectangles.fm/",
+      "why": "Weekly design livestream and newsletter: headline 'Where designers get unstuck', 'Together with' sponsor slot, a three-panel carousel of livestreams each with 'Watch on Youtube', sections for newsletter, takeaways and community, Sponsor and Survey links in the menu. No subscribe form on the page.",
+      "recognition": "One Page Love listing, 2026-06-22",
+      "source": "https://onepagelove.com/rectangles-fm",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Pete Sena",
+      "url": "https://petesena.com/",
+      "why": "Personal site of a strategist who speaks, writes and hosts podcast conversations: headline 'Creative firestarter. Thought partner to CEOs.', menu About, Newsletter, Contact, buttons 'Book a brainstorm', 'Read the essay', 'Book me to speak', photographs on stage and in workshops, client logo grid, Substack in the footer.",
+      "recognition": "One Page Love listing, 2026-11-04",
+      "source": "https://onepagelove.com/pete-sena",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "The Podcast Coach",
+      "url": "https://thepodcastcoach.co.uk/",
+      "why": "UK podcast production studio: headline 'The way you want to be heard', Book A Strategy Call and Our Process buttons, eight services without prices, four client podcast case studies, nine testimonials with photo and name, FAQ on turnaround and monetisation, team photograph, 'Stay in the Loop' newsletter form in the footer.",
+      "recognition": "Awwwards Honorable Mention, 2026-02-01",
+      "source": "https://www.awwwards.com/sites/the-podcast-coach",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Wilson",
+      "url": "https://wilson.fm/",
+      "why": "Weekly podcast playlist presented as a 'podcast magazine': 'Letter from the editor' signed by Wilson, three labels 'NO ONBOARDING', 'NO REGISTRATION', 'NO ALGORITHMS', a 'get wilson on the app store' link twice, a 'view playlists' link and a contact email. No episode list on the home page.",
+      "recognition": "One Page Love listing, 2018-07-13",
+      "source": "https://onepagelove.com/wilson-fm",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "Platform buttons that are icons only, with no text label for screen readers or new listeners.",
+    "A newsletter named in the menu with no signup form anywhere on the home page.",
+    "Episode lists with no date or number, so a visitor cannot tell whether the show is still running.",
+    "Copy-paste errors across episodes (the same platform link on two episodes, a description under the wrong episode).",
+    "A podcast or newsletter site on a subdomain or service that disappears when the season ends; listings show several such sites now offline.",
+    "A creator page with no business enquiries contact or audience figures for sponsors.",
+    "An autoplaying trailer or a full-screen subscribe pop-up on the first visit."
+  ],
+  "sources": [
+    {
+      "name": "One Page Love, Podcast tag",
+      "url": "https://onepagelove.com/tag/podcast",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, CTRL SHIFT! podcast",
+      "url": "https://www.awwwards.com/sites/ctrl-shift-podcast",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, The Podcast Coach",
+      "url": "https://www.awwwards.com/sites/the-podcast-coach",
+      "access": "free"
+    }
+  ]
+}

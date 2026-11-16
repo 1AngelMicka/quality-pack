@@ -1,0 +1,166 @@
+{
+  "id": "sports-club",
+  "label": {
+    "fr": "Club de sport et activités de plein air",
+    "en": "Sports club and outdoor activities"
+  },
+  "expects": [
+    {
+      "rule": "The first screen says which sport, where, and for whom (ages, levels, beginners welcome) in a line of text, with one labelled button to join, try or book.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "How to start is spelled out: a free or paid trial session, the membership or session price, what to bring, and who to contact.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Training groups or lessons are listed with day, time, place and level, as text that can be read on a phone at the side of the pitch.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Events, races and fixtures carry a date, place and registration link, and are published as Event structured data with name, start date and location.",
+      "source": "https://developers.google.com/search/docs/appearance/structured-data/event",
+      "verified": true
+    },
+    {
+      "rule": "Venue address, opening hours and phone are published as text and as LocalBusiness structured data, so search results and maps can show them.",
+      "source": "https://developers.google.com/search/docs/appearance/structured-data/local-business",
+      "verified": true
+    },
+    {
+      "rule": "A club with junior members names its welfare or safeguarding contact on the site.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "When booking leaves the site (Playtomic, BikeReg, a booking subdomain, WhatsApp), the button says where it goes.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "6 of 9 put a labelled join, register or book button on the first screen (Epsom & Ewell Harriers, LSV Invictus, New Generation Ski School, XNRGY, Bougeotte & Placotine, Gravelle du Parc); Sóller Tennis Club uses a WhatsApp button with a prefilled message instead.",
+    "Booking leaves the site on 5 of 9: Playtomic (XNRGY), BikeReg (Gravelle du Parc), a booking subdomain (New Generation Ski School), a short link and WhatsApp (Sóller Tennis Club), WhatsApp (La Huella); Alpine Guides takes bookings by phone, WhatsApp or form.",
+    "5 of 9 sort the offer by level or audience before anything else: LSV Invictus's seven groups from beginners to performance, New Generation's levels 1-6, Bougeotte & Placotine's pregnant / new mothers / perimenopause, La Huella's five workout types, Alpine Guides' trip categories.",
+    "5 of 9 show proof as a row of numbers or a founding year: Alpine Guides (since 1966, 47,000+ guests), Epsom & Ewell Harriers (since 1890), La Huella (150 classes a week, 6 gyms, 3 cities), Bougeotte & Placotine (16K mothers), Gravelle du Parc (4 editions, 1,500 riders).",
+    "Prices appear on the home page on only 2 of 9 (XNRGY from €30 an hour, Gravelle du Parc's side events); the others send the visitor to another page or to WhatsApp.",
+    "Dated fixtures or events are on the home page on 4 of 9 (Epsom & Ewell Harriers' six fixtures with times and venues, LSV Invictus's two events, Gravelle du Parc's weekend schedule with SOLD OUT on full distances, XNRGY's tournament)."
+  ],
+  "sites": [
+    {
+      "name": "Epsom & Ewell Harriers (Surrey athletics club)",
+      "url": "https://www.epsomandewellharriers.org",
+      "why": "Club name with 'Surrey's original running club' and 'empowering athletes since 1890', a Join our community button, then a fixtures list (date, time, venue) and dated news. Members 'from Year 5 to masters'; the Club menu includes Training sessions, Coaches and Welfare. Red (#E10120) and yellow (#FEDA10) club colours on off-white (#F8F9F2).",
+      "recognition": "Awwwards Nominee (not an award), 2025-09-24",
+      "source": "https://www.awwwards.com/sites/epsom-ewell-harriers",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "LSV Invictus (running club, Ooststellingwerf)",
+      "url": "https://www.lsv-invictus.nl/",
+      "why": "Dutch village running club: the headline names the club and region, one line lists running, walking and bootcamp 'for all levels', and a Bekijk loopgroepen button leads to seven groups (beginners 0 to 3 km, youth, performance, walking) by weekday. Lid worden in the menu, two dated events, an email link. Built in Framer, set in Inter. Times and meeting places are missing from the home page.",
+      "recognition": "Awwwards Nominee (not an award), 2026-01-11",
+      "source": "https://www.awwwards.com/sites/lsv-invictus",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Alpine Guides (Aoraki / Mount Cook)",
+      "url": "https://www.alpineguides.co.nz/",
+      "why": "Mountain guiding company: summit photograph, 'Expert Mountain Adventures Since 1966', three proof figures (60+ years, 47,000+ guests, 15,000,000+ vertical metres), then trip cards by category (glacier, hiking, skills courses, private guiding). Phone, WhatsApp and reservation hours written out; a live mountain webcam and gear guide. Amber (#fcb124) on charcoal (#1e1e1e).",
+      "recognition": "Awwwards Honorable Mention, 2026-09-27",
+      "source": "https://www.awwwards.com/sites/alpine-guides-aoraki",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "New Generation Ski School (Alps)",
+      "url": "https://www.skinewgen.com/",
+      "why": "Hero of a children's lesson with 'CARVE YOUR OWN LINE', two buttons (Find Your Level, Book Now to book.skinewgen.com), press logos, then menus by resort (France, Austria, Switzerland), lesson type and level (1-6, 3+). States that prices vary by resort and live availability. EN/FR/DE switch; UK office phone with hours; set in Lexend.",
+      "recognition": "Awwwards Nominee (not an award), 2025-08-10",
+      "source": "https://www.awwwards.com/sites/new-generation-ski-school",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "XNRGY Club (padel, Amsterdam and Almere)",
+      "url": "https://xnrgyclub.com/",
+      "why": "Headline 'ON&OFF COURT' with two buttons, Book a court (Playtomic) and Book a lesson, then two locations with court counts, gym, restaurant and parking, and the price 'from €30 an hour, €7.50 each with four players'. Menu by intent: Play, Lessons, Gym, Events, Business, Locations, Club. Navy (#0f1320) and blue (#192b88); EN/NL switch; phone in the footer.",
+      "recognition": "Awwwards Honorable Mention, 2026-06-15",
+      "source": "https://www.awwwards.com/sites/xnrgy-club",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "La Huella Workout Club (Barcelona)",
+      "url": "https://lahuella.club",
+      "why": "Coached group-training club: full-screen session photograph with the pitch (adapted coaching, 150+ classes a week, 6 gyms, 3 cities), then five workout types (Hybrid 50/50, Strength, Endurance, CrossFit, HYROX), clubs by city, and an FAQ saying the first class is a trial. Contact is a WhatsApp button; no prices and no booking button on the home page.",
+      "recognition": "Awwwards Nominee (not an award), 2025-10-07",
+      "source": "https://www.awwwards.com/sites/la-huella-workout-club",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Sóller Tennis Club (Mallorca)",
+      "url": "https://www.sollertennisclub.com/?lan=en",
+      "why": "One page: full-bleed photograph with the club name and 'Funday L'any 1999', an aerial court photo, two moods ('Serve, Volley, Return / Game On' and 'Swim, Cocktails, Social / Time Out'). Lessons through a WhatsApp message prefilled with sport, level, dates and times; court rental through a link. Address with a map, phone and email in the footer; no hours or prices.",
+      "recognition": "One Page Love, published 2024-02-20",
+      "source": "https://onepagelove.com/soller-tennis-club",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Bougeotte & Placotine (Quebec)",
+      "url": "https://bougeotteetplacotine.ca/",
+      "why": "French-language training centres for women: a strip offering to try one class before committing with Voir l'horaire, the headline 'Centre spécialisé en entraînement pour les femmes' listing who it is for (pregnant women, new mothers, perimenopause), Inscriptions and Cours de groupe buttons, class thumbnails by name, and a contact form that asks which of the 14 branches.",
+      "recognition": "Awwwards Nominee (not an award), 2025-12-24",
+      "source": "https://www.awwwards.com/sites/bougeotte-placotine",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Gravelle du Parc (Wakefield, Quebec)",
+      "url": "https://www.gravelleduparc.com/",
+      "why": "Gravel ride and trail run weekend by a local outdoor group: name, dates and place on the first screen with Découvrir l'événement and S'inscrire maintenant, four key figures, distances per day with SOLD OUT on full ones, an hour-by-hour weekend schedule and side-event prices. Registration on BikeReg; informal Quebec French throughout.",
+      "recognition": "Awwwards Nominee (not an award), 2026-11-11",
+      "source": "https://www.awwwards.com/sites/gravelle-du-parc",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A home page of club news with no line saying which sport, where and for whom.",
+    "No training times, place or price: only 'contact us' or a WhatsApp button.",
+    "Join or book buttons that open an outside platform without saying which one.",
+    "Fixtures and results only as PDFs or social posts, or a calendar still showing last season.",
+    "Stock photos of athletes instead of the club's own members, coaches and ground.",
+    "Junior section with no welfare or safeguarding contact.",
+    "Heavy video hero that hides the opening hours and address on a phone."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Sports",
+      "url": "https://www.awwwards.com/websites/sports/",
+      "access": "free"
+    },
+    {
+      "name": "One Page Love, Sport genre",
+      "url": "https://onepagelove.com/genre/sport",
+      "access": "free"
+    },
+    {
+      "name": "Google Search Central, Event structured data",
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/event",
+      "access": "free"
+    },
+    {
+      "name": "Google Search Central, Local business structured data",
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/local-business",
+      "access": "free"
+    }
+  ]
+}

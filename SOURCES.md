@@ -567,6 +567,19 @@ Une vidéo listait 31 consignes de vitesse (24 lisibles à l'écran, le reste r�
 | Campagne npm « Mini Shai-Hulud » (mai 2026), d'après International Cyber Digest sur X | le ver s'inscrivait dans `.claude/settings.json` et `.vscode/tasks.json` | publication d'un tiers, non vérifiée de première main | cité comme signalement |
 | Décalage de 30 à 50 ms entre les éléments d'une liste, sortie 20 % plus courte, carte suivante visible d'un quart à un tiers | réglages maison, sans validation publiée | — | réglages ajustables |
 
+## Lot 9 — banque agrandie (vérifié le 2026-11-16)
+
+27 nouveaux types de site (213 sites) et trois familles de motifs (30 thèmes, 96 modules, 90 règles), recherchés en parallèle puis relus et validés avant d'entrer dans le dépôt. Chaque site est une entreprise réelle dont la page en ligne a été lue, avec une distinction vérifiable (Awwwards, WebAwards, One Page Love, Typewolf, Brutalist Websites) et l'adresse de la page qui la donne ; « Nominee » et « Honorable Mention » sont écrits tels quels. Aucune capture d'écran de site tiers n'est stockée.
+
+| Lien | Rôle | Licence ou accès | Statut |
+| --- | --- | --- | --- |
+| [Awwwards](https://www.awwwards.com), [WebAwards](https://webaward.org), [One Page Love](https://onepagelove.com), [Typewolf](https://www.typewolf.com), [Brutalist Websites](https://brutalistwebsites.com) | pages de distinction des sites de la banque et des exemples de thèmes | consultation gratuite | citées, une adresse par site |
+| [Google Fonts](https://fonts.google.com) (dépôt google/fonts) | polices proposées par les thèmes | OFL ; Special Elite en Apache-2.0 | licence relue dans le dépôt |
+| NN/g, Baymard (articles gratuits), W3C/WCAG, Material 3, Apple HIG, GOV.UK, Practical Typography, web.dev | règles de design chiffrées | accès libre | citées ; chaque règle dit la force de sa preuve (recherche, guide, convention, maison) |
+| Règlement (UE) 1169/2011, articles 14 et 44 ; documentation Google des données structurées | attentes des commerces de bouche et des événements | accès libre | cités |
+
+Limites connues : les descriptions viennent du texte des pages, pas de captures ; quelques pages illisibles portent « (not seen beyond the gallery listing) » ; les règles « expects » des nouveaux types sont surtout des règles maison non vérifiées ; peu de références pour la claymorphie et le style tableau de données, aucune auto-école ni salle d'escalade primée trouvée.
+
 ## Lot 8 — banque de motifs (vérifié le 2026-11-16)
 
 Tout ce que le pack peut proposer, même ce qu'il ne demande pas : `plugins/core/bank/patterns/`, commande `sw patterns`. Les motifs viennent du récap de réels (barres d'onglets, effets, fonctionnalités, lois d'UX) et des règles déjà sourcées plus haut ; les galeries et bibliothèques ont été vérifiées sur leur propre site ou dépôt. Aucune galerie ne donne de droit sur les designs montrés : on s'en inspire, on ne copie rien.

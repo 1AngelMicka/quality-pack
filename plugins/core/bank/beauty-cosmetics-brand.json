@@ -1,0 +1,129 @@
+{
+  "id": "beauty-cosmetics-brand",
+  "label": {
+    "fr": "Marque de cosmétiques",
+    "en": "Beauty and cosmetics brand"
+  },
+  "expects": [
+    {
+      "rule": "Every product page lists the full ingredient list (INCI), the volume, how to use it and the skin or hair type it is for.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Claims such as vegan, cruelty-free, dermatologist tested or a percentage result name the certifier or the test (who, how many people, how long).",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Prices and sizes are on the product cards, with sets showing the saving against buying items separately.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A short routine finder or quiz helps choose between products, and leads to products rather than to an email gate.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Reviews show the reviewer's skin or hair type and come from a named platform or verified purchases.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Free-shipping threshold, delivery times and returns of opened products are stated before checkout.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "5 of the 6 sites read show prices on the home page (OMR, TrueKind, KOBA, EIGENHAIN, ETOILE); Function of Beauty shows none.",
+    "5 of 6 carry label claims (vegan, cruelty-free, dermatologist tested, made in Germany, natural-origin percentage); only Function of Beauty footnotes how its figures were measured.",
+    "4 of 6 show reviews or ratings: Function of Beauty and KOBA with named reviewers (KOBA gives age and city), ETOILE 4.8 from 1,144 ratings, EIGENHAIN with video testimonials from clinics; OMR and TrueKind have none.",
+    "4 of 6 state a free-shipping threshold in the top bar (Function of Beauty 75 USD, KOBA 60 USD / 50 GBP / 50 EUR, EIGENHAIN 48 EUR in Germany, ETOILE 200 AUD).",
+    "3 of 6 offer a finder: Function of Beauty's two-minute hair quiz, EIGENHAIN's skin test leading to a four-step routine, KOBA's Find Your Ritual.",
+    "3 of 6 tie a first-order discount to the newsletter (KOBA 10%, ETOILE 15 AUD, Function of Beauty an unstated offer)."
+  ],
+  "sites": [
+    {
+      "name": "KOBA Skincare",
+      "url": "https://kobaskincare.com/",
+      "why": "Body and face care built on safou oil, formulated with French expertise, EN/FR and GBP/USD/EUR switches. Bars for 10% off with the newsletter and free shipping over 60 USD / 50 GBP / 50 EUR; product cards with price, star rating and review count (Bottom Up Foot Cream 35 GBP, 4.9 from 185); value sets at 15% off; reviews with first name, age and city.",
+      "recognition": "Awwwards Honorable Mention, 2025-01-20",
+      "source": "https://www.awwwards.com/sites/koba-skincare",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "EIGENHAIN",
+      "url": "https://eigenhain.com",
+      "why": "German skincare, page in German: headline 'Mehr als Hautpflege', badges cold-stirred and made in Germany, a skin-need picker and Hauttest leading to a four-step routine, prices on cards (Cleanser 26 EUR, sets 68 to 86 EUR), a section on aftercare for microneedling and peels, FAQ naming ingredients and cited studies, free shipping in Germany from 48 EUR.",
+      "recognition": "Awwwards Honorable Mention, 2022-02-28",
+      "source": "https://www.awwwards.com/sites/eigenhain-skincare",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "OMR Beauty",
+      "url": "https://omrbeauty.com",
+      "why": "Swedish fragrance brand: headline 'unbound by beauty' with Shop now, menu by format (eau de parfum, perfume oil, scented candle), featured Copper 50 ml at 57,95 EUR with top, heart and base notes listed, perfume oils 8 ml at 32,95 EUR, hoodies in the same shop. No reviews and no shipping terms on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2026-02-03",
+      "source": "https://www.awwwards.com/sites/omr-beauty",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Function of Beauty",
+      "url": "https://functionofbeauty.com/",
+      "why": "Custom haircare: headline 'Your Hair Type Changes Everything' with Shop Your Hair Type and Take the Quiz, badges (sulfate-free, vegan, dermatologist tested), claims '2x stronger hair' with a footnote on how it was measured, before-and-after reviews tagged by hair type, free shipping over 75 USD. No prices on the home page; one block showed a raw template error.",
+      "recognition": "Awwwards Honorable Mention, 2023-11-17",
+      "source": "https://www.awwwards.com/sites/function-of-beauty",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "TrueKind",
+      "url": "https://truekindskincare.com/",
+      "why": "Indian skincare: headline 'True to Oneself / kind to Nature' with Explore All Products, four claim blocks (clean, radical transparency, potent, conscious) naming PETA vegan certification, seven products all at 899 INR, journal and newsletter. Phone in the header, but the footer number 1111-2222-3333 is a leftover placeholder and two different ingredient counts are given.",
+      "recognition": "Awwwards Site of the Day, 2025-04-29",
+      "source": "https://www.awwwards.com/sites/truekind-skincare",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "ETOILE",
+      "url": "https://etoile.com/",
+      "why": "Australian beauty accessories (vanity cases, makeup bags, brushes): bar 'Free AU shipping on orders 200+' and 'New customers save 15', AUD/NZD/USD/GBP selector, menu Shop, Save With Sets (Curated Sets, Build Your Set), Pro MUA; Duo Vanity Case 120 AUD in black and 15 colours, rated 4.8 from 1,144, sold-out variants marked.",
+      "recognition": "Site Inspire listing, 2026-11-12",
+      "source": "https://www.siteinspire.com/website/13683-etoile",
+      "scale": "company",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "Clean, natural or non-toxic claims with no certifier, no percentage and no ingredient list behind them.",
+    "Before-and-after photographs or percentage results with no footnote on who was tested and for how long.",
+    "A quiz that asks for an email address before showing its result.",
+    "Placeholder phone numbers, lorem text or template errors left in the footer or a promotional block.",
+    "Product cards with no size or volume next to the price.",
+    "Text set in light grey on pastel backgrounds that fails contrast on ingredient and usage copy.",
+    "Several overlapping offers (pop-up, bar, banner) that each promise a different first-order discount."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Skincare",
+      "url": "https://www.awwwards.com/websites/skincare/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Beauty",
+      "url": "https://www.awwwards.com/websites/beauty/",
+      "access": "free"
+    },
+    {
+      "name": "Siteinspire, Fashion and E-Commerce listings",
+      "url": "https://www.siteinspire.com/websites/categories/fashion",
+      "access": "free"
+    }
+  ]
+}

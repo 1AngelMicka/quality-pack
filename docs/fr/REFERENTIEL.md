@@ -200,6 +200,7 @@ _S'applique si : Le projet a une interface utilisateur_
 
 - Concevoir mobile d'abord, puis élargir ; tester à 360, 390, 768, 1024, 1440 et 1920 px (certaines mises en page ne cassent que sur grand écran).
 - Cibles tactiles d'au moins 44 × 44 px ; aucune fonction accessible uniquement au survol.
+- Un effet pensé pour la souris (survol WebGL, curseur, bouton magnétique) n'est jamais le moment signature à lui seul : la signature a une version au doigt ou au défilement, puisque la plupart des visiteurs d'un commerce sont sur téléphone.
 - Images servies à la bonne taille (srcset ou composant d'image du framework).
 
 **Critères d'audit**
@@ -208,7 +209,7 @@ _S'applique si : Le projet a une interface utilisateur_
 | --- | --- | --- | --- |
 | RSP-01 | Aucun défilement horizontal ni contenu coupé de 360 à 1440 px | Bloquant | Captures aux 5 largeurs de référence et mesure de scrollWidth, puis à chaque étape des parcours (horizontal_overflow dans flows.json). (auto `viewport_screenshots`) |
 | RSP-02 | Cibles tactiles d'au moins 44 × 44 px sur mobile | Majeur | Mesurer boutons, liens d'icône, cases à cocher en vue mobile. (lecture) |
-| RSP-03 | Aucune fonction réservée au survol | Majeur | Menus, infobulles et actions accessibles au toucher. (lecture) |
+| RSP-03 | Aucune fonction ni effet signature réservé au survol | Majeur | Menus, infobulles et actions accessibles au toucher ; le moment signature et les effets au survol mis en avant ont une version au doigt ou au défilement sur téléphone (DESIGN.md › Signature). (lecture) |
 | RSP-04 | Mise en page adaptée à chaque format, pas seulement rétrécie | Mineur | Navigation, tableaux et grilles réorganisés sur mobile et tablette. (lecture) |
 | RSP-05 | Zones sûres et clavier virtuel gérés sur mobile | Mineur | Encoche, barre du bas iOS et champ masqué par le clavier testés. (lecture) |
 

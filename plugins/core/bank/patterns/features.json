@@ -25,7 +25,8 @@
       "build": "Accept and refuse buttons of equal weight on the first layer, nothing set before consent, choice changeable from the footer. Free: a self-hosted consent script or the analytics' cookieless mode.",
       "checks": [
         "PRV-01"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "copy-button",
@@ -46,7 +47,8 @@
       "build": "navigator.clipboard.writeText; the icon becomes a check for about 2 s; announced by aria-live.",
       "checks": [
         "UX build rule"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "print-stylesheet",
@@ -66,7 +68,8 @@
       "build": "@media print: hide navigation and actions, black on white, URLs after links, page breaks avoided inside blocks.",
       "checks": [
         "UX build rule"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "password-reveal",
@@ -85,7 +88,8 @@
       "build": "A toggle button with aria-pressed that switches type=password and text without clearing the field.",
       "checks": [
         "UX build rule"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "utm-preservation",
@@ -107,7 +111,8 @@
       },
       "use_when": "Sites with an analytics tool and campaigns on several channels.",
       "avoid_when": "Sites without analytics: nobody reads the parameters.",
-      "build": "Add utm_source, utm_medium and utm_campaign to shared links; make sure redirects keep the query string; a privacy-friendly analytics tool (Plausible or Umami self-hosted, Matomo) reads them."
+      "build": "Add utm_source, utm_medium and utm_campaign to shared links; make sure redirects keep the query string; a privacy-friendly analytics tool (Plausible or Umami self-hosted, Matomo) reads them.",
+      "prevalence": "standard"
     },
     {
       "id": "form-confirmation",
@@ -128,7 +133,8 @@
       "build": "Replace the form with a message or show a success state that stays; email confirmation for orders and bookings.",
       "checks": [
         "UX-05"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "last-updated-date",
@@ -147,7 +153,8 @@
       "build": "From the content's real change date, not the build date; <time datetime>.",
       "checks": [
         "CNT build rule"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "faq-accordion",
@@ -167,7 +174,8 @@
       "build": "<details><summary> works without JavaScript and is accessible; FAQPage structured data only where Google still shows it.",
       "checks": [
         "SUP-04"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "dark-mode",
@@ -189,7 +197,8 @@
       "checks": [
         "UI-06",
         "CRF-07"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "loading-skeleton",
@@ -209,7 +218,8 @@
       "build": "Same dimensions as the final content; delayed 150 to 300 ms.",
       "checks": [
         "CRF-04"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "optimistic-update",
@@ -228,7 +238,8 @@
       "build": "Update local state, send, roll back with a message or Undo on failure.",
       "checks": [
         "premium-craft"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "undo-toast",
@@ -248,7 +259,8 @@
       "checks": [
         "UX-03",
         "CRF-05"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "confirm-dialog",
@@ -267,7 +279,8 @@
       "build": "The button says the action (\"Delete 3 invoices\"), not \"OK\"; typing the name for very destructive actions.",
       "checks": [
         "UX-03"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "streaming-response",
@@ -286,7 +299,8 @@
       "build": "Server-sent events or a ReadableStream; a Stop button; the final text announced once.",
       "checks": [
         "UX build rule"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "autosave",
@@ -306,7 +320,8 @@
       "build": "Debounced saves, \"Saved\" state with time, conflict handling, warning before leaving with unsaved changes.",
       "checks": [
         "DUX-04"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "onboarding-checklist",
@@ -329,7 +344,8 @@
       "build": "3 to 5 steps, each linked to where it is done, dismissible, progress saved.",
       "checks": [
         "ACT-01"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "empty-state-teaching",
@@ -348,7 +364,8 @@
       "build": "One sentence, one primary button, sample data on request.",
       "checks": [
         "UX-01"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "language-switcher",
@@ -368,7 +385,8 @@
       "build": "Names in their own language (Deutsch, Français); hreflang; the choice remembered; no automatic redirect without a way back.",
       "checks": [
         "SEO-07"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "notification-center",
@@ -384,7 +402,8 @@
       },
       "use_when": "Collaborative apps.",
       "avoid_when": "Single-user tools with few events.",
-      "build": "Bell with a count, mark as read, links to the object, email digest settings."
+      "build": "Bell with a count, mark as read, links to the object, email digest settings.",
+      "prevalence": "standard"
     },
     {
       "id": "keyboard-shortcuts-sheet",
@@ -404,7 +423,8 @@
       "build": "A dialog grouped by screen, with the platform's symbols.",
       "checks": [
         "CRF-08"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "social-share",
@@ -424,7 +444,8 @@
       "build": "navigator.share on phones, plain links elsewhere (no third-party scripts that track); a good share image.",
       "checks": [
         "SEO-03"
-      ]
+      ],
+      "prevalence": "standard"
     }
   ]
 }

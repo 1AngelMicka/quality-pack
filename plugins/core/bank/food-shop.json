@@ -1,0 +1,170 @@
+{
+  "id": "food-shop",
+  "label": {
+    "fr": "Boulangerie, pizzeria et commerce de bouche",
+    "en": "Bakery, pizzeria and food shop"
+  },
+  "expects": [
+    {
+      "rule": "Each shop's address, opening hours and phone number are on the home page as text, with today's closing time easy to find; several shops get one block each.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The way to buy is one labelled button on the first screen (order, pre-order, shop, book the truck) that says whether it is pickup, delivery or shipping, and names the outside platform when it leaves the site.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "For food sold online, the mandatory food information (ingredients, allergens, net quantity) is shown before the purchase is concluded, not only on the label after delivery.",
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011R1169",
+      "verified": true
+    },
+    {
+      "rule": "Allergen information is provided for food sold unpackaged (bread, pastries, pizza, deli counter), so the site either lists it or says where to get it.",
+      "source": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011R1169",
+      "verified": true
+    },
+    {
+      "rule": "Products are shown with real photographs and prices; seasonal or daily items (bread of the day, brioche of the month, roast of the week) are dated.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Address, hours, phone and the kind of shop (Bakery, CafeOrCoffeeShop, Store) are also published as LocalBusiness structured data so search results can show them.",
+      "source": "https://developers.google.com/search/docs/appearance/structured-data/local-business",
+      "verified": true
+    }
+  ],
+  "traits": [
+    "9 of 10 put a way to buy on the first screen as a labelled button or header link (Menu/Order, order now, Book a truck, NAKÚPIŤ, Acheter en ligne, cart); The Olly is the only one with no button at all.",
+    "3 of 10 hand ordering to Toast (Sunbeam Bagels, Banh Mi World, Pumpernickel + Rye); the three roasters and the chocolate brand sell on their own shop with a cart drawer (Best Bean Best Cup, Café Binocle, Rye Island, Theobroma).",
+    "Hours are on the home page as text on 5 of 10 (Sunbeam's top bar, Banh Mi World's open-now line, The Olly's table of five shops, Pumpernickel + Rye, Best Bean Best Cup); Sacré Vin & Sacré Fromage gives address and phones but no hours.",
+    "The 3 roasters order the page by product: bag, origin, process, weight and grind selector, then add to cart (Best Bean Best Cup, Café Binocle, Rye Island).",
+    "Colour comes from one strong brand colour on a quiet ground, where it could be read from the CSS: orange #f0843f on cream #f6e9d2 (Sunbeam), red #e42527 on grey #eeeeef (The Olly), brown #2F1B12 on cream #fff4e3 (Theobroma), green #2DD743 (Best Bean Best Cup).",
+    "3 of 10 offer a first-order or subscription discount of 15% (Best Bean Best Cup, Theobroma, Café Binocle); 2 of 10 cover the first screen on load (Pizza Amici's cookie panel, Sacré Vin's age check)."
+  ],
+  "sites": [
+    {
+      "name": "Sunbeam Bagel & Coffee Co. (Bryan, Texas)",
+      "url": "https://sunbeambagels.com/",
+      "why": "A top strip reads 'Come On In: 7am - 3pm', then the headline 'Start Your Day Right in Bryan, Tx' over 'Coffee. Breakfast. Lunch.', a Menu/Order button to Toast and four food photographs. Cream (#f6e9d2) with orange (#f0843f); a playful 'drop a bagel' sticker. Address, phone and hours in the footer.",
+      "recognition": "Awwwards Honorable Mention, 2026-07-23",
+      "source": "https://www.awwwards.com/sites/sunbeam-bagels-coffee",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Pizza Amici (Netherlands)",
+      "url": "https://www.pizza-amici.nl/",
+      "why": "Pizza food-truck hire: the headline 'Huur een pizza foodtruck op locatie', proof figures (3000+ jobs, 480+ pizzas an hour, from €10 per person), a 4.6 Google rating, a team photo under a striped awning and a Boek een truck button in the header. A four-step 'how it works' explains the quote request. Dark brown (#2b1d15) text colour; a cookie panel covers the first screen on load.",
+      "recognition": "Awwwards Honorable Mention, 2026-07-05",
+      "source": "https://www.awwwards.com/sites/pizza-amici",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Theobroma Chocolat (Montreal)",
+      "url": "https://theobromachocolat.com/",
+      "why": "Full-width hero with a short loud line ('Pause mode: on. Flavour: loud.'), a 'This just in' product with a Discover button, then three category tiles (Sticks, Chunkies, Minis) and product cards with price, quantity stepper and Add to cart. Brown (#2F1B12) on cream (#fff4e3); FR/EN switch; Fairtrade and ingredients sections before best sellers.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-16",
+      "source": "https://www.awwwards.com/sites/theobroma",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Best Bean Best Cup (Melbourne roaster)",
+      "url": "https://bestbeanbestcup.com.au",
+      "why": "Announcement bar with the free-shipping threshold and dispatch time, then the plain headline 'Vietnamese Coffee Roasters in Melbourne' and a photo grid. Each coffee is a block with tagline, weight and grind selectors (including phin filter), quantity and Add to cart. Green (#2DD743) accent on white; address, phone and hours lower down.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-16",
+      "source": "https://www.awwwards.com/sites/best-bean-best-cup",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Café Binocle (Montreal micro-roaster)",
+      "url": "https://www.cafebinocle.com/",
+      "why": "French first, with an En switch. The headline 'Le café le plus gentil au monde!' and the line that the coffee is not sold in grocery stores, then three blocks to the mission, subscriptions and the coffees, in 300 g or 1 kg with carbon-neutral delivery. Yellow (#ffe26e) and blue (#334fb4) colour scheme, set in Assistant; subscriptions run on Subbly.",
+      "recognition": "Awwwards Honorable Mention, 2026-04-21",
+      "source": "https://www.awwwards.com/sites/cafe-binocle",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Rye Island Roastery (Slovakia)",
+      "url": "https://ryeisland.com/",
+      "why": "Slovak-language shop: headline 'Objavte kávu bez kompromisov', a roasted-coffee stamp, a green NAKÚPIŤ (buy) button, then a carousel of about twelve bags each labelled with origin and process (washed, natural). Four tiles split coffee, events (courses and tastings), equipment and merch; prices 'from 12.50 €'. Dark navy (#10172a) sections.",
+      "recognition": "Awwwards Honorable Mention, 2026-03-26",
+      "source": "https://www.awwwards.com/sites/rye-island-roastery",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Banh Mi World (Whitby, Ontario)",
+      "url": "https://banhmiworld.ca/",
+      "why": "Header with an open-now line, location chooser and an order now button; a scrolling strip 'eat banh mi / drink coffee / be happy' over a large split headline. Three dish cards with dietary tags, then a location block with address, hours (10 AM to 10 PM daily), parking and Get Directions. Ordering and gift cards through Toast. The header phone number is a placeholder that differs from the store's: check such details.",
+      "recognition": "Awwwards Honorable Mention, 2026-05-12",
+      "source": "https://www.awwwards.com/sites/banh-mi-world",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Sacré Vin & Sacré Fromage (Nantes)",
+      "url": "https://www.sacre-vin-fromage.fr/",
+      "why": "Wine shop and cheese shop side by side, presented one after the other on the first screen: 'Un caviste en Bio, Biodynamie, Nature' with Découvrir and Nos box vin, then the fromagerie with Acheter en ligne. Three products to share, the founder's story, both shops' photos, a contact form that asks which shop. An age check covers the page on load; no opening hours on the home page.",
+      "recognition": "Awwwards Nominee (not an award), 2023-10-05",
+      "source": "https://www.awwwards.com/sites/sacre-vin-sacre-fromage",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "The Olly (Como bakery)",
+      "url": "https://www.theolly.it",
+      "why": "One long Italian page for a bakery founded in 1956: photo of the bake room, short blocks on bread, pastry and coffee, then all five shops with address, phone and opening hours for each, the brioche of the month (dated) and the founder's story in three chapters. Red (#e42527) on light grey (#eeeeef), headlines in Noto Serif Display Extra Condensed. No order button: you go to the shop.",
+      "recognition": "Awwwards Honorable Mention, 2024-09-12",
+      "source": "https://www.awwwards.com/sites/the-olly",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Pumpernickel + Rye (Urbana, Maryland deli)",
+      "url": "https://pumpandrye.com/",
+      "why": "Single page for a 'new school deli' in a restored farmhouse: a pig illustration and a short Welcome, and a nav made only of actions (Order Online on Toast, catering on EZCater, the dated seasonal menu as a PDF, merch). Phone in the header; hours per day and the street address as text.",
+      "recognition": "One Page Love, published 2020-01-27",
+      "source": "https://onepagelove.com/pumpernickel-and-rye",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "No opening hours on the home page, or hours only in an image or an Instagram post.",
+    "An order button that opens a third-party platform without saying so, or without a phone number as a fallback.",
+    "Placeholder details left in production (a sample phone number, '[release date]', lorem text).",
+    "Menu or price list only as a PDF that cannot be read on a phone.",
+    "Stock photos of generic bread or coffee instead of the shop's own products and people.",
+    "Age gate, cookie panel and newsletter pop-up stacked over the first screen before the visitor sees what is sold.",
+    "Online shop with no ingredients or allergen list on the product page."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Food & Drink",
+      "url": "https://www.awwwards.com/websites/food-drink/",
+      "access": "free"
+    },
+    {
+      "name": "One Page Love, Restaurant genre",
+      "url": "https://onepagelove.com/genre/restaurant",
+      "access": "free"
+    },
+    {
+      "name": "Regulation (EU) No 1169/2011 on food information to consumers (Articles 14 and 44)",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011R1169",
+      "access": "free"
+    },
+    {
+      "name": "Google Search Central, Local business structured data",
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/local-business",
+      "access": "free"
+    }
+  ]
+}

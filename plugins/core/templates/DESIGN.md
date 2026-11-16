@@ -25,6 +25,15 @@ key tasks, on phone and on desktop (criterion ERG-08), so write principles you c
 
 Where the work happens, one line each: what the user decides there, in which order, and what is recommended by default.
 
+## Signature
+
+The one moment that belongs to this site, taken from the trade (design-direction, DIR-11).
+
+- Moment: <one sentence>
+- Where: <page and section>
+- On phone: <how it works by touch and scroll>
+- Still version: <what reduced motion shows>
+
 ## Chosen patterns
 
 Patterns from `sw patterns` the user chose, one line each: the pattern ID, where it is used, why. A pattern the generic-look check flags is fine here when it was chosen on purpose.

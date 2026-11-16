@@ -1,0 +1,147 @@
+{
+  "id": "coworking-venue",
+  "label": {
+    "fr": "Coworking et lieu à louer",
+    "en": "Coworking and venue hire"
+  },
+  "expects": [
+    {
+      "rule": "The first screen says what can be rented and where (city, district, transport stop) in the headline.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Prices per formula are published (day pass, desk, private office, room per hour), with VAT stated.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "One primary action: book a visit or a free test day for coworking, request a quote for a venue.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Access hours (staffed hours and member 24/7 access) and the full address are plain text.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Venues give capacities per room (seated, standing, surface in m²) and floor plans or a virtual tour.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Photographs show the actual rooms, labelled by name, rather than generic office stock images.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "5 of 8 publish prices on the home page (Silversquare, Llum, Anticafe, Yellow Desk, FoundrSpace); all 5 give a day or hourly entry price, from 6 EUR an hour to 35 EUR a day.",
+    "4 of 8 have a Book a tour or Request a visit button (Silversquare, Llum, Yellow Desk, FoundrSpace); the 2 event venues use Request a quote or Organize your event.",
+    "4 of 8 show a phone number on the home page (Llum, LOFFICE, Yellow Desk, Stazione Leopolda); Silversquare, FoundrSpace and Kortrijk Xpo show none.",
+    "4 of 8 state 24/7 member access but none gives reception hours on the home page except Silversquare in its FAQ (8:30 to 17:00).",
+    "Both event venues give size figures (Stazione Leopolda 6,000 m2 and 1,850 guests; Kortrijk Xpo nearly 40,000 m2 and 6 halls) and neither publishes prices.",
+    "5 of 8 offer a language switch (Silversquare NL/FR/EN, Llum ES/EN/FR, Stazione IT/EN, Kortrijk NL/FR/EN, LOFFICE HU)."
+  ],
+  "sites": [
+    {
+      "name": "Silversquare",
+      "url": "https://silversquare.eu/en",
+      "why": "Belgian and Luxembourg coworking: headline 'Unique coworking spaces in Belgium & Luxembourg', top bar 'Book a free test day', Book a tour button, menus for Solutions and six cities, prices excl. VAT (Day Pass 35 EUR, Flex 250 EUR a month, Private Office 475 EUR, meeting rooms from 28 EUR), named meeting-room photos, NL/FR/EN.",
+      "recognition": "Awwwards Honorable Mention, 2021-05-14",
+      "source": "https://www.awwwards.com/sites/silversquare",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Llum Coworking",
+      "url": "https://llumcoworking.com/",
+      "why": "Single coworking in Valencia: headline 'Coworking en Valencia', subline on light, Solicitar una visita button in the header, prices + IVA (day 25 EUR Mon-Thu 9:00-18:00, fixed desk from 205 EUR, rooms from 18 EUR an hour), street address near Xativa metro, phone and email, Google rating with 165 reviews, ES/EN/FR.",
+      "recognition": "Awwwards Nominee, 2024-05-06 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/llum-coworking",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "LOFFICE",
+      "url": "https://loffice.hu/budapest/hu/",
+      "why": "Budapest coworking and event spaces, page in Hungarian: banner on design offices for rent with flexible terms, menu About, Services, Book!, Contact, Login, cards for loft offices, coworking, meeting and event room hire, registered-office packages; reception address, phone and email; client logos. Prices sit behind a Packages and prices link.",
+      "recognition": "Awwwards Nominee, 2021-01-04 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/loffice-budapest-and-vienna",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Anticafe",
+      "url": "https://anticafe.eu/",
+      "why": "French cafe-coworking in Bordeaux and Strasbourg: headline 'Le pionnier francais du cafe-coworking, depuis 2013', line 'Payez le temps, pas la conso.', price 6 EUR an hour capped at 29 EUR a day with drinks included, Reserver une place button, one link per city, privatisation offers for seminars. Opening days stated, no times.",
+      "recognition": "Awwwards Honorable Mention, 2018-12-28",
+      "source": "https://www.awwwards.com/sites/anticafe",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Yellow Desk Co",
+      "url": "https://yellowdesk.com.au/",
+      "why": "One coworking in South Yarra, Melbourne: headline 'More than just Coworking', menus Room Hire (two boardrooms, photo studio) and Workspaces, Book a tour twice, prices +GST (Flexi Pass from 40 AUD, desk 600 AUD a month, office 2,500 AUD), street address, phone, email, a long enquiry form with date and time.",
+      "recognition": "Awwwards Nominee, 2023-03-01 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/yellow-desk-co",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "FoundrSpace",
+      "url": "https://www.foundrspace.com/",
+      "why": "California coworking with two sites and one coming: headline 'The future of work is hybrid', banner for the new Covina location, menus Locations, About, Events (venue hire), Perks, price grid (day pass 30 USD, seat 199 USD a month, office from 800 USD, meeting room 50 USD an hour), Book a tour per site. No street address or phone.",
+      "recognition": "Awwwards Honorable Mention, 2023-03-30",
+      "source": "https://www.awwwards.com/sites/foundrspace-coworking",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Stazione Leopolda",
+      "url": "https://www.stazione-leopolda.com/en",
+      "why": "Event venue in a former Florence station: headline 'A unique venue in the heart of Florence, where your event comes to life', about 6,000 m2 over two buildings for up to 1,850 guests, Request a quote repeated, Virtual tour, upcoming events with dates, client testimonials, street address, phone and email, IT/EN.",
+      "recognition": "Awwwards Nominee, 2026-08-06 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/stazione-leopolda",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Kortrijk Xpo",
+      "url": "https://kortrijkxpo.com/en",
+      "why": "Exhibition and conference venue in West Flanders: headline 'when ideas need space', menus Calendar, Visit, Organize (spaces, meetings, catering), figures nearly 40,000 m2, 6 halls, 5 meeting rooms, Organize your event and View our calendar buttons, event cards with dates, photos of halls during fairs. No phone or email on the home page.",
+      "recognition": "Awwwards Nominee, 2026-08-29 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/kortrijk-xpo",
+      "scale": "company",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "Prices hidden behind a 'packages and prices' link or a contact form for standard desks and day passes.",
+    "No street address on the home page of a space people must find on foot.",
+    "Room photos without the room's name, capacity or surface beside them.",
+    "A venue home page with no phone, no email and no quote form, only a Contact menu item.",
+    "'24/7 access' stated without the staffed reception hours or how a visitor gets in.",
+    "An enquiry form asking for package, room length, date and time before a first visit.",
+    "Prices quoted without saying whether VAT or GST is included."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, search 'coworking'",
+      "url": "https://www.awwwards.com/inspiration_search/coworking/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'venue'",
+      "url": "https://www.awwwards.com/inspiration_search/venue/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'workspace'",
+      "url": "https://www.awwwards.com/inspiration_search/workspace/",
+      "access": "free"
+    }
+  ]
+}

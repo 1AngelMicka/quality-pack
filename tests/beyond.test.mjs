@@ -116,6 +116,8 @@ test("patterns: every family is well formed, and the CLI lists, filters, searche
   const found = (await run(dir, ["patterns", "search", "glass"])).out;
   assert.ok(found.entries.some((e) => e.id === "liquid-glass") && found.entries.some((e) => e.id === "liquid-glass-js"));
   assert.equal((await run(dir, ["patterns", "rubber-band"])).out.entry.family, "motion");
+  const rare = (await run(dir, ["patterns", "effects", "--prevalence", "rare"])).out;
+  assert.ok(rare.entries.length && rare.entries.every((e) => e.prevalence === "rare") && rare.entries.some((e) => e.id === "before-after"));
   assert.notEqual((await run(dir, ["patterns", "no-such-thing"])).code, 0);
 });
 

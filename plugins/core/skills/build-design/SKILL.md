@@ -64,13 +64,14 @@ Rules:
 
 - Design mobile first, then widen; test at 360, 390, 768, 1024, 1440 and 1920 px (some layouts only break on wide screens).
 - Touch targets at least 44 × 44 px; no feature available only on hover.
+- An effect made for the mouse (WebGL hover, cursor, magnetic button) is never the signature moment on its own: the signature has a touch or scroll version, since most visitors of a business are on phones.
 - Images served at the right size (srcset or the framework's image component).
 
 Done means:
 
 - [BLOCKER] RSP-01: No horizontal scroll or clipped content from 360 to 1440 px. Check: Screenshots at the 5 reference widths and scrollWidth check, then at every flow step (horizontal_overflow in flows.json).
 - [major] RSP-02: Touch targets at least 44 × 44 px on mobile. Check: Measure buttons, icon links, checkboxes in mobile view.
-- [major] RSP-03: No hover-only feature. Check: Menus, tooltips and actions reachable by touch.
+- [major] RSP-03: No hover-only feature or signature effect. Check: Menus, tooltips and actions reachable by touch; the signature moment and featured hover effects have a touch or scroll version on phone (DESIGN.md › Signature).
 - [minor] RSP-04: Layout adapted to each format, not just shrunk. Check: Navigation, tables and grids reorganised on mobile and tablet.
 - [minor] RSP-05: Safe areas and on-screen keyboard handled on mobile. Check: Notch, iOS bottom bar and field hidden by keyboard tested.
 

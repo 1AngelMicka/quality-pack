@@ -1,0 +1,147 @@
+{
+  "id": "winery-spirits",
+  "label": {
+    "fr": "Domaine viticole et spiritueux",
+    "en": "Winery and spirits"
+  },
+  "expects": [
+    {
+      "rule": "A legal-age check on entry that is one question with Yes and No (or a birth year), states the age rule applied, and remembers the answer.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Visits and tastings have their own menu entry with formats, duration, price per person and a booking button, not only an email address.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Address, opening days and hours of the cellar door or shop, and how to get there are plain text, with seasonal closures stated.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Each wine or spirit has a page with grape or botanicals, vintage or age, tasting notes, technical sheet and a price or a where-to-buy link.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The estate is shown with real photographs of its vineyards, cellar or still and the people who work there, not generic bottle-and-glass imagery.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The legally required health warning for the market is present (in France: 'L'abus d'alcool est dangereux pour la santé, à consommer avec modération').",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A language switch for the main export and visitor markets.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "6 of 8 show an age check on entry (Monemvasia asks a birth year digit by digit; Lafon-Rochet, Citadelle and Sir Chill ask Yes or No; De Lossy asks a birth year; Ses Talaioles a Confirm button); none was seen on LEA or Rutherford Ranch.",
+    "7 of 8 have a language switch (Sir Chill offers six languages, Ses Talaioles three, Citadelle three); Rutherford Ranch is English only.",
+    "5 of 8 have a visit or tour entry in the menu (Monemvasia, Ses Talaioles, Lafon-Rochet, Citadelle, Rutherford Ranch), but only Monemvasia shows tasting formats with prices (€15 for 4 wines, €25 for 6) and Book Now buttons on the home page.",
+    "4 of 8 sell from the site (Monemvasia and Ses Talaioles with prices and a cart, Rutherford Ranch with a promo banner, De Lossy through an external Shopify Buy Now); Sir Chill sends to a distributor finder; LEA, Lafon-Rochet and Citadelle do not sell.",
+    "None of the 8 states cellar-door opening hours on the home page; 2 give a street address (LEA, Lafon-Rochet).",
+    "Headlines are a place or a date, not a product: 'La pépite de Saint-Estèphe', 'Living beautifully since 1862', 'Aromas of the Mediterranean', founded 1997."
+  ],
+  "sites": [
+    {
+      "name": "Monemvasia Winery",
+      "url": "https://www.monemvasiawinery.gr",
+      "why": "Family winery in Laconia, Greece. Birth-year age gate, headline that the winery was founded in 1997, menu Winery / Wines / Visit with Tour-Tasting, Reviews and eshop, four tasting formats with Book Now buttons (Tour Tasting 4 wines €15, Terroir 6 wines €25, private, educational), wines with prices and add-to-cart (€12 to €14.80), EN switch. No address or hours on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2025-10-31",
+      "source": "https://www.awwwards.com/sites/monemvasia-winery",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "LEA Winery",
+      "url": "https://leawinery.com/",
+      "why": "Winery in Friuli, Italy. Spaced capitals tagline 'Innovative to be natural', intro video 'Guardiamo alla terra con infinito rispetto', menu Chi siamo / Tenuta / I vini / Sostenibilità / Mondo No Alcol / Contatti, three wine brands as cut-out bottle shots, downloadable company profile and sustainability report, it/en switch, address and phone in the footer. No shop, visit booking or prices.",
+      "recognition": "Awwwards Honorable Mention, 2025-10-16",
+      "source": "https://www.awwwards.com/sites/lea-winery",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Ses Talaioles",
+      "url": "https://www.sestalaioles.com/",
+      "why": "Finca and winery in eastern Mallorca. Age modal 'Welcome to Finca Ses Talaioles' with Confirm, headline 'Aromas of the Mediterranean' over a photograph of the historic tower, menu Finca / Wine / Terroir / Bodega / Tours, a cart, wines with bottle and per-litre prices (€15.50 to €79), photographs of vineyard work and black pigs, en/de/es switch. No hours or street address.",
+      "recognition": "Awwwards Honorable Mention, 2024-06-28",
+      "source": "https://www.awwwards.com/sites/ses-talaioles-winery",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Château Lafon-Rochet",
+      "url": "https://www.lafon-rochet.com/",
+      "why": "Saint-Estèphe Grand Cru Classé, Bordeaux. Yes/No legal-age gate (No goes to google.com), cookie choice with 'necessary only', headline 'La pépite de Saint-Estèphe' and a Découvrir la propriété button, menu with Visiter le Domaine leading to a contact page, three wines with Découvrir buttons, grape mix stated, address and phone in the footer, Fr/En. No shop, prices or visit hours.",
+      "recognition": "Awwwards Honorable Mention, 2023-05-15",
+      "source": "https://www.awwwards.com/sites/chateau-lafon-rochet",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Champagne De Lossy",
+      "url": "https://champagnedelossy.com",
+      "why": "Champagne house in Rilly-la-Montagne. Age gate with a year-of-birth field and language choice before 'Enter the site', headline 'Living beautifully since 1862', a three-link menu (legacy, champagne, Buy Now), Buy Now in the header to an external Shopify store, photographs of cellar, vineyard and bottle, sections each ending in Explore, FR/EN. No visits, prices or address.",
+      "recognition": "Awwwards Honorable Mention, 2025-10-11",
+      "source": "https://www.awwwards.com/sites/champagne-de-lossy",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Citadelle Gin",
+      "url": "https://citadellegin.com/",
+      "why": "French gin distilled at Château de Bonbonnet near Cognac. Oui/Non age question, headline 'Citadelle, le premier gin craft au monde !', three numbered chapters (gin de France, botanicals shown as about 20 icons, a family house open to visitors), five gins listed, Visites in the menu and a visits card, cocktails page, fr/es/en, the French health warning in the footer. No prices on the home page.",
+      "recognition": "Awwwards Site of the Day, 2021-11-14",
+      "source": "https://www.awwwards.com/sites/citadelle-gin",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Sir Chill Gin",
+      "url": "https://www.sirchillgin.be/",
+      "why": "Belgian gin finished by hand. 'Just a question' overlay asking if the visitor may drink alcohol, headline 'Gin to its perfection', menu Story / Products / Stores / Contact, five product tiles (gin, alcohol free, barrel, tasting box, personalise your gin), 'You can taste Sir Chill here' to a distributor finder, six-language switch. No prices or address.",
+      "recognition": "Awwwards Honorable Mention, 2024-01-12",
+      "source": "https://www.awwwards.com/sites/sir-chill-gin",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Rutherford Ranch Winery",
+      "url": "https://www.rutherfordranch.com/",
+      "why": "Napa Valley winery on the Silverado Trail. Rotating banners ('Slow down & visit Rutherford', 'Join the family'), a promo strip (15% off, $25 shipping), menu Shop / Visit Us (Reserve Tasting, Torcia Experience, Guided Tour & Tasting) / Wine Club / Events, Make a reservation buttons, wine club with free tastings for four, photographs of guests tasting, goats on the tour and the arched red tasting-room doors. No hours or prices on the home page.",
+      "recognition": "WebAwards Best Beverage Website, 2024",
+      "source": "https://www.webaward.org/winner/37340/wsi-wins-2024-webaward-for-rutherford-ranch.html",
+      "scale": "company",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "An age gate whose No button links to nowhere, or that asks for a full birth date digit by digit on every visit.",
+    "A 'Visit' menu entry that only leads to an email address, with no formats, prices or dates.",
+    "Cellar-door hours and address missing from the home page of an estate that receives visitors.",
+    "Image alt text that repeats the page title ('Accueil - ...') on every photograph.",
+    "A Buy button that leaves for another store without saying so.",
+    "Spelling mistakes in the legal health warning.",
+    "Wine pages with a bottle shot and a poetic paragraph but no grape, vintage or price."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Champagne search",
+      "url": "https://www.awwwards.com/inspiration_search/champagne/",
+      "access": "free"
+    },
+    {
+      "name": "WebAwards, Best Beverage Website",
+      "url": "https://www.webaward.org/category/Beverage/best-beverage-websites.html",
+      "access": "free"
+    }
+  ]
+}

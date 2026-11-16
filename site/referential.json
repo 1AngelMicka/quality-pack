@@ -1682,6 +1682,10 @@
        "en": "Touch targets at least 44 × 44 px; no feature available only on hover."
       },
       {
+       "fr": "Un effet pensé pour la souris (survol WebGL, curseur, bouton magnétique) n'est jamais le moment signature à lui seul : la signature a une version au doigt ou au défilement, puisque la plupart des visiteurs d'un commerce sont sur téléphone.",
+       "en": "An effect made for the mouse (WebGL hover, cursor, magnetic button) is never the signature moment on its own: the signature has a touch or scroll version, since most visitors of a business are on phones."
+      },
+      {
        "fr": "Images servies à la bonne taille (srcset ou composant d'image du framework).",
        "en": "Images served at the right size (srcset or the framework's image component)."
       }
@@ -1725,12 +1729,12 @@
         "method": "inspect"
        },
        "label": {
-        "fr": "Aucune fonction réservée au survol",
-        "en": "No hover-only feature"
+        "fr": "Aucune fonction ni effet signature réservé au survol",
+        "en": "No hover-only feature or signature effect"
        },
        "verify": {
-        "fr": "Menus, infobulles et actions accessibles au toucher.",
-        "en": "Menus, tooltips and actions reachable by touch."
+        "fr": "Menus, infobulles et actions accessibles au toucher ; le moment signature et les effets au survol mis en avant ont une version au doigt ou au défilement sur téléphone (DESIGN.md › Signature).",
+        "en": "Menus, tooltips and actions reachable by touch; the signature moment and featured hover effects have a touch or scroll version on phone (DESIGN.md › Signature)."
        }
       },
       {
