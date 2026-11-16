@@ -15,7 +15,7 @@ Match the effort to the request: a small change gets steps 1 and 5 on the screen
 
 ## Priorities
 
-The user's choices and the product's identity come first. A "should" of the measure is advice: if the design breaks it on purpose (a brutalist site with hard shadows, a title in Title Case by house style), keep the design and write the reason in `DESIGN.md`. A "must" is a defect a visitor meets; fix it.
+The user's choices and the product's identity come first. A "should" of the measure is advice: if the design breaks it on purpose (a brutalist site with hard shadows, a title in Title Case by house style), keep the design and write the reason in `DESIGN.md`. A "must" is a defect a visitor meets; fix it, unless the user wants it that way: then it is a choice (`project.json` › `choices`), and `sw craft` reports it as chosen. Defaults, never ceilings: nothing here limits what the user asks for.
 
 ## 1. Measure
 

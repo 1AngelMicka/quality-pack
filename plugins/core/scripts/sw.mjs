@@ -767,6 +767,7 @@ async function main() {
       const urls = rest.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href);
       const result = await lookAt(urls, { cwd, mode, baseline, before, as, project, slopWords: [...(ref.slop_words.fr || []), ...(ref.slop_words.en || [])] });
       if (result.errors) { out(result); process.exitCode = 2; return; }
+      { const { choiceMap, applyLookChoices } = await import("./lib/choices.mjs"); applyLookChoices(result, choiceMap(project)); }
       if (project && result.pages) {
         const d = join(auditsDir(), run);
         mkdirSync(d, { recursive: true });
@@ -794,6 +795,7 @@ async function main() {
       const urls = rest.map((u) => /^[a-z]+:\/\//i.test(u) ? u : pathToFileURL(resolve(here, u)).href);
       const result = await craftAt(urls, { cwd, mode, before, as, project });
       if (result.errors) { out(result); process.exitCode = 2; return; }
+      { const { choiceMap, applyCraftChoices } = await import("./lib/choices.mjs"); applyCraftChoices(result, choiceMap(project)); }
       if (project && result.pages) {
         const d = join(auditsDir(), run);
         mkdirSync(d, { recursive: true });

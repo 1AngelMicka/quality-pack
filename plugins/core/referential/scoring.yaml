@@ -12,6 +12,9 @@ scoring:
   # a project with an open blocker cannot be rated "good".
   global_blocker_cap: 5.9
   # A criterion that could not be checked counts as failed until verified.
+  # The user's choices (project.json › choices, status "chosen") leave the score, except in these domains,
+  # where a choice puts other people at risk: there the criterion keeps its measured status ("measured").
+  choices_still_count: [security, privacy, data, compliance, accessibility, accounts, subscriptions, payments, integrations, backups, mobile-release, desktop-release]
   unknown_counts_as: fail
   # Effort budgets for the key tasks played by `sw.mjs flows`, per device. A flow can override them (flows[].budget).
   #   page_screens: height of the longest page or panel, in screens, at any step

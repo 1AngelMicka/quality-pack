@@ -17,6 +17,7 @@ Plugins for [Claude Code](https://claude.com/claude-code) that take a project **
 - **Designs, then compares.** Screen organisation per kind of task, a visual direction drawn from your references, a bank of 197 sites recognised as excellent across 26 types of site, several versions of a screen ranked blind by a jury before you choose.
 - **Plays instead of reading.** Your key tasks on phone and desktop, access control with two accounts, login, webhooks, the subscription life cycle, the screen with a slow network or a failing server.
 - **Measures the rendering in a real browser.** Spacing, finish, generic "AI-made" look, loading on a throttled phone, the gap to your references.
+- **Never caps what you want.** Its limits (number of animations, scroll budget, typefaces, effects flagged as generic…) are defaults, not ceilings. Want more: Claude builds it, tells you the cost once, then records it as a choice (`.quality/project.json` › `choices`). Measures and the audit show it as "chosen", not as a defect. Only choices that put other people at risk (security, data, money, law, accessibility) still count in the score.
 - **Refuses what is invented.** No testimonial, figure, customer logo or badge without a fact you supplied.
 - **Scores honestly.** 37 domains, 249 criteria, two scores out of 10 (Experience; Engineering and operations). Every criterion needs evidence, and an open blocker caps the score.
 - **Stays frugal and quiet.** Rules loaded on demand, compact outputs, incremental audits. Free, open source, no telemetry, in English and French.

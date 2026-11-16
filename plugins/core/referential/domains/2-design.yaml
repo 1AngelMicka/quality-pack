@@ -80,7 +80,7 @@ domains:
       - id: SLP-05
         severity: minor
         check: {method: inspect}
-        label: {fr: "Les animations sont utiles, discrètes et respectent prefers-reduced-motion", en: "Animations are useful, subtle and respect prefers-reduced-motion"}
+        label: {fr: "Les animations servent le propos et respectent prefers-reduced-motion", en: "Animations serve the content and respect prefers-reduced-motion"}
         verify: {fr: "Lister les animations et leur rôle ; tester avec réduction des animations activée.", en: "List animations and their purpose; test with reduced motion enabled."}
 
   - id: responsive

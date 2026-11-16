@@ -46,6 +46,33 @@ test("score: all pass gives 10, a failed blocker caps domain and overall", () =>
   assert.equal(partial.open_blockers, 1, "a partial blocker counts as failed");
 });
 
+test("choices: a chosen design criterion leaves the score, a chosen security one still counts", () => {
+  const ids = allDomains(ref).flatMap((d) => d.criteria.map((c) => c.id));
+  const all = Object.fromEntries(ids.map((id) => [id, { status: "pass", evidence: "x" }]));
+  const flags = ["has_ui", "has_backend", "has_auth", "has_user_data", "has_db", "public_web"];
+  const r = compute({ profile: "webapp", flags, results: { ...all, "SLP-05": { status: "chosen", measured: "fail", choice: "rich motion on every section" },
+    "SEC-01": { status: "chosen", measured: "fail", choice: "test" } } }, ref);
+  assert.equal(r.domains.find((d) => d.id === "ai-slop").score, 10, "the chosen design criterion is not a defect");
+  assert.ok(r.issues.some((i) => i.id === "SEC-01") && !r.issues.some((i) => i.id === "SLP-05"));
+  assert.deepEqual(r.chosen.map((c) => [c.id, c.counted]), [["SLP-05", false], ["SEC-01", true]]);
+  assert.match(toMarkdown(r, ref, "fr"), /Choix de l'utilisateur[\s\S]*SLP-05[\s\S]*rich motion/);
+});
+
+test("choices: sw craft and sw look report a chosen check as chosen, not failed", async () => {
+  const { choiceMap, applyCraftChoices, applyLookChoices } = await import("../plugins/core/scripts/lib/choices.mjs");
+  const map = choiceMap({ choices: [{ id: "heading_wrap", why: "house style" }, { id: "LOOK-GLASS", why: "brand" }, { id: "scroll_hijack", why: "portfolio" }, { what: "no id" }] });
+  assert.equal(map.size, 3);
+  const craft = { pages: [{ summary: { must_failed: [], should_failed: ["heading_wrap", "caps_tracking"] }, checks: { heading_wrap: { level: "should", ok: false }, caps_tracking: { level: "should", ok: false } } }] };
+  applyCraftChoices(craft, map);
+  assert.deepEqual(craft.pages[0].summary.should_failed, ["caps_tracking"]);
+  assert.deepEqual(craft.pages[0].summary.chosen, ["heading_wrap"]);
+  const look = { pages: [{ tier: "strong", points: 5, counted: ["LOOK-GLASS", "LOOK-GLOW"], signals: [{ id: "LOOK-GLASS", weight: 3 }, { id: "LOOK-GLOW", weight: 2 }], checks: { scroll_hijack: { ok: false } } }] };
+  applyLookChoices(look, map);
+  assert.equal(look.pages[0].tier, "some");
+  assert.equal(look.pages[0].checks.scroll_hijack.ok, true);
+  assert.deepEqual(look.pages[0].chosen.sort(), ["LOOK-GLASS", "scroll_hijack"]);
+});
+
 test("score: missing results count as unknown, na is excluded", () => {
   const r = compute({ profile: "vitrine", flags: ["has_ui", "public_web"], results: {} }, ref);
   assert.ok(r.issues.every((i) => i.status === "unknown"));

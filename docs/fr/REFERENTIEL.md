@@ -188,7 +188,7 @@ _S'applique si : Le projet a une interface utilisateur_
 | SLP-02 | La direction visuelle est propre au projet et documentée | Majeur | DESIGN.md décrit les choix (ambiance, couleurs, typographie) et ils se retrouvent à l'écran ; comparer avec les gabarits par défaut (shadcn brut, dégradé violet, verre). L'existence de DESIGN.md ne suffit pas ; le respect de l'organisation des références est vérifié par ERG-08. (lecture) |
 | SLP-03 | Aucun visuel décoratif sans information (illustrations génériques, blobs, icônes au hasard) | Majeur | Pour chaque image ou illustration : que montre-t-elle de réel ? (lecture) |
 | SLP-04 | Les sections répondent à une question de l'utilisateur, pas à un gabarit | Mineur | Chercher les blocs génériques : témoignages inventés, « Nos valeurs », grilles de 3 avantages vagues ; look.json : palier « strong » en mode persuade = échec, « some » = partiel, jamais sur un seul signal ; en mode operate, seuls les signaux de qualité comptent. (lecture `generic_look_scan`) |
-| SLP-05 | Les animations sont utiles, discrètes et respectent prefers-reduced-motion | Mineur | Lister les animations et leur rôle ; tester avec réduction des animations activée. (lecture) |
+| SLP-05 | Les animations servent le propos et respectent prefers-reduced-motion | Mineur | Lister les animations et leur rôle ; tester avec réduction des animations activée. (lecture) |
 
 ### Responsive (RSP)
 
