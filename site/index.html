@@ -121,6 +121,7 @@ claude plugin install sw@shipwright --scope project</code></pre>
     <div class="table-wrap"><table>
       <thead><tr><th scope="col">Commande</th><th scope="col">Pour</th></tr></thead>
       <tbody>
+        <tr><td><code>/sw:help</code></td><td>Toutes les commandes, classées par usage, avec à quoi elles servent. <code>/sw:help design</code> en explique une en détail.</td></tr>
         <tr><td><code>/sw:kickoff</code></td><td>Configurer ou mettre à jour le profil qualité du projet.</td></tr>
         <tr><td><code>/sw:audit</code></td><td>Audit incrémental : seul ce qui a changé depuis le dernier audit est revérifié. Complet au premier audit, après une mise à jour du pack, ou tous les 30 jours.</td></tr>
         <tr><td><code>/sw:audit quick</code></td><td>Vérifications automatiques seulement, sans agents : le moins cher, idéal avant une mise en ligne.</td></tr>
@@ -129,6 +130,8 @@ claude plugin install sw@shipwright --scope project</code></pre>
         <tr><td><code>/sw:audit SEC-01 SEC-03</code></td><td>Des critères précis ; <code>/sw:audit blockers</code> pour les seuls points bloquants.</td></tr>
         <tr><td><code>/sw:fix</code></td><td>Corriger les points bloquants, ou les 5 premiers problèmes. <code>/sw:fix 10</code> ou <code>/sw:fix SEC-02</code> pour choisir.</td></tr>
         <tr><td><code>/sw:handoff</code></td><td>Écrire <code>.quality/handoff.md</code> avant d’arrêter une longue tâche.</td></tr>
+        <tr><td><code>/sw:design</code></td><td>Tout le design dans l’ordre : direction, organisation des écrans, finitions, espacement, revue. <code>/sw:design check</code> mesure sans rien changer.</td></tr>
+        <tr><td><code>/sw:look</code>, <code>/sw:auth</code>, <code>/sw:perf</code>…</td><td>Chaque outil de mesure a sa commande : <code>/sw:help</code> les liste toutes.</td></tr>
       </tbody>
     </table></div>
   </section>

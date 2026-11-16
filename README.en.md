@@ -143,7 +143,16 @@ Teammates get the pack when they open the project in Claude Code and trust the f
 
 ### Update
 
-Type `/plugin marketplace update shipwright` in Claude Code. To update automatically, open `/plugin`, go to **Marketplaces**, select **shipwright** and choose **Enable auto-update**.
+In a terminal:
+
+```bash
+claude plugin marketplace update shipwright
+claude plugin update sw@shipwright
+```
+
+Do the same for each module installed (`claude plugin update sw-nextjs@shipwright`…), then type `/reload-plugins` in Claude Code or open a new session. The first command only fetches the new version: without the second, the installed plugin stays the old one. `/sw:doctor` shows the active version.
+
+To update automatically, open `/plugin`, go to **Marketplaces**, select **shipwright** and choose **Enable auto-update**.
 
 ### Uninstall
 

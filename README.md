@@ -142,7 +142,16 @@ Tes collègues reçoivent le pack en ouvrant le projet dans Claude Code et en fa
 
 ### Mettre à jour
 
-Tape `/plugin marketplace update shipwright` dans Claude Code. Pour les mises à jour automatiques : `/plugin` → **Marketplaces** → **shipwright** → **Enable auto-update**.
+Dans un terminal :
+
+```bash
+claude plugin marketplace update shipwright
+claude plugin update sw@shipwright
+```
+
+Fais de même pour chaque module installé (`claude plugin update sw-nextjs@shipwright`…), puis tape `/reload-plugins` dans Claude Code ou rouvre une session. La première commande ne fait que récupérer la nouvelle version : sans la deuxième, le plugin installé reste l'ancien. `/sw:doctor` affiche la version active.
+
+Pour les mises à jour automatiques : `/plugin` → **Marketplaces** → **shipwright** → **Enable auto-update**.
 
 ### Désinstaller
 
