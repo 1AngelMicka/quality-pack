@@ -1074,6 +1074,14 @@
        "en": "A long page (article, documentation, list) offers a way back to the top or keeps navigation within reach; an invoice, receipt or document people print has a print stylesheet (@media print) without menus or buttons."
       },
       {
+       "fr": "Une valeur que l'utilisateur doit recopier (clé d'API, lien d'invitation, code, commande) a un bouton « copier » qui confirme la copie à côté de lui.",
+       "en": "A value the user has to copy (API key, invitation link, code, command) has a copy button that confirms the copy beside it."
+      },
+      {
+       "fr": "Une réponse longue à produire (texte généré par une IA, rapport, import) s'affiche au fur et à mesure (streaming), avec un moyen d'arrêter, plutôt qu'après une longue attente.",
+       "en": "A response that takes long to produce (AI-generated text, report, import) is shown as it comes (streaming), with a way to stop it, rather than after a long wait."
+      },
+      {
        "fr": "Les formulaires gardent la saisie en cas d'erreur et affichent l'erreur à côté du champ.",
        "en": "Forms keep the input on error and show the error next to the field."
       }
@@ -1777,6 +1785,10 @@
       {
        "fr": "L'information ne passe jamais par la couleur seule.",
        "en": "Information never relies on colour alone."
+      },
+      {
+       "fr": "Dès qu'un menu ou un en-tête précède le contenu, le premier élément atteint au clavier est un lien « aller au contenu » vers la zone principale ; il peut rester caché jusqu'au focus.",
+       "en": "As soon as a menu or a header comes before the content, the first element reached by keyboard is a \"skip to content\" link to the main area; it may stay hidden until focused."
       }
      ],
      "criteria": [
@@ -1807,8 +1819,8 @@
         "en": "Main flows fully doable by keyboard, visible focus"
        },
        "verify": {
-        "fr": "Tab, Maj+Tab, Entrée, Espace, Échap sur chaque tâche clé, dans l'état rempli (données de test chargées) ; modales qui piègent et rendent le focus.",
-        "en": "Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus."
+        "fr": "Tab, Maj+Tab, Entrée, Espace, Échap sur chaque tâche clé, dans l'état rempli (données de test chargées) ; modales qui piègent et rendent le focus ; lien « aller au contenu » en premier quand un menu précède le contenu (sw craft : skip_link).",
+        "en": "Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus; a skip link comes first when a menu precedes the content (sw craft: skip_link)."
        }
       },
       {
@@ -2604,6 +2616,10 @@
        "en": "Rate-limit login, sign-up, password reset, forms and expensive routes."
       },
       {
+       "fr": "Formulaires publics sans compte (contact, inscription, mot de passe oublié) : la limite de débit d'abord ; si des robots passent quand même, un défi anti-robot discret (Cloudflare Turnstile, gratuit, ou un champ piège caché), jamais un CAPTCHA à images qui bloque une partie des gens.",
+       "en": "Public forms without an account (contact, sign-up, password reset): rate limiting first; if bots still get through, a quiet bot challenge (Cloudflare Turnstile, free, or a hidden honeypot field), never an image CAPTCHA that locks some people out."
+      },
+      {
        "fr": "Requêtes base de données paramétrées ou ORM ; jamais de concaténation de chaînes.",
        "en": "Parameterised database queries or ORM; never string concatenation."
       },
@@ -2708,8 +2724,8 @@
         "en": "Rate limiting on sensitive and expensive routes"
        },
        "verify": {
-        "fr": "Connexion, inscription, mot de passe oublié, formulaires, appels à des API payantes.",
-        "en": "Login, sign-up, password reset, forms, calls to paid APIs."
+        "fr": "Connexion, inscription, mot de passe oublié, formulaires, appels à des API payantes ; défi anti-robot sur les formulaires publics qui reçoivent des robots.",
+        "en": "Login, sign-up, password reset, forms, calls to paid APIs; a bot challenge on public forms that receive bots."
        }
       },
       {
@@ -3195,8 +3211,8 @@
      },
      "build": [
       {
-       "fr": "Identifier au /kickoff le pays, le type d'éditeur (particulier, entreprise) et les obligations qui en découlent ; le module compliance-fr détaille la France.",
-       "en": "At /kickoff, identify the country, the publisher type (individual, company) and the resulting obligations; the compliance-fr module details France."
+       "fr": "Identifier au /kickoff le pays de l'éditeur, les pays des clients, le type d'éditeur (particulier, entreprise) et les obligations qui en découlent : droit de la consommation, cookies, accessibilité et TVA suivent souvent le pays du client. Le module compliance-fr détaille la France.",
+       "en": "At /kickoff, identify the publisher's country, the customers' countries, the publisher type (individual, company) and the resulting obligations: consumer law, cookies, accessibility and VAT often follow the customer's country. The compliance-fr module details France."
       },
       {
        "fr": "Vérifier la licence de chaque dépendance, police, image et icône avant de l'ajouter.",
@@ -3753,6 +3769,22 @@
       {
        "fr": "Retirer les dépendances inutilisées (knip, gratuit) avant de chercher à alléger les autres.",
        "en": "Remove unused dependencies (knip, free) before trying to slim down the others."
+      },
+      {
+       "fr": "Lancer en même temps les requêtes qui ne dépendent pas l'une de l'autre (Promise.all, chargements côte à côte), côté navigateur comme côté serveur, au lieu de les enchaîner.",
+       "en": "Send requests that do not depend on each other at the same time (Promise.all, side-by-side loading), in the browser and on the server, instead of chaining them."
+      },
+      {
+       "fr": "Servir les fichiers statiques (JS, CSS, images, polices) depuis un CDN ou un hébergeur qui en fournit un, avec des noms versionnés et un cache long.",
+       "en": "Serve static files (JS, CSS, images, fonts) from a CDN or a host that provides one, with versioned names and a long cache."
+      },
+      {
+       "fr": "Mesurer les Core Web Vitals chez les vrais visiteurs une fois en ligne (bibliothèque web-vitals, gratuite, ou rapport CrUX) : c'est le 75e percentile du terrain qui compte, Lighthouse n'en est qu'une estimation.",
+       "en": "Measure Core Web Vitals on real visitors once live (the free web-vitals library, or the CrUX report): the field 75th percentile is what counts, Lighthouse only estimates it."
+      },
+      {
+       "fr": "Un cache serveur (Redis ou mémoire) seulement pour une lecture lente et fréquente repérée dans le journal des requêtes lentes, avec sa durée et son invalidation écrites ; pas par principe.",
+       "en": "A server cache (Redis or memory) only for a slow and frequent read found in the slow-query log, with its lifetime and invalidation written down; not by default."
       }
      ],
      "criteria": [
@@ -3790,8 +3822,8 @@
         "en": "Core Web Vitals within budget on mobile (LCP, INP, CLS)"
        },
        "verify": {
-        "fr": "Lighthouse en mode mobile sur les pages principales ; données terrain si disponibles.",
-        "en": "Lighthouse mobile on main pages; field data if available."
+        "fr": "Lighthouse en mode mobile sur les pages principales ; une fois en ligne, données terrain au 75e percentile (web-vitals ou CrUX).",
+        "en": "Lighthouse mobile on main pages; once live, field data at the 75th percentile (web-vitals or CrUX)."
        }
       },
       {
@@ -3879,8 +3911,8 @@
         "en": "API response time measured and reasonable"
        },
        "verify": {
-        "fr": "p95 des routes principales sous 500 ms en conditions normales.",
-        "en": "p95 of main routes under 500 ms under normal load."
+        "fr": "p95 des routes principales sous 500 ms en conditions normales ; aucune cascade de requêtes indépendantes lancées l'une après l'autre (onglet Réseau, traces serveur).",
+        "en": "p95 of main routes under 500 ms under normal load; no cascade of independent requests sent one after the other (Network tab, server traces)."
        }
       },
       {

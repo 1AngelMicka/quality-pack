@@ -11,6 +11,7 @@ domains:
       - {fr: "Valider toute entrée externe côté serveur avec un schéma (Zod, Valibot…) : corps, paramètres, query, headers, webhooks, fichiers.", en: "Validate every external input server-side with a schema (Zod, Valibot…): body, params, query, headers, webhooks, files."}
       - {fr: "Vérifier l'autorisation à chaque requête, côté serveur, sur la ressource demandée (pas seulement la connexion).", en: "Check authorisation on every request, server-side, on the requested resource (not just login)."}
       - {fr: "Limiter le débit sur la connexion, l'inscription, la réinitialisation de mot de passe, les formulaires et les routes coûteuses.", en: "Rate-limit login, sign-up, password reset, forms and expensive routes."}
+      - {fr: "Formulaires publics sans compte (contact, inscription, mot de passe oublié) : la limite de débit d'abord ; si des robots passent quand même, un défi anti-robot discret (Cloudflare Turnstile, gratuit, ou un champ piège caché), jamais un CAPTCHA à images qui bloque une partie des gens.", en: "Public forms without an account (contact, sign-up, password reset): rate limiting first; if bots still get through, a quiet bot challenge (Cloudflare Turnstile, free, or a hidden honeypot field), never an image CAPTCHA that locks some people out."}
       - {fr: "Requêtes base de données paramétrées ou ORM ; jamais de concaténation de chaînes.", en: "Parameterised database queries or ORM; never string concatenation."}
       - {fr: "Écrire le modèle de menaces au cadrage (.quality/threats.json) : ce qu'un attaquant veut, par où l'on entre, ce qui peut mal tourner, ce qu'on fait pour chaque cas. Le relire à chaque nouveau point d'entrée, type de donnée, rôle ou service tiers.", en: "Write the threat model at kickoff (.quality/threats.json): what an attacker wants, where input enters, what can go wrong, what is done about each case. Review it at every new entry point, kind of data, role or third party."}
       - {fr: "Chaîne d'approvisionnement : fichier de verrouillage commité, délai de 7 jours avant d'installer une nouvelle version, scripts d'installation bloqués, actions de CI épinglées par empreinte de commit ; chaque commande que .claude/settings.json, .mcp.json ou .vscode/tasks.json lance toute seule est lue et attendue, aussi dans un dépôt cloné avant de l'ouvrir.", en: "Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash; every command that .claude/settings.json, .mcp.json or .vscode/tasks.json runs by itself is read and expected, also in a cloned repository before opening it."}
@@ -44,7 +45,7 @@ domains:
         check: {method: inspect}
         applies_if: [has_backend]
         label: {fr: "Limitation de débit sur les routes sensibles et coûteuses", en: "Rate limiting on sensitive and expensive routes"}
-        verify: {fr: "Connexion, inscription, mot de passe oublié, formulaires, appels à des API payantes.", en: "Login, sign-up, password reset, forms, calls to paid APIs."}
+        verify: {fr: "Connexion, inscription, mot de passe oublié, formulaires, appels à des API payantes ; défi anti-robot sur les formulaires publics qui reçoivent des robots.", en: "Login, sign-up, password reset, forms, calls to paid APIs; a bot challenge on public forms that receive bots."}
       - id: SEC-06
         severity: major
         check: {method: auto, tool: headers_check}
@@ -205,7 +206,7 @@ domains:
     label: {fr: "Conformité", en: "Compliance"}
     summary: {fr: "Obligations légales applicables et licences. Ce référentiel n'est pas un avis juridique.", en: "Applicable legal obligations and licences. This referential is not legal advice."}
     build:
-      - {fr: "Identifier au /kickoff le pays, le type d'éditeur (particulier, entreprise) et les obligations qui en découlent ; le module compliance-fr détaille la France.", en: "At /kickoff, identify the country, the publisher type (individual, company) and the resulting obligations; the compliance-fr module details France."}
+      - {fr: "Identifier au /kickoff le pays de l'éditeur, les pays des clients, le type d'éditeur (particulier, entreprise) et les obligations qui en découlent : droit de la consommation, cookies, accessibilité et TVA suivent souvent le pays du client. Le module compliance-fr détaille la France.", en: "At /kickoff, identify the publisher's country, the customers' countries, the publisher type (individual, company) and the resulting obligations: consumer law, cookies, accessibility and VAT often follow the customer's country. The compliance-fr module details France."}
       - {fr: "Vérifier la licence de chaque dépendance, police, image et icône avant de l'ajouter.", en: "Check the licence of every dependency, font, image and icon before adding it."}
       - {fr: "Créditer les ressources qui l'exigent dans un fichier dédié ou en pied de page.", en: "Credit resources that require it in a dedicated file or in the footer."}
     criteria:

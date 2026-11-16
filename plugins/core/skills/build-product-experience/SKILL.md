@@ -59,6 +59,8 @@ Rules:
 - Any action over one second shows feedback; any destructive action asks for confirmation or can be undone.
 - A password field has a button to show it, which does not clear the field and is announced by screen readers.
 - A long page (article, documentation, list) offers a way back to the top or keeps navigation within reach; an invoice, receipt or document people print has a print stylesheet (@media print) without menus or buttons.
+- A value the user has to copy (API key, invitation link, code, command) has a copy button that confirms the copy beside it.
+- A response that takes long to produce (AI-generated text, report, import) is shown as it comes (streaming), with a way to stop it, rather than after a long wait.
 - Forms keep the input on error and show the error next to the field.
 
 Done means:

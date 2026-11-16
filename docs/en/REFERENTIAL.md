@@ -83,6 +83,8 @@ _Applies if: The project has a user interface_
 - Any action over one second shows feedback; any destructive action asks for confirmation or can be undone.
 - A password field has a button to show it, which does not clear the field and is announced by screen readers.
 - A long page (article, documentation, list) offers a way back to the top or keeps navigation within reach; an invoice, receipt or document people print has a print stylesheet (@media print) without menus or buttons.
+- A value the user has to copy (API key, invitation link, code, command) has a copy button that confirms the copy beside it.
+- A response that takes long to produce (AI-generated text, report, import) is shown as it comes (streaming), with a way to stop it, rather than after a long wait.
 - Forms keep the input on error and show the error next to the field.
 
 **Audit criteria**
@@ -223,13 +225,14 @@ _Applies if: The project has a user interface_
 - Everything works by keyboard, with always-visible focus and a logical order.
 - Every field has a visible label; every meaningful image has alt text; every icon button has an accessible name.
 - Information never relies on colour alone.
+- As soon as a menu or a header comes before the content, the first element reached by keyboard is a "skip to content" link to the main area; it may stay hidden until focused.
 
 **Audit criteria**
 
 | ID | Criterion | Severity | How to verify |
 | --- | --- | --- | --- |
 | A11Y-01 | No critical or serious axe-core violation on main pages and flow states | Blocker | axe-core (via Playwright) on each main page and at every step of the key tasks (flows.json). An empty screen with no violation is not enough to pass. (auto `axe`) |
-| A11Y-02 | Main flows fully doable by keyboard, visible focus | Major | Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus. (inspection) |
+| A11Y-02 | Main flows fully doable by keyboard, visible focus | Major | Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus; a skip link comes first when a menu precedes the content (sw craft: skip_link). (inspection) |
 | A11Y-03 | Compliant contrast (4.5:1 text, 3:1 components) | Major | Measure on colour tokens and rendered pages, in every theme. (auto `contrast_check`) |
 | A11Y-04 | Labels, text alternatives and accessible names present | Major | Fields without labels, images without alt, icon buttons without aria-label. (inspection) |
 | A11Y-05 | Structure readable by screen reader (headings, landmarks, announcements) | Minor | VoiceOver or NVDA test; errors and notifications announced (aria-live). (inspection) |
@@ -368,6 +371,7 @@ Secret protection, input validation, permissions, rate limiting and security hea
 - Validate every external input server-side with a schema (Zod, Valibot…): body, params, query, headers, webhooks, files.
 - Check authorisation on every request, server-side, on the requested resource (not just login).
 - Rate-limit login, sign-up, password reset, forms and expensive routes.
+- Public forms without an account (contact, sign-up, password reset): rate limiting first; if bots still get through, a quiet bot challenge (Cloudflare Turnstile, free, or a hidden honeypot field), never an image CAPTCHA that locks some people out.
 - Parameterised database queries or ORM; never string concatenation.
 - Write the threat model at kickoff (.quality/threats.json): what an attacker wants, where input enters, what can go wrong, what is done about each case. Review it at every new entry point, kind of data, role or third party.
 - Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash; every command that .claude/settings.json, .mcp.json or .vscode/tasks.json runs by itself is read and expected, also in a cloned repository before opening it.
@@ -382,7 +386,7 @@ Secret protection, input validation, permissions, rate limiting and security hea
 | SEC-02 | Every external input is validated server-side with a schema | Blocker | Read every route, server action, webhook handler and upload. (inspection) |
 | SEC-03 | Authorisation checked server-side on every resource (no IDOR) | Blocker | access.json: every resource declared in project.json › access is read by its owner and refused to the other accounts and to a visitor; no leak. Without an access block, read every protected route: can a user read or change another user's resource by changing the ID? (auto `access_run`) |
 | SEC-04 | No dependency with a known critical or high vulnerability | Blocker | npm audit, pnpm audit or osv-scanner. (auto `deps_audit`) |
-| SEC-05 | Rate limiting on sensitive and expensive routes | Major | Login, sign-up, password reset, forms, calls to paid APIs. (inspection) |
+| SEC-05 | Rate limiting on sensitive and expensive routes | Major | Login, sign-up, password reset, forms, calls to paid APIs; a bot challenge on public forms that receive bots. (inspection) |
 | SEC-06 | Security headers present and CSP without needless unsafe-inline | Major | Request against production or staging; check every header. (auto `headers_check`) |
 | SEC-07 | Sessions and passwords handled correctly | Major | HttpOnly, Secure, SameSite cookies; argon2 or bcrypt hashing; invalidation on logout; CSRF protection. (inspection) |
 | SEC-08 | No injection: parameterised queries, escaped HTML, no command execution with user input | Major | Search for $queryRaw, dangerouslySetInnerHTML, eval, exec, child_process with external input. (inspection) |
@@ -452,7 +456,7 @@ Applicable legal obligations and licences. This referential is not legal advice.
 
 **While building**
 
-- At /kickoff, identify the country, the publisher type (individual, company) and the resulting obligations; the compliance-fr module details France.
+- At /kickoff, identify the publisher's country, the customers' countries, the publisher type (individual, company) and the resulting obligations: consumer law, cookies, accessibility and VAT often follow the customer's country. The compliance-fr module details France.
 - Check the licence of every dependency, font, image and icon before adding it.
 - Credit resources that require it in a dedicated file or in the footer.
 
@@ -552,18 +556,22 @@ Asset compression, query optimisation and speed.
 - Search and filters: send the request 250 to 300 ms after the last keystroke (debounce), cancel the previous one (AbortController), and never send the same request twice at once (a query cache such as TanStack Query or SWR).
 - Read only the columns you need (no SELECT *, no full record sent to the client); log slow queries and read the plan of the slowest with EXPLAIN ANALYZE.
 - Remove unused dependencies (knip, free) before trying to slim down the others.
+- Send requests that do not depend on each other at the same time (Promise.all, side-by-side loading), in the browser and on the server, instead of chaining them.
+- Serve static files (JS, CSS, images, fonts) from a CDN or a host that provides one, with versioned names and a long cache.
+- Measure Core Web Vitals on real visitors once live (the free web-vitals library, or the CrUX report): the field 75th percentile is what counts, Lighthouse only estimates it.
+- A server cache (Redis or memory) only for a slow and frequent read found in the slow-query log, with its lifetime and invalidation written down; not by default.
 
 **Audit criteria**
 
 | ID | Criterion | Severity | How to verify |
 | --- | --- | --- | --- |
 | PRF-07 | Loading holds on a throttled phone | Major | perf.json on the main pages: no failed "must" (largest paint under 4 s, layout shift of 0.1 at most, under 600 ms of blocking, under 700 kB of scripts); each "should" fixed or justified. (auto `perf_run`) |
-| PRF-01 | Core Web Vitals within budget on mobile (LCP, INP, CLS) | Major | Lighthouse mobile on main pages; field data if available. (auto `lighthouse`) |
+| PRF-01 | Core Web Vitals within budget on mobile (LCP, INP, CLS) | Major | Lighthouse mobile on main pages; once live, field data at the 75th percentile (web-vitals or CrUX). (auto `lighthouse`) |
 | PRF-02 | No N+1 query or unpaginated list | Major | Read data access inside loops; log the queries of one page. (inspection) |
 | PRF-03 | Images optimised, sized and lazy-loaded | Major | Modern formats, srcset or image component, width and height present. (inspection) |
 | PRF-04 | JavaScript shipped to the client within budget | Minor | Bundle analysis; heavy dependencies replaced or loaded on demand; unused dependencies removed (`npx knip` reports none, or each one left is justified). (auto `bundle_size`) |
 | PRF-05 | Compression and HTTP caching active on static assets | Minor | content-encoding and cache-control headers on JS, CSS, images, fonts. (auto `headers_check`) |
-| PRF-06 | API response time measured and reasonable | Minor | p95 of main routes under 500 ms under normal load. (inspection) |
+| PRF-06 | API response time measured and reasonable | Minor | p95 of main routes under 500 ms under normal load; no cascade of independent requests sent one after the other (Network tab, server traces). (inspection) |
 | PRF-08 | Search and typing without extra requests | Minor | With the Network tab open: a word typed in search or a filter sends one request after the typing pause, and the previous one is cancelled; on page load, no identical request is sent twice. (inspection) |
 | PRF-09 | Slow queries found, columns read limited to what is needed | Minor | Slow-query log on (PostgreSQL: log_min_duration_statement or pg_stat_statements); the slowest read with EXPLAIN ANALYZE and fixed or justified; no SELECT * and no full record returned on the main routes. (inspection) |
 

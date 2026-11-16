@@ -15,6 +15,10 @@ domains:
       - {fr: "Recherche et filtres : lancer la requête 250 à 300 ms après la dernière frappe (debounce), annuler la précédente (AbortController) et ne jamais envoyer deux fois la même requête en même temps (cache de requêtes comme TanStack Query ou SWR).", en: "Search and filters: send the request 250 to 300 ms after the last keystroke (debounce), cancel the previous one (AbortController), and never send the same request twice at once (a query cache such as TanStack Query or SWR)."}
       - {fr: "Ne lire que les colonnes utiles (pas de SELECT * ni d'enregistrement complet renvoyé au client) ; journaliser les requêtes lentes et lire le plan des plus lentes avec EXPLAIN ANALYZE.", en: "Read only the columns you need (no SELECT *, no full record sent to the client); log slow queries and read the plan of the slowest with EXPLAIN ANALYZE."}
       - {fr: "Retirer les dépendances inutilisées (knip, gratuit) avant de chercher à alléger les autres.", en: "Remove unused dependencies (knip, free) before trying to slim down the others."}
+      - {fr: "Lancer en même temps les requêtes qui ne dépendent pas l'une de l'autre (Promise.all, chargements côte à côte), côté navigateur comme côté serveur, au lieu de les enchaîner.", en: "Send requests that do not depend on each other at the same time (Promise.all, side-by-side loading), in the browser and on the server, instead of chaining them."}
+      - {fr: "Servir les fichiers statiques (JS, CSS, images, polices) depuis un CDN ou un hébergeur qui en fournit un, avec des noms versionnés et un cache long.", en: "Serve static files (JS, CSS, images, fonts) from a CDN or a host that provides one, with versioned names and a long cache."}
+      - {fr: "Mesurer les Core Web Vitals chez les vrais visiteurs une fois en ligne (bibliothèque web-vitals, gratuite, ou rapport CrUX) : c'est le 75e percentile du terrain qui compte, Lighthouse n'en est qu'une estimation.", en: "Measure Core Web Vitals on real visitors once live (the free web-vitals library, or the CrUX report): the field 75th percentile is what counts, Lighthouse only estimates it."}
+      - {fr: "Un cache serveur (Redis ou mémoire) seulement pour une lecture lente et fréquente repérée dans le journal des requêtes lentes, avec sa durée et son invalidation écrites ; pas par principe.", en: "A server cache (Redis or memory) only for a slow and frequent read found in the slow-query log, with its lifetime and invalidation written down; not by default."}
     criteria:
       - id: PRF-07
         severity: major
@@ -27,7 +31,7 @@ domains:
         check: {method: auto, tool: lighthouse}
         applies_if: [has_ui]
         label: {fr: "Core Web Vitals dans le budget sur mobile (LCP, INP, CLS)", en: "Core Web Vitals within budget on mobile (LCP, INP, CLS)"}
-        verify: {fr: "Lighthouse en mode mobile sur les pages principales ; données terrain si disponibles.", en: "Lighthouse mobile on main pages; field data if available."}
+        verify: {fr: "Lighthouse en mode mobile sur les pages principales ; une fois en ligne, données terrain au 75e percentile (web-vitals ou CrUX).", en: "Lighthouse mobile on main pages; once live, field data at the 75th percentile (web-vitals or CrUX)."}
       - id: PRF-02
         severity: major
         check: {method: inspect}
@@ -56,7 +60,7 @@ domains:
         check: {method: inspect}
         applies_if: [has_backend]
         label: {fr: "Temps de réponse API mesuré et raisonnable", en: "API response time measured and reasonable"}
-        verify: {fr: "p95 des routes principales sous 500 ms en conditions normales.", en: "p95 of main routes under 500 ms under normal load."}
+        verify: {fr: "p95 des routes principales sous 500 ms en conditions normales ; aucune cascade de requêtes indépendantes lancées l'une après l'autre (onglet Réseau, traces serveur).", en: "p95 of main routes under 500 ms under normal load; no cascade of independent requests sent one after the other (Network tab, server traces)."}
       - id: PRF-08
         severity: minor
         check: {method: inspect}

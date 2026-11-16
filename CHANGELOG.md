@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- **Skip link:** a "skip to content" link comes first when a menu precedes the content (accessibility build rule, A11Y-02). `sw craft` checks it as `skip_link` (should) when three controls or more sit before `<main>`.
+- **Performance:** independent requests are sent at the same time (PRF-06), static files come from a CDN with versioned names, Core Web Vitals are measured on real visitors once live (PRF-01, web-vitals or CrUX), and a server cache such as Redis only for a slow, frequent read found in the slow-query log.
+- **Security:** public forms without an account get a quiet bot challenge (Turnstile or a honeypot) when rate limiting is not enough, never an image CAPTCHA (SEC-05).
+- **Product and finish:** a copy button on values the user must copy (API key, invitation link, code); long responses such as AI text are streamed with a way to stop; rubber-band resistance when dragging past a limit; an optional success pulse and arc for long moves (premium-craft).
+- **Legal:** `/sw:kickoff` asks for the customers' countries as well as the publisher's, written in `project.json` › `customer_countries`.
+- **Next.js module:** a rule against needless re-renders, measured with the React Profiler before adding memo.
+- SOURCES.md lists the points of the reels recap that were left out, with the reason.
+
 ## 0.10.0 — 2026-11-16
 
 - **Every tool command is now a slash command.** `/sw:look <url>`, `/sw:auth`, `/sw:supply`, `/sw:perf <url>` and 26 more replace `node sw.mjs …`: Claude runs the tool, takes the address from `project.json` › `urls` when none is given, and explains the result. Generated from `tools/commands.yaml`. The commands that send attacks or real actions (`auth`, `access`, `webhooks`, `dast`, `billing`) refuse a production address.

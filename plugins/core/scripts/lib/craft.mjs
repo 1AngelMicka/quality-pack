@@ -190,6 +190,13 @@ function measureCraft() {
   const meta = (sel) => document.querySelector(sel)?.getAttribute("content") || null;
   const viewport = meta("meta[name=viewport]") || "";
   const maxScale = /maximum-scale\s*=\s*([\d.]+)/.exec(viewport)?.[1];
+  // Skip link: the first focusable element jumps to the main content, when there is something to skip.
+  const focusables = [...document.querySelectorAll("a[href], button, input, select, textarea, [tabindex]:not([tabindex='-1'])")].filter((e) => !e.disabled);
+  const mainEl = document.querySelector("main, [role=main]") || document.querySelector("h1");
+  const beforeMain = mainEl ? focusables.filter((e) => !mainEl.contains(e) && (mainEl.compareDocumentPosition(e) & Node.DOCUMENT_POSITION_PRECEDING)).length : 0;
+  const firstHref = focusables[0]?.matches("a[href^='#']") ? focusables[0].getAttribute("href").slice(1) : "";
+  let skipTarget = null;
+  try { skipTarget = firstHref ? document.getElementById(decodeURIComponent(firstHref)) : null; } catch { skipTarget = null; }
 
   return {
     viewport: { width: vw, height: vh }, lang,
@@ -212,7 +219,8 @@ function measureCraft() {
       icons: icons.length, icon_strokes: Object.fromEntries(strokes), icon_sizes: Object.fromEntries(sizes), icons_filled: filled, icons_stroked: stroked, lucide },
     head: { icon: link("icon") || link("shortcut"), apple_touch_icon: link("apple-touch-icon"), manifest: link("manifest"), theme_color: meta("meta[name=theme-color]"),
       og_image: meta("meta[property='og:image']"), og_title: meta("meta[property='og:title']"), title: document.title,
-      viewport_blocks_zoom: /user-scalable\s*=\s*(no|0)/.test(viewport) || (maxScale != null && Number(maxScale) < 2) },
+      viewport_blocks_zoom: /user-scalable\s*=\s*(no|0)/.test(viewport) || (maxScale != null && Number(maxScale) < 2),
+      skip: { before_main: beforeMain, first: focusables[0] ? name(focusables[0]) : null, ok: !!skipTarget && !!mainEl && (skipTarget === mainEl || skipTarget.contains(mainEl) || mainEl.contains(skipTarget)) } },
   };
 }
 
@@ -463,6 +471,8 @@ export function scoreCraft(m, { mode = "operate", calibration = null } = {}) {
   }
 
   // Around the page
+  if (h.skip && h.skip.before_main >= 3) add("skip_link", "should", h.skip.ok, h.skip.ok ? "skip link to the main content" : `${h.skip.before_main} controls before the main content, first one: ${h.skip.first}`,
+    "with three controls or more before the main content, the first one is a link that jumps to it (WCAG 2.4.1); it may stay hidden until focused");
   add("viewport_zoom", "must", !h.viewport_blocks_zoom, h.viewport_blocks_zoom ? "the viewport tag blocks pinch zoom" : "zoom allowed", "the page can be zoomed (no user-scalable=no, no maximum-scale under 2)");
   const a = m.around;
   if (a && !a.skipped) {

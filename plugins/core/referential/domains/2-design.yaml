@@ -130,6 +130,7 @@ domains:
       - {fr: "Tout fonctionne au clavier, avec un focus toujours visible et un ordre logique.", en: "Everything works by keyboard, with always-visible focus and a logical order."}
       - {fr: "Chaque champ a un label visible ; chaque image utile a un alt ; chaque bouton icône a un nom accessible.", en: "Every field has a visible label; every meaningful image has alt text; every icon button has an accessible name."}
       - {fr: "L'information ne passe jamais par la couleur seule.", en: "Information never relies on colour alone."}
+      - {fr: "Dès qu'un menu ou un en-tête précède le contenu, le premier élément atteint au clavier est un lien « aller au contenu » vers la zone principale ; il peut rester caché jusqu'au focus.", en: "As soon as a menu or a header comes before the content, the first element reached by keyboard is a \"skip to content\" link to the main area; it may stay hidden until focused."}
     criteria:
       - id: A11Y-01
         severity: blocker
@@ -140,7 +141,7 @@ domains:
         severity: major
         check: {method: inspect}
         label: {fr: "Parcours principaux réalisables entièrement au clavier, focus visible", en: "Main flows fully doable by keyboard, visible focus"}
-        verify: {fr: "Tab, Maj+Tab, Entrée, Espace, Échap sur chaque tâche clé, dans l'état rempli (données de test chargées) ; modales qui piègent et rendent le focus.", en: "Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus."}
+        verify: {fr: "Tab, Maj+Tab, Entrée, Espace, Échap sur chaque tâche clé, dans l'état rempli (données de test chargées) ; modales qui piègent et rendent le focus ; lien « aller au contenu » en premier quand un menu précède le contenu (sw craft : skip_link).", en: "Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus; a skip link comes first when a menu precedes the content (sw craft: skip_link)."}
       - id: A11Y-03
         severity: major
         check: {method: auto, tool: contrast_check}

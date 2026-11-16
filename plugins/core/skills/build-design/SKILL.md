@@ -87,11 +87,12 @@ Rules:
 - Everything works by keyboard, with always-visible focus and a logical order.
 - Every field has a visible label; every meaningful image has alt text; every icon button has an accessible name.
 - Information never relies on colour alone.
+- As soon as a menu or a header comes before the content, the first element reached by keyboard is a "skip to content" link to the main area; it may stay hidden until focused.
 
 Done means:
 
 - [BLOCKER] A11Y-01: No critical or serious axe-core violation on main pages and flow states. Check: axe-core (via Playwright) on each main page and at every step of the key tasks (flows.json). An empty screen with no violation is not enough to pass.
-- [major] A11Y-02: Main flows fully doable by keyboard, visible focus. Check: Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus.
+- [major] A11Y-02: Main flows fully doable by keyboard, visible focus. Check: Tab, Shift+Tab, Enter, Space, Esc on each key task, in the filled state (test data loaded); modals trap and restore focus; a skip link comes first when a menu precedes the content (sw craft: skip_link).
 - [major] A11Y-03: Compliant contrast (4.5:1 text, 3:1 components). Check: Measure on colour tokens and rendered pages, in every theme.
 - [major] A11Y-04: Labels, text alternatives and accessible names present. Check: Fields without labels, images without alt, icon buttons without aria-label.
 - [minor] A11Y-05: Structure readable by screen reader (headings, landmarks, announcements). Check: VoiceOver or NVDA test; errors and notifications announced (aria-live).

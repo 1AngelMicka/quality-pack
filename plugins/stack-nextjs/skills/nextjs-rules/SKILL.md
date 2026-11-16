@@ -14,6 +14,7 @@ These rules add to the core build skills of Shipwright.
 - Validate Server Action and Route Handler inputs with Zod, and check the session in each one.
 - Only NEXT_PUBLIC_ variables reach the client: no secret may use that prefix.
 - Images with next/image, fonts with next/font, metadata through the Metadata API (title, description, OpenGraph).
+- No needless re-render: state as close as possible to where it is used, no object or function recreated on each render as a prop of a memoised component; measure with the React DevTools Profiler before adding memo (not needed when the React Compiler is on).
 - loading.tsx, error.tsx and not-found.tsx files for every route segment that loads data.
 - Security headers and CSP in next.config or middleware.
 - Tailwind: colours and spacing in the config or CSS variables; no arbitrary bracket values.
