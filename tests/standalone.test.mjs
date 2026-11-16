@@ -112,7 +112,7 @@ test("install: the marketplace, the main plugin and the modules found in the pro
 test("commands: each /sw: command made from tools/commands.yaml runs a command the CLI knows", () => {
   const cli = readFileSync(SW, "utf8");
   const dir = join(ROOT, "plugins/core/skills");
-  const made = readdirSync(dir).filter((d) => existsSync(join(dir, d, "SKILL.md")) && readFileSync(join(dir, d, "SKILL.md"), "utf8").includes("from tools/commands.yaml"));
+  const made = readdirSync(dir).filter((d) => existsSync(join(dir, d, "SKILL.md")) && readFileSync(join(dir, d, "SKILL.md"), "utf8").includes("from tools/commands.yaml. Do not"));
   assert.ok(made.length >= 25, "the command skills are generated");
   for (const name of made) {
     const text = readFileSync(join(dir, name, "SKILL.md"), "utf8");
@@ -122,4 +122,7 @@ test("commands: each /sw: command made from tools/commands.yaml runs a command t
   }
   for (const active of ["auth", "access", "webhooks", "dast", "billing"]) assert.match(readFileSync(join(dir, active, "SKILL.md"), "utf8"), /Local or staging only/);
   assert.match(readFileSync(join(dir, "billing", "SKILL.md"), "utf8"), /Never ask for the key/);
+  // /sw:help lists every skill of the main plugin except the build rules.
+  const help = readFileSync(join(dir, "help", "SKILL.md"), "utf8");
+  for (const d of readdirSync(dir).filter((x) => existsSync(join(dir, x, "SKILL.md")) && !x.startsWith("build-"))) assert.ok(help.includes("`/sw:" + d), "/sw:help misses " + d);
 });

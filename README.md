@@ -170,6 +170,7 @@ Fais de même pour chaque module (`qp-nextjs` devient `sw-nextjs`, etc.). Rien n
 
 | Commande | Pour |
 | --- | --- |
+| `/sw:help` · `/sw:help <commande>` | Afficher toutes les commandes avec leur usage, ou en expliquer une en détail |
 | `/sw:kickoff` | Configurer ou mettre à jour le profil qualité du projet |
 | `/sw:audit` | Audit incrémental : seul ce qui a changé depuis le dernier audit est revérifié (complet au premier audit, après une mise à jour du pack, ou si le dernier audit complet a plus de 30 jours) |
 | `/sw:audit quick` | Vérifications automatiques seulement, sans auditeurs : le moins cher, idéal avant une mise en ligne |

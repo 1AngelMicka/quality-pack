@@ -5,6 +5,25 @@
 #   url: true when the command needs the address of a page; the default comes from project.json › urls
 #   active: true when it sends requests that change or attack something: local or staging only
 #   after: what to do with the result
+# /sw:help lists every command and skill under these groups, in this order. tools/build.py fails when a skill of
+# plugins/core/skills (other than build-*) is missing here, so the help never falls out of date.
+groups:
+  - title: "Start and follow-up"
+    items: [from-zero, kickoff, audit, fix, handoff, status, report, doctor, browser-setup, graph, help]
+  - title: "Design"
+    items: [design, design-direction, design-screens, design-variants, design-review, premium-craft, deslop-ui, scroll-animation, look, deslop, craft, stress, tokens, tiles, bank, profile, gap, variants]
+  - title: "Security"
+    items: [security-testing, access, auth, dast, supply, threats, webhooks]
+  - title: "Speed, search and content"
+    items: [seo-launch, perf, seo, web, facts, scan]
+  - title: "SaaS and payments"
+    items: [saas-foundations, billing]
+  - title: "Key tasks and real people"
+    items: [flows, record, user-testing]
+  - title: "Mobile and desktop apps"
+    items: [mobile-app, mobile, desktop-app, desktop]
+  - title: "Working method"
+    items: [workflow]
 commands:
   doctor:
     hint: ""

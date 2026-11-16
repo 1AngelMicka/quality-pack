@@ -39,6 +39,7 @@ Plugins for [Claude Code](https://claude.com/claude-code) that take a project **
 
 | Moment | What happens |
 | --- | --- |
+| `/sw:help` · `/sw:help <command>` | Show every command with its use, or explain one in detail |
 | `/sw:kickoff` | Claude reads your project and asks a few questions: for whom, which kind of project, the key tasks, the look you want, the test accounts, the threats, the target searches. It writes `.quality/project.json`, `DESIGN.md` and the threat model. |
 | While you build | The `from-zero` skill says where the project stands and what must be true before the next stage. Claude loads the rules of the domains it touches and the skill of the subject at hand (screens, SaaS, security, mobile, desktop, finish, search). A guard blocks secrets written in code. |
 | At each stage | The `sw` commands prove what was just done: tasks played, access tried, rendering measured. A failure stops the stage, not just a report. |
