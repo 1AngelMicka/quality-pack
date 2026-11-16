@@ -24,16 +24,20 @@ Rules:
 - Search and filters: send the request 250 to 300 ms after the last keystroke (debounce), cancel the previous one (AbortController), and never send the same request twice at once (a query cache such as TanStack Query or SWR).
 - Read only the columns you need (no SELECT *, no full record sent to the client); log slow queries and read the plan of the slowest with EXPLAIN ANALYZE.
 - Remove unused dependencies (knip, free) before trying to slim down the others.
+- Send requests that do not depend on each other at the same time (Promise.all, side-by-side loading), in the browser and on the server, instead of chaining them.
+- Serve static files (JS, CSS, images, fonts) from a CDN or a host that provides one, with versioned names and a long cache.
+- Measure Core Web Vitals on real visitors once live (the free web-vitals library, or the CrUX report): the field 75th percentile is what counts, Lighthouse only estimates it.
+- A server cache (Redis or memory) only for a slow and frequent read found in the slow-query log, with its lifetime and invalidation written down; not by default.
 
 Done means:
 
 - [major] PRF-07: Loading holds on a throttled phone (only if: has_ui). Check: perf.json on the main pages: no failed "must" (largest paint under 4 s, layout shift of 0.1 at most, under 600 ms of blocking, under 700 kB of scripts); each "should" fixed or justified.
-- [major] PRF-01: Core Web Vitals within budget on mobile (LCP, INP, CLS) (only if: has_ui). Check: Lighthouse mobile on main pages; field data if available.
+- [major] PRF-01: Core Web Vitals within budget on mobile (LCP, INP, CLS) (only if: has_ui). Check: Lighthouse mobile on main pages; once live, field data at the 75th percentile (web-vitals or CrUX).
 - [major] PRF-02: No N+1 query or unpaginated list (only if: has_db). Check: Read data access inside loops; log the queries of one page.
 - [major] PRF-03: Images optimised, sized and lazy-loaded (only if: has_ui). Check: Modern formats, srcset or image component, width and height present.
 - [minor] PRF-04: JavaScript shipped to the client within budget (only if: has_ui). Check: Bundle analysis; heavy dependencies replaced or loaded on demand; unused dependencies removed (`npx knip` reports none, or each one left is justified).
 - [minor] PRF-05: Compression and HTTP caching active on static assets. Check: content-encoding and cache-control headers on JS, CSS, images, fonts.
-- [minor] PRF-06: API response time measured and reasonable (only if: has_backend). Check: p95 of main routes under 500 ms under normal load.
+- [minor] PRF-06: API response time measured and reasonable (only if: has_backend). Check: p95 of main routes under 500 ms under normal load; no cascade of independent requests sent one after the other (Network tab, server traces).
 - [minor] PRF-08: Search and typing without extra requests (only if: has_ui, has_backend). Check: With the Network tab open: a word typed in search or a filter sends one request after the typing pause, and the previous one is cancelled; on page load, no identical request is sent twice.
 - [minor] PRF-09: Slow queries found, columns read limited to what is needed (only if: has_db). Check: Slow-query log on (PostgreSQL: log_min_duration_statement or pg_stat_statements); the slowest read with EXPLAIN ANALYZE and fixed or justified; no SELECT * and no full record returned on the main routes.
 

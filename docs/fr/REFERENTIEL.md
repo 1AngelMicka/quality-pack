@@ -83,6 +83,8 @@ _S'applique si : Le projet a une interface utilisateur_
 - Toute action de plus d'une seconde montre un retour visuel ; toute action destructive demande confirmation ou permet d'annuler.
 - Un champ de mot de passe a un bouton pour l'afficher, qui ne vide pas le champ et que le lecteur d'écran annonce.
 - Une page longue (article, documentation, liste) propose un retour en haut ou garde la navigation à portée ; une facture, un reçu ou un document qu'on imprime a une feuille d'impression (@media print) sans menus ni boutons.
+- Une valeur que l'utilisateur doit recopier (clé d'API, lien d'invitation, code, commande) a un bouton « copier » qui confirme la copie à côté de lui.
+- Une réponse longue à produire (texte généré par une IA, rapport, import) s'affiche au fur et à mesure (streaming), avec un moyen d'arrêter, plutôt qu'après une longue attente.
 - Les formulaires gardent la saisie en cas d'erreur et affichent l'erreur à côté du champ.
 
 **Critères d'audit**
@@ -223,13 +225,14 @@ _S'applique si : Le projet a une interface utilisateur_
 - Tout fonctionne au clavier, avec un focus toujours visible et un ordre logique.
 - Chaque champ a un label visible ; chaque image utile a un alt ; chaque bouton icône a un nom accessible.
 - L'information ne passe jamais par la couleur seule.
+- Dès qu'un menu ou un en-tête précède le contenu, le premier élément atteint au clavier est un lien « aller au contenu » vers la zone principale ; il peut rester caché jusqu'au focus.
 
 **Critères d'audit**
 
 | ID | Critère | Sévérité | Vérification |
 | --- | --- | --- | --- |
 | A11Y-01 | Aucune violation axe-core critique ou sérieuse sur les pages principales et les états des parcours | Bloquant | axe-core (via Playwright) sur chaque page principale et à chaque étape des tâches clés (flows.json). Un écran vide sans violation ne suffit pas à réussir. (auto `axe`) |
-| A11Y-02 | Parcours principaux réalisables entièrement au clavier, focus visible | Majeur | Tab, Maj+Tab, Entrée, Espace, Échap sur chaque tâche clé, dans l'état rempli (données de test chargées) ; modales qui piègent et rendent le focus. (lecture) |
+| A11Y-02 | Parcours principaux réalisables entièrement au clavier, focus visible | Majeur | Tab, Maj+Tab, Entrée, Espace, Échap sur chaque tâche clé, dans l'état rempli (données de test chargées) ; modales qui piègent et rendent le focus ; lien « aller au contenu » en premier quand un menu précède le contenu (sw craft : skip_link). (lecture) |
 | A11Y-03 | Contrastes conformes (4,5:1 texte, 3:1 composants) | Majeur | Mesure sur les tokens de couleur et les pages rendues, dans chaque thème. (auto `contrast_check`) |
 | A11Y-04 | Labels, alternatives textuelles et noms accessibles présents | Majeur | Champs sans label, images sans alt, boutons icône sans aria-label. (lecture) |
 | A11Y-05 | Structure lisible par lecteur d'écran (titres, régions, annonces) | Mineur | Test VoiceOver ou NVDA ; erreurs et notifications annoncées (aria-live). (lecture) |
@@ -368,6 +371,7 @@ Protection des secrets, validation des entrées, permissions, limitation des req
 - Valider toute entrée externe côté serveur avec un schéma (Zod, Valibot…) : corps, paramètres, query, headers, webhooks, fichiers.
 - Vérifier l'autorisation à chaque requête, côté serveur, sur la ressource demandée (pas seulement la connexion).
 - Limiter le débit sur la connexion, l'inscription, la réinitialisation de mot de passe, les formulaires et les routes coûteuses.
+- Formulaires publics sans compte (contact, inscription, mot de passe oublié) : la limite de débit d'abord ; si des robots passent quand même, un défi anti-robot discret (Cloudflare Turnstile, gratuit, ou un champ piège caché), jamais un CAPTCHA à images qui bloque une partie des gens.
 - Requêtes base de données paramétrées ou ORM ; jamais de concaténation de chaînes.
 - Écrire le modèle de menaces au cadrage (.quality/threats.json) : ce qu'un attaquant veut, par où l'on entre, ce qui peut mal tourner, ce qu'on fait pour chaque cas. Le relire à chaque nouveau point d'entrée, type de donnée, rôle ou service tiers.
 - Chaîne d'approvisionnement : fichier de verrouillage commité, délai de 7 jours avant d'installer une nouvelle version, scripts d'installation bloqués, actions de CI épinglées par empreinte de commit ; chaque commande que .claude/settings.json, .mcp.json ou .vscode/tasks.json lance toute seule est lue et attendue, aussi dans un dépôt cloné avant de l'ouvrir.
@@ -382,7 +386,7 @@ Protection des secrets, validation des entrées, permissions, limitation des req
 | SEC-02 | Toute entrée externe est validée côté serveur par un schéma | Bloquant | Lire chaque route, action serveur, handler de webhook et upload. (lecture) |
 | SEC-03 | Autorisation vérifiée côté serveur sur chaque ressource (pas d'IDOR) | Bloquant | access.json : chaque ressource déclarée dans project.json › access est lue par son propriétaire et refusée aux autres comptes et au visiteur ; aucune fuite. Sans bloc access, lire chaque route protégée : un utilisateur peut-il lire ou modifier la ressource d'un autre en changeant l'identifiant ? (auto `access_run`) |
 | SEC-04 | Aucune dépendance avec une vulnérabilité critique ou haute connue | Bloquant | npm audit, pnpm audit ou osv-scanner. (auto `deps_audit`) |
-| SEC-05 | Limitation de débit sur les routes sensibles et coûteuses | Majeur | Connexion, inscription, mot de passe oublié, formulaires, appels à des API payantes. (lecture) |
+| SEC-05 | Limitation de débit sur les routes sensibles et coûteuses | Majeur | Connexion, inscription, mot de passe oublié, formulaires, appels à des API payantes ; défi anti-robot sur les formulaires publics qui reçoivent des robots. (lecture) |
 | SEC-06 | Headers de sécurité présents et CSP sans unsafe-inline inutile | Majeur | Requête sur la production ou la préproduction ; vérification de chaque header. (auto `headers_check`) |
 | SEC-07 | Sessions et mots de passe gérés correctement | Majeur | Cookies HttpOnly, Secure, SameSite ; hachage argon2 ou bcrypt ; invalidation à la déconnexion ; protection CSRF. (lecture) |
 | SEC-08 | Pas d'injection : requêtes paramétrées, HTML échappé, pas d'exécution de commande avec une entrée utilisateur | Majeur | Rechercher $queryRaw, dangerouslySetInnerHTML, eval, exec, child_process avec entrée externe. (lecture) |
@@ -452,7 +456,7 @@ Obligations légales applicables et licences. Ce référentiel n'est pas un avis
 
 **Pendant la construction**
 
-- Identifier au /kickoff le pays, le type d'éditeur (particulier, entreprise) et les obligations qui en découlent ; le module compliance-fr détaille la France.
+- Identifier au /kickoff le pays de l'éditeur, les pays des clients, le type d'éditeur (particulier, entreprise) et les obligations qui en découlent : droit de la consommation, cookies, accessibilité et TVA suivent souvent le pays du client. Le module compliance-fr détaille la France.
 - Vérifier la licence de chaque dépendance, police, image et icône avant de l'ajouter.
 - Créditer les ressources qui l'exigent dans un fichier dédié ou en pied de page.
 
@@ -552,18 +556,22 @@ Compression des ressources, optimisation des requêtes et rapidité.
 - Recherche et filtres : lancer la requête 250 à 300 ms après la dernière frappe (debounce), annuler la précédente (AbortController) et ne jamais envoyer deux fois la même requête en même temps (cache de requêtes comme TanStack Query ou SWR).
 - Ne lire que les colonnes utiles (pas de SELECT * ni d'enregistrement complet renvoyé au client) ; journaliser les requêtes lentes et lire le plan des plus lentes avec EXPLAIN ANALYZE.
 - Retirer les dépendances inutilisées (knip, gratuit) avant de chercher à alléger les autres.
+- Lancer en même temps les requêtes qui ne dépendent pas l'une de l'autre (Promise.all, chargements côte à côte), côté navigateur comme côté serveur, au lieu de les enchaîner.
+- Servir les fichiers statiques (JS, CSS, images, polices) depuis un CDN ou un hébergeur qui en fournit un, avec des noms versionnés et un cache long.
+- Mesurer les Core Web Vitals chez les vrais visiteurs une fois en ligne (bibliothèque web-vitals, gratuite, ou rapport CrUX) : c'est le 75e percentile du terrain qui compte, Lighthouse n'en est qu'une estimation.
+- Un cache serveur (Redis ou mémoire) seulement pour une lecture lente et fréquente repérée dans le journal des requêtes lentes, avec sa durée et son invalidation écrites ; pas par principe.
 
 **Critères d'audit**
 
 | ID | Critère | Sévérité | Vérification |
 | --- | --- | --- | --- |
 | PRF-07 | Chargement tenu sur un téléphone ralenti | Majeur | perf.json sur les pages principales : aucun « must » en échec (affichage principal sous 4 s, saut de mise en page de 0,1 au plus, moins de 600 ms de blocage, moins de 700 kB de scripts) ; chaque « should » corrigé ou justifié. (auto `perf_run`) |
-| PRF-01 | Core Web Vitals dans le budget sur mobile (LCP, INP, CLS) | Majeur | Lighthouse en mode mobile sur les pages principales ; données terrain si disponibles. (auto `lighthouse`) |
+| PRF-01 | Core Web Vitals dans le budget sur mobile (LCP, INP, CLS) | Majeur | Lighthouse en mode mobile sur les pages principales ; une fois en ligne, données terrain au 75e percentile (web-vitals ou CrUX). (auto `lighthouse`) |
 | PRF-02 | Aucune requête N+1 ni liste non paginée | Majeur | Lire les accès aux données dans les boucles ; journaliser les requêtes d'une page. (lecture) |
 | PRF-03 | Images optimisées, dimensionnées et chargées en différé | Majeur | Formats modernes, srcset ou composant d'image, width et height présents. (lecture) |
 | PRF-04 | JavaScript envoyé au client dans le budget | Mineur | Analyse du bundle ; dépendances lourdes remplacées ou chargées à la demande ; dépendances inutilisées retirées (`npx knip` sans dépendance signalée, ou chaque reste justifié). (auto `bundle_size`) |
 | PRF-05 | Compression et cache HTTP actifs sur les ressources statiques | Mineur | Headers content-encoding et cache-control sur JS, CSS, images, polices. (auto `headers_check`) |
-| PRF-06 | Temps de réponse API mesuré et raisonnable | Mineur | p95 des routes principales sous 500 ms en conditions normales. (lecture) |
+| PRF-06 | Temps de réponse API mesuré et raisonnable | Mineur | p95 des routes principales sous 500 ms en conditions normales ; aucune cascade de requêtes indépendantes lancées l'une après l'autre (onglet Réseau, traces serveur). (lecture) |
 | PRF-08 | Recherche et saisie sans requêtes en trop | Mineur | Onglet Réseau ouvert : un mot tapé dans la recherche ou un filtre donne une requête après la pause de frappe, la précédente est annulée ; au chargement d'une page, aucune requête identique en double. (lecture) |
 | PRF-09 | Requêtes lentes repérées, colonnes lues limitées au besoin | Mineur | Journal des requêtes lentes actif (PostgreSQL : log_min_duration_statement ou pg_stat_statements) ; les plus lentes lues avec EXPLAIN ANALYZE et corrigées ou justifiées ; pas de SELECT * ni d'enregistrement complet renvoyé sur les routes principales. (lecture) |
 

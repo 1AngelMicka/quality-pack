@@ -24,7 +24,7 @@ Round 1:
 - Surface mode of the screens (has_ui): `persuade` (landing and marketing pages), `operate` (app screens, dashboards, forms) or `read` (documentation). It decides how strict the generic-look check is. Recommend `persuade` for `vitrine`, `operate` otherwise.
 - Profile: `vitrine` (showcase site), `webapp`, `saas`, `mobile`, `desktop` (Tauri or Electron app), `api`. Recommend the detected one first and give `profile_why`. When detect lists `app_signals` (state, file input, desktop shell, service worker…), the UI is an application: never recommend `vitrine`.
 - Report language: fr or en.
-- Country of the publisher (drives legal obligations; default FR).
+- Country of the publisher, and countries of the customers (both drive legal obligations: consumer law, cookies, accessibility and VAT often follow the customer's country; default FR). Write them in `country` and `customer_countries`.
 - Stacks: confirm the detected ones (nextjs, node-api, infra-vps, expo, capacitor, tauri, electron, …).
 
 Round 2:

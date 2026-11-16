@@ -78,6 +78,10 @@
    "en": "Images with next/image, fonts with next/font, metadata through the Metadata API (title, description, OpenGraph)."
   },
   {
+   "fr": "Pas de rendu en trop : l'état au plus près de qui l'utilise, pas d'objet ni de fonction recréés à chaque rendu en prop d'un composant mémorisé ; mesurer avec le Profiler de React DevTools avant d'ajouter memo (inutile si le React Compiler est activé).",
+   "en": "No needless re-render: state as close as possible to where it is used, no object or function recreated on each render as a prop of a memoised component; measure with the React DevTools Profiler before adding memo (not needed when the React Compiler is on)."
+  },
+  {
    "fr": "Fichiers loading.tsx, error.tsx et not-found.tsx pour chaque segment de route qui charge des données.",
    "en": "loading.tsx, error.tsx and not-found.tsx files for every route segment that loads data."
   },

@@ -84,6 +84,7 @@ Three limits (Nielsen): 0.1 s feels instant; 1 s keeps the train of thought; 10 
 | Full page, under 10 s | A skeleton with the shape of the real layout, not an empty frame |
 | One block, 2 to 10 s | A spinner in that block. The sources leave 1 to 2 s open: treat it the same |
 | Over 10 s, and any upload or conversion | A progress bar with a percentage, and a way to cancel |
+| Text or result produced piece by piece (AI answer, report, import) | Stream it as it comes, with a way to stop; not one spinner for the whole duration |
 
 - A loading button keeps its label and its width. The skeleton has the dimensions of the final content: no shift when it is replaced.
 - **Optimistic update.** When success is likely, change the screen at once, reconcile with the answer, and on failure roll back with a message or offer Undo.
@@ -114,7 +115,10 @@ The token bands are in type-space-motion.md. These are the values for controls.
 | Same element, two states | When a card becomes a page or a thumbnail becomes a viewer, move the element itself: View Transitions (`view-transition-name`) or Motion's `layoutId`, not one fade out and another fade in |
 | Tooltips | The first waits; the next ones in the same group show at once. About 125 ms, ease-out |
 | Icon swap (copy to check) | Opacity, scale and blur together. On a crossfade, `blur(2px)` hides an imperfect one |
-| Spring (drag, gesture) | Duration about 0.45 s, bounce 0. Apple's advice, not verified: bounce 0 by default, about 0.15 for some life, avoid more than about 0.4 |
+| Spring (drag, gesture) | Duration about 0.45 s, bounce 0. Apple's advice, not verified: bounce 0 by default, about 0.15 for some life, avoid more than about 0.4. An element thrown by the finger keeps the speed of the gesture (a sense of weight) |
+| Drag past a limit (sheet, carousel, slider) | Resistance that grows with the distance (rubber band), then a spring back; never a dead stop. Not on page scrolling: the system already does it |
+| Success confirmation | Optional: one short pulse (about scale 1.05 and back, under 300 ms), once; nothing with `prefers-reduced-motion` |
+| Long travel across the screen | Optional: a slight arc rather than a straight line, as objects move. By eye |
 
 Never animate: `width`, `height`, `top`, `left`, margins or padding; `transition: all`; an action started from the keyboard; an action done many times a day; the theme switch. Use CSS transitions for anything the user can interrupt: they retarget, keyframes do not. Large blurs and `backdrop-filter` on big surfaces are slow. Pause loops when off screen. Set `will-change` only while the animation runs.
 
@@ -129,11 +133,13 @@ Sources: Emil Kowalski (https://emilkowal.ski/ui/7-practical-animation-tips, htt
 - **URL state.** Filters, tabs, page number and open panels are in the address. Reload, share and Back give the same screen. Back and Forward restore the scroll position.
 - **Real links and hit areas.** Navigation is an `<a href>`: middle click and Ctrl or Cmd click work. No dead zone inside a control. Label and checkbox are one target. List rows touch: pad them, no gap between them.
 - **Hover.** `@media (hover: hover) { .btn:hover { … } }`, so a tap leaves no stuck hover. No tooltip on a disabled button, nothing clickable inside a tooltip.
+- **Skip link.** When a menu or a header comes before the content, the first Tab stop is a "Skip to content" link to `<main>`, hidden until focused (WCAG 2.4.1).
+- **Copy.** A value the user must copy (API key, invitation link, code) has a copy button; the icon turns into a check for about 2 s.
 - **Touch.** Fields at 16 px or more. No autofocus. `touch-action: manipulation` on controls. `overscroll-behavior: contain` on dialogs and drawers.
 - **Shortcuts** are shown with the platform's symbols and work on non-QWERTY layouts. A multi-screen app has a search or command palette on Ctrl or Cmd + K (house setting).
 - **Forms.** Enter submits; Ctrl or Cmd + Enter in a textarea. Submit is never disabled in advance. Paste is never blocked. The error sits beside its field and focus goes to the first one. `autocomplete` and `inputmode` are set. Leaving with unsaved changes warns. Values are trimmed.
 
-Measured by `sw craft`: `focus_visible` (must, 25 Tab stops), `hover_states` (12 buttons), `input_font_size`, `viewport_zoom`. By eye: everything else. Run each flow once with the keyboard only.
+Measured by `sw craft`: `focus_visible` (must, 25 Tab stops), `hover_states` (12 buttons), `input_font_size`, `viewport_zoom`, `skip_link` (should, with 3 or more controls before the main content). By eye: everything else. Run each flow once with the keyboard only.
 
 Sources: Vercel guidelines, Rauno Freiberg, Linear (https://linear.app/now/invisible-details).
 

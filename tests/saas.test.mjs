@@ -39,6 +39,18 @@ test("craft: a rough page fails on finish, a polished one passes", async (t) => 
   assert.deepEqual(polished.summary.should_failed, [], JSON.stringify(polished.failed));
 });
 
+test("craft: a page with a menu before the content needs a skip link", async (t) => {
+  const { loadBrowserTools } = await lib("browser.mjs");
+  if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run sw.mjs browser-setup)");
+  const dir = mkdtempSync(join(tmpdir(), "qp-skip-"));
+  const nav = '<nav><a href="/a">A</a> <a href="/b">B</a> <a href="/c">C</a> <a href="/d">D</a></nav>';
+  const page = (skip) => { const f = join(dir, `${skip ? "with" : "without"}.html`); writeFileSync(f, `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Skip</title></head><body>${skip ? '<a href="#content">Skip to content</a>' : ""}${nav}<main id="content"><h1>Title</h1><p>Text.</p></main></body></html>`); return f; };
+  const without = (await run(dir, ["craft", page(false)])).out.pages[0];
+  assert.ok(without.summary.should_failed.includes("skip_link"), JSON.stringify(without.summary));
+  const withSkip = (await run(dir, ["craft", page(true)])).out.pages[0];
+  assert.ok(!withSkip.summary.should_failed.includes("skip_link"), JSON.stringify(withSkip.failed?.skip_link));
+});
+
 test("craft: site icon, share image and 404 page are checked on a served site", async (t) => {
   const { loadBrowserTools } = await lib("browser.mjs");
   if (!(await loadBrowserTools(ROOT))) return t.skip("Playwright not installed (run sw.mjs browser-setup)");

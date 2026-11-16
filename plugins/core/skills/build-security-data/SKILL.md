@@ -20,6 +20,7 @@ Rules:
 - Validate every external input server-side with a schema (Zod, Valibot…): body, params, query, headers, webhooks, files.
 - Check authorisation on every request, server-side, on the requested resource (not just login).
 - Rate-limit login, sign-up, password reset, forms and expensive routes.
+- Public forms without an account (contact, sign-up, password reset): rate limiting first; if bots still get through, a quiet bot challenge (Cloudflare Turnstile, free, or a hidden honeypot field), never an image CAPTCHA that locks some people out.
 - Parameterised database queries or ORM; never string concatenation.
 - Write the threat model at kickoff (.quality/threats.json): what an attacker wants, where input enters, what can go wrong, what is done about each case. Review it at every new entry point, kind of data, role or third party.
 - Supply chain: committed lockfile, 7-day wait before installing a new version, install scripts blocked, CI actions pinned by commit hash; every command that .claude/settings.json, .mcp.json or .vscode/tasks.json runs by itself is read and expected, also in a cloned repository before opening it.
@@ -32,7 +33,7 @@ Done means:
 - [BLOCKER] SEC-02: Every external input is validated server-side with a schema (only if: has_backend). Check: Read every route, server action, webhook handler and upload.
 - [BLOCKER] SEC-03: Authorisation checked server-side on every resource (no IDOR) (only if: has_auth). Check: access.json: every resource declared in project.json › access is read by its owner and refused to the other accounts and to a visitor; no leak. Without an access block, read every protected route: can a user read or change another user's resource by changing the ID?
 - [BLOCKER] SEC-04: No dependency with a known critical or high vulnerability. Check: npm audit, pnpm audit or osv-scanner.
-- [major] SEC-05: Rate limiting on sensitive and expensive routes (only if: has_backend). Check: Login, sign-up, password reset, forms, calls to paid APIs.
+- [major] SEC-05: Rate limiting on sensitive and expensive routes (only if: has_backend). Check: Login, sign-up, password reset, forms, calls to paid APIs; a bot challenge on public forms that receive bots.
 - [major] SEC-06: Security headers present and CSP without needless unsafe-inline. Check: Request against production or staging; check every header.
 - [major] SEC-07: Sessions and passwords handled correctly (only if: has_auth). Check: HttpOnly, Secure, SameSite cookies; argon2 or bcrypt hashing; invalidation on logout; CSRF protection.
 - [major] SEC-08: No injection: parameterised queries, escaped HTML, no command execution with user input. Check: Search for $queryRaw, dangerouslySetInnerHTML, eval, exec, child_process with external input.
@@ -98,7 +99,7 @@ Applicable legal obligations and licences. This referential is not legal advice.
 
 Rules:
 
-- At /kickoff, identify the country, the publisher type (individual, company) and the resulting obligations; the compliance-fr module details France.
+- At /kickoff, identify the publisher's country, the customers' countries, the publisher type (individual, company) and the resulting obligations: consumer law, cookies, accessibility and VAT often follow the customer's country. The compliance-fr module details France.
 - Check the licence of every dependency, font, image and icon before adding it.
 - Credit resources that require it in a dedicated file or in the footer.
 

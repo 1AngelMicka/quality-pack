@@ -566,3 +566,28 @@ Une vidéo listait 31 consignes de vitesse (24 lisibles à l'écran, le reste r�
 | [Claude Code, réglages et hooks](https://code.claude.com/docs/en/settings), [VS Code, tâches (runOn folderOpen)](https://code.visualstudio.com/docs/debugtest/tasks) | commandes lancées toutes seules par la configuration d'un dépôt (`sw supply`, `auto_run`) | documentation, accès libre | intégré (`security-testing`) |
 | Campagne npm « Mini Shai-Hulud » (mai 2026), d'après International Cyber Digest sur X | le ver s'inscrivait dans `.claude/settings.json` et `.vscode/tasks.json` | publication d'un tiers, non vérifiée de première main | cité comme signalement |
 | Décalage de 30 à 50 ms entre les éléments d'une liste, sortie 20 % plus courte, carte suivante visible d'un quart à un tiers | réglages maison, sans validation publiée | — | réglages ajustables |
+
+### Lot 7, suite — les 18 points restants (2026-11-16)
+
+Relecture des points du récap qui n'avaient pas été repris. Retenus :
+
+| Lien | Rôle | Licence | Statut |
+| --- | --- | --- | --- |
+| [WCAG 2.2, critère 2.4.1 Bypass Blocks](https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html) | lien « aller au contenu » en premier quand un menu précède le contenu (A11Y, `sw craft` : `skip_link`) | W3C | cité |
+| [web-vitals](https://github.com/GoogleChrome/web-vitals), [rapport CrUX](https://developer.chrome.com/docs/crux) | Core Web Vitals mesurés chez les vrais visiteurs, 75e percentile (PRF-01) | Apache-2.0 ; documentation en accès libre | cités |
+| [MDN, Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) | requêtes indépendantes lancées en même temps (PRF-06) | MDN CC-BY-SA | cité |
+| [web.dev, Content delivery networks](https://web.dev/articles/content-delivery-networks) | fichiers statiques servis par un CDN, noms versionnés, cache long | CC BY 4.0 | cité |
+| [Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/) | défi anti-robot gratuit, après la limite de débit, sur les formulaires publics (SEC-05) | service gratuit, documentation en accès libre | cité, aucune dépendance ajoutée |
+| [React, Profiler](https://react.dev/reference/react/Profiler) et [React Compiler](https://react.dev/learn/react-compiler) | rendus inutiles mesurés avant d'ajouter memo (module nextjs) | CC BY 4.0 | cités |
+| [emilkowalski/skills](https://github.com/emilkowalski/skills) (apple-design, gestures) | résistance élastique au-delà d'une limite de glissement, poids du geste, pulsation de réussite facultative | MIT | idées reprises, texte réécrit |
+| Bouton « copier », streaming des réponses longues, pays des clients au /kickoff, cache serveur seulement après mesure, trajectoire en arc | réglages maison | — | réglages ajustables |
+
+Écartés, pour ne pas reposer la question :
+
+| Point | Raison |
+| --- | --- |
+| En-tête fixe | Choix de mise en page, pas un critère de qualité ; les règles qui s'appliquent quand il existe sont déjà là (niveaux d'empilement, ancres, focus jamais caché dessous) |
+| Bouton de contact flottant | Choix de mise en page qui cache du contenu sur téléphone ; un contact visible depuis toutes les pages est déjà demandé (SUP-01) |
+| Suivi UTM | Marketing, utile seulement avec un outil de statistiques ; ce sont les liens partagés qui portent les paramètres, pas le site |
+| « Effet d'environ 12 % » | Libellé illisible dans la vidéo (« Flou » ou « Étire ») ; s'il s'agit du flou, déjà couvert (fondus avec flou) |
+| Effet élastique sur le défilement de la page | Le système le fait déjà ; le refaire reviendrait à piloter le défilement, ce que `scroll-animation` interdit. Retenu seulement pour les gestes (ci-dessus) |

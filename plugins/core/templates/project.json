@@ -3,6 +3,7 @@
   "language": "fr",
   "profile": "webapp",
   "country": "FR",
+  "customer_countries": ["FR"],
   "stacks": ["nextjs", "node-api", "infra-vps"],
   "package_manager": "pnpm",
   "promise": "For <whom>, <product> <does what> so that <outcome>.",
