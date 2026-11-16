@@ -1,0 +1,2007 @@
+{
+  "family": "themes",
+  "kind": "pattern",
+  "label": {
+    "fr": "Thèmes et styles",
+    "en": "Themes and styles"
+  },
+  "summary": "Named visual styles with their rules for type, colour, layout, imagery, motion and build, so a site can commit to one aesthetic on purpose instead of drifting to the generic default. Pick a style from the brief and the references, never from this list alone; when a style is marked common or everywhere, it needs a reason in DESIGN.md and a twist of its own.",
+  "entries": [
+    {
+      "id": "theme-swiss",
+      "label": {
+        "fr": "Style suisse (typographie internationale)",
+        "en": "Swiss / International Typographic Style"
+      },
+      "what": "The 1950s Zurich and Basel school applied to screens: a strict modular grid, flush-left ragged-right sans-serif text, big type used as the main image, asymmetric balance, lots of white space and objective photography. Hierarchy comes from size, weight and position, never from decoration. Content is arranged like a poster or a timetable: clear, rational and visibly built on a grid.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "desktop-app"
+        ]
+      },
+      "suits": [
+        "architecture studio",
+        "type foundry",
+        "design school or museum",
+        "engineering or consulting firm",
+        "cultural programme or festival timetable",
+        "law or audit firm that wants precision without luxury cues"
+      ],
+      "use_when": "The message is information-heavy and must feel exact and trustworthy; the client values clarity and order over warmth; there is strong typography or photography to carry the page.",
+      "avoid_when": "The brand must feel warm, handmade or playful; the content is thin (the grid then looks empty); the team will not keep the grid discipline when adding pages.",
+      "type": {
+        "pairing": "Schibsted Grotesk (Google Fonts, OFL) for display and text, or IBM Plex Sans (Google Fonts, OFL) for text with IBM Plex Mono (OFL) for figures and labels. Avoid defaulting to Inter, which reads as generic rather than Swiss.",
+        "rules": "One family, two or three weights (regular, medium, bold). Large jumps in the scale (for example 14 / 20 / 48 / 120 px) rather than many close steps. Sentence case, flush left, ragged right, never justified. Tight tracking (-0.02em) on large headings, neutral on text. Numbers and dates set large as visual elements."
+      },
+      "colour": "Mostly black on white or white on black, plus one signal colour used for structure (a rule, a number, a block) rather than decoration. Example: #FFFFFF, #111111, #E30613 (red); or #F2F2F0, #0A0A0A, #0050FF (blue).",
+      "layout": "A visible 12-column (or 6 on phone) grid with fixed gutters; content blocks snap to columns and baselines; asymmetric compositions with large empty fields; sections separated by thin rules and white space, not by cards or background bands.",
+      "imagery": "Objective black-and-white or neutral colour photography, cropped hard to the grid; diagrams and maps instead of illustration; no stock lifestyle shots.",
+      "motion": "Little and functional: instant or short (150-200 ms) transitions, text that slides along the grid, no bounce or parallax.",
+      "build": "CSS Grid with grid-template-columns: repeat(12, 1fr) and a gap token, items placed with grid-column spans; a debug overlay of the columns while building; type scale as CSS custom properties with clamp(); hanging punctuation and font-variant-numeric: tabular-nums for tables and dates.",
+      "pitfalls": "Using Helvetica-like fonts on a centred layout (that is just minimal, not Swiss); breaking the grid with random card widths; adding gradients or rounded cards; too many sizes so no hierarchy stands out.",
+      "prevalence": "common",
+      "examples": [
+        {
+          "name": "Grids by Obys",
+          "url": "https://grids.obys.agency/",
+          "recognition": "Awwwards Site of the Day, 2021",
+          "source": "https://www.awwwards.com/sites/grids"
+        },
+        {
+          "name": "Studio Joshgrafik",
+          "url": "https://www.joshgrafik.com/",
+          "recognition": "Awwwards Honorable Mention, 2026 (described as strict black and white, Swiss-style type on a 12-column grid)",
+          "source": "https://www.awwwards.com/sites/studio-joshgrafik"
+        },
+        {
+          "name": "USSR Futurism",
+          "url": "https://ussrfuturism.tilda.ws/en",
+          "recognition": "Awwwards Honorable Mention, 2023 (described as Swiss style with brutalist touches)",
+          "source": "https://www.awwwards.com/sites/ussr-futurism"
+        }
+      ],
+      "sources": [
+        {
+          "name": "International Typographic Style (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/International_Typographic_Style"
+        },
+        {
+          "name": "Grid (graphic design) (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Grid_(graphic_design)"
+        }
+      ]
+    },
+    {
+      "id": "theme-brutalism",
+      "label": {
+        "fr": "Brutalisme (web brut)",
+        "en": "Brutalism (raw web)"
+      },
+      "what": "The web shown as material: default or system fonts, visible HTML structure, blue underlined links, hard edges, raw tables and lists, sometimes clashing elements on purpose. It refuses polish to look honest, fast and independent. Unlike neo-brutalism it is not a friendly component kit: it can be austere, dense, ugly-by-choice and closer to a document than a product page.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "suits": [
+        "independent record label or music venue",
+        "art collective or artist-run space",
+        "experimental type foundry",
+        "streetwear or avant-garde fashion label",
+        "zine, newsletter or archive",
+        "personal site of a developer or designer"
+      ],
+      "use_when": "The audience is culturally literate and values attitude over reassurance; the content itself (music, art, text) is the product; speed and lightness matter.",
+      "avoid_when": "Selling to a broad or anxious audience (health, finance, public services); forms and checkout must feel safe; accessibility would be traded for the look.",
+      "type": {
+        "pairing": "System fonts (Times New Roman, Arial, Courier via the system stack) or Courier Prime (Google Fonts, OFL) and Space Mono (Google Fonts, OFL) for a typed feel; Archivo Black (Google Fonts, OFL) when one loud display face is needed.",
+        "rules": "Browser-like sizes (16 px text, big h1), few weights, often all caps or all lower case for headings, default tracking. Underlined links. Mixed sizes are allowed when deliberate; text still needs 45-80 characters per line to stay readable."
+      },
+      "colour": "Default-web colours or a single harsh pairing. Examples: #FFFFFF, #000000, #0000EE (link blue), #551A8B (visited); or #00FF00 on #000000 used sparingly. Colour goes on links, borders and a few blocks, not on gradients.",
+      "layout": "Document flow first: stacked blocks, tables, lists and borders; little or no padding; elements can touch or overlap; navigation as plain text links; density is high and sections are separated by rules.",
+      "imagery": "Unretouched photos, screenshots, scans, low-resolution or dithered images, raw video embeds; images at their natural size rather than cropped into neat ratios.",
+      "motion": "None or abrupt: instant state changes, marquee text, cursor-following elements; no easing curves meant to soothe.",
+      "build": "Start from semantic HTML with almost no CSS; set body { font-family: Times, serif; max-width: none; } and style only what matters; use border: 1px solid and outline instead of shadows; keep focus styles visible; ship tiny pages without frameworks.",
+      "pitfalls": "Copying the look over a conventional SaaS layout (it then reads as broken, not raw); unreadable contrast or line lengths; losing focus states and keyboard access in the name of rawness; mistaking it for neo-brutalism with rounded shadows.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "ACRONYM",
+          "url": "https://acrnm.com",
+          "recognition": "Listed on Brutalist Websites (undated listing)",
+          "source": "https://brutalistwebsites.com/"
+        },
+        {
+          "name": "AllCaps",
+          "url": "https://allcapstype.com",
+          "recognition": "Awwwards Honorable Mention, 2022 (described as a brutalist site for a type collective)",
+          "source": "https://www.awwwards.com/sites/allcaps"
+        },
+        {
+          "name": "Budapest Park",
+          "url": "https://www.budapestpark.hu/en",
+          "recognition": "Awwwards Honorable Mention, 2021 (described as brutalist web design for a concert venue)",
+          "source": "https://www.awwwards.com/sites/budapest-park"
+        },
+        {
+          "name": "Kern Society",
+          "url": "https://shockingmike.github.io/kern-society",
+          "recognition": "One Page Love, tagged Brutalism, 2026",
+          "source": "https://onepagelove.com/kern-society"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Brutalist Web Design guidelines (David Bryant Copeland)",
+          "url": "https://brutalist-web.design/"
+        },
+        {
+          "name": "Brutalist Websites gallery",
+          "url": "https://brutalistwebsites.com/"
+        },
+        {
+          "name": "Brutalist architecture (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Brutalist_architecture"
+        }
+      ]
+    },
+    {
+      "id": "theme-neo-brutalism",
+      "label": {
+        "fr": "Néo-brutalisme",
+        "en": "Neo-brutalism"
+      },
+      "what": "A friendly, product-ready descendant of brutalism: thick black outlines, flat saturated fills, hard offset shadows with no blur, chunky buttons that visibly press down, big grotesque type and sticker-like shapes. It feels bold, playful and handmade while staying a tidy component system. It became a startup and creator-tool cliché, so it needs a real reason and a twist.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "phone"
+        ]
+      },
+      "suits": [
+        "creator tool or indie app",
+        "online course or bootcamp",
+        "Gen Z fintech or consumer app",
+        "community or event for designers",
+        "portfolio of a product designer",
+        "indie game studio"
+      ],
+      "use_when": "The product wants to look approachable and confident against polished corporate competitors; the audience is young or design-literate; the UI has clear components that benefit from strong outlines.",
+      "avoid_when": "Luxury, healthcare or institutional contexts; dense data screens where every box would get a 3 px border; the brief asks to stand out from other startups (this look is now common).",
+      "type": {
+        "pairing": "Archivo Black (Google Fonts, OFL) or Bricolage Grotesque (Google Fonts, OFL) for display; Archivo (OFL) or Rubik (Google Fonts, OFL) for text. Avoid Space Grotesk, already flagged as the default 'distinctive' font.",
+        "rules": "Heavy display weights (800-900) at large sizes, tight tracking (-0.03em); text at 16-18 px regular; labels in uppercase bold are fine on buttons but not as eyebrows on every section."
+      },
+      "colour": "Off-white or cream ground, pure black outlines and shadows, two or three flat saturated fills used per component. Example: #FFFDF5, #000000, #FF6B6B, #FFD93D, #4D96FF; or #F4F4F0, #111111, #A3E635, #F472B6. Do not use the cream-plus-terracotta or black-plus-acid-green defaults without a reason.",
+      "layout": "Cards and panels with 2-3 px borders and 4-8 px hard shadows, generous padding, a loose grid that allows slight rotations or offsets; sections in contrasting flat colour bands.",
+      "imagery": "Flat illustrations with black outlines, stickers, cut-out product shots, screenshots framed in thick borders; no soft 3D renders.",
+      "motion": "Snappy and physical: buttons translate by the shadow offset on press, elements wobble or pop with short spring easing; no slow fades.",
+      "build": "Tokens --border: 3px solid #000 and --shadow: 6px 6px 0 #000; button:active { transform: translate(6px, 6px); box-shadow: none; }; Tailwind arbitrary values like shadow-[6px_6px_0_#000] and border-[3px]; keep radius at 0 or one small value consistently.",
+      "pitfalls": "Every element boxed and shadowed so nothing stands out; random rotations; pastel fills that lose the punch; copying a well-known kit (Gumroad-like) without adapting colour and type; shadows on text.",
+      "prevalence": "common",
+      "examples": [
+        {
+          "name": "Ugly Cash",
+          "url": "https://ugly.cash/",
+          "recognition": "One Page Love feature, 2026 (described as neo-brutalist)",
+          "source": "https://onepagelove.com/uglycash"
+        },
+        {
+          "name": "Rubens Cantuni",
+          "url": "https://www.rubens.design/",
+          "recognition": "One Page Love, tagged Neubrutalism, 2022",
+          "source": "https://onepagelove.com/rubens-cantuni"
+        },
+        {
+          "name": "Figma Academy",
+          "url": "https://www.figma.academy/",
+          "recognition": "One Page Love, tagged Neubrutalism, 2021",
+          "source": "https://onepagelove.com/figma-academy"
+        },
+        {
+          "name": "Marjo Ballabani",
+          "url": "https://marjoballabani.me/",
+          "recognition": "Awwwards Nominee, 2025 (described as a resume in neo brutalism style)",
+          "source": "https://www.awwwards.com/sites/marjo-ballabani"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Neobrutalism: Definition and Best Practices (Nielsen Norman Group)",
+          "url": "https://www.nngroup.com/articles/neobrutalism/"
+        },
+        {
+          "name": "Neubrutalism website examples (One Page Love)",
+          "url": "https://onepagelove.com/tag/neubrutalism"
+        }
+      ]
+    },
+    {
+      "id": "theme-editorial-magazine",
+      "label": {
+        "fr": "Magazine éditorial",
+        "en": "Editorial magazine"
+      },
+      "what": "Pages composed like a printed magazine: a strong serif or contrasted headline face, a narrow reading column, pull quotes, captions, drop caps, numbered features and large photography in varied crops. Rhythm comes from changing layouts between spreads. In 2026 the 'broadsheet' version (cream paper, black serif, thin rules) is a default of generated sites, so it needs a specific voice.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "independent magazine or newsletter",
+        "publisher or bookshop",
+        "restaurant or winery with stories to tell",
+        "designer portfolio with long case studies",
+        "research institute or think tank",
+        "fashion label lookbook"
+      ],
+      "use_when": "There is real long-form content, good photography and an editor; reading time matters more than conversion speed.",
+      "avoid_when": "The content is thin marketing copy (it will look like a costume); the site is an app or a dashboard; the brief asks to avoid the current generic look and no distinctive typeface or art direction is planned.",
+      "type": {
+        "pairing": "Newsreader (Google Fonts, OFL) or Fraunces (Google Fonts, OFL) for headlines and long text; Instrument Sans (Google Fonts, OFL) for captions, navigation and metadata. Source Serif 4 (OFL) is a quieter text alternative.",
+        "rules": "Text 18-21 px with 1.5-1.6 line height and 60-75 characters per line; headlines very large (64-140 px) with optical sizes and tight tracking; italics for standfirsts; small caps or a sans for bylines; avoid the cliché of one italic serif word inside a sans headline."
+      },
+      "colour": "Paper and ink with one section colour per issue or category. Example: #FBFAF7, #1A1A1A, #B3261E; or #FFFFFF, #0F172A, #0E7C66. Colour marks sections, rubrics and links; photos carry the rest.",
+      "layout": "Asymmetric multi-column grids that change per section: full-bleed opener, then a reading column with images breaking out to wide or full width; pull quotes in the margin; generous vertical space between stories.",
+      "imagery": "Commissioned or documentary photography, art-directed crops (tight portrait, wide landscape), captions and credits always present; illustration commissioned per story.",
+      "motion": "Calm: images reveal on scroll once, reading progress, smooth page transitions between articles; nothing that interrupts reading.",
+      "build": "CSS Grid with named lines (full, wide, content) so images can break out of the text column; font-optical-sizing: auto and text-wrap: balance on headlines, text-wrap: pretty on paragraphs; initial-letter or ::first-letter for drop caps; hanging-punctuation where supported.",
+      "pitfalls": "Cream background + black serif + thin rules with no photography (the generic broadsheet); fake magazine labels like 'Issue 01' on a SaaS; walls of text without real editing; serif headlines at weights the font does not have.",
+      "prevalence": "everywhere",
+      "examples": [
+        {
+          "name": "Artem Taradash",
+          "url": "https://taradash.me/",
+          "recognition": "One Page Love, tagged Editorial, 2026",
+          "source": "https://onepagelove.com/artem-taradash"
+        },
+        {
+          "name": "Felix Haas",
+          "url": "https://felixhaas.io/",
+          "recognition": "One Page Love, tagged Editorial, 2026",
+          "source": "https://onepagelove.com/felix-haas"
+        },
+        {
+          "name": "Visions magazine",
+          "url": "https://www.readvisions.com/",
+          "recognition": "One Page Love, tagged Magazine, 2019",
+          "source": "https://onepagelove.com/visions-magazine"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Page layout (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Page_layout"
+        },
+        {
+          "name": "Editorial website design examples (One Page Love)",
+          "url": "https://onepagelove.com/tag/editorial"
+        }
+      ]
+    },
+    {
+      "id": "theme-bauhaus",
+      "label": {
+        "fr": "Bauhaus / géométrie primaire",
+        "en": "Bauhaus / geometric primary"
+      },
+      "what": "Composition from circles, squares and triangles in red, yellow and blue with black and white, geometric sans-serif type, strong diagonals and functional asymmetry, as taught at the Bauhaus (1919-1933). Shapes are not decoration: they frame content, point to actions and build the layout. It feels constructive, didactic and optimistic.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "phone"
+        ]
+      },
+      "suits": [
+        "design or architecture school",
+        "museum or exhibition",
+        "furniture or lighting brand",
+        "coffee roaster or bakery with a modernist identity",
+        "education or coding bootcamp",
+        "children's learning product"
+      ],
+      "use_when": "The brand is about making, learning or craft; the client wants colour and boldness without being childish; a simple geometric system can carry the identity.",
+      "avoid_when": "Serious financial or medical contexts; brands whose own colours clash with primaries; when the shapes would just be sprinkled on a generic layout.",
+      "type": {
+        "pairing": "Jost (Google Fonts, OFL, inspired by 1920s German sans-serifs) for display and text; League Spartan (Google Fonts, OFL) for heavy headlines; Josefin Sans (OFL) for a lighter geometric voice.",
+        "rules": "Geometric sans throughout, lower case or all caps headings, bold weights for titles, medium tracking on uppercase labels (+0.05em), headings sometimes set vertically or on a diagonal; text stays horizontal and readable."
+      },
+      "colour": "Primaries plus black and an off-white. Example: #F2EDE4, #111111, #D7261E, #F4B400, #1F4E9C. Colour fills whole shapes and blocks; text stays black or white on them with contrast checked (yellow needs black text).",
+      "layout": "Modular grid where some cells are solid colour shapes; asymmetric balance; content blocks aligned to the same edges as the shapes; sections can be split diagonally or by large circles.",
+      "imagery": "Black-and-white photography with geometric crops (circle, half-circle), photomontage, simple diagrams; avoid soft gradients.",
+      "motion": "Mechanical and geometric: shapes rotate, slide and assemble on scroll, linear or steps() easing; reduced motion keeps the final composition.",
+      "build": "Shapes as CSS (border-radius: 50%, clip-path: polygon(...)) or inline SVG placed on a CSS Grid; colour tokens limited to five; scroll-driven animations (animation-timeline: view()) to assemble shapes with a static fallback.",
+      "pitfalls": "Random confetti of shapes; primaries at full saturation everywhere so the eye has no rest; 'Bauhaus' font imitations used for body text; ignoring contrast of white on yellow.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Nike x The Bauhaus",
+          "url": "https://nikebauhaus.vercel.app/",
+          "recognition": "Awwwards Honorable Mention, 2024",
+          "source": "https://www.awwwards.com/sites/nike-x-the-bauhaus"
+        },
+        {
+          "name": "XV Bienal de Arquitectura y Urbanismo (BEAU)",
+          "url": "https://xv.labienal.es/",
+          "recognition": "Awwwards Honorable Mention, 2024 (described as inspired by Bauhaus modular typography)",
+          "source": "https://www.awwwards.com/sites/bienal-arquitectura-urbanismo"
+        },
+        {
+          "name": "100 years of bauhaus",
+          "url": "https://www.bauhaus100.com",
+          "recognition": "Awwwards Honorable Mention, 2019",
+          "source": "https://www.awwwards.com/sites/100-years-of-bauhaus"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Bauhaus (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Bauhaus"
+        }
+      ]
+    },
+    {
+      "id": "theme-art-deco",
+      "label": {
+        "fr": "Art déco",
+        "en": "Art Deco"
+      },
+      "what": "1920s-30s glamour: symmetry, stepped and sunburst motifs, fan and chevron patterns, thin gold lines on deep colours, tall high-contrast geometric capitals and framed panels like a cinema facade or a cocktail menu. It feels celebratory, crafted and a little theatrical, which makes it memorable when applied with restraint.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "cocktail bar, hotel or restaurant",
+        "theatre, cinema or jazz club",
+        "jeweller or watchmaker",
+        "event or gala",
+        "podcast or media brand with a showbiz tone",
+        "spirits brand"
+      ],
+      "use_when": "The place or product has a real link to the period or to nightlife and ceremony; the brand needs a strong frame that works on menus, posters and screens.",
+      "avoid_when": "Software, health or public services; content-heavy sites (ornate frames get in the way); when gold would only signal fake luxury.",
+      "type": {
+        "pairing": "Limelight (Google Fonts, OFL, high-contrast Art Deco display) or Poiret One (Google Fonts, OFL, light Deco geometric) for display only; Josefin Sans (OFL) or Libre Baskerville (Google Fonts, OFL) for text.",
+        "rules": "Display faces only at 32 px and above; uppercase headings with wide tracking (+0.1 to +0.2em); centred, symmetric title blocks; text in a plain face at 16-18 px."
+      },
+      "colour": "Deep grounds with metallic or cream accents. Example: #0E1A2B (midnight), #C9A44C (gold), #F3E9D2 (cream), #1E5E4E (emerald); or #111111, #D4AF37, #7A1F2B. Gold for lines and ornaments, not for text that must be read.",
+      "layout": "Symmetric, centred compositions inside framed panels; stepped section edges; ornaments at section breaks; content still in a simple column underneath the frame.",
+      "imagery": "High-contrast photography with warm lighting, line illustrations, geometric patterns as backgrounds at low contrast.",
+      "motion": "Elegant and slow: lines drawing in (SVG stroke-dashoffset), fans opening, gentle shimmer on gold, nothing bouncy.",
+      "build": "Ornaments and frames as inline SVG or CSS (repeating-linear-gradient for chevrons, conic-gradient for sunbursts); border-image for framed panels; gold via flat colour plus a subtle linear-gradient highlight, never as text fill for body copy.",
+      "pitfalls": "Gold gradients everywhere (casino look); Deco display font used for paragraphs; clip-art ornaments; Great Gatsby party clichés with no link to the brand.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Doof! Media",
+          "url": "https://doofmedia.com",
+          "recognition": "Awwwards Nominee, 2025 (described as bringing the Art Deco style to the web)",
+          "source": "https://www.awwwards.com/sites/doof-media"
+        },
+        {
+          "name": "The Hall of Zero Limits (Dogstudio)",
+          "url": "https://wakanda-forever-master.dogstudio-dev.co/zerolimits",
+          "recognition": "Awwwards Site of the Day and Site of the Month, January 2023 (design blends Art Deco with GUI shapes)",
+          "source": "https://www.awwwards.com/the-hall-of-zero-limits-by-dogstudio-wins-site-of-the-month-january-2023.html"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Art Deco (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Art_Deco"
+        }
+      ]
+    },
+    {
+      "id": "theme-art-nouveau",
+      "label": {
+        "fr": "Art nouveau / ornement organique",
+        "en": "Art Nouveau / organic ornament"
+      },
+      "what": "Flowing whiplash curves, plant stems, flowers and hair turned into frames and borders, as in Mucha posters, Guimard's metro entrances or Viennese Secession print. Typography is drawn and decorative, colours are muted botanicals with gold. On the web it works as a frame and a signature, around otherwise calm and readable content.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "winery, tea house or perfumer",
+        "florist or botanical garden",
+        "herbalist or natural cosmetics",
+        "museum exhibition on the period",
+        "boutique hotel in a historic building",
+        "fantasy book or game"
+      ],
+      "use_when": "The product is natural, crafted or historical; the brand can afford a commissioned illustrator; the site has few pages where ornament can be lavish.",
+      "avoid_when": "Tools and dashboards; brands that need speed and neutrality; when only stock vector flourishes are available.",
+      "type": {
+        "pairing": "Federant (Google Fonts, OFL, a revival of Otto Ludwig Nägele's 1911 Feder Antiqua from the Jugendstil period) for display; Cormorant Garamond (Google Fonts, OFL) or Libre Baskerville (OFL) for text.",
+        "rules": "Decorative display only for titles and initials; text in a classical serif at 18 px with generous leading; centred title blocks inside frames; drop caps welcome."
+      },
+      "colour": "Muted botanicals with metal. Example: #F1E9D8 (parchment), #4F6B4A (sage), #A4573A (rust), #B8963E (old gold), #2B2A26; or #E8E1D3, #6E4B6B (plum), #7D8F69. Colour lives in illustration and frames; text stays dark on light.",
+      "layout": "Framed panels with organic borders, arched or rounded tops on images, symmetrical compositions; inside the frame a simple single column; ornament at edges, never between the reader and the text.",
+      "imagery": "Commissioned line illustration with flat colour, botanical engravings, warm photography of objects in natural light, arch-shaped crops.",
+      "motion": "Slow growth: vines and lines drawing in along SVG paths, gentle sway, parallax of foliage layers; static under reduced motion.",
+      "build": "Ornaments as optimized inline SVG with currentColor so they theme; arches with border-radius: 50% 50% 0 0 / 30% 30% 0 0 or clip-path: path(); stroke-dasharray animations on scroll; frames with border-image from one SVG.",
+      "pitfalls": "Clip-art swirls from stock packs; ornament so dense the content disappears; a decorative font for body text; heavy SVG files slowing the page.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Klimt wine",
+          "url": "https://klimtwine.com/en",
+          "recognition": "Awwwards Honorable Mention, 2026 (described as inspired by Art Nouveau with gold accents)",
+          "source": "https://www.awwwards.com/sites/klimt-wine-product-website"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Art Nouveau (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Art_Nouveau"
+        },
+        {
+          "name": "Jugendstil (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Jugendstil"
+        }
+      ]
+    },
+    {
+      "id": "theme-memphis",
+      "label": {
+        "fr": "Memphis / années 80 ludiques",
+        "en": "Memphis / 80s playful"
+      },
+      "what": "The Memphis Group's 1980s Milan look: clashing pastels and brights, squiggles, confetti dots, terrazzo and zigzag patterns, primitive shapes in black outlines, objects that look like toys. It is loud, joyful and deliberately anti-tasteful. On a site it works best as a strong pattern language around plain, readable content.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "toy or game brand",
+        "ice cream, candy or juice bar",
+        "kids' activity or party venue",
+        "design shop or furniture brand with postmodern pieces",
+        "music festival",
+        "creative agency with a playful voice"
+      ],
+      "use_when": "The brand wants joy and irreverence; the audience likes colour; the content is short and visual.",
+      "avoid_when": "Trust-heavy services; long reading; brands with a strict colour identity that patterns would fight.",
+      "type": {
+        "pairing": "Shrikhand (Google Fonts, OFL) or Bungee (Google Fonts, OFL) for display; Rubik (Google Fonts, OFL) for text.",
+        "rules": "Chunky display at large sizes, sometimes rotated or outlined; text calm and regular at 16-18 px; mixed case; avoid more than one decorative face."
+      },
+      "colour": "Several saturated and pastel hues together, held by black. Example: #FF6FB5 (pink), #FFD23F (yellow), #3DDC97 (mint), #4C6FFF (blue), #111111, #FFFFFF; or #F7A9A8, #7EC8E3, #FFE156, #222222. Patterns take the colour; text sits on white or black blocks.",
+      "layout": "Loose collage of blocks with patterned backgrounds and floating shapes; content panels with black outlines; deliberate tilts kept small; sections clearly separated by pattern changes.",
+      "imagery": "Product photos on flat colour backgrounds with geometric props, patterns (squiggle, terrazzo, zigzag, dots), cut-out shapes.",
+      "motion": "Bouncy and toy-like: shapes float, wiggle and pop in with spring easing; patterns slowly drift; disable drift under reduced motion.",
+      "build": "Patterns as small tileable SVGs or CSS gradients (radial-gradient dots, repeating-linear-gradient zigzags) on background layers; shapes as absolutely positioned SVGs in a relative section with overflow: clip; outlines with 2-3 px black borders shared with the shapes.",
+      "pitfalls": "Patterns behind text; every colour at once on every section; clip-art 'Memphis pattern' downloads; confusing it with neo-brutalism by adding hard shadows to everything.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Memphis Milano",
+          "url": "https://memphis.it/en/",
+          "recognition": "Awwwards Honorable Mention, 2023",
+          "source": "https://www.awwwards.com/sites/memphis-milano"
+        },
+        {
+          "name": "Endless Summer by Richard Mille",
+          "url": "https://endless-summer.richardmille.com/",
+          "recognition": "Awwwards Site of the Day, 2023 (described as a tribute to Memphis design)",
+          "source": "https://www.awwwards.com/sites/endless-summer"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Memphis Group (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Memphis_Group"
+        }
+      ]
+    },
+    {
+      "id": "theme-y2k",
+      "label": {
+        "fr": "Y2K / chrome du web des débuts",
+        "en": "Y2K / early-web chrome"
+      },
+      "what": "Late-90s and early-2000s digital optimism: liquid chrome and glossy plastic, iridescent and holographic surfaces, blobby 3D shapes, pixel and techno fonts, lens flares, translucent aqua buttons, starbursts and window-like panels. It reads nostalgic, techy and fashion-forward, close to club flyers and early music-player skins.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "streetwear or alternative fashion label",
+        "electronic music artist, club night or label",
+        "browser game or gaming community",
+        "creative or motion studio",
+        "beauty or nail brand aimed at Gen Z",
+        "3D asset pack or font shop"
+      ],
+      "use_when": "The audience is young and culture-led; the product is about music, fashion or games; the brand accepts a loud, time-stamped look.",
+      "avoid_when": "Brands that must age slowly; B2B services; accessibility-critical flows (chrome text and glows often fail contrast).",
+      "type": {
+        "pairing": "Michroma (Google Fonts, OFL) or Orbitron (Google Fonts, OFL) for wide techno headings; Silkscreen or VT323 (both Google Fonts, OFL) for pixel labels; Chakra Petch (Google Fonts, OFL) for text.",
+        "rules": "Wide extended display in caps with tracking +0.05 to +0.15em; pixel fonts only at sizes that match their grid (multiples of their design size); body text in a readable face at 16-18 px."
+      },
+      "colour": "Silver and chrome on black or sky gradients, with candy accents. Example: #0A0A0F, #C0C7D1 (chrome), #7CF2FF (aqua), #FF4FD8 (hot pink), #B6FF3B (lime); or #E6F0FF, #9AA7B8, #6A5CFF, #FF8AD8. Chrome and glow on shapes and headings; text on solid panels.",
+      "layout": "Window or panel metaphors (title bars, bevelled boxes), floating 3D objects, stickers and starbursts; content in clear panels so the decoration stays around it.",
+      "imagery": "3D chrome and glossy blobs, holographic textures, pixel art, low-poly or early-CGI renders, flash-photo fashion shots.",
+      "motion": "Spinning chrome objects, shimmer passes, marquee text, cursor trails; short loops; static fallback for reduced motion.",
+      "build": "Chrome text with background: linear-gradient(...) plus background-clip: text for headings only; 3D objects as pre-rendered WebP/AVIF or a small three.js or model-viewer scene; bevelled panels with inset box-shadows; pixel fonts with -webkit-font-smoothing: none and image-rendering: pixelated for pixel art.",
+      "pitfalls": "Glow and gradient on every element; chrome body text; heavy 3D on phones; mixing Y2K with glassmorphism defaults so it looks like a generic AI landing page.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Kimfu agence créative",
+          "url": "https://www.kimfuagence.com/",
+          "recognition": "Awwwards Honorable Mention, 2025 (described as retro Y2K funk meets 2020s tech)",
+          "source": "https://www.awwwards.com/sites/kimfu-agence-creative"
+        },
+        {
+          "name": "Y2K Abstract 3D Illustrations",
+          "url": "https://y2k-abstract.wannathis.one",
+          "recognition": "Awwwards Honorable Mention, 2025",
+          "source": "https://www.awwwards.com/sites/y2k-abstract-3d-illustrations"
+        },
+        {
+          "name": "Studio MACACO",
+          "url": "https://studiomacaco.ch",
+          "recognition": "Awwwards Nominee, 2026 (described as merging Y2K aesthetics and mecha-inspired interfaces)",
+          "source": "https://www.awwwards.com/sites/studio-macaco"
+        },
+        {
+          "name": "Soulbound",
+          "url": "https://soulbound.game",
+          "recognition": "Awwwards Nominee, 2025 (described as a Y2K-style game hub)",
+          "source": "https://www.awwwards.com/sites/soulbound-1"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Y2K aesthetic (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Y2K_aesthetic"
+        },
+        {
+          "name": "Frutiger Aero (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Frutiger_Aero"
+        },
+        {
+          "name": "Y2K aesthetic for web design projects (Webflow blog)",
+          "url": "https://webflow.com/blog/y2k-aesthetic"
+        }
+      ]
+    },
+    {
+      "id": "theme-retro-futurism",
+      "label": {
+        "fr": "Rétro-futurisme / ère spatiale",
+        "en": "Retro-futurism / space age"
+      },
+      "what": "The future as imagined in the 1950s-70s: Googie boomerangs and starbursts, rockets, rounded capsule shapes, atomic dots, sci-fi paperback covers and NASA mission graphics, in warm oranges, teals and creams. Optimistic and narrative, it suits brands that sell a vision of tomorrow while wanting warmth instead of cold tech blue.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "phone"
+        ]
+      },
+      "suits": [
+        "clean-energy or aerospace startup with a story",
+        "science museum or planetarium",
+        "sci-fi publisher or magazine",
+        "retro diner, motel or bowling alley",
+        "board game or video game studio",
+        "fashion capsule collection"
+      ],
+      "use_when": "The brand tells a story about the future with optimism; illustration budget exists; a narrative scroll fits the content.",
+      "avoid_when": "Serious enterprise software; brands where nostalgia would undermine credibility; sites with mostly forms.",
+      "type": {
+        "pairing": "Audiowide (Google Fonts, OFL) or Orbitron (Google Fonts, OFL) for display; Exo 2 (Google Fonts, OFL) or Space Mono (Google Fonts, OFL) for text and labels.",
+        "rules": "Rounded or extended display faces in caps, sometimes on curves; mono labels like mission data (coordinates, dates); text in a calm face at 16-18 px."
+      },
+      "colour": "Warm mid-century palette on cream or deep space. Example: #F4E8D0, #E86A33 (orange), #2A9D8F (teal), #264653, #F2C14E; or #0B1026 (space), #FF7A45, #7FDBDA, #F7F3E3. Colour in large flat illustration fields and badges.",
+      "layout": "Poster-like scenes with a horizon, orbits and badges; capsule-shaped cards and buttons; a narrative scroll with chapters; data panels like mission control in mono type.",
+      "imagery": "Flat or grainy illustration in a 50s-70s style, NASA-archive style photography, paperback-cover compositions, starfields.",
+      "motion": "Smooth orbital motion, rockets and planets on scroll paths, counters and dials; keep it slow and loop-free on reading sections.",
+      "build": "Capsules with border-radius: 999px; orbits as SVG circles with offset-path animations; grain via an SVG feTurbulence overlay at low opacity; scroll-driven chapters with animation-timeline: view() and a static fallback.",
+      "pitfalls": "Generic 'space' stock with purple nebulae (that is just the generic dark tech look); too many fonts; retro on the surface while the layout is a standard SaaS template.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Retronova",
+          "url": "https://www.retronovaworld.com/",
+          "recognition": "Awwwards Site of the Day, 2024",
+          "source": "https://www.awwwards.com/sites/retronova"
+        },
+        {
+          "name": "Prometheus Fuels",
+          "url": "https://www.prometheusfuels.com/",
+          "recognition": "Awwwards Site of the Day and Site of the Month, May 2021 (retro-futuristic brand by Active Theory)",
+          "source": "https://www.awwwards.com/prometheus-by-active-theory-wins-site-of-the-month-may-2021.html"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Retrofuturism (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Retrofuturism"
+        },
+        {
+          "name": "Googie architecture (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Googie_architecture"
+        },
+        {
+          "name": "Space Age (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Space_Age"
+        }
+      ]
+    },
+    {
+      "id": "theme-terminal",
+      "label": {
+        "fr": "Terminal / monospace / développeur",
+        "en": "Terminal / monospace / developer"
+      },
+      "what": "The interface of a command line or a text-mode program: monospace type everywhere, a fixed character grid, prompts and cursors, ASCII art and box-drawing characters, keyboard shortcuts shown in the UI, phosphor colours on dark. It signals technical depth, speed and honesty. Mono labels on a normal site are now common; the full terminal look is still distinctive.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "desktop-app"
+        ]
+      },
+      "suits": [
+        "developer tool, CLI or API product",
+        "infrastructure or security company",
+        "open-source project",
+        "hacker-news-style community or newsletter",
+        "developer portfolio",
+        "AI agent or automation product"
+      ],
+      "use_when": "The audience lives in terminals and editors; keyboard-first interaction is a real feature; the content is text and code.",
+      "avoid_when": "Non-technical audiences; long marketing reading in mono (slower to read); brands where the look would pose as technical without substance.",
+      "type": {
+        "pairing": "JetBrains Mono or IBM Plex Mono (both Google Fonts, OFL) for everything; VT323 (Google Fonts, OFL) for a CRT accent; a proportional companion such as IBM Plex Sans (OFL) only if long reading is needed.",
+        "rules": "One size step per level, sizes in multiples of the line height; text 15-16 px with 1.5-1.6 line height; lengths in ch units; headings marked with symbols (#, >, [ ]) rather than size alone; no tracking changes."
+      },
+      "colour": "Dark ground with one phosphor colour and an error colour, or a light 'paper terminal'. Example: #0C0C0C, #D4D4D4, #39FF14 (green), #FFB000 (amber), #FF5555; or #FAFAF7, #1B1B1B, #0057FF. Colour marks prompts, status and links.",
+      "layout": "A character grid: widths in ch (max-width: 80ch), boxes drawn with borders or box-drawing characters, dense lists and tables, command palette, everything aligned to columns; sections as panes.",
+      "imagery": "ASCII and ANSI art, real code and real output, diagrams in text, dithered images; screenshots of the actual tool.",
+      "motion": "Typing and cursor blink (respect reduced motion), instant pane switches, progress bars in characters; no smooth parallax.",
+      "build": "font-family on :root with font-variant-ligatures chosen on purpose; widths and gaps in ch and lh units; ASCII art in <pre> with aria-hidden and a text alternative; keyboard shortcuts with real handlers and a visible kbd hint; caret blink with @keyframes steps(1).",
+      "pitfalls": "Fake commands that do nothing; matrix-rain clichés; green on black at low contrast; mono labels sprinkled over a generic SaaS layout (now a default in itself); unreadable ASCII for screen readers.",
+      "prevalence": "common",
+      "examples": [
+        {
+          "name": "FWA Wire",
+          "url": "https://thefwa.net/",
+          "recognition": "Awwwards Nominee, 2026 (described as a retro-brutalist newswire with a raw terminal-based UI)",
+          "source": "https://www.awwwards.com/sites/fwa-wire"
+        },
+        {
+          "name": "Brutalist Hacker News",
+          "url": "https://brutalisthackernews.com",
+          "recognition": "Awwwards Nominee, 2024",
+          "source": "https://www.awwwards.com/sites/brutalist-hacker-news"
+        },
+        {
+          "name": "Matt Bierman",
+          "url": "https://bierman.io/",
+          "recognition": "One Page Love, tagged ASCII, 2024",
+          "source": "https://onepagelove.com/matt-bierman"
+        },
+        {
+          "name": "Hyve Systems",
+          "url": "https://www.hyve.systems/",
+          "recognition": "One Page Love, tagged ASCII, 2024",
+          "source": "https://onepagelove.com/hyve-systems"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Monospaced font (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Monospaced_font"
+        },
+        {
+          "name": "Text-based user interface (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Text-based_user_interface"
+        },
+        {
+          "name": "ASCII website examples (One Page Love)",
+          "url": "https://onepagelove.com/tag/ascii"
+        }
+      ]
+    },
+    {
+      "id": "theme-japanese-minimalism",
+      "label": {
+        "fr": "Minimalisme japonais (ma, vide)",
+        "en": "Japanese minimalism (ma, whitespace)"
+      },
+      "what": "Built on ma, the meaningful interval: empty space is part of the composition, not leftover. Few elements, placed off-centre with care; vertical text or small captions; natural textures and muted earth tones; slow pacing that asks the visitor to pause. Inspired by wabi-sabi, it accepts imperfection and quiet, unlike Western minimalism that tends to be cold and corporate.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "phone"
+        ]
+      },
+      "suits": [
+        "ryokan, onsen or boutique hotel",
+        "tea house, sake brewery or ceramicist",
+        "architect or interior designer",
+        "skincare or fragrance with natural ingredients",
+        "gallery or craft shop",
+        "meditation or yoga studio"
+      ],
+      "use_when": "The product is about calm, craft, time or place; photography is excellent; the client accepts that some screens carry almost nothing.",
+      "avoid_when": "Conversion pages that need dense persuasion; catalogues with hundreds of items; when 'minimal' would hide missing content.",
+      "type": {
+        "pairing": "Shippori Mincho (Google Fonts, OFL) for display and Japanese text, with Zen Kaku Gothic New (Google Fonts, OFL) for UI; for Latin-only sites, Noto Serif JP and Noto Sans JP (Google Fonts, OFL) keep the same voice with a small footprint if subset.",
+        "rules": "Small text sizes (14-16 px) with generous line height (1.8-2 for Japanese); light and regular weights; wide letter-spacing on small captions (+0.1em); vertical writing (writing-mode: vertical-rl) for short titles only."
+      },
+      "colour": "Natural and desaturated. Example: #F4F1EA (washi), #2B2B28 (sumi ink), #8C7B6B (clay), #5E6B57 (moss); or #EDEBE6, #1E1E1E, #A23B2A (vermilion seal) used once per page.",
+      "layout": "Asymmetric placement on a loose grid, one focal element per screen, very large margins, long vertical rhythm; navigation discreet; text blocks narrow and short.",
+      "imagery": "Quiet photography with natural light and texture (paper, wood, stone, steam), lots of negative space inside the photo; ink-brush or scroll-painting motifs used sparingly.",
+      "motion": "Slow fades and gentle reveals timed to scroll, long durations (600-1200 ms) with soft easing; nothing loops; respect reduced motion fully.",
+      "build": "writing-mode: vertical-rl for titles with text-orientation: mixed; font subsetting with unicode-range for CJK fonts; spacing tokens with large top values (min(20vh, 240px)); scroll-driven opacity with animation-timeline: view() and static fallback.",
+      "pitfalls": "Sprinkling kanji or cherry blossoms as decoration; white space with no focal point (empty, not ma); loading full CJK fonts unsubset (several MB); grey-on-grey text that fails contrast.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Hanamurasaki",
+          "url": "https://www.hana-mura.com/",
+          "recognition": "Awwwards Honorable Mention, 2023 (described as expressing time, space and wabi-sabi)",
+          "source": "https://www.awwwards.com/sites/hanamurasaki"
+        },
+        {
+          "name": "SENN",
+          "url": "https://sen-n.com/",
+          "recognition": "Awwwards Honorable Mention, 2020 (described as inspired by Japanese aesthetics, Zen and wabi-sabi)",
+          "source": "https://www.awwwards.com/sites/senn"
+        },
+        {
+          "name": "Monaka Design, 'Ma' case study",
+          "url": "https://monakadesign.online",
+          "recognition": "One Page Love feature, 2026 (one-pager on ma, the Japanese concept of negative space)",
+          "source": "https://onepagelove.com/ma"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Ma (negative space) (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Ma_(negative_space)"
+        },
+        {
+          "name": "Wabi-sabi (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Wabi-sabi"
+        },
+        {
+          "name": "Japanese aesthetics (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Japanese_aesthetics"
+        }
+      ]
+    },
+    {
+      "id": "theme-scandinavian-soft-minimal",
+      "label": {
+        "fr": "Scandinave / minimal doux",
+        "en": "Scandinavian / soft minimal"
+      },
+      "what": "Functional and warm: light neutral grounds, soft natural colours, rounded but not bubbly shapes, honest product photography in daylight, clear sans-serif type and plenty of air. It feels calm, well-made and democratic, like Nordic furniture. Because it sits close to the default clean SaaS look, it needs real materials, colour and photography to be recognisable.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "suits": [
+        "furniture, lighting or homeware brand",
+        "energy or climate tech",
+        "kids' products or education",
+        "bakery or café",
+        "architecture or interior studio",
+        "public service or cooperative"
+      ],
+      "use_when": "The product is physical or everyday; the brand promises quality without luxury; the interface must stay simple and usable for everyone.",
+      "avoid_when": "Brands that need edge or loudness; when there is no good photography (it then becomes generic); nightlife or entertainment.",
+      "type": {
+        "pairing": "Albert Sans (Google Fonts, OFL, inspired by early-20th-century Scandinavian architects and designers) for display and text; Manrope (Google Fonts, OFL) as an alternative; a serif accent such as Fraunces (OFL) only if the brand has one.",
+        "rules": "Medium weights for headings (500-600) rather than black; sentence case; comfortable sizes (17-18 px text); modest scale steps; no tracking tricks."
+      },
+      "colour": "Warm whites and natural tones with one muted accent. Example: #F7F5F0, #2E2E2C, #C9B8A3 (oak), #7A8B74 (sage), #D98E73 (clay); or #FFFFFF, #1F2A30, #A7C4D3 (fjord), #E8DCC8. Accent on actions and small details; large fields stay neutral.",
+      "layout": "Simple 12-column grid, generous padding, large photos alternating with short text, soft radii (6-12 px) applied consistently, clear navigation; sections breathe with space rather than borders.",
+      "imagery": "Daylight product and interior photography, real materials (wood, wool, ceramic), people in real homes; simple line icons; avoid stock 3D.",
+      "motion": "Gentle and quick (200-300 ms), subtle hover lifts and image zooms; nothing showy.",
+      "build": "Neutral colour tokens in OKLCH with a warm hue so greys are not blue; one radius token; responsive images with srcset and aspect-ratio; container queries for product cards.",
+      "pitfalls": "Beige-on-beige with no contrast; one soft shadow and one radius everywhere (the generic look); stock interiors that are not the client's; no accent at all so actions disappear.",
+      "prevalence": "common",
+      "examples": [
+        {
+          "name": "Heimdall Power",
+          "url": "https://www.heimdallpower.com/",
+          "recognition": "Awwwards Site of the Day, 2025 (described as blending Scandinavian design, 3D visuals and subtle interactions)",
+          "source": "https://www.awwwards.com/sites/heimdall-power"
+        },
+        {
+          "name": "Nod Coding Bootcamp",
+          "url": "https://nodcoding.com",
+          "recognition": "Awwwards Site of the Day, 2024 (colours, illustrations and micro-interactions described as Scandinavian-influenced)",
+          "source": "https://www.awwwards.com/sites/nod-coding-bootcamp"
+        },
+        {
+          "name": "Muuto",
+          "url": "https://www.muuto.com",
+          "recognition": "Awwwards Honorable Mention, 2017",
+          "source": "https://www.awwwards.com/sites/muuto"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Scandinavian design (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Scandinavian_design"
+        },
+        {
+          "name": "Hygge (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Hygge"
+        }
+      ]
+    },
+    {
+      "id": "theme-maximalism-collage",
+      "label": {
+        "fr": "Maximalisme / collage",
+        "en": "Maximalism / collage"
+      },
+      "what": "More is more: layered cut-out photos, scans, stickers, handwriting, patterns, clashing type and colours, overlapping elements that the visitor can sometimes drag around. It feels personal, energetic and curated like a scrapbook or a zine wall. The art is in the editing: a clear reading path survives under the abundance.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "artist or illustrator portfolio",
+        "music festival or record shop",
+        "vintage or second-hand shop",
+        "travel journal or personal archive",
+        "fashion or beauty brand with a strong voice",
+        "cultural magazine or zine"
+      ],
+      "use_when": "The brand has a strong personality and a lot of authentic material (photos, scans, artwork); the audience expects discovery and play.",
+      "avoid_when": "Users must find information fast; accessibility or performance budgets are strict; there is no owned material and the collage would be stock.",
+      "type": {
+        "pairing": "Anton (Google Fonts, OFL) and DM Serif Display (Google Fonts, OFL) as clashing display voices; Bricolage Grotesque (Google Fonts, OFL) for text.",
+        "rules": "Two or three display voices allowed, each with a role (shout, quote, label); body text in one readable face at 16-18 px; display can rotate, overlap and change size dramatically."
+      },
+      "colour": "Many colours, held together by a recurring pair. Example: #FFF4E0 (paper), #111111, #FF3D2E, #2E5BFF, #FFD000, #2FBF71; or #F2E6D8, #3B1F2B, #E85D75, #6CC4A1. Colour comes from the material itself; text blocks on solid grounds.",
+      "layout": "Layered free composition on top of a hidden grid: absolutely positioned pieces around a readable main column; z-index layers; draggable or randomised items on desktop, a stacked simpler collage on phone.",
+      "imagery": "Owned photos cut out, scans of paper, tape and stickers, hand drawing, archival images with rights; textures of paper and print.",
+      "motion": "Playful: drag and throw, items shuffling on reload, hover reveals, sound on interaction only if opt-in; static for reduced motion.",
+      "build": "Cut-outs as transparent WebP/AVIF; pieces positioned with CSS Grid areas plus transform: rotate() and translate(); a drag library (for example the free Draggable from GSAP, or pointer events) only on pointer: fine; aria-hidden on purely decorative layers and a plain text version of the content.",
+      "pitfalls": "Chaos without a reading path; text over busy images; 20 MB of images; using stock cut-outs that make it look like a template; ignoring keyboard users for draggable content.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Traveler's Collage",
+          "url": "https://travelers-collage.netlify.app/",
+          "recognition": "Awwwards Honorable Mention, 2023",
+          "source": "https://www.awwwards.com/sites/travelers-collage"
+        },
+        {
+          "name": "eloyb.design",
+          "url": "https://eloyb.design",
+          "recognition": "Awwwards Honorable Mention, 2025 (described as a brutalist and maximalist aesthetic)",
+          "source": "https://www.awwwards.com/sites/eloyb-design"
+        },
+        {
+          "name": "Davesocozy",
+          "url": "https://davesocozy.com",
+          "recognition": "One Page Love, tagged Collage, 2026",
+          "source": "https://onepagelove.com/davesocozy"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Maximalism (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Maximalism"
+        },
+        {
+          "name": "Collage (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Collage"
+        }
+      ]
+    },
+    {
+      "id": "theme-risograph",
+      "label": {
+        "fr": "Risographie / texture d'impression",
+        "en": "Risograph / print texture"
+      },
+      "what": "The look of risograph and screen printing: a few bright spot inks (fluorescent pink, blue, yellow, green) overprinting to make new colours, grain and halftone dots, slight misregistration between layers, paper texture. It feels indie, tactile and handmade, like a zine or a gig poster, and gives flat illustration a printed warmth.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "phone"
+        ]
+      },
+      "suits": [
+        "independent publisher, zine or comic",
+        "print studio or illustrator",
+        "bookshop or library event",
+        "music venue or small festival",
+        "community project or nonprofit",
+        "craft brewery or coffee roaster"
+      ],
+      "use_when": "The brand is independent, cultural or community-led; there is illustration or photography that can be duotoned; a printed counterpart exists (posters, books, packaging).",
+      "avoid_when": "Brands needing a clean premium or clinical feel; photo-heavy e-commerce where colour accuracy matters; when grain overlays would hurt text contrast.",
+      "type": {
+        "pairing": "Archivo (Google Fonts, OFL, wide and condensed widths for poster headings) with Courier Prime (Google Fonts, OFL) for typewritten details; Bagel Fat One (Google Fonts, OFL) for a rounded poster voice.",
+        "rules": "Poster-scale headings, often in one spot colour with a misregistered second layer; text in solid ink at 16-18 px without texture over it; uppercase short labels."
+      },
+      "colour": "Two or three spot inks on paper, with multiply to show overprint. Example: #F7F2E8 (paper), #FF48B0 (fluorescent pink), #0078BF (medium blue), #FFE800 (yellow); or #FBF8F1, #00A95C (green), #FF6C2F (orange), #3D3B8E. Inks fill illustrations and headings; body text in a dark ink.",
+      "layout": "Poster and zine layouts: big blocks, offset layers, mixed column widths, stapled-page feel; sections like printed sheets with paper texture backgrounds.",
+      "imagery": "Duotone or tritone photos, halftone dots, grainy flat illustrations, scanned printed matter; images split into ink layers that overlap slightly.",
+      "motion": "Layers sliding into register on scroll, slight jitter of misprint on hover; grain static (animated noise is costly and tiring).",
+      "build": "mix-blend-mode: multiply on stacked ink layers; duotone images via an SVG feColorMatrix or by preparing two-ink images at build time; halftone via a radial-gradient background pattern with mask-image; grain as a small tiled PNG or SVG feTurbulence at 5-10 % opacity, never over body text.",
+      "pitfalls": "Grain overlay on the whole page including text; too many inks so it stops looking printed; fake misregistration on every element; heavy unoptimised noise images.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Pear",
+          "url": "https://pear.no/",
+          "recognition": "Awwwards Honorable Mention, 2026 (described as a letterpress prospectus with misregistered halftone type)",
+          "source": "https://www.awwwards.com/sites/pear"
+        },
+        {
+          "name": "Claude on Mars",
+          "url": "https://www.anthropic.com/features/claude-on-mars",
+          "recognition": "Awwwards Honorable Mention, 2026 (uses risograph-scanned images)",
+          "source": "https://www.awwwards.com/sites/claude-on-mars"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Risograph (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Risograph"
+        },
+        {
+          "name": "Halftone (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Halftone"
+        }
+      ]
+    },
+    {
+      "id": "theme-luxury-couture-serif",
+      "label": {
+        "fr": "Luxe / haute couture à empattements",
+        "en": "Luxury / haute couture serif"
+      },
+      "what": "Quiet, expensive restraint: a high-contrast serif set large and light, lots of empty space, one or two neutral tones, and photography that does all the talking. Navigation is minimal, often hidden, and copy is short. Luxury comes from what is left out, the precision of alignment and the quality of the images rather than from gold, gradients or ornament. Pages feel like a printed lookbook or an exhibition catalogue.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "jewellers and watchmakers",
+        "fashion and leather houses",
+        "high-end real estate and architects",
+        "perfume and cosmetics",
+        "boutique hotels",
+        "private banks and family offices (in a muted form)"
+      ],
+      "use_when": "The product is rare, expensive or crafted and the client has excellent photography; the goal is desire and trust, not comparison shopping.",
+      "avoid_when": "Weak or stock imagery, price-led offers, products where users need dense information quickly, or when the client wants a lot said on every screen.",
+      "type": {
+        "pairing": "Bodoni Moda (Google Fonts, OFL) or Cormorant Garamond (Google Fonts, OFL) for display and short headlines; Instrument Sans (Google Fonts, OFL) for navigation, captions and body; optionally Cormorant italic for a single accent word in a caption, never inside a sans headline.",
+        "rules": "Display at 56–120 px on desktop in light or regular weight, never bold; tight leading (1.0–1.1) and slight negative tracking on display; navigation and labels in small sans, uppercase allowed with +0.08–0.12em tracking; body 15–17 px, line length 55–70 characters; very few sizes (3–4)."
+      },
+      "colour": "Near-monochrome: off-white or bone background, near-black text, one deep tone from the brand used sparingly (a single button or a rule). Example A: #F6F3EE background, #1A1918 text, #6B5B4B accent. Example B (dark): #0E0E0D background, #ECE7DF text, #B49A6A accent used only for small details. Colour lives in the photographs, not in the UI.",
+      "layout": "Asymmetric editorial grid (12 columns, images spanning 7–9), large outer margins, one idea per viewport, sections separated by 160–240 px of space on desktop. Text blocks narrow and placed off-centre. Product grids sparse (2–3 per row) with generous gutters.",
+      "imagery": "Full-bleed, art-directed photography with soft natural light; macro details of material (stitching, stone, grain); consistent colour grading across the site; no stock, no mockups, no icons.",
+      "motion": "Slow and sparse: image reveals by clip or mask over 0.8–1.2 s with a gentle ease-out, subtle parallax on large images, crossfades between products. Nothing bounces. Respect reduced motion by showing the final state.",
+      "build": "Self-host the variable fonts with font-display: swap and preload the display face; use CSS grid with named lines for asymmetric placements; image reveals with clip-path inset() animated by a scroll-driven animation (animation-timeline: view()) and a still fallback; text-wrap: balance on headlines.",
+      "pitfalls": "Gold gradients and script fonts; Playfair Display by default; centred everything; low-resolution or stock photos; a serif italic word dropped into a sans headline (a generic cluster); too many type sizes; bold serif headlines; hiding prices and key information so far that the site becomes unusable.",
+      "prevalence": "common",
+      "examples": [
+        {
+          "name": "Cartier - Le Chœur des Pierres",
+          "url": "https://www.cartier.com/en-fr/lechoeurdespierres",
+          "recognition": "Awwwards Site of the Day, 2026",
+          "source": "https://www.awwwards.com/sites/cartier-le-choeur-des-pierres"
+        },
+        {
+          "name": "Almada Label",
+          "url": "https://almadalabel.com/",
+          "recognition": "Awwwards Honorable Mention, 2026",
+          "source": "https://www.awwwards.com/sites/almada-label"
+        },
+        {
+          "name": "natureofthings",
+          "url": "https://natureofthings.com/",
+          "recognition": "Awwwards Honorable Mention, 2025",
+          "source": "https://www.awwwards.com/sites/natureofthings"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Awwwards - luxury websites",
+          "url": "https://www.awwwards.com/websites/luxury/"
+        },
+        {
+          "name": "Google Fonts - Bodoni Moda specimen",
+          "url": "https://fonts.google.com/specimen/Bodoni+Moda"
+        },
+        {
+          "name": "MDN - text-wrap",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/text-wrap"
+        }
+      ]
+    },
+    {
+      "id": "theme-dark-tech-launch",
+      "label": {
+        "fr": "Tech sombre / lancement produit",
+        "en": "Dark tech / product launch"
+      },
+      "what": "A near-black canvas where the product itself is the light source: real interface screenshots, code, terminals or a 3D render glow out of the dark. Tight grotesque or monospaced type, thin hairline borders, small grey labels, and one sharp accent. It signals engineering seriousness and speed. In 2026 this is one of the most copied looks, so it only works when the product's own screens and a specific accent carry it.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "desktop-app"
+        ]
+      },
+      "suits": [
+        "developer tools and APIs",
+        "AI and infrastructure start-ups",
+        "security products",
+        "launch and keynote pages",
+        "hardware and audio gear launches"
+      ],
+      "use_when": "The audience is technical, the product has real screens or output worth showing, and the launch has a moment (a release, an event, a keynote).",
+      "avoid_when": "Consumer services for a broad public, anything where trust comes from warmth, long reading, or when the only visuals available are abstract gradients.",
+      "type": {
+        "pairing": "Mona Sans (Google Fonts, OFL) or IBM Plex Sans (Google Fonts, OFL) for headlines and body; IBM Plex Mono or JetBrains-style monospace such as DM Mono (Google Fonts, OFL) for labels, metrics and code. Avoid Inter and Geist as an unexamined default (generic cluster).",
+        "rules": "Headlines 48–88 px, semibold, tracking -0.02 to -0.04em; body 15–16 px in a grey around 65–70 % lightness; mono labels at 12–13 px, uppercase optional with +0.04em; tabular figures for every number."
+      },
+      "colour": "Black is never pure: layered greys build depth, and a single accent is reserved for the call to action and live data. Example A: #0B0C0E background, #15171B surface, #2A2D33 borders, #E8E9EB text, #FF5A1F accent. Example B: #08090A, #121417, #F2F3F5 text, #6EE7F9 accent. Avoid violet-to-blue gradients and acid green on black, both flagged as generic.",
+      "layout": "Centred column of 1100–1280 px with a bento or split grid for features, but break the default: lead with the product screen, not a pill badge and two buttons. Dense information blocks separated by hairlines; changelog or spec tables near the top.",
+      "imagery": "Real product UI at full resolution, code snippets that run, terminal recordings, 3D renders of the hardware. Subtle grain or a single radial light behind the hero screen. No stock photos of people at laptops.",
+      "motion": "Precise and fast (150–300 ms), keyboard-like: typing effects for commands, numbers counting once, screens sliding in with a short ease-out. One signature moment (a 3D model, a shader) at most, with a still fallback.",
+      "build": "CSS custom properties for the grey ramp in OKLCH so steps are even; border: 1px solid with a slightly lighter top edge for elevation instead of shadows; screenshots served as AVIF with explicit width/height; a radial-gradient light behind the hero; font-variant-numeric: tabular-nums on stats.",
+      "pitfalls": "Purple glow and gradient text; glass cards everywhere; abstract blobs instead of the product; three identical feature cards; grey text too dark to read (check 4.5:1); a 3D scene that drops frames on a laptop.",
+      "prevalence": "everywhere",
+      "examples": [
+        {
+          "name": "Vercel Ship",
+          "url": "https://vercel.com/ship",
+          "recognition": "Awwwards Honorable Mention, 2024",
+          "source": "https://www.awwwards.com/sites/vercel-ship"
+        },
+        {
+          "name": "Darkmoon, AI Pentest Platform",
+          "url": "https://dark-moon.org/",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/darkmoon-ai-pentest-platform"
+        },
+        {
+          "name": "TIGRIS",
+          "url": "https://tigris.lorolabs.ai/",
+          "recognition": "Awwwards Honorable Mention, 2026",
+          "source": "https://www.awwwards.com/sites/tigris"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Awwwards - technology websites",
+          "url": "https://www.awwwards.com/websites/technology/"
+        },
+        {
+          "name": "Josh W. Comeau - Designing beautiful shadows in CSS",
+          "url": "https://www.joshwcomeau.com/css/designing-shadows/"
+        },
+        {
+          "name": "MDN - font-variant-numeric",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric"
+        }
+      ]
+    },
+    {
+      "id": "theme-corporate-clean-b2b",
+      "label": {
+        "fr": "Corporate épuré (B2B de confiance)",
+        "en": "Corporate clean (trustworthy B2B)"
+      },
+      "what": "Calm, orderly and legible: a white or very light background, a sober sans or a serif for headlines, one institutional colour, real numbers and clear structure. It says competent, regulated and here to stay. The quality is in hierarchy, consistent spacing and precise copy rather than visual tricks; done well it reads like a good annual report, done badly like every other SaaS template.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "operate"
+        ]
+      },
+      "suits": [
+        "consultancies and law firms",
+        "insurance, banking and fintech for businesses",
+        "healthcare and pharma B2B",
+        "industrial and engineering suppliers",
+        "public bodies and institutions",
+        "enterprise software"
+      ],
+      "use_when": "Buyers are cautious, decisions involve several people, and credibility (certifications, figures, case studies) matters more than excitement.",
+      "avoid_when": "Consumer brands that need personality, launches that need a moment, or when the client has no real proof to show (the style exposes empty claims).",
+      "type": {
+        "pairing": "Source Serif 4 (Google Fonts, OFL) for headlines with Source Sans 3 (Google Fonts, OFL) for body and UI; or Public Sans (Google Fonts, OFL) alone for a government-like neutrality.",
+        "rules": "Modest scale (ratio 1.2–1.25), headlines 36–56 px semibold, body 16–18 px with 1.5–1.6 line height; sentence case everywhere; no uppercase eyebrow above every section; tabular figures in tables and results."
+      },
+      "colour": "One institutional colour plus neutrals; colour marks actions and data, not decoration. Example A: #FFFFFF, #F4F6F8 surface, #1C2430 text, #0B5CAD primary, #0F7B5F for positive data. Example B: #FBFAF7, #222222 text, #7A1F2B deep red primary, #D9D4CC borders. Steer away from indigo/violet primaries (generic cluster).",
+      "layout": "12-column grid, 1200 px container, left-aligned text, predictable sections: problem, proof, offer, people, contact. Comparison tables, case-study cards with real figures and named clients (with permission), clear footer with legal and contact details.",
+      "imagery": "Real photos of the team, sites and clients in natural light; charts drawn from real data; simple line icons from one set. No handshake stock photos, no abstract 3D.",
+      "motion": "Almost none: hover and focus states, a short fade for content loading, accordions that open in 200 ms. Nothing that delays reading.",
+      "build": "Tailwind with a constrained theme (one primary, one neutral ramp, 4–5 type sizes); prose styles for long pages; accessible tables with caption and scope; CSS clamp() for fluid headline sizes; a design-token file shared with any product UI.",
+      "pitfalls": "Hero with a pill badge, gradient blob and two buttons; three identical icon cards; 'Trusted by' logo rows without permission; vague claims and hollow words; stock photos of handshakes; blue that is too saturated; walls of text without hierarchy.",
+      "prevalence": "standard",
+      "examples": [
+        {
+          "name": "Superscript",
+          "url": "https://www.superscript.nyc/",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/superscript"
+        },
+        {
+          "name": "Neon Century",
+          "url": "https://www.neoncentury.com/",
+          "recognition": "Awwwards Honorable Mention, 2022",
+          "source": "https://www.awwwards.com/sites/neon-century"
+        },
+        {
+          "name": "Wafer.ai",
+          "url": "https://www.wafer.ai",
+          "recognition": "Awwwards Honorable Mention, 2026",
+          "source": "https://www.awwwards.com/sites/wafer-ai"
+        }
+      ],
+      "sources": [
+        {
+          "name": "U.S. Web Design System",
+          "url": "https://designsystem.digital.gov/"
+        },
+        {
+          "name": "GOV.UK Service Manual - Design",
+          "url": "https://www.gov.uk/service-manual/design"
+        },
+        {
+          "name": "Awwwards - business and corporate websites",
+          "url": "https://www.awwwards.com/websites/business-corporate/"
+        }
+      ]
+    },
+    {
+      "id": "theme-warm-craft-handmade",
+      "label": {
+        "fr": "Artisanal chaleureux / fait main",
+        "en": "Warm craft / handmade"
+      },
+      "what": "The feel of a market stall, a bakery or a workshop: warm paper tones, a soft characterful serif, hand-drawn marks, and close-up photographs of hands, tools and ingredients. Slight irregularity is welcome. It says made by people, small batch, local. The risk in 2026 is the generic cream-and-terracotta version, so the palette and drawings must come from the actual craft.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "bakers, chocolatiers, cheesemakers",
+        "beekeepers and farm shops",
+        "restaurants and cafés",
+        "potters, woodworkers, leather and textile makers",
+        "craft breweries and small producers"
+      ],
+      "use_when": "The maker, the process and the place are the story, and the client can supply real photographs of the work.",
+      "avoid_when": "Industrial producers pretending to be small, tech products, or when there are no photos of the actual craft (illustrations alone feel fake).",
+      "type": {
+        "pairing": "Fraunces (Google Fonts, OFL) with its soft/wonk axes for headlines; Karla or Work Sans (Google Fonts, OFL) for body and menus; hand lettering drawn for the brand (or scanned from the shop sign) for one or two words only.",
+        "rules": "Headlines 40–80 px in medium weight with the SOFT axis raised; body 17–18 px for warmth; mixed case; prices and opening hours in tabular figures; no more than one decorative face."
+      },
+      "colour": "Earth and product colours taken from the craft itself: crust, honey, glaze, wood. Example A (bakery): #F3E9DA paper, #2B1D14 text, #B5541E crust, #E7B75F wheat. Example B (honey): #FFF6E0, #3A2A12 text, #E59F1B honey, #5B6B2F leaf. Colour goes into backgrounds of sections and labels, not gradients.",
+      "layout": "Loose, slightly off-grid composition: images overlapping section edges, rotated stickers or labels, handwritten notes. Information that customers need (hours, address, order) stays plain, near the top and on phone thumbs' reach.",
+      "imagery": "Documentary photos of the process and people, natural light, close-ups of texture; hand-drawn illustrations or scanned stamps for small accents; grain or paper texture at low opacity.",
+      "motion": "Gentle and playful in small doses: a stamp that lands, a label that wobbles on hover, a jar that fills on scroll. Never slow down ordering.",
+      "build": "Paper texture with an SVG feTurbulence filter or a tiny tiled image instead of a heavy JPEG; Fraunces variable axes via font-variation-settings; rotated elements with transform: rotate(-2deg) and a random offset per item; clip-path or SVG masks for torn-paper edges.",
+      "pitfalls": "The default cream background with terracotta accent (generic cluster); fake handwriting fonts for body text; stock photos of 'artisans'; too many textures; illustrations that do not match the real shop; ordering buried under storytelling.",
+      "prevalence": "common",
+      "examples": [
+        {
+          "name": "Impasto Forno Antico",
+          "url": "https://www.impastofornoantico.com/",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/impasto-forno-antico"
+        },
+        {
+          "name": "Theobroma",
+          "url": "https://theobromachocolat.com/",
+          "recognition": "Awwwards Honorable Mention, 2026",
+          "source": "https://www.awwwards.com/sites/theobroma"
+        },
+        {
+          "name": "Netties Bees",
+          "url": "https://www.nettiesbees.com/",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/netties-bees"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Awwwards - food and drink websites",
+          "url": "https://www.awwwards.com/websites/food-drink/"
+        },
+        {
+          "name": "Google Fonts - Fraunces specimen",
+          "url": "https://fonts.google.com/specimen/Fraunces"
+        },
+        {
+          "name": "CSS-Tricks - Grainy gradients",
+          "url": "https://css-tricks.com/grainy-gradients/"
+        }
+      ]
+    },
+    {
+      "id": "theme-organic-earthy",
+      "label": {
+        "fr": "Organique / naturel / terreux",
+        "en": "Organic / natural / earthy"
+      },
+      "what": "Grounded and calm, built from materials: stone, clay, linen, leaves, soil. Muted, desaturated colours, soft flowing shapes, generous space and photography with real texture. It feels slow and honest, closer to a field or a spa than to a shop. Done well, the palette is specific to a landscape; done badly it is beige wellness wallpaper.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "phone"
+        ]
+      },
+      "suits": [
+        "organic farms and food brands",
+        "natural cosmetics and skincare",
+        "wellness, yoga and retreats",
+        "landscape architects and gardeners",
+        "eco-tourism and outdoor lodges",
+        "wineries and producers with a terroir story"
+      ],
+      "use_when": "The product comes from a real place or material and the brand is about care, time or sustainability, backed by facts.",
+      "avoid_when": "Fast, promotional retail; tech products; brands with no environmental substance (the look then becomes greenwashing).",
+      "type": {
+        "pairing": "Young Serif (Google Fonts, OFL) or Cormorant (Google Fonts, OFL) for headlines; Figtree (Google Fonts, OFL) for body and interface.",
+        "rules": "Headlines 40–72 px in regular weight with relaxed leading (1.15); body 17 px, line height 1.6; lowercase or sentence case; few type sizes; avoid tight, aggressive tracking."
+      },
+      "colour": "Desaturated earth and plant tones from the actual place. Example A (clay and olive): #EFE9E1, #2F2A24 text, #8C6A4F clay, #6F7A4E olive. Example B (forest and stone): #E6E4DD, #1F2A24 text, #3E5B4A moss, #A9A28F stone. Colour fills large calm areas; avoid saturated green.",
+      "layout": "Wide, airy single-column storytelling alternating with full-bleed photos; soft rounded or organic image masks used sparingly; sections that breathe (120–200 px); product information in clear cards that do not break the calm.",
+      "imagery": "Landscape and material photography with soft daylight; close-ups of texture (bark, seeds, ceramics); botanical line drawings or pressed-leaf scans as accents; consistent warm or cool grade.",
+      "motion": "Slow fades and gentle parallax, leaves or particles only if very subtle; transitions around 400–700 ms with soft easing; respect reduced motion.",
+      "build": "Organic image masks with SVG clipPath or CSS mask-image using a single path; noise texture overlay with an SVG feTurbulence filter at 3–6 % opacity; palette defined in OKLCH with low chroma; scroll-driven fades with a no-animation fallback.",
+      "pitfalls": "Generic beige and sage with no place behind it; blob shapes everywhere; stock leaves; claims of being natural or sustainable without evidence; low contrast grey-green text.",
+      "prevalence": "common",
+      "examples": [
+        {
+          "name": "Zorah Wines",
+          "url": "https://www.zorahwines.com/",
+          "recognition": "Awwwards Honorable Mention, 2022",
+          "source": "https://www.awwwards.com/sites/zorah-wines"
+        },
+        {
+          "name": "Elder Flower",
+          "url": "https://shopelderflower.com/",
+          "recognition": "Awwwards Honorable Mention, 2022",
+          "source": "https://www.awwwards.com/sites/elder-flower-2"
+        },
+        {
+          "name": "Melisterra",
+          "url": "https://melisterra.com/",
+          "recognition": "Awwwards Honorable Mention, 2023",
+          "source": "https://www.awwwards.com/sites/melisterra"
+        }
+      ],
+      "sources": [
+        {
+          "name": "MDN - feTurbulence",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feTurbulence"
+        },
+        {
+          "name": "MDN - clip-path",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path"
+        },
+        {
+          "name": "Google Fonts - Young Serif specimen",
+          "url": "https://fonts.google.com/specimen/Young+Serif"
+        }
+      ]
+    },
+    {
+      "id": "theme-playful-rounded",
+      "label": {
+        "fr": "Ludique et arrondi",
+        "en": "Playful rounded"
+      },
+      "what": "Friendly, bouncy and bright: rounded type, big soft shapes, saturated but harmonious colours, characters or mascots, and interactions that reward a tap. Everything looks touchable. It lowers the barrier for first-time users and children, and makes a consumer product feel approachable. It needs a strong system (a mascot, a shape language) or it falls into generic cartoon clutter.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "children's education and activities",
+        "consumer mobile apps (health, budgeting, habits)",
+        "sweets, ice cream and snacks",
+        "games and family entertainment",
+        "social and leisure venues"
+      ],
+      "use_when": "The audience is broad or young, the product is light-hearted, and approachability matters more than authority.",
+      "avoid_when": "Serious subjects (health diagnosis, legal, finance decisions for adults), luxury, or audiences who may feel talked down to.",
+      "type": {
+        "pairing": "Fredoka (Google Fonts, OFL) or Baloo 2 (Google Fonts, OFL) for headlines; Nunito (Google Fonts, OFL) for body and interface.",
+        "rules": "Headlines 44–96 px in bold or heavy weight, tight leading; body 17–18 px with generous line height; buttons large (48 px min height) with bold labels; sentence case; numbers large and friendly."
+      },
+      "colour": "Three or four saturated colours with clear roles plus a dark ink for text; avoid rainbow chaos. Example A: #FFF8EC background, #1F1A3D ink, #FF6B4A coral, #FFC83D sun, #3BB6A1 mint. Example B: #FFE84D yellow block, #13294B ink, #FF7AB6 pink, #FFFFFF cards. Colour fills whole sections and shapes; text stays on high-contrast backgrounds.",
+      "layout": "Large rounded blocks (radius 24–40 px, varied by size), stacked sections in different background colours, mascot or illustration breaking out of the frame. Clear single action per screen on phone.",
+      "imagery": "Custom flat or lightly shaded illustrations, a mascot with poses, product photos cut out on colour; stickers and badges. Keep one illustration style.",
+      "motion": "Springy and short (spring physics or overshoot easing), tap feedback by squash and stretch, characters that react on hover; keep loops subtle and pausable.",
+      "build": "Rive or Lottie for mascot animations (free runtimes); CSS linear() easing to approximate springs; Tailwind theme with named brand colours and a radius scale; SVG illustrations inlined so colours follow tokens.",
+      "pitfalls": "Emoji used as icons (generic cluster); every colour at full saturation; one identical radius on everything; clip-art illustrations from different packs; text on yellow with poor contrast; motion that never stops.",
+      "prevalence": "common",
+      "examples": [
+        {
+          "name": "Siglitos",
+          "url": "https://siglitos.com",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/siglitos"
+        },
+        {
+          "name": "Ivy Kids",
+          "url": "https://ivykids.com/",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/ivy-kids"
+        },
+        {
+          "name": "Sixes Social Cricket",
+          "url": "https://sixescricket.com/",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/sixes-social-cricket"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Awwwards - colorful websites",
+          "url": "https://www.awwwards.com/websites/colorful/"
+        },
+        {
+          "name": "Google Fonts - Fredoka specimen",
+          "url": "https://fonts.google.com/specimen/Fredoka"
+        },
+        {
+          "name": "Awwwards - illustration websites",
+          "url": "https://www.awwwards.com/websites/illustration/"
+        }
+      ]
+    },
+    {
+      "id": "theme-skeuomorphism-revival",
+      "label": {
+        "fr": "Skeuomorphisme revisité / tactile",
+        "en": "Skeuomorphism revival / tactile"
+      },
+      "what": "Interfaces that look and behave like physical objects: knobs that turn, switches that click, keys with depth, paper, leather, metal or lacquer surfaces, real shadows and sound. The revival is more precise than the 2010 version: fewer textures, better lighting, and objects drawn from the product's own world. It turns browsing into handling and is memorable when the subject is itself an object.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "desktop-app"
+        ]
+      },
+      "suits": [
+        "audio gear, synthesizers and music apps",
+        "keyboards, cameras and hardware products",
+        "creative portfolios and museums",
+        "watch and instrument makers",
+        "games and toy-like tools"
+      ],
+      "use_when": "The product is physical or tool-like, and one tactile object can become the signature of the site.",
+      "avoid_when": "Content-heavy sites, forms and checkout flows, or when performance budgets are tight on low-end phones.",
+      "type": {
+        "pairing": "Barlow (Google Fonts, OFL) for labels engraved on controls and for UI; Share Tech Mono (Google Fonts, OFL) for displays and readouts; a quiet sans such as Instrument Sans (Google Fonts, OFL) for body.",
+        "rules": "Control labels small (11–13 px), uppercase, +0.06em tracking, as if printed on hardware; readouts in mono with tabular figures; body text kept plain and flat so the objects carry the style."
+      },
+      "colour": "Material colours with lighting: one base material and one indicator colour. Example A (anodised): #D9D7D2 aluminium, #2B2B2B text, #FF4D1A indicator, #1B1B1B key caps. Example B (lacquer): #1A0F0C deep lacquer, #8E1B12 red, #E9DCC5 ivory labels. Colour appears in LEDs, indicators and one object.",
+      "layout": "A central object or control panel as the hero, with content arranged around it like a device or desk; elsewhere a calm flat layout so the tactile parts stand out.",
+      "imagery": "Photographed or 3D-rendered real objects with consistent light direction; subtle material textures (brushed metal, paper fibre); no clip-art gloss.",
+      "motion": "Physical: buttons press down 1–2 px with a shadow change, knobs rotate with inertia, switches snap; optional click sounds off by default; 80–160 ms responses.",
+      "build": "Layered box-shadow (an inset highlight and a soft drop) for depth; conic-gradient for knob faces and brushed metal; pointer events plus a hidden range input for accessible knobs; Web Audio for click sounds, muted until the user opts in.",
+      "pitfalls": "Glossy 2010 web-2.0 reflections; mixed light directions; neumorphism with grey-on-grey low contrast; controls that look interactive but are not; heavy textures that slow loading; missing keyboard access.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "MG - Museum of Curiosities",
+          "url": "https://matthisgarnier.com",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/mg-museum-of-curiosities"
+        },
+        {
+          "name": "KASANÉ - Urushi Keyboard",
+          "url": "https://kasane-keyboard.com/",
+          "recognition": "Awwwards Honorable Mention, 2025",
+          "source": "https://www.awwwards.com/sites/kasane-urushi-keyboard"
+        },
+        {
+          "name": "Tommy Biglow",
+          "url": "https://tommybiglow.com",
+          "recognition": "Awwwards Honorable Mention, 2026",
+          "source": "https://www.awwwards.com/sites/tommy-biglow"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Nielsen Norman Group - Skeuomorphism",
+          "url": "https://www.nngroup.com/articles/skeuomorphism/"
+        },
+        {
+          "name": "MDN - box-shadow",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow"
+        },
+        {
+          "name": "Josh W. Comeau - Designing beautiful shadows in CSS",
+          "url": "https://www.joshwcomeau.com/css/designing-shadows/"
+        }
+      ]
+    },
+    {
+      "id": "theme-claymorphism-soft-3d",
+      "label": {
+        "fr": "Claymorphisme / 3D douce",
+        "en": "Claymorphism / soft 3D"
+      },
+      "what": "Puffy, inflated, toy-like forms: rounded 3D objects and cards that look moulded from clay or soft plastic, with pastel colours, inner highlights and soft floating shadows. Characters and icons feel squeezable. It brings warmth and fun to digital products, especially on phones. Since about 2022 it has become a common illustration pack style, so custom models tied to the product are what make it work.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "onboarding and marketing for consumer apps",
+        "kids' learning products",
+        "casual games",
+        "fintech or health apps aimed at a young audience",
+        "toy and confectionery brands"
+      ],
+      "use_when": "The product is friendly and simple, and the team can produce custom 3D models (Blender, Spline) in one consistent style.",
+      "avoid_when": "Serious or premium brands, dense interfaces, or when the only available assets are generic 3D icon packs.",
+      "type": {
+        "pairing": "Fredoka (Google Fonts, OFL) or Rubik (Google Fonts, OFL) for headlines; Nunito (Google Fonts, OFL) for body.",
+        "rules": "Rounded, heavy headlines 40–80 px; body 16–18 px; generous padding inside buttons; avoid thin weights that look weak next to puffy shapes."
+      },
+      "colour": "Pastel bases with one stronger accent; every object has a lighter top-left highlight and a darker bottom shade. Example A: #F3EEFF background, #FFD6E8 pink, #C7F0DB mint, #7C5CFF accent used only for actions (keep violet off the brand primary unless chosen on purpose), #241B3A text. Example B: #FFF4E6, #FFB38A peach, #8FD3FF sky, #2D2A26 text.",
+      "layout": "Big floating cards with radius 28–40 px, one 3D hero object per section, lots of air around objects so shadows have room; simple single-column flows on phone.",
+      "imagery": "Custom 3D renders with soft studio lighting and subsurface feel; characters and objects from the product's world; consistent camera angle and material across all renders.",
+      "motion": "Bouncy, squishy: objects float slowly, squash on tap, inflate on hover; spring easing; loops paused off-screen and under reduced motion.",
+      "build": "Clay card: background colour plus box-shadow with two insets (light top-left, dark bottom-right) and one soft outer shadow; 3D objects exported as transparent WebP/AVIF renders, or a Spline/three.js scene only for the hero; CSS linear() spring easing; prefers-reduced-motion stops floating loops.",
+      "pitfalls": "Generic 3D emoji packs; mixing clay with flat icons and photos; low text contrast on pastels; every element puffy (buttons, inputs, tables); heavy WebGL scenes on mobile.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Tinkeroll",
+          "url": "https://layernative.com/tinkeroll/",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/tinkeroll"
+        },
+        {
+          "name": "Hello-World",
+          "url": "https://www.hello-world.studio/",
+          "recognition": "Awwwards Honorable Mention, 2025",
+          "source": "https://www.awwwards.com/sites/hello-world-2"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Smashing Magazine - Claymorphism: will it stick around?",
+          "url": "https://www.smashingmagazine.com/2022/03/claymorphism-css-ui-design-trend/"
+        },
+        {
+          "name": "MDN - box-shadow",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow"
+        },
+        {
+          "name": "Awwwards - 3D websites",
+          "url": "https://www.awwwards.com/websites/3d/"
+        }
+      ]
+    },
+    {
+      "id": "theme-data-dense-utilitarian",
+      "label": {
+        "fr": "Dense en données / tableau de bord utilitaire",
+        "en": "Data-dense / dashboard utilitarian"
+      },
+      "what": "Information first: compact tables, small multiples, sparklines, monospaced figures and thin rules, with almost no decoration. Every pixel carries data, and density is a feature for expert users who scan and compare. Beauty comes from alignment, consistent number formatting and a disciplined colour code, like a trading terminal, a timetable or a scientific report.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "desktop-app",
+          "read"
+        ]
+      },
+      "suits": [
+        "analytics and monitoring tools",
+        "trading and finance platforms",
+        "logistics and operations back-offices",
+        "sports statistics and rankings",
+        "research, public data and reports"
+      ],
+      "use_when": "Users are repeat experts who need to compare many values quickly, and the data is real and up to date.",
+      "avoid_when": "First-time visitors who must be persuaded, emotional or lifestyle brands, or when the data is thin (density then looks empty).",
+      "type": {
+        "pairing": "IBM Plex Sans (Google Fonts, OFL) for UI and labels with IBM Plex Mono (Google Fonts, OFL) for figures and codes; or Atkinson Hyperlegible (Google Fonts, OFL) when legibility for low vision matters.",
+        "rules": "Base 13–14 px for tables, 12 px minimum for labels; tabular and lining figures everywhere; right-align numbers, left-align text; units in a lighter tone; at most 3 weights; headings small, the data is the hierarchy."
+      },
+      "colour": "Neutral greys plus a semantic set (up, down, warning, selection) and a colour-blind-safe series palette. Example A (light): #FFFFFF, #F5F6F7 rows, #1D2125 text, #0F62FE selection, #198038 up, #DA1E28 down. Example B (dark): #161616, #262626, #F4F4F4 text, #4589FF, #42BE65, #FA4D56. Colour is reserved for meaning, never decoration.",
+      "layout": "Dense grid with fixed sidebars and resizable panes; tables with sticky headers and first column; 4/8 px spacing scale; small multiples instead of one big chart; filters always visible; keyboard navigation.",
+      "imagery": "None beyond charts, maps and icons; charts drawn with consistent axes and direct labels.",
+      "motion": "Minimal and functional: 100–150 ms state changes, live values that update without layout shift, no entrance animations.",
+      "build": "font-variant-numeric: tabular-nums lining-nums on all data; CSS grid with subgrid for aligned tables; position: sticky for headers; a free chart library (Observable Plot, ECharts or Chart.js) fed with tokens for colours; container queries so panels adapt to pane width.",
+      "pitfalls": "Dashboard cards with giant single numbers and no context (generic big-stat row); rainbow chart colours; proportional figures that jitter; decorative gradients; truncating data without a tooltip; red/green only encoding.",
+      "prevalence": "standard",
+      "examples": [
+        {
+          "name": "DeepBook",
+          "url": "https://deepbook-v2-wip.webflow.io/",
+          "recognition": "Awwwards Site of the Day, 2026",
+          "source": "https://www.awwwards.com/sites/deepbook"
+        },
+        {
+          "name": "Field Rank",
+          "url": "https://www.fieldrank.run",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/field-rank"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Carbon Design System - Data visualization",
+          "url": "https://carbondesignsystem.com/data-visualization/getting-started/"
+        },
+        {
+          "name": "Edward Tufte",
+          "url": "https://www.edwardtufte.com/"
+        },
+        {
+          "name": "Datawrapper blog",
+          "url": "https://www.datawrapper.de/blog/"
+        }
+      ]
+    },
+    {
+      "id": "theme-retro-70s",
+      "label": {
+        "fr": "Rétro années 70",
+        "en": "Retro 70s"
+      },
+      "what": "Warm nostalgia: fat, rounded display type with soft curves, stacked stripes and rainbow bands in orange, mustard, brown and avocado, sunbursts, rounded frames and grainy film photos. It evokes record sleeves, airline posters and diners. It suits brands with a sense of fun and heritage, and stands out against cool tech palettes when the typography is drawn with care.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "vintage and second-hand shops",
+        "restaurants, diners and bars",
+        "music, festivals and film production",
+        "surf, skate and outdoor brands",
+        "craft drinks and snack brands"
+      ],
+      "use_when": "The brand has a warm, sociable personality or a real link to the era, and the audience enjoys nostalgia.",
+      "avoid_when": "Serious B2B, healthcare, or when the decade has no relation to the brand (it then reads as a costume).",
+      "type": {
+        "pairing": "Shrikhand (Google Fonts, OFL) for big display words; Fraunces (Google Fonts, OFL) with high SOFT for secondary headlines; Outfit (Google Fonts, OFL) for body and UI.",
+        "rules": "Display 64–140 px, very tight leading (0.9–1.0), sometimes on a curve or stacked; secondary headlines bold; body 16–18 px in a clean geometric sans; avoid more than one novelty face."
+      },
+      "colour": "Warm, slightly muted 70s ramp used in stripes and blocks. Example A: #F4E4C1 cream, #3B2314 brown text, #E36414 orange, #F2A900 mustard, #6B7B3A avocado. Example B: #FCEFD8, #2A1A12 text, #D1495B raspberry, #EDAE49 gold, #00798C teal. Colour goes into bands, badges and full-section backgrounds.",
+      "layout": "Poster-like sections with centred display words, stripe bands as dividers, rounded or arched image frames, badges and stamps; content blocks simple underneath.",
+      "imagery": "Film-grain photography with warm grade and faded blacks; halftone or flat illustrations; arched frames; vintage ephemera scanned from the brand's own archive when possible.",
+      "motion": "Groovy but controlled: stripes that slide, sunbursts that rotate slowly, wavy text on hover; 300–500 ms with soft easing.",
+      "build": "Stripe bands with repeating-linear-gradient; arched frames with border-radius: 999px 999px 0 0; film grain via an SVG feTurbulence overlay with mix-blend-mode: multiply; text on a path with SVG textPath for curved titles.",
+      "pitfalls": "Using a 70s clip-art pack; every colour at once; low contrast orange text on cream; groovy fonts for body text; the look without any real tie to the brand.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "LABELLAVISTA",
+          "url": "https://labellavista.es/",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/labellavista"
+        },
+        {
+          "name": "HEP Vintage Club",
+          "url": "https://www.hepvintageclub.it",
+          "recognition": "Awwwards Honorable Mention, 2025",
+          "source": "https://www.awwwards.com/sites/hep-vintage-club"
+        },
+        {
+          "name": "Supersweet Motion Pictures",
+          "url": "https://supersweet.ninja/",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/supersweet-motion-pictures-r"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Awwwards - retro websites",
+          "url": "https://www.awwwards.com/websites/retro/"
+        },
+        {
+          "name": "MDN - repeating-linear-gradient()",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/repeating-linear-gradient"
+        },
+        {
+          "name": "Google Fonts - Shrikhand specimen",
+          "url": "https://fonts.google.com/specimen/Shrikhand"
+        }
+      ]
+    },
+    {
+      "id": "theme-vaporwave-synthwave",
+      "label": {
+        "fr": "Vaporwave / synthwave",
+        "en": "Vaporwave / synthwave"
+      },
+      "what": "Neon-lit 80s and 90s nostalgia: magenta and cyan glows on deep purple-black, perspective grids running to a sunset, chrome lettering, scanlines, pixel or arcade type. Synthwave leans to retro-futurist driving and arcade energy; vaporwave adds ironic early-internet collage, pastel gradients and classical busts. It is loud and very recognisable, best kept for entertainment and events.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "suits": [
+        "music artists, labels and club nights",
+        "arcade, retro and indie games",
+        "event and festival microsites",
+        "portfolios of creative coders",
+        "streetwear drops"
+      ],
+      "use_when": "The project is entertainment with a nostalgic hook and a short life (a drop, a game, an event), and the audience knows the reference.",
+      "avoid_when": "Anything that needs long reading, trust or accessibility for a broad public; brands without an 80s/90s link.",
+      "type": {
+        "pairing": "Monoton or Audiowide (Google Fonts, OFL) for display; VT323 or Press Start 2P (Google Fonts, OFL) for HUD labels and scores; a readable sans such as Rubik (Google Fonts, OFL) for any body text.",
+        "rules": "Display huge with glow or chrome gradients; pixel fonts only at their native multiples (e.g. 8/16/24 px for Press Start 2P) to stay crisp; body text plain, never in a pixel or neon face."
+      },
+      "colour": "Dark violet-black with neon accents. Example A (synthwave): #120A24 background, #FF2E88 magenta, #22D3EE cyan, #FFB000 sunset, #F5F3FF text. Example B (vaporwave pastel): #FBC2EB to #A6C1EE gradient field, #2B1055 text, #00F0B5 accent. Note: violet and gradients are flagged as generic in ordinary product pages; here they are the subject and must be chosen explicitly.",
+      "layout": "Full-screen stage scenes: a horizon grid, a sun, a title; HUD-style overlays for navigation; content in a few large panels. Keep a plain, readable layer for practical info (dates, tickets).",
+      "imagery": "Low-poly 3D, chrome renders, VHS-textured video, pixel sprites, collage of early-web elements; scanlines and chromatic aberration in small amounts.",
+      "motion": "Looping grid scroll toward the horizon, flicker and glitch on transitions, arcade-style counters; keep loops pausable and under reduced motion freeze to a still poster.",
+      "build": "Perspective grid with a repeating-linear-gradient on a plane rotated by transform: perspective() rotateX(); neon glow with layered text-shadow; scanlines with a repeating-linear-gradient overlay; three.js only for a hero scene with a static image fallback.",
+      "pitfalls": "Glow on body text (unreadable); flicker that can trigger photosensitive users (keep under 3 flashes per second); every effect at once; generic stock sunsets; no exit to plain information.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Laser Drift - Neon Blast",
+          "url": "https://laserdrift.com/",
+          "recognition": "Awwwards Honorable Mention, 2025",
+          "source": "https://www.awwwards.com/sites/laser-drift-neon-blast"
+        },
+        {
+          "name": "MemoryQuest",
+          "url": "https://memoryquest.nl/en",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/memoryquest"
+        },
+        {
+          "name": "North",
+          "url": "https://www.north.cloud/",
+          "recognition": "Awwwards Honorable Mention, 2024",
+          "source": "https://www.awwwards.com/sites/north"
+        }
+      ],
+      "sources": [
+        {
+          "name": "MDN - text-shadow",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow"
+        },
+        {
+          "name": "Google Fonts - VT323 specimen",
+          "url": "https://fonts.google.com/specimen/VT323"
+        },
+        {
+          "name": "web.dev - prefers-reduced-motion",
+          "url": "https://web.dev/articles/prefers-reduced-motion"
+        }
+      ]
+    },
+    {
+      "id": "theme-cyberpunk-neon",
+      "label": {
+        "fr": "Cyberpunk / néon",
+        "en": "Cyberpunk / neon"
+      },
+      "what": "Dystopian high-tech: black and gunmetal surfaces cut by acid yellow, hot red or electric cyan, angular clipped corners, HUD frames, glitch, kanji or technical codes, and condensed techno type. It feels like a game interface or a mecha cockpit. Harder and more aggressive than synthwave, it suits brands that want edge, but its acid-on-black version is close to a 2026 generic cluster.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "desktop-app"
+        ]
+      },
+      "suits": [
+        "games, esports and gaming hardware",
+        "security and hacking tools",
+        "creative technology studios",
+        "electronic music and nightlife",
+        "Web3 and digital collectibles"
+      ],
+      "use_when": "The audience is gamers or tech enthusiasts and the brand wants edge and futurism; the product has a world (a game, a universe) to draw from.",
+      "avoid_when": "Broad public services, calm or wellbeing brands, long-form reading, or when the only reason is to look 'techy'.",
+      "type": {
+        "pairing": "Chakra Petch or Orbitron (Google Fonts, OFL) for display and HUD headings; Rajdhani (Google Fonts, OFL) for navigation and labels; Share Tech Mono (Google Fonts, OFL) for codes and data.",
+        "rules": "Display uppercase, 48–120 px, tight leading, sometimes slanted or split by a glitch; labels small uppercase with wide tracking and index numbers (01/, SYS-04); body kept in a readable weight at 16 px."
+      },
+      "colour": "Black and steel with one or two high-voltage accents. Example A: #0A0A0C background, #1C1F24 panels, #FCEE0A acid yellow, #FF003C hot red, #E6E6E6 text. Example B: #05070D, #00F0FF cyan, #FF2BD6 magenta, #9BA3AF text. To avoid the acid-green-on-black cluster, pick the accent from the product's world.",
+      "layout": "HUD panels with clipped corners, thin outlines and corner brackets; asymmetric, layered compositions; data overlays and tickers; navigation styled as a game menu but with clear labels.",
+      "imagery": "Night city photography with neon signage, 3D mechs and characters, glitch and RGB split, technical diagrams; dark grade with saturated highlights.",
+      "motion": "Fast, glitchy: text scramble on reveal, scanline sweeps, HUD lines drawing in, 100–250 ms snaps; avoid strobing; reduced motion shows final states.",
+      "build": "Clipped corners with clip-path: polygon(); glitch with stacked pseudo-elements offset and clipped by keyframes; text scramble with a small JS loop that respects reduced motion; outline frames with border-image or SVG strokes.",
+      "pitfalls": "Acid green on black by default (generic cluster); unreadable glitched text; random kanji used as decoration without meaning; strobing; every panel framed so nothing stands out.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Studio MACACO",
+          "url": "https://studiomacaco.ch",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/studio-macaco"
+        },
+        {
+          "name": "Rubens Cantuni",
+          "url": "https://www.rubens.design/",
+          "recognition": "Awwwards Honorable Mention, 2026",
+          "source": "https://www.awwwards.com/sites/rubens-cantuni-1"
+        },
+        {
+          "name": "CyberKongz",
+          "url": "https://www.cyberkongz.com/",
+          "recognition": "Awwwards Honorable Mention, 2023",
+          "source": "https://www.awwwards.com/sites/cyberkongz"
+        }
+      ],
+      "sources": [
+        {
+          "name": "MDN - clip-path",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path"
+        },
+        {
+          "name": "Google Fonts - Chakra Petch specimen",
+          "url": "https://fonts.google.com/specimen/Chakra+Petch"
+        },
+        {
+          "name": "MDN - mix-blend-mode",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/mix-blend-mode"
+        }
+      ]
+    },
+    {
+      "id": "theme-grunge-punk-zine",
+      "label": {
+        "fr": "Grunge / fanzine punk",
+        "en": "Grunge / punk zine"
+      },
+      "what": "Photocopied, cut-and-paste rawness: torn paper, tape, xerox grain, ransom-note lettering, typewriter text, stamps and scribbles, high-contrast black and white with one loud spot colour. Layouts look assembled by hand and slightly wrong on purpose. It carries attitude and authenticity for subcultures, but needs a disciplined underlying structure so content stays findable.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "suits": [
+        "bands, labels and venues",
+        "skate, tattoo and streetwear shops",
+        "independent magazines and cultural archives",
+        "activist campaigns and collectives",
+        "festivals and DIY events"
+      ],
+      "use_when": "The brand belongs to a subculture or a cause and wants to feel independent and human rather than corporate.",
+      "avoid_when": "Brands that need polish or trust with a mainstream audience, e-commerce with large catalogues, or users who rely on assistive technology if the collage hides text.",
+      "type": {
+        "pairing": "Anton (Google Fonts, OFL) for big poster headlines; Special Elite (Google Fonts, Apache 2.0) or Courier Prime (Google Fonts, OFL) for typewriter body and captions; Rubik Wet Paint (Google Fonts, OFL) or hand-cut lettering scans for one or two words.",
+        "rules": "Headlines very large, uppercase, overlapping images; mix sizes freely in headlines but keep body text one size (16–18 px) in a readable face; real text in HTML even when it looks pasted."
+      },
+      "colour": "Black, paper white and one spot colour, as in a two-colour print run. Example A: #F2EFE6 paper, #111111 ink, #FF2E63 pink spot. Example B: #EDEDED, #0D0D0D, #FFE600 yellow spot, #1F4CFF blue second spot. Spot colour on highlights, stickers and underlines.",
+      "layout": "Collage on a hidden grid: rotated blocks, overlapping images, tape and stickers, deliberately misaligned headings; navigation and key info remain conventional and stable.",
+      "imagery": "High-contrast black and white photos, halftone and photocopy texture, torn edges, scribbles, scanned flyers; real archive material where possible.",
+      "motion": "Jerky, stop-motion feel: elements that snap into place, stickers slapped on, frame-by-frame flicker at low rates; short and optional.",
+      "build": "Photocopy effect with CSS filter: grayscale(1) contrast(1.8) plus an SVG feTurbulence noise overlay; torn edges with clip-path polygons or SVG masks; rotated elements with small random transforms; steps() timing function for stop-motion.",
+      "pitfalls": "Grunge texture packs over a standard template; unreadable body text; images of text instead of real text; chaos in navigation; using punk aesthetics for a brand with no link to it.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "The Music Project",
+          "url": "https://www.themusicproject.org",
+          "recognition": "Awwwards Honorable Mention, 2025",
+          "source": "https://www.awwwards.com/sites/the-music-project"
+        },
+        {
+          "name": "Punk is not dead",
+          "url": "https://pind.univ-tours.fr/",
+          "recognition": "Awwwards Honorable Mention, 2018",
+          "source": "https://www.awwwards.com/sites/punk-is-not-dead-2"
+        },
+        {
+          "name": "Grungeology",
+          "url": "https://www.grungeology.org",
+          "recognition": "Awwwards Nominee, 2025",
+          "source": "https://www.awwwards.com/sites/grungeology"
+        }
+      ],
+      "sources": [
+        {
+          "name": "MDN - filter",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/filter"
+        },
+        {
+          "name": "MDN - feTurbulence",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feTurbulence"
+        },
+        {
+          "name": "Fonts In Use",
+          "url": "https://fontsinuse.com/"
+        }
+      ]
+    },
+    {
+      "id": "theme-botanical-heritage",
+      "label": {
+        "fr": "Botanique / patrimoine (vin, thé, apothicaire)",
+        "en": "Botanical / heritage (wine, tea, apothecary)"
+      },
+      "what": "Old-world refinement with plants at its heart: engraved botanical illustrations, classical serifs, labels and seals inspired by apothecary jars and wine estates, deep inky greens and burgundies on parchment. It speaks of lineage, know-how and provenance. The best versions use the house's own archive (labels, maps, herbaria) and keep the shopping experience modern underneath.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "phone"
+        ]
+      },
+      "suits": [
+        "wine estates and spirits",
+        "tea houses and coffee roasters",
+        "apothecaries, herbalists and perfumers",
+        "florists and seed companies",
+        "heritage cosmetics and soap makers"
+      ],
+      "use_when": "The house has real history, origin or ingredients to tell, and an archive or illustrator to draw from.",
+      "avoid_when": "Young brands without heritage (it looks borrowed), clinical or medical products, mass-market promotions.",
+      "type": {
+        "pairing": "IM Fell English (Google Fonts, OFL) or Sorts Mill Goudy (Google Fonts, OFL) for titles and labels; Libre Caslon Text (Google Fonts, OFL) for body; a small-caps or uppercase spaced sans such as Instrument Sans (Google Fonts, OFL) for navigation.",
+        "rules": "Titles 40–72 px in regular weight, often centred like a label; small caps with +0.1em tracking for categories; old-style figures in running text, lining tabular figures in prices; body 17–18 px."
+      },
+      "colour": "Deep, ink-like colours on paper. Example A (apothecary): #F1EBDD parchment, #1E2B22 ink green, #7B2D26 oxblood, #B08D57 brass. Example B (wine): #F6F1E7, #2A1218 text, #5E1A2B burgundy, #3F4F3A vine leaf. Colour in labels, seals, rules and illustration tints.",
+      "layout": "Symmetric, label-like compositions for key moments (a product as a specimen plate), framed by thin double rules; otherwise a classic editorial grid; product pages with tasting or ingredient notes laid out as a herbarium sheet.",
+      "imagery": "Engraved or watercolour botanical plates (public domain archives or commissioned), estate and field photography, macro shots of leaves, bottles and jars; consistent warm grade.",
+      "motion": "Subtle: illustrations that draw themselves (SVG stroke), leaves that sway slightly, page transitions like turning a page; 400–800 ms.",
+      "build": "Line illustrations as inline SVG animated with stroke-dasharray/stroke-dashoffset; double rules and frames with border-style: double or outline-offset; font-variant-numeric: oldstyle-nums in prose and tabular-nums in prices; public-domain plates optimised as AVIF.",
+      "pitfalls": "Fake vintage clip-art; too many ornaments and flourishes; low contrast sepia text; heritage cues with no real history; slow, ornate checkout.",
+      "prevalence": "rare",
+      "examples": [
+        {
+          "name": "Heart & Soil",
+          "url": "https://www.heartandsoilflowers.com/",
+          "recognition": "Typewolf Site of the Day, December 2025",
+          "source": "https://www.typewolf.com/site-of-the-day/heart-and-soil"
+        },
+        {
+          "name": "La Botanique | Nature At Night (L'Artisan Parfumeur)",
+          "url": "https://www.artisanparfumeur.com/en-gb/la-botanique.html",
+          "recognition": "Awwwards Honorable Mention, 2021",
+          "source": "https://www.awwwards.com/sites/la-botanique-nature-at-night"
+        },
+        {
+          "name": "Taylors Wines",
+          "url": "https://www.taylorswines.com.au/",
+          "recognition": "Awwwards Nominee, 2025",
+          "source": "https://www.awwwards.com/sites/taylors-wines"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Wikimedia Commons - Botanical illustrations",
+          "url": "https://commons.wikimedia.org/wiki/Category:Botanical_illustrations"
+        },
+        {
+          "name": "rawpixel - public domain images",
+          "url": "https://www.rawpixel.com/category/53/public-domain"
+        },
+        {
+          "name": "Google Fonts - IM Fell English specimen",
+          "url": "https://fonts.google.com/specimen/IM+Fell+English"
+        }
+      ]
+    },
+    {
+      "id": "theme-sport-bold-condensed",
+      "label": {
+        "fr": "Sport / énergie condensée",
+        "en": "Sport / bold condensed energy"
+      },
+      "what": "Speed and power: huge condensed uppercase type, diagonal cuts, high-contrast action photography, numbers as graphics, and a hard accent colour. Text sits tight against images, often overlapping athletes. It feels like a match poster, a jersey or a broadcast graphic. It works when motion and real photography drive it, and turns cheap when it relies on stock athletes and slanted boxes.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "suits": [
+        "clubs, teams and athletes",
+        "gyms, combat sports and coaching",
+        "races, tournaments and events",
+        "sports equipment and apparel",
+        "sports media and statistics"
+      ],
+      "use_when": "The subject is physical performance or competition, with strong action photography and real figures (scores, times, records).",
+      "avoid_when": "Calm wellness, luxury or B2B services, or when no action imagery is available.",
+      "type": {
+        "pairing": "Anton or Bebas Neue (Google Fonts, OFL) for display; Barlow Condensed (Google Fonts, OFL) for subheads, stats and navigation; Barlow (Google Fonts, OFL) for body. Big Shoulders Display (Google Fonts, OFL) as an alternative with more character.",
+        "rules": "Display uppercase 80–200 px, leading 0.85–0.95, tracking slightly tight; numbers huge with tabular figures for scores and times; subheads condensed bold uppercase with +0.02em; body normal width 16–18 px for readability."
+      },
+      "colour": "High contrast with one hard team or brand colour. Example A: #0B0B0B, #FFFFFF, #E10600 red accent, #F5F5F5 surfaces. Example B: #0A1A2F navy, #FFFFFF, #FFD200 yellow, #00A3E0 secondary. Colour as full blocks, stripes, numbers and buttons.",
+      "layout": "Tight, dynamic compositions: diagonal section edges, type overlapping cut-out athletes, scoreboards and fixtures as structured tables, horizontal scrolling rows for results and players on phone.",
+      "imagery": "Real action shots with motion blur, sweat and grain, shot or graded consistently; cut-out athletes; numbers and pictograms as graphic elements; video loops of the sport.",
+      "motion": "Fast and kinetic: wipes, diagonal slides, counters for stats, scroll-linked type moving across the screen; 200–400 ms with strong ease-out; reduced motion keeps everything static.",
+      "build": "Diagonal edges with clip-path: polygon(); type knock-out over images with mix-blend-mode or background-clip: text; tabular-nums for scores; video hero with poster image and no autoplay sound; horizontal scroll rows with CSS scroll-snap.",
+      "pitfalls": "Stock athletes; slanted boxes as the only idea; italic everything; condensed type for body text; scores and fixtures out of date; heavy video on mobile data.",
+      "prevalence": "common",
+      "examples": [
+        {
+          "name": "Justin Jefferson",
+          "url": "https://jjettas.com",
+          "recognition": "Awwwards Site of the Day, 2026",
+          "source": "https://www.awwwards.com/sites/justin-jefferson"
+        },
+        {
+          "name": "Fighter Ready",
+          "url": "https://fighterready.com/",
+          "recognition": "Awwwards Honorable Mention, 2026",
+          "source": "https://www.awwwards.com/sites/fighter-ready"
+        },
+        {
+          "name": "Baztan Race",
+          "url": "https://baztan-race.com",
+          "recognition": "Awwwards Nominee, 2026",
+          "source": "https://www.awwwards.com/sites/baztan-race"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Awwwards - sports websites",
+          "url": "https://www.awwwards.com/websites/sports/"
+        },
+        {
+          "name": "Google Fonts - Barlow Condensed specimen",
+          "url": "https://fonts.google.com/specimen/Barlow+Condensed"
+        },
+        {
+          "name": "MDN - clip-path",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path"
+        }
+      ]
+    }
+  ]
+}

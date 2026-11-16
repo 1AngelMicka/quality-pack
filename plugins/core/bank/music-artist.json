@@ -1,0 +1,170 @@
+{
+  "id": "music-artist",
+  "label": {
+    "fr": "Artiste, groupe et label de musique",
+    "en": "Music artist, band and label"
+  },
+  "expects": [
+    {
+      "rule": "The first screen says who this is and what they sound like (genre, city, latest release) in a line of text, and gives a way to listen in one tap.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Upcoming dates are a text list with date, venue, city and a ticket link per row, with sold-out, last-tickets and cancelled states written out.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Each concert is published as Event structured data with name, start date and location, and uses eventStatus for cancelled, postponed or rescheduled shows and offers availability for sold out.",
+      "source": "https://developers.google.com/search/docs/appearance/structured-data/event",
+      "verified": true
+    },
+    {
+      "rule": "Sound never starts on its own for more than three seconds without a visible way to pause or stop it.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html",
+      "verified": false
+    },
+    {
+      "rule": "Booking, press and management contacts are written out (email or form with a reason to choose), not only behind a social profile.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A venue's programme lists every night with date, start time and price or ticket link, and gives the address and how to get there.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "4 of 10 put streaming links on the first screen or in the header (Matt Jinn's 'Listen on' row, INHERITED's Spotify icon, Paul Kalkbrenner's now-playing control and eight platform logos, Bob Moll's Spotify and Apple Music under each track).",
+    "Dates are a text list on the home page on 3 of 10 (Paul Kalkbrenner's date / venue / city table to Bandsintown, Effenaar's three featured nights, Lucerna Music Bar's programme with times); 5051 loads them from Bandsintown by script and showed only 'LOADING SHOWS...'.",
+    "Both venues write availability as words on the card: 'SOLD OUT' (Lucerna Music Bar), 'Laatste kaarten' (Effenaar).",
+    "3 of 10 open on a gate before the content: a loader or 'press any button' (Iris K), a sound toggle and loader sequence (Paul Kalkbrenner), a LOADING screen for the pixel-art game (5051).",
+    "Dark grounds dominate where they could be read: #0A0E0F (Effenaar), #020208 (Iris K), #0a0608 (5051), #000000 (Remote Control Records, per its Awwwards entry); the colour comes from photographs and artwork.",
+    "4 of 10 write a booking or press contact on the home page (INHERITED's email with Inquiries / Collaborations / Booking, Matt Jinn's email, 5051's form with a reason to choose, Iris K's press email); 4 of 10 ask for a newsletter (Matt Jinn, Paul Kalkbrenner, Remote Control Records, Effenaar)."
+  ],
+  "sites": [
+    {
+      "name": "Paul Kalkbrenner",
+      "url": "https://www.paulkalkbrenner.net/",
+      "why": "Header with Music, Tour, About, Journey, Gallery, News, Contact, Store; a now-playing control with a Sound ON/OFF toggle; the headline 'Experience the Pulse of Electronic Music' one word per line; eight streaming logos. Albums by year with pre-order and stream buttons, then a tour table (date, venue, city, tickets to Bandsintown). Two album blurbs still show '[release date]'.",
+      "recognition": "Awwwards Site of the Day, 2026-09-02",
+      "source": "https://www.awwwards.com/sites/paul-kalkbrenner",
+      "scale": "star",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Matt Jinn (singer-songwriter, NYC)",
+      "url": "https://mattjinn.com/",
+      "why": "The name, then a 'Listen on' row (Spotify, Apple Music, YouTube) and three current actions: pre-save the next EP, join the list for merch, watch the new video. Four-item menu (Music, Videos, Shows, About), contact email and newsletter written out. Self-released artist; no label or ticket clutter.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-14",
+      "source": "https://www.awwwards.com/sites/matt-jinn",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "INHERITED (deathcore band)",
+      "url": "https://inherited.band/",
+      "why": "Band photo with the name letter-spaced and the line '2016 Deathcore Metalcore'; Spotify, Instagram and TikTok in the header. Three anchors (Home, Band Members, Records): one card per member with role and country, then the next EP's track with a listen link. The contact panel gives an email to copy and three reasons (Inquiries, Collaborations, Booking).",
+      "recognition": "Awwwards Honorable Mention, 2026-09-21",
+      "source": "https://www.awwwards.com/sites/inherited-band",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "5051 (punk band, New York)",
+      "url": "https://band5051.com/",
+      "why": "A pixel-art side-scroller: desert highway at dusk with the band logo, set in Press Start 2P with yellow (#ffcc33) and red (#ee2222) on near-black (#0a0608). Below the game the page still has the band, live shows from Bandsintown, a 30-second preview player with streaming links and a booking form with a reason to choose. Without scripts the name, tagline and members remain readable.",
+      "recognition": "Awwwards Honorable Mention, 2026-05-03",
+      "source": "https://www.awwwards.com/sites/5051-punk-band",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Iris K (composer and violinist)",
+      "url": "https://theirisk.com/",
+      "why": "A 'music museum' you enter after a loader and 'Press Any Button' (headphones suggested), black (#020208) throughout, with Back / Next / Mute controls in the experience. Separate Bio and Shop: score PDFs at $9.99 through Stripe, a media kit PDF and a press email. A study in an immersive gate; no concert dates.",
+      "recognition": "Awwwards Honorable Mention, 2026-05-26",
+      "source": "https://www.awwwards.com/sites/iris-k",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Bob Moll (electronic producer)",
+      "url": "https://bobmoll.tech",
+      "why": "One column: the name, the label 'mir doch egal records', a single line describing the sound (minimal, dub techno influences), then nine releases as cover, title and two icon links (Spotify, Apple Music). Nothing else, which makes it fast to scan; it also has no contact or booking line at all.",
+      "recognition": "One Page Love, published 2026-10-02",
+      "source": "https://onepagelove.com/bob-moll",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Kluster Collectif (Paris)",
+      "url": "https://klustercollectif.com/",
+      "why": "French electronic-music collective and label: the first screen is a full sentence about the night as a safe space, with Rejoindre Kluster, Espace Presse and Contacts. Four sections (Association, Projets, Membres, Prévention) and links to Resident Advisor, SoundCloud and Bandcamp. Built in Framer with Fragment Mono for text.",
+      "recognition": "Awwwards Honorable Mention, 2026-04-21",
+      "source": "https://www.awwwards.com/sites/kluster-collectif",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Effenaar (Eindhoven venue)",
+      "url": "https://www.effenaar.nl/",
+      "why": "A large pop venue: large image cards with headline and subtitle ('Deze week in Effenaar', 'Laatste kaarten: Davina Michelle' with 'Scoor hier je tickets'), then featured nights with artist, support acts and Dutch dates, and 'Bekijk volledig programma'. Near-black (#0A0E0F) with a terracotta accent (#BF7960), set in Noi; ticket resale through CM.com.",
+      "recognition": "Awwwards Honorable Mention, 2023-05-26",
+      "source": "https://www.awwwards.com/sites/https-www-effenaar-nl",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Lucerna Music Bar (Prague)",
+      "url": "https://musicbar.cz/en/",
+      "why": "Club venue: a three-item news slider, then the programme as a vertical list of nights, each with day, date, start time, square poster and title; 'SOLD OUT' and 'private event, club closed' written on the card. Address with a map link, photos of the room, a CS/EN switch. Four-item menu: Program, Club, Cafe Bar, Contacts.",
+      "recognition": "Awwwards Nominee (not an award), 2020-03-23",
+      "source": "https://awwwards.com/sites/lucerna-music-bar",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Remote Control Records (Australian label)",
+      "url": "https://remotecontrolrecords.com.au",
+      "why": "An independent label since 2001, organised like a magazine: a lead story, then dated news cards typed 'Out now', 'Announced', 'Watch', 'Listen', 'Introducing'; a grid of latest release covers with Learn More to smart links; artists split into Current and Alumni; a Record Stores page. Black (#000000) per its Awwwards entry.",
+      "recognition": "Awwwards Honorable Mention, 2025-05-07",
+      "source": "https://www.awwwards.com/sites/remote-control-records",
+      "scale": "company",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A link-in-bio page standing in for the site: no dates, no contact, no text a search engine can read.",
+    "Tour dates only as a third-party widget that shows 'loading' or nothing when the script fails.",
+    "Autoplay sound or video with no pause control, or a 'press any key' gate in front of the only content.",
+    "Dates without a year or a city, or past dates left at the top of the list.",
+    "Booking and press contact only as a social direct message.",
+    "Unfinished copy published ('[release date]', a stream button that points at another album).",
+    "Venue programme where sold-out or cancelled nights look the same as nights on sale."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Music & Sound",
+      "url": "https://www.awwwards.com/websites/music-sound/",
+      "access": "free"
+    },
+    {
+      "name": "One Page Love, Music Related genre",
+      "url": "https://onepagelove.com/genre/music-related",
+      "access": "free"
+    },
+    {
+      "name": "Google Search Central, Event structured data",
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/event",
+      "access": "free"
+    },
+    {
+      "name": "W3C, Understanding SC 1.4.2 Audio Control",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html",
+      "access": "free"
+    }
+  ]
+}

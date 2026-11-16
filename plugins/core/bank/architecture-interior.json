@@ -1,0 +1,180 @@
+{
+  "id": "architecture-interior",
+  "label": {
+    "fr": "Architecture et décoration intérieure",
+    "en": "Architecture and interior design"
+  },
+  "expects": [
+    {
+      "rule": "The first screen shows built work (a photograph of a finished project) and one line saying what the practice does and where, not an intro animation. Users spent 57% of viewing time above the fold in NN/g's 2018 study.",
+      "source": "https://www.nngroup.com/articles/scrolling-and-attention/",
+      "verified": true
+    },
+    {
+      "rule": "Project photographs carry a text alternative, or a visible caption that names the project.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html",
+      "verified": true
+    },
+    {
+      "rule": "Captions, metadata and menu text set over or beside photographs reach a contrast ratio of at least 4.5:1 (3:1 for large text).",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "Architecture is a regulated profession in France: the site shows the professional title, the applicable professional rules and the name of the order or body the architect is registered with, plus a postal address, an email address and a phone number.",
+      "source": "https://entreprendre.service-public.gouv.fr/vosdroits/F37351",
+      "verified": true
+    },
+    {
+      "rule": "Each project has a page of its own with location, year, type (new build, renovation, interior), size or status, and the photographer's name.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Projects can be narrowed by type (architecture, interior, landscape, residential, commercial) when there are more than about a dozen.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The studio address, phone and email are on the home page or one tap away from every page, so a prospective client can call without hunting for a form.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "9 of 10 show projects as photographs on the home page: a full-width stack (Scullion), tiles or cards (TaylorHare, Pauline Borgia, Reed Hilderbrand, Groth, Stephanie Thatenhorst, Coaika), a feed of project cards (Arrova) or a long list (Dowen Farmer); Franklin Azzi's home could not be read.",
+    "6 of 10 give project metadata beyond the title on the home page: floor area (Pauline Borgia), location (Reed Hilderbrand, TaylorHare), status, size and year (Arrova, Dowen Farmer) or completion date (Groth).",
+    "7 of 10 put a postal address, a phone number or an email address on the home page (Scullion, TaylorHare, Pauline Borgia, Arrova, Dowen Farmer, Stephanie Thatenhorst, Coaika); none lists services as a priced offer: the work stands for the offer.",
+    "Of the 5 sites whose font names could be read, all set text in a grotesque sans (Founders Grotesk, Aktiv Grotesk, Basel Grotesk, PP Neue Montreal, Helvetica Neue) and 4 pair it with a serif or a mono (Victor Serif, Beirut Display, Lyon, GT America Mono).",
+    "Colour comes from the photographs: the interface is white, black or a warm neutral (#faf7f4 and #262626 at Franklin Azzi, #f6f5ea with copper #bf7b54 at Stephanie Thatenhorst, dark brown #3b1e12 at Coaika).",
+    "7 of 10 state in one sentence what the practice does and where on the first screen or in the title (Scullion, TaylorHare, Pauline Borgia, Arrova, Groth, Stephanie Thatenhorst, Coaika)."
+  ],
+  "sites": [
+    {
+      "name": "Scullion Architects",
+      "url": "https://scullion.ie/",
+      "why": "Name, the line 'Creative construction shaping memorable spaces' and a 'Discuss Your Project' button, then about ten full-width project photographs with no captions, three dated news items and a three-step enquiry form that explains fees, timelines and how a consultation happens. The overlay menu carries the Ranelagh address, phone and email. Founders Grotesk with Victor Serif, white and black with an orange accent (#fd4a2a).",
+      "recognition": "SiteInspire, added 2026-09-25",
+      "source": "https://www.siteinspire.com/website/13630-scullion-architects",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "TaylorHare Architects",
+      "url": "https://taylorhare.com/",
+      "why": "Opens on the large statement 'Architecture is about much more than buildings. We create places.' over a photograph of a house in a clearing. Projects are filed by landscape (Fields, Hills, Borders, Blocks, Shorelines) rather than by building type, each tile with title and place. The footer lists three offices (Denmark, Kent, California) with phone links and a mailto 'get in touch'.",
+      "recognition": "SiteInspire, added 2026-09-24",
+      "source": "https://www.siteinspire.com/website/13628-taylorhare-architects",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Studio Pauline Borgia",
+      "url": "https://www.paulineborgia.com/",
+      "why": "Paris architecture and interiors studio: menu of Contact, Projets, Collections, Archives, À propos, then filter tabs (Tout, Intérieur, Architecture) above fourteen project cards, each with a photograph, title, one line of what was done ('Rénovation d'un appartement') and the floor area in m². Email and the boulevard Raspail address sit in the footer. Aktiv Grotesk with Beirut Display Light, black and white.",
+      "recognition": "SiteInspire, added 2025-07-11",
+      "source": "https://www.siteinspire.com/website/13283-studio-pauline-borgia",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Reed Hilderbrand",
+      "url": "https://www.reedhilderbrand.com/",
+      "why": "Landscape architects: the home page is almost only a grid of project photographs, each labelled with name and place (Long Dock Park, Beacon NY; Clark Art Institute, Williamstown MA). Navigation is four words (Projects, Impact, Philosophy, About), with Contact, People and Recognition under About. Basel Grotesk with the Lyon serif on white.",
+      "recognition": "SiteInspire, added 2026-08-17",
+      "source": "https://www.siteinspire.com/website/13496-reed-hilderbrand",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Arrova",
+      "url": "https://arrova.eu/",
+      "why": "Two-city practice (Pamplona and Zürich) whose home page is one vertical feed of seven projects, newest first: place in capitals, project name, a one-line tagline, two images or drawings, a 'read more' link and a credit block (team, collaborators, status, size S/M/L, year). A 'Memorandum' text, publications and a contact block with both addresses, phone and email close the page. Black and white.",
+      "recognition": "SiteInspire, added 2026-11-11",
+      "source": "https://www.siteinspire.com/website/13680-arrova",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Groth Studio",
+      "url": "https://www.groth.studio/",
+      "why": "Hospitality and interior design studio between Barcelona and the Catskills: the header carries two live clocks (ET and CET) beside Projects, Research, About, Contact. A counted project list (9) shows cover image, title, one-line description, status ('in progress', 'Completed fall 2025') and a View Project link, followed by three research pieces. PP Neue Montreal with GT America Mono, black on white.",
+      "recognition": "SiteInspire, added 2025-11-13",
+      "source": "https://www.siteinspire.com/website/13343-groth-studio",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Dowen Farmer Architects",
+      "url": "https://www.dowenfarmer.com/",
+      "why": "London practice that puts its phone number and email in the first screen next to a three-item menu (Projects, About, Contact) and a strip of project names. The body is a long filterable list (Select, Mixed Use, Commercial, Residential, Industrial) of about seventy projects, each with images, a tagline and a data block: status, type, location, client, area and coordinates. The Peckham address and company number are in the footer.",
+      "recognition": "SiteInspire, added 2024-06-04",
+      "source": "https://www.siteinspire.com/website/12285-dowen-farmer-architects",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Stephanie Thatenhorst",
+      "url": "https://www.stephanie-thatenhorst.com/",
+      "why": "Munich interior designer whose site joins the practice, a showroom and a shop: header with name and 'Interior Design', Projects, Shop, Showroom, Spaces, Stories, About and a DE/EN switch. Project cards carry a category label (Office, Private Residence, Retail). Cream background (#f6f5ea) with a copper accent (#bf7b54); the footer gives the showroom address and opening hours.",
+      "recognition": "SiteInspire, added 2026-01-22",
+      "source": "https://www.siteinspire.com/website/13350-stephanie-thatenhorst",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Franklin Azzi",
+      "url": "https://www.franklinazzi.fr/en",
+      "why": "Paris architecture and interiors agency; identity and site by Base Design. The served page gives only a three-word menu (Office, Projects, Notice), an EN/FR switch, Contact and Legal Notice; the CSS sets Helvetica Neue and Helvetica Condensed on a warm off-white (#faf7f4) with near-black text (#262626). The project content is rendered by script and could not be read (not seen beyond the gallery listing)",
+      "recognition": "SiteInspire, added 2026-08-24",
+      "source": "https://www.siteinspire.com/website/13523-franklin-azzi",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Coaika",
+      "url": "https://www.coaika.co/",
+      "why": "Sydney interiors and architecture studio founded in 2021 by two directors: a short menu (Home, Projects, Press, Awards, Practice, Contact), then numbered lists of press features (001–005) and award shortlists (001–014) with year, award and project, a studio paragraph, and a contact block with the Darlinghurst address, phone, email and Instagram. Portrait project thumbnails in a grid; dark brown (#3b1e12) on white.",
+      "recognition": "SiteInspire, added 2026-11-10",
+      "source": "https://www.siteinspire.com/website/13674-coaika",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A full-screen slideshow of renders with no project name, place or year, so the visitor cannot tell built work from images.",
+    "Stock photographs of interiors or architecture that are not the studio's own projects.",
+    "Contact only through a form, with no address, phone number or email, for a business clients expect to visit or call.",
+    "Project pages that are only a gallery: no location, year, type, size, role or photographer credit.",
+    "Thin grey captions set over photographs that fail contrast, and project images without text alternatives.",
+    "A long loader or scroll-jacking effect that hides the work for several seconds on a phone.",
+    "A list of generic services ('design, build, renovation') with no project showing each one."
+  ],
+  "sources": [
+    {
+      "name": "SiteInspire, Architecture",
+      "url": "https://www.siteinspire.com/websites/categories/architecture",
+      "access": "free"
+    },
+    {
+      "name": "SiteInspire, Interior Design",
+      "url": "https://www.siteinspire.com/websites/categories/interior-design",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, Scrolling and Attention",
+      "url": "https://www.nngroup.com/articles/scrolling-and-attention/",
+      "access": "free"
+    },
+    {
+      "name": "Service-Public.fr, Mentions obligatoires sur le site internet d'une entreprise",
+      "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F37351",
+      "access": "free"
+    },
+    {
+      "name": "W3C, WCAG 2.2 Understanding 1.1.1 and 1.4.3",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html",
+      "access": "free"
+    }
+  ]
+}

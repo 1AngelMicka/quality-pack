@@ -1,0 +1,138 @@
+{
+  "id": "medical-practice",
+  "label": {
+    "fr": "Cabinet médical, dentiste, kiné",
+    "en": "Medical practice, dentist, physiotherapist"
+  },
+  "expects": [
+    {
+      "rule": "One booking action, repeated in the header and the first screen, that opens a real scheduler (online booking tool or a short form), with the phone number as a tap-to-call link next to it.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The first headline names the speciality and the town or district (for example 'dental practice in Hamburg for the whole family').",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Opening hours per day, address, access (floor, step-free entrance, nearest stop) and parking are plain text on the home page and the contact page.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Fees or guide prices, insurance accepted (public, private, direct billing) and payment methods are stated, with a link to a full fee page.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Each practitioner is named with a photograph, qualification and registration number where the profession has one.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "What to do in an emergency or out of hours is stated with the number to call, including the public service number when the practice is closed.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Treatment pages say what happens at the first visit, how long it takes and what to bring, in plain words.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "3 of 7 open a real booking path from the main button (Herzel: Dr. Flex scheduler; Chu Vision: /schedule-appointment; Ader Dent: pre-appointment form with branch choice); on 2 (Gadoury, Foothills) 'book' dials the phone, and on 2 (101 Physio, Marylebone) it jumps to a contact form.",
+    "4 of 7 put the phone number in the header or top bar (Herzel, Marylebone, Gadoury, Chu Vision); the 3 multi-site practices (101 Physio, Foothills, Ader Dent) list a number under each location instead.",
+    "4 of 7 state opening hours per day on the home page (Herzel, Marylebone, Ader Dent, Gadoury); 101 Physio, Foothills and Chu Vision give none.",
+    "Only 1 of 7 shows prices on the home page (Marylebone: guide prices and a £150 consultation, with a fee page); 101 Physio states direct insurance billing, Chu Vision financing, Herzel the payment methods and insurance types.",
+    "5 of 7 name their practitioners (Herzel and Marylebone with portraits, Marylebone with GDC numbers; Ader Dent seven bios; Foothills three therapists; Chu Vision the lead surgeon); 101 Physio uses unnamed stock-style photographs.",
+    "3 of 7 show a Google rating with the count (Herzel 4.7, Marylebone 5.0 from 200+, Chu Vision 4.9 from 1,430); Foothills shows 4.9 from 1,007 without naming the platform. Only Marylebone gives an out-of-hours instruction (NHS 111)."
+  ],
+  "sites": [
+    {
+      "name": "Zahnarztpraxis Natalie Herzel",
+      "url": "https://www.herzel-zahnarzt.de/",
+      "why": "Hamburg family dental practice. Headline 'Zahnarztpraxis in Hamburg für die ganze Familie', phone in the top bar, 'Einen Termin vereinbaren' buttons in header and hero that open a Dr. Flex online scheduler ('1-2 Minuten'), hours per day, entrance opposite the U-Bahn on the ground floor, statutory, private and self-pay patients accepted, team portraits with roles, Google 4.7/5. de/en switch.",
+      "recognition": "Awwwards Nominee, 2024-06-20",
+      "source": "https://www.awwwards.com/sites/natalie-herzel-dental-clinic",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Marylebone Smile Clinic",
+      "url": "https://marylebonesmileclinic.co.uk/",
+      "why": "Cosmetic dentist on Harley Street, London. Headline 'Leading Cosmetic Dentistry in London', address and phone at the top, 'Book your consultation' in header and hero (jumps to a footer form), a floating Virtual consultation button, hours Mon-Fri 9-18, guide prices in the FAQ (bonding from £495 per tooth, £150 consultation), finance logos, three dentists with photos and GDC numbers, 'Call NHS 111' for out-of-hours.",
+      "recognition": "Awwwards Nominee, 2024-04-17",
+      "source": "https://www.awwwards.com/sites/marylebone-smile-clinic",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Clinique dentaire Gadoury",
+      "url": "https://cliniquedentairegadoury.com/",
+      "why": "Village dental clinic in Saint-Jean-de-Matha, Québec, in French. Headline 'Des services de dentisterie de qualité, selon vos besoins', phone in the header, two 'Prendre rendez-vous' buttons that dial the phone, hours per day (closed Friday to Sunday), address with a Voir sur la carte link, missed-appointment policy and a new-patient PDF form. Four-item menu; no team photographs.",
+      "recognition": "Awwwards Nominee, 2025-02-06",
+      "source": "https://www.awwwards.com/sites/clinique-dentaire-gadoury",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Ader Dent",
+      "url": "https://www.aderdent.com/",
+      "why": "Dental polyclinic in Pendik, Istanbul, with a second branch in Didim. Turkish site with an EN switch; Randevu Al button in the header (links to #), an online pre-appointment form with branch selector at the bottom, hours (Mon-Fri 9-19, Sat 9-16:30), both addresses, seven practitioner bios, a medical-tourism menu entry. One branch's tap-to-call link dials the other branch's number.",
+      "recognition": "Awwwards Nominee, 2026-03-23",
+      "source": "https://www.awwwards.com/sites/ader-dent",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "101 Physio",
+      "url": "https://101physio.ca/",
+      "why": "Physiotherapy clinics in Vaughan, Brampton and Scarborough (Ontario). Headline 'Focused on Your Recovery', Book Appointment in header, hero and a sticky bar (all to /contact/), each location with its own phone and address, a 'Direct Easy Billing' section on insurance, a five-step 'What to Expect at Your First Visit', a downloadable referral form. Reviews heading with no reviews under it; no hours.",
+      "recognition": "Awwwards Nominee, 2025-12-12",
+      "source": "https://www.awwwards.com/sites/101-physio",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Foothills Physical Therapy",
+      "url": "https://foothillspt.com/",
+      "why": "Four physical therapy clinics around Boise, Idaho. Headline 'One on One. Expert. Quality. Care.', services menu (sports rehab, aquatic therapy, dry needling, pelvic health), 'Book an appointment!' buttons that dial 208-343-4700, clinic cards with tap-to-call numbers, addresses and map links, three named therapists, 4.9 from 1,007 reviews with three quoted. No hours or insurance on the home page.",
+      "recognition": "Awwwards Nominee, 2025-05-22",
+      "source": "https://www.awwwards.com/sites/foothills-physical-therapy",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Chu Vision Institute",
+      "url": "https://www.chuvision.com/",
+      "why": "Ophthalmology practice in Bloomington, Minnesota. H1 'Ophthalmology in Minneapolis & near St. Paul, MN', tagline 'The freedom to see clearly. The freedom to live fully.', phone in the top bar and beside a Book Now button that opens a scheduling page, 'Schedule a FREE Vision Correction Consultation', Google 4.9 from 1,430 reviews, video testimonials, a candidacy self-test, financing and insurance under Resources. No hours on the home page.",
+      "recognition": "WebAwards Best Healthcare Provider Website, 2025",
+      "source": "https://www.webaward.org/winner/37832/studio-3-marketing-wins-2025-webaward-for-chu-vision-institue.html",
+      "scale": "company",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A 'Book an appointment' button that only links to '#', or to a contact form when an online scheduler exists.",
+    "Tap-to-call links whose number differs from the number displayed next to them.",
+    "A reviews section with a heading and a button but no reviews.",
+    "Stock photographs of anonymous therapists, or an image whose alt text says one profession and caption another.",
+    "No opening hours and no out-of-hours instruction on a practice home page.",
+    "Treatment menus with fifteen entries split into two unlabelled groups instead of a short list grouped by patient need.",
+    "An expired or reused domain: check the practice still owns it (one listed dental practice's domain now serves an unrelated page)."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, therapy search",
+      "url": "https://www.awwwards.com/inspiration_search/Therapy/",
+      "access": "free"
+    },
+    {
+      "name": "WebAwards, Best Healthcare Provider Website",
+      "url": "https://www.webaward.org/category/Healthcare_Provider/best-healthcare_provider-websites.html",
+      "access": "free"
+    }
+  ]
+}

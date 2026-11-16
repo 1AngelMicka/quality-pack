@@ -1,0 +1,166 @@
+{
+  "id": "wedding-events",
+  "label": {
+    "fr": "Mariage et organisation d'événements",
+    "en": "Weddings and events"
+  },
+  "expects": [
+    {
+      "rule": "Prices are shared upfront, as packages, ranges or from-prices: in The Knot's 2024 budget report pricing is the first thing 80% of couples look for, and 70% say pricing transparency strongly influences booking.",
+      "source": "https://pros.weddingpro.com/report/2024-couples-finance-and-budget-report/",
+      "verified": true
+    },
+    {
+      "rule": "Venues state the guest capacity of each space and what the fee includes; The Knot's venue report finds couples weigh capacity (61% in the Midwest, 54% on average) and that 76% had rentals included in the venue fee.",
+      "source": "https://pros.weddingpro.com/report/the-knot-real-weddings-venue-report/",
+      "verified": false
+    },
+    {
+      "rule": "The enquiry form asks for what a quote needs and nothing more: date, number of guests, type of event, place, and a way to reply.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Real weddings and events are shown as stories with names, place, date and the supplier's own photographs, not a stock gallery.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Reviews name the couple or client and the platform (Google, The Knot, WeddingWire, Mariages.net), and recognitions link to their source.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The area served, the address and a phone or WhatsApp number are on the page, with the time to get an answer to an enquiry.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "None of the 9 sites read lists a price or package price on the home page; De Foodtruck Club comes closest with what is included (staff hours, plates) and a quote promised within 24 hours.",
+    "6 of 9 tell real events as named stories or cases (Boutique Weddings three couples and 17 stories, Austo three weddings by couple names, De Foodtruck Club five recent parties, Marquet five named clients, Stazione Leopolda upcoming events and five client quotes, Monarque a gallery of private events).",
+    "The 3 venues or venue managers state capacity (Cambium Farms 250 and 200 guests, Stazione Leopolda 1,850 over 6,000 m2, Monarque's Maison Chevalier 100); none states what the fee includes.",
+    "Phone at the top on 2 of 9 (Cambium Farms, Begnis Catering); 4 keep it in the footer, menu or address block (Boutique Weddings, De Foodtruck Club, Osmose, Stazione Leopolda); 3 show none (Monarque, Austo, Marquet).",
+    "4 of 9 are bilingual (Boutique Weddings CZ/EN, Begnis GR/EN, Osmose FR/EN, Stazione Leopolda IT/EN); Monarque puts its detailed enquiry form (date, guests, type, venue) at the very top.",
+    "Palettes are warm and specific rather than wedding pastel: Monarque burgundy #4c181a on #ded9d7, Austo green #184e4a with PP Editorial New, Boutique Weddings orange-red #e84f36 with Haffer, De Foodtruck Club pink #ffb3db on #201e1d, Osmose red #d03a1c with Montserrat."
+  ],
+  "sites": [
+    {
+      "name": "Boutique Weddings",
+      "url": "https://boutiqueweddings.cz/",
+      "why": "Prague wedding planner: H1 naming the agency and city, a video, 20 years and 300+ weddings, two named rankings (Wedvibes, Wezoree), wedding styles grid, four service 'chapters', three couple stories, 19 venues in Czechia and Italy, then a four-field form (name, phone, email, question) with consent. Czech and English; #e84f36 accent, Haffer type; phone only in the footer.",
+      "recognition": "Awwwards Honorable Mention, 2025-05-13",
+      "source": "https://www.awwwards.com/sites/boutique-weddings-2",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Cambium Farms",
+      "url": "https://cambiumfarms.com/",
+      "why": "Barn wedding and event venue in Caledon, Ontario: phone and email in the top bar, Book a Tour in the menu, headline 'Where Rustic Elegance Meets Natural Serenity', two venue cards with capacity (The Barn 250, The Byre 200), partner caterers named, event-type tiles, Instagram feed, address with map in the footer. Tan #b5a07e and black. Tour and enquiry buttons point back to the home page.",
+      "recognition": "Awwwards Honorable Mention, 2024-04-19",
+      "source": "https://www.awwwards.com/sites/cambium-farms",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Monarque Événements",
+      "url": "https://monarque-evenements.com/",
+      "why": "Quebec City event production house: the 'Planifier votre événement' form comes first, with date, number of guests, event type (corporate, private, charity) and whether it is at the Maison Chevalier vaults; headline 'Orchestrer l'inoubliable', founder profile, four services, a private-event carousel, the 100-guest venue it manages, partner logos. Burgundy #4c181a on #ded9d7; no phone shown.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-25",
+      "source": "https://www.awwwards.com/sites/monarque-evenements",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Begnis Catering",
+      "url": "https://www.begniscatering.gr/",
+      "why": "Athens family caterer since 1985: two phone numbers in the header, a menu split by occasion (corporate, private, wedding, christening), image cards for each, its museum café and pastry brand, a partner-venues page, address and phone again in the footer. Greek with an English version; mostly image links with no labels, and no contact form on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2021-02-19",
+      "source": "https://www.awwwards.com/sites/begnis-catering",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "De Foodtruck Club",
+      "url": "https://defoodtruckclub.nl/",
+      "why": "Dutch food-truck catering for parties and events: 'Boek een truck' in the header, headline 'Let's change catering!', nine truck concepts as cards, a comparison with regular caterers, client logos, a six-step process saying what to send (trucks, guests, place, times) and a quote within 24 hours, counters, phone near the end. Pink #ffb3db on #201e1d, Thunder and DM Sans.",
+      "recognition": "Awwwards Honorable Mention, 2024-06-27",
+      "source": "https://www.awwwards.com/sites/de-foodtruck-club",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Austo Entertainment",
+      "url": "https://www.austoentertainment.com/",
+      "why": "Orange County wedding DJs: Book Your DJ in the header, headline 'Unforgettable moments start with the music' beside three photographs, three featured weddings by couple names, team, services, three testimonials signed by bride or groom, 'Ready to book your DJ?' with Let's Do It, WeddingWire and The Knot badges. Green #184e4a, PP Editorial New with Plus Jakarta Sans; no phone or prices.",
+      "recognition": "Awwwards Honorable Mention, 2025-12-19",
+      "source": "https://www.awwwards.com/sites/austo-entertainment",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Osmose, agence culinaire",
+      "url": "https://www.osmose-cuisine.com/",
+      "why": "Caterer and private chef in Les Houches near Chamonix: FR/EN switch, menu by service (traiteur, chef à domicile, actualités), a seasonal menu banner linking to a PDF, three feature cards including a wedding formula, address, phone and email in one block, news. Red #d03a1c on white with Montserrat. No enquiry form; phone not in the header.",
+      "recognition": "Awwwards Honorable Mention, 2019-05-01",
+      "source": "https://www.awwwards.com/sites/osmose-cuisine",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Stazione Leopolda",
+      "url": "https://www.stazione-leopolda.com/en",
+      "why": "Florence event venue in a former railway station: Request a quote in the header and a bottom bar, headline 'A unique venue in the heart of Florence, where your event comes to life', four reasons (location, logistics, versatility, set-up support), two spaces with 6,000 m2 and 1,850 guests, virtual tour, upcoming events, five client quotes. Italian and English; Darker Grotesque.",
+      "recognition": "Awwwards Nominee, 2026-08-06 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/stazione-leopolda",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Marquet",
+      "url": "https://www.marquet.nyc/",
+      "why": "New York boutique caterer: Get In Touch in the header, headline 'Serving up thoughtful menus', three event types, five service styles numbered 01 to 05 (passed canapés to plated), the chef, five reviews signed with name and town, Book Us and a Calendly 'Schedule a Call'. Cream #f0ebe2 and near-black #1a1b1f. The Instagram block still shows template text and a typo.",
+      "recognition": "Awwwards Honorable Mention, 2025-10-06",
+      "source": "https://www.awwwards.com/sites/marquet",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "No price, package or from-price anywhere, when pricing is the first thing couples look for.",
+    "Book a Tour, Inquire or Request a quote buttons that point back to the home page or to '#'.",
+    "Template text left in a block (an '@username' Instagram feed with an unrelated caption).",
+    "A gallery of stock rings, bouquets and champagne glasses instead of the supplier's own events with names and places.",
+    "Venue pages without the capacity per space or what the hire fee includes.",
+    "Image-only cards with no visible label, so the visitor cannot tell weddings from corporate events.",
+    "No phone and no reply time, when couples are comparing several suppliers at once."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, search 'wedding planner'",
+      "url": "https://www.awwwards.com/inspiration_search/wedding%20planner/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'catering'",
+      "url": "https://www.awwwards.com/inspiration_search/catering/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'event venue'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=event%20venue",
+      "access": "free"
+    },
+    {
+      "name": "WeddingPro (The Knot), 2024 Couples Finance and Budget Report",
+      "url": "https://pros.weddingpro.com/report/2024-couples-finance-and-budget-report/",
+      "access": "free"
+    },
+    {
+      "name": "WeddingPro (The Knot), Real Weddings venue report",
+      "url": "https://pros.weddingpro.com/report/the-knot-real-weddings-venue-report/",
+      "access": "free"
+    }
+  ]
+}

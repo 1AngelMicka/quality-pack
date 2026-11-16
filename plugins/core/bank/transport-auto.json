@@ -1,0 +1,172 @@
+{
+  "id": "transport-auto",
+  "label": {
+    "fr": "Transport, VTC et automobile",
+    "en": "Transport, chauffeur and automotive services"
+  },
+  "expects": [
+    {
+      "rule": "One booking action (book a ride, get a quote, book a workshop slot, book a lesson) sits in the header on every page, with the phone and WhatsApp beside it.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "In France a VTC may only pick up a client on a prior booking and may not cruise for fares, so the site must offer a real way to book in advance (form, app or phone) that records date, time and client details.",
+      "source": "https://www.weblex.fr/articles/gerer-une-entreprise-de-vtc-ce-qu-il-faut-savoir",
+      "verified": true
+    },
+    {
+      "rule": "Prices are readable before booking: fixed fares or from-prices for transfers and hourly hire, package prices for lessons or detailing, and the cancellation terms.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The fleet or the cars worked on are shown with real photographs and plain facts (model, class, seats, luggage), not stock images of a car on an empty road.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Areas, airports and branches served are listed, with a branch picker when there is more than one location.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Licences and approvals are stated: VTC register or private-hire licence, driving-school approval number, brand or insurer approvals for a garage.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The business answers its reviews, positive and negative: in BrightLocal's 2025 survey only 7% of consumers do not expect owners to respond, and businesses that do not respond rank lowest.",
+      "source": "https://www.brightlocal.com/research/local-consumer-review-survey-2025/",
+      "verified": true
+    }
+  ],
+  "traits": [
+    "7 of the 8 sites read put a booking or quote action in the header (Little's Personalised Quote and Quick Quote, City Taxis Online Booking, SilverDrive Book now, Dursun Make a reservation, Automod Rendez-vous, Semler workshop booking, Drivelodge Configure); Maison de Lysenne starts with a Nous contacter button in the hero.",
+    "Only City Taxis shows phone numbers at the very top (six, one per city); Dursun, SilverDrive, Maison de Lysenne and Drivelodge keep the phone in the footer or contact block; Automod and Semler show none on the home page.",
+    "The 4 chauffeur services (Little's, Dursun, SilverDrive, Maison de Lysenne) all name their cars or fleet classes; none of the 8 sites lists a fare or service price (Semler shows monthly lease prices for cars in stock).",
+    "Chauffeur sites use a dark luxury palette with one warm accent: Dursun gold #be9b64 with Atlas Grotesk, Little's burgundy #691923 and #1e1e1f, SilverDrive #0b1010 and sand #f1eae3 (Maison de Lysenne is listed by the gallery as dark with gold; not confirmed in its CSS).",
+    "4 of 8 handle several locations: Automod a 30-branch picker, City Taxis six cities, Semler a booking widget per workshop (Copenhagen, Aarhus), Drivelodge a fitter finder over 50 UK fitters.",
+    "3 of 8 show a score with its platform (SilverDrive 4.7 with Trustpilot, City Taxis 4.8 from 94,000 passengers, Automod 500+ Google reviews); 2 offer WhatsApp (SilverDrive, Maison de Lysenne)."
+  ],
+  "sites": [
+    {
+      "name": "Little's Chauffeur Drive",
+      "url": "https://littles.co.uk/",
+      "why": "Scottish chauffeur firm with offices in Aberdeen, Edinburgh, Glasgow and London: header with Personalised Quote and Quick Quote, a one-line promise ('60 years delivering the highest quality service'), counters (21,000 journeys in 12 months, 465 cities served), then touring, corporate, partnerships and fleet blocks; four tap-to-call office numbers and an email. Burgundy #691923 and charcoal #1e1e1f.",
+      "recognition": "Awwwards Honorable Mention, 2023-12-05",
+      "source": "https://www.awwwards.com/sites/littles-chauffeur",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Dursun Personal Driver Service",
+      "url": "https://dursun-limousine.ch/en/",
+      "why": "Zurich and Geneva limousine service: logo with a Make a reservation button that jumps to the form, tagline 'Your wish is our command', four Mercedes classes named by model (S350, S500, AMG S63, V250), then a reservation form and the phone. Gold #be9b64 on black and white, Atlas Grotesk throughout, English and German. Requests are answered by call-back, no instant booking.",
+      "recognition": "Awwwards Honorable Mention, 2016-11-28",
+      "source": "https://www.awwwards.com/sites/dursun-personal-driver-service",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "SilverDrive Personal Drivers",
+      "url": "https://www.silverdrive.nl/",
+      "why": "Amsterdam chauffeur service: Book now in the header, headline 'Enjoy ultimate comfort with SilverDrive Private chauffeurs', Book a Chauffeur button, 4.7 rating with Trustpilot link, app download with QR code, three most-booked services (airport, business, hourly), Schiphol VIP Center and private-jet transfers, FAQ on fixed fares and cancellation. Five languages; phone and WhatsApp in the footer.",
+      "recognition": "Awwwards Nominee, 2024-06-24 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/silverdrive-personal-drivers",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Maison de Lysenne",
+      "url": "https://www.maisondelysenne.com/",
+      "why": "Paris private chauffeur and concierge: headline 'Avec Maison de Lysenne, votre trajet devient un art', one-line offer (chauffeur, private jets, concierge, available 24/7), Nous contacter button, service cards, fleet by class (Classe S, Range Rover, Rolls-Royce Ghost), address in Paris 16e. French and English. Phone and WhatsApp only in the footer; no booking form.",
+      "recognition": "Awwwards Nominee, 2026-01-14 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/maison-de-lysenne",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "City Taxis",
+      "url": "https://citytaxis.com/",
+      "why": "Taxi firm in Sheffield and five nearby towns: a top bar with one phone number per city and Online Booking, headline 'Going Places', app badges, Book / Track / Pay steps, 'In your city' numbers with Get a Quote, 4.8 rating from 94,000 passengers, named institutional clients. Dark slate #263239 with cyan #08d1eb. A banner now points to the Veezu app.",
+      "recognition": "Awwwards Nominee, 2020-01-16 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/city-taxis",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Automod",
+      "url": "https://automod.qc.ca/",
+      "why": "Quebec network of 30 windscreen and repair garages: promo bar with a branch finder, headline 'Spécialistes du pare-brise et des vitres d'auto au Québec', three services, Prendre rendez-vous three times, a 'preferred branch' picker, 500+ Google reviews, family-owned since 1987 and insurer-recommended badges. White, near-black #1a1919 and green #4bb04f; French only, no phone on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2021-03-25",
+      "source": "https://www.awwwards.com/sites/automod",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Drivelodge",
+      "url": "https://www.drivelodge.co.uk/",
+      "why": "UK van roof conversion workshop: headline 'Pop Top & High Top Roof Conversions', Get in touch and Search by model buttons, a fitter finder over 50+ approved fitters, best-selling roofs as cards, an online configurator by make and model, five-year guarantee, opening hours beside the contact form, phone and company number in the footer. Blue #437ef7 on white.",
+      "recognition": "Awwwards Honorable Mention, 2025-07-25",
+      "source": "https://www.awwwards.com/sites/drivelodge",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Semler Premium",
+      "url": "https://www.semlerpremium.dk/",
+      "why": "Danish dealer and workshop for Porsche, Bentley and Lamborghini: 'Book tid på værksted' in the header, a rotating model hero, an explanation of what an authorised dealer means, six after-sales service points, cars in stock with monthly lease prices, and a workshop booking widget per site (Copenhagen, Aarhus). Black, #f8f8f8 and a lime #eeff5b accent; no phone on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2026-01-15",
+      "source": "https://www.awwwards.com/sites/semler-premium",
+      "scale": "company",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A booking button that opens a long generic contact form (street address, company, country) for a simple transfer.",
+    "No fares, from-prices or package prices anywhere, so every visitor has to ask.",
+    "Stock photographs of a car on an empty road instead of the actual fleet, drivers or workshop.",
+    "No phone on the home page of a service people book at short notice.",
+    "Rating badges with no platform named, or figures that disagree on the same page (seen: 4.5 and 4.4 for the same Google reviews).",
+    "Old banners left in place (expired promotions, a COVID-19 menu item, a notice pointing to another brand).",
+    "A 'Get Started' or booking link that points to '#'."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, search 'chauffeur'",
+      "url": "https://www.awwwards.com/inspiration_search/chauffeur/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'limousine'",
+      "url": "https://www.awwwards.com/inspiration_search/limousine/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'taxi'",
+      "url": "https://www.awwwards.com/inspiration_search/taxi/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'car rental'",
+      "url": "https://www.awwwards.com/inspiration_search/car-rental/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'garage'",
+      "url": "https://www.awwwards.com/inspiration_search/garage/",
+      "access": "free"
+    },
+    {
+      "name": "WebLex, running a VTC business",
+      "url": "https://www.weblex.fr/articles/gerer-une-entreprise-de-vtc-ce-qu-il-faut-savoir",
+      "access": "free"
+    },
+    {
+      "name": "BrightLocal, Local Consumer Review Survey 2025",
+      "url": "https://www.brightlocal.com/research/local-consumer-review-survey-2025/",
+      "access": "free"
+    }
+  ]
+}

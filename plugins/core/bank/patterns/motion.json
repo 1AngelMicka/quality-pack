@@ -26,7 +26,8 @@
       "build": "A custom curve such as cubic-bezier(0.22, 1, 0.36, 1); the CSS keyword ease-out is weak.",
       "checks": [
         "premium-craft: motion numbers"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "ease-in-out-move",
@@ -44,7 +45,8 @@
       },
       "use_when": "Reordering, a panel sliding to a new position, a carousel step.",
       "avoid_when": "Entrances and exits.",
-      "build": "cubic-bezier(0.65, 0, 0.35, 1) or a spring with no bounce."
+      "build": "cubic-bezier(0.65, 0, 0.35, 1) or a spring with no bounce.",
+      "prevalence": "standard"
     },
     {
       "id": "menu-150-250ms",
@@ -62,7 +64,8 @@
       },
       "use_when": "Every dropdown, popover and tooltip.",
       "avoid_when": "Nothing.",
-      "build": "transition: transform 180ms, opacity 180ms with an ease-out curve; tooltips about 125 ms."
+      "build": "transition: transform 180ms, opacity 180ms with an ease-out curve; tooltips about 125 ms.",
+      "prevalence": "standard"
     },
     {
       "id": "press-scale",
@@ -80,7 +83,8 @@
       },
       "use_when": "Buttons and cards that can be pressed.",
       "avoid_when": "Text links; actions started from the keyboard.",
-      "build": ":active { transform: scale(0.97) } with a 100 ms transition (range 0.96 to 0.98)."
+      "build": ":active { transform: scale(0.97) } with a 100 ms transition (range 0.96 to 0.98).",
+      "prevalence": "standard"
     },
     {
       "id": "stagger-list",
@@ -97,7 +101,8 @@
       },
       "use_when": "First appearance of a list, a menu or search results.",
       "avoid_when": "Lists that update often; more than about ten items (the rest appear together).",
-      "build": "animation-delay: calc(var(--i) * 40ms) or Motion's stagger. With prefers-reduced-motion: no movement, a plain state change."
+      "build": "animation-delay: calc(var(--i) * 40ms) or Motion's stagger. With prefers-reduced-motion: no movement, a plain state change.",
+      "prevalence": "everywhere"
     },
     {
       "id": "popover-from-trigger",
@@ -115,7 +120,8 @@
       },
       "use_when": "Dropdowns, popovers, context menus.",
       "avoid_when": "Dialogs centred on screen (they scale from about 0.8 at the centre).",
-      "build": "transform-origin from the popover library's variable (Radix: --radix-popover-content-transform-origin), start at scale 0.95, never 0."
+      "build": "transform-origin from the popover library's variable (Radix: --radix-popover-content-transform-origin), start at scale 0.95, never 0.",
+      "prevalence": "standard"
     },
     {
       "id": "shorter-exit",
@@ -133,7 +139,8 @@
       },
       "use_when": "Every exit.",
       "avoid_when": "Nothing.",
-      "build": "Exit with opacity and about 4 px of blur, 20 % shorter than the entrance."
+      "build": "Exit with opacity and about 4 px of blur, 20 % shorter than the entrance.",
+      "prevalence": "standard"
     },
     {
       "id": "blur-fade",
@@ -151,7 +158,8 @@
       },
       "use_when": "Entrances of content blocks and icon swaps.",
       "avoid_when": "Large surfaces on low-end phones (blur is costly).",
-      "build": "From translateY(8px), filter: blur(8px), opacity 0; icon swaps with blur(2px)."
+      "build": "From translateY(8px), filter: blur(8px), opacity 0; icon swaps with blur(2px).",
+      "prevalence": "everywhere"
     },
     {
       "id": "crossfade",
@@ -169,7 +177,8 @@
       },
       "use_when": "Swapping an icon (copy → check), a label, an image.",
       "avoid_when": "Moving an element (move it instead).",
-      "build": "Two layers with opacity, scale and blur together; or a View Transition on the root."
+      "build": "Two layers with opacity, scale and blur together; or a View Transition on the root.",
+      "prevalence": "standard"
     },
     {
       "id": "shared-element",
@@ -187,7 +196,8 @@
       },
       "use_when": "Lists to detail, galleries, tab indicators.",
       "avoid_when": "Unrelated screens.",
-      "build": "View Transitions (view-transition-name) or Motion's layoutId."
+      "build": "View Transitions (view-transition-name) or Motion's layoutId.",
+      "prevalence": "common"
     },
     {
       "id": "no-bounce-routine",
@@ -205,7 +215,8 @@
       },
       "use_when": "Every routine state change.",
       "avoid_when": "Nothing.",
-      "build": "Springs with bounce 0 by default, about 0.15 for some life on a gesture."
+      "build": "Springs with bounce 0 by default, about 0.15 for some life on a gesture.",
+      "prevalence": "standard"
     },
     {
       "id": "success-pulse",
@@ -226,7 +237,8 @@
       "build": "scale 1 → 1.05 → 1 in under 300 ms, once. With prefers-reduced-motion: no movement, a plain state change.",
       "checks": [
         "sw look: LOOK-PULSE flags endless pulses"
-      ]
+      ],
+      "prevalence": "common"
     },
     {
       "id": "arc-motion",
@@ -243,7 +255,8 @@
       },
       "use_when": "Add-to-cart flights, a card thrown to a new column, a floating notch.",
       "avoid_when": "Short moves and routine transitions.",
-      "build": "offset-path with a curve, or animate x and y with different easings. With prefers-reduced-motion: no movement, a plain state change."
+      "build": "offset-path with a curve, or animate x and y with different easings. With prefers-reduced-motion: no movement, a plain state change.",
+      "prevalence": "rare"
     },
     {
       "id": "weight-momentum",
@@ -260,7 +273,8 @@
       },
       "use_when": "Sheets, carousels, cards thrown or swiped.",
       "avoid_when": "Clicks and keyboard actions.",
-      "build": "Pass the gesture's velocity to a spring (Motion, react-spring, Vaul for sheets); about 0.45 s, no bounce."
+      "build": "Pass the gesture's velocity to a spring (Motion, react-spring, Vaul for sheets); about 0.45 s, no bounce.",
+      "prevalence": "standard"
     },
     {
       "id": "rubber-band",
@@ -283,7 +297,8 @@
           "name": "emilkowalski/skills, apple-design and gestures (MIT)",
           "url": "https://github.com/emilkowalski/skills"
         }
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "view-transitions-pages",
@@ -301,7 +316,8 @@
       "use_when": "Portfolios, editorial sites, galleries, shops between list and product.",
       "avoid_when": "Apps where speed matters more than continuity.",
       "build": "Cross-document View Transitions (@view-transition { navigation: auto }) with view-transition-name on shared elements. With prefers-reduced-motion: no movement, a plain state change.",
-      "see": "scroll-animation"
+      "see": "scroll-animation",
+      "prevalence": "common"
     },
     {
       "id": "scroll-reveal",
@@ -321,7 +337,8 @@
       "see": "scroll-animation",
       "checks": [
         "sw look: LOOK-ANIMATE-ALL when on every section"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "scroll-progress-bar",
@@ -339,7 +356,8 @@
       "use_when": "Long articles and guides.",
       "avoid_when": "Short pages and apps.",
       "build": "animation-timeline: scroll(root) on transform: scaleX(); no JavaScript needed.",
-      "see": "scroll-animation"
+      "see": "scroll-animation",
+      "prevalence": "common"
     },
     {
       "id": "parallax",
@@ -356,7 +374,8 @@
       "use_when": "Brand, travel, event and storytelling pages, with restraint.",
       "avoid_when": "Reading and app screens; text layers.",
       "build": "Scroll-driven animations on transform only. With prefers-reduced-motion: no movement, a plain state change.",
-      "see": "scroll-animation"
+      "see": "scroll-animation",
+      "prevalence": "common"
     },
     {
       "id": "pinned-scrollytelling",
@@ -373,7 +392,8 @@
       "use_when": "Product tours, data stories, launches.",
       "avoid_when": "Anything people need to scan quickly; phones with long pinned sections.",
       "build": "position: sticky with steps; a third of the screen per step at most. With prefers-reduced-motion: no movement, a plain state change.",
-      "see": "scroll-animation"
+      "see": "scroll-animation",
+      "prevalence": "common"
     },
     {
       "id": "horizontal-scroll-section",
@@ -390,7 +410,8 @@
       "use_when": "Portfolios, timelines, collections.",
       "avoid_when": "Essential content (people miss it).",
       "build": "Sticky container plus a scroll-driven translateX; a visible way to skip it.",
-      "see": "scroll-animation"
+      "see": "scroll-animation",
+      "prevalence": "common"
     },
     {
       "id": "text-reveal",
@@ -406,7 +427,8 @@
       },
       "use_when": "One headline per page on brand and launch pages.",
       "avoid_when": "Body text, app screens.",
-      "build": "Split into spans, about 80 ms between words, never letter by letter on long text. With prefers-reduced-motion: no movement, a plain state change."
+      "build": "Split into spans, about 80 ms between words, never letter by letter on long text. With prefers-reduced-motion: no movement, a plain state change.",
+      "prevalence": "everywhere"
     },
     {
       "id": "marquee",
@@ -426,7 +448,8 @@
       "checks": [
         "BRD-01",
         "WCAG 2.2.2"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "magnetic-button",
@@ -446,7 +469,8 @@
       },
       "use_when": "Agencies, portfolios, creative studios, on one or two buttons.",
       "avoid_when": "Touch screens, forms, apps.",
-      "build": "@media (hover: hover) and (pointer: fine) only; translate up to about 8 px with a spring. With prefers-reduced-motion: no movement, a plain state change."
+      "build": "@media (hover: hover) and (pointer: fine) only; translate up to about 8 px with a spring. With prefers-reduced-motion: no movement, a plain state change.",
+      "prevalence": "everywhere"
     },
     {
       "id": "custom-cursor",
@@ -466,7 +490,8 @@
       },
       "use_when": "Creative portfolios and studios.",
       "avoid_when": "Any site where people must click precisely; touch screens.",
-      "build": "Keep the system cursor visible or use cursor: url(); follow with transform in requestAnimationFrame; hidden with reduced motion."
+      "build": "Keep the system cursor visible or use cursor: url(); follow with transform in requestAnimationFrame; hidden with reduced motion.",
+      "prevalence": "everywhere"
     },
     {
       "id": "text-scramble",
@@ -486,7 +511,8 @@
       },
       "use_when": "Developer tools, tech launches, a short label.",
       "avoid_when": "Body text and anything read by screen readers during the effect.",
-      "build": "Keep the real text in the DOM (aria-label) and animate a decorative copy. With prefers-reduced-motion: no movement, a plain state change."
+      "build": "Keep the real text in the DOM (aria-label) and animate a decorative copy. With prefers-reduced-motion: no movement, a plain state change.",
+      "prevalence": "common"
     },
     {
       "id": "number-ticker",
@@ -502,7 +528,8 @@
       },
       "use_when": "One real, sourced figure.",
       "avoid_when": "Invented or rounded statistics (BRD-01); several counters at once.",
-      "build": "Count with tabular figures and the final value in the DOM from the start. With prefers-reduced-motion: no movement, a plain state change."
+      "build": "Count with tabular figures and the final value in the DOM from the start. With prefers-reduced-motion: no movement, a plain state change.",
+      "prevalence": "everywhere"
     },
     {
       "id": "lottie-rive",
@@ -520,7 +547,8 @@
       },
       "use_when": "Illustrated onboarding, empty states, success moments, an animated logo.",
       "avoid_when": "Large files on the first screen; loops that never stop.",
-      "build": "lottie-web (MIT) or Rive runtime (MIT); lazy-loaded, paused off screen. With prefers-reduced-motion: no movement, a plain state change."
+      "build": "lottie-web (MIT) or Rive runtime (MIT); lazy-loaded, paused off screen. With prefers-reduced-motion: no movement, a plain state change.",
+      "prevalence": "common"
     }
   ]
 }

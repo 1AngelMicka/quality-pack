@@ -1,0 +1,129 @@
+{
+  "id": "pet-services",
+  "label": {
+    "fr": "Animaux : vétérinaire, toilettage",
+    "en": "Pet services: vet, grooming"
+  },
+  "expects": [
+    {
+      "rule": "The phone number is a tap-to-call link in the header of every page, next to the booking button.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A veterinary practice states what to do in an emergency and out of hours: the number to call and the after-hours clinic, with its address.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Opening hours are listed day by day, every day labelled, with holiday closures.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Online booking or an appointment request is one button away, and says which species and services can be booked online.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Grooming, boarding, daycare and walking prices are published, by size or duration; vets publish at least consultation and vaccination prices or a clear statement of how costs are given.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The team is shown with names, roles and qualifications, and photos of the real premises.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Species treated, service area (for mobile grooming, pet sitting) and parking or access are stated.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "4 of 6 sites read put a booking or appointment button in the header (Don't Board Me, Kindred, Folsom Ranch, My Dog Company); Folsom's goes to the contact page, Kindred's and My Dog Company's to external booking tools.",
+    "Only the 2 non-medical services publish prices (Don't Board Me from $30 a walk and monthly plans; My Dog Company CHF 29 an hour, 69 a half day, 99 a day); none of the 3 vets do.",
+    "4 of 6 give opening hours (Folsom 8am-8pm seven days, Kindred clinic hours, Kireys Mon-Sat 9-5, My Dog Company drop-off and pick-up times); Kindred's first set of hours has unlabelled days.",
+    "1 of 3 veterinary sites has an urgent-care page and an after-hours hospitals page (Folsom Ranch); Kindred and Doutor Mauro state nothing on emergencies.",
+    "4 of 6 show customer reviews or testimonials on the page (Folsom 23 five-star reviews, Kireys, Don't Board Me, Doutor Mauro); Kindred only links to Yelp.",
+    "2 of 6 use illustration rather than photography as the main visual (Kindred animated pet illustrations, Don't Board Me with a loading-screen ball game)."
+  ],
+  "sites": [
+    {
+      "name": "Don't Board Me",
+      "url": "https://dontboardme.com/",
+      "why": "In-home pet sitting and dog walking in San Diego-Carlsbad: headline 'A tired dog is a happy dog!', Book in the header, Book now repeated, three priced walking plans (single 30-minute walk from $30, twice a week $224/month, three times $312/month marked most popular), four numbered steps to a first 'Welcome Woof' meeting, phone with WhatsApp link, ten testimonials, Instagram photo grid.",
+      "recognition": "Awwwards Site of the Day, 2024-03-11",
+      "source": "https://www.awwwards.com/sites/dont-board-me",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Kindred Pet Care",
+      "url": "https://kindredpetcare.com/",
+      "why": "Veterinary practice in St. Charles, Illinois: headline 'Expertise meets compassion at Kindred Pet Care', Request an Appointment in the header (external booking), tap-to-call phone and address, service cards (preventive care, surgery, dental, pet drop-off), wellness plans with a Choose a plan button, four team headshots with names, animated pet illustrations. Hours partly unlabelled; no emergency information.",
+      "recognition": "Awwwards Honorable Mention, 2024-04-26",
+      "source": "https://www.awwwards.com/sites/kindred-pet-care",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "My Dog Company",
+      "url": "https://www.mydogcompany.com/",
+      "why": "Dog daycare, grooming and overnight care in Zürich, three addresses (one for sausage dogs only): banner 'enrichment based dog daycare, custom grooming, exclusive holiday & overnight care', menu spa / daycare / membership / booking, prices in CHF (29 an hour, 69 a half day, 99 a full day), drop-off from 7:30 and pick-up 4:15-6:30, external booking. No phone number on the page.",
+      "recognition": "Awwwards Honorable Mention, 2023-04-26",
+      "source": "https://www.awwwards.com/sites/my-dog-company",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Folsom Ranch Veterinary Hospital",
+      "url": "https://folsomranchvet.com/",
+      "why": "Privately owned vet in Folsom, California: 'General Practice & Urgent Care', 'open 7 days a week', 'Always Accepting New Patients', Book an appointment and Contact us in the header, click-to-call (916) 936-1130, hours 8am-8pm, street address, Urgent Care and After Hour Hospitals pages, 23 named five-star reviews, a hiring banner.",
+      "recognition": "WebAwards Best General Interest Website, 2024",
+      "source": "https://webaward.org/winner/37348/wsi-wins-2024-webaward-for-folsom-ranch-veterinary-hospital.html",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Kirey's Pet Salon & Hotel",
+      "url": "https://www.kireys.org/",
+      "why": "Grooming salon, mobile grooming van, pet hotel and pet taxi in Mission, Texas: headline 'Taking Care Of Your Pets As If They Were Our Own', four service icons, phone, address, hours Mon-Sat 9-5 closed Sunday, a list of eleven towns served, 'Hablamos Español!'. No prices or booking form, and template copy ('Insert a video that shows the benefits...') left on the page.",
+      "recognition": "Awwwards Nominee, 2021-07-13 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/kireys-mobile-grooming",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Clínica Veterinária Doutor Mauro",
+      "url": "https://www.clinicadrmauro.com.br/",
+      "why": "Small-animal vet in João Pessoa, Brazil, in Portuguese: headline 'Buscamos a excelência' under the vet's name, six-item menu (clinic, testimonials, facilities, services, location, contact), two landline numbers, street address with a See map button, testimonials, the vet's specialities (dermatology, surgery, traumatology). No hours; the phone icon links to '#'.",
+      "recognition": "Awwwards Honorable Mention, 2014-10-17",
+      "source": "https://www.awwwards.com/sites/clinica-veterinaria-doutor-mauro",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A veterinary site with no emergency or out-of-hours instructions.",
+    "A phone icon that links to '#' instead of a tel: link.",
+    "Opening hours listed without the day each line belongs to.",
+    "Template text left on the page ('Insert a video that shows...').",
+    "A booking button that only leads to a generic contact form with no sign of available slots.",
+    "Grooming or boarding with 'contact us for prices' and no from-price by dog size.",
+    "A domain that now redirects to another business without notice."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, pet sitting and pet care searches",
+      "url": "https://www.awwwards.com/inspiration_search/pet%20sitting/",
+      "access": "free"
+    },
+    {
+      "name": "WebAwards, Folsom Ranch Veterinary Hospital winner page",
+      "url": "https://webaward.org/winner/37348/wsi-wins-2024-webaward-for-folsom-ranch-veterinary-hospital.html",
+      "access": "free"
+    }
+  ]
+}

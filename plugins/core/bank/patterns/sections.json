@@ -27,7 +27,8 @@
       },
       "use_when": "SaaS, apps, tools.",
       "avoid_when": "Products with nothing visual yet.",
-      "build": "A real screen at a readable size, cropped on what matters."
+      "build": "A real screen at a readable size, cropped on what matters.",
+      "prevalence": "common"
     },
     {
       "id": "hero-two-buttons",
@@ -46,7 +47,8 @@
       "build": "Primary filled, secondary as a text link or outline.",
       "checks": [
         "deslop tells: hero with two buttons"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "eyebrow-badge",
@@ -65,7 +67,8 @@
       "build": "A link to the news, removed when it is old.",
       "checks": [
         "sw look: LOOK-BADGE, LOOK-EYEBROWS"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "stat-band",
@@ -84,7 +87,8 @@
       "build": "Tabular figures, the source in a note.",
       "checks": [
         "BRD-01"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "three-steps",
@@ -103,7 +107,8 @@
       "build": "Steps with a real visual each.",
       "checks": [
         "sw look: LOOK-NUMBERED"
-      ]
+      ],
+      "prevalence": "everywhere"
     },
     {
       "id": "logo-wall",
@@ -123,7 +128,8 @@
       "checks": [
         "BRD-01",
         "LEG-06"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "testimonials",
@@ -142,7 +148,8 @@
       "build": "Specific result in the quote, a link to the source when public.",
       "checks": [
         "BRD-01"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "pricing-toggle",
@@ -166,7 +173,8 @@
       "checks": [
         "SUB-08",
         "PAY-06"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "comparison-table",
@@ -187,7 +195,8 @@
       },
       "use_when": "Three or more plans, or a product against alternatives (honestly).",
       "avoid_when": "Two plans (a list is enough).",
-      "build": "Sticky header row, ticks with text for screen readers, the recommended plan marked."
+      "build": "Sticky header row, ticks with text for screen readers, the recommended plan marked.",
+      "prevalence": "standard"
     },
     {
       "id": "sticky-mobile-cta",
@@ -210,7 +219,8 @@
       },
       "use_when": "Product pages, bookings, sign-up pages.",
       "avoid_when": "When it covers content or other fixed buttons.",
-      "build": "Safe-area padding, hidden while the keyboard is open."
+      "build": "Safe-area padding, hidden while the keyboard is open.",
+      "prevalence": "standard"
     },
     {
       "id": "cta-band",
@@ -226,7 +236,8 @@
       },
       "use_when": "Long pages.",
       "avoid_when": "Short pages where the action is still visible.",
-      "build": "One action, a sentence that answers the last doubt."
+      "build": "One action, a sentence that answers the last doubt.",
+      "prevalence": "standard"
     },
     {
       "id": "carousel-peek",
@@ -246,7 +257,8 @@
       "build": "About a quarter to a third of the next card visible; scroll-snap; arrows on desktop.",
       "checks": [
         "ergonomics: closure"
-      ]
+      ],
+      "prevalence": "common"
     },
     {
       "id": "newsletter-signup",
@@ -267,7 +279,8 @@
       "checks": [
         "PRV-03",
         "LEG build rule"
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "map-and-hours",
@@ -290,7 +303,8 @@
       },
       "use_when": "Restaurants, shops, local services, venues.",
       "avoid_when": "Online-only businesses.",
-      "build": "Static map image linking to a maps app (no heavy embed on load), hours in a table, LocalBusiness structured data."
+      "build": "Static map image linking to a maps app (no heavy embed on load), hours in a table, LocalBusiness structured data.",
+      "prevalence": "standard"
     }
   ]
 }

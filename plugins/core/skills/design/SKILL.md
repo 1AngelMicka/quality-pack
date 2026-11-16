@@ -38,7 +38,7 @@ Otherwise, say which steps will run and which are skipped and why, then go on wi
 
 ## 1. Direction (`design-direction`)
 
-Run it when `DESIGN.md` is missing, its tokens say "to define", `sw tokens` fails, or the user asks for a new look. Otherwise skip it and say so. This step needs the user: their references and anti-references, then their choice between the style tiles. Do not invent references to go faster.
+It also finds the signature moment from the trade and mixes the references axis by axis (DIR-11, DIR-12). Run it when `DESIGN.md` is missing, its tokens say "to define", `sw tokens` fails, or the user asks for a new look. Otherwise skip it and say so. This step needs the user: their references and anti-references, then their choice between the style tiles. Do not invent references to go faster.
 
 ## 2. Organisation (`design-screens`)
 

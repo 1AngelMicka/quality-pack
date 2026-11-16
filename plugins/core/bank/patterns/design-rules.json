@@ -1,0 +1,2588 @@
+{
+  "family": "design-rules",
+  "kind": "pattern",
+  "label": {
+    "fr": "Règles de design",
+    "en": "Design rules"
+  },
+  "summary": "Concrete, numeric and sourced design rules (typography, colour, layout, Gestalt, composition, imagery, icons, interaction, UI copy) that a designer can apply and explain. Each rule says when to break it and how to build it in CSS or tokens; 'evidence' states how strong the backing is (research, guideline, convention, house). It goes deeper than the token rules of design-direction and the finishing details of premium-craft and does not repeat them.",
+  "entries": [
+    {
+      "id": "rule-type-scale-ratio-by-surface",
+      "label": {
+        "fr": "Ratio d'échelle selon la surface",
+        "en": "Scale ratio by surface"
+      },
+      "what": "A modular scale multiplies a base size by one ratio (Bringhurst: a prearranged set of harmonious proportions). Pick the ratio from the job: about 1.125–1.2 for dense app screens, 1.2–1.25 for reading, 1.333 up to 1.618 for persuasive or editorial pages where one headline must dominate. Tim Brown's example uses 1.618 from an 18 px base.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Setting tokens for a new product; explaining why headings feel too loud or too flat.",
+      "avoid_when": "A dense tool where the top step would exceed the space of a toolbar; a ratio above 1.333 on a phone, where 5 steps of 1.618 put the top heading above 100 px.",
+      "build": "--ratio: 1.2; --step-0: 1rem; --step-1: calc(var(--step-0) * var(--ratio)); ... Round to whole px at render. Use 5–7 steps, not every step the maths produces.",
+      "prevalence": "standard",
+      "evidence": "house",
+      "sources": [
+        {
+          "name": "Tim Brown, A List Apart: More meaningful typography",
+          "url": "https://alistapart.com/article/more-meaningful-typography/"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-scale-double-strand",
+      "label": {
+        "fr": "Échelle à deux brins",
+        "en": "Double-stranded scale"
+      },
+      "what": "A scale can start from two numbers: the body size and an 'important number' from the layout, such as a column width, a media width or a caption size. Tim Brown builds one from 18 px and 190 px at 1.618, and treats the results as suggestions to round, combine or ignore, not as law.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Editorial pages or landing pages where an image, video or column width is fixed and type should relate to it.",
+      "avoid_when": "App UI built on a 4 px spacing grid, where scale values that do not land on the grid create drift.",
+      "build": "Generate both series with the same ratio, merge them into one sorted list, round to the nearest px (or the nearest 4 px for spacing), and keep only the values you use.",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "Tim Brown, A List Apart: More meaningful typography",
+          "url": "https://alistapart.com/article/more-meaningful-typography/"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-scale-compress-on-phone",
+      "label": {
+        "fr": "Échelle compressée sur téléphone",
+        "en": "Compress the scale on phones"
+      },
+      "what": "Headings shrink on small screens while body text stays put. GOV.UK keeps body at 19/25 px on every screen but takes its XL heading from 48 px to 32 px and its L heading from 36 px to 27 px below 640 px. The ratio between levels falls on phones; hierarchy is kept by weight and space.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "phone"
+        ]
+      },
+      "use_when": "Any responsive type scale.",
+      "avoid_when": "A desktop-only tool with a fixed window size.",
+      "build": "Define two scales (phone ratio about 1.15–1.2, desktop about 1.25–1.333) and interpolate headings with clamp(min, rem + vw, max); keep body fixed at 1rem or 1.0625rem.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "GOV.UK Design System: Type scale",
+          "url": "https://design-system.service.gov.uk/styles/type-scale/"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-optical-size-axis",
+      "label": {
+        "fr": "Taille optique",
+        "en": "Optical size"
+      },
+      "what": "Fonts with an opsz axis draw small text with thicker strokes and looser forms and large text with more stroke contrast. Browsers apply it automatically (font-optical-sizing: auto). Material Symbols carry the same axis from 20 to 48. A face drawn for 64 px headlines looks spindly at 12 px, and a text cut looks clumsy at 64 px.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Choosing families: prefer one with an opsz axis or separate Text and Display cuts.",
+      "avoid_when": "When an unusual look is wanted on purpose (a text cut set huge for a blunt, sturdy headline).",
+      "build": "Leave font-optical-sizing: auto. Never set font-variation-settings: 'opsz' on the root, it freezes one size everywhere. For families without the axis, map --font-display to sizes of about 32 px and above.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "MDN: font-optical-sizing",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/font-optical-sizing"
+        },
+        {
+          "name": "Google Fonts: Material Symbols guide",
+          "url": "https://developers.google.com/fonts/docs/material_symbols"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-measure-latin",
+      "label": {
+        "fr": "Longueur de ligne (alphabet latin)",
+        "en": "Line length for Latin text"
+      },
+      "what": "Body lines of 45–90 characters including spaces (Butterick), 50–75 as the target (Baymard), never more than 80 (WCAG 1.4.8). GOV.UK caps at 75. Baymard saw users tire of or abandon text of 100+ characters per line. Lines too short break rhythm and make readers skip words.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Every block of running text: articles, docs, product descriptions, help panels.",
+      "avoid_when": "Labels, table cells and short UI strings, where measure is not the constraint; display headlines, which can run shorter.",
+      "build": "p, li { max-width: 65ch; } (Baymard suggests about 70ch or 34em; adjust per font, since ch is the width of '0'). Constrain the text column, not the page.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "Butterick, Practical Typography: line length",
+          "url": "https://practicaltypography.com/line-length.html"
+        },
+        {
+          "name": "Baymard Institute: Readability, the optimal line length",
+          "url": "https://baymard.com/blog/line-length-readability"
+        },
+        {
+          "name": "W3C, Understanding WCAG SC 1.4.8 Visual Presentation",
+          "url": "https://www.w3.org/WAI/WCAG21/Understanding/visual-presentation.html"
+        },
+        {
+          "name": "GOV.UK Design System: Layout",
+          "url": "https://design-system.service.gov.uk/styles/layout/"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-measure-cjk",
+      "label": {
+        "fr": "Longueur de ligne en chinois, japonais, coréen",
+        "en": "Line length for CJK text"
+      },
+      "what": "Chinese, Japanese and Korean glyphs carry more meaning each and are full-width, so the ceiling halves: WCAG 1.4.8 sets 40 CJK characters per line instead of 80. Baymard repeats the 40 limit. Applying a Latin 65ch rule to CJK text gives lines about twice too long.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Localised products that ship CJK content.",
+      "avoid_when": "Mixed UI strings that are short anyway.",
+      "build": "Use the ic unit (width of the CJK water ideograph): :lang(ja) p, :lang(zh) p, :lang(ko) p { max-width: 40ic; }. Set lang on <html> so the rule applies.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "W3C, Understanding WCAG SC 1.4.8 Visual Presentation",
+          "url": "https://www.w3.org/WAI/WCAG21/Understanding/visual-presentation.html"
+        },
+        {
+          "name": "Baymard Institute: Readability, the optimal line length",
+          "url": "https://baymard.com/blog/line-length-readability"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-measure-phone",
+      "label": {
+        "fr": "Longueur de ligne sur téléphone",
+        "en": "Measure on phones"
+      },
+      "what": "In portrait, a phone limits the line for you; Baymard warns the problem returns in landscape, where lines pass 80 characters unless constrained. At 16 px body in a 360 px window with 16 px gutters a line holds roughly 35–45 characters, under Butterick's 45 minimum, which is why short columns need hyphenation and left alignment more than wide ones.",
+      "fits": {
+        "surfaces": [
+          "phone",
+          "read"
+        ]
+      },
+      "use_when": "Reading screens on phones; checking landscape.",
+      "avoid_when": "Phone layouts whose text is mostly labels and buttons.",
+      "build": "Keep max-width: 65ch also on phones so landscape stays bounded; keep side gutters at 16 px; enable hyphens: auto with lang set for long-word languages (German, Finnish, French) below 480 px.",
+      "prevalence": "standard",
+      "evidence": "house",
+      "sources": [
+        {
+          "name": "Baymard Institute: Readability, the optimal line length",
+          "url": "https://baymard.com/blog/line-length-readability"
+        },
+        {
+          "name": "Butterick, Practical Typography: line length",
+          "url": "https://practicaltypography.com/line-length.html"
+        },
+        {
+          "name": "Butterick, Practical Typography: hyphenation",
+          "url": "https://practicaltypography.com/hyphenation.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-leading-inverse-size",
+      "label": {
+        "fr": "Interlignage inverse à la taille",
+        "en": "Leading shrinks as size grows"
+      },
+      "what": "Line height runs 120–145 % of the size for most text (Butterick) and drops as size rises. Real systems: GOV.UK body 19/25 (1.32), heading 48/50 (1.04); Apple iOS body 17/22 (1.29), Large Title 34/41 (1.2). WCAG 1.4.8 (AAA) asks 1.5 inside paragraphs. Smaller-looking faces need less.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Setting line-height tokens for each step of the scale.",
+      "avoid_when": "AAA reading products, where 1.5 is the floor for body; very short display lines in a tight lockup, which can go under 1.0.",
+      "build": "Give each size token its own line-height: --lh-body: 1.5; --lh-ui: 1.3; --lh-h3: 1.25; --lh-h1: 1.05. Unitless values, so they follow the font size.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Butterick, Practical Typography: line spacing",
+          "url": "https://practicaltypography.com/line-spacing.html"
+        },
+        {
+          "name": "GOV.UK Design System: Type scale",
+          "url": "https://design-system.service.gov.uk/styles/type-scale/"
+        },
+        {
+          "name": "Apple HIG: Typography",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/typography"
+        },
+        {
+          "name": "W3C, Understanding WCAG SC 1.4.8 Visual Presentation",
+          "url": "https://www.w3.org/WAI/WCAG21/Understanding/visual-presentation.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-tracking-by-size",
+      "label": {
+        "fr": "Approche selon la taille",
+        "en": "Tracking by size"
+      },
+      "what": "Letter spacing is size-dependent. Apple's SF Pro table: +6/1000 em at 11 pt, −26 at 17 pt, +14 at 28 pt, 0 at 80 pt. Inter publishes tracking = −0.0223 + 0.185·e^(−0.1745·size). Butterick: lowercase under 9 pt may need more, headlines may need less.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Any family used across a wide size range, above all a grotesque used for both UI and headlines.",
+      "avoid_when": "Families with an opsz axis or separate display cuts, whose spacing is already adjusted; never tighten until letters touch.",
+      "build": "Store tracking with each size token, in em: --tracking-caption: 0.01em; --tracking-body: 0; --tracking-h1: -0.02em. Derive values from the family's own table or formula when published.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Apple HIG: Typography",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/typography"
+        },
+        {
+          "name": "Rasmus Andersson, Inter: dynamic metrics (archived)",
+          "url": "https://d.rsms.me/inter-website/v3/dynmetrics/"
+        },
+        {
+          "name": "Butterick, Practical Typography: letterspacing",
+          "url": "https://practicaltypography.com/letterspacing.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-all-caps-short",
+      "label": {
+        "fr": "Capitales pour moins d'une ligne",
+        "en": "All caps only under one line"
+      },
+      "what": "All caps read slower than lowercase at body sizes. Use them only for text shorter than one line (labels, overlines, small headers), always letterspaced 5–12 % (0.05–0.12em), with kerning on and cap-height figures. Never set a paragraph or a whole sentence heading in caps to emphasise it.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Overlines, tab labels, table headers, badges.",
+      "avoid_when": "Body copy, buttons longer than two words, long headings, any text that will be translated into languages whose words run long.",
+      "build": "Type the text normally and apply text-transform: uppercase; letter-spacing: 0.08em; font-variant-numeric: lining-nums; font-feature-settings: 'case' 1 where the font has case-sensitive forms.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Butterick, Practical Typography: all caps",
+          "url": "https://practicaltypography.com/all-caps.html"
+        },
+        {
+          "name": "Butterick, Practical Typography: letterspacing",
+          "url": "https://practicaltypography.com/letterspacing.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-three-levels",
+      "label": {
+        "fr": "Trois niveaux de hiérarchie",
+        "en": "Three levels of hierarchy"
+      },
+      "what": "Use no more than 3 type sizes for hierarchy (NN/g), and no more than 3 heading levels, ideally 2 (Butterick). NN/g's web example: body 14–16 px, subheaders 18–22 px, headers up to 32 px, with no more than 2 large elements on a screen. Extra distinctions come from weight, colour or space, not more sizes.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Reviewing a screen that looks noisy; setting the scale tokens in use.",
+      "avoid_when": "Long documentation with deep nesting, where a 4th level is needed: make it bold body size, not a new size.",
+      "build": "Expose only --text-sm, --text-base, --text-lg (plus one display size on persuasive pages) to components; lint for font sizes outside the token list.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: Visual hierarchy in UX",
+          "url": "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/"
+        },
+        {
+          "name": "NN/g: 5 principles of visual design in UX",
+          "url": "https://www.nngroup.com/articles/principles-visual-design/"
+        },
+        {
+          "name": "Butterick, Practical Typography: headings",
+          "url": "https://practicaltypography.com/headings.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-heading-subtle-step",
+      "label": {
+        "fr": "Titres : le plus petit écart visible",
+        "en": "Headings: smallest visible step"
+      },
+      "what": "In running documents a heading only needs the smallest size change that is visibly different: for 12 pt text, 12.5–13 pt, not 14–15 (Butterick). Bold is optional; space above and below is the subtlest effective emphasis. Heavy bold faces can drop half a point. No underline, no all-caps sentences, no centring.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Documentation, settings, help, long forms, reports.",
+      "avoid_when": "Persuasive pages, where one headline must carry the screen and a 2–3× jump is intended.",
+      "build": "h3 { font-size: 1.0625rem; font-weight: 600; margin-block: 2em 0.5em; } and keep hyphenation off in headings.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Butterick, Practical Typography: headings",
+          "url": "https://practicaltypography.com/headings.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-heading-spacing-asymmetry",
+      "label": {
+        "fr": "Espace autour des titres asymétrique",
+        "en": "Asymmetric space around headings"
+      },
+      "what": "A heading must sit closer to the text it introduces than to the section before it, or it reads as a caption of the previous block (NN/g proximity). A practical ratio is space above at least twice the space below.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Every heading inside a flow of content.",
+      "avoid_when": "Headings that sit alone at the top of a card or panel, where the container padding sets the space.",
+      "build": "h2 { margin-block: 2.5rem 0.75rem; } h3 { margin-block: 2rem 0.5rem; } With text-box-trim the visible gaps match these values.",
+      "prevalence": "standard",
+      "evidence": "house",
+      "sources": [
+        {
+          "name": "NN/g: Proximity principle in visual design",
+          "url": "https://www.nngroup.com/articles/gestalt-proximity/"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-figures-styles",
+      "label": {
+        "fr": "Styles de chiffres",
+        "en": "Figure styles"
+      },
+      "what": "Lining figures sit at cap height and fit everywhere; oldstyle figures blend with lowercase prose but never with capitals. Tabular figures share one width for columns; proportional figures space evenly in body text. The two choices are independent, and many fonts default to tabular lining.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Editorial prose with many numbers (proportional, possibly oldstyle); tables, prices and timers (tabular lining).",
+      "avoid_when": "All-caps or UI labels (no oldstyle); body prose (avoid tabular, it leaves gaps around 1).",
+      "build": "body { font-variant-numeric: proportional-nums; } .prose-serif { font-variant-numeric: oldstyle-nums proportional-nums; } td.num, .price, .timer { font-variant-numeric: tabular-nums lining-nums; }",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Butterick, Practical Typography: alternate figures",
+          "url": "https://practicaltypography.com/alternate-figures.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-hyphenation",
+      "label": {
+        "fr": "Césure",
+        "en": "Hyphenation"
+      },
+      "what": "Hyphenation is mandatory for justified text, optional for left-aligned text, and becomes essential as columns shorten; it should be off in headings (Butterick). Browsers hyphenate only when the element has a lang attribute and a dictionary exists. Default limits are 5-letter words, 2 letters before and after the break.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "phone"
+        ]
+      },
+      "use_when": "Narrow columns, phones, languages with long compounds (German, Dutch, Finnish).",
+      "avoid_when": "Headings, UI labels, code, product names, URLs.",
+      "build": "html[lang] p { hyphens: auto; hyphenate-limit-chars: 6 3 2; } h1, h2, h3, button, label { hyphens: manual; } Use &shy; inside long brand words.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Butterick, Practical Typography: hyphenation",
+          "url": "https://practicaltypography.com/hyphenation.html"
+        },
+        {
+          "name": "MDN: hyphens",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/hyphens"
+        },
+        {
+          "name": "MDN: hyphenate-limit-chars",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/hyphenate-limit-chars"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-no-justify",
+      "label": {
+        "fr": "Pas de texte justifié à l'écran",
+        "en": "No justified text on screen"
+      },
+      "what": "WCAG 1.4.8 (AAA) asks that text is not justified: uneven word spaces create rivers of white and some readers with cognitive disabilities struggle with it. Browsers have weak hyphenation control, so justified web text produces poor breaks.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Default for all running text.",
+      "avoid_when": "Print-like editorial layouts with wide columns, hyphens: auto, and checked output in each language; even then never on phones.",
+      "build": "text-align: start; (start, not left, so right-to-left languages flip). Remove text-align: justify from CMS styles.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "W3C, Understanding WCAG SC 1.4.8 Visual Presentation",
+          "url": "https://www.w3.org/WAI/WCAG21/Understanding/visual-presentation.html"
+        },
+        {
+          "name": "Butterick, Practical Typography: hyphenation",
+          "url": "https://practicaltypography.com/hyphenation.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-pairing-roles",
+      "label": {
+        "fr": "Associer les polices par rôle",
+        "en": "Pair fonts by role"
+      },
+      "what": "Most documents can take a second font, few a third, almost none four (Butterick). Give each a consistent job (headings vs body, content vs edge elements) and switch only at paragraph breaks. Serif with sans is not required; subtle contrast often beats strong contrast. Shortcut: fonts by the same designer.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Choosing families for a brand.",
+      "avoid_when": "A brief asking for a deliberately clashing, poster-like look: then one font must still own all running text.",
+      "build": "--font-display and --font-text (plus --font-mono for data/code), never a third decorative family in components. Check that x-heights roughly match when two faces sit on one line.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Butterick, Practical Typography: mixing fonts",
+          "url": "https://practicaltypography.com/mixing-fonts.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-paragraph-spacing",
+      "label": {
+        "fr": "Espace entre paragraphes",
+        "en": "Paragraph spacing"
+      },
+      "what": "Mark paragraphs either with space (50–100 % of the body size, set after the paragraph) or with a first-line indent of 1–4× the size, never both (Butterick). WCAG 1.4.8 (AAA) asks paragraph spacing of at least 1.5× the line spacing, more generous than Butterick: AAA products follow WCAG.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Articles, docs, long descriptions.",
+      "avoid_when": "Chat bubbles and lists, where each item is its own block.",
+      "build": "p + p { margin-block-start: 0.75em; } (Butterick range) or, for AAA, p + p { margin-block-start: 1.5lh; }. For indents: p + p { text-indent: 1.5em; margin: 0; }.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Butterick, Practical Typography: space between paragraphs",
+          "url": "https://practicaltypography.com/space-between-paragraphs.html"
+        },
+        {
+          "name": "Butterick, Practical Typography: first-line indents",
+          "url": "https://practicaltypography.com/first-line-indents.html"
+        },
+        {
+          "name": "W3C, Understanding WCAG SC 1.4.8 Visual Presentation",
+          "url": "https://www.w3.org/WAI/WCAG21/Understanding/visual-presentation.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-body-size-by-platform",
+      "label": {
+        "fr": "Taille du corps selon la plateforme",
+        "en": "Body size by platform"
+      },
+      "what": "Body size depends on the platform and viewing distance: web 15–25 px (Butterick), GOV.UK 19 px, iOS default 17 pt with an 11 pt minimum, macOS 13 pt with a 10 pt minimum (Apple HIG). Desktop tools sit smaller than marketing pages. Text must still scale to 200 %.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Setting --text-base per product type.",
+      "avoid_when": "Copying a website's 18 px body into a dense macOS-style desktop app, or a 13 px app body onto a reading site.",
+      "build": "Reading sites 17–20 px; web apps 14–16 px (16 px for inputs on phones); desktop apps 13–14 px with Dynamic Type or OS text size respected.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Butterick, Practical Typography: point size",
+          "url": "https://practicaltypography.com/point-size.html"
+        },
+        {
+          "name": "GOV.UK Design System: Type scale",
+          "url": "https://design-system.service.gov.uk/styles/type-scale/"
+        },
+        {
+          "name": "Apple HIG: Typography",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/typography"
+        },
+        {
+          "name": "Apple HIG: Accessibility",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/accessibility"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-centered-text-short",
+      "label": {
+        "fr": "Centrer seulement le court",
+        "en": "Center only short text"
+      },
+      "what": "Centred text is overused: keep it for short phrases and titles. Never centre a block of text: two ragged edges make it harder to read and to align with anything else. For a centred title on several lines, break lines where the meaning breaks.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Hero titles, empty states, short confirmations.",
+      "avoid_when": "Paragraphs, lists, forms, any text over about 3 lines.",
+      "build": "Centre the container, left-align the text inside. For centred headings use text-wrap: balance instead of manual <br> where possible.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Butterick, Practical Typography: centered text",
+          "url": "https://practicaltypography.com/centered-text.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-type-vertical-rhythm",
+      "label": {
+        "fr": "Rythme vertical",
+        "en": "Vertical rhythm"
+      },
+      "what": "A strict baseline grid is hard to keep on the web, but line heights and spaces drawn from one base unit keep blocks aligned. Material v1 aligns type to an 8 dp baseline grid. text-box-trim (Baseline 2026) removes the space a font adds above caps and below the baseline, so a 24 px gap measures 24 px.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Text-heavy pages and cards side by side whose first lines should align.",
+      "avoid_when": "Mixed-content feeds where images and embeds break the grid anyway.",
+      "build": "Make every line-height × size a multiple of 4 px (16/24, 20/28, 32/40); use the lh unit for gaps between text blocks; h1, h2, p { text-box: trim-both cap alphabetic; } with a fallback.",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "Material Design (v1): Responsive UI, grid",
+          "url": "https://m1.material.io/layout/responsive-ui.html"
+        },
+        {
+          "name": "MDN: text-box-trim",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/text-box-trim"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-60-30-10",
+      "label": {
+        "fr": "Règle 60-30-10",
+        "en": "The 60-30-10 split"
+      },
+      "what": "Borrowed from interior design: about 60 % dominant (surfaces), 30 % secondary (structure, panels), 10 % accent (actions). It is a convention, not a finding. NN/g gives a related limit: no more than 2 primary and 2 secondary colours in simple designs, and no more than 3 contrast variations in complex ones.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Marketing pages, brand sites, hero sections.",
+      "avoid_when": "App screens and dashboards, where the accent should be a few per cent and data colours follow meaning; dark themes, where 10 % of saturated accent glows too much.",
+      "build": "Count pixel share with a screenshot histogram; on app screens aim accent under 5 % and let neutrals carry 90 %+.",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "NN/g: Visual hierarchy in UX",
+          "url": "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-accent-means-action",
+      "label": {
+        "fr": "L'accent signifie l'action",
+        "en": "Accent colour means action"
+      },
+      "what": "Reserve the accent for what can be clicked and the main call to action. NN/g: non-clickable items in link colour make users assume they are interactive; same-coloured buttons look equally important. Android: assign the primary role to crucial calls to action and keep brand colours sparing.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Every screen with actions.",
+      "avoid_when": "Brand illustrations or hero art, which can use brand hues as long as they never look like buttons.",
+      "build": "--accent only on .btn-primary, links, focus, selected state. Decorative brand colour goes to --brand-* tokens that components may not use for text.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: Similarity principle in visual design",
+          "url": "https://www.nngroup.com/articles/gestalt-similarity/"
+        },
+        {
+          "name": "Android Developers: Color for mobile design",
+          "url": "https://developer.android.com/design/ui/mobile/guides/styles/color"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-oklch-lightness-steps",
+      "label": {
+        "fr": "Pas de luminosité OKLCH",
+        "en": "OKLCH lightness steps"
+      },
+      "what": "In OKLCH, equal L means equal perceived lightness across hues, so states can be derived by moving L only. Evil Martians: a background with L ≥ 0.87 contrasts well with black text; chroma stays under 0.37 in sRGB and P3, and each hue reaches its maximum chroma at a different L. Still verify contrast with a real formula.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Deriving hover, pressed, disabled and surface steps from one accent.",
+      "avoid_when": "Colours near the gamut edge, where a lightness change also clips chroma and can shift hue.",
+      "build": "--accent-hover: oklch(from var(--accent) calc(l - 0.06) c h); in dark: calc(l + 0.06). Keep L steps of 0.04–0.08 between rest, hover and pressed (house values).",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Evil Martians: OKLCH in CSS",
+          "url": "https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-accent-per-theme",
+      "label": {
+        "fr": "Un accent par thème",
+        "en": "One accent value per theme"
+      },
+      "what": "An accent that passes 4.5:1 as text on white rarely passes on a near-black surface. Define the accent per theme: darker in light themes, lighter in dark themes (Material dark themes use lighter tonal variants). Apple asks 4.5:1 minimum and targets 7:1 for custom colours, especially small text.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Any product with light and dark themes.",
+      "avoid_when": "Accent used only as a large fill with white text on top, where one value can work if it passes 4.5:1 against that text.",
+      "build": "--accent: oklch(0.52 0.16 H) in light; --accent: oklch(0.78 0.13 H) in dark (house starting points); test text-on-surface and on-accent pairs in both themes.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Apple HIG: Dark Mode",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/dark-mode"
+        },
+        {
+          "name": "Google codelab: Design a dark theme with Material",
+          "url": "https://codelabs.developers.google.com/codelabs/design-material-darktheme"
+        },
+        {
+          "name": "Android Developers: Color for mobile design",
+          "url": "https://developer.android.com/design/ui/mobile/guides/styles/color"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-neutrals-from-source",
+      "label": {
+        "fr": "Neutres issus de la couleur source",
+        "en": "Neutrals derived from the source colour"
+      },
+      "what": "Material 3 derives five key colours from one source colour, including two neutrals, so greys carry a trace of the brand hue. Pure grey next to a saturated brand looks foreign. The tint is a temperature choice: warm neutrals read softer, cool neutrals read technical.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Building surface, border and secondary text scales.",
+      "avoid_when": "A brief that asks for strict neutrality (photography portfolios, colour-critical tools), where tinted greys distort perception of the content.",
+      "build": "--neutral-H = brand hue; chroma 0.005–0.02 for surfaces, a little more for borders; generate with Material Theme Builder or an OKLCH ramp.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Android Developers: Color for mobile design",
+          "url": "https://developer.android.com/design/ui/mobile/guides/styles/color"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-semantic-consistency",
+      "label": {
+        "fr": "Couleurs sémantiques constantes",
+        "en": "Consistent semantic colours"
+      },
+      "what": "A colour that carries meaning must carry it everywhere: Android's example of one error field in red and another in purple shows how users mis-skim a form. Too many semantic colours confuse; too many decorative colours overwhelm. Use the system error role and add custom semantic roles only when a meaning repeats.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "desktop-app",
+          "phone"
+        ]
+      },
+      "use_when": "Status, error, success, warning, membership or plan colours.",
+      "avoid_when": "Category colours in data, which follow the chart palette rules instead.",
+      "build": "Tokens by meaning: --danger, --success, --warning, --info, each with fg, bg and border variants; no raw hex in components.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Android Developers: Color for mobile design",
+          "url": "https://developer.android.com/design/ui/mobile/guides/styles/color"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-never-alone",
+      "label": {
+        "fr": "Jamais la couleur seule",
+        "en": "Never colour alone"
+      },
+      "what": "WCAG 1.4.1: colour is not the only means of conveying information, an action, a prompt or a distinction. Inline links without underline need at least 3:1 lightness contrast with surrounding text (technique G183). Required fields use red plus an icon; errors use colour plus icon plus text (NN/g).",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Links in prose, errors, required fields, statuses, chart series.",
+      "avoid_when": "Visited-link colour, which may be colour-only; navigation links whose placement already says they are links.",
+      "build": "a { text-decoration: underline; text-underline-offset: 0.15em; } or a 3:1 lightness difference plus underline on hover/focus; error: icon + message + red border.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "W3C, Understanding WCAG SC 1.4.1 Use of Color",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html"
+        },
+        {
+          "name": "NN/g: Error-message guidelines",
+          "url": "https://www.nngroup.com/articles/error-message-guidelines/"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-meaning-culture",
+      "label": {
+        "fr": "Sens des couleurs selon la culture",
+        "en": "Colour meaning across cultures"
+      },
+      "what": "Colour meaning is learned, not universal: red, white, green and yellow carry different associations across regions and religions, and financial red/green conventions are not shared everywhere. Since WCAG already forbids colour as the only cue, the safe rule is: label the meaning and check the palette with people from each target market.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Products launched in several regions; finance and health status colours.",
+      "avoid_when": "Single-market products with an established local convention.",
+      "build": "Keep meaning in labels and icons; make semantic colours tokens that a locale can override (--gain, --loss rather than --green, --red).",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "W3C, Understanding WCAG SC 1.4.1 Use of Color",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html"
+        },
+        {
+          "name": "Android Developers: Color for mobile design",
+          "url": "https://developer.android.com/design/ui/mobile/guides/styles/color"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-dataviz-categorical",
+      "label": {
+        "fr": "Palette catégorielle",
+        "en": "Categorical chart palette"
+      },
+      "what": "UK Government Analysis Function: no more than 4 categories per chart (clustered bars, stacked bars and lines alike); adjacent elements at least 3:1; for two series use the highest-contrast pair (their dark blue #12436D and orange #F46A25). Their palette: #12436D, #28A197, #801650, #F46A25, #3D3D3D, #A285D1.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "read",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Bar, line and pie charts on dashboards and reports.",
+      "avoid_when": "More than 4 series: use small multiples, direct labels or a focus palette instead of more hues.",
+      "build": "--chart-1..4 tokens checked at 3:1 against the surface and each neighbour; label series directly at the line end instead of a distant legend.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "UK Government Analysis Function: Data visualisation, colours",
+          "url": "https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-colours-in-charts/"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-dataviz-sequential",
+      "label": {
+        "fr": "Palette séquentielle",
+        "en": "Sequential palette"
+      },
+      "what": "Ordered values use one hue from dark to light. In the UK Government blue ramp only the 3 darkest steps reach 3:1 on white, so a sequential palette needs an accessible alternative (labels, table). Use pale grey (#F2F2F2) for no data. Diverging data uses two hues around a neutral midpoint (house).",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "read",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Heatmaps, choropleths, density.",
+      "avoid_when": "Categories with no order, which need a categorical palette.",
+      "build": "Generate the ramp in OKLCH with fixed hue and L from about 0.3 to 0.9; add value labels or a data table; never a rainbow ramp.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "UK Government Analysis Function: Data visualisation, colours",
+          "url": "https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-colours-in-charts/"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-dataviz-focus",
+      "label": {
+        "fr": "Palette de mise en avant",
+        "en": "Focus palette"
+      },
+      "what": "To make one series the story, colour it and grey the rest. The UK Government focus palette uses dark blue #12436D against #BFBFBF, and warns that this grey is only 1.83:1 on white, below 3:1, so use it only when essential. Gridlines (#D9D9D9) need not meet 3:1; axis lines and labels do (#595959).",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Charts that make a single point, in reports and landing pages.",
+      "avoid_when": "Exploratory dashboards where every series matters equally.",
+      "build": "--chart-focus: accent; --chart-context: neutral at about 3:1 if it must be read; --chart-grid: very light; --chart-axis: ≥3:1.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "UK Government Analysis Function: Data visualisation, colours",
+          "url": "https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-colours-in-charts/"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-colour-blind-check",
+      "label": {
+        "fr": "Vérifier le daltonisme",
+        "en": "Check for colour blindness"
+      },
+      "what": "About 8 % of men and 0.5 % of women have a colour-vision deficiency (UK Government Analysis Function); red and green are a common pattern that some cannot tell apart (Android). Red, amber and green cannot all reach enough contrast with white and with each other. Check charts in greyscale and with a simulator.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Status sets, charts, maps, any red/green pair.",
+      "avoid_when": "Never skip; even brand palettes should be checked.",
+      "build": "Pair status colours with icons and words; RAG cells as filled cells with text (#C00000 + white, #FFC000 + black, #8ED973 + black); thicker lines for hard-to-separate series.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "UK Government Analysis Function: Data visualisation, colours",
+          "url": "https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-colours-in-charts/"
+        },
+        {
+          "name": "Android Developers: Color for mobile design",
+          "url": "https://developer.android.com/design/ui/mobile/guides/styles/color"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-dark-elevation-lighter",
+      "label": {
+        "fr": "Thème sombre : plus haut, plus clair",
+        "en": "Dark theme: higher is lighter"
+      },
+      "what": "In dark themes depth comes from surface lightness, not shadow. Material 2 starts from #121212 rather than black and lays a white overlay that grows with elevation (2 % on a card, 12 % on a bottom app bar in Google's codelab; up to about 16 % per the spec, not re-read here). Apple uses base and brighter elevated backgrounds.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Menus, dialogs, sheets and cards in dark mode.",
+      "avoid_when": "OLED-first media players where true black is a deliberate brand choice; then separate layers with hairlines.",
+      "build": "--surface-0: oklch(0.18 0.01 H); --surface-1: +0.03 L; --surface-2: +0.06 L; --surface-3: +0.09 L. Raise a layer by changing its surface token, keep shadows minimal.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Google codelab: Design a dark theme with Material",
+          "url": "https://codelabs.developers.google.com/codelabs/design-material-darktheme"
+        },
+        {
+          "name": "Material Design 2: Dark theme",
+          "url": "https://m2.material.io/design/color/dark-theme.html"
+        },
+        {
+          "name": "Apple HIG: Dark Mode",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/dark-mode"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-dark-text-emphasis",
+      "label": {
+        "fr": "Thème sombre : opacités de texte",
+        "en": "Dark theme text emphasis"
+      },
+      "what": "Material's dark text emphasis: white at 87 % (high), 60 % (medium), 38 % (disabled). On #121212 these give about 14.2:1, 7.2:1 and 3.6:1 (computed). So 38 % is for disabled only; secondary text needs at least the 60 % level. Prefer solid colours over alpha so contrast does not change on lighter surfaces.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Text tokens for dark themes.",
+      "avoid_when": "Light themes, where the emphasis steps come from the neutral ramp instead.",
+      "build": "--text-1: oklch(0.93 0.01 H); --text-2: oklch(0.75 0.01 H); --text-disabled: oklch(0.5 0.01 H); check each against the highest surface, which has the least contrast.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Google codelab: Design a dark theme with Material",
+          "url": "https://codelabs.developers.google.com/codelabs/design-material-darktheme"
+        }
+      ]
+    },
+    {
+      "id": "rule-color-dark-not-default",
+      "label": {
+        "fr": "Pas de thème sombre par défaut",
+        "en": "Do not default to dark"
+      },
+      "what": "NN/g reviews studies showing light mode (positive polarity) gives better acuity and proofreading for people with normal vision, in young and older adults alike, and faster reading at night with small text. Some low-vision users read faster in dark mode. So offer dark, follow the OS, and do not force it.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Choosing the default theme.",
+      "avoid_when": "Long-form reading apps, media and night-use tools, which NN/g says should prioritise a dark option; brands whose identity is dark, provided text sizes stay generous.",
+      "build": "color-scheme: light dark; default from prefers-color-scheme; a visible toggle that persists; same theme on every screen.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Dark mode vs. light mode",
+          "url": "https://www.nngroup.com/articles/dark-mode/"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-columns-4-8-12",
+      "label": {
+        "fr": "Grille 4, 8, 12 colonnes",
+        "en": "4, 8 and 12 column grid"
+      },
+      "what": "Material's responsive grid: 4 columns below 600 dp, 8 columns from 600 dp, 12 columns from 840 dp. Android's current window classes: compact under 600 dp, medium 600–839, expanded 840–1199, large 1200–1599, extra-large 1600 and over. Columns are for placing content, not for filling every column.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Responsive pages and apps that span phone to desktop.",
+      "avoid_when": "Single-column reading pages, which only need a constrained measure; complex tools, where named grid areas fit better than columns.",
+      "build": "display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); --cols: 4 → 8 at 600px → 12 at 840px. Span counts per component, not per page.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Material Design (v1): Responsive UI, grid",
+          "url": "https://m1.material.io/layout/responsive-ui.html"
+        },
+        {
+          "name": "Android Developers: Use window size classes",
+          "url": "https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-gutters-margins",
+      "label": {
+        "fr": "Gouttières et marges",
+        "en": "Gutters and margins"
+      },
+      "what": "Material v1: gutters of 16 dp on small windows and 24 dp from 960 dp; margins and gutters can each be 8, 16, 24 or 40 dp and need not match (40 dp margins with 24 dp gutters is fine). Margins and columns follow an 8 dp baseline. Material 2 lets margins grow to a 200 dp maximum on wide bodies.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Setting layout tokens.",
+      "avoid_when": "Dense data tools, where 8 dp gutters keep columns of numbers together.",
+      "build": "--gutter: 16px; --margin: 16px; @media (min-width: 960px) { --gutter: 24px; --margin: 40px; } column-gap: var(--gutter); padding-inline: var(--margin).",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Material Design (v1): Responsive UI, grid",
+          "url": "https://m1.material.io/layout/responsive-ui.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-window-not-device",
+      "label": {
+        "fr": "Mise en page selon la fenêtre",
+        "en": "Lay out by window, not device"
+      },
+      "what": "Android size classes are set by the window the app gets, not the device: split screen, resizable desktop windows and foldables change them at runtime. Compact height (under 480 dp, almost every phone in landscape) makes two panes impractical even when width is medium.",
+      "fits": {
+        "surfaces": [
+          "desktop-app",
+          "phone",
+          "operate"
+        ]
+      },
+      "use_when": "Desktop apps, tablet layouts, list-detail screens.",
+      "avoid_when": "Fixed kiosks or embedded screens with one known size.",
+      "build": "Use container queries and window media queries; never isTablet logic. Switch to two panes at ≥840px wide and ≥480px high.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Android Developers: Use window size classes",
+          "url": "https://developer.android.com/develop/ui/compose/layouts/adaptive/use-window-size-classes"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-two-thirds-column",
+      "label": {
+        "fr": "Colonne des deux tiers",
+        "en": "Two-thirds column"
+      },
+      "what": "GOV.UK keeps main content in a two-thirds column even without a sidebar, caps page width at 1020 px by default and keeps lines under 75 characters. It starts from one column on small screens. This combines a readable measure with room for secondary content on the right.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Forms, transactional flows, content pages.",
+      "avoid_when": "Dashboards and editors, which need the full width.",
+      "build": ".page { max-width: 1020px; margin-inline: auto; } .main { grid-column: span 8 / span 8; } on a 12-column grid (two thirds), full width below 640px.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "GOV.UK Design System: Layout",
+          "url": "https://design-system.service.gov.uk/styles/layout/"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-attention-left",
+      "label": {
+        "fr": "L'attention penche à gauche",
+        "en": "Attention leans left"
+      },
+      "what": "NN/g 2017, 120+ participants, 1920×1080: 80 % of fixations on the left half of the page (94 % on search results). Peak attention sits about 400–600 px from the left edge, not at the far edge. Nobody scrolled horizontally. Right-to-left sites mirror this.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "operate",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Placing priority content, filters, primary actions.",
+      "avoid_when": "Right-to-left locales (mirror everything); important right-hand content, which can work only if made visually stronger.",
+      "build": "Put priority content start-aligned in the main column; secondary content in a right rail; use logical properties (margin-inline-start) so RTL flips.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Horizontal attention leans left",
+          "url": "https://www.nngroup.com/articles/horizontal-attention-leans-left/"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-fold-matters",
+      "label": {
+        "fr": "La ligne de flottaison compte",
+        "en": "The fold still matters"
+      },
+      "what": "NN/g 2018 (120 participants, 130,000 fixations): 57 % of viewing time above the fold, 74 % within the first two screenfuls, the remaining 26 % thinly across the rest. Over 65 % of time in the first screen goes to its top half. Minimal layouts risk false floors that make users stop scrolling.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Ordering sections on landing pages and articles.",
+      "avoid_when": "Content people come to read in full (commitment reading), where order matters less than structure.",
+      "build": "Main promise and primary action in the first viewport; let the next section's top show (no 100vh hero that ends cleanly); avoid full-width bands that look like a footer.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Scrolling and attention",
+          "url": "https://www.nngroup.com/articles/scrolling-and-attention/"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-f-pattern-prevent",
+      "label": {
+        "fr": "Prévenir le motif en F",
+        "en": "Prevent the F-pattern"
+      },
+      "what": "NN/g first saw the F-pattern in 2006 and again 11 years later, on mobile too. It is a failure mode, not a template: it appears with unformatted walls of text, users who want efficiency and low motivation. Readers then miss content on the right and lower down. The layer-cake pattern (scan headings, read the needed section) is the most effective scan.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Long text, help, policies, product descriptions.",
+      "avoid_when": "Never design to the F on purpose; it describes what goes wrong.",
+      "build": "Most important points in the first 2 paragraphs; headings every 3–5 paragraphs, front-loaded; bold key terms; bullets; descriptive links.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: F-shaped pattern of reading on the web",
+          "url": "https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/"
+        },
+        {
+          "name": "NN/g: Text scanning patterns, eyetracking evidence",
+          "url": "https://www.nngroup.com/articles/text-scanning-patterns-eyetracking/"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-z-and-zigzag",
+      "label": {
+        "fr": "Motif en Z et zigzag",
+        "en": "Z-pattern and zigzag"
+      },
+      "what": "The Z-pattern is a convention without an eyetracking study behind it. NN/g did test zigzag image-text rows (about 30–35 people per version): informative images work in either layout, but in zigzag users keep stumbling on decorative images. Zigzag suits short pages of 2–3 rows; long lists should stay aligned.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Feature sections on landing pages.",
+      "avoid_when": "Long feature lists, decorative or text-heavy images.",
+      "build": "Alternate with grid-auto-flow and :nth-child(even) { direction: rtl } only for up to 3 rows; put the most informative row first with content on the left; keep images level with their text.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Zigzag image-text layouts",
+          "url": "https://www.nngroup.com/articles/zigzag-page-layout/"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-golden-ratio-critical",
+      "label": {
+        "fr": "Nombre d'or, avec recul",
+        "en": "Golden ratio, critically"
+      },
+      "what": "The golden ratio (1:1.618) is one meaningful proportion among many, chosen for its cultural associations (Tim Brown picked it for a Renaissance-inspired text), not because it is proven to please or to convert. No usability guideline requires it. Treat claims that it 'feels natural' as convention.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Editorial or brand pages where the ratio has a story to tell.",
+      "avoid_when": "Justifying a layout to a client as scientifically optimal; app layouts, where content dictates proportions.",
+      "build": "If used: a 1fr 1.618fr two-column split or a 1.618 type ratio, rounded to the spacing grid; document it as a style choice.",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "Tim Brown, A List Apart: More meaningful typography",
+          "url": "https://alistapart.com/article/more-meaningful-typography/"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-rule-of-thirds-crops",
+      "label": {
+        "fr": "Règle des tiers pour les recadrages",
+        "en": "Rule of thirds for crops"
+      },
+      "what": "The rule of thirds places the subject on a third line rather than the centre so the image leaves room for text and direction. It is a photographic convention with no UI study behind it; use it for crops that must host copy, not as a page grid.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Hero images with overlaid text; banners cropped per breakpoint.",
+      "avoid_when": "Product photos, avatars and icons, which belong centred; symmetrical, calm brands.",
+      "build": "object-fit: cover; object-position: 33% 50% (subject left, text right) and change object-position per breakpoint or with art-directed <picture> sources.",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "web.dev: Serve responsive images",
+          "url": "https://web.dev/articles/serve-responsive-images"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-space-ratio-groups",
+      "label": {
+        "fr": "Ratio d'espace entre et dans les groupes",
+        "en": "Space ratio between and within groups"
+      },
+      "what": "Proximity can overpower colour and shape cues (NN/g), so space must say what belongs together: label to field small, field pair to next pair larger, section to section larger again. A working ratio is at least 2× from one level to the next: 8 → 16 → 32 px, or 4 → 12 → 24 → 48 px in dense tools.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Forms, cards, settings, every stacked layout.",
+      "avoid_when": "Lists of equal items, which use one constant gap.",
+      "build": "Tokens by role, not by size: --space-inside: 8px; --space-between-items: 16px; --space-between-groups: 32px; --space-between-sections: 64px.",
+      "prevalence": "standard",
+      "evidence": "house",
+      "sources": [
+        {
+          "name": "NN/g: Proximity principle in visual design",
+          "url": "https://www.nngroup.com/articles/gestalt-proximity/"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-regroup-per-breakpoint",
+      "label": {
+        "fr": "Regrouper à chaque point de rupture",
+        "en": "Re-check groups at each breakpoint"
+      },
+      "what": "Stacking for mobile can split items that belonged together. NN/g's Transport for London case: two related links side by side on desktop ended far apart on mobile, so mobile users could miss the second. Groupings must be re-checked at every breakpoint, not only the desktop design.",
+      "fits": {
+        "surfaces": [
+          "phone",
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Responsive layouts that reflow from columns to a stack.",
+      "avoid_when": "Single-column designs that never reflow.",
+      "build": "Wrap each group in its own element so it stacks as a unit; use order only within a group; screenshot each breakpoint and check that related actions stay adjacent.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Proximity principle in visual design",
+          "url": "https://www.nngroup.com/articles/gestalt-proximity/"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-align-to-few-edges",
+      "label": {
+        "fr": "Peu de lignes d'alignement",
+        "en": "Align to few edges"
+      },
+      "what": "Every extra alignment line is something the eye must reconcile. Align text, fields and the primary button to the same start edge: GOV.UK aligns the primary button with the left edge of its form. Centred and left-aligned blocks on one screen create two axes that fight.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "read",
+          "phone"
+        ]
+      },
+      "use_when": "Forms, settings, articles.",
+      "avoid_when": "Symmetrical hero sections or empty states, which can use one centred axis consistently.",
+      "build": "One inline-start padding per container; buttons in the flow of the form (not right-aligned in a footer on desktop forms); count distinct x positions in a screenshot, aim for 3–4 on a form.",
+      "prevalence": "standard",
+      "evidence": "house",
+      "sources": [
+        {
+          "name": "GOV.UK Design System: Button",
+          "url": "https://design-system.service.gov.uk/components/button/"
+        }
+      ]
+    },
+    {
+      "id": "rule-layout-optical-centre",
+      "label": {
+        "fr": "Centre optique",
+        "en": "Optical centre"
+      },
+      "what": "Something centred exactly in a box looks low, because the eye places the centre slightly above the geometric middle. Lift single centred items (an empty-state illustration, a modal on a tall screen, a play triangle's mass) a few per cent above centre.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Empty states, splash screens, modals, icon buttons.",
+      "avoid_when": "Rows of items that must share a baseline with neighbours.",
+      "build": "Place with grid and padding-block-end slightly larger than padding-block-start (about 45/55 split); for modals use margin-block: auto with translateY(-4vh) on tall windows.",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "NN/g: 5 principles of visual design in UX",
+          "url": "https://www.nngroup.com/articles/principles-visual-design/"
+        }
+      ]
+    },
+    {
+      "id": "rule-gestalt-proximity-beats-style",
+      "label": {
+        "fr": "La proximité l'emporte sur le style",
+        "en": "Proximity beats style"
+      },
+      "what": "Items close together are seen as a group, and proximity can override similarity of colour or shape (NN/g). Failures it cites: an Add button among Next, Save and Cancel, far from the content; a Skip link in a corner, far from the actions. Labels must sit nearer their own field than the field above.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Forms, toolbars, cards, action rows.",
+      "avoid_when": "Never; if two things are related and must sit apart, link them with a line or a shared container.",
+      "build": "Label-to-field gap 4–8 px, field-to-next-label gap 20–24 px; Previous/Next together, destructive actions separated by space.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Proximity principle in visual design",
+          "url": "https://www.nngroup.com/articles/gestalt-proximity/"
+        }
+      ]
+    },
+    {
+      "id": "rule-gestalt-similarity-honest",
+      "label": {
+        "fr": "Similarité honnête",
+        "en": "Honest similarity"
+      },
+      "what": "Items sharing a visual trait are read as related; colour is the strongest of colour, shape and size (NN/g). So similar styling must mean similar behaviour: a decorative element styled like a button promises a click, and same-sized content next to ads gets ignored with them.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Design system components: one look per behaviour.",
+      "avoid_when": "Deliberate grouping of different types that do behave alike (all filters as chips).",
+      "build": "One component per behaviour: link, button, chip, tag, each visually distinct; tags that are not clickable never use the link colour or a pointer cursor.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Similarity principle in visual design",
+          "url": "https://www.nngroup.com/articles/gestalt-similarity/"
+        }
+      ]
+    },
+    {
+      "id": "rule-gestalt-common-region",
+      "label": {
+        "fr": "Région commune",
+        "en": "Common region"
+      },
+      "what": "A shared boundary (border, background) is a stronger grouping cue than proximity or similarity, and can override proximity (NN/g). Its cost: boxes added by habit create clutter, and full-width coloured bands can form false floors that stop scrolling. Ask first whether space alone would group it.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Mixed content that must stay together (a recipe card, a print dialog section, zebra rows).",
+      "avoid_when": "Groups that space already separates; nested cards inside cards.",
+      "build": "Use a surface step (background) before a border; one level of containers per screen region; zebra striping for wide tables.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Common region principle",
+          "url": "https://www.nngroup.com/articles/common-region/"
+        }
+      ]
+    },
+    {
+      "id": "rule-gestalt-continuity",
+      "label": {
+        "fr": "Continuité",
+        "en": "Continuity"
+      },
+      "what": "The eye follows a line or curve and groups items along it (NN/g lists continuation among its Gestalt principles). Aligned items, a progress line through steps or a timeline axis read as one sequence; a broken alignment reads as a new group.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Steppers, timelines, horizontal lists, multi-step forms.",
+      "avoid_when": "Unrelated items that happen to align; break the line with space or a divider.",
+      "build": "Draw sequence connectors with a pseudo-element on the list (::before as a 2px line), keep items on one axis, and let the line stop where the sequence stops.",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "NN/g: 5 principles of visual design in UX",
+          "url": "https://www.nngroup.com/articles/principles-visual-design/"
+        }
+      ]
+    },
+    {
+      "id": "rule-gestalt-figure-ground-scrim",
+      "label": {
+        "fr": "Figure et fond : le voile",
+        "en": "Figure-ground: the scrim"
+      },
+      "what": "A dialog or sheet is read as figure only when the ground clearly recedes. A scrim that is too light leaves two competing layers; too dark hides the context the user needs to remember. Pair the scrim with a surface step so the figure also separates by lightness.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Modals, bottom sheets, side drawers, lightboxes.",
+      "avoid_when": "Non-modal popovers and menus, which should not dim the page.",
+      "build": "::backdrop { background: oklch(0 0 0 / 0.4); } in light themes, 0.6 in dark (house values); optional backdrop-filter: blur(4px) when the page behind is busy.",
+      "prevalence": "standard",
+      "evidence": "house",
+      "sources": [
+        {
+          "name": "NN/g: 5 principles of visual design in UX",
+          "url": "https://www.nngroup.com/articles/principles-visual-design/"
+        }
+      ]
+    },
+    {
+      "id": "rule-gestalt-symmetry-order",
+      "label": {
+        "fr": "Symétrie et ordre",
+        "en": "Symmetry and order"
+      },
+      "what": "People perceive symmetric, ordered arrangements as one stable whole (NN/g lists symmetry and order among Gestalt principles; symmetric balance feels stable and static). Use symmetry to calm and asymmetry to move; mixing both without intent reads as accident.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Trust pages, pricing, legal and finance screens where calm matters.",
+      "avoid_when": "Product launches and editorial pages that need energy.",
+      "build": "Symmetric: centred column, equal-width pricing cards. Make the choice per section and keep it within the section.",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "NN/g: 5 principles of visual design in UX",
+          "url": "https://www.nngroup.com/articles/principles-visual-design/"
+        }
+      ]
+    },
+    {
+      "id": "rule-comp-one-focal-point",
+      "label": {
+        "fr": "Un seul point focal",
+        "en": "One focal point per screen"
+      },
+      "what": "Each screen needs one element the eye lands on first. NN/g tests this by blurring the screen (radii of 5, 10 and 20 px): at low blur the groups and the focal point should match the intent; at strong blur an unintended element, often a strongly coloured one, can dominate.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Reviewing any screen, especially landing heroes and the main work screen.",
+      "avoid_when": "Dashboards of equal peers, where the focal point is the layout itself and no tile should dominate.",
+      "build": "Screenshot, apply filter: blur(8px) in devtools, and check that the brightest or largest blob is the intended element. Reduce any rival's size, saturation or contrast.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: Visual hierarchy in UX",
+          "url": "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/"
+        }
+      ]
+    },
+    {
+      "id": "rule-comp-visual-weight",
+      "label": {
+        "fr": "Poids visuel",
+        "en": "Visual weight"
+      },
+      "what": "Visual weight comes from area, value contrast, saturation and isolation, not from the number of elements (NN/g: weight depends on area). A small saturated element can balance a large pale one. Balance weight around an axis, usually vertical.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Composing heroes, cards with image and text, two-column layouts.",
+      "avoid_when": "Deliberately unbalanced editorial pages that want tension; even then keep the imbalance obvious.",
+      "build": "Offset a large image with a heavy, dark headline plus a saturated button on the other side; check by blurring.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: 5 principles of visual design in UX",
+          "url": "https://www.nngroup.com/articles/principles-visual-design/"
+        }
+      ]
+    },
+    {
+      "id": "rule-comp-contrast-of-scale",
+      "label": {
+        "fr": "Contraste d'échelle",
+        "en": "Contrast of scale"
+      },
+      "what": "Scale signals importance: make the most important element the largest and keep at most 3 distinct sizes (NN/g), with no more than 2 large elements per screen. Differences must be decisive; two sizes that differ by 10 % read as a mistake, not a hierarchy.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Heroes, section openers, statistics, pricing.",
+      "avoid_when": "Dense tools, where size jumps waste space and hierarchy comes from weight and position.",
+      "build": "Display step ≥1.5× the next level on persuasive pages; numbers in a stat row at --text-display with labels at --text-sm.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: Visual hierarchy in UX",
+          "url": "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/"
+        },
+        {
+          "name": "NN/g: 5 principles of visual design in UX",
+          "url": "https://www.nngroup.com/articles/principles-visual-design/"
+        }
+      ]
+    },
+    {
+      "id": "rule-comp-rhythm-repetition",
+      "label": {
+        "fr": "Rythme et répétition",
+        "en": "Rhythm and repetition"
+      },
+      "what": "Repeating the same structure (section spacing, card anatomy, heading treatment) lets users predict where things are; NN/g asks for consistent visual rules per element type so behaviour is predictable. Rhythm on long pages comes from varying section density on a repeating base, not from new styles.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Long landing pages, docs, catalogues.",
+      "avoid_when": "A single deliberate break, used once to mark the key section (von Restorff).",
+      "build": "One --section-gap; alternate dense and airy sections; one card component with variants instead of bespoke cards per section.",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "NN/g: Similarity principle in visual design",
+          "url": "https://www.nngroup.com/articles/gestalt-similarity/"
+        },
+        {
+          "name": "NN/g: 5 principles of visual design in UX",
+          "url": "https://www.nngroup.com/articles/principles-visual-design/"
+        }
+      ]
+    },
+    {
+      "id": "rule-comp-asymmetry-dynamic",
+      "label": {
+        "fr": "Asymétrie dynamique",
+        "en": "Asymmetry for energy"
+      },
+      "what": "Asymmetrical balance (different sizes and positions that still balance) feels dynamic; symmetrical balance feels stable and static; radial balance pulls to a centre (NN/g). Pick asymmetry when the brand needs movement, but keep the weights balanced so it reads as intended.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Hero sections, editorial openers, portfolios.",
+      "avoid_when": "Forms and transactional flows, where predictability wins.",
+      "build": "grid-template-columns: 7fr 5fr or 2fr 1fr instead of 1fr 1fr; counterweight the smaller side with stronger contrast.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: 5 principles of visual design in UX",
+          "url": "https://www.nngroup.com/articles/principles-visual-design/"
+        }
+      ]
+    },
+    {
+      "id": "rule-comp-limit-contrast-variations",
+      "label": {
+        "fr": "Limiter les variations de contraste",
+        "en": "Limit contrast variations"
+      },
+      "what": "NN/g: no more than 3 contrast variations in complex designs, and do not lower text contrast to de-emphasise content, since it harms legibility. De-emphasise with size, position and weight first, then with a secondary text colour that still passes 4.5:1.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "desktop-app",
+          "read"
+        ]
+      },
+      "use_when": "Dense screens with primary, secondary and tertiary information.",
+      "avoid_when": "Disabled states, which may fall below 4.5:1 by WCAG's exception, but must still look disabled, not faded content.",
+      "build": "Three text tokens only: --text-1, --text-2 (≥4.5:1), --text-disabled; no ad-hoc opacity on text.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: Visual hierarchy in UX",
+          "url": "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/"
+        },
+        {
+          "name": "NN/g: 5 principles of visual design in UX",
+          "url": "https://www.nngroup.com/articles/principles-visual-design/"
+        }
+      ]
+    },
+    {
+      "id": "rule-img-real-over-stock",
+      "label": {
+        "fr": "Du vrai plutôt que de la banque d'images",
+        "en": "Real over stock"
+      },
+      "what": "Users ignore generic stock photos of people and decorative images (NN/g). Real people draw attention: on one site users spent 10 % more time on team portraits than on bios that took 316 % more space. Product photos are studied when they inform.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "About, team, trust and product pages.",
+      "avoid_when": "Illustrative imagery whose role is mood only; keep it small so it does not displace content.",
+      "build": "Commission or shoot real photos; delete hero images that show nothing specific; give portraits consistent framing (same crop, light and background).",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Photos as web content",
+          "url": "https://www.nngroup.com/articles/photos-as-web-content/"
+        }
+      ]
+    },
+    {
+      "id": "rule-img-informative-thumbnails",
+      "label": {
+        "fr": "Vignettes informatives",
+        "en": "Informative thumbnails"
+      },
+      "what": "On an Amazon results page NN/g measured 18 % of viewing time on photos and 82 % on text, 0.9 fixations per thumbnail against 4.4 per description, because the thumbnails did not differentiate the products. Images must show what differs between items, and enlarged views should be at least twice the original size.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Product lists, galleries, comparisons.",
+      "avoid_when": "Items that truly look identical; then lead with text.",
+      "build": "Crop thumbnails on the distinguishing detail; consistent aspect ratio per list (aspect-ratio: 4/3 or 1/1); zoom view ≥2× the thumbnail.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Photos as web content",
+          "url": "https://www.nngroup.com/articles/photos-as-web-content/"
+        }
+      ]
+    },
+    {
+      "id": "rule-img-in-scale",
+      "label": {
+        "fr": "Images à l'échelle",
+        "en": "Show scale"
+      },
+      "what": "Baymard: 42 % of users try to judge a product's size from its images, 56 % start with images before text, and 28 % of 60 major sites had no in-scale image. Show at least one image in context or next to an object of known size; videos do not replace it.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "use_when": "E-commerce and any physical product page.",
+      "avoid_when": "Digital products, where a screenshot at real size plays the same role.",
+      "build": "Gallery order: hero cut-out, in-scale/in-use shot second; model shots for wearables; alt text that states size.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "Baymard Institute: In-scale product images",
+          "url": "https://baymard.com/blog/in-scale-product-images"
+        }
+      ]
+    },
+    {
+      "id": "rule-img-art-direction",
+      "label": {
+        "fr": "Direction artistique par point de rupture",
+        "en": "Art direction per breakpoint"
+      },
+      "what": "Art direction serves different crops, not only different sizes, per viewport (web.dev). A wide hero shrunk to a phone turns its subject into a speck; recrop to keep the subject. Common practice is 3–5 sizes per image; desktop images on mobile can cost 2–4× more data.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "use_when": "Hero and feature images that must work on phones.",
+      "avoid_when": "Images whose subject fills the frame and survives any crop.",
+      "build": "<picture><source media='(max-width: 600px)' srcset='hero-portrait.avif'><img src='hero-wide.jpg' srcset='... 3–5 widths' sizes='100vw' width height alt></picture>.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "web.dev: Serve responsive images",
+          "url": "https://web.dev/articles/serve-responsive-images"
+        }
+      ]
+    },
+    {
+      "id": "rule-img-consistent-treatment",
+      "label": {
+        "fr": "Traitement d'image cohérent",
+        "en": "Consistent image treatment"
+      },
+      "what": "A set of images reads as one brand when they share aspect ratio, light, colour grading, background and crop distance. Mixed treatments make a page look assembled from sources. Pick 1–2 aspect ratios per product (for example 4:3 for cards, 16:9 for heroes) and one grade.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Catalogues, blogs, portfolios, team pages.",
+      "avoid_when": "User-generated content, where variety is honest; frame it consistently instead (same ratio and radius).",
+      "build": "aspect-ratio tokens (--ratio-card: 4/3; --ratio-hero: 16/9); object-fit: cover; a shared filter or LUT applied at export, not in CSS.",
+      "prevalence": "standard",
+      "evidence": "house",
+      "sources": [
+        {
+          "name": "NN/g: Photos as web content",
+          "url": "https://www.nngroup.com/articles/photos-as-web-content/"
+        }
+      ]
+    },
+    {
+      "id": "rule-img-dark-mode-adjust",
+      "label": {
+        "fr": "Images en thème sombre",
+        "en": "Images in dark mode"
+      },
+      "what": "Apple: if a white-background image glows in Dark Mode, darken it slightly; add a light border to dark icons that lose their edges; adjust illustrations so dark details stay visible. Images are content, but their brightness must sit with the theme.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Products with a dark theme and screenshots, logos or illustrations.",
+      "avoid_when": "Photographs where colour accuracy matters (portfolios, product colour).",
+      "build": "@media (prefers-color-scheme: dark) { img.ui-shot { filter: brightness(0.9); } } and provide dark variants of diagrams with <picture><source media='(prefers-color-scheme: dark)'>.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Apple HIG: Dark Mode",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/dark-mode"
+        }
+      ]
+    },
+    {
+      "id": "rule-icon-grid-stroke",
+      "label": {
+        "fr": "Grille et trait des icônes",
+        "en": "Icon grid and stroke"
+      },
+      "what": "Lucide's grid: 24×24 canvas, at least 1 px padding, 2 px centred stroke, round joins and caps, never mixed stroke widths. Corners: 2 px radius on shapes 8 px and larger, 1 px below; sharp where more than two lines meet. Keep at least 2 px between distinct elements.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Drawing custom icons that must sit with an existing outline set.",
+      "avoid_when": "Filled or duotone sets, which follow their own grid; brand marks.",
+      "build": "Draw at 24 px, export SVG with stroke='currentColor' stroke-width='2'; scale with width/height, and adjust stroke-width to keep about 2 px at 20 px and 1.5 px at 16 px (house).",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "Lucide: Icon design guide",
+          "url": "https://lucide.dev/contribute/icon-design-guide"
+        }
+      ]
+    },
+    {
+      "id": "rule-icon-optical-weight",
+      "label": {
+        "fr": "Poids optique des icônes",
+        "en": "Icon optical weight"
+      },
+      "what": "Icons in one set must carry the same visual weight: Lucide checks each icon by blurring it next to its reference circle and square; it should look neither lighter nor darker. Circles and triangles must overshoot a square's bounds to look the same size.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Mixing icons from several sources; drawing new icons.",
+      "avoid_when": "Never; mismatched weight is visible in every toolbar.",
+      "build": "Prefer one library per product; when adding icons, compare blurred at 16 and 24 px; nudge play triangles right of geometric centre.",
+      "prevalence": "standard",
+      "evidence": "convention",
+      "sources": [
+        {
+          "name": "Lucide: Icon design guide",
+          "url": "https://lucide.dev/contribute/icon-design-guide"
+        }
+      ]
+    },
+    {
+      "id": "rule-icon-optical-size-grade",
+      "label": {
+        "fr": "Taille optique et grade des icônes",
+        "en": "Icon optical size and grade"
+      },
+      "what": "Material Symbols vary with size: opsz 20–48 adjusts stroke as the icon scales; weight 100–700; grade from about −25 to 200 changes thickness without changing size. Use a negative grade (−25) for light icons on dark backgrounds to reduce glare, and match the grade of the text.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Variable icon fonts in light and dark themes.",
+      "avoid_when": "Static SVG sets without axes; then use a thinner stroke on dark by hand.",
+      "build": ".icon { font-variation-settings: 'opsz' 24, 'wght' 400, 'GRAD' 0; } @media (prefers-color-scheme: dark) { .icon { font-variation-settings: 'opsz' 24, 'wght' 400, 'GRAD' -25; } }",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "Google Fonts: Material Symbols guide",
+          "url": "https://developers.google.com/fonts/docs/material_symbols"
+        }
+      ]
+    },
+    {
+      "id": "rule-icon-label-them",
+      "label": {
+        "fr": "Étiqueter les icônes",
+        "en": "Label your icons"
+      },
+      "what": "Only a few icons are universal (home, print, search). Others vary in meaning between products (heart, star, hamburger), so icons need visible text labels, not hover tooltips, which do not work on touch (NN/g). A label also enlarges the hit area. If you need more than 5 seconds to think of an icon for a concept, use a word.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Navigation, toolbars, action menus.",
+      "avoid_when": "Dense expert toolbars with stable, learned icons, provided labels exist in tooltips and in the accessible name.",
+      "build": "<button><svg aria-hidden='true'/><span>Archive</span></button>; in icon-only cases, aria-label plus a tooltip on hover and focus.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Icon usability",
+          "url": "https://www.nngroup.com/articles/icon-usability/"
+        }
+      ]
+    },
+    {
+      "id": "rule-icon-size-to-text",
+      "label": {
+        "fr": "Taille d'icône par rapport au texte",
+        "en": "Icon size relative to text"
+      },
+      "what": "An icon beside text should match the text's visual weight and sit on its optical centre, not its box. A common pairing is an icon about 1.25× the font size (16 px icon with 13–14 px text, 20 px with 16 px), with stroke weight close to the text stem weight.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Buttons, menu items, list rows with leading icons.",
+      "avoid_when": "Standalone icon buttons, which are sized by the hit target (24 px icon in a 44–48 px target).",
+      "build": ".btn svg { width: 1.25em; height: 1.25em; flex: none; } .btn { display: inline-flex; align-items: center; gap: 0.5em; } Check optical centring at each size.",
+      "prevalence": "standard",
+      "evidence": "house",
+      "sources": [
+        {
+          "name": "Lucide: Icon design guide",
+          "url": "https://lucide.dev/contribute/icon-design-guide"
+        },
+        {
+          "name": "NN/g: Icon usability",
+          "url": "https://www.nngroup.com/articles/icon-usability/"
+        }
+      ]
+    },
+    {
+      "id": "rule-icon-context-size",
+      "label": {
+        "fr": "Taille d'icône selon le contexte",
+        "en": "Icon prominence depends on context"
+      },
+      "what": "The same icon changes prominence with the screen: NN/g measured a hamburger at about 20 % of a mobile navigation bar but about 3.5 % of the desktop layout, where it almost vanished. On larger screens show navigation openly instead of hiding it behind an icon.",
+      "fits": {
+        "surfaces": [
+          "phone",
+          "persuade",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Responsive navigation.",
+      "avoid_when": "Apps with very few destinations, where a hidden menu costs little.",
+      "build": "Show a visible nav list from about 840px; keep the menu icon for compact widths only.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Icon usability",
+          "url": "https://www.nngroup.com/articles/icon-usability/"
+        }
+      ]
+    },
+    {
+      "id": "rule-int-target-size-matrix",
+      "label": {
+        "fr": "Tailles de cible",
+        "en": "Target sizes"
+      },
+      "what": "Floors and targets differ by source: WCAG 2.5.8 (AA) 24×24 CSS px; 2.5.5 (AAA) 44×44; Apple iOS 44×44 pt default, 28 pt minimum; web.dev 48×48 px (about 9 mm, a fingertip pad); NN/g 1×1 cm physical. Primary actions on phones deserve more (NN/g cites about 2×2 cm).",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Every interactive element.",
+      "avoid_when": "Inline links in sentences (WCAG exception); dense mouse-only desktop tables, which can use 24–28 px rows if keyboard access is complete.",
+      "build": "--target-min: 24px (desktop floor); --target: 44px (touch); expand small icons with padding or a ::before hit area rather than enlarging the glyph.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "W3C, Understanding WCAG SC 2.5.8 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
+        },
+        {
+          "name": "Apple HIG: Accessibility",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/accessibility"
+        },
+        {
+          "name": "web.dev: Accessible tap targets",
+          "url": "https://web.dev/articles/accessible-tap-targets"
+        },
+        {
+          "name": "NN/g: Touch targets on touchscreens",
+          "url": "https://www.nngroup.com/articles/touch-target-size/"
+        }
+      ]
+    },
+    {
+      "id": "rule-int-target-spacing",
+      "label": {
+        "fr": "Espacement des cibles",
+        "en": "Target spacing"
+      },
+      "what": "Spacing helps only once targets are big enough (NN/g, which cites about 2 mm as the common minimum gap). web.dev asks about 8 px between touch targets; Apple about 12 pt around bezeled controls and 24 pt around unbezeled ones. WCAG lets a target under 24 px pass if a 24 px circle on it touches no other target.",
+      "fits": {
+        "surfaces": [
+          "phone",
+          "operate",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Toolbars, icon rows, chips, pagination, lists of links.",
+      "avoid_when": "Segmented controls and grouped buttons, which can touch if each segment is full-size.",
+      "build": "gap: 8px minimum between touch targets; for compact icon rows check the 24px-circle rule in devtools.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: Touch targets on touchscreens",
+          "url": "https://www.nngroup.com/articles/touch-target-size/"
+        },
+        {
+          "name": "web.dev: Accessible tap targets",
+          "url": "https://web.dev/articles/accessible-tap-targets"
+        },
+        {
+          "name": "Apple HIG: Accessibility",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/accessibility"
+        },
+        {
+          "name": "W3C, Understanding WCAG SC 2.5.8 Target Size (Minimum)",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
+        }
+      ]
+    },
+    {
+      "id": "rule-int-fitts-in-practice",
+      "label": {
+        "fr": "Fitts en pratique",
+        "en": "Fitts in practice"
+      },
+      "what": "Put the next action where the hand already is: Submit next to the last field, context-menu options next to their trigger, linear menus ordered by frequency (NN/g). Screen edges are infinite targets for a mouse, not for touch, where edge targets took longer. Make the whole labelled area clickable, not just the icon.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Forms, menus, toolbars, desktop apps.",
+      "avoid_when": "Destructive actions, which should be harder to hit by accident: keep them away from frequent ones.",
+      "build": "Primary button directly under the last field; menus anchored to their trigger (popover anchor positioning); full-row click areas in lists.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: Fitts's law and its applications in UX",
+          "url": "https://www.nngroup.com/articles/fitts-law/"
+        }
+      ]
+    },
+    {
+      "id": "rule-int-strong-signifiers",
+      "label": {
+        "fr": "Signifiants forts",
+        "en": "Strong signifiers"
+      },
+      "what": "NN/g (71 participants, 9 site pairs): pages with weak clickability cues took about 22 % longer to scan and drew about 25 % more fixations; on one pair, 86 % found the target link with strong cues against 50 % with weak ones. Links need contrast and conventional styling; buttons need a visible shape.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Any interface, above all content-heavy or unfamiliar ones.",
+      "avoid_when": "Expert tools with stable conventions where a quieter style is learned; even then keep focus and hover states strong.",
+      "build": "Buttons: filled or bordered with ≥3:1 boundary; links: colour + underline in body text; nothing non-interactive uses the button or link look.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: Flat UI elements attract less attention and cause uncertainty",
+          "url": "https://www.nngroup.com/articles/flat-ui-less-attention-cause-uncertainty/"
+        }
+      ]
+    },
+    {
+      "id": "rule-int-avoid-disabled-buttons",
+      "label": {
+        "fr": "Éviter les boutons désactivés",
+        "en": "Avoid disabled buttons"
+      },
+      "what": "GOV.UK: avoid disabled buttons; they have poor contrast and confuse users, who cannot tell why they cannot continue. Keep the button active and explain what is missing on submit. Use one only if research shows it helps.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone",
+          "persuade"
+        ]
+      },
+      "use_when": "Forms and checkouts.",
+      "avoid_when": "Actions that are truly unavailable for a reason the user cannot change right now (no network), with the reason shown next to it.",
+      "build": "Keep <button> enabled; on submit, validate and move focus to an error summary; if disabled, use aria-disabled with an adjacent explanation instead of the disabled attribute.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "GOV.UK Design System: Button",
+          "url": "https://design-system.service.gov.uk/components/button/"
+        }
+      ]
+    },
+    {
+      "id": "rule-int-inline-validation-timing",
+      "label": {
+        "fr": "Moment de la validation en ligne",
+        "en": "Inline validation timing"
+      },
+      "what": "Baymard: 31 % of sites have no inline validation. Validate on leaving the field, not while typing (premature errors made users think valid input was wrong); for fixed-length inputs validate when the expected length is reached; remove the error on the keystroke that fixes it; show a positive state on valid fields; still validate on submit.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone",
+          "persuade"
+        ]
+      },
+      "use_when": "All forms, especially checkout and sign-up.",
+      "avoid_when": "Single-field search, which needs no validation state.",
+      "build": "Validate on blur; re-validate on input only while the field is invalid; aria-invalid and aria-describedby on the message; keep entered values after a failed submit.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "Baymard Institute: Usability testing of inline form validation",
+          "url": "https://baymard.com/blog/inline-form-validation"
+        }
+      ]
+    },
+    {
+      "id": "rule-int-labels-above-fields",
+      "label": {
+        "fr": "Libellés au-dessus des champs",
+        "en": "Labels above fields"
+      },
+      "what": "Baymard: placeholder-only labels vanish once users type, and some users deleted their input to see the label again or abandoned. Use permanent labels on forms of 3 or more fields, on every drop-down and on fields with format rules. Placeholders hold format examples only. Floating labels are untested and need room for full error messages.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone",
+          "persuade"
+        ]
+      },
+      "use_when": "Every form beyond a single search or newsletter field.",
+      "avoid_when": "A single standalone field (search) or a frequent 2-field form, where an inline label can work.",
+      "build": "<label for> above the input, 4–8 px gap; hint text between label and field; placeholder only for format examples such as 06 12 34 56 78.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "Baymard Institute: Mobile forms, avoid inline labels",
+          "url": "https://baymard.com/blog/mobile-forms-avoid-inline-labels"
+        }
+      ]
+    },
+    {
+      "id": "rule-int-error-messages",
+      "label": {
+        "fr": "Messages d'erreur",
+        "en": "Error messages"
+      },
+      "what": "NN/g: show the error next to the field that caused it, with colour plus icon plus text, in plain words that name the problem and how to fix it, without blaming the user; keep the input. Match severity: inline or toast for minor issues, a modal only for severe ones. About 350 million people have a colour-vision deficiency.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Forms, failed actions, system errors.",
+      "avoid_when": "Never show errors before the user has had a chance to act (empty field on focus).",
+      "build": "Message under the field, linked by aria-describedby; icon + text in --danger; a summary at the top for long forms with links to fields; never 'An error occurred'.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: Error-message guidelines",
+          "url": "https://www.nngroup.com/articles/error-message-guidelines/"
+        }
+      ]
+    },
+    {
+      "id": "rule-int-button-order-platform",
+      "label": {
+        "fr": "Ordre des boutons selon la plateforme",
+        "en": "Button order follows the platform"
+      },
+      "what": "NN/g: Windows puts OK before Cancel, macOS puts OK last; on the web follow the platform most of your users use, and consistency matters more than the order itself. GOV.UK places the primary button at the left edge of the form, which suits single-column web forms.",
+      "fits": {
+        "surfaces": [
+          "desktop-app",
+          "operate"
+        ]
+      },
+      "use_when": "Dialogs and desktop apps.",
+      "avoid_when": "Web forms with one primary action under the fields: put it first, aligned left.",
+      "build": "Desktop apps: read the OS (navigator.userAgentData.platform or Tauri/Electron APIs) and order the dialog footer accordingly; web: primary first in a button group.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: OK-Cancel or Cancel-OK?",
+          "url": "https://www.nngroup.com/articles/ok-cancel-or-cancel-ok/"
+        },
+        {
+          "name": "GOV.UK Design System: Button",
+          "url": "https://design-system.service.gov.uk/components/button/"
+        }
+      ]
+    },
+    {
+      "id": "rule-int-one-primary-action",
+      "label": {
+        "fr": "Une seule action principale",
+        "en": "One primary action"
+      },
+      "what": "GOV.UK: use the default (primary) button for the main call to action and avoid more than one per page; several main actions weaken each other and leave users unsure what to do next. Secondary actions use a quieter style or a link.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Every page and dialog.",
+      "avoid_when": "Comparison or pricing pages where several equal choices are the point; even then highlight the recommended one.",
+      "build": "One .btn-primary per view (lint for it); secondary as .btn-secondary or a text link; destructive as its own style.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "GOV.UK Design System: Button",
+          "url": "https://design-system.service.gov.uk/components/button/"
+        }
+      ]
+    },
+    {
+      "id": "rule-copy-button-verb",
+      "label": {
+        "fr": "Le verbe du bouton dit ce qui se passe",
+        "en": "Button verb says what happens"
+      },
+      "what": "Button text describes the action in sentence case with a verb that matches the outcome: 'Save and continue' when data is saved, 'Continue' when it is not, 'Add another address' rather than 'Add' (GOV.UK). 'Start now' is only for the start of a service.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Every button.",
+      "avoid_when": "Universally understood single words in dense toolbars (Save, Undo), provided the accessible name is precise.",
+      "build": "Verb + object, 1–4 words; sentence case; never 'Submit', 'OK' or 'Click here' where a specific verb exists; the dialog title and its confirm button use the same verb.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "GOV.UK Design System: Button",
+          "url": "https://design-system.service.gov.uk/components/button/"
+        }
+      ]
+    },
+    {
+      "id": "rule-copy-link-front-load",
+      "label": {
+        "fr": "Liens : mots-clés en premier",
+        "en": "Links: keywords first"
+      },
+      "what": "Generic 'Learn more' links give little scent, repeat on the page and fail out of context for screen readers (NN/g). Name the destination and put the key words in the first 2 words ('More camping hacks'). Each link label should be unique and make sense alone.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Cards, feature sections, article links, navigation.",
+      "avoid_when": "A heading that already is the link and describes the destination; then drop the extra link.",
+      "build": "Write the label after reading the destination page; if 'Learn more' stays, add the topic ('Learn more about pricing') or link the descriptive phrase.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: 'Learn more' links, you can do better",
+          "url": "https://www.nngroup.com/articles/learn-more-links/"
+        }
+      ]
+    },
+    {
+      "id": "rule-copy-title-length",
+      "label": {
+        "fr": "Longueur des titres de page",
+        "en": "Page title length"
+      },
+      "what": "NN/g: page titles of 40–60 characters, keywords near the front, leading articles dropped. Headlines must make sense out of context and promise only what the content delivers; avoid puns and clever wording in all microcontent.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "<title>, article headlines, card titles, email subjects.",
+      "avoid_when": "Brand-led hero lines, which can be evocative if the subhead states the plain meaning.",
+      "build": "<title>Task or topic – Product</title> under 60 characters; h1 front-loaded with the information-bearing word.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: Microcontent, how to write headlines, page titles and subject lines",
+          "url": "https://www.nngroup.com/articles/microcontent-how-to-write-headlines-page-titles-and-subject-lines/"
+        }
+      ]
+    },
+    {
+      "id": "rule-copy-sentence-length",
+      "label": {
+        "fr": "Longueur des phrases",
+        "en": "Sentence length"
+      },
+      "what": "GOV.UK: split any sentence over 25 words and keep paragraphs to 5 sentences at most. It cites literacy data (1 in 6 adults in England with very poor literacy) and a study where 80 % of people preferred clear English, more so as the topic became complex.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate",
+          "persuade"
+        ]
+      },
+      "use_when": "Help, onboarding, errors, legal summaries, product copy.",
+      "avoid_when": "Literary or brand storytelling, where rhythm may need longer sentences; keep the UI strings short anyway.",
+      "build": "Lint copy: flag sentences over 25 words and paragraphs over 5 sentences; one idea per sentence in UI.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "GOV.UK content guidance: Clear language",
+          "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/clear-language/"
+        }
+      ]
+    },
+    {
+      "id": "rule-copy-concise-scannable-objective",
+      "label": {
+        "fr": "Concis, survolable, objectif",
+        "en": "Concise, scannable, objective"
+      },
+      "what": "NN/g's 1997 study: 79 % of users scanned new pages and 16 % read word by word. Rewriting promotional text to be concise improved usability by 58 %, scannable by 47 %, objective by 27 %, and all three by 124 %. Old, but repeated by the later F-pattern work.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Landing pages, product descriptions, docs.",
+      "avoid_when": "Content people commit to reading (contracts, long-form journalism), which still benefits from structure but not from cutting.",
+      "build": "Cut adjectives and claims; bullets for 3+ parallel items; bold key terms; headings every few paragraphs.",
+      "prevalence": "standard",
+      "evidence": "research",
+      "sources": [
+        {
+          "name": "NN/g: How users read on the web",
+          "url": "https://www.nngroup.com/articles/how-users-read-on-the-web/"
+        },
+        {
+          "name": "NN/g: F-shaped pattern of reading on the web",
+          "url": "https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/"
+        }
+      ]
+    },
+    {
+      "id": "rule-copy-error-specific",
+      "label": {
+        "fr": "Erreurs précises et constructives",
+        "en": "Specific, constructive error text"
+      },
+      "what": "Error text names the specific problem and the fix in plain language, hides codes unless they help diagnosis, and does not blame (NN/g). 'Enter a date of birth in the past' beats 'Invalid input'. Keep it next to the field.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Validation and system messages.",
+      "avoid_when": "Security-sensitive cases (login), where the message must not reveal which part was wrong.",
+      "build": "Pattern: what happened + how to fix, under 15 words for field errors; error codes in a details element for support.",
+      "prevalence": "standard",
+      "evidence": "guideline",
+      "sources": [
+        {
+          "name": "NN/g: Error-message guidelines",
+          "url": "https://www.nngroup.com/articles/error-message-guidelines/"
+        }
+      ]
+    }
+  ]
+}

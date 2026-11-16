@@ -1,0 +1,176 @@
+{
+  "id": "professional-firm",
+  "label": {
+    "fr": "Cabinet : avocat, comptable, conseil",
+    "en": "Professional firm: law, accounting, advice"
+  },
+  "expects": [
+    {
+      "rule": "The first screen says what the firm does, for whom and where (for example 'Avocat pénaliste à Paris', 'Cabinet d'expertise comptable à Clermont-Ferrand'), with one way to make contact. Users spent 57% of viewing time above the fold in NN/g's 2018 study.",
+      "source": "https://www.nngroup.com/articles/scrolling-and-attention/",
+      "verified": true
+    },
+    {
+      "rule": "Contact information is displayed prominently and fees are disclosed up front where possible: NN/g lists upfront disclosure among the four credibility factors and reports users leaving a site that did not state its rate.",
+      "source": "https://www.nngroup.com/articles/trustworthy-design/",
+      "verified": true
+    },
+    {
+      "rule": "Visitors can see who is behind the firm: real photographs of the people, where it is based, and several contact channels (phone, address, email). NN/g found stock photography lowered trust.",
+      "source": "https://www.nngroup.com/articles/about-us-information-on-websites/",
+      "verified": true
+    },
+    {
+      "rule": "Lawyers, notaries and chartered accountants are regulated professions in France: the site shows the professional title, the applicable professional rules, the name of the order or body the firm is registered with, the registration number, an email address and a phone number.",
+      "source": "https://entreprendre.service-public.gouv.fr/vosdroits/F37351",
+      "verified": true
+    },
+    {
+      "rule": "Body text, including small legal notes and footers, reaches a contrast ratio of at least 4.5:1.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "Practice areas are named in the client's words (dismissal, custody, company creation, tax audit) and each has its own page that explains the first step and how the first meeting works.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The phone number is a tap-to-call link visible without scrolling on a phone, and a contact form asks only for what is needed to call back.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "8 of 9 name their practice areas on the home page as a list or cards: numbered (Lacourte Raquin, Integrated Wealthcare), grouped (AVVR's 23 expertises in three groups), card grids by procedure and offence (Kohen), or 'Je souhaite' needs (Yes! Avocats).",
+    "5 of 9 show named people with photographs on the home page (Yes! Avocats, Cathey & Miles, Manning Elliott, AVVR through article authors, Kohen); the other 4 link to a team page or give a headcount ('cinquante professionnels' at income).",
+    "5 of 9 put proof on the home page: press logos and a 4.8/5 Google rating from 85 reviews (Kohen), verdict amounts against the insurer's offer (Cathey & Miles), a Chambers quote and rankings (Lacourte Raquin), years of practice (income, Integrated Wealthcare).",
+    "5 of 9 carry recent articles or news on the home page (AVVR, Kohen, Lacourte Raquin, Manning Elliott, Parhélie).",
+    "2 of 9 state prices or how fees work (Kohen: 80 € written review, 300 € one-hour meeting; Cathey & Miles: no fee unless the client wins more than the insurer's highest offer).",
+    "3 of 9 put the phone number in the header (AVVR, Yes! Avocats, Cathey & Miles); colour is restrained, one dark or warm accent at most: deep red #9c1b30 on #dbd6d2 (Cathey & Miles), slate #3b4156 with orange #d36f3b (income), near-black #1d1d1f on white (Kohen)."
+  ],
+  "sites": [
+    {
+      "name": "AVVR Advocaten Notariaat",
+      "url": "https://avvr.nl/",
+      "why": "Utrecht firm of lawyers and notaries: a top bar with email, phone, careers and contact above the menu (Expertises, Team, Actueel, Over ons) and an NL/EN switch. The headline 'Bereikbare specialisten voor als het erop aankomt' sits over a full-width photograph, then three value blocks, two illustrated practice areas (real estate, businesses) and six recent articles with author photo, tags and date. Set in Switzer.",
+      "recognition": "Awwwards Honorable Mention, 2023-01-25",
+      "source": "https://www.awwwards.com/sites/de-advocaten-van-van-riet",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Hassan Kohen, avocat pénaliste",
+      "url": "https://kohenavocats.com/",
+      "why": "Paris criminal defence lawyer: a black chess knight behind 'Avocat pénaliste à Paris' and 'Une défense préparée', with a button to a paid written case review. Below: press logos, card grids by procedure (garde à vue, comparution immédiate) and by offence, 4.8/5 from 85 Google reviews, about forty FAQ answers and stated prices (80 € review, 300 € one-hour meeting). Lato, near-black #1d1d1f on white.",
+      "recognition": "Awwwards Nominee, 2026-01-14",
+      "source": "https://www.awwwards.com/sites/kohen-avocats",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Yes! Avocats",
+      "url": "https://yes-avocats.fr/",
+      "why": "Two-partner business and employment law firm in Strasbourg: top bar with five links and a tap-to-call number, a full-width photograph of a lawyer and a headline that rotates five endings ('…favorisons votre réussite', '…protégeons vos arrières'). Further down: partner cards with photographs, a 'Je souhaite' menu of about fifteen common needs, named contacts and a 'Rappelez-moi' callback form; address in the footer.",
+      "recognition": "Awwwards Honorable Mention, 2018-06-01",
+      "source": "https://www.awwwards.com/sites/yes-avocats-associes",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Parhélie",
+      "url": "https://parhelie.fr/",
+      "why": "Tax law firm for businesses, site by type8 studio: the opening states 'Cabinet d'avocats' of tax specialists supporting innovation, in an eight-slide sequence with a 'Passer' skip link; menu of Le cabinet, Notre offre, Vos questions, a Manifeste and a blog, an FR/EN switch and LinkedIn plus email in a contact panel. Much of the text is drawn by script and did not render when read (not seen beyond the gallery listing)",
+      "recognition": "Awwwards Honorable Mention, 2022-12-27",
+      "source": "https://www.awwwards.com/sites/parhelie",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "income",
+      "url": "https://www.income.ec/",
+      "why": "Chartered accountants and auditors in Clermont-Ferrand: 'Cabinet d'expertise comptable et d'audit à Clermont-Ferrand' and a 'Nous contacter' button over a photograph of the offices. Then four numbered roles, three service cards (Conseil, Social, Audit), '21 ans d'expérience', a team teaser (about fifty people) and a contact block with address, map link, clickable phone and a form with a service selector. Inter Tight with Cormorant Garamond italic; slate #3b4156, orange #d36f3b, green #6baf91.",
+      "recognition": "Awwwards Honorable Mention, 2023-03-23",
+      "source": "https://www.awwwards.com/sites/income",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Manning Elliott",
+      "url": "https://www.manningelliott.com/",
+      "why": "British Columbia accounting firm: 'We're more than CPAs' and two tiles (About Us, Explore) on the first screen, then partner cards with title, credentials and industry tags, eight service tiles (Tax, Audit & Accounting, SR&ED), nine industry tiles, five dated articles, careers and a 'Get in Touch' block; the four office addresses and a client portal link are in the footer.",
+      "recognition": "Awwwards Nominee, 2020-05-15",
+      "source": "https://www.awwwards.com/sites/manning-elliott",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Integrated Wealthcare",
+      "url": "https://www.iwcglobal.net/",
+      "why": "Wealth management adviser for doctors: 'Collaborative Wealth Management for the Medical Community', five numbered services (retirement, investment, tax, insurance, estate) with a short paragraph each, five cards by career stage (medical students to practice owners) and a contact form that asks career stage and services wanted, promises a reply in 3 to 5 business days and links a scheduling page. Regulatory documents (Form ADV, Form CRS) are in the footer. Instrument Serif on white.",
+      "recognition": "Awwwards Honorable Mention, 2025-11-07",
+      "source": "https://www.awwwards.com/sites/integrated-wealthcare",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Lacourte Raquin & Associés",
+      "url": "https://lacourte.com/en/home",
+      "why": "Paris business law firm founded in 1993: a one-sentence introduction over a photograph with a Chambers client quote, three dated news items, then nine numbered practice areas (01 M&A to 09 Restructuring) each with a short description and 'View more', a team teaser and a footer with the rue Paul Cézanne address, careers and LinkedIn. FR/EN switch; site by Bonhomme.",
+      "recognition": "Awwwards Honorable Mention, 2023-06-01",
+      "source": "https://www.awwwards.com/sites/lacourte-raquin-tatar",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Cathey & Miles",
+      "url": "https://catheymiles.com/",
+      "why": "Two-founder Florida trial firm against insurers, site by Noomo: header with Results, About, Contact and the phone number; the hero is a book-like graphic asking 'Adjuster acting in bad faith?' then 'Don't threaten us with a good time.' Case cards show the verdict beside the insurer's first offer ($30.1M against $100k), founders with photographs, a fee rule and a short email form. Aeonik, deep red #9c1b30 on stone #dbd6d2.",
+      "recognition": "Awwwards Honorable Mention, 2024-02-20",
+      "source": "https://www.awwwards.com/sites/cathey-miles",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "Stock photographs of handshakes, gavels, scales of justice or calculators instead of the firm's own people and offices.",
+    "A homepage slogan with no practice area, place or audience ('Excellence, rigour, commitment').",
+    "Contact only through a long form, with no phone number or address, for clients who often need to talk the same day.",
+    "Practice areas listed as legal jargon with no page explaining the problem it solves and the first step.",
+    "Team pages of identical grey headshots with no specialism, languages or direct contact.",
+    "Missing regulatory details (bar or order, registration number, professional rules, insurer) or a legal notice page left empty.",
+    "Testimonials or results without names, dates or sources, or the same quote repeated."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Business & Corporate",
+      "url": "https://www.awwwards.com/websites/business-corporate/",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, Trustworthiness in Web Design: 4 Credibility Factors",
+      "url": "https://www.nngroup.com/articles/trustworthy-design/",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, 'About Us' Information on Websites",
+      "url": "https://www.nngroup.com/articles/about-us-information-on-websites/",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, Scrolling and Attention",
+      "url": "https://www.nngroup.com/articles/scrolling-and-attention/",
+      "access": "free"
+    },
+    {
+      "name": "Service-Public.fr, Mentions obligatoires sur le site internet d'une entreprise",
+      "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F37351",
+      "access": "free"
+    },
+    {
+      "name": "W3C, WCAG 2.2 Understanding 1.4.3",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+      "access": "free"
+    }
+  ]
+}

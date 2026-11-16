@@ -76,9 +76,9 @@ commands:
     does: "Reference bank: for a site type, what visitors expect, sites known to be excellent with the reason, what to avoid. Without a type, lists the types."
     after: "Summarise for the user what applies to their project."
   patterns:
-    hint: "[family | pattern | search <words>] [--type <site type>] [--surface persuade|operate|read|phone|desktop-app]"
-    does: "Pattern bank: everything the pack can propose for an interface (navigation, motion, visual effects, features, page sections, UX laws, inspiration galleries, component libraries), with where each fits, what it costs and how to build it with free tools. Without an argument, lists the families."
-    after: "Offer the user the patterns that fit their project as options, with the cost of each; a pattern is a choice, the rules still apply to it."
+    hint: "[family | pattern | search <words>] [--type <site type>] [--surface persuade|operate|read|phone|desktop-app] [--prevalence rare|common|everywhere|standard]"
+    does: "Pattern bank: everything the pack can propose for an interface (themes and styles, UI modules, design rules, navigation, motion, visual effects, features, page sections, UX laws, inspiration galleries, component libraries), with where each fits, what it costs and how to build it with free tools. Without an argument, lists the families."
+    after: "Offer the user the patterns that fit their project as options, with the cost of each and how widespread it is (a pattern seen everywhere reads as déjà vu alone: pair it with a signature taken from the trade)."
   variants:
     hint: "<name> <url> <url> [url...] | <name> --tally"
     does: "Several versions of one screen: screenshots under shuffled letters, measures, pairs for a blind jury; --tally ranks them from the votes."

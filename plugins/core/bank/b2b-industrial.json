@@ -1,0 +1,128 @@
+{
+  "id": "b2b-industrial",
+  "label": {
+    "fr": "Industrie et B2B",
+    "en": "Industrial and B2B"
+  },
+  "expects": [
+    {
+      "rule": "The first screen says what is made or done and for which industries, in plain words (e.g. 'technical industrial dry ice cleaning'), not only a vision statement.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Industries or applications are a visible entry point in the menu, so a buyer can start from their sector.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Technical documents (data sheets, safety data sheets, CAD files, manuals) are reachable without a sales call; gating is limited to marketing content.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "One clear business action (request a quote, site visit, talk to an engineer) repeated at the end of each section, with a direct phone or email for a named team or site.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Proof is specific: figures with units, named customers or case studies, certifications with their standard (ISO 9001 etc.), real plant and product photographs.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Each country or language version states which entity, address and company number it belongs to.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "5 of 7 list industries or segments in the main menu or on the home page (Cryox, Q-Industrial, Carbo, Aalberts, Rondo by product family); Vegusa organises by equipment type and Nexus by software product.",
+    "4 of 7 open with a short functional headline (Cryox 'Technical industrial dry ice cleaning', Q-Industrial 'Industrial / Coatings', Vegusa product slides, Nexus customer portal); Carbo, Aalberts and Rondo open with a mission sentence, a featured story or a support promise.",
+    "3 of 7 give a phone number on the home page (Cryox 24/7 line in the footer, Carbo near the footer, Vegusa seven branch numbers in the header plus WhatsApp); the others route to a contact page.",
+    "Technical documents are reachable from 3 of 7 (Rondo manuals and CAD DXF files, Carbo data sheets in Resources, Q-Industrial formulas behind a login); Carbo also gates articles behind a name-email-phone form.",
+    "4 of 7 use real photographs of work or plant (Cryox operators in protective suits, Q-Industrial spray painting and locomotives, Aalberts buildings and staff, Rondo support staff); all 7 were read as page text, not screenshots."
+  ],
+  "sites": [
+    {
+      "name": "CRYOX",
+      "url": "https://cryox.be/en",
+      "why": "Belgian dry ice cleaning contractor: headline 'Technical industrial dry ice cleaning', menu of four items plus NL/EN, 'schedule a site visit' repeated through the page, five benefits (no water, non-abrasive, safe for electrics), a four-step process, seven sectors, photographs of operators in protective suits, 24/7 phone and company number in the footer.",
+      "recognition": "Awwwards Nominee, 2026-06-28",
+      "source": "https://www.awwwards.com/sites/cryox",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Q-Industrial",
+      "url": "https://www.q-industrial.com/",
+      "why": "Industrial paint and coatings maker, English (Germany) and Ukrainian versions: headline 'Industrial / Coatings', menu of Industries (5), Surfaces (5), Catalog and a locked Technologies section, Explore Catalog button, five sector cards (rail, machine tools, metal structures), photographs of spray painting and freight locomotives, 'Consult with our experts' footer action.",
+      "recognition": "Awwwards Site of the Day, 2024-06-02",
+      "source": "https://www.awwwards.com/sites/q-industrial",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "CARBO",
+      "url": "https://carbo.tech/",
+      "why": "Ceramic proppants and industrial media maker: headline on ceramic solutions for global industries, menu with Industries (oil and gas, foundry, mining, geothermal) and Resources (technical and safety data sheets), figures (110+ patents, 45 years, 17 countries), case studies, phone and Houston address in a closing contact block; some articles gated behind a form.",
+      "recognition": "Awwwards Nominee, 2025-11-27",
+      "source": "https://www.awwwards.com/sites/carbo",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Rondo",
+      "url": "https://www.rondo.com.au/",
+      "why": "Australian maker of steel ceiling and wall framing: headlines on technical design support, Find a Supplier in header and footer, product families in the menu, links to product manuals, whitepapers, CAD DXF drawings and safety data sheets (by request), Australia/New Zealand switch, photograph of support staff.",
+      "recognition": "WebAwards Best Manufacturing Website, 2023",
+      "source": "https://www.webaward.org/winner/37116/welcome-wins-2023-webaward-for-rondo.html",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Vegusa Maquinaria",
+      "url": "https://www.vegusamaquinaria.com.mx/",
+      "why": "Mexican forklift and machinery dealer: branch selector with seven cities, seven phone numbers in the header, floating WhatsApp button with pre-filled New, Used and Rental messages, hero slides with a priced truck ('Desde $590,900*'), four service cards (new, used, rental, parts), 14-question FAQ, branch addresses with map links.",
+      "recognition": "WebAwards Best Manufacturing Website, 2026",
+      "source": "https://www.webaward.org/winner/38005/vegusa-maquinaria-wins-2026-webaward-for-vegusa-maquinaria-website-industrial-machinery--forklift-solutions-in-mexico.html",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Hexagon Nexus",
+      "url": "https://nexus.hexagon.com/",
+      "why": "Customer portal for Hexagon manufacturing software: heading 'Welcome to the Customer Portal', tagline 'The Future of Manufacturing is Open', Register for free and Login buttons, a grid of ten product tiles (EDGECAM, PC-DMIS, RADAN Quoting), a three-slide carousel (academy, metrology shop), five tagged news items. No contact form.",
+      "recognition": "Awwwards Site of the Day, 2022-12-09",
+      "source": "https://www.awwwards.com/sites/nexus",
+      "scale": "star",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A home page headline that is a mission statement with no product, process or industry named.",
+    "Data sheets and safety sheets hidden behind a sales form or a 'request' button.",
+    "Prices shown with an asterisk and no footnote anywhere on the page.",
+    "Placeholder content left live: '000-000-0000' phone numbers, 'Image Alt Text Here', unlabelled hero images.",
+    "Figures without units or context (a total in pounds with no period or product).",
+    "Award pages that still link to a lapsed company domain now used by an unrelated site; check before citing.",
+    "Contact limited to a generic form when a 24/7 or per-site phone number exists."
+  ],
+  "sources": [
+    {
+      "name": "WebAwards, Best Manufacturing Website",
+      "url": "https://webaward.org/category/Manufacturing/best-manufacturing-websites.html",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Cryox",
+      "url": "https://www.awwwards.com/sites/cryox",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Q-Industrial",
+      "url": "https://www.awwwards.com/sites/q-industrial",
+      "access": "free"
+    }
+  ]
+}

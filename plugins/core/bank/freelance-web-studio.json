@@ -1,0 +1,166 @@
+{
+  "id": "freelance-web-studio",
+  "label": {
+    "fr": "Freelance et petit studio web",
+    "en": "Freelance and small web studio"
+  },
+  "expects": [
+    {
+      "rule": "The first screen says what is sold (websites, for whom), who makes it and where, with one way to start a project. Users spent 57% of viewing time above the fold in NN/g's 2018 study.",
+      "source": "https://www.nngroup.com/articles/scrolling-and-attention/",
+      "verified": true
+    },
+    {
+      "rule": "Contact information is prominent and the cost is disclosed up front (a starting price or what a typical project costs): NN/g counts upfront disclosure among the four credibility factors and saw users reject a site that did not state its rate.",
+      "source": "https://www.nngroup.com/articles/trustworthy-design/",
+      "verified": true
+    },
+    {
+      "rule": "The studio's own site passes the Core Web Vitals it sells: Largest Contentful Paint of 2.5 s or less, Interaction to Next Paint of 200 ms or less, Cumulative Layout Shift of 0.1 or less, at the 75th percentile of page loads.",
+      "source": "https://web.dev/articles/vitals",
+      "verified": true
+    },
+    {
+      "rule": "Menu links, project links and contact buttons are at least 24 by 24 CSS pixels or spaced so they are easy to hit on a phone.",
+      "source": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "verified": true
+    },
+    {
+      "rule": "A French freelancer or small company shows its legal notice: name with 'EI' or company name and legal form, registration number (RNE or RCS), VAT number when applicable, email, phone and the hosting provider.",
+      "source": "https://entreprendre.service-public.gouv.fr/vosdroits/F37351",
+      "verified": true
+    },
+    {
+      "rule": "Each project names the client and its sector, what the studio did (design, build, both, or with which partner), and links to the live site.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The site says how a project starts and runs: first call or email, typical timeline, what happens after launch (care plan, updates, hosting).",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "7 of 8 show work or clients on the home page: a case-study carousel (Little Website Co.), case studies tagged by service and sector (Laurenti), a 27-project grid (CubiFlow), a list of built sites with year, design partner and a Visit link (Anna Erdelen), success stories with one figure each (Monolog), project cards and client logos (Onlines), client logos (Aspectify).",
+    "6 of 8 list their services on the home page, from a one-line list (Quatrième Étage) to three numbered blocks with sub-items (Laurenti); CubiFlow and Anna Erdelen let the work stand for the offer.",
+    "4 of 8 make booking a call the main action (Aspectify's free discovery call, CubiFlow's 30-minute cal.com link, Monolog's intro call, Onlines' 'Agendar una llamada' and WhatsApp); the other 4 rely on a visible email address.",
+    "6 of 8 say where they are based (Essex, Arezzo, UK, Toulouse, Rosario, Hanoi and Melbourne); 2 of 8 show named testimonials with role and company (Little Website Co., Monolog); only Monolog states a price (from $20k, most projects $25k to $50k, 10 to 14 weeks).",
+    "The interface is near-monochrome on 5 of 8 (#0a0a0a and #fff at Aspectify, #111 on #f3f3f3 at Little Website Co., black and white at Quatrième Étage, Monolog, Onlines); 3 add one hot accent (#ff4040 on #181818 at Laurenti, #ff5c00 at CubiFlow, #b81414 and #1aff9e on #1d1d1d at Anna Erdelen)."
+  ],
+  "sites": [
+    {
+      "name": "Little Website Co.",
+      "url": "https://littlewebsite.co/",
+      "why": "Essex studio run by one developer: 'Design + Technology.' over full-width media, then 'a little web design and development studio based in Essex', a client strip, a plain list of twenty services (four linked: Craft CMS, Sanity), a swipeable carousel of four testimonials with name, role and company, three recent case studies and a 'Get started.' block with an 'E-mail us' button. Geist and Saans, #111 on #f3f3f3.",
+      "recognition": "Minimal Gallery, published 2026-10-28",
+      "source": "https://minimal.gallery/little-website-co/",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Laurenti Web Design Studio",
+      "url": "https://laurentiwebdesign.it/",
+      "why": "Small studio in Arezzo: the header gives 'Italy / Worldwide', the email address, LinkedIn and Instagram; the headline 'Digital. Design to move.' leads to three numbered services (01 Strategy, 02 Design, 03 Development, with WordPress themes, e-commerce and headless CMS) and five case studies for local businesses, each tagged with the services done and the sector (healthcare, events, manufacturing, architecture). Manrope; red #ff4040 on near-black #181818.",
+      "recognition": "Awwwards Honorable Mention, 2026-05-15",
+      "source": "https://www.awwwards.com/sites/laurenti-web-design-studio",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Aspectify Design",
+      "url": "https://aspectify.design/",
+      "why": "UK Webflow studio led by a freelance designer-developer: 'Webflow Development . Web Design . Branding' and 'Accepting projects from 2026' up top, four services in one sentence each (Webflow build, web design, Figma to Webflow, WordPress to Webflow), client logos under 'A few companies who trusted us', and 'Book a free discovery call' repeated down the page. PP Neue Montreal, #0a0a0a and white.",
+      "recognition": "Awwwards Honorable Mention, 2024-07-31",
+      "source": "https://www.awwwards.com/sites/aspectify-design-2024",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "CubiFlow",
+      "url": "https://www.cubiflow.com/",
+      "why": "Webflow design and development studio whose home page is almost only work: a grid of 27 project cards, each swapping to a second image on hover, under a menu of Projects, Services, SiteMap, About and App. The footer gives the email, a contact page and a 'Book Us' link to a 30-minute call. General Sans with B612 Mono, #111 on white with an orange accent (#ff5c00). No location or prices on the home page.",
+      "recognition": "Minimal Gallery, published 2026-02-23",
+      "source": "https://minimal.gallery/cubiflow/",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Anna Erdelen",
+      "url": "https://www.erdelen.com/",
+      "why": "Freelance creative web developer: the home page is a list of thirteen sites built from 2024 to 2026 for orchestras, galleries, architects and an interior designer, each with year, the design studio it was built with, and a 'Visit' link to the live site. Only Work and About in the menu, the email and Instagram at the foot. Dark grey #1d1d1d with a red (#b81414) and a green (#1aff9e) accent, a mono beside a sans.",
+      "recognition": "Minimal Gallery, published 2024-11-15",
+      "source": "https://minimal.gallery/anna-erdelen/",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Monolog",
+      "url": "https://bymonolog.com/",
+      "why": "Founder-led brand and web studio (Hanoi and Melbourne): 'Websites and identities that reflect your ambition' with 'Schedule an intro call', then client results with one figure each (21% more conversions for an architecture practice, $100k of work in 30 days for a mural agency), named testimonials, six services, a three-step process and an FAQ that states the price (from $20k, most $25k to $50k), timeline (10 to 14 weeks) and 90 days of support.",
+      "recognition": "Minimal Gallery, published 2026-06-12",
+      "source": "https://minimal.gallery/monolog/",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Quatrième Étage",
+      "url": "https://quatriemeetage.studio/",
+      "why": "Toulouse design duo founded in 2017: one paragraph says who they are, what they make (identities, packaging, books, websites), for whom (art, culture, communication) and that they keep 'a deliberately small client list'. A one-line list of five services, a short press list, Work and About links and the email address complete the page. Monument and Monument Mono, black on white.",
+      "recognition": "SiteInspire, added 2026-09-11",
+      "source": "https://www.siteinspire.com/website/13573-quatrieme-etage",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Onlines",
+      "url": "https://onlines.com.ar/",
+      "why": "Web design and development studio in Rosario: a WhatsApp 'Hablemos' button in the header, the heading 'internet.' beside a mock chat saying 'Hagamos tu nuevo sitio web', and the line that it makes websites for companies, governments and organisations. Three service cards, a process section with 'Agendar una llamada', six team members with photographs and roles, three projects, nine client logos and the office address in the footer.",
+      "recognition": "Minimal Gallery, published 2026-11-08",
+      "source": "https://minimal.gallery/onlines/",
+      "scale": "company",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A hero with a slogan ('We craft digital experiences') and no word on what is sold, for whom, or where the studio is.",
+    "A heavy intro loader, WebGL or scroll effects that make the studio's own site slow on a phone: it is the first proof of the work.",
+    "Mock-up screenshots of sites that were never launched, or work with no client name and no link to the live site.",
+    "The same testimonial text repeated under several names, or quotes with no name, role or company.",
+    "Contact only through a pop-up form or a Gmail compose link, with no business email, location or legal notice.",
+    "Service lists of buzzwords (SEO, UX, AI, growth) with no indication of price range, timeline or what the client gets after launch.",
+    "Work shown only as links to Instagram or Behance instead of case pages on the studio's own site."
+  ],
+  "sources": [
+    {
+      "name": "Minimal Gallery, Agency",
+      "url": "https://minimal.gallery/tag/agency",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, Design Agencies",
+      "url": "https://www.awwwards.com/websites/design-agencies/",
+      "access": "free"
+    },
+    {
+      "name": "SiteInspire, Agencies & Consultancies",
+      "url": "https://www.siteinspire.com/websites/category/agencies-and-consultancies",
+      "access": "free"
+    },
+    {
+      "name": "Nielsen Norman Group, Trustworthiness in Web Design: 4 Credibility Factors",
+      "url": "https://www.nngroup.com/articles/trustworthy-design/",
+      "access": "free"
+    },
+    {
+      "name": "web.dev, Web Vitals",
+      "url": "https://web.dev/articles/vitals",
+      "access": "free"
+    },
+    {
+      "name": "Service-Public.fr, Mentions obligatoires sur le site internet d'une entreprise",
+      "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F37351",
+      "access": "free"
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "id": "tourism-activities",
+  "label": {
+    "fr": "Tourisme et activités",
+    "en": "Tourism and activities"
+  },
+  "expects": [
+    {
+      "rule": "Each activity or trip card shows the price from, duration, minimum age or level, and the season or departure dates.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Booking shows real availability and takes payment online (or states clearly that it is a request), from a button on every activity card and page.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Meeting point, address or pick-up area, and how far it is from the nearest town, are plain text with a map link.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Cancellation and weather policy, what is included and what to bring are stated before payment.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Reviews name their platform and count, and photographs show actual guests and guides on the activity.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Licences, insurance or financial protection required for the activity or package (for example ATOL in the UK, the operator permit in Québec) are named.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "A phone or chat contact for questions before booking is visible in the header.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "5 of 7 put a price from on each card (OARS $121 to $4,499, Chanteclerc, Backpacking Tours with struck-through normal prices, Sage, Natural World Safaris); Spain Collection and the Sumène Artense tourist office show none.",
+    "Only 1 of 7 has a Book Now button on the home page cards (Sage, through FareHarbor); the 4 trip operators use View details, View tour or an enquiry link.",
+    "4 of 7 show a rating; 2 name the platform (Backpacking Tours: Google, Facebook, TourRadar; Sage: Google and Tripadvisor); OARS shows per-trip star scores, Natural World Safaris 5/5 on 8 reviews.",
+    "2 of 7 have a trip finder on the first screen (OARS: destination, activity, trip length, month; Chanteclerc: when, where, duration).",
+    "3 of 7 put a phone number in the header (OARS, Natural World Safaris, Spain Collection); Sage shows it only in the footer and Chanteclerc nowhere on the home page.",
+    "Photographs are of the destination or activity on all 7; Backpacking Tours and Sage add guest photographs (reviews, trip photo store)."
+  ],
+  "sites": [
+    {
+      "name": "OARS",
+      "url": "https://www.oars.com/",
+      "why": "Rafting and adventure outfitter running since 1969. Hero 'The World's Best Rafting Adventures' over river photographs, a 'Find your trip' panel (destination, activity, trip length, departure month), ten trip cards with from-prices ($121 to $4,499), star scores and review counts, Compare and Favorites, phone and Request Catalog in the top bar. No Book button on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2016-06-09",
+      "source": "https://www.awwwards.com/sites/o-a-r-s-adventure-travel",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Sage Outdoor Adventures",
+      "url": "https://sageoutdooradventures.com/",
+      "why": "Activity operator near Vail, Colorado. Headline 'Snowmobiling and snow tubing in Vail & Beaver Creek', banner '30 minutes from Vail', three activity cards with from-price, duration, minimum age and a Book Now button to FareHarbor, menu split into winter and summer activities and groups, 4.9 Google and Tripadvisor Travelers' Choice, guide ratio stated, hotel pick-up. Phone only in the footer.",
+      "recognition": "Awwwards Nominee, 2018-03-20",
+      "source": "https://www.awwwards.com/sites/sage-outdoor-adventures-1",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Backpacking Tours",
+      "url": "https://www.backpackingtours.com/",
+      "why": "Group trips for solo travellers. Headline 'Epic Backpacking Trips Worldwide!', '84 trips, 6 continents' with a route map, cards with duration, stops, activities, from-price and struck-through normal price (Albania 9 days from €799), currency switch, 4.9 from 560+ reviews with Google, Facebook and TourRadar named, spread-payment offer, Bangkok office address in the footer.",
+      "recognition": "Awwwards Honorable Mention, 2019-11-28",
+      "source": "https://www.awwwards.com/sites/backpacking-tours",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Tours Chanteclerc",
+      "url": "https://www.tourschanteclerc.com/",
+      "why": "Québec tour operator since 1970, in French. Headline 'Tours Chanteclerc vous offre le monde', search with Quand / Où and duration filters (3 to 7 days up to 22+), destination grid by continent, featured trips with nights, meals and from-price (Andalusia 5 799 $), tags Accompagné and Départ garanti, a separate portal for travel agents, Québec permit and association logos in the footer. No phone on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2025-07-22",
+      "source": "https://www.awwwards.com/sites/tours-chantecler",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Natural World Safaris",
+      "url": "https://www.naturalworldsafaris.com/",
+      "why": "UK wildlife safari operator. Heading 'Right Place, Right Time', region tabs (Africa, Asia, Polar Regions) over a Svalbard photograph, safari cards from £5,490 per person, a Call Us number in the header and four regional numbers in the footer, ATOL and Trust My Travel logos with 'Financial protection offered on all bookings', press logos. Enquiry link rather than a booking button.",
+      "recognition": "WebAwards Best Travel Website, 2020",
+      "source": "https://www.webaward.org/winner/35529/4-roads-wins-2020-webaward-for-natural-world-safaris-.html",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Spain Collection",
+      "url": "https://spaincollection.com/",
+      "why": "Basque travel designer for Spain and Portugal (trips, weddings, stays). Headline 'Your trusted partner for travel, weddings and exclusive luxury stays in Spain & Portugal', menu Collections / Vanity / Escapes / Weddings, experiences hosted by named people (a two-Michelin-star chef, a bullfighter), ten destination tiles, phone and Mundaka address in header and footer, Virtuoso logo. No prices, durations or reviews.",
+      "recognition": "Awwwards Honorable Mention, 2025-10-26",
+      "source": "https://www.awwwards.com/sites/spain-collection-travel",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Office de tourisme de Sumène Artense",
+      "url": "https://tourisme-sumene-artense.com",
+      "why": "French tourist office (Cantal). Headline 'Laissez-vous transporter dans la Petite Scandinavie' with a Découvrir button, menu Hébergements / Activités / Gastronomie et terroir / Agenda, activities split into hiking, cycling, climbing, water sports, fishing, an interactive map with eight sites, seven themed 'Terre de ...' entries, an agenda with dated events, credited landscape photographs, Fr/En. No booking tool; office hours not found on the home page.",
+      "recognition": "Awwwards Nominee, 2025-07-31",
+      "source": "https://www.awwwards.com/sites/tourisme-sumene-artense",
+      "scale": "company",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "Trip cards with a photograph and a title but no price, duration or season.",
+    "A combo listing whose duration contradicts its description (2 hours on the card, a 1-hour tour in the text).",
+    "No phone or chat for questions anywhere above the footer.",
+    "A 'No trips here just yet' empty state left in a listing on the home page.",
+    "Countdown sale banners and waitlist pop-ups over the first screen.",
+    "A tourist office home page without opening hours, address and phone of the office.",
+    "Ratings without the platform or the number of reviews."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Travel & Tourism",
+      "url": "https://www.awwwards.com/websites/travel-tourism/",
+      "access": "free"
+    },
+    {
+      "name": "WebAwards, Best Travel Website",
+      "url": "https://www.webaward.org/category/Travel/best-travel-websites.html",
+      "access": "free"
+    }
+  ]
+}

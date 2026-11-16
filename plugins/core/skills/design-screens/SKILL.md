@@ -49,7 +49,7 @@ Choose one of three shells, then a recipe. Details and transitions between width
 
 ## 6. Apply the recipe for the task
 
-Open the recipe in [references/tasks.md](references/tasks.md): editor with preview, wizard, list-detail, settings, checkout, dashboard, search with filters, long form, data table, empty state, first run. Each gives the phone layout, the desktop layout, the rules with their thresholds and the classic mistakes.
+For public pages, `sw patterns modules` lists variants of each module (hero, features, pricing, social proof, contact, gallery, footer, forms, 404…) with their phone version and how widespread each is: propose two or three that fit instead of the usual sequence. Open the recipe in [references/tasks.md](references/tasks.md): editor with preview, wizard, list-detail, settings, checkout, dashboard, search with filters, long form, data table, empty state, first run. Each gives the phone layout, the desktop layout, the rules with their thresholds and the classic mistakes.
 
 ## 7. Write the layout spec, then build
 

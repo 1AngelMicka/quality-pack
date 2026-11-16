@@ -12,6 +12,9 @@ export const BANK_DIR = join(dirname(fileURLToPath(import.meta.url)), "..", ".."
 
 // A site whose description says it was not seen on a screenshot (only a loader, a blocked page, or nothing):
 // what was measured there is not the page described, so it stays out of the measured profile.
+// Who the site belongs to, so that a project is compared with references of its own size.
+export const SCALES = ["star", "agency-made-showcase", "company", "independent"];
+
 export const notSeen = (site) => /\(not seen (on a screenshot|beyond [^)]*)\)/i.test(site?.why || "");
 
 export function loadBank(dir = BANK_DIR) {
@@ -48,6 +51,7 @@ export function validateType(t, id) {
     if (!s.name) errors.push(`${where}: name is required`);
     if (!s.why || s.why.length < 30) errors.push(`${where}: why says in concrete terms what makes it excellent (30 characters or more)`);
     if (!s.recognition) errors.push(`${where}: recognition names who recognised it and when (award, gallery, article)`);
+    if (s.scale && !SCALES.includes(s.scale)) errors.push(`${where}: scale must be one of ${SCALES.join(", ")}`);
   }
   for (const [i, e] of (t.expects || []).entries()) if (!e.rule) errors.push(`${id}.expects[${i}]: rule is required`);
   return errors;

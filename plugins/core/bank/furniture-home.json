@@ -1,0 +1,124 @@
+{
+  "id": "furniture-home",
+  "label": {
+    "fr": "Mobilier et maison",
+    "en": "Furniture and home"
+  },
+  "expects": [
+    {
+      "rule": "Each product shows dimensions, materials and finishes, and the price or a 'from' price for the base configuration.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Delivery terms are stated before the basket: lead time, cost, whether it is to the room or the kerb, and assembly.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Showroom or shop addresses with opening hours are one click from the header, with a way to book a visit.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Photographs show pieces in real rooms and on a plain background, with a person or known object for scale.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Fabric and finish samples, or a swatch request, are offered for upholstered and made-to-order pieces.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Trade or project buyers have their own entry (professionals, contract) separate from the retail shop.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "Only 2 of the 6 sites read show prices on the home page (Case in GBP with 'from' prices, CODE in hryvnia as ranges); Jakobsen, Mara, Rigas and Maison Sarah Lavoine show none.",
+    "5 of 6 give a physical address on the home page (Jakobsen showroom in Copenhagen, Case in London, Rigas in Athens, CODE in a shopping centre, Mara in Passirano); Maison Sarah Lavoine links to a shops page.",
+    "5 of 6 have an entry for professionals or projects (Case Professionals, Mara Projects and Professionals, Rigas HORECA and Our Projects, Maison Sarah Lavoine Espace Pro, CODE design services).",
+    "2 of 6 state delivery terms on the home page: Case (free 2-5 working days in the UK, white glove over a threshold) and Maison Sarah Lavoine (delivery by appointment, 14-day returns).",
+    "2 of 6 lead with a founding date (Jakobsen 'Est 1975', Rigas 'Since 1975'); 2 name outside designers (Case: Matthew Hilton, Studio Bottger; Mara: AMDL CIRCLE).",
+    "4 of 6 offer a second language or are written in the local one with English (Maison Sarah Lavoine FR/EN, Jakobsen EN/DE, Rigas Greek with English copy, Mara English site of an Italian maker)."
+  ],
+  "sites": [
+    {
+      "name": "Case Furniture",
+      "url": "https://casefurniture.com",
+      "why": "London maker and retailer: top bar with Christmas delivery cut-offs, Price Match Guarantee and free 2-5 working day UK delivery; menu by room and by type (storage, lighting, accessories) plus Designers, Outlet and Professionals; 'from' prices on cards (Linn Bed 1,365 GBP, Forum 3-Seater Sofa 3,995 GBP); address and phone in the footer.",
+      "recognition": "Awwwards Honorable Mention, 2021-07-29",
+      "source": "https://www.awwwards.com/sites/case-furniture",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Maison Sarah Lavoine",
+      "url": "https://www.maisonsarahlavoine.com/",
+      "why": "Paris interiors house, French site with an English switch: Christmas shop banner, tiles for Les Iconiques, Mobilier, Decoration, Luminaires, Art de la table, Linge de maison and Nos boutiques et revendeurs; reassurance row with 14-day returns, delivery by appointment and interest-free instalments from 300 EUR; phone and WhatsApp for customer service; Espace Pro in the header. No prices on the home page.",
+      "recognition": "Site Inspire listing, 2025-04-18",
+      "source": "https://www.siteinspire.com/website/13129-maison-sarah-lavoine",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Jakobsen Copenhagen",
+      "url": "https://jakobsencopenhagen.com/",
+      "why": "Danish upholstered furniture since 1975: headline 'Design by Tradition. Copenhagen by Heart.', menu Products, Retailers, Stories, About, Contact with EN/DE, product counts by category (Sofas 13, Lounge Chairs 7, Footstools 9), MILLE sofa as the feature, showroom address on Bredgade, Copenhagen, and a 'Begin a Conversation' button. No prices; sold through retailers.",
+      "recognition": "Site Inspire listing, 2026-09-29",
+      "source": "https://www.siteinspire.com/website/13637-jakobsen-copenhagen",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Mara",
+      "url": "https://marasrl.it/en/",
+      "why": "Italian maker of chairs and tables for office, contract and home: headline 'design furniture for office, contract, and home. 100% made in Italy.', products by category with counts (Seats 62, Tables and desks 58) and by area of use (hotels and restaurants, outdoor, office), 24 projects, a Professionals section, address and phone in Passirano. No prices.",
+      "recognition": "Site Inspire listing, 2026-08-24",
+      "source": "https://www.siteinspire.com/website/13530-mara",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Rigas Furniture",
+      "url": "https://www.rigas-furniture.gr/",
+      "why": "Athens furniture company, Greek menu by room (dining, living room, bedroom) plus BOHO, HORECA, OUTDOOR and DECO n MORE; English hero '50 Years of Quality Experience and Philosophy', 'Elegance isn't added, it's curated' with an Our Projects button, tiles for Home, HORECA and Airbnb, address on Kifisou Avenue and phone in the footer. No prices or delivery terms.",
+      "recognition": "Awwwards Honorable Mention, 2025-05-30",
+      "source": "https://www.awwwards.com/sites/rigas-furniture",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "C.O.D.E. Furniture",
+      "url": "https://www.code-furniture.com/",
+      "why": "Ukrainian furniture and interior design studio: headline 'ReDESIGN Your LIVING SPACE with MINIMALIST and CHIC FURNITURE', menu of seven named collections and a 2023 lookbook, a 'Let's talk' button at the top, price ranges in hryvnia on items (bedside table 15,447-17,019), showroom in a shopping centre with two phones, and an offer to send a manager to measure.",
+      "recognition": "Awwwards Honorable Mention, 2024-02-23",
+      "source": "https://www.awwwards.com/sites/code-furniture",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "Product pages with no dimensions, or dimensions only in a downloadable PDF.",
+    "Price on request for every item in a shop that sells online, with no indication of range.",
+    "Delivery cost and lead time revealed only at the last checkout step.",
+    "Only rendered or styled room photographs, with no plain view and nothing to judge scale.",
+    "Collections named only with invented words, with no category (sofa, table, lamp) next to them.",
+    "A retailers or showroom page that lists names without addresses or hours.",
+    "Full-screen scroll animations that hold back the product grid on a phone."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Furniture",
+      "url": "https://www.awwwards.com/websites/furniture/",
+      "access": "free"
+    },
+    {
+      "name": "Siteinspire, Furniture",
+      "url": "https://www.siteinspire.com/websites/categories/furniture",
+      "access": "free"
+    }
+  ]
+}

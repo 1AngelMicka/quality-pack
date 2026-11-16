@@ -1,0 +1,138 @@
+{
+  "id": "fashion-store",
+  "label": {
+    "fr": "Boutique de mode",
+    "en": "Fashion store"
+  },
+  "expects": [
+    {
+      "rule": "Shipping cost, free-shipping threshold and returns terms are stated in one line at the top of every page, in the visitor's currency.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Prices are shown on every product card on the home page and in listings, with sale prices next to the original.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The menu groups clothes by type (trousers, knitwear, dresses) and lets people also browse by collection or season.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Each product page gives size guide, fit on the model (height and size worn), material composition and care, near the size picker.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Country and currency can be changed from the header, and the price shown matches what is charged at checkout.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Sold-out sizes and items are marked on the card, with a notify-me option, rather than hidden or left clickable to a dead end.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "6 of the 6 sites read put a shipping or delivery line in the top bar (Almada free to Finland over 300 EUR, Coutumes free over 150 EUR with 30-day returns, Ossou free shipping and returns, Akke free over 350 EUR, Heirest a 19 USD sizing kit with free shipping, Jane Finds worldwide delivery).",
+    "4 of 6 show prices on the home page (Heirest, Akke, Coutumes, Jane Finds); Almada and Ossou show product names or banners only.",
+    "4 of 6 offer a country or currency selector in the header (Almada FI/EUR with seven markets, Heirest, Coutumes, Jane Finds).",
+    "2 of 6 let people browse by material or colour as well as by type: Almada (cashmere, satin, silk; vanilla, chocolate, taupe) and Jane Finds (leather and hardware).",
+    "6 of 6 have a newsletter sign-up; only Akke attaches a discount to it, the others promise first access or news.",
+    "2 of 6 handle sold items in the open: Coutumes marks most new pieces 'Unavailable - Notify me', Jane Finds labels sold bags 'Placed' with a 'Source this configuration' button."
+  ],
+  "sites": [
+    {
+      "name": "Almada Label",
+      "url": "https://almadalabel.com/",
+      "why": "Finnish womenswear: top bar 'Free shipping to Finland on orders over 300EUR', FI / EUR selector with seven markets and EN/DE/FR, Shop menu split by garment type, by material (brushed cashmere, satin, silk, shearling) and by colour (vanilla, chocolate, taupe). Banner 'Silk, lustrous satin and delicate sheer layers' with Shop new arrivals; no prices on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2026-10-22",
+      "source": "https://www.awwwards.com/sites/almada-label",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Coutumes",
+      "url": "https://coutumes.com/",
+      "why": "French men's jewellery in 925 silver: headline states the product and materials, top bar lists free returns within 30 days, free shipping over 150 EUR, 2-year warranty and payment in 3 instalments. New-in grid with prices (Cuban chain necklace 190 EUR, bandana 35 EUR), most marked 'Unavailable - Notify me'; Create your own and Magazine in the menu.",
+      "recognition": "Site Inspire listing, 2026-05-15",
+      "source": "https://www.siteinspire.com/website/13453-coutumes",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Akke Knitwear",
+      "url": "https://akkeknitwear.com",
+      "why": "Italian technical knitwear, page in Italian with an English switch: menu Menswear, Womenswear, Everest Akke Limited, Akkeworld; rotating slides for New Collection and a 50% launch promo; best sellers split men and women with prices (Akrose 72 EUR, Basalt cashmere 189 EUR) and a Discover now button on each; free shipping over 350 EUR; newsletter with a discount code.",
+      "recognition": "Site Inspire listing, 2025-10-02",
+      "source": "https://www.siteinspire.com/website/13325-akke-knitwear",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Ossou",
+      "url": "https://ossou.com",
+      "why": "Denim label: top bar 'Free shipping on all orders and returns', a run of full-width banners each with one headline and one button ('The Finishing Touch' / Shop New Arrivals, 'Texture Theory' / Shop New Knitwear), a Denim menu with a Fit Guide, collections listed by season (Spring/Summer 2027 back to 2026). No prices on the home page.",
+      "recognition": "Site Inspire listing, 2026-03-27",
+      "source": "https://www.siteinspire.com/website/13386-ossou",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Heirest",
+      "url": "https://heirest.com/",
+      "why": "Made-to-order fine jewellery: headline 'Author what others inherit.' with a 'design Yours' button, top bar selling a 19 USD sizing kit with free shipping, 'from' prices on every card (Raised Bezel Pinky Ring 1,751 USD), a configurator to generate a design, badges for lifetime warranty and hand-crafting, press logos and five-star reviews.",
+      "recognition": "Awwwards Honorable Mention, 2026-09-29",
+      "source": "https://www.awwwards.com/sites/heirest",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Jane Finds",
+      "url": "https://janefinds.com/",
+      "why": "Miami reseller of pre-owned Hermes bags: headline 'Find by instinct. Collect with certainty.' and 'Authenticated - Worldwide delivery', menu by model (Birkin, Kelly) with sizes, plus browse by leather and by hardware; cards show price (Birkin 30 at 34,500 USD) and View piece; sold pieces kept as 'Placed' with 'Source this configuration'; Text a specialist button.",
+      "recognition": "WebAwards Best Fashion or Beauty Website, 2024",
+      "source": "https://www.webaward.org/winner/37278/sltc-wins-2024-webaward-for-jane-finds---website-refresh.html",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Sezane",
+      "url": "https://www.sezane.com/",
+      "why": "Paris womenswear brand selling online and in its own shops; listed under Fashion and E-Commerce, with design and art direction credited to the brand's in-house team, L'Agence Sezane. The live site refused automated reading. (not seen beyond the gallery listing)",
+      "recognition": "Site Inspire listing, 2026-09-10",
+      "source": "https://www.siteinspire.com/website/7018-sezane",
+      "scale": "star",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A home page made only of mood banners with no product, price or way into the categories.",
+    "A promotion bar that contradicts the checkout (free shipping announced, charged at payment, or a threshold in another currency).",
+    "A size picker with no size guide, no model measurements and no composition on the same screen.",
+    "Sold-out sizes hidden from the picker, or a sold-out product still sending people to add to cart.",
+    "A newsletter pop-up that covers the first screen on arrival, before anything has been seen.",
+    "Collections named only by season codes or poetic titles, with no plain category names next to them.",
+    "Prices shown only after choosing a size or opening a quick-view."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, Fashion",
+      "url": "https://www.awwwards.com/websites/fashion/",
+      "access": "free"
+    },
+    {
+      "name": "Siteinspire, Fashion",
+      "url": "https://www.siteinspire.com/websites/categories/fashion",
+      "access": "free"
+    },
+    {
+      "name": "WebAwards, Best Fashion or Beauty Website (2024 winner page)",
+      "url": "https://www.webaward.org/winner/37278/sltc-wins-2024-webaward-for-jane-finds---website-refresh.html",
+      "access": "free"
+    }
+  ]
+}

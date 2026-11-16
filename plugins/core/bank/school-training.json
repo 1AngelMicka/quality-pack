@@ -1,0 +1,138 @@
+{
+  "id": "school-training",
+  "label": {
+    "fr": "École et centre de formation",
+    "en": "School and training centre"
+  },
+  "expects": [
+    {
+      "rule": "Each programme shows its length, level, entry requirements, start dates and price on its own page.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The next open day or visit date and an Apply or Book a visit button are on the first screen.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Accreditations and quality marks (national registration, Qualiopi in France, recognised diplomas) are named with their number.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Outcomes are published with their year and method: employment rate, exam results, satisfaction scores.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Funding options (scholarships, employer or public funding) are explained with an estimate tool or a contact.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Student work, real classrooms and named teachers are shown rather than stock photographs.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "4 of 7 list programme lengths on the home page (ESMA in years, ETIC in hours, alfie in days, Ducasse in weeks and years); only alfie gives a price (from 500 EUR excl. VAT a day).",
+    "5 of 7 publish an outcome figure (ETIC 93% employability, Ducasse 98% employability, Korowa median ATAR 90.7, alfie 9.3/10, Reality Academy 4.9/5 Google); none states the method.",
+    "3 of 7 have an Apply button on the home page (ESMA, Ducasse, Korowa); 3 offer a visit or tour (ETIC Marcar Visita, Korowa Tour Korowa, Ducasse open days per campus).",
+    "3 of 7 name a quality mark (ETIC DGERT certification, alfie and Reality Academy Qualiopi with a registration number).",
+    "4 of 7 have a language switch (ESMA FR/EN, ETIC PT/EN, Ducasse FR/EN, New Generation EN/FR/DE).",
+    "ESMA is the only one to lead with student work: graduation films by year and awards (BAFTA Student Award, SIGGRAPH)."
+  ],
+  "sites": [
+    {
+      "name": "ESMA 3D",
+      "url": "https://www.esma-3d.fr/en/",
+      "why": "French school for 3D animation, effects and video games on six campuses: banner 'The leading school for 3D animation, special effects, and video games', menu Wall, News, Projects, Courses, Alumni, Campuses, Apply top right, programmes with durations (3D animation 5 years, video game 4 years), graduation films by year, BAFTA Student Award, FR/EN. No fees or open days.",
+      "recognition": "Awwwards Honorable Mention, 2025-10-28",
+      "source": "https://www.awwwards.com/sites/esma-3d",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "ETIC_Algarve",
+      "url": "https://www.eticalgarve.com/",
+      "why": "Creative and tech school in Faro, Portuguese with EN: headline 'Saber fazer praticando', banner for 26/27 short courses, course cards with hours (Photoshop 40 h, Illustrator 33 h), Marcar Visita button, figures (93% employability, 2,835 trainees, 23 nationalities), DGERT certification logo. No fees or start dates.",
+      "recognition": "Awwwards Honorable Mention, 2026-02-04",
+      "source": "https://www.awwwards.com/sites/etic-algarve",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "alfie formation",
+      "url": "https://alfieformation.fr/",
+      "why": "Nantes training firm for digital marketing and AI: line 'Formez-vous avec les meilleurs consultants IA & marketing digital', phone and Obtenir un devis in the header, course list with lengths (Google Ads 1 to 2 days), price from 500 EUR HT a day, OPCO funding up to 100% with a budget simulator, Qualiopi, not CPF eligible. Two satisfaction figures that do not match (9.3/10, 4.9 on 208 reviews).",
+      "recognition": "Awwwards Nominee, 2025-05-07 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/alfie-formation",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Ecole Ducasse",
+      "url": "https://www.ecoleducasse.com/en",
+      "why": "Culinary and pastry school with campuses in Yssingeaux and Meudon: headline 'Globally recognized culinary school', Download a brochure and Apply now buttons, Open days under each campus, programme lengths (Bachelor 3 years, Essentials 8 weeks, Diplomas 8 to 22 weeks), figures (98% employability, 12 to 18 students per class), FR/EN. No fees.",
+      "recognition": "Awwwards Honorable Mention, 2020-06-03",
+      "source": "https://www.awwwards.com/sites/ecole-alain-ducasse-paris",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Korowa Anglican Girls' School",
+      "url": "https://www.korowa.vic.edu.au/",
+      "why": "Girls' school in Glen Iris, Melbourne: headline 'We don't make ladies / We're too busy making leaders', Tour Korowa, Enquire and Apply buttons, year levels from early learning to Year 12, 2025 results (median ATAR 90.7), sunset photos of students hiking, photos of class, netball, violin, labs; address and phone in footer. Fees behind a link.",
+      "recognition": "Awwwards Honorable Mention, 2026-05-29",
+      "source": "https://www.awwwards.com/sites/korowa-anglican-girls-school-1",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "New Generation Ski School",
+      "url": "https://www.skinewgen.com/",
+      "why": "Ski and snowboard school in 18 French, 5 Austrian and 1 Swiss resort: headline 'CARVE YOUR OWN LINE', Book Now and Find Your Level buttons, menus by resort, lessons, courses and instructor training (BASI, ISIA), levels 1 to 6, UK office phone with hours Mon-Fri 9:00-17:00, EN/FR/DE. Prices only after choosing a resort.",
+      "recognition": "Awwwards Nominee, 2025-08-10 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/new-generation-ski-school",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Reality Academy",
+      "url": "https://www.reality-academy.fr/",
+      "why": "Montreuil training provider using VR and AI role-play for companies: headline 'Revolutionnez la formation avec l'apprentissage Learning By Doing', Demo gratuite and Planifier une demo buttons, topics (safety, management, CSR), '40+ formations', Qualiopi and registration number, 4.9/5 Google from 300+ reviews, dated awareness days. No durations or prices.",
+      "recognition": "Awwwards Nominee, 2024-09-05 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/reality-academy",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "Programme pages with no length, start date or fee, leaving the applicant to request a brochure for basics.",
+    "Employment or satisfaction percentages with no year, sample size or method.",
+    "Two satisfaction scores on the same page that contradict each other.",
+    "A home page whose headline is split into animated fragments that do not read as a sentence without scripts.",
+    "Open days mentioned without a date, or only inside a downloadable brochure.",
+    "Stock photographs of smiling students instead of the real buildings, classes and student work.",
+    "An Apply button that leads to a generic contact form rather than the application for a named programme."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, search 'school'",
+      "url": "https://www.awwwards.com/inspiration_search/school/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'ecole'",
+      "url": "https://www.awwwards.com/inspiration_search/ecole/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'formation'",
+      "url": "https://www.awwwards.com/inspiration_search/formation/",
+      "access": "free"
+    }
+  ]
+}

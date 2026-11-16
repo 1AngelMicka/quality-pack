@@ -9,6 +9,13 @@ import { BANK_DIR, loadBank } from "./bank.mjs";
 
 export const PATTERNS_DIR = join(BANK_DIR, "patterns");
 export const SURFACES = ["persuade", "operate", "read", "phone", "desktop-app"];
+// How widespread a pattern is, so that Claude knows what reads as déjà vu.
+export const PREVALENCE = {
+  standard: "expected execution: it neither stands out nor looks generic",
+  everywhere: "seen on a large share of award galleries and generated sites: alone it reads as déjà vu; use it only with something taken from the trade",
+  common: "seen often: fine, but it does not set a site apart by itself",
+  rare: "still uncommon: it can set a site apart when it comes from the subject",
+};
 // Kinds of entry: a pattern to build, a place to look for ideas, a library to build with.
 const KINDS = ["pattern", "gallery", "library"];
 
@@ -46,10 +53,15 @@ export function validatePatterns(bank, siteTypes = Object.keys(loadBank().types)
       if (fam.kind === "pattern") {
         for (const k of ["use_when", "avoid_when", "build"]) if (!e[k]) errors.push(`${where}: ${k} is required`);
         if (!e.fits?.surfaces?.length) errors.push(`${where}: fits.surfaces is required`);
+        if (!PREVALENCE[e.prevalence]) errors.push(`${where}: prevalence must be one of ${Object.keys(PREVALENCE).join(", ")}`);
       } else {
         try { const u = new URL(e.url); if (u.protocol !== "https:") errors.push(`${where}: https address expected`); } catch { errors.push(`${where}: url is not an address`); }
         if (!e.access) errors.push(`${where}: access says what is free and what is paid`);
         if (fam.kind === "library" && !e.licence) errors.push(`${where}: licence is required`);
+      }
+      for (const key of ["examples", "references"]) for (const [j, x] of (e[key] || []).entries()) {
+        try { const u = new URL(x.url); if (u.protocol !== "https:") errors.push(`${where}.${key}[${j}]: https address expected`); } catch { errors.push(`${where}.${key}[${j}]: url is not an address`); }
+        if (!x.name) errors.push(`${where}.${key}[${j}]: name is required`);
       }
       for (const [j, s] of (e.sources || []).entries()) {
         try { new URL(s.url); } catch { errors.push(`${where}.sources[${j}]: url is not an address`); }
@@ -60,23 +72,25 @@ export function validatePatterns(bank, siteTypes = Object.keys(loadBank().types)
   return errors;
 }
 
-const fitsFilter = ({ type, surface }) => (e) =>
-  (!type || !e.fits?.types?.length || e.fits.types.includes(type)) && (!surface || !e.fits?.surfaces?.length || e.fits.surfaces.includes(surface));
+const fitsFilter = ({ type, surface, prevalence }) => (e) =>
+  (!prevalence || e.prevalence === prevalence) && (!type || !e.fits?.types?.length || e.fits.types.includes(type)) && (!surface || !e.fits?.surfaces?.length || e.fits.surfaces.includes(surface));
 
-const brief = (e) => ({ id: e.id, label: e.label?.en, what: e.what, ...(e.url ? { url: e.url, access: e.access } : {}), ...(e.licence ? { licence: e.licence } : {}) });
+const brief = (e) => ({ id: e.id, label: e.label?.en, what: e.what, ...(e.prevalence ? { prevalence: e.prevalence } : {}), ...(e.url ? { url: e.url, access: e.access } : {}), ...(e.licence ? { licence: e.licence } : {}) });
 
 // sw patterns                     the families, with counts
 // sw patterns <family>            the entries of a family
 // sw patterns <id>                one entry in full
 // sw patterns search <words>      entries whose text matches every word
 // Filters: --type <site type> and --surface <persuade|operate|read|phone|desktop-app> keep what fits.
-export function listPatterns(bank, args = [], { type, surface } = {}) {
-  const entries = all(bank).filter(fitsFilter({ type, surface }));
-  const filters = { ...(type ? { type } : {}), ...(surface ? { surface } : {}) };
+export function listPatterns(bank, args = [], { type, surface, prevalence } = {}) {
+  if (prevalence && !PREVALENCE[prevalence]) return { errors: [`--prevalence must be one of ${Object.keys(PREVALENCE).join(", ")}`] };
+  const entries = all(bank).filter(fitsFilter({ type, surface, prevalence }));
+  const filters = { ...(type ? { type } : {}), ...(surface ? { surface } : {}), ...(prevalence ? { prevalence } : {}) };
   if (!args.length) return {
     filters,
     families: Object.values(bank.families).map((f) => ({ family: f.family, kind: f.kind, label: f.label?.en, summary: f.summary, entries: entries.filter((e) => e.family === f.family).length })),
-    usage: "sw.mjs patterns <family> | <id> | search <words> [--type <site type>] [--surface <persuade|operate|read|phone|desktop-app>]. Propose patterns as options; the referential's rules still apply to what is chosen.",
+    prevalence: PREVALENCE,
+    usage: "sw.mjs patterns <family> | <id> | search <words> [--type <site type>] [--surface <persuade|operate|read|phone|desktop-app>] [--prevalence standard|everywhere|common|rare]. Propose patterns as options; to stand out, pair what is common with a signature taken from the trade (design-direction, DIR-11).",
   };
   if (args[0] === "search") {
     const words = args.slice(1).map((w) => w.toLowerCase());

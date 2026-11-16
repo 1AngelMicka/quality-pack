@@ -1,0 +1,143 @@
+{
+  "id": "kids-family",
+  "label": {
+    "fr": "Enfants et famille : crèche, loisirs",
+    "en": "Kids and family: nursery, activities"
+  },
+  "expects": [
+    {
+      "rule": "The ages accepted are stated on the first screen or next to each programme (for example 3 months to 3 years).",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Opening hours, session lengths (full day, half day) and closure weeks are written as text.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Fees are published, with what they include (meals, nappies) and the subsidies or public funding that reduce them.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "One clear next step for parents: book a visit, register interest or check availability, with a short form.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Inspection results, licence or registration number and staff qualifications are shown, with a link to the official report.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Photographs of children are of the real setting and used with consent; faces of identifiable children are limited.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "For activities and play venues: price per child and per adult, booking requirement and session times are on the booking page before payment.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "5 of 6 sites read state the ages accepted (Vaikystes Sodas 1-6, Rainbow babies to school age, Little Skool-House 2 months-6 years, Maria Montessori Institute 2½-16 by site, MoPA 1-7 in the top banner); Kita Sunnastrahl does not on the home page.",
+    "3 of 6 give hours as text (Kita Sunnastrahl Mon-Fri 7-18, Vaikystes Sodas 8:30-17:30, Rainbow 7:00-18:00 with half-day and extended sessions); MoPA says only 'open every day'.",
+    "2 of 6 show a fee figure on the home page (Little Skool-House 'fees from $408.50 after subsidy' in the hero, MoPA '$6 visits' and memberships from $82); 3 others link to a fees page or PDF.",
+    "4 of 6 lead parents to registration rather than contact (Kita 'Mein Kind anmelden', Vaikystes 'Registracija', Little Skool-House 'Register interest', MoPA 'Book Tickets'); 3 of 6 offer a visit or tour (Kita, Vaikystes, Maria Montessori Institute).",
+    "3 of 6 show named parent testimonials or a rating (Kita two, Vaikystes three, Rainbow one plus a 4.8 Google rating).",
+    "3 of 6 use illustration or decorative shapes alongside photographs (Kita, Rainbow, MoPA)."
+  ],
+  "sites": [
+    {
+      "name": "Kita Sunnastrahl",
+      "url": "https://www.kitaarosa.ch/",
+      "why": "Daycare in Arosa, Switzerland, in German: headline 'Wo Kinderfüsse die Welt entdecken, schritt für schritt', buttons 'Mein Kind anmelden', 'Kita Besichtigung' and 'Kita-Platz reservieren', parent menu with registration, costs, hours and a tariff PDF, hours Mon-Fri 7:00-18:00, phone and email, two named parent testimonials, coloured leaf and flower shapes over photos of children outdoors.",
+      "recognition": "Awwwards Nominee, 2024-11-28 (submitted, not an award)",
+      "source": "https://awwwards.com/sites/kita-sunnastrahl",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Vaikystės sodas",
+      "url": "https://www.vaikystes-sodas.lt/",
+      "why": "Private kindergarten network in Lithuania, in Lithuanian: three named parent testimonials first, 'Pasimatuokite Sodelį!' with a Registracija button for an individual meeting, short answer blocks 'Why us?', 'Where are we?' (Vilnius, Kaunas, Klaipėda, Panevėžys), 'Whom do we accept?' (ages 1 to 6), 'What do we cost?' linking 2025/2026 fees, phone and weekday hours 8:30-17:30.",
+      "recognition": "Awwwards Nominee, 2018-10-16 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/vaikystes-sodas",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Rainbow Nursery",
+      "url": "https://myrainbownursery.co.uk/",
+      "why": "Nursery, early learning centre and out-of-school club in Bathgate, Scotland: headline 'Rain or shine, look for the rainbow', rooms named by colour, ages per setting, hours Mon-Fri 7:00-18:00 with half-day and extended sessions, funded places with West Lothian Council, both addresses and phone, 4.8 Google rating, staff portraits. Footer links point to '#'. The award was for an earlier version of the site.",
+      "recognition": "Awwwards Nominee, 2012-08-28 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/rainbow-nursery",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Little Skool-House",
+      "url": "https://www.littleskoolhouse.com/",
+      "why": "Preschool and childcare group in Singapore: hero 'Little Skool-House has 14 POP centres islandwide!' with 'fees from $408.50* after working mother subsidy', '2027 ENROLMENT NOW OPEN', Register interest repeated, programmes by age (2 months-3 years, 4-6 years), figures with sources (93% bilingual proficiency, 96% parent satisfaction, 2026 survey), Find one near you. No phone on the home page.",
+      "recognition": "Awwwards Nominee, 2024-01-11 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/little-skool-house",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Maria Montessori Institute",
+      "url": "https://www.mariamontessori.org/",
+      "why": "London charity running a Montessori school (2½ to 16, three sites with ages per site) and teacher training: headline 'Making the World a Better Place. One Child at a Time.', school menu with Visit, Apply, School Fees, Term Dates and 'Ofsted & Parent Views', upcoming school tours listed, parent-toddler group named. No phone number on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2025-05-23",
+      "source": "https://www.awwwards.com/sites/maria-montessori-institute",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "MoPA, Museum of Play and Art",
+      "url": "https://www.museumofplayandart.com.au/",
+      "why": "Play museum for ages 1-7 with five Australian locations: top banner 'MUSEUM FOR AGES 1-7 BOOKINGS ESSENTIAL OPEN EVERY DAY', Book Tickets button, Book Now menu (play, party, excursions, memberships, venue hire), '$6 MoPA Visits' headline, memberships from $82, gift cards from $30, hot-weather policy in the footer. No hours or street address on the home page.",
+      "recognition": "CSS Design Awards Special Kudos, 2025-04-05",
+      "source": "https://www.cssdesignawards.com/sites/mopa/47316/",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Metropolitan Montessori School",
+      "url": "https://mmsny.org/",
+      "why": "Montessori school in New York for children aged 2 to 14, per the listing; site built by Manoverboard Inc. The live site could not be read (certificate error), so no headline, buttons or fees were checked. (not seen beyond the gallery listing)",
+      "recognition": "Awwwards Honorable Mention, 2022-04-05",
+      "source": "https://www.awwwards.com/sites/metropolitan-montessori-school",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "Ages accepted missing from the home page, so parents must open several pages to know if their child qualifies.",
+    "'Contact us for fees' with no figure and no mention of public subsidies.",
+    "Stock photographs of children that are clearly not the setting.",
+    "Footer or menu links that point to '#'.",
+    "A registration flow that asks for the child's full details before the parent has seen hours, fees or availability.",
+    "Inspection or licence information hidden or missing.",
+    "A play venue that requires booking but shows no session times or ticket price before the checkout."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, nursery search",
+      "url": "https://www.awwwards.com/inspiration_search/nursery/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, kindergarten search",
+      "url": "https://www.awwwards.com/inspiration_search/kindergarten/",
+      "access": "free"
+    },
+    {
+      "name": "CSS Design Awards, gallery",
+      "url": "https://www.cssdesignawards.com/",
+      "access": "free"
+    }
+  ]
+}

@@ -29,7 +29,8 @@
           "name": "Laws of UX",
           "url": "https://lawsofux.com/"
         }
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "law-figure-ground",
@@ -47,7 +48,8 @@
       },
       "use_when": "Dialogs, sheets, focus modes.",
       "avoid_when": "Non-modal panels.",
-      "build": "A scrim behind dialogs; the content behind loses contrast."
+      "build": "A scrim behind dialogs; the content behind loses contrast.",
+      "prevalence": "standard"
     },
     {
       "id": "law-banner-blindness",
@@ -71,7 +73,8 @@
           "name": "NN/g, Banner Blindness Revisited",
           "url": "https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/"
         }
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "law-parkinson-prefill",
@@ -87,7 +90,8 @@
       },
       "use_when": "Forms, checkouts, settings.",
       "avoid_when": "Guesses the user must correct.",
-      "build": "autocomplete attributes, defaults from the account, address lookup."
+      "build": "autocomplete attributes, defaults from the account, address lookup.",
+      "prevalence": "standard"
     },
     {
       "id": "law-visual-connection",
@@ -105,7 +109,8 @@
       },
       "use_when": "Steppers, timelines, flows.",
       "avoid_when": "Unrelated items.",
-      "build": "A line or shared container between steps."
+      "build": "A line or shared container between steps.",
+      "prevalence": "standard"
     },
     {
       "id": "law-choice-overload",
@@ -133,7 +138,8 @@
           "name": "Laws of UX, Hick's law",
           "url": "https://lawsofux.com/hicks-law/"
         }
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "law-fitts",
@@ -161,7 +167,8 @@
           "name": "Laws of UX, Fitts's law",
           "url": "https://lawsofux.com/fittss-law/"
         }
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "law-jakob",
@@ -185,7 +192,8 @@
           "name": "Laws of UX, Jakob's law",
           "url": "https://lawsofux.com/jakobs-law/"
         }
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "law-von-restorff",
@@ -209,7 +217,8 @@
           "name": "Laws of UX, Von Restorff effect",
           "url": "https://lawsofux.com/von-restorff-effect/"
         }
-      ]
+      ],
+      "prevalence": "standard"
     },
     {
       "id": "law-peak-end",
@@ -227,7 +236,8 @@
       },
       "use_when": "Checkout, onboarding, sign-up.",
       "avoid_when": "Nothing.",
-      "build": "Care for the success screen and the moment of first value."
+      "build": "Care for the success screen and the moment of first value.",
+      "prevalence": "standard"
     }
   ]
 }

@@ -1,0 +1,181 @@
+{
+  "id": "trades-craftsman",
+  "label": {
+    "fr": "Artisan et métiers du bâtiment",
+    "en": "Trades and craftsmen"
+  },
+  "expects": [
+    {
+      "rule": "The phone number is a tap-to-call link in the header and next to the quote button, not only in the footer or behind a contact panel.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The first screen names the trade and the place (towns or area served), and the service area is listed in plain text further down.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "In France, a trade under mandatory decennial insurance puts 'Assurance professionnelle', the insurer's name and address and the geographic coverage on every quote and invoice, so the quote the site sends must carry them.",
+      "source": "https://www.capeb.fr/actualites/la-mention-de-lassurance-est-obligatoire-sur-les-devis-et-facture",
+      "verified": true
+    },
+    {
+      "rule": "Insurance, licence, registration and trade-body numbers (decennial insurer, RBQ, Innung, Qualibat, RGE, state licence) are written out on the site and link to the public register where one exists.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "The owner answers reviews, positive and negative: in BrightLocal's 2025 survey only 7% of consumers do not expect owners to respond, and 63% expect an answer within two days to a week.",
+      "source": "https://www.brightlocal.com/research/local-consumer-review-survey-2025/",
+      "verified": true
+    },
+    {
+      "rule": "The site says how a quote works (free site visit, delay to get the quote, from-prices or price ranges) and the quote form asks only for name, phone, town and the job.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Finished projects are shown as named jobs with real photographs, place and what was done, not as a stock gallery.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "Two families among the 9 sites read: 4 conversion-led trades (Klindworth roofing, Plomberie 5 Etoiles, Lücke roofing, Vitruvius builder) and 5 portfolio-led joiners and carpenters (Hays, Siegesmund, Lachaumette Chaput, Borgatta, Eham) that sell on craft and finished rooms.",
+    "4 of 9 put the phone at the top of the page (Klindworth, Hays, Plomberie 5 Etoiles, Lücke); 4 keep it in the footer or a contact panel (Siegesmund, Lachaumette Chaput, Borgatta, Vitruvius) and Eham shows none on the home page.",
+    "4 of 9 have a named quote action near the top (Request a Quote, Request a quote, Obtenez un devis, 1-Klick Anfrage); the 5 others send to a contact page.",
+    "4 of 9 show licences, trade bodies or certificates on the home page (Klindworth licence 03-0636, Plomberie RBQ and CMMTQ, Lücke IFBS and Dachdeckerinnung, Vitruvius home builders association); none of the 5 joiners does.",
+    "6 of 9 lead with named projects (Klindworth Mertz, Groves, Anderson; Hays Woodlawn; Vitruvius Axis; Eham, Borgatta and Lachaumette Chaput project teasers); only Plomberie 5 Etoiles and Klindworth show client reviews with a place or platform.",
+    "The joiners use warm wood neutrals and a serif: Eham #ebe4e0 with #342616, Borgatta #eae4dd with #45392d, Lachaumette Chaput gold #d8b567 with Baskervville, Siegesmund Taviraj, Vitruvius Cormorant and EB Garamond; the emergency plumber uses red #fc002c and navy #113645 with Raleway."
+  ],
+  "sites": [
+    {
+      "name": "Klindworth Roofing",
+      "url": "https://klindworthroofing.com/",
+      "why": "Roofer in The Woodlands, Texas: phone 832-832-1661 and licence number in the header, capital headline 'Roofing & Repairs' with a Request a Quote button, metal and shingle cards, three named projects, testimonials naming the client's town, RCAT and BBB badges, a 'Let's work together' block with Call Now, four towns listed in the footer. Dark #24262b with a tan #ac9376 accent.",
+      "recognition": "Awwwards Honorable Mention, 2024-04-04",
+      "source": "https://www.awwwards.com/sites/klindworth-roofing",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Hays Woodworking Group",
+      "url": "https://www.hayswoodworking.com/",
+      "why": "Custom millwork shop in Mississauga: five-item menu, email and tap-to-call phone in a bar under it, headline 'Custom millwork for homes and businesses' over a photograph, three featured projects, seven service tiles each opening a filtered showroom, a founder quote, then 'Start your custom journey' with Request a quote. Off-white #fefefe and near-black #1a1617.",
+      "recognition": "Awwwards Honorable Mention, 2025-06-26",
+      "source": "https://www.awwwards.com/sites/hays-woodworking-group-inc",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Schreinerei Siegesmund",
+      "url": "https://www.schreinerei-siegesmund.de/",
+      "why": "Joinery near Munich making furniture from antique wood: header with only Kontakt and Menü, headline 'Moderne Premium Möbel gefertigt wie vor 100 Jahren', one button to the furniture overview, a project gallery, then three steps (antique wood, making, finished piece) and Kontakt aufnehmen. The Kontakt panel holds Instagram, tap-to-call, email and a map link. Black and white with the Taviraj serif.",
+      "recognition": "Awwwards Honorable Mention, 2024-07-15",
+      "source": "https://www.awwwards.com/sites/siegesmund",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Lachaumette Chaput",
+      "url": "https://www.lachaumettechaput.fr/",
+      "why": "Family joinery and fit-out firm in Ile-de-France since 1934: three-slide hero with the headline on joinery, fit-out and decoration and a Découvrir button, then activities, projects, the company, news and a recruitment block with Postuler. Baskervville serif, gold #d8b567 on white and black, WebGL transitions. Phone only in the footer, cookie banner with an equal Refuser button.",
+      "recognition": "Awwwards Honorable Mention, 2021-11-16",
+      "source": "https://www.awwwards.com/sites/lachaumette-chaput",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Borgatta Menuiserie",
+      "url": "https://borgattamenuiserie.ch/",
+      "why": "Family joinery in Villeneuve (Vaud) since 1932: the logo text names trade, town and year, rotating banner 'Le bois sous toutes ses formes', a short menu by product (doors, windows, fittings), recent jobs described in one line each (a high table, a kitchen in Montreux, made-to-measure windows). Address and tap-to-call phone in the footer; terms of sale in the menu. Beige #eae4dd and brown #45392d.",
+      "recognition": "Awwwards Honorable Mention, 2019-01-22",
+      "source": "https://www.awwwards.com/sites/borgatta-menuiserie",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Eham",
+      "url": "https://www.eham.de/",
+      "why": "Family joinery and interiors firm in Bavaria: four-item menu, DE/EN switch, short headline 'Aus anderem Holz.' with one project teaser, four trade tiles (joinery, kitchens, interiors, floors), news, then 'Vertrauen beginnt beim ersten Kontakt' linking to the contact page. Warm #ebe4e0 and #f9f4f1 with dark brown #342616, Suisse Intl. No phone or address on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2020-02-27",
+      "source": "https://www.awwwards.com/sites/eham",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Vitruvius Built",
+      "url": "https://vitruviusbuilt.com/",
+      "why": "Custom home builder in Park City, Utah: capital headline naming the trade and the area, Read more and View projects buttons, a project gallery, one homeowner testimonial with the project linked, then what, where and how they build, named communities, press logos and the builders association. Cormorant and EB Garamond on black and white; phone only in the footer.",
+      "recognition": "WebAwards Best Construction Website, 2025",
+      "source": "https://www.webaward.org/winner/37548/vitruvius-built-wins-2025-webaward-for-a-refined-build-experience--vitruvius-built.html",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Plomberie 5 Étoiles",
+      "url": "https://www.plomberie5etoiles.com/",
+      "why": "Montreal plumber: header with Obtenez un devis and the phone, headline naming trade, city and four services, '24/7' and response-in-the-hour claims, 4.8 stars from 145+ Google reviews with six named reviews, RBQ licence linked to the public register, CMMTQ and CAA-Québec, FAQ and lists of neighbourhoods served. French with an English switch; Raleway, navy #113645, red #fc002c.",
+      "recognition": "Awwwards Nominee, 2025-05-15 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/montreal-plumber",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Lücke Dach & Fassade",
+      "url": "https://luecke-dachfassade.de/",
+      "why": "Master roofer in the Weserbergland (12 staff, 105 years): phone, fax, email and office hours at the top, a '1-Klick Anfrage' button, call, mail, WhatsApp and directions links, trade-body logos (IFBS, Dachdeckerinnung) and a CrefoZert certificate, key figures, partner brands. Slussen and Bulevar type. The nominated domain luecke-dachpartner.de now redirects here. (The listed domain now redirects here.)",
+      "recognition": "Awwwards Nominee, 2024-02-23 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/lucke-dachpartner",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A phone number that appears only in the footer or inside a contact panel for a trade people call in a hurry.",
+    "No town, address or service area anywhere on the home page.",
+    "Insurance, licence or trade-body membership claimed in words ('licensed and insured') with no number or register link.",
+    "A gallery of stock tools, hard hats and smiling workers instead of the firm's own finished jobs.",
+    "A quote form with a dozen required fields, or 'contact us' as the only route to a price.",
+    "Copyright placeholders, inconsistent addresses or founding dates left in the page (seen: 'XXXX', two street numbers, three founding claims).",
+    "Heavy WebGL transitions that hide the phone and the service list on a slow phone."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, search 'roofing'",
+      "url": "https://www.awwwards.com/inspiration_search/roofing/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'carpentry'",
+      "url": "https://www.awwwards.com/inspiration_search/carpentry/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'menuiserie'",
+      "url": "https://www.awwwards.com/inspiration_search/menuiserie/",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'plumbing'",
+      "url": "https://www.awwwards.com/inspiration_search/plumbing/",
+      "access": "free"
+    },
+    {
+      "name": "WebAwards, Best Construction Website",
+      "url": "https://www.webaward.org/category/Construction/best-construction-websites.html",
+      "access": "free"
+    },
+    {
+      "name": "CAPEB, insurance mention on quotes and invoices",
+      "url": "https://www.capeb.fr/actualites/la-mention-de-lassurance-est-obligatoire-sur-les-devis-et-facture",
+      "access": "free"
+    },
+    {
+      "name": "BrightLocal, Local Consumer Review Survey 2025",
+      "url": "https://www.brightlocal.com/research/local-consumer-review-survey-2025/",
+      "access": "free"
+    }
+  ]
+}

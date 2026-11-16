@@ -1,0 +1,175 @@
+{
+  "id": "hair-beauty",
+  "label": {
+    "fr": "Coiffure, barbier et beauté",
+    "en": "Hair, barber and beauty"
+  },
+  "expects": [
+    {
+      "rule": "Online booking is one tap away from every screen (header button on phone and desktop), and phone or messaging is offered for those who prefer it.",
+      "source": "https://www.salonbusiness.co.uk/phorest-reveals-2025-consumer-insights-shaping-the-salon-industry/",
+      "verified": true
+    },
+    {
+      "rule": "Prices are published, at least as from-prices per service, with what makes them vary (length, stylist level, time).",
+      "source": "https://www.salonbusiness.co.uk/phorest-reveals-2025-consumer-insights-shaping-the-salon-industry/",
+      "verified": false
+    },
+    {
+      "rule": "Opening hours, the street address with a map link and the phone number are plain text on the home page, per location when there are several.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Photographs show the real salon, the real team and real client results, not stock models.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Each stylist or therapist is named with a photograph and a specialty, and can be booked directly when clients choose a person.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Consultation, deposit and cancellation rules (for colour, extensions, treatments) are stated before booking.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "7 of 10 hand booking to a third-party tool rather than an on-site form: Timma and Bokadirekt (ALICE), Timely (Una), Booksy (Atelier Brzozowski), Mangomint (M Coupe, Muse), Squire (CRISP), Fresha (Venetian); Goldust has its own /book pages, Il Colorista and Mistretta route to WhatsApp, a form or a contact page.",
+    "7 of 10 give a street address on the home page; Venetian and M Coupe give none, Goldust hides it inside a map link.",
+    "5 of 10 list opening hours on the home page (Una, Il Colorista, CRISP, Muse, Mistretta); the others leave them out or on another page.",
+    "Only 3 of 10 put actual prices on the home page (CRISP full list by stylist level, Goldust per treatment, Muse as offers); Una, M Coupe and Mistretta say instead what makes the price vary.",
+    "4 of 10 are multi-site (Atelier Brzozowski 2, CRISP 3, Venetian 3, Muse 3) and list each location separately, with hours per shop on CRISP and Muse.",
+    "Palettes are soft and warm or near-monochrome with one accent: lavender #efeafb (Una), coral #e9584f (Il Colorista), gold #b69f64 (Venetian), blush #d5b8a6 on cream #f5f0e7 (Goldust), sage #62685e and #293223 (Muse); 3 of the 5 read pair a display serif with a sans."
+  ],
+  "sites": [
+    {
+      "name": "ALICE Hair & Art",
+      "url": "https://www.alicehairart.se/",
+      "why": "Stockholm salon that doubles as a gallery: an all-text first screen, 'The seamless blend of hairdressing & art', a three-item nav (Info, Hair, & Art), then a book block with each of three stylists linked to their own booking page (Timma, Bokadirekt). Address on Regeringsgatan as text, email and Instagram; no prices or hours. Near-black #121212 on light grey #f0f0f0, Inter (Framer).",
+      "recognition": "Awwwards Honorable Mention, 2025-02-11",
+      "source": "https://www.awwwards.com/sites/alice-hair-art",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Una",
+      "url": "https://www.una-akl.com/",
+      "why": "Auckland hair studio: header with Menu and a 'Book an appointment' button to Timely; headline 'There is no one quite like you. You are one. You are Una.' and the founder introduced by name. Hours (Tue-Sat, Sun-Mon closed), address with a parking link, phone and email are in the header and footer. Prices explained (depend on length, thickness, time) with a free consultation. Lavender #efeafb, PP Eiko serif with PP Neue Montreal.",
+      "recognition": "Awwwards Honorable Mention, 2024-03-14",
+      "source": "https://www.awwwards.com/sites/una-1",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Il Colorista Salon",
+      "url": "https://ilcolorista.salon/",
+      "why": "Colour salon in Isola della Scala near Verona: H1 'Atelier a Isola della Scala' over a carousel of salon photographs, the line 'Ogni donna ha il suo colore', services (consulenza, colore, balayage...), the two staff named with photographs, a seasonal magazine as PDF. Footer: every day 8:30-18:30, address, tap-to-call and WhatsApp. Coral accent #e9584f on #1f1f1f text. No prices, no book button.",
+      "recognition": "Awwwards Honorable Mention, 2022-09-29",
+      "source": "https://www.awwwards.com/sites/il-colorista-salon",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Atelier Brzozowski",
+      "url": "https://atelierbrzozowski.com/",
+      "why": "Two hair salons in Gdańsk and Gdynia: logo and a short paragraph on haircutting as a craft, nav split by city (Stylists and Contact each have Gdynia and Gdańsk), a Rezerwacja block with one 'Zarezerwuj online' button per salon to Booksy, each address with a tap-to-call number. Price list on its own page; shop on a separate domain.",
+      "recognition": "Awwwards Honorable Mention, 2024-09-12",
+      "source": "https://www.awwwards.com/sites/atelier-brzozowski",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "M Coupe",
+      "url": "https://mcoupe.ca/",
+      "why": "Quebec City salon, French only: header with four links and a 'Prendre Rendez-vous' button to Mangomint, repeated in each service section; black-and-white and colour photographs; 'Services personnalisés pour vous!' with tabs (Coupe et Stylisme, Barbershop, Coloration, Extensions, Soins). Extensions state a 45-minute consultation and a deposit. No hours, address or phone on the home page.",
+      "recognition": "Awwwards Honorable Mention, 2022-11-29",
+      "source": "https://www.awwwards.com/sites/m-coupe",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "CRISP Barbershop",
+      "url": "https://www.crispmtl.com/",
+      "why": "Montreal barbershops: full-width shop photograph, 'MORE THAN A BARBER SHOP' and BOOK NOW, with BOOK in the header (all to Squire). A full price list by stylist level (Stylist, Junior Stylist, Junior Barber, haircut 50/40/25 $, plus taxes), three shops each with address linked to Maps and hours per day, portfolio and academy. No phone number shown.",
+      "recognition": "Awwwards Honorable Mention, 2026-08-11",
+      "source": "https://www.awwwards.com/sites/crisp-barbershop",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Venetian Nail Spa",
+      "url": "https://venetianspa.ca/",
+      "why": "Winnipeg nail spa with three mall locations: 'A REFINED GLOW, THE VENETIAN WAY' over a row of images, 'Book Your Experience' and a header Book Now to Fresha, 'over 1,000 five-star reviews' and four testimonials, a location picker in the contact form. Gold #b69f64, Beautique Display with Inter. No prices, hours, address or phone, and the mobile menu's Book Now links to '#'.",
+      "recognition": "Awwwards Honorable Mention, 2026-05-23",
+      "source": "https://www.awwwards.com/sites/venetian-nail-spa",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Goldust Spa",
+      "url": "https://goldustspa.com/",
+      "why": "Day spa in Canggu, Bali: on load a panel asks 'What can we help you with today?' with five choices (book a treatment, spa party, gift card, menu, collaborate), then 'Welcome to Goldust' over rotating photographs and an 'Enter with music / silence' choice. Treatments carry duration and price (IDR 650k++), each with its own book button; WhatsApp number in header and footer. Blush #d5b8a6 on cream #f5f0e7, Pangaia serif. No hours.",
+      "recognition": "Awwwards Honorable Mention, 2025-06-09",
+      "source": "https://www.awwwards.com/sites/goldust-spa",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Muse Laser & Spa",
+      "url": "https://www.muselaserspa.com/",
+      "why": "Laser and skin clinics in Chicago and two suburbs: 'Be your own Muse', a Book now button (Mangomint), quick links to six treatments, a badge row (500+ Google reviews, 5000+ clients), special offers with prices ($299 first microneedling), a free-consult form, and three clinic cards with address, hours per day and phone. Sage #62685e and dark green #293223 on #f3f3f3, Sigurd Knight with Manrope.",
+      "recognition": "Awwwards Honorable Mention, 2024-11-26",
+      "source": "https://www.awwwards.com/sites/muse-laser-spa",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Mistretta Coiffure",
+      "url": "https://mistretta.ch/",
+      "why": "Hair and beauty salon in Lugano-Paradiso: 'Mistretta Coiffure 2026' with a carousel of yearly looks, services (hair, photo shoots, wedding looks, make-up), See pricelist and Book appointment buttons (booking goes to the contact page), trends by year, a See on map button. Hours per day (Monday on request), address and phone in text; EN, DE, IT. Navy #313357. Some product tiles are empty and one heading reads 'Weeding look'.",
+      "recognition": "Awwwards Honorable Mention, 2018-10-17",
+      "source": "https://www.awwwards.com/sites/mistretta-coiffure",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A Book button that links to '#' or to a contact page, or a booking widget that only appears on desktop.",
+    "No prices anywhere, not even from-prices, with 'contact us' as the only answer.",
+    "Hours, address and phone missing from the home page, or present only inside a map link.",
+    "Stock photographs of models instead of the salon, the team and real client results.",
+    "Typos and empty image tiles left from the template (a misspelt service heading, blank partner logos).",
+    "An intro gate (sound choice, full-screen animation) that delays the booking button on phone.",
+    "Several locations merged into one contact form, with no per-location address, hours and phone."
+  ],
+  "sources": [
+    {
+      "name": "Awwwards, search 'salon'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=salon",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'barber'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=barber",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'spa'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=spa",
+      "access": "free"
+    },
+    {
+      "name": "Awwwards, search 'coiffure'",
+      "url": "https://www.awwwards.com/inspiration_search/?text=coiffure",
+      "access": "free"
+    },
+    {
+      "name": "Salon Business, Phorest 2025 consumer insights (UK and Ireland)",
+      "url": "https://www.salonbusiness.co.uk/phorest-reveals-2025-consumer-insights-shaping-the-salon-industry/",
+      "access": "free"
+    }
+  ]
+}

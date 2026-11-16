@@ -1,0 +1,2096 @@
+{
+  "family": "modules",
+  "kind": "pattern",
+  "label": {
+    "fr": "Modules d'interface",
+    "en": "UI modules"
+  },
+  "summary": "Concrete variants of each interface module (hero, features, pricing, proof, footer, contact, gallery, forms, cards, product page, article, team, timeline, FAQ, 404, empty states, restaurant menus, booking, maps, CTA), so a page can be composed from deliberate choices instead of the same template sections. Prevalence is honest: 'everywhere' variants are fine but say nothing on their own.",
+  "entries": [
+    {
+      "id": "hero-split-text-visual",
+      "label": {
+        "fr": "Ouverture en deux colonnes texte et visuel",
+        "en": "Split hero, text and visual"
+      },
+      "what": "Two columns on the first screen: headline, one sentence and one action on the left, a visual (product, illustration or photo) on the right, vertically centred. The reading order goes text first, then proof, which is why it became the default landing layout.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "A product or offer that can be explained in one sentence and shown in one image.",
+      "avoid_when": "As the automatic choice: it is the most common hero on the web and says nothing about the brand by itself; pick it only when the visual carries real information.",
+      "build": "Grid of two columns (about 5/7 or 6/6) from 960px, gap 48-80px, align-items center. Under 768px stack text above the visual, keep the button above the fold. h1 once, button as a real link or button, visual with meaningful alt or alt=\"\" when decorative; do not lazy-load it (it is the LCP image).",
+      "prevalence": "everywhere"
+    },
+    {
+      "id": "hero-full-bleed-photo",
+      "label": {
+        "fr": "Ouverture photo plein cadre",
+        "en": "Full-bleed photo hero"
+      },
+      "what": "A photograph covers the whole first screen, edge to edge, with a short headline set over a quiet area of the image or over a gradient scrim. The picture does the selling: the place, the dish, the object, the people.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Hotels, restaurants, travel, architecture, fashion, events: trades where the photo is the product and the client has good photography.",
+      "avoid_when": "Stock photos, busy images with no quiet zone for text, or software products where a photo says nothing concrete.",
+      "build": "Section at min-height: 100svh (not 100vh, which jumps on phones), image as <img> with object-fit: cover and a chosen object-position, fetchpriority=\"high\", srcset for widths. Text over a local scrim (linear-gradient) checked at 4.5:1 on the worst crop. On phone, change the crop with <picture> art direction rather than shrinking the desktop crop.",
+      "prevalence": "common"
+    },
+    {
+      "id": "hero-product-in-context",
+      "label": {
+        "fr": "Produit en situation",
+        "en": "Product in context"
+      },
+      "what": "The product appears where it is used: the app on a phone held in a hand, the device on a desk, the dashboard inside a real browser window next to the tools it connects to. The visitor sees the outcome in a believable setting, not a floating screenshot.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Physical products, mobile apps, integrations, and any product whose value depends on where it lives.",
+      "avoid_when": "When the context photo is generic stock or an obvious mockup template; a clean screenshot beats a fake scene.",
+      "build": "Same grid as a split hero or a centred stack with the scene below the headline. Export the scene at 2x with a real screen capture composited in, WebP or AVIF, width and height attributes to avoid layout shift. On phone, crop tight on the screen so text in the UI stays readable.",
+      "prevalence": "common"
+    },
+    {
+      "id": "hero-typographic",
+      "label": {
+        "fr": "Ouverture uniquement typographique",
+        "en": "Type-only hero"
+      },
+      "what": "No image at all: a very large headline, set in a characterful typeface, fills the first screen, sometimes with one word in another weight, style or colour. Confidence comes from the words and the type, and the page loads instantly.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Studios, agencies, writers, consultants, manifestos, and products whose promise is sharper than any picture.",
+      "avoid_when": "When the headline is vague: a giant sentence that says little exposes the emptiness. Also avoid when visitors need to see the product to understand it.",
+      "build": "Fluid size with clamp() (for example clamp(2.5rem, 8vw, 7rem)), text-wrap: balance, tight but readable line-height (1.0-1.1), max-width in ch. Keep one h1; decorative words stay in the same h1, not separate headings. On phone check that no single word overflows (hyphens: auto with lang set, or a smaller clamp minimum).",
+      "prevalence": "rare"
+    },
+    {
+      "id": "hero-video-loop",
+      "label": {
+        "fr": "Ouverture avec boucle vidéo",
+        "en": "Looping video hero"
+      },
+      "what": "A short silent loop (5 to 15 seconds) plays behind or beside the headline: a process, a place, the product in motion. It shows texture and movement a photo cannot, then settles into the background.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Trades where motion is the message: food being made, a venue, a craft, a physical product, a game.",
+      "avoid_when": "Slow connections and data-heavy audiences, or when the loop is decorative stock footage. Never with sound on by default.",
+      "build": "<video autoplay muted loop playsinline preload=\"metadata\" poster=\"...\"> with a compressed MP4/WebM under about 2-3 MB; the poster is the LCP image. Provide a visible pause button (WCAG 2.2.2 for motion over 5 s) and serve the poster only under prefers-reduced-motion: reduce or Save-Data. On phone, consider a shorter, vertically cropped file via <source media>.",
+      "prevalence": "common"
+    },
+    {
+      "id": "hero-interactive-demo",
+      "label": {
+        "fr": "Ouverture avec démo interactive",
+        "en": "Interactive demo hero"
+      },
+      "what": "The first screen contains a working, sandboxed piece of the product: type in a field and see the result, drag a slider, run a query, edit a sample document. The visitor tries the value before reading any claim.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Developer tools, AI products, editors, calculators: anything whose value is felt in one interaction under ten seconds.",
+      "avoid_when": "Products that need an account, real data or a long setup to show anything; a fake demo that does not really work damages trust.",
+      "build": "Split or stacked layout with the demo as a bounded component (fixed height, own scroll). Prefill a good example so it looks alive before input. Keyboard reachable, labelled controls, live region (aria-live=\"polite\") for results. Lazy-hydrate the demo after the headline paints. On phone, reduce to one interaction or replace with a short recording.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "hero-collage",
+      "label": {
+        "fr": "Ouverture en collage",
+        "en": "Collage hero"
+      },
+      "what": "Several images, cut-outs, notes or product pieces are arranged in a loose, overlapping composition around or behind the headline, like a pinboard or a magazine spread. It conveys variety and personality at a glance.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Marketplaces, creative tools, community products, events, portfolios: anything with many different outputs or people.",
+      "avoid_when": "Serious or regulated trades where order signals reliability, and when the images are weak (a collage multiplies weak images).",
+      "build": "CSS grid with explicit overlapping areas or absolutely positioned items inside a relative container with aspect-ratio; slight rotations with transform. Keep the headline in normal flow above the collage in the DOM. On phone, reduce to 3-4 pieces in a simple two-column stack or a horizontal strip. Decorative pieces get alt=\"\".",
+      "prevalence": "rare"
+    },
+    {
+      "id": "hero-search-first",
+      "label": {
+        "fr": "Ouverture centrée sur la recherche",
+        "en": "Search-first hero"
+      },
+      "what": "The first screen is a large search field with a short prompt and a few suggested queries or categories beneath it. The page assumes the visitor came to find something specific and gets them there in one step.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Directories, marketplaces, travel, real estate, documentation, job boards, recipe sites.",
+      "avoid_when": "Products with a small catalogue, or when visitors do not yet know what to look for (they need persuasion first).",
+      "build": "A <form role=\"search\"> with a visible <label> (can be visually styled as the prompt), input type=\"search\", submit button, suggestions as links. Field at least 48px high. Autofocus only when search is the page's only purpose. On phone, the field spans the full width and the keyboard's enter key submits (enterkeyhint=\"search\").",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Filter categories and values",
+          "url": "https://www.nngroup.com/articles/filter-categories-values/"
+        }
+      ]
+    },
+    {
+      "id": "features-alternating-rows",
+      "label": {
+        "fr": "Rangées alternées texte et image",
+        "en": "Alternating feature rows"
+      },
+      "what": "Each feature gets its own row: text on one side, image on the other, and the sides swap row after row in a zigzag. It is the classic long landing page rhythm.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Three to five features that each need an image and a paragraph to be understood.",
+      "avoid_when": "As a default: research shows the zigzag makes scanning slower because the eye has to jump sides; if features are short, a grid or a list reads faster.",
+      "build": "Each row is a two-column grid; alternate with grid-auto-flow or order on even rows, never by changing the DOM order. Keep heading levels consistent (h3 under the section h2). On phone all rows stack with text first, image second, the same way every time.",
+      "prevalence": "everywhere",
+      "references": [
+        {
+          "name": "NN/g, Zigzag image-text layouts",
+          "url": "https://www.nngroup.com/articles/zigzag-page-layout/"
+        }
+      ]
+    },
+    {
+      "id": "features-tabs",
+      "label": {
+        "fr": "Fonctionnalités en onglets",
+        "en": "Feature tabs"
+      },
+      "what": "A row of tabs (one per feature or per audience) switches the panel below: a screenshot with a short caption. The page stays compact while still showing several product screens.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Products with several distinct modules or audiences, where visitors want to pick the one that concerns them.",
+      "avoid_when": "When every tab is essential reading: content hidden in tabs gets far less attention than the first tab. Avoid more than 5-6 tabs.",
+      "build": "WAI-ARIA tabs pattern: role=\"tablist\", role=\"tab\" with aria-selected and aria-controls, role=\"tabpanel\", arrow keys move between tabs. Fixed panel aspect-ratio to avoid jumps. On phone, tabs become a horizontally scrollable row or an accordion; keep the tab labels short.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Tabs used right",
+          "url": "https://www.nngroup.com/articles/tabs-used-right/"
+        }
+      ]
+    },
+    {
+      "id": "features-accordion-preview",
+      "label": {
+        "fr": "Accordéon avec aperçu",
+        "en": "Accordion with preview"
+      },
+      "what": "A list of features on one side behaves like an accordion: opening one item reveals its description and swaps the large preview image on the other side. Only one item is open at a time, often with a progress bar that auto-advances.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Four to six features that each map to a distinct screen, on a page that should stay short.",
+      "avoid_when": "If auto-advance moves faster than people read, or when there is no image per feature.",
+      "build": "Grid of two columns from 960px: list (buttons with aria-expanded and aria-controls) and a sticky preview. Auto-advance pauses on hover and focus, and stops under prefers-reduced-motion. On phone, render the image inside each opened item instead of a separate column.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Accordions on desktop",
+          "url": "https://www.nngroup.com/articles/accordions-on-desktop/"
+        }
+      ]
+    },
+    {
+      "id": "features-annotated-screenshot",
+      "label": {
+        "fr": "Capture annotée",
+        "en": "Annotated screenshot"
+      },
+      "what": "One large product screenshot with numbered callouts or leader lines pointing to the parts that matter, each with a short label. The visitor learns the interface and its value in one look.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Dense tools (dashboards, editors, analytics) where the value is in specific details of one screen.",
+      "avoid_when": "Simple products where the screenshot speaks for itself, or when callouts would cover the interesting parts.",
+      "build": "Figure with the image and an ordered list of callouts; position markers in percentages over a relative container so they scale. The list is the accessible version (markers are aria-hidden and the list is real text). On phone, hide markers on the image and show the list below with small cropped thumbnails.",
+      "prevalence": "common"
+    },
+    {
+      "id": "features-sticky-visual-scroll",
+      "label": {
+        "fr": "Liste qui défile avec visuel fixe",
+        "en": "Scrolling list with sticky visual"
+      },
+      "what": "Feature blocks scroll on one side while a visual stays pinned on the other, changing as each block reaches the middle of the screen. It tells a sequence without hijacking the scroll.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "A story in steps: a workflow, a product tour, a before-during-after.",
+      "avoid_when": "Short pages, or when the visual barely changes between steps. Never take over the scroll speed.",
+      "build": "Two-column grid; the visual column uses position: sticky; top: calc(50% - h/2). Swap the visual with IntersectionObserver on each text block, crossfade 200-300 ms. Under reduced motion swap without fade. On phone, drop the sticky column and put each visual inside its block.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Scrolljacking 101",
+          "url": "https://www.nngroup.com/articles/scrolljacking-101/"
+        }
+      ]
+    },
+    {
+      "id": "features-problem-solution-pairs",
+      "label": {
+        "fr": "Problème puis solution",
+        "en": "Problem and solution pairs"
+      },
+      "what": "Each feature is framed as a pair: the old way (the frustration, often greyed or crossed out) next to the new way (the product). It can be a two-column table, a list of rows or cards flipped from dull to bright.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Products replacing a known painful habit: spreadsheets, manual work, a competitor everyone knows.",
+      "avoid_when": "When the pain is invented or exaggerated; visitors notice. Do not mock the visitor's current tools too hard.",
+      "build": "A list of rows, each a two-column grid with a clear label (Before / With us) as text, not colour alone. On phone each pair stacks with the labels kept. Use <del> only when the meaning is really 'removed'.",
+      "prevalence": "common"
+    },
+    {
+      "id": "features-icon-grid",
+      "label": {
+        "fr": "Grille d'icônes",
+        "en": "Icon feature grid"
+      },
+      "what": "Six to nine short features in a grid of three columns, each with an icon, a bold title and one or two lines of text. Fast to scan, easy to fill.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Secondary features or reassurance items (security, support, integrations) after the main story is told.",
+      "avoid_when": "As the main feature section: the icon grid is a strong sign of a template page, and generic icons add nothing. Prefer real screenshots or fewer, deeper features.",
+      "build": "grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); icons decorative (aria-hidden) since the title carries the meaning. Titles as h3. On phone, one column or two compact columns with icons on the left.",
+      "prevalence": "everywhere"
+    },
+    {
+      "id": "features-live-changelog",
+      "label": {
+        "fr": "Fonctionnalités par les nouveautés",
+        "en": "Features as a live changelog"
+      },
+      "what": "Instead of timeless feature blocks, the section shows the latest shipped improvements with dates, small visuals and a link to the full changelog. It proves the product is alive and moving.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Products that ship often and want to show momentum: developer tools, SaaS in growth.",
+      "avoid_when": "Products that rarely change, or when entries are trivial (bug fixes as features).",
+      "build": "An ordered list of articles with <time datetime>, newest first, limited to 3-5 items; each links to its changelog entry. Generate from the real changelog at build time so it never goes stale. On phone, a simple vertical list.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "pricing-plan-cards-recommended",
+      "label": {
+        "fr": "Cartes d'offres avec offre conseillée",
+        "en": "Plan cards with a recommended plan"
+      },
+      "what": "Three (sometimes four) plan cards side by side with price, short description, main action and a feature list; the middle one is highlighted as recommended with a badge and stronger styling.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "SaaS with clear tiers where most buyers should land on one plan.",
+      "avoid_when": "When the plans differ by one variable only (use a slider) or when there is one plan. Three equal cards is the most common pricing layout on the web; distinguish it with real limits and plain words.",
+      "build": "Grid of three equal columns from 960px, cards aligned so prices and buttons sit on the same line (subgrid or fixed rows). The recommended badge is text, not colour alone. On phone, stack with the recommended plan first or show a plan switcher; keep feature lists collapsed beyond 5 items.",
+      "prevalence": "everywhere",
+      "references": [
+        {
+          "name": "Pricing Pages gallery",
+          "url": "https://pricingpages.design/"
+        },
+        {
+          "name": "SaaS Landing Page, pricing examples",
+          "url": "https://saaslandingpage.com/pricing/"
+        }
+      ]
+    },
+    {
+      "id": "pricing-single-plan",
+      "label": {
+        "fr": "Offre unique",
+        "en": "Single plan"
+      },
+      "what": "One price, one card, everything included: a big number, a short list of what you get and one button. Optional add-ons or a note for large teams sit below. The page reads as a confident offer rather than a choice to make.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Simple products, indie tools, memberships, services with a fixed price. It removes choice anxiety.",
+      "avoid_when": "When customers truly differ in size and value received; one price then leaves money on the table or scares small buyers.",
+      "build": "Centred card max-width about 32rem, or a two-column block: price and button left, what is included right. Price in tabular figures with currency and period spelled out. On phone, the card spans the width with the button above the list.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "Pricing Pages gallery",
+          "url": "https://pricingpages.design/"
+        }
+      ]
+    },
+    {
+      "id": "pricing-usage-slider",
+      "label": {
+        "fr": "Prix au curseur d'usage",
+        "en": "Usage slider pricing"
+      },
+      "what": "A slider (or stepper) for the main usage unit, such as seats, contacts, requests or storage, updates the price live. The visitor sees exactly what they will pay at their size.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Usage-based or per-seat pricing where the price depends on one main number.",
+      "avoid_when": "Pricing with several independent variables (use a calculator), or when large volumes are custom quotes (end the slider with 'Contact us').",
+      "build": "Native <input type=\"range\"> with a visible label and an associated number input for exact values; output in an <output> element with aria-live=\"polite\". Snap to meaningful steps. On phone, the slider spans the full width with a large thumb (at least 44px target).",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "Pricing Pages gallery",
+          "url": "https://pricingpages.design/"
+        }
+      ]
+    },
+    {
+      "id": "pricing-table-matrix",
+      "label": {
+        "fr": "Tableau des offres",
+        "en": "Plan comparison matrix"
+      },
+      "what": "A full table with plans in columns and every feature in rows, grouped by category, with checkmarks, limits and footnotes. It sits below the plan cards for people who compare in detail.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "desktop-app"
+        ]
+      },
+      "use_when": "B2B buyers and procurement who need every limit spelled out before committing.",
+      "avoid_when": "As the only pricing element for a consumer product; it overwhelms. Keep rows that actually differ between plans.",
+      "build": "A real <table> with <th scope=\"col\"> plan headers made sticky (position: sticky; top) and row group headers. Checkmarks need text (visually hidden 'Included'). On phone, switch to one plan at a time with a selector, or horizontal scroll with a sticky first column.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Comparison tables",
+          "url": "https://www.nngroup.com/articles/comparison-tables/"
+        },
+        {
+          "name": "Pricing Pages gallery",
+          "url": "https://pricingpages.design/"
+        }
+      ]
+    },
+    {
+      "id": "pricing-calculator",
+      "label": {
+        "fr": "Calculateur de prix",
+        "en": "Pricing calculator"
+      },
+      "what": "A small form with several inputs (team size, volume, options, region) produces an itemised estimate with a total, often next to a summary card that updates live. Each line explains where the money goes, so the total feels earned rather than arbitrary.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Complex pricing with multiple variables: cloud, logistics, insurance, services billed by components.",
+      "avoid_when": "Simple pricing; a calculator suggests complexity and can make a cheap product look expensive.",
+      "build": "Two-column grid: fieldset of labelled inputs left, sticky summary right (role=\"status\" for updates). Show the formula or line items so the total is credible. On phone, inputs first and a sticky bottom bar with the running total.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "Pricing Pages gallery",
+          "url": "https://pricingpages.design/"
+        }
+      ]
+    },
+    {
+      "id": "pricing-per-outcome",
+      "label": {
+        "fr": "Prix par usage concret",
+        "en": "Price per outcome"
+      },
+      "what": "The price is expressed in the customer's terms rather than plans: per meal, per booking, per session, per finished project, with worked examples of what typical customers pay per month.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Services and marketplaces where buyers think in jobs, not features: freelancers, studios, clinics, delivery.",
+      "avoid_when": "Subscription products with many features where an outcome price would be misleading.",
+      "build": "A short list of example cases (cards or a small table) with the input and the resulting price, plus the unit price in large type. Mention taxes and fees clearly. On phone, the examples become a stacked list.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "proof-single-big-quote",
+      "label": {
+        "fr": "Une seule grande citation",
+        "en": "Single big quote"
+      },
+      "what": "One testimonial set very large, almost like a headline, with the person's photo, name, role and company. It is calmer and more believable than a carousel of ten small quotes.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "When there is one strong, specific quote from a recognisable customer.",
+      "avoid_when": "When the quote is generic praise ('Great product!'); at this size, vagueness shows.",
+      "build": "<figure> with <blockquote> and <figcaption> holding name and role. Size with clamp(), text-wrap: balance, real typographic quotes. On phone, reduce size and keep the attribution directly under the quote.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "SaaS Landing Page, testimonial examples",
+          "url": "https://saaslandingpage.com/testimonials/"
+        }
+      ]
+    },
+    {
+      "id": "proof-testimonial-wall",
+      "label": {
+        "fr": "Mur de témoignages",
+        "en": "Testimonial wall"
+      },
+      "what": "Many short testimonials (often posts from social networks or reviews) in a masonry or multi-column layout, showing volume and variety. Sometimes the columns scroll slowly in opposite directions. Each item keeps its source, avatar and handle so it reads as real.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Products with a large, vocal user base and many genuine short reviews.",
+      "avoid_when": "Fewer than about nine real quotes; a thin wall looks empty. Avoid auto-scrolling columns without a pause control.",
+      "build": "CSS columns (column-width: 20rem) or grid with masonry fallback; each item a <figure> with source link when public. Cap height and add 'Show more' instead of an endless wall. Any animation stops under reduced motion and on hover/focus. On phone, a single column showing 4-6 items.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "SaaS Landing Page, testimonial examples",
+          "url": "https://saaslandingpage.com/testimonials/"
+        },
+        {
+          "name": "NN/g, Social proof in the UX",
+          "url": "https://www.nngroup.com/articles/social-proof-ux/"
+        }
+      ]
+    },
+    {
+      "id": "proof-case-study-cards",
+      "label": {
+        "fr": "Cartes d'études de cas",
+        "en": "Case study cards"
+      },
+      "what": "A row of cards, each for one customer: logo, a one-line result with a number ('cut onboarding from 3 weeks to 4 days'), a photo, and a link to the full story.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "B2B, agencies, consultancies: buyers who want to see a similar company succeed.",
+      "avoid_when": "When there are no measured results yet; a card with a vague outcome is weaker than a plain quote.",
+      "build": "Grid of 2-3 cards; the whole card is one link (a stretched link on the title, not nested links). Result number in tabular figures. On phone, a horizontal scroll-snap row or a stacked list.",
+      "prevalence": "common"
+    },
+    {
+      "id": "proof-press-strip",
+      "label": {
+        "fr": "Bandeau presse",
+        "en": "Press strip"
+      },
+      "what": "A thin row of publication logos ('As seen in') sometimes paired with a short quote from one article. It borrows authority from known media. It usually sits right under the hero, before the visitor has decided whether to trust the page.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Consumer brands, books, restaurants and products that received real coverage.",
+      "avoid_when": "If the coverage was paid, minor or impossible to find; link each logo to the article.",
+      "build": "Flex row with wrap, logos in one tone at the same optical height, each a link with the publication name as alt text. On phone, two rows or a scroll-snap strip; avoid an auto-scrolling marquee for only a few logos.",
+      "prevalence": "common"
+    },
+    {
+      "id": "proof-metrics-with-source",
+      "label": {
+        "fr": "Chiffres sourcés",
+        "en": "Metrics with source"
+      },
+      "what": "Three or four big numbers (customers, uptime, time saved, rating) each with a small line saying where the number comes from and when it was measured. Credible because it is checkable.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "When the numbers are real, recent and meaningful to the visitor.",
+      "avoid_when": "Vanity numbers ('10,000+ happy users') with no source or date; they read as filler.",
+      "build": "A <dl> with <dt> label and <dd> value, or a list; small caption with source and date; tabular figures. On phone, a 2x2 grid. Do not animate counters unless the content is still readable without the animation.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Social proof in the UX",
+          "url": "https://www.nngroup.com/articles/social-proof-ux/"
+        }
+      ]
+    },
+    {
+      "id": "proof-video-testimonials",
+      "label": {
+        "fr": "Témoignages vidéo",
+        "en": "Video testimonials"
+      },
+      "what": "Short clips (30 to 90 seconds) of customers speaking, shown as thumbnails with a name, role and a one-line pull quote; clicking plays the video in place or in a dialog.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "High-trust or high-price purchases where seeing a real person matters: education, health, B2B services.",
+      "avoid_when": "When videos are long, poorly lit, or unavailable with captions.",
+      "build": "Grid of thumbnails as buttons opening a <dialog> with the video (focus trapped, Escape closes, focus returns). Load the player only on click (facade pattern). Captions (<track kind=\"captions\">) are mandatory, plus a transcript link. On phone, full-width thumbnails in a list.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "footer-minimal",
+      "label": {
+        "fr": "Pied de page minimal",
+        "en": "Minimal footer"
+      },
+      "what": "One line or two: logo or name, copyright, a few legal links (privacy, terms, legal notice) and maybe social icons. Nothing more. It closes the page quietly and lets the last content section or the main call to action carry the ending.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Small sites, single-page sites, apps and focused landing pages where the nav already holds everything.",
+      "avoid_when": "Content-rich sites where people scroll to the bottom looking for a link (they need a sitemap footer).",
+      "build": "<footer> with a <nav aria-label=\"Legal\">; flex row with space-between, wrap on phone into a centred stack. Icon-only social links need accessible names. Contrast still at 4.5:1 even for 'quiet' text.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "Footer.design gallery",
+          "url": "https://www.footer.design/"
+        },
+        {
+          "name": "NN/g, Web page footers 101",
+          "url": "https://www.nngroup.com/articles/footers/"
+        }
+      ]
+    },
+    {
+      "id": "footer-fat-sitemap",
+      "label": {
+        "fr": "Pied de page plan du site",
+        "en": "Fat sitemap footer"
+      },
+      "what": "Several columns of grouped links (Product, Resources, Company, Legal), brand and short description in the first column, often with language switch and social links at the bottom. It doubles as a second navigation for people who reach the bottom without finding what they wanted.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Sites with many pages: SaaS, institutions, e-commerce. It is the safety net for people who scroll to the end.",
+      "avoid_when": "Small sites: empty columns with two links each look padded.",
+      "build": "<footer> containing <nav> groups, each with a heading (h2 or a visually styled p with aria-labelledby). Grid of repeat(auto-fit, minmax(10rem, 1fr)). On phone, two columns or collapsible groups (details/summary). Keep link targets at least 24px high.",
+      "prevalence": "everywhere",
+      "references": [
+        {
+          "name": "Footer.design gallery",
+          "url": "https://www.footer.design/"
+        },
+        {
+          "name": "NN/g, Web page footers 101",
+          "url": "https://www.nngroup.com/articles/footers/"
+        }
+      ]
+    },
+    {
+      "id": "footer-cta",
+      "label": {
+        "fr": "Pied de page avec appel à l'action",
+        "en": "CTA footer"
+      },
+      "what": "The footer opens with a last pitch: a large headline and the main button, then the usual links below. The end of the page becomes a final chance to convert.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Landing pages and marketing sites with one clear action.",
+      "avoid_when": "Pages that already end with a CTA block (two in a row repeat), or utility pages.",
+      "build": "Two stacked regions inside <footer>: a CTA band (heading plus button) and the link area. Give the CTA band its own background so it does not merge with the links. On phone, button full width.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "Footer.design gallery",
+          "url": "https://www.footer.design/"
+        },
+        {
+          "name": "CTA.gallery",
+          "url": "https://www.cta.gallery/"
+        }
+      ]
+    },
+    {
+      "id": "footer-newsletter",
+      "label": {
+        "fr": "Pied de page avec lettre d'information",
+        "en": "Newsletter footer"
+      },
+      "what": "A footer whose main element is an email sign-up: a short promise of what the newsletter contains, an email field and a button, beside or above the link columns. It turns the end of the page into a reason to come back.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Blogs, media, shops, creators: anywhere a return visit matters more than an immediate sale.",
+      "avoid_when": "When there is no newsletter actually sent on a regular schedule.",
+      "build": "A <form> with a visible <label> for the email, type=\"email\", autocomplete=\"email\", inline errors and a success message announced (role=\"status\"). Say how often and how to unsubscribe. On phone, field and button stacked full width.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "Footer.design gallery",
+          "url": "https://www.footer.design/"
+        }
+      ]
+    },
+    {
+      "id": "footer-big-wordmark",
+      "label": {
+        "fr": "Pied de page avec grand logo",
+        "en": "Big wordmark footer"
+      },
+      "what": "The brand name is set huge across the full width at the bottom of the page, sometimes cut off by the edge, under a compact row of links. It closes the page like a signature.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Studios, brands with a strong wordmark, portfolios, products with a distinctive name.",
+      "avoid_when": "Long or generic names that do not survive being set at 20vw; trades where restraint reads better.",
+      "build": "Wordmark as SVG or text sized with font-size in vw (or fitted with SVG viewBox), aria-hidden when the name already appears in the footer as text. Avoid horizontal overflow (overflow: clip on the section). On phone it simply scales down.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "Footer.design gallery",
+          "url": "https://www.footer.design/"
+        }
+      ]
+    },
+    {
+      "id": "contact-split-form-map",
+      "label": {
+        "fr": "Formulaire et carte côte à côte",
+        "en": "Split form and map"
+      },
+      "what": "A contact form on one side, a map with address, opening hours and phone on the other. Visitors pick writing or coming in. Both halves answer the same question, how do I reach you, in the way that suits each visitor.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Local businesses, offices that receive visitors, agencies with a physical studio.",
+      "avoid_when": "Remote-only businesses (the map is decoration) or when the form is the only real channel.",
+      "build": "Two-column grid from 960px; form first in the DOM. Map embed loaded on interaction (static image with a 'Load map' button) to avoid heavy third-party scripts; address also as plain text with a 'Get directions' link. On phone, form then address then map.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Website forms usability",
+          "url": "https://www.nngroup.com/articles/web-form-design/"
+        }
+      ]
+    },
+    {
+      "id": "contact-booking-calendar",
+      "label": {
+        "fr": "Calendrier de prise de rendez-vous",
+        "en": "Booking calendar embed"
+      },
+      "what": "Instead of a form, the page shows available slots in a calendar: pick a day, pick a time, give your name and email, done. The meeting is booked without email ping-pong.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Consultants, sales demos, coaches, clinics, services sold through a first call.",
+      "avoid_when": "When there is no capacity to honour bookings, or when requests need qualification first (use a short form, then the calendar).",
+      "build": "Inline embed of the booking tool or a native list of slots grouped by day (buttons, not a tiny grid), time zone shown and changeable. Provide an alternative link (email) if the embed fails. On phone, show days as a horizontal strip and slots as a list.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Date-input form fields",
+          "url": "https://www.nngroup.com/articles/date-input/"
+        }
+      ]
+    },
+    {
+      "id": "contact-multi-channel",
+      "label": {
+        "fr": "Contact multi-canal",
+        "en": "Multi-channel contact"
+      },
+      "what": "A set of cards, one per channel (phone, email, chat, visit, social), each with when it is answered and how fast. Visitors pick the channel that suits their urgency. Nobody is forced into a form when a phone call would be faster.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Support pages, businesses with several teams (sales, support, press), customer-facing services.",
+      "avoid_when": "Tiny businesses with one person behind every channel; promise only channels that are answered.",
+      "build": "Grid of cards with real links: tel:, mailto:, chat button. Show hours and expected response time as text. Group by purpose (Sales, Support) with headings. On phone, phone and chat first, full-width rows.",
+      "prevalence": "common"
+    },
+    {
+      "id": "contact-chat-first",
+      "label": {
+        "fr": "Contact par conversation",
+        "en": "Chat-first contact"
+      },
+      "what": "The contact page opens a conversation directly: a few guided questions in chat bubbles route the request (topic, details, email), with a human taking over when needed. It feels like talking to someone rather than filling in a form.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Products with live support teams, or flows where a few questions can qualify the request.",
+      "avoid_when": "When no human answers in a reasonable time, or for formal requests (legal, press) that need a written record.",
+      "build": "A log region (role=\"log\", aria-live=\"polite\") with a labelled input; quick replies as buttons. Always state who answers and when, and offer an email fallback. On phone, the chat fills the screen with the input pinned above the keyboard (interactive-widget=resizes-content).",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "NN/g, The UX of chatbots",
+          "url": "https://www.nngroup.com/articles/chatbots/"
+        }
+      ]
+    },
+    {
+      "id": "gallery-masonry",
+      "label": {
+        "fr": "Galerie en maçonnerie",
+        "en": "Masonry gallery"
+      },
+      "what": "Images of different heights packed in columns with no gaps, each keeping its natural ratio. Feels rich and editorial, like a pinboard. The visitor scans many pieces quickly and clicks one to open it larger or go to its project page.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Photographers, illustrators, inspiration boards, collections with mixed formats.",
+      "avoid_when": "When order matters (masonry reads column by column visually but row by row in the DOM), or for products where comparing items side by side matters.",
+      "build": "CSS columns (column-width) or grid with grid-template-rows: masonry where supported, with a columns fallback. Width and height attributes on every image; loading=\"lazy\" below the fold. Each item a link with descriptive alt. On phone, two columns or one.",
+      "prevalence": "common"
+    },
+    {
+      "id": "gallery-uniform-grid",
+      "label": {
+        "fr": "Grille uniforme",
+        "en": "Uniform grid"
+      },
+      "what": "Every item has the same ratio (square, 4:3 or 3:4) in a regular grid with a caption under each. Calm, orderly and easy to compare. The regular rhythm puts the content forward and makes the grid predictable to scan row by row.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Product catalogues, project lists, team photos, any collection where comparing is the point.",
+      "avoid_when": "Work where cropping destroys the image (panoramas, posters).",
+      "build": "grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); aspect-ratio and object-fit: cover on images; caption as text below. On phone, two columns for products, one for portfolio work.",
+      "prevalence": "standard"
+    },
+    {
+      "id": "gallery-list-hover-preview",
+      "label": {
+        "fr": "Liste avec aperçu au survol",
+        "en": "List with hover preview"
+      },
+      "what": "Projects are listed as large text rows (name, client, year). Hovering a row reveals a floating image that follows the pointer or appears at a fixed spot. The list stays light and readable while the images add colour on demand.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Studios and portfolios with strong names and a confident typographic identity.",
+      "avoid_when": "Touch-only audiences if the preview is the only way to see the work, or catalogues where images are the main content.",
+      "build": "A <ul> of links; preview image positioned with transform from pointer events, shown on hover and focus-visible (keyboard users must see it too), aria-hidden since the link text names the project. Under reduced motion, show the image without following the pointer. On phone, show a small thumbnail inline in each row.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "gallery-fullscreen-slider",
+      "label": {
+        "fr": "Diaporama plein écran",
+        "en": "Full-screen slider"
+      },
+      "what": "One image at a time fills the viewport, with arrows, a counter (3 / 12) and a caption. Swipe or arrow keys move between images. Each image gets the whole screen, like turning the pages of a large photo book.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Photography, architecture, a single project told through big images.",
+      "avoid_when": "Content people want to scan quickly; carousels hide everything but the first slide. Never auto-advance.",
+      "build": "A region with aria-roledescription=\"carousel\", each slide labelled 'n of N', prev/next buttons with names, arrow-key support, scroll-snap for swipe. Preload next image only. On phone, swipe with visible buttons kept.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "NN/g, Carousel usability",
+          "url": "https://www.nngroup.com/articles/designing-effective-carousels/"
+        }
+      ]
+    },
+    {
+      "id": "gallery-filterable",
+      "label": {
+        "fr": "Galerie filtrable",
+        "en": "Filterable gallery"
+      },
+      "what": "A row of filter chips (by category, year, medium, client) above a grid; choosing one narrows the items, with the count of results shown. The grid reflows in place, so the visitor never leaves the page to narrow the collection down.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Portfolios and catalogues of more than about 20 items across distinct categories.",
+      "avoid_when": "Small collections where filters return one or two items each.",
+      "build": "Filter chips as toggle buttons (aria-pressed) or links that update the URL query so filtered views can be shared. Announce the result count (role=\"status\"). Animate reflow with View Transitions if wanted, disabled under reduced motion. On phone, chips scroll horizontally or move into a filter sheet.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Filter categories and values",
+          "url": "https://www.nngroup.com/articles/filter-categories-values/"
+        },
+        {
+          "name": "NN/g, Mobile faceted search with a tray",
+          "url": "https://www.nngroup.com/articles/mobile-faceted-search/"
+        }
+      ]
+    },
+    {
+      "id": "form-single-column",
+      "label": {
+        "fr": "Formulaire sur une colonne",
+        "en": "Single-column form"
+      },
+      "what": "All fields stacked in one column, label above each field, one primary button at the end. The eye moves straight down and nothing is missed. Completion is faster than with multi-column layouts, where people skip fields or read in the wrong order.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone",
+          "persuade"
+        ]
+      },
+      "use_when": "Almost every form: contact, sign-up, checkout, settings.",
+      "avoid_when": "Very long admin forms where related short fields (city and postcode) can sit together; even then keep the main flow in one column.",
+      "build": "Labels as <label for>, fields max-width matched to expected input length, autocomplete attributes, input types and inputmode set, errors next to the field and summarised at the top on submit (linked to fields). Group with fieldset/legend. On phone, fields at 16px font to avoid zoom.",
+      "prevalence": "standard",
+      "references": [
+        {
+          "name": "NN/g, Website forms usability",
+          "url": "https://www.nngroup.com/articles/web-form-design/"
+        }
+      ]
+    },
+    {
+      "id": "form-multi-step",
+      "label": {
+        "fr": "Formulaire en plusieurs étapes",
+        "en": "Multi-step form"
+      },
+      "what": "A long form split into short steps with a progress indicator ('Step 2 of 4'), back and next buttons, and a review screen before submitting. Each step feels short, and the visitor always knows how much is left.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Long or branching forms: onboarding, applications, quotes, insurance, checkout.",
+      "avoid_when": "Forms of fewer than about six fields; splitting them adds clicks for nothing.",
+      "build": "One question or topic per page (GOV.UK style), progress as text, state kept when going back, a check-your-answers page with change links. Move focus to the step heading on each change. On phone, the next button is full width; keep progress short (no 8-dot stepper).",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "GOV.UK Design System, question pages",
+          "url": "https://design-system.service.gov.uk/patterns/question-pages/"
+        },
+        {
+          "name": "GOV.UK Design System, check answers",
+          "url": "https://design-system.service.gov.uk/patterns/check-answers/"
+        },
+        {
+          "name": "NN/g, Wizards",
+          "url": "https://www.nngroup.com/articles/wizards/"
+        }
+      ]
+    },
+    {
+      "id": "form-inline",
+      "label": {
+        "fr": "Formulaire en ligne",
+        "en": "Inline form"
+      },
+      "what": "A form reduced to one field and one button on a single line, usually email: sign up, join the waitlist, get the guide. It sits inside a hero or a CTA block.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Single-field actions with very low friction.",
+      "avoid_when": "Anything needing more than one piece of information; do not hide a long form behind it.",
+      "build": "Flex row with the input growing and the button fixed; a visible label (it can sit above the row) rather than placeholder only. Errors below the row, success replaces the form with a message (role=\"status\"). On phone, wrap to field above button.",
+      "prevalence": "common"
+    },
+    {
+      "id": "form-conversational",
+      "label": {
+        "fr": "Formulaire conversationnel",
+        "en": "Conversational form"
+      },
+      "what": "Questions appear one at a time in large type, like a conversation; answers can be typed or chosen from big buttons, and the next question slides in. It feels lighter than a page of fields.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone",
+          "persuade"
+        ]
+      },
+      "use_when": "Surveys, quizzes, quote requests and onboarding where tone matters and answers branch.",
+      "avoid_when": "Forms people fill often or want to review at a glance (admin, checkout); the one-at-a-time pace slows experts down.",
+      "build": "Each question a fieldset with legend as the visible question; Enter submits the step; focus moves to the new question. Show progress and allow going back. Under reduced motion no slide. On phone, the input stays above the keyboard.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "GOV.UK Design System, question pages",
+          "url": "https://design-system.service.gov.uk/patterns/question-pages/"
+        }
+      ]
+    },
+    {
+      "id": "card-media",
+      "label": {
+        "fr": "Carte média",
+        "en": "Media card"
+      },
+      "what": "Image on top, then a small label, a title and one or two lines of text, sometimes with author and date. The default card for articles, courses and products. The image draws the eye, the title decides the click.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Lists of content where the image helps to choose.",
+      "avoid_when": "When images are generic or missing for many items; a list without images is better than placeholder images.",
+      "build": "<article> with the heading containing the link, stretched over the card with a ::after so there is one tab stop. Image with aspect-ratio and width/height. Keep text order in DOM: title before metadata for screen readers, or use aria-describedby. Grid auto-fill on desktop, one column on phone.",
+      "prevalence": "everywhere",
+      "references": [
+        {
+          "name": "NN/g, Cards: UI-component definition",
+          "url": "https://www.nngroup.com/articles/cards-component/"
+        }
+      ]
+    },
+    {
+      "id": "card-horizontal",
+      "label": {
+        "fr": "Carte horizontale",
+        "en": "Horizontal card"
+      },
+      "what": "Thumbnail on the left, text on the right, in a compact row. Lists of these read like a feed and fit more items on screen than vertical cards. They work well in narrow columns and sidebars.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Search results, news lists, related articles, settings entries, phone lists.",
+      "avoid_when": "When the image is the main content (use media cards).",
+      "build": "Grid with columns auto / 1fr, thumbnail fixed size (80-160px) with object-fit. Single link per card as above. On very narrow screens keep it horizontal with a smaller thumbnail rather than stacking.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Cards: UI-component definition",
+          "url": "https://www.nngroup.com/articles/cards-component/"
+        }
+      ]
+    },
+    {
+      "id": "card-stat",
+      "label": {
+        "fr": "Carte chiffre",
+        "en": "Stat card"
+      },
+      "what": "A label, one big number, a change versus the previous period (up or down, with colour and arrow) and sometimes a tiny sparkline. The building block of dashboards. One glance answers the question 'how are we doing?'.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Dashboards and reports with a handful of key figures.",
+      "avoid_when": "Rows of 8+ stat cards that no one reads; pick the 3-4 numbers that drive a decision.",
+      "build": "Label as text, value in tabular figures, change with sign and words (not colour alone: '+12% vs last week'). Sparkline aria-hidden with the summary in text. Grid auto-fit minmax(12rem, 1fr); on phone a 2-column grid.",
+      "prevalence": "standard"
+    },
+    {
+      "id": "card-profile",
+      "label": {
+        "fr": "Carte profil",
+        "en": "Profile card"
+      },
+      "what": "Photo or avatar, name, role and a short line, with optional contact or social links. Used for people in teams, speakers, authors, directories. Cards stay identical in size so a group of people reads as one team rather than a pile of different pictures.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Team pages, directories, author boxes, speaker lists.",
+      "avoid_when": "When there are no real photos: silhouettes or initials on every card look unfinished; use a text list instead.",
+      "build": "Same photo ratio and crop across all cards; name as heading, role as text. Links with accessible names ('Email Marie Dupont'). On phone, two columns of compact cards or a list.",
+      "prevalence": "common"
+    },
+    {
+      "id": "card-product",
+      "label": {
+        "fr": "Carte produit",
+        "en": "Product card"
+      },
+      "what": "Product photo, name, price, rating and sometimes colour swatches or a quick-add button. Hovering may show a second photo. The grid of product cards is the shop window: it must let people compare items in a glance and open one in a tap.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Shops and catalogues.",
+      "avoid_when": "Overloading it with badges, discounts and buttons; keep price and name readable first.",
+      "build": "Image with consistent ratio and background, name as link, price with currency, rating as text ('4.6 out of 5, 120 reviews'). Quick-add is a separate button (not nested inside the link). Second image on hover only for pointer devices (@media (hover: hover)). Two columns on phone.",
+      "prevalence": "standard"
+    },
+    {
+      "id": "product-gallery-left-info-right",
+      "label": {
+        "fr": "Galerie à gauche, infos à droite",
+        "en": "Gallery left, info right"
+      },
+      "what": "The classic product page: large images with thumbnails on the left, and name, price, options, add-to-cart and key details on the right. Visitors know this layout from every big shop, so they find the price, the size choice and the button without thinking.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Almost all e-commerce products.",
+      "avoid_when": "Products that need configuration or long explanation before buying (use a configurator or a long-form page).",
+      "build": "Grid of two columns (about 7/5) from 960px; gallery as a list of images with thumbnail buttons; info column first in reading order for screen readers is acceptable if headings are clear. On phone, a swipeable gallery with dots, then info, then a sticky add-to-cart bar.",
+      "prevalence": "standard"
+    },
+    {
+      "id": "product-sticky-buy-box",
+      "label": {
+        "fr": "Encart d'achat fixe",
+        "en": "Sticky buy box"
+      },
+      "what": "The right column with price, options and the buy button stays pinned while the left column scrolls through a long stack of images and details. The decision is always one click away, whatever the visitor is reading.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Products with many photos or long descriptions, fashion, furniture, premium goods.",
+      "avoid_when": "Buy boxes taller than the viewport (sticky then traps content), or very short pages.",
+      "build": "position: sticky; top: header height + gap on the buy box; ensure it fits in 100svh minus header, else disable sticky. On phone, replace with a bottom bar showing price and the button, appearing after the main button scrolls out.",
+      "prevalence": "common"
+    },
+    {
+      "id": "product-configurator",
+      "label": {
+        "fr": "Configurateur",
+        "en": "Product configurator"
+      },
+      "what": "The visitor builds the product: choose model, colour, size, options step by step while a large preview updates and the price total stays visible. The visitor sees exactly what they will receive and what it costs before adding it to the cart.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "persuade"
+        ]
+      },
+      "use_when": "Customisable products: bikes, cars, furniture, printed goods, computers.",
+      "avoid_when": "Products with one or two simple options (variant selectors are enough).",
+      "build": "Preview area (image swap or 3D) plus an options panel grouped by fieldsets with radio groups; running total in a sticky summary with role=\"status\". Selections stored in the URL to share. On phone, preview on top at about 40% height, options scroll below, summary in a bottom bar.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "product-long-form-story",
+      "label": {
+        "fr": "Page produit narrative",
+        "en": "Long-form product story"
+      },
+      "what": "A product page that reads like a feature article: alternating full-width images, details, materials, maker story and specs, with the buy action repeated in a slim sticky bar. The page sells the reasons behind the price, not just the item.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Premium, crafted or high-consideration products where the story justifies the price.",
+      "avoid_when": "Commodity products where people just compare price and specs.",
+      "build": "Sections with full-bleed images and narrow text columns (max 65ch); a sticky bar with name, price and button appears after the hero. Specs as a real <dl> or table. On phone, the same order; keep the bar compact.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "article-classic-column",
+      "label": {
+        "fr": "Article en colonne de lecture",
+        "en": "Classic reading column"
+      },
+      "what": "One centred text column of about 60-75 characters, with title, author, date and reading time on top, images that can break out wider than the text. Nothing competes with the text; navigation and related links wait at the end of the article.",
+      "fits": {
+        "surfaces": [
+          "read"
+        ]
+      },
+      "use_when": "Most articles, documentation pages and long reads.",
+      "avoid_when": "Rarely wrong; only content that is mostly tables or code may need a wider column.",
+      "build": "<article> with a grid of named lines (full / wide / content) so images can span wide or full. max-width about 68ch, line-height 1.5-1.7, font-size at least 1.0625rem. <time datetime> for dates. On phone, 16-20px gutters.",
+      "prevalence": "standard"
+    },
+    {
+      "id": "article-sidebar-toc",
+      "label": {
+        "fr": "Article avec sommaire latéral",
+        "en": "Article with side table of contents"
+      },
+      "what": "The text column sits beside a sticky table of contents that highlights the current section as the reader scrolls. Readers see where they are, how much is left, and can jump straight to the section they came for. It turns a long page into something navigable.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Long guides, documentation, reports, anything over about 1,500 words with clear sections.",
+      "avoid_when": "Short posts where a table of contents adds noise.",
+      "build": "Grid with the TOC in a <nav aria-label=\"Contents\">, sticky, current item marked with aria-current=\"true\" via IntersectionObserver. On phone, collapse the TOC into a details/summary at the top or a floating 'Contents' button.",
+      "prevalence": "common"
+    },
+    {
+      "id": "article-editorial-magazine",
+      "label": {
+        "fr": "Mise en page magazine",
+        "en": "Editorial magazine layout"
+      },
+      "what": "Magazine-style art direction: a large opening image or title spread, drop cap, pull quotes in the margin, image pairs and captions, sometimes a change of layout per chapter. Each story gets its own art direction rather than the blog's default template.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Flagship stories, case studies, annual reports, brand journals.",
+      "avoid_when": "Everyday posts produced quickly; the layout raises expectations the writing must meet.",
+      "build": "CSS grid with 12 columns for spreads; pull quotes as <blockquote> or aside with aria-hidden if duplicated from the text. Drop cap with ::first-letter or initial-letter. On phone, return to one column with images full width.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "blog-index-featured-plus-list",
+      "label": {
+        "fr": "Index de blog avec article à la une",
+        "en": "Blog index with featured post"
+      },
+      "what": "The blog home shows one featured post large at the top, then the rest as a compact list or grid with category filters and pagination. The lead story gets space while the archive stays easy to scan by date, title and category.",
+      "fits": {
+        "surfaces": [
+          "read"
+        ]
+      },
+      "use_when": "Blogs with regular publishing and a clear lead story.",
+      "avoid_when": "Blogs with few posts; a plain list reads better than a big featured slot that never changes.",
+      "build": "Featured post as a horizontal card spanning the width, then a grid or list of cards; category links as a nav. Real pagination links (not infinite scroll only) for SEO and footer access. On phone, the featured card stacks.",
+      "prevalence": "common"
+    },
+    {
+      "id": "team-grid-portraits",
+      "label": {
+        "fr": "Grille de portraits",
+        "en": "Portrait grid"
+      },
+      "what": "Everyone shown in a grid with consistent portraits, name and role, sometimes a line about each person or a link to their profile. Visitors put faces to the company and can find the person they will deal with.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Teams up to about 30 people where faces build trust: agencies, clinics, small companies.",
+      "avoid_when": "Large organisations (use departments or a few leaders) or inconsistent photos taken in different styles.",
+      "build": "Profile cards in a grid auto-fill minmax(12rem, 1fr), same crop and treatment for all photos. Names as headings, alt text with the name or alt=\"\" if the name is right below. On phone, two columns.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, About Us information on websites",
+          "url": "https://www.nngroup.com/articles/about-us-information-on-websites/"
+        }
+      ]
+    },
+    {
+      "id": "team-founders-story",
+      "label": {
+        "fr": "Fondateurs et leur histoire",
+        "en": "Founders with their story"
+      },
+      "what": "The founders shown large with a paragraph each about why they started the company, often with a candid photo together rather than headshots. It answers the question 'who is behind this, and why?' with a human voice.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Startups and small brands where the founders' motive is part of the offer.",
+      "avoid_when": "When the story is boilerplate ('passionate about innovation'); write the specific reason.",
+      "build": "Two-column split per founder or one shared photo with text beside. Keep it short, sign with names. On phone, photo above text.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, About Us information on websites",
+          "url": "https://www.nngroup.com/articles/about-us-information-on-websites/"
+        }
+      ]
+    },
+    {
+      "id": "team-list-hover-photo",
+      "label": {
+        "fr": "Liste de l'équipe avec photo au survol",
+        "en": "Team list with photo on hover"
+      },
+      "what": "A typographic list of names and roles; hovering or focusing a name reveals the person's portrait. Distinctive and compact. Names and roles stay readable as a clean list, the faces appear on demand, and the whole team fits on one screen even when it is large.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Studios and agencies with a typographic identity.",
+      "avoid_when": "If faces matter for trust (healthcare, local services): show them directly.",
+      "build": "Same technique as the list with hover preview: links or buttons per person, image shown on hover and focus, inline thumbnail on touch devices.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "team-departments",
+      "label": {
+        "fr": "Équipe par service",
+        "en": "Team by department"
+      },
+      "what": "People grouped by department or location, with headings and a filter, sometimes with open roles listed next to each group. Visitors find the right person in a large team without scrolling through everyone, and each department can show how to contact it directly.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Larger teams, institutions, schools, firms where visitors look for the right contact.",
+      "avoid_when": "Teams under about 15 people.",
+      "build": "Sections with h2 per department, filter buttons that update the URL; each person card with direct contact link. On phone, departments collapse into details/summary.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "timeline-vertical",
+      "label": {
+        "fr": "Frise verticale",
+        "en": "Vertical timeline"
+      },
+      "what": "Dates or steps along a vertical line with dots, each with a title and short text, sometimes alternating left and right of the line on desktop. It reads top to bottom like a story and works the same way on every screen width.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Company history, project phases, event schedules, roadmaps.",
+      "avoid_when": "When items are not really sequential.",
+      "build": "An ordered list (<ol>) with <time> elements; the line drawn with a pseudo-element. Avoid alternating sides (harder to scan); keep text on one side. On phone, the line on the left with text to the right.",
+      "prevalence": "common"
+    },
+    {
+      "id": "timeline-horizontal-scroll",
+      "label": {
+        "fr": "Frise horizontale",
+        "en": "Horizontal timeline"
+      },
+      "what": "Steps or years laid out on a horizontal track the visitor scrolls sideways or drags, with a progress indicator. It gives a sense of distance and duration, with each stop as a card the visitor reaches by scrolling sideways, dragging or using buttons.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Long histories or roadmaps where the horizontal metaphor fits (decades, phases).",
+      "avoid_when": "Content that must be read in full; sideways scrolling is less discoverable. Do not convert vertical wheel scroll into horizontal movement.",
+      "build": "<ol> in a flex row with overflow-x: auto and scroll-snap; prev/next buttons for mouse users; visible scrollbar or fade hint. Keyboard: the scroll container is focusable (tabindex=0) with a label. On phone, revert to the vertical layout.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "NN/g, Scrolljacking 101",
+          "url": "https://www.nngroup.com/articles/scrolljacking-101/"
+        }
+      ]
+    },
+    {
+      "id": "process-numbered-steps-detail",
+      "label": {
+        "fr": "Étapes numérotées détaillées",
+        "en": "Detailed numbered process"
+      },
+      "what": "Each step of how the service works gets a number, a title, what happens, how long it takes and what the client provides, often with a small visual. More concrete than three icons.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Services and agencies explaining their method; onboarding explanations.",
+      "avoid_when": "When the process is trivial (sign up, use it) and needs no explanation.",
+      "build": "<ol> of articles with duration and deliverable as small metadata (dl). Two-column per step (number and title left, details right) from 960px. On phone, stacked.",
+      "prevalence": "common"
+    },
+    {
+      "id": "process-roadmap-board",
+      "label": {
+        "fr": "Feuille de route en colonnes",
+        "en": "Roadmap board"
+      },
+      "what": "A public roadmap in columns (Now, Next, Later or Shipped) with cards for each item, sometimes votable. Visitors see what is being built, what comes next and what was shipped recently, which builds trust and collects feedback on priorities.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Products building in public, communities, open-source projects.",
+      "avoid_when": "Companies that cannot commit to what they publish.",
+      "build": "Columns as sections with headings and lists of cards; avoid drag-and-drop for visitors. On phone, columns become tabs or stacked sections.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "faq-two-column-list",
+      "label": {
+        "fr": "FAQ en deux colonnes ouvertes",
+        "en": "Two-column open FAQ"
+      },
+      "what": "All questions and answers visible at once in two columns, no clicking. Best when the answers are short. Nothing is hidden, the page can be scanned in seconds, and every answer is indexed by search engines without extra markup.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Up to about 10 short questions on a landing or pricing page.",
+      "avoid_when": "Long answers or many questions (use an accordion or a categorised page).",
+      "build": "A <dl> or a list of h3 + p, in a two-column grid from 960px (column-count or grid). On phone, one column.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "SaaS Landing Page, FAQ examples",
+          "url": "https://saaslandingpage.com/faq/"
+        }
+      ]
+    },
+    {
+      "id": "faq-categorised-search",
+      "label": {
+        "fr": "FAQ par catégories avec recherche",
+        "en": "Categorised FAQ with search"
+      },
+      "what": "A help-centre style FAQ: a search field on top, categories (Billing, Account, Shipping) as tabs or a side menu, then questions in each category. Visitors find their answer by typing or by browsing a topic.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Products with many recurring questions, e-commerce, services with support load.",
+      "avoid_when": "Fewer than about 15 questions.",
+      "build": "Search as a form role=\"search\" that filters client-side or goes to results; each category a section with an id for deep links; questions as details/summary or links to pages. On phone, categories as a select or chips.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "SaaS Landing Page, FAQ examples",
+          "url": "https://saaslandingpage.com/faq/"
+        }
+      ]
+    },
+    {
+      "id": "faq-sidebar-intro",
+      "label": {
+        "fr": "FAQ avec colonne d'introduction",
+        "en": "FAQ with intro column"
+      },
+      "what": "A heading, a short sentence and a 'Still have questions? Contact us' link in a left column, the accordion of questions in a wider right column. The layout gives the FAQ a clear purpose and an exit to a human.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Marketing pages where the FAQ also routes people to sales or support.",
+      "avoid_when": "When the FAQ is the main content of the page.",
+      "build": "Grid 1/2 split; left column sticky optional. Accordion items as <details><summary> or buttons with aria-expanded; answers indexable text. On phone, intro on top then questions.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "SaaS Landing Page, FAQ examples",
+          "url": "https://saaslandingpage.com/faq/"
+        },
+        {
+          "name": "NN/g, Accordions on desktop",
+          "url": "https://www.nngroup.com/articles/accordions-on-desktop/"
+        }
+      ]
+    },
+    {
+      "id": "faq-objection-inline",
+      "label": {
+        "fr": "Réponses placées près des doutes",
+        "en": "Objection answers in place"
+      },
+      "what": "Instead of one FAQ block at the end, the main questions are answered right where the doubt arises: a short 'Is it secure?' note beside the sign-up form, 'Can I cancel?' under the price.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Conversion pages where a few objections block the decision.",
+      "avoid_when": "Too many inline notes clutter the page; keep two or three, the rest in a FAQ.",
+      "build": "Small aside or a details element next to the relevant action, linked with aria-describedby where it explains a control. On phone, kept directly under the related button.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "NN/g, Progressive disclosure",
+          "url": "https://www.nngroup.com/articles/progressive-disclosure/"
+        }
+      ]
+    },
+    {
+      "id": "404-helpful-search",
+      "label": {
+        "fr": "404 utile avec recherche",
+        "en": "Helpful 404 with search"
+      },
+      "what": "A plain message that the page was not found, a search field, and links to the most visited pages or likely matches for the mistyped address. The visitor is never left stranded: the error becomes a short detour to the right page.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Content-heavy sites, documentation, shops.",
+      "avoid_when": "Nothing: it is the safe base for any 404.",
+      "build": "Return a real 404 status. h1 says what happened in plain words; search form; list of suggested links (computed from the URL if possible). Keep the site header and footer. On phone, same order.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Improving the 404 error message",
+          "url": "https://www.nngroup.com/articles/improving-dreaded-404-error-message/"
+        },
+        {
+          "name": "404s.design gallery",
+          "url": "https://404s.design/"
+        }
+      ]
+    },
+    {
+      "id": "404-illustrated-playful",
+      "label": {
+        "fr": "404 illustrée et ludique",
+        "en": "Illustrated playful 404"
+      },
+      "what": "A custom illustration, animation or small joke in the brand's voice, plus a clear way back home. It turns a dead end into a moment of personality. A visitor who arrived by mistake leaves smiling and still finds the way back to the content.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Brands with a playful tone and their own illustration style.",
+      "avoid_when": "Serious contexts (banking, health) or when the joke replaces the useful links.",
+      "build": "Illustration decorative (alt=\"\") or with alt if it carries the message; animation respects reduced motion. Always include a home link and search. Real 404 status.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "404s.design gallery",
+          "url": "https://404s.design/"
+        }
+      ]
+    },
+    {
+      "id": "404-mini-game",
+      "label": {
+        "fr": "404 avec mini-jeu",
+        "en": "404 with a mini-game"
+      },
+      "what": "The error page hosts a tiny playable game or toy related to the brand, next to the way back. It is remembered and shared, and costs nothing to people who just want to leave, since the way back stays first and the game waits for a click.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Developer tools, games, creative studios: audiences who enjoy the wink.",
+      "avoid_when": "Most sites: it costs weight and time for a page that should send people on.",
+      "build": "Game in a canvas loaded after the page paints, playable with keyboard, pausable, off under reduced motion. The home link stays first in tab order.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "404s.design gallery",
+          "url": "https://404s.design/"
+        }
+      ]
+    },
+    {
+      "id": "404-redirect-suggestion",
+      "label": {
+        "fr": "404 avec suggestion de page",
+        "en": "404 suggesting the likely page"
+      },
+      "what": "The page guesses what the visitor wanted ('Did you mean /pricing?') from the broken address and offers it as the main button. Most broken links come from typos or old addresses, so a good guess fixes the problem in one click.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Sites that renamed or moved pages, docs with versioned URLs.",
+      "avoid_when": "When the guess is often wrong; then show a list instead of one main suggestion.",
+      "build": "Server or edge function matching the path against a sitemap (edit distance or known redirects); fix permanent moves with 301 redirects instead. The suggestion as a prominent link, then search.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "NN/g, Improving the 404 error message",
+          "url": "https://www.nngroup.com/articles/improving-dreaded-404-error-message/"
+        }
+      ]
+    },
+    {
+      "id": "empty-first-use-action",
+      "label": {
+        "fr": "Premier usage avec action",
+        "en": "First-use empty state with action"
+      },
+      "what": "When a list is empty for a new user, the space explains what will appear here and offers the one action that fills it ('Create your first project'), sometimes with a small illustration.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Any list, inbox, dashboard or library a new account starts with.",
+      "avoid_when": "A generic 'No data' message; always say what would appear and how to get it.",
+      "build": "Centred block in the content area with a heading, one sentence and the primary button; illustration aria-hidden. Keep the page's normal layout (header, filters) so the user learns where things are.",
+      "prevalence": "standard",
+      "references": [
+        {
+          "name": "Empty States gallery",
+          "url": "https://emptystat.es/"
+        },
+        {
+          "name": "NN/g, Empty states in complex apps",
+          "url": "https://www.nngroup.com/articles/empty-state-interface-design/"
+        }
+      ]
+    },
+    {
+      "id": "empty-sample-data",
+      "label": {
+        "fr": "Données d'exemple",
+        "en": "Sample data empty state"
+      },
+      "what": "Instead of an empty screen, the product shows realistic sample content clearly labelled as an example, which the user can explore and then delete or replace. The user sees what the screen will look like when it is full, before doing any work.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Dashboards, analytics, CRMs: products whose value only shows with data.",
+      "avoid_when": "When samples could be mistaken for real data, especially in finance or health.",
+      "build": "Sample rows flagged with a visible 'Example' tag and a banner with 'Remove examples' and 'Import your data'. Do not count samples in totals that matter.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "NN/g, Empty states in complex apps",
+          "url": "https://www.nngroup.com/articles/empty-state-interface-design/"
+        }
+      ]
+    },
+    {
+      "id": "empty-no-results",
+      "label": {
+        "fr": "Aucun résultat",
+        "en": "No results state"
+      },
+      "what": "After a search or filters return nothing, the screen says so, shows the active filters, and offers ways out: clear filters, broaden the search, check spelling, popular items. The visitor understands why nothing matched and how to fix it.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "read",
+          "phone"
+        ]
+      },
+      "use_when": "Any search or filterable list.",
+      "avoid_when": "Never show an empty grid with no message.",
+      "build": "Message in a role=\"status\" region so the zero count is announced; list active filters as removable chips; suggestion links. Keep the search field filled with the query.",
+      "prevalence": "standard",
+      "references": [
+        {
+          "name": "Empty States gallery",
+          "url": "https://emptystat.es/"
+        },
+        {
+          "name": "NN/g, Filter categories and values",
+          "url": "https://www.nngroup.com/articles/filter-categories-values/"
+        }
+      ]
+    },
+    {
+      "id": "empty-cleared-reward",
+      "label": {
+        "fr": "État vide gratifiant",
+        "en": "Cleared state"
+      },
+      "what": "When the user has finished everything (inbox zero, all tasks done), a calm message or small illustration marks the achievement instead of an empty list. It is the small reward for finishing, and confirms nothing was lost.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Task lists, inboxes, review queues, notifications.",
+      "avoid_when": "Overdone celebrations on screens people clear many times a day; keep it subtle.",
+      "build": "Short message and optional illustration; any confetti or motion is brief and off under reduced motion. Offer the next useful step (view archive, plan tomorrow).",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "Empty States gallery",
+          "url": "https://emptystat.es/"
+        }
+      ]
+    },
+    {
+      "id": "menu-single-page-sections",
+      "label": {
+        "fr": "Carte sur une page avec rubriques",
+        "en": "Single-page menu with sections"
+      },
+      "what": "The whole menu on one page in sections (Starters, Mains, Desserts, Drinks) with a sticky row of section links; each dish has name, short description, price and dietary tags. Guests can scroll it like a printed card.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "phone"
+        ]
+      },
+      "use_when": "Most restaurants, cafés and bars.",
+      "avoid_when": "PDF-only menus: they are hard to read on phones and invisible to search engines; use HTML.",
+      "build": "Sections with h2 and ids, a sticky nav of anchor links (horizontal scroll on phone) with aria-current on the visible section. Each dish a list item: name and price on one line (flex with a dotted leader optional), price in tabular figures. Allergens as text, not only icons.",
+      "prevalence": "standard"
+    },
+    {
+      "id": "menu-photo-cards",
+      "label": {
+        "fr": "Carte avec photos des plats",
+        "en": "Menu with dish photos"
+      },
+      "what": "Each dish shown as a card with a photo, name, description and price, often in a grid by category. Mouth-watering when the photos are real. The visitor chooses with their eyes, like at a counter, and can open a dish for details or allergens.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "phone",
+          "persuade"
+        ]
+      },
+      "use_when": "Casual dining, delivery, cafés with signature dishes; places where seeing the dish helps choose.",
+      "avoid_when": "Fine dining (photos feel cheap) or when only stock photos exist.",
+      "build": "Media or horizontal cards in a grid; photos with consistent ratio and lighting; lazy-load below the fold. On phone, horizontal cards (photo left) so more dishes fit.",
+      "prevalence": "common"
+    },
+    {
+      "id": "menu-typographic-tasting",
+      "label": {
+        "fr": "Carte typographique de dégustation",
+        "en": "Typographic tasting menu"
+      },
+      "what": "A centred, elegant list in refined type, like a printed menu card: course by course, few words, price for the whole menu, wine pairing as a second column or line.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Fine dining, wine bars, seasonal and tasting menus.",
+      "avoid_when": "Long menus with many choices; the elegance becomes hard to scan.",
+      "build": "Narrow centred column, generous line-height, small caps or italic for descriptions, an <ol> for courses. Date the menu ('Autumn menu, from 3 November'). Same on phone with tighter margins.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "menu-tabbed-services",
+      "label": {
+        "fr": "Carte par service",
+        "en": "Menu by service"
+      },
+      "what": "Tabs or a switch for each service (Breakfast, Lunch, Dinner, Drinks), showing only the relevant menu, with the hours of that service. Guests see only what is served when they plan to come, without scrolling past other menus.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "phone"
+        ]
+      },
+      "use_when": "Places serving different menus across the day.",
+      "avoid_when": "Places with one menu; tabs then hide nothing useful.",
+      "build": "WAI-ARIA tabs or links to separate URLs (better for sharing and search). Preselect the current service by local time. On phone, full-width segmented control.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Tabs used right",
+          "url": "https://www.nngroup.com/articles/tabs-used-right/"
+        }
+      ]
+    },
+    {
+      "id": "booking-date-first",
+      "label": {
+        "fr": "Réservation en commençant par la date",
+        "en": "Date-first booking"
+      },
+      "what": "The visitor picks a date (and party size), sees available times, picks one, enters details and confirms. The classic restaurant, hotel and appointment flow. It answers the first question guests have, 'is there room when I want to come?'.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Restaurants, hotels, venues: when availability is driven by the calendar.",
+      "avoid_when": "Services where the choice of person or service matters more than the date.",
+      "build": "Steps on one page or as a short multi-step flow; dates as a calendar grid (role=\"grid\" with arrow keys) or a strip of upcoming days; times as buttons. Show time zone and cancellation policy before confirm. On phone, day strip and time list rather than a full month grid.",
+      "prevalence": "standard",
+      "references": [
+        {
+          "name": "NN/g, Date-input form fields",
+          "url": "https://www.nngroup.com/articles/date-input/"
+        }
+      ]
+    },
+    {
+      "id": "booking-service-first",
+      "label": {
+        "fr": "Réservation en commençant par la prestation",
+        "en": "Service-first booking"
+      },
+      "what": "The visitor first chooses the service (haircut, consultation type, class), optionally the person, then sees matching slots, then confirms. Durations and prices are known before any time slot is shown, so the slots offered always fit the chosen service and the chosen person.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Salons, clinics, coaches, studios: when duration and price depend on the service.",
+      "avoid_when": "Single-service businesses.",
+      "build": "Service list as radio cards with duration and price; then staff (with 'Any available'); then slots. Summary sticky on desktop, collapsible on phone. Check-your-answers before paying.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "GOV.UK Design System, check answers",
+          "url": "https://design-system.service.gov.uk/patterns/check-answers/"
+        }
+      ]
+    },
+    {
+      "id": "booking-inline-widget",
+      "label": {
+        "fr": "Module de réservation intégré",
+        "en": "Inline booking widget"
+      },
+      "what": "A compact booking bar (date, guests, button) embedded in the hero or a sticky side box, sending people straight to availability without leaving the page. The intent to book is caught at the moment it appears, on the page that created it.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Hotels, rentals, restaurants: pages where booking is the main goal.",
+      "avoid_when": "When availability is complex enough that the inline bar leads to dead ends.",
+      "build": "A <form> with labelled date and number inputs; on submit, go to the availability step with values in the URL. Sticky on desktop, bottom bar on phone.",
+      "prevalence": "common"
+    },
+    {
+      "id": "booking-request-to-book",
+      "label": {
+        "fr": "Demande de réservation",
+        "en": "Request to book"
+      },
+      "what": "Instead of instant confirmation, the visitor sends a request (dates, needs, message) and gets a reply within a stated time. Common for custom services, groups, events. It sets clear expectations instead of a false promise of instant confirmation.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Events, private hire, group bookings, services that need human review.",
+      "avoid_when": "Standard bookings that could be instant; the wait loses customers.",
+      "build": "A short form with dates and details, confirmation page and email stating when they will hear back. Be explicit that it is not yet confirmed.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "maps-store-locator",
+      "label": {
+        "fr": "Recherche de points de vente",
+        "en": "Store locator"
+      },
+      "what": "A search by city or postcode (and 'Use my location') lists nearby locations with distance, hours and directions, beside a map with matching pins. Visitors find the nearest place and how to get there in a few seconds.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Chains, networks, franchises, anything with more than about five locations.",
+      "avoid_when": "A single location (show its address and hours directly).",
+      "build": "List first in the DOM (the map is a supplement); each location an article with address, hours, phone link and directions link. Geolocation only on button press. On phone, list by default with a 'Map' toggle.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "NN/g, Filter categories and values",
+          "url": "https://www.nngroup.com/articles/filter-categories-values/"
+        }
+      ]
+    },
+    {
+      "id": "maps-static-directions",
+      "label": {
+        "fr": "Carte statique et itinéraire",
+        "en": "Static map with directions"
+      },
+      "what": "A lightweight static map image with the address, nearest transport, parking info and a 'Get directions' button opening the user's map app. It loads instantly, needs no consent banner and hands navigation to the app people already use.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "phone"
+        ]
+      },
+      "use_when": "Single-location businesses that want speed and privacy (no third-party map scripts).",
+      "avoid_when": "When visitors need to explore the area interactively.",
+      "build": "<img> of the map with alt describing the location; directions as a link to a maps URL; address in <address>. Fast, no cookies. Same on phone, button full width.",
+      "prevalence": "common"
+    },
+    {
+      "id": "maps-illustrated",
+      "label": {
+        "fr": "Plan illustré",
+        "en": "Illustrated map"
+      },
+      "what": "A custom drawn map of the area, campus, venue or route, in the brand's style, showing only what matters (entrances, parking, rooms). It is clearer than a street map for a place with its own geography, and it carries the brand's style into a practical tool.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Campuses, festivals, resorts, venues, walking tours.",
+      "avoid_when": "When people need turn-by-turn navigation.",
+      "build": "SVG with labelled areas or an image with a text list of points of interest; zoom with pinch on phone or an 'Open full size' link. Do not rely on colour alone to identify areas.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "maps-location-cards",
+      "label": {
+        "fr": "Cartes des adresses",
+        "en": "Location cards"
+      },
+      "what": "Each location shown as a card with a photo of the place, address, hours and a link, without any interactive map. Visitors choose the place that suits them by its atmosphere, not only by its distance from where they are.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Two to eight locations (restaurants, offices, studios) where the place's look matters.",
+      "avoid_when": "Large networks (use a locator).",
+      "build": "Grid of cards with <address>, hours as a small table or dl, phone as tel: link. On phone, stacked.",
+      "prevalence": "common"
+    },
+    {
+      "id": "cta-split-visual",
+      "label": {
+        "fr": "Appel à l'action avec visuel",
+        "en": "Split CTA with visual"
+      },
+      "what": "A closing block with headline, one sentence and the main button on one side, and a product shot or photo on the other, often on a contrasting background panel with rounded corners.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Ending a landing page after the case is made.",
+      "avoid_when": "Repeating it several times down the page.",
+      "build": "Two-column grid inside a contained panel; on phone the visual moves below the button or is dropped. Button as a link with a verb ('Start your free trial').",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "CTA.gallery",
+          "url": "https://www.cta.gallery/"
+        }
+      ]
+    },
+    {
+      "id": "cta-inline-content",
+      "label": {
+        "fr": "Appel à l'action dans le contenu",
+        "en": "In-content CTA"
+      },
+      "what": "A small boxed prompt inside an article, related to what was just read ('Want the checklist? Download it'), instead of a generic banner. It catches readers at the moment the content has proved its value.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Blogs and guides that support a product or newsletter.",
+      "avoid_when": "More than one or two per article; unrelated offers feel like ads (banner blindness).",
+      "build": "An aside with a heading and one button, styled distinctly from the text. Place after a useful section, not in the first paragraph. Full width on phone.",
+      "prevalence": "common",
+      "references": [
+        {
+          "name": "CTA.gallery",
+          "url": "https://www.cta.gallery/"
+        }
+      ]
+    },
+    {
+      "id": "cta-final-fullscreen",
+      "label": {
+        "fr": "Appel final plein écran",
+        "en": "Full-screen final CTA"
+      },
+      "what": "The last section takes the whole viewport with one bold sentence and one button, sometimes over an image or a strong colour. A clear end to the story. Nothing else competes with the final action.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Brand and launch pages with a strong closing line.",
+      "avoid_when": "Utility pages, or when the footer already carries a CTA.",
+      "build": "Section min-height 80-100svh, centred content, large type with clamp(). One button only. Check contrast over any image.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "CTA.gallery",
+          "url": "https://www.cta.gallery/"
+        }
+      ]
+    },
+    {
+      "id": "cta-command-snippet",
+      "label": {
+        "fr": "Appel à l'action par commande",
+        "en": "Command snippet CTA"
+      },
+      "what": "For developer products the call to action is the install command itself (npm i …, curl …) in a code box with a copy button, next to a link to docs.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Developer tools, libraries, CLIs.",
+      "avoid_when": "Non-technical audiences.",
+      "build": "<pre><code> with a copy button (accessible name 'Copy command', feedback announced). Horizontal scroll for long commands, no wrapping that breaks copy. On phone, font size at least 14px.",
+      "prevalence": "rare"
+    },
+    {
+      "id": "cta-floating-card",
+      "label": {
+        "fr": "Carte d'appel flottante",
+        "en": "Floating CTA card"
+      },
+      "what": "A small card appears in a corner after the visitor has scrolled a good part of the page, offering the next step (book a call, get the guide), and can be dismissed.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Long pages and articles where the main CTA scrolled away long ago.",
+      "avoid_when": "Phones where it covers content, or appearing on load; never stack it with a chat bubble and a cookie banner.",
+      "build": "Fixed position card shown after a scroll threshold, with a close button (focusable, remembered for the session). Not a modal: no focus trap. Off on small screens or reduced to a slim bar.",
+      "prevalence": "rare",
+      "references": [
+        {
+          "name": "CTA.gallery",
+          "url": "https://www.cta.gallery/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "id": "farm-local-produce",
+  "label": {
+    "fr": "Ferme et producteur local",
+    "en": "Farm and local producer"
+  },
+  "expects": [
+    {
+      "rule": "The first screen names what the farm produces and where it is (product and region or village), not only a slogan.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Farm shop or tasting-room opening hours are written as text, day by day, with seasonal changes and closures stated.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Every way to buy is listed: on-farm shop, markets with day and place, retailers, delivery or online shop, with prices for the main products.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Address with a map link and the phone number appear on every page, the phone as a tap-to-call link.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Photographs show the real farm, animals, people and products; product shots show the actual jar, bottle or cut.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "Claims about methods (organic, grass-fed, raw, generations) are specific and backed by a certification name, a date or a number.",
+      "source": "house rule",
+      "verified": false
+    },
+    {
+      "rule": "What is in season now, or what is available this week, is stated and dated.",
+      "source": "house rule",
+      "verified": false
+    }
+  ],
+  "traits": [
+    "4 of 6 sites read (Homestead Honey, Delfino, Tarieu, Johel) lead on family history with a figure: 'since 1972', 'over 60 years', 'fourth generation', 'since 1980'.",
+    "4 of 6 have a 'where to find us' route to retailers or points of sale (Homestead Find a Store, Tarieu Points de vente, Johel Où nous trouver, Nakahora store list).",
+    "3 of 6 give opening hours day by day on the home page (Delfino, Tarieu, Johel); Agrumea and Homestead Honey give none.",
+    "2 of 6 show product prices (Homestead Honey on its shop page, $8 to $78; Nakahora on the home page in yen); Agrumea sends its shop to an external site, Tarieu and Johel sell only on site or through retailers.",
+    "4 of 6 show a phone number on the home page (Homestead Honey, Delfino, Tarieu, Johel); Agrumea and Nakahora show none on the first page read.",
+    "3 of 6 name the product in the main headline (Agrumea marmalades and preserves, Tarieu 'ferme brassicole', Nakahora seasonal milk)."
+  ],
+  "sites": [
+    {
+      "name": "Agrumea Farm",
+      "url": "https://www.agrumeafarm.it/en",
+      "why": "Sicilian preserves maker: headline 'Agrumea Farm: Sicilian artisan marmalades, spreads and preserves', IT/EN switch, four-item menu (Home, Pantry, Production, Experience), a loading counter, a rotating set of ten product jars each linked to its page (pistachio pesto, sliced orange marmalade, caponata, almond spread). No prices, hours or address on the home page; Shop goes to an external site.",
+      "recognition": "Awwwards Site of the Day, 2026-11-05",
+      "source": "https://www.awwwards.com/sites/agrumea-farm",
+      "scale": "agency-made-showcase",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Homestead Honey Farm",
+      "url": "https://homesteadhoneyfarm.com/",
+      "why": "Minnesota beekeepers: banners 'For the Love of Bees' and 'Pure Raw Honey Since 1972', menu split into Honey, Bees, Us, Shop and Find a Store, phone (507) 263-5580 on the page, photo of a bee on linden blossom. Shop lists eleven jars and pails with prices from $8 (12 oz squeeze bottle) to $78 (12 lb pail). No street address or hours.",
+      "recognition": "WebAwards Best Food Industry Website, 2025",
+      "source": "https://www.webaward.org/winner/37624/greater-thought-design--marketing-wins-2025-webaward-for-homestead-honey-farm-website.html",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Delfino Farms",
+      "url": "https://delfinofarms.com/",
+      "why": "Family farm in Camino, California: headline 'Family owned and run for over 60 years', menu naming its vineyard, apple bakery, cider and summer music series, separate hours for the winery (Thu-Mon 11-5) and the bakery and farm grounds (Fri-Mon 10-5), both addresses, phone and email, a 1964 photo of the farm next to current photos of concerts and orchards.",
+      "recognition": "Awwwards Nominee, 2024-04-09 (submitted, not an award)",
+      "source": "https://www.awwwards.com/sites/delfino-farms",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Nakahora Farm",
+      "url": "https://nakahora-bokujou.jp/",
+      "why": "Japanese grass-fed dairy farm with its online shop on the home page: slider on seasonal milk, butter and the farm's mountain dairying method, product grid with yen prices (pure grass-fed butter ¥2,700, six cup ices ¥3,900), subscription and gift sets, delivery notices in the news list, store list and farm-visit pages in the menu.",
+      "recognition": "CSS Design Awards Website of the Day, 2017-05-06",
+      "source": "https://www.cssdesignawards.com/sites/nakahora-farm-corporate-website/30576/",
+      "scale": "company",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Ferme du Tarieu",
+      "url": "https://fermedutarieu.ca/",
+      "why": "Fourth-generation farm brewery in Quebec, in French: tagline 'Cultivateur de saveurs', hero 'Ferme brassicole réunissant la culture de la terre et la passion des saveurs', ten beers with style and ABV, barley grown on the farm (over 50 tonnes a year), pub in a red barn with hours (Thu-Sat 11-21, Sun 11-20, closed Mon-Wed), address and phone. No online shop.",
+      "recognition": "Awwwards Honorable Mention, 2019-12-20",
+      "source": "https://www.awwwards.com/sites/ferme-du-tarieu",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Ferme Johel",
+      "url": "https://fermejohel.com/",
+      "why": "Grain-fed chicken farm in Sainte-Cécile-de-Milton, Quebec: tagline 'De notre ferme à votre assiette', four-item menu (products, about, where to find us, contact), whole, cut, marinated and ready-to-serve chicken, on-farm shop hours day by day (Wed-Fri 9-17, Sat 9-16, Sun-Tue by appointment), address and phone. The award dates from 2014; the current page was read.",
+      "recognition": "Awwwards Honorable Mention, 2014-12-18",
+      "source": "https://www.awwwards.com/sites/ferme-johel",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    },
+    {
+      "name": "Ferme de Sohan",
+      "url": "https://www.fermedesohan.be/",
+      "why": "Farm on a .be domain, described in the listing as 'a one-of-a-kind farm' with rare biological diversity and respect for animal welfare; site built in 2017 by EPIC Agency. The live site could not be read (certificate error). (not seen beyond the gallery listing)",
+      "recognition": "Awwwards Honorable Mention, 2017-05-29",
+      "source": "https://www.awwwards.com/sites/ferme-de-sohan",
+      "scale": "independent",
+      "checked": "2026-11-16"
+    }
+  ],
+  "avoid": [
+    "A shop link that leaves for another site with no warning and no prices shown on the farm's own pages.",
+    "No opening hours for the farm shop, or hours that are not marked as seasonal when the shop closes in winter.",
+    "A home page that is only a loading animation and a product carousel, with no address or way to visit.",
+    "Stock photographs of generic fields and baskets of vegetables instead of the farm's own land and products.",
+    "Vague claims ('natural', 'authentic', 'local') with no certification, method or place named.",
+    "A list of markets with no days, times or towns.",
+    "A domain left to lapse so the farm's address now shows a domain-sale page."
+  ],
+  "sources": [
+    {
+      "name": "WebAwards, Best Food Industry Website",
+      "url": "https://www.webaward.org/category/Food_Industry/best-food_industry-websites.html",
+      "access": "free"
+    },
+    {
+      "name": "CSS Design Awards, Website of the Day winners",
+      "url": "https://www.cssdesignawards.com/wotd-award-winners",
+      "access": "free"
+    }
+  ]
+}
