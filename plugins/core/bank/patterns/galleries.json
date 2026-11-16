@@ -1,0 +1,280 @@
+{
+  "family": "galleries",
+  "kind": "gallery",
+  "label": {
+    "fr": "Galeries d'inspiration",
+    "en": "Inspiration galleries"
+  },
+  "summary": "Where to find references to show the user or to learn from. Looking is free or partly free; none of them licenses the designs it shows: learn from them, never copy a layout, a text or an image.",
+  "checked": "2026-11-16",
+  "entries": [
+    {
+      "id": "land-book",
+      "label": {
+        "fr": "Land-book",
+        "en": "Land-book"
+      },
+      "url": "https://land-book.com",
+      "what": "Landing pages by category and style.",
+      "access": "limited free plan, Pro paid (price not verified)",
+      "fits": {
+        "types": [
+          "landing-page",
+          "saas-marketing",
+          "agency-studio",
+          "portfolio"
+        ]
+      }
+    },
+    {
+      "id": "supahero",
+      "label": {
+        "fr": "Supahero",
+        "en": "Supahero"
+      },
+      "url": "https://supahero.io",
+      "what": "Hero sections only, the top of the page.",
+      "access": "free to browse; now part of screensdesign"
+    },
+    {
+      "id": "pricing-pages",
+      "label": {
+        "fr": "Pricing Pages",
+        "en": "Pricing Pages"
+      },
+      "url": "https://pricingpages.design",
+      "what": "Pricing pages of real products.",
+      "access": "free to browse",
+      "fits": {
+        "types": [
+          "pricing-page",
+          "saas-marketing"
+        ]
+      }
+    },
+    {
+      "id": "social-proof-examples",
+      "label": {
+        "fr": "Social Proof Examples",
+        "en": "Social Proof Examples"
+      },
+      "url": "https://socialproofexamples.com",
+      "what": "About 190 examples of reviews, testimonials and trust signals.",
+      "access": "free to read (guide by digitalpsychology.io)"
+    },
+    {
+      "id": "really-good-emails",
+      "label": {
+        "fr": "Really Good Emails",
+        "en": "Really Good Emails"
+      },
+      "url": "https://reallygoodemails.com",
+      "what": "Emails of real brands: onboarding, receipts, newsletters.",
+      "access": "gallery free; the email builder is paid"
+    },
+    {
+      "id": "deck-gallery",
+      "label": {
+        "fr": "Deck.Gallery",
+        "en": "Deck.Gallery"
+      },
+      "url": "https://deck.gallery",
+      "what": "Presentation decks of startups and brands.",
+      "access": "not verified"
+    },
+    {
+      "id": "posts-design",
+      "label": {
+        "fr": "Posts.Design",
+        "en": "Posts.Design"
+      },
+      "url": "https://posts.design",
+      "what": "Social media posts by brands.",
+      "access": "public preview and a free account (100 credits a month)"
+    },
+    {
+      "id": "adfolio",
+      "label": {
+        "fr": "Adfolio",
+        "en": "Adfolio"
+      },
+      "url": "https://adfolio.design",
+      "what": "Advertising creatives.",
+      "access": "not verified"
+    },
+    {
+      "id": "navbar-gallery",
+      "label": {
+        "fr": "Navbar Gallery",
+        "en": "Navbar Gallery"
+      },
+      "url": "https://navbar.gallery",
+      "what": "Navigation bars and menus, desktop and phone.",
+      "access": "free to browse (sponsored by Mobbin)"
+    },
+    {
+      "id": "og-image-gallery",
+      "label": {
+        "fr": "OG Image Gallery",
+        "en": "OG Image Gallery"
+      },
+      "url": "https://ogimage.gallery",
+      "what": "Share images (Open Graph) of real sites.",
+      "access": "free to browse; a Pro plan exists"
+    },
+    {
+      "id": "mobbin",
+      "label": {
+        "fr": "Mobbin",
+        "en": "Mobbin"
+      },
+      "url": "https://mobbin.com",
+      "what": "Screens and flows of the biggest phone and web apps.",
+      "access": "limited free plan (no flows or search); Pro paid",
+      "fits": {
+        "types": [
+          "saas-app",
+          "mobile-app-page",
+          "onboarding-login",
+          "fintech"
+        ]
+      }
+    },
+    {
+      "id": "refero",
+      "label": {
+        "fr": "Refero",
+        "en": "Refero"
+      },
+      "url": "https://refero.design",
+      "what": "Web and app screens indexed by element and flow, and visual styles of sites.",
+      "access": "not verified"
+    },
+    {
+      "id": "recent-design",
+      "label": {
+        "fr": "Recent (ex-Godly)",
+        "en": "Recent (formerly Godly)"
+      },
+      "url": "https://recent.design",
+      "what": "Recent web design picked for its visual quality.",
+      "access": "free to browse (godly.website redirects here)"
+    },
+    {
+      "id": "motionographer",
+      "label": {
+        "fr": "Motionographer",
+        "en": "Motionographer"
+      },
+      "url": "https://motionographer.com",
+      "what": "Motion design news and work.",
+      "access": "free"
+    },
+    {
+      "id": "savee",
+      "label": {
+        "fr": "Savee",
+        "en": "Savee"
+      },
+      "url": "https://savee.com",
+      "what": "Save and share visual inspiration in boards.",
+      "access": "free account; Pro paid"
+    },
+    {
+      "id": "eyecannndy",
+      "label": {
+        "fr": "Eyecandy",
+        "en": "Eyecandy"
+      },
+      "url": "https://eyecannndy.com",
+      "what": "Visual and camera techniques shown as short loops (5 000 and more).",
+      "access": "appears free (not verified)"
+    },
+    {
+      "id": "awwwards",
+      "label": {
+        "fr": "Awwwards",
+        "en": "Awwwards"
+      },
+      "url": "https://www.awwwards.com",
+      "what": "Award-winning sites judged by a jury.",
+      "access": "not verified"
+    },
+    {
+      "id": "lapa-ninja",
+      "label": {
+        "fr": "Lapa Ninja",
+        "en": "Lapa Ninja"
+      },
+      "url": "https://www.lapa.ninja",
+      "what": "Landing pages by category.",
+      "access": "not verified; sells templates"
+    },
+    {
+      "id": "pageflows",
+      "label": {
+        "fr": "Page Flows",
+        "en": "Page Flows"
+      },
+      "url": "https://pageflows.com",
+      "what": "Recorded user flows of real products (onboarding, checkout). Screenlane now redirects here.",
+      "access": "paid only (trial, then subscription): cite, do not rely on it"
+    },
+    {
+      "id": "saas-landing-page",
+      "label": {
+        "fr": "SaaS Landing Page",
+        "en": "SaaS Landing Page"
+      },
+      "url": "https://saaslandingpage.com",
+      "what": "About 850 SaaS landing pages.",
+      "access": "free to browse",
+      "fits": {
+        "types": [
+          "saas-marketing",
+          "landing-page"
+        ]
+      }
+    },
+    {
+      "id": "dark-mode-design",
+      "label": {
+        "fr": "Dark Mode Design",
+        "en": "Dark Mode Design"
+      },
+      "url": "https://www.darkmodedesign.com",
+      "what": "Sites designed in dark mode.",
+      "access": "free to browse"
+    },
+    {
+      "id": "footer-design",
+      "label": {
+        "fr": "Footer.design",
+        "en": "Footer.design"
+      },
+      "url": "https://www.footer.design",
+      "what": "Site footers, from simple to rich, by style.",
+      "access": "free to browse"
+    },
+    {
+      "id": "collect-ui",
+      "label": {
+        "fr": "Collect UI",
+        "en": "Collect UI"
+      },
+      "url": "https://collectui.com",
+      "what": "Interface shots by component type.",
+      "access": "free to browse"
+    },
+    {
+      "id": "laws-of-ux",
+      "label": {
+        "fr": "Laws of UX",
+        "en": "Laws of UX"
+      },
+      "url": "https://lawsofux.com",
+      "what": "The psychology principles behind interface choices, one page each.",
+      "access": "free to read"
+    }
+  ]
+}

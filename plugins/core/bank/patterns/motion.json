@@ -1,0 +1,526 @@
+{
+  "family": "motion",
+  "kind": "pattern",
+  "label": {
+    "fr": "Animations",
+    "en": "Motion"
+  },
+  "summary": "Motion that can be proposed, from the micro-settings of controls to signature moments. Durations and curves follow premium-craft; every entry has a reduced-motion version.",
+  "entries": [
+    {
+      "id": "ease-out-enter",
+      "label": {
+        "fr": "Entrées en ease-out",
+        "en": "Ease-out for entrances"
+      },
+      "what": "Things that appear start fast and slow down at the end, so they feel responsive.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Every entrance: menus, dialogs, toasts, content.",
+      "avoid_when": "Movement from one place to another (use ease-in-out).",
+      "build": "A custom curve such as cubic-bezier(0.22, 1, 0.36, 1); the CSS keyword ease-out is weak.",
+      "checks": [
+        "premium-craft: motion numbers"
+      ]
+    },
+    {
+      "id": "ease-in-out-move",
+      "label": {
+        "fr": "Déplacements en ease-in-out",
+        "en": "Ease-in-out for moves"
+      },
+      "what": "Something already on screen that moves to another place accelerates then slows down.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Reordering, a panel sliding to a new position, a carousel step.",
+      "avoid_when": "Entrances and exits.",
+      "build": "cubic-bezier(0.65, 0, 0.35, 1) or a spring with no bounce."
+    },
+    {
+      "id": "menu-150-250ms",
+      "label": {
+        "fr": "Menus en 150 à 250 ms",
+        "en": "Menus in 150 to 250 ms"
+      },
+      "what": "Dropdowns and popovers open in about 180 ms: fast enough to feel instant, slow enough to be seen.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Every dropdown, popover and tooltip.",
+      "avoid_when": "Nothing.",
+      "build": "transition: transform 180ms, opacity 180ms with an ease-out curve; tooltips about 125 ms."
+    },
+    {
+      "id": "press-scale",
+      "label": {
+        "fr": "Bouton enfoncé à 0,97",
+        "en": "Press scale 0.97"
+      },
+      "what": "A button shrinks slightly while pressed, like a physical key.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Buttons and cards that can be pressed.",
+      "avoid_when": "Text links; actions started from the keyboard.",
+      "build": ":active { transform: scale(0.97) } with a 100 ms transition (range 0.96 to 0.98)."
+    },
+    {
+      "id": "stagger-list",
+      "label": {
+        "fr": "Liste décalée",
+        "en": "Staggered list"
+      },
+      "what": "Items of a list appear one after the other, 30 to 50 ms apart.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "First appearance of a list, a menu or search results.",
+      "avoid_when": "Lists that update often; more than about ten items (the rest appear together).",
+      "build": "animation-delay: calc(var(--i) * 40ms) or Motion's stagger. With prefers-reduced-motion: no movement, a plain state change."
+    },
+    {
+      "id": "popover-from-trigger",
+      "label": {
+        "fr": "Popover qui part du bouton",
+        "en": "Popover from its trigger"
+      },
+      "what": "A popover grows from the button that opened it and shrinks back into it on close.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Dropdowns, popovers, context menus.",
+      "avoid_when": "Dialogs centred on screen (they scale from about 0.8 at the centre).",
+      "build": "transform-origin from the popover library's variable (Radix: --radix-popover-content-transform-origin), start at scale 0.95, never 0."
+    },
+    {
+      "id": "shorter-exit",
+      "label": {
+        "fr": "Sortie plus courte que l'entrée",
+        "en": "Shorter exit"
+      },
+      "what": "Things leave about 20 % faster and more quietly than they arrived.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Every exit.",
+      "avoid_when": "Nothing.",
+      "build": "Exit with opacity and about 4 px of blur, 20 % shorter than the entrance."
+    },
+    {
+      "id": "blur-fade",
+      "label": {
+        "fr": "Fondu avec flou",
+        "en": "Fade with blur"
+      },
+      "what": "Content appears from a slight blur and offset, which hides imperfect frames and feels smoother.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Entrances of content blocks and icon swaps.",
+      "avoid_when": "Large surfaces on low-end phones (blur is costly).",
+      "build": "From translateY(8px), filter: blur(8px), opacity 0; icon swaps with blur(2px)."
+    },
+    {
+      "id": "crossfade",
+      "label": {
+        "fr": "Fondu enchaîné",
+        "en": "Crossfade"
+      },
+      "what": "The old state fades out while the new one fades in, both visible for a moment.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Swapping an icon (copy → check), a label, an image.",
+      "avoid_when": "Moving an element (move it instead).",
+      "build": "Two layers with opacity, scale and blur together; or a View Transition on the root."
+    },
+    {
+      "id": "shared-element",
+      "label": {
+        "fr": "Élément partagé entre deux états",
+        "en": "Shared element between two states"
+      },
+      "what": "When a card becomes a page or a thumbnail a viewer, the element itself moves and grows.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Lists to detail, galleries, tab indicators.",
+      "avoid_when": "Unrelated screens.",
+      "build": "View Transitions (view-transition-name) or Motion's layoutId."
+    },
+    {
+      "id": "no-bounce-routine",
+      "label": {
+        "fr": "Pas de rebond sur les transitions simples",
+        "en": "No bounce on routine transitions"
+      },
+      "what": "Routine transitions settle without overshoot; bounce is kept for gestures and rare moments.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Every routine state change.",
+      "avoid_when": "Nothing.",
+      "build": "Springs with bounce 0 by default, about 0.15 for some life on a gesture."
+    },
+    {
+      "id": "success-pulse",
+      "label": {
+        "fr": "Pulsation de réussite",
+        "en": "Success pulse"
+      },
+      "what": "A short single pulse confirms that something worked: a saved state, a payment, a completed step.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Rare, meaningful successes.",
+      "avoid_when": "Frequent actions; a dot pulsing forever (no state).",
+      "build": "scale 1 → 1.05 → 1 in under 300 ms, once. With prefers-reduced-motion: no movement, a plain state change.",
+      "checks": [
+        "sw look: LOOK-PULSE flags endless pulses"
+      ]
+    },
+    {
+      "id": "arc-motion",
+      "label": {
+        "fr": "Mouvement en arc",
+        "en": "Arc motion"
+      },
+      "what": "An element travelling far across the screen follows a slight curve, as objects do, instead of a straight line.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "phone"
+        ]
+      },
+      "use_when": "Add-to-cart flights, a card thrown to a new column, a floating notch.",
+      "avoid_when": "Short moves and routine transitions.",
+      "build": "offset-path with a curve, or animate x and y with different easings. With prefers-reduced-motion: no movement, a plain state change."
+    },
+    {
+      "id": "weight-momentum",
+      "label": {
+        "fr": "Poids et élan",
+        "en": "Weight and momentum"
+      },
+      "what": "An element released by the finger keeps the speed of the gesture and settles, so it feels physical.",
+      "fits": {
+        "surfaces": [
+          "phone",
+          "operate"
+        ]
+      },
+      "use_when": "Sheets, carousels, cards thrown or swiped.",
+      "avoid_when": "Clicks and keyboard actions.",
+      "build": "Pass the gesture's velocity to a spring (Motion, react-spring, Vaul for sheets); about 0.45 s, no bounce."
+    },
+    {
+      "id": "rubber-band",
+      "label": {
+        "fr": "Résistance élastique",
+        "en": "Rubber band"
+      },
+      "what": "Dragging past a limit meets growing resistance, then the element springs back.",
+      "fits": {
+        "surfaces": [
+          "phone",
+          "operate"
+        ]
+      },
+      "use_when": "Sheets, carousels, sliders, pull to refresh.",
+      "avoid_when": "Page scrolling (the system already does it).",
+      "build": "Past the limit, the shown displacement is overshoot × size × 0.55 / (size + 0.55 × |overshoot|), so it slows as it grows (Motion: dragElastic about 0.2); about 10 px of movement before a drag commits; then a spring back to the limit.",
+      "sources": [
+        {
+          "name": "emilkowalski/skills, apple-design and gestures (MIT)",
+          "url": "https://github.com/emilkowalski/skills"
+        }
+      ]
+    },
+    {
+      "id": "view-transitions-pages",
+      "label": {
+        "fr": "Transitions entre pages",
+        "en": "Page transitions"
+      },
+      "what": "Moving from one page to another crossfades or slides, with shared elements carried over.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Portfolios, editorial sites, galleries, shops between list and product.",
+      "avoid_when": "Apps where speed matters more than continuity.",
+      "build": "Cross-document View Transitions (@view-transition { navigation: auto }) with view-transition-name on shared elements. With prefers-reduced-motion: no movement, a plain state change.",
+      "see": "scroll-animation"
+    },
+    {
+      "id": "scroll-reveal",
+      "label": {
+        "fr": "Apparition au défilement",
+        "en": "Reveal on scroll"
+      },
+      "what": "Sections or images fade in as they enter the screen.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "One orchestrated moment per page on marketing pages.",
+      "avoid_when": "Every section (flagged as generic), app and reading screens.",
+      "build": "IntersectionObserver or animation-timeline: view(); once, not on each pass. With prefers-reduced-motion: no movement, a plain state change.",
+      "see": "scroll-animation",
+      "checks": [
+        "sw look: LOOK-ANIMATE-ALL when on every section"
+      ]
+    },
+    {
+      "id": "scroll-progress-bar",
+      "label": {
+        "fr": "Barre de progression de lecture",
+        "en": "Reading progress bar"
+      },
+      "what": "A thin bar at the top fills as the reader goes down the article.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Long articles and guides.",
+      "avoid_when": "Short pages and apps.",
+      "build": "animation-timeline: scroll(root) on transform: scaleX(); no JavaScript needed.",
+      "see": "scroll-animation"
+    },
+    {
+      "id": "parallax",
+      "label": {
+        "fr": "Parallaxe",
+        "en": "Parallax"
+      },
+      "what": "Layers move at different speeds while scrolling, giving depth.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Brand, travel, event and storytelling pages, with restraint.",
+      "avoid_when": "Reading and app screens; text layers.",
+      "build": "Scroll-driven animations on transform only. With prefers-reduced-motion: no movement, a plain state change.",
+      "see": "scroll-animation"
+    },
+    {
+      "id": "pinned-scrollytelling",
+      "label": {
+        "fr": "Récit épinglé au défilement",
+        "en": "Pinned scrollytelling"
+      },
+      "what": "A section stays pinned while its content changes step by step with the scroll.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Product tours, data stories, launches.",
+      "avoid_when": "Anything people need to scan quickly; phones with long pinned sections.",
+      "build": "position: sticky with steps; a third of the screen per step at most. With prefers-reduced-motion: no movement, a plain state change.",
+      "see": "scroll-animation"
+    },
+    {
+      "id": "horizontal-scroll-section",
+      "label": {
+        "fr": "Section qui défile à l'horizontale",
+        "en": "Horizontal scroll section"
+      },
+      "what": "Vertical scrolling moves a row of cards sideways inside a pinned section.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Portfolios, timelines, collections.",
+      "avoid_when": "Essential content (people miss it).",
+      "build": "Sticky container plus a scroll-driven translateX; a visible way to skip it.",
+      "see": "scroll-animation"
+    },
+    {
+      "id": "text-reveal",
+      "label": {
+        "fr": "Texte qui se révèle",
+        "en": "Text reveal"
+      },
+      "what": "Words or lines of a headline appear one after the other.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "One headline per page on brand and launch pages.",
+      "avoid_when": "Body text, app screens.",
+      "build": "Split into spans, about 80 ms between words, never letter by letter on long text. With prefers-reduced-motion: no movement, a plain state change."
+    },
+    {
+      "id": "marquee",
+      "label": {
+        "fr": "Bandeau défilant",
+        "en": "Marquee"
+      },
+      "what": "A row of logos or words scrolls continuously.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "Real client logos or a short slogan on a brand page.",
+      "avoid_when": "Invented logos (BRD-01); without a pause control when it lasts over 5 seconds.",
+      "build": "CSS animation on transform with a duplicated row; pause on hover and focus, a pause button, stopped with prefers-reduced-motion.",
+      "checks": [
+        "BRD-01",
+        "WCAG 2.2.2"
+      ]
+    },
+    {
+      "id": "magnetic-button",
+      "label": {
+        "fr": "Bouton magnétique",
+        "en": "Magnetic button"
+      },
+      "what": "A button is slightly attracted by the pointer when it comes near.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "agency-studio",
+          "portfolio"
+        ]
+      },
+      "use_when": "Agencies, portfolios, creative studios, on one or two buttons.",
+      "avoid_when": "Touch screens, forms, apps.",
+      "build": "@media (hover: hover) and (pointer: fine) only; translate up to about 8 px with a spring. With prefers-reduced-motion: no movement, a plain state change."
+    },
+    {
+      "id": "custom-cursor",
+      "label": {
+        "fr": "Curseur personnalisé",
+        "en": "Custom cursor"
+      },
+      "what": "The pointer is replaced or followed by a shape that reacts to what is under it.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "agency-studio",
+          "portfolio"
+        ]
+      },
+      "use_when": "Creative portfolios and studios.",
+      "avoid_when": "Any site where people must click precisely; touch screens.",
+      "build": "Keep the system cursor visible or use cursor: url(); follow with transform in requestAnimationFrame; hidden with reduced motion."
+    },
+    {
+      "id": "text-scramble",
+      "label": {
+        "fr": "Texte qui se brouille",
+        "en": "Text scramble"
+      },
+      "what": "Characters shuffle before settling into the final word.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "developer-tool",
+          "ai-product"
+        ]
+      },
+      "use_when": "Developer tools, tech launches, a short label.",
+      "avoid_when": "Body text and anything read by screen readers during the effect.",
+      "build": "Keep the real text in the DOM (aria-label) and animate a decorative copy. With prefers-reduced-motion: no movement, a plain state change."
+    },
+    {
+      "id": "number-ticker",
+      "label": {
+        "fr": "Chiffre qui défile",
+        "en": "Number ticker"
+      },
+      "what": "A number counts up to its value when it comes into view.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ]
+      },
+      "use_when": "One real, sourced figure.",
+      "avoid_when": "Invented or rounded statistics (BRD-01); several counters at once.",
+      "build": "Count with tabular figures and the final value in the DOM from the start. With prefers-reduced-motion: no movement, a plain state change."
+    },
+    {
+      "id": "lottie-rive",
+      "label": {
+        "fr": "Animation Lottie ou Rive",
+        "en": "Lottie or Rive animation"
+      },
+      "what": "A vector animation made in a design tool and played on the page or in the app.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Illustrated onboarding, empty states, success moments, an animated logo.",
+      "avoid_when": "Large files on the first screen; loops that never stop.",
+      "build": "lottie-web (MIT) or Rive runtime (MIT); lazy-loaded, paused off screen. With prefers-reduced-motion: no movement, a plain state change."
+    }
+  ]
+}

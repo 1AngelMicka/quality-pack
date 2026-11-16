@@ -567,6 +567,25 @@ Une vidéo listait 31 consignes de vitesse (24 lisibles à l'écran, le reste r�
 | Campagne npm « Mini Shai-Hulud » (mai 2026), d'après International Cyber Digest sur X | le ver s'inscrivait dans `.claude/settings.json` et `.vscode/tasks.json` | publication d'un tiers, non vérifiée de première main | cité comme signalement |
 | Décalage de 30 à 50 ms entre les éléments d'une liste, sortie 20 % plus courte, carte suivante visible d'un quart à un tiers | réglages maison, sans validation publiée | — | réglages ajustables |
 
+## Lot 8 — banque de motifs (vérifié le 2026-11-16)
+
+Tout ce que le pack peut proposer, même ce qu'il ne demande pas : `plugins/core/bank/patterns/`, commande `sw patterns`. Les motifs viennent du récap de réels (barres d'onglets, effets, fonctionnalités, lois d'UX) et des règles déjà sourcées plus haut ; les galeries et bibliothèques ont été vérifiées sur leur propre site ou dépôt. Aucune galerie ne donne de droit sur les designs montrés : on s'en inspire, on ne copie rien.
+
+| Lien | Rôle | Licence ou accès | Statut |
+| --- | --- | --- | --- |
+| [emilkowalski/skills](https://github.com/emilkowalski/skills) (animate, apple-design, gestures, choreograph) | indicateur d'onglet en 250 ms ease-in-out, formule de résistance élastique (constante 0,55), seuil de 10 px avant un glissement | MIT | valeurs reprises, texte réécrit |
+| [Laws of UX](https://lawsofux.com) | lois de Fitts, Hick, Jakob, Von Restorff, clôture | accès libre | cité |
+| shadcn/ui, Magic UI (cœur), daisyUI, Motion, React Three Fiber, tsParticles, Sonner, Vaul, cmdk, Pagefind, lottie-web, liquid-glass-js | bibliothèques pour construire les motifs | MIT | citées, aucune ajoutée au pack |
+| model-viewer, Paper Shaders | objet 3D, fonds en shader | Apache-2.0 | citées |
+| ShaderGradient | dégradés 3D animés | MIT selon son README (pas de fichier LICENSE détecté) | citée avec la réserve |
+| Aceternity UI | composants animés | licence propre : produits finis autorisés, pas de redistribution ; offres payantes | citée : composants gratuits seulement, jamais dans un modèle distribué |
+| ReactDrops | logo en verre liquide | licence propre (ReactDrops Component License 1.0) | citée, conditions à lire |
+| Originkit, Particles (Casberry) | composants animés, simulateur de particules | licence non vérifiée ou non publiée | cités pour les idées, ne pas copier le code |
+| Land-book, Supahero, Pricing Pages, Social Proof Examples, Really Good Emails, Posts.Design, Navbar Gallery, OG Image Gallery, Recent (ex-Godly), Motionographer, SaaS Landing Page, Dark Mode Design, Footer.design, Collect UI | galeries d'inspiration | consultation gratuite ou en partie gratuite | citées |
+| Mobbin, Savee | galeries d'écrans et de références | offre gratuite limitée, offres payantes | citées, sans dépendre de l'offre payante |
+| Page Flows | parcours enregistrés | payant seulement | cité, non utilisé (Screenlane y redirige) |
+| Deck.Gallery, Adfolio, Refero, Eyecandy (eyecannndy.com), Awwwards, Lapa Ninja | galeries | accès non vérifié (pages bloquées pour l'outil de lecture) | citées comme non vérifiées |
+
 ### Lot 7, suite — les 18 points restants (2026-11-16)
 
 Relecture des points du récap qui n'avaient pas été repris. Retenus :

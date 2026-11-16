@@ -1,0 +1,233 @@
+{
+  "family": "ux-laws",
+  "kind": "pattern",
+  "label": {
+    "fr": "Lois d'UX",
+    "en": "UX laws"
+  },
+  "summary": "Principles to explain or justify a layout choice. Each comes with what it changes on screen.",
+  "entries": [
+    {
+      "id": "law-closure",
+      "label": {
+        "fr": "Clôture",
+        "en": "Closure"
+      },
+      "what": "People complete a shape that is cut: a card cut at the edge says there is more to scroll.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Carousels and horizontal lists.",
+      "avoid_when": "Content that must be seen whole.",
+      "build": "Let the next card show by a quarter to a third.",
+      "sources": [
+        {
+          "name": "Laws of UX",
+          "url": "https://lawsofux.com/"
+        }
+      ]
+    },
+    {
+      "id": "law-figure-ground",
+      "label": {
+        "fr": "Figure et fond",
+        "en": "Figure and ground"
+      },
+      "what": "Dimming what is behind brings the important element forward.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Dialogs, sheets, focus modes.",
+      "avoid_when": "Non-modal panels.",
+      "build": "A scrim behind dialogs; the content behind loses contrast."
+    },
+    {
+      "id": "law-banner-blindness",
+      "label": {
+        "fr": "Cécité aux bannières",
+        "en": "Banner blindness"
+      },
+      "what": "Anything that looks like an ad is not seen.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Every important message.",
+      "avoid_when": "Coloured boxes in the sidebar or at the top of the page for key information.",
+      "build": "Put key information in the content flow, in the page's own style.",
+      "sources": [
+        {
+          "name": "NN/g, Banner Blindness Revisited",
+          "url": "https://www.nngroup.com/articles/banner-blindness-old-and-new-findings/"
+        }
+      ]
+    },
+    {
+      "id": "law-parkinson-prefill",
+      "label": {
+        "fr": "Loi de Parkinson et pré-remplissage",
+        "en": "Parkinson's law and prefill"
+      },
+      "what": "A task expands to fill the time it is given: prefill what is known so it takes less.",
+      "fits": {
+        "surfaces": [
+          "operate"
+        ]
+      },
+      "use_when": "Forms, checkouts, settings.",
+      "avoid_when": "Guesses the user must correct.",
+      "build": "autocomplete attributes, defaults from the account, address lookup."
+    },
+    {
+      "id": "law-visual-connection",
+      "label": {
+        "fr": "Connexion visuelle",
+        "en": "Visual connection"
+      },
+      "what": "Steps linked by a line or the same container are read as one sequence.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Steppers, timelines, flows.",
+      "avoid_when": "Unrelated items.",
+      "build": "A line or shared container between steps."
+    },
+    {
+      "id": "law-choice-overload",
+      "label": {
+        "fr": "Trop de choix",
+        "en": "Choice overload"
+      },
+      "what": "More options slow the decision and can stop it.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Pricing, menus, settings.",
+      "avoid_when": "Expert tools where every option is needed (group them instead).",
+      "build": "Show a few options and a recommended one; the rest behind \"more\".",
+      "checks": [
+        "ERG-03",
+        "ERG-07"
+      ],
+      "sources": [
+        {
+          "name": "Laws of UX, Hick's law",
+          "url": "https://lawsofux.com/hicks-law/"
+        }
+      ]
+    },
+    {
+      "id": "law-fitts",
+      "label": {
+        "fr": "Loi de Fitts",
+        "en": "Fitts's law"
+      },
+      "what": "Large and close targets are faster to reach.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Main actions, phone screens.",
+      "avoid_when": "Nothing.",
+      "build": "Main action large and near the thumb; 44 px targets at least.",
+      "checks": [
+        "RSP-02",
+        "ERG-05"
+      ],
+      "sources": [
+        {
+          "name": "Laws of UX, Fitts's law",
+          "url": "https://lawsofux.com/fittss-law/"
+        }
+      ]
+    },
+    {
+      "id": "law-jakob",
+      "label": {
+        "fr": "Loi de Jakob",
+        "en": "Jakob's law"
+      },
+      "what": "People expect a site to work like the ones they already know.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Navigation, checkout, forms.",
+      "avoid_when": "When a new way is clearly better and taught.",
+      "build": "Logo top left goes home, cart top right, search with a magnifier.",
+      "sources": [
+        {
+          "name": "Laws of UX, Jakob's law",
+          "url": "https://lawsofux.com/jakobs-law/"
+        }
+      ]
+    },
+    {
+      "id": "law-von-restorff",
+      "label": {
+        "fr": "Effet de démarcation",
+        "en": "Von Restorff effect"
+      },
+      "what": "The item that differs is the one remembered.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "The recommended plan, the main action.",
+      "avoid_when": "Several items made different at once.",
+      "build": "One accent per screen for the main action.",
+      "sources": [
+        {
+          "name": "Laws of UX, Von Restorff effect",
+          "url": "https://lawsofux.com/von-restorff-effect/"
+        }
+      ]
+    },
+    {
+      "id": "law-peak-end",
+      "label": {
+        "fr": "Règle du pic et de la fin",
+        "en": "Peak-end rule"
+      },
+      "what": "People judge an experience by its best moment and its end.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Checkout, onboarding, sign-up.",
+      "avoid_when": "Nothing.",
+      "build": "Care for the success screen and the moment of first value."
+    }
+  ]
+}

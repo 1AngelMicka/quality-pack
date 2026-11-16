@@ -17,7 +17,8 @@ A comparison needs something to compare with.
 
 1. **The brief**, in three lines: who arrives on this screen, what they want, what they must be able to do next. Take it from `.quality/project.json` (`promise`, `flows`) and confirm it with the user.
 2. **The site type.** `sw bank` lists the types (SaaS marketing site, restaurant, online shop, documentation…); `sw bank <type>` gives what visitors of that type expect, real sites recognised as excellent with what to look at on each, their shared traits, and what to avoid. Open two or three of the sites it lists before designing. They are there to learn from, never to copy: no layout, text or image is taken from them.
-3. **The project's own references**, when the user named sites they like: measure them once.
+3. **The pattern bank.** `sw patterns --type <type> --surface <mode>` lists navigation, sections, effects and motion that suit the type. Each version may lead with a different pattern (a sliding-pill nav against a full-screen menu, a bento grid against a product shot): it is a quick way to make the versions really differ. A pattern the generic-look check flags may be used in one version if the user asked for it.
+4. **The project's own references**, when the user named sites they like: measure them once.
 
 ```bash
 node "${CLAUDE_PLUGIN_ROOT}/scripts/sw.mjs" profile https://reference-one.example https://reference-two.example --save

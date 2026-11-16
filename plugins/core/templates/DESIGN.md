@@ -25,6 +25,12 @@ key tasks, on phone and on desktop (criterion ERG-08), so write principles you c
 
 Where the work happens, one line each: what the user decides there, in which order, and what is recommended by default.
 
+## Chosen patterns
+
+Patterns from `sw patterns` the user chose, one line each: the pattern ID, where it is used, why. A pattern the generic-look check flags is fine here when it was chosen on purpose.
+
+- <pattern id> — <where> — <why>
+
 ## Never
 
 - <what the user never wants to see>

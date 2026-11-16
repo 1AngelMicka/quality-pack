@@ -101,6 +101,24 @@ test("bank: every type is well formed and the list can be read", async () => {
   assert.ok(validateType({ label: { fr: "x", en: "x" }, expects: [{ rule: "r" }], avoid: ["a"], sites: [{ url: "http://x", name: "", why: "short" }] }, "t").length >= 3);
 });
 
+test("patterns: every family is well formed, and the CLI lists, filters, searches and shows one", async () => {
+  const { loadPatterns, validatePatterns } = await lib("patterns.mjs");
+  const bank = loadPatterns();
+  assert.deepEqual(validatePatterns(bank), []);
+  const fams = Object.keys(bank.families);
+  for (const f of ["navigation", "motion", "effects", "features", "sections", "ux-laws", "galleries", "libraries"]) assert.ok(fams.includes(f), f);
+  assert.ok(validatePatterns({ families: { x: { family: "x", kind: "pattern", label: { fr: "x" }, summary: "s", entries: [{ id: "Bad id", what: "short", fits: { surfaces: ["nowhere"] } }] } } }).length >= 5);
+  const dir = mkdtempSync(join(tmpdir(), "qp-pat-"));
+  const list = (await run(dir, ["patterns"])).out;
+  assert.ok(list.families.length >= 8 && list.families.every((f) => f.entries > 0));
+  const nav = (await run(dir, ["patterns", "navigation", "--surface", "phone"])).out;
+  assert.ok(nav.entries.some((e) => e.id === "tab-indicator-sliding-pill") && !nav.entries.some((e) => e.id === "mega-menu"));
+  const found = (await run(dir, ["patterns", "search", "glass"])).out;
+  assert.ok(found.entries.some((e) => e.id === "liquid-glass") && found.entries.some((e) => e.id === "liquid-glass-js"));
+  assert.equal((await run(dir, ["patterns", "rubber-band"])).out.entry.family, "motion");
+  assert.notEqual((await run(dir, ["patterns", "no-such-thing"])).code, 0);
+});
+
 test("variants: letters are shuffled, pairs listed, and votes ranked", async (t) => {
   const { tallyVariants, variantsDir } = await lib("variants.mjs");
   // Tally alone, from votes written by hand.

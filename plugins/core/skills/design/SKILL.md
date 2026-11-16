@@ -42,7 +42,7 @@ Run it when `DESIGN.md` is missing, its tokens say "to define", `sw tokens` fail
 
 ## 2. Organisation (`design-screens`)
 
-For each key screen: panes per window width, layout shell, navigation, where the main action and the result sit, phone and desktop separately. Skip a screen whose tasks are within budget in step 0 and whose organisation the user has not questioned.
+For each key screen: panes per window width, layout shell, navigation, where the main action and the result sit, phone and desktop separately. Offer the options of `sw patterns` (navigation, sections, effects, motion, features) that fit the site type before building, and write the chosen ones in `DESIGN.md` › "Chosen patterns". Skip a screen whose tasks are within budget in step 0 and whose organisation the user has not questioned.
 
 ## 3. Scroll animations (`scroll-animation`)
 

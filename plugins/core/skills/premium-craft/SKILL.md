@@ -42,6 +42,8 @@ It shows the screen in the conditions it was not built in: every data request sl
 
 ## 2. Finish what cannot be measured
 
+To propose more than the rules ask for, `sw patterns motion`, `sw patterns effects` and `sw patterns features` list the motion, visual effects and features that can be offered, each with where it fits and how to build it with free tools; `sw patterns libraries` lists free component libraries and their licences. Patterns are choices, not requirements: offer the ones that fit with their cost ("use when", "avoid when"), let the user pick, and write each chosen one in `DESIGN.md` › "Chosen patterns" with its reason. A pattern the generic-look check flags (glass, glow, serif italics, badge above the headline…) is allowed once the user chose it: say so in one line, then build it well.
+
 Work through [references/details.md](references/details.md) on the key screens. The parts that matter most:
 
 **States.** Every button, field, link and tab has hover, visible focus, pressed, disabled and loading, and they differ. Hover and focus have more contrast than rest. A loading button keeps its label and its width. Hover styles sit under `@media (hover: hover)`.

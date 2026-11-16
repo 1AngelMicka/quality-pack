@@ -1,0 +1,496 @@
+{
+  "family": "navigation",
+  "kind": "pattern",
+  "label": {
+    "fr": "Navigation",
+    "en": "Navigation"
+  },
+  "summary": "Ways to move around a site or an app, and how the navigation itself behaves and moves.",
+  "entries": [
+    {
+      "id": "sticky-header",
+      "label": {
+        "fr": "En-tête fixe",
+        "en": "Sticky header"
+      },
+      "what": "The header stays at the top while the page scrolls, so navigation and the main action stay at hand.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Long pages, documentation, shops, apps where the main action or search lives in the header.",
+      "avoid_when": "Short pages; phone screens where it eats more than about 10 % of the height.",
+      "build": "position: sticky; top: 0 on the header, a z-index from the scale (--z-sticky), scroll-margin-top on anchors equal to its height plus 16 px, and focus never hidden under it.",
+      "checks": [
+        "premium-craft: anchors, z-index scale, focus not hidden"
+      ]
+    },
+    {
+      "id": "hide-on-scroll-header",
+      "label": {
+        "fr": "En-tête qui se cache au défilement",
+        "en": "Header that hides on scroll"
+      },
+      "what": "The header slides away when the user scrolls down and comes back as soon as they scroll up.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "phone"
+        ]
+      },
+      "use_when": "Reading pages and phone screens where height is precious.",
+      "avoid_when": "App screens where the header holds tools used all the time.",
+      "build": "Compare scroll positions in a passive scroll listener or with an IntersectionObserver sentinel; translateY(-100%) with a 200 ms ease-out transition, never animate top. With prefers-reduced-motion: no movement, a plain state change."
+    },
+    {
+      "id": "shrinking-header",
+      "label": {
+        "fr": "En-tête qui rétrécit",
+        "en": "Shrinking header"
+      },
+      "what": "A tall header with a large logo becomes a compact bar after the first screen.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Brand sites, restaurants, hotels, portfolios that open on a large header.",
+      "avoid_when": "Apps and dashboards.",
+      "build": "Two states switched by a class from an IntersectionObserver on the hero; animate transform and opacity only, or use a scroll-driven animation (animation-timeline: scroll()).",
+      "see": "scroll-animation"
+    },
+    {
+      "id": "transparent-header-over-hero",
+      "label": {
+        "fr": "En-tête transparent sur l'image d'ouverture",
+        "en": "Transparent header over the hero"
+      },
+      "what": "The header sits transparent over a full-width image or video and becomes solid when the page scrolls.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "hotel-travel",
+          "restaurant-cafe",
+          "luxury-brand",
+          "event-conference",
+          "real-estate",
+          "culture-museum-music"
+        ]
+      },
+      "use_when": "Hotels, travel, restaurants, luxury, events with a strong opening image.",
+      "avoid_when": "When the text over the image cannot keep 4.5:1 contrast.",
+      "build": "A gradient scrim behind the header text for contrast; the solid state switches at the end of the hero."
+    },
+    {
+      "id": "mega-menu",
+      "label": {
+        "fr": "Méga-menu",
+        "en": "Mega menu"
+      },
+      "what": "A wide panel under a top-level item that shows grouped links, sometimes with an image or a short description each.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "ecommerce",
+          "saas-marketing",
+          "public-service",
+          "education",
+          "non-profit"
+        ]
+      },
+      "use_when": "Sites with many sections: shops, SaaS with several products, public services, universities.",
+      "avoid_when": "Fewer than about 12 destinations: a simple menu is faster.",
+      "build": "Opens on click (and on hover with a 150 to 300 ms intent delay), closes with Esc and on outside click, keyboard order follows the columns; disclosure button with aria-expanded."
+    },
+    {
+      "id": "drawer-menu",
+      "label": {
+        "fr": "Menu mobile en tiroir",
+        "en": "Drawer menu (mobile)"
+      },
+      "what": "A button opens a panel from the side or the top with the whole navigation, on phones.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read",
+          "phone"
+        ]
+      },
+      "use_when": "Any public site on phone with more than four or five destinations.",
+      "avoid_when": "Apps with three to five main destinations: a bottom tab bar is faster to reach.",
+      "build": "A real <button> with aria-expanded and aria-controls, focus moved into the panel and trapped, Esc and a visible close button, scroll of the page locked, overscroll-behavior: contain. Slide 250 ms ease-out, exit 20 % shorter. With prefers-reduced-motion: no movement, a plain state change."
+    },
+    {
+      "id": "full-screen-menu",
+      "label": {
+        "fr": "Menu plein écran",
+        "en": "Full-screen menu"
+      },
+      "what": "The menu covers the whole screen with large links, often animated in one after the other.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "agency-studio",
+          "portfolio",
+          "luxury-brand",
+          "culture-museum-music"
+        ]
+      },
+      "use_when": "Agencies, studios, portfolios, fashion and luxury brands where the menu is part of the show.",
+      "avoid_when": "Sites people use to get something done quickly.",
+      "build": "Same accessibility as the drawer; links staggered by 30 to 50 ms; the whole menu readable at 200 % zoom."
+    },
+    {
+      "id": "bottom-tab-bar",
+      "label": {
+        "fr": "Barre d'onglets en bas",
+        "en": "Bottom tab bar"
+      },
+      "what": "Three to five main destinations in a bar at the bottom of the phone screen, within reach of the thumb.",
+      "fits": {
+        "surfaces": [
+          "phone",
+          "operate"
+        ]
+      },
+      "use_when": "Apps and web apps on phone with three to five main sections.",
+      "avoid_when": "Actions (a tab never starts an action), more than five destinations, desktop widths (use a rail or a sidebar).",
+      "build": "Each tab is a link with an icon and a label; the selected one is marked by more than colour; safe-area padding at the bottom (env(safe-area-inset-bottom)); the bar stays visible except in modals.",
+      "checks": [
+        "MUX-04",
+        "SCR-03"
+      ],
+      "see": "design-screens"
+    },
+    {
+      "id": "tab-indicator-sliding-pill",
+      "label": {
+        "fr": "Onglets : pastille qui glisse",
+        "en": "Tab change: sliding pill"
+      },
+      "what": "A pill or underline behind the selected tab slides to the newly chosen tab instead of jumping.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone",
+          "persuade"
+        ]
+      },
+      "use_when": "Tab bars, segmented controls, filters, pricing toggles.",
+      "avoid_when": "Nothing: it is the safest of the tab animations.",
+      "build": "One indicator moved between tabs: Motion layoutId, a View Transition with view-transition-name, or a clip-path on a duplicated active tab list. About 250 ms with an ease-in-out curve (it is a move); on React Native, animate translateX and width, not scaleX, so the corners stay round; haptic feedback on the press. With prefers-reduced-motion: no movement, a plain state change.",
+      "checks": [
+        "premium-craft: same element, two states"
+      ],
+      "sources": [
+        {
+          "name": "emilkowalski/skills, animate recipes (MIT)",
+          "url": "https://github.com/emilkowalski/skills"
+        }
+      ]
+    },
+    {
+      "id": "tab-indicator-icon-fill",
+      "label": {
+        "fr": "Onglets : icône qui se remplit",
+        "en": "Tab change: icon fills"
+      },
+      "what": "The icon of the chosen tab lifts slightly and switches from outline to filled.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "phone"
+        ]
+      },
+      "use_when": "Bottom tab bars with outline icons.",
+      "avoid_when": "Icon sets without a filled variant (do not fake it with a heavier stroke).",
+      "build": "Swap the outline and filled icon with opacity, a scale from 0.9 and blur(2px) together, under 200 ms; translateY(-2px) at most for the lift. With prefers-reduced-motion: no movement, a plain state change.",
+      "checks": [
+        "sw craft: icon_style"
+      ]
+    },
+    {
+      "id": "tab-indicator-expanding-label",
+      "label": {
+        "fr": "Onglets : étiquette qui s'ouvre",
+        "en": "Tab change: expanding label"
+      },
+      "what": "Only the selected tab shows its label: its pill widens to reveal the name while the others show icons only.",
+      "fits": {
+        "surfaces": [
+          "phone",
+          "operate"
+        ]
+      },
+      "use_when": "Bottom bars with four or five tabs and short names.",
+      "avoid_when": "Long or translated names that change the width a lot; users who need labels to recognise icons (keep labels on all tabs then).",
+      "build": "Animate the pill with transform (scaleX on a background layer) or a layout animation, never width on the text itself; the label fades in after the pill, 200 to 250 ms total. With prefers-reduced-motion: no movement, a plain state change."
+    },
+    {
+      "id": "tab-indicator-floating-notch",
+      "label": {
+        "fr": "Onglets : disque dans une encoche",
+        "en": "Tab change: floating notch"
+      },
+      "what": "A disc carrying the selected icon jumps into a notch cut in the bar above the chosen tab.",
+      "fits": {
+        "surfaces": [
+          "phone"
+        ]
+      },
+      "use_when": "Playful consumer apps where the bar is part of the identity.",
+      "avoid_when": "Work apps and anything used many times a day: it is slow and draws the eye at every change.",
+      "build": "SVG path for the bar with the notch moved by transform, the disc on an arc (offset-path or two transforms); keep it under 300 ms. With prefers-reduced-motion: no movement, a plain state change.",
+      "cost": "high effort, distracting when repeated"
+    },
+    {
+      "id": "tab-indicator-liquid-bulge",
+      "label": {
+        "fr": "Onglets : bombement liquide",
+        "en": "Tab change: liquid bulge"
+      },
+      "what": "The bar bulges under the chosen tab like a liquid, then settles.",
+      "fits": {
+        "surfaces": [
+          "phone"
+        ]
+      },
+      "use_when": "Consumer apps with a playful or organic identity.",
+      "avoid_when": "Work apps, frequent switching, low-end phones.",
+      "build": "SVG path morph (Motion or a spring on the control points) or a gooey filter (blur plus contrast); test the frame rate on a low-end phone. With prefers-reduced-motion: no movement, a plain state change.",
+      "cost": "high effort, heavy on low-end phones"
+    },
+    {
+      "id": "tab-indicator-bubbles",
+      "label": {
+        "fr": "Onglets : bulles qui éclatent",
+        "en": "Tab change: bubbles"
+      },
+      "what": "Small bubbles rise from the chosen tab and pop.",
+      "fits": {
+        "surfaces": [
+          "phone"
+        ]
+      },
+      "use_when": "Games, kids' apps, celebrations; once, not at every switch.",
+      "avoid_when": "Anything used for work, and repeated switching.",
+      "build": "A few absolutely positioned circles animated with transform and opacity, removed after the animation; or a Lottie or Rive file. With prefers-reduced-motion: no movement, a plain state change.",
+      "cost": "decorative; flagged as motion without information on frequent actions"
+    },
+    {
+      "id": "navigation-rail",
+      "label": {
+        "fr": "Rail de navigation",
+        "en": "Navigation rail"
+      },
+      "what": "A narrow vertical bar of icons with labels on the side of the screen, between a tab bar and a full sidebar.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Tablets and medium widths; apps with three to seven destinations.",
+      "avoid_when": "Phones (use the bottom bar).",
+      "build": "Material 3 navigation rail pattern: 80 px wide, icon with label, selected state with an indicator; switch from the bottom bar at about 600 px."
+    },
+    {
+      "id": "sidebar",
+      "label": {
+        "fr": "Barre latérale",
+        "en": "Sidebar"
+      },
+      "what": "A persistent column of navigation on the left of an app, often collapsible.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "desktop-app"
+        ],
+        "types": [
+          "saas-app",
+          "developer-tool",
+          "documentation"
+        ]
+      },
+      "use_when": "Apps and dashboards with more than five sections or nested sections.",
+      "avoid_when": "Marketing pages.",
+      "build": "5 to 8 top-level items, groups with headings, collapsible to a rail with its state remembered; keyboard shortcut to toggle."
+    },
+    {
+      "id": "command-palette",
+      "label": {
+        "fr": "Palette de commandes",
+        "en": "Command palette"
+      },
+      "what": "Ctrl or Cmd + K opens a search box that finds pages, records and actions.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "read",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Apps with many screens or records, documentation, developer tools.",
+      "avoid_when": "Small sites with a few pages.",
+      "build": "A dialog with a combobox (role=combobox, listbox of results), arrow keys, Enter, Esc; recent items first; the shortcut shown with the platform's symbols. Libraries: cmdk (MIT).",
+      "see": "premium-craft"
+    },
+    {
+      "id": "site-search",
+      "label": {
+        "fr": "Recherche sur le site",
+        "en": "Site search"
+      },
+      "what": "A search field that finds content across the site, with results as you type or on a results page.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Documentation, shops, blogs, public services, any site with more than a few dozen pages.",
+      "avoid_when": "Small showcase sites.",
+      "build": "Static sites: Pagefind (MIT) indexes at build time; apps: the database's full-text search. Debounce 250 to 300 ms, cancel the previous request, highlight the match.",
+      "checks": [
+        "PRF-08"
+      ]
+    },
+    {
+      "id": "breadcrumbs",
+      "label": {
+        "fr": "Fil d'Ariane",
+        "en": "Breadcrumbs"
+      },
+      "what": "A trail of links showing where the page sits in the hierarchy.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade",
+          "operate"
+        ]
+      },
+      "use_when": "Shops, documentation, public services, deep hierarchies.",
+      "avoid_when": "Flat sites of one or two levels.",
+      "build": "<nav aria-label=\"Breadcrumb\"> with an ordered list, the current page with aria-current=\"page\"; BreadcrumbList structured data for search engines.",
+      "checks": [
+        "SEO-06"
+      ]
+    },
+    {
+      "id": "table-of-contents",
+      "label": {
+        "fr": "Sommaire latéral",
+        "en": "Table of contents"
+      },
+      "what": "A list of the page's headings beside or above long content, with the current section highlighted.",
+      "fits": {
+        "surfaces": [
+          "read"
+        ],
+        "types": [
+          "documentation",
+          "editorial",
+          "education"
+        ]
+      },
+      "use_when": "Articles, documentation, legal pages, long guides.",
+      "avoid_when": "Short pages.",
+      "build": "Built from the h2 and h3; current section from an IntersectionObserver; sticky on desktop, collapsed at the top on phone."
+    },
+    {
+      "id": "back-to-top",
+      "label": {
+        "fr": "Bouton retour en haut",
+        "en": "Back to top button"
+      },
+      "what": "A button that appears after some scrolling and brings the user back to the top.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Long pages: articles, documentation, long lists.",
+      "avoid_when": "Pages under about three screens.",
+      "build": "Appears after about two screens, a real link to #top or a button that moves focus to the top; smooth scroll only without prefers-reduced-motion.",
+      "checks": [
+        "UX build rule: long pages"
+      ]
+    },
+    {
+      "id": "floating-contact-button",
+      "label": {
+        "fr": "Bouton de contact flottant",
+        "en": "Floating contact button"
+      },
+      "what": "A round button fixed in a corner that opens contact options (chat, phone, email, WhatsApp).",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "local-service",
+          "restaurant-cafe",
+          "real-estate",
+          "ecommerce",
+          "hotel-travel",
+          "health-wellness"
+        ]
+      },
+      "use_when": "Local services, restaurants, real estate, shops where a quick question leads to a sale.",
+      "avoid_when": "Apps and dashboards; pages where it covers content or a cookie banner on phone.",
+      "build": "Fixed bottom right with safe-area margins, never over the main action or form fields; a real button with a name; links tel:, mailto: or a chat. Hide it while the keyboard is open."
+    },
+    {
+      "id": "floating-action-button",
+      "label": {
+        "fr": "Bouton d'action flottant",
+        "en": "Floating action button"
+      },
+      "what": "One round button for the screen's main creation action (new message, new task), floating above the content.",
+      "fits": {
+        "surfaces": [
+          "phone",
+          "operate"
+        ]
+      },
+      "use_when": "Phone apps where one creation action dominates.",
+      "avoid_when": "Screens with several equal actions; desktop (put the action in the toolbar).",
+      "build": "Material 3 FAB: 56 dp, bottom right, above the tab bar; extended FAB with a label when space allows."
+    },
+    {
+      "id": "skip-link",
+      "label": {
+        "fr": "Lien « aller au contenu »",
+        "en": "Skip link"
+      },
+      "what": "The first keyboard stop is a link that jumps over the menu to the main content.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Every page with a menu or header before the content.",
+      "avoid_when": "Nothing: it is a rule, offered here for completeness.",
+      "build": "<a href=\"#main\" class=\"skip\">Skip to content</a> as the first element, visible on focus; <main id=\"main\">.",
+      "checks": [
+        "A11Y-02",
+        "sw craft: skip_link"
+      ]
+    }
+  ]
+}

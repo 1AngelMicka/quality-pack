@@ -1,0 +1,430 @@
+{
+  "family": "features",
+  "kind": "pattern",
+  "label": {
+    "fr": "Fonctionnalités",
+    "en": "Features"
+  },
+  "summary": "Features a site or an app can offer. Some are rules of the referential (marked in checks); the others are options to propose when they fit.",
+  "entries": [
+    {
+      "id": "cookie-banner",
+      "label": {
+        "fr": "Bandeau cookies",
+        "en": "Cookie banner"
+      },
+      "what": "Asks consent before non-essential cookies, with refuse as easy as accept.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Only when the site sets non-essential cookies or trackers.",
+      "avoid_when": "Sites with essential cookies only: no banner needed.",
+      "build": "Accept and refuse buttons of equal weight on the first layer, nothing set before consent, choice changeable from the footer. Free: a self-hosted consent script or the analytics' cookieless mode.",
+      "checks": [
+        "PRV-01"
+      ]
+    },
+    {
+      "id": "copy-button",
+      "label": {
+        "fr": "Bouton « copier »",
+        "en": "Copy button"
+      },
+      "what": "A button next to a value copies it and confirms with a check.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "API keys, invitation links, codes, commands, addresses, IBAN shown to the owner.",
+      "avoid_when": "Ordinary text people do not need to reuse.",
+      "build": "navigator.clipboard.writeText; the icon becomes a check for about 2 s; announced by aria-live.",
+      "checks": [
+        "UX build rule"
+      ]
+    },
+    {
+      "id": "print-stylesheet",
+      "label": {
+        "fr": "Version imprimable",
+        "en": "Print version"
+      },
+      "what": "A print stylesheet that removes menus and buttons and keeps the content readable on paper.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "operate"
+        ]
+      },
+      "use_when": "Invoices, receipts, recipes, tickets, legal pages, documentation.",
+      "avoid_when": "Marketing pages.",
+      "build": "@media print: hide navigation and actions, black on white, URLs after links, page breaks avoided inside blocks.",
+      "checks": [
+        "UX build rule"
+      ]
+    },
+    {
+      "id": "password-reveal",
+      "label": {
+        "fr": "Afficher le mot de passe",
+        "en": "Show password"
+      },
+      "what": "A button in the password field shows what was typed.",
+      "fits": {
+        "surfaces": [
+          "operate"
+        ]
+      },
+      "use_when": "Every password field.",
+      "avoid_when": "Nothing.",
+      "build": "A toggle button with aria-pressed that switches type=password and text without clearing the field.",
+      "checks": [
+        "UX build rule"
+      ]
+    },
+    {
+      "id": "utm-preservation",
+      "label": {
+        "fr": "Suivi des campagnes (UTM)",
+        "en": "Campaign tracking (UTM)"
+      },
+      "what": "Links shared on social networks or in emails carry utm_ parameters, read by the analytics tool to know which campaign brought each visitor.",
+      "fits": {
+        "surfaces": [
+          "persuade"
+        ],
+        "types": [
+          "saas-marketing",
+          "landing-page",
+          "ecommerce",
+          "event-conference"
+        ]
+      },
+      "use_when": "Sites with an analytics tool and campaigns on several channels.",
+      "avoid_when": "Sites without analytics: nobody reads the parameters.",
+      "build": "Add utm_source, utm_medium and utm_campaign to shared links; make sure redirects keep the query string; a privacy-friendly analytics tool (Plausible or Umami self-hosted, Matomo) reads them."
+    },
+    {
+      "id": "form-confirmation",
+      "label": {
+        "fr": "Confirmation d'envoi",
+        "en": "Form confirmation"
+      },
+      "what": "After sending a form, a clear message says what happens next and when.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Every form.",
+      "avoid_when": "Nothing.",
+      "build": "Replace the form with a message or show a success state that stays; email confirmation for orders and bookings.",
+      "checks": [
+        "UX-05"
+      ]
+    },
+    {
+      "id": "last-updated-date",
+      "label": {
+        "fr": "Date de mise à jour",
+        "en": "Last-updated date"
+      },
+      "what": "Pages show when their content was last changed.",
+      "fits": {
+        "surfaces": [
+          "read"
+        ]
+      },
+      "use_when": "Legal pages, documentation, articles, prices.",
+      "avoid_when": "Home pages and app screens.",
+      "build": "From the content's real change date, not the build date; <time datetime>.",
+      "checks": [
+        "CNT build rule"
+      ]
+    },
+    {
+      "id": "faq-accordion",
+      "label": {
+        "fr": "FAQ dépliable",
+        "en": "Collapsible FAQ"
+      },
+      "what": "Questions shown as a list, each answer opening on click.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Pricing pages, product pages, support.",
+      "avoid_when": "When people need to read every answer (show them open).",
+      "build": "<details><summary> works without JavaScript and is accessible; FAQPage structured data only where Google still shows it.",
+      "checks": [
+        "SUP-04"
+      ]
+    },
+    {
+      "id": "dark-mode",
+      "label": {
+        "fr": "Mode sombre",
+        "en": "Dark mode"
+      },
+      "what": "A dark theme that follows the system or the user's choice.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Apps, tools, documentation.",
+      "avoid_when": "Only when it would be an inverted copy of the light theme.",
+      "build": "Built tokens for dark, color-scheme set, images and shadows checked in dark.",
+      "checks": [
+        "UI-06",
+        "CRF-07"
+      ]
+    },
+    {
+      "id": "loading-skeleton",
+      "label": {
+        "fr": "Squelettes de chargement",
+        "en": "Loading skeletons"
+      },
+      "what": "Grey shapes of the real layout while a page loads.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "read"
+        ]
+      },
+      "use_when": "Pages that take 1 to 10 s.",
+      "avoid_when": "Waits under 300 ms (nothing is better).",
+      "build": "Same dimensions as the final content; delayed 150 to 300 ms.",
+      "checks": [
+        "CRF-04"
+      ]
+    },
+    {
+      "id": "optimistic-update",
+      "label": {
+        "fr": "Interface optimiste",
+        "en": "Optimistic update"
+      },
+      "what": "The screen changes at once and is corrected if the server refuses.",
+      "fits": {
+        "surfaces": [
+          "operate"
+        ]
+      },
+      "use_when": "Likes, toggles, renames, reordering.",
+      "avoid_when": "Payments and irreversible actions.",
+      "build": "Update local state, send, roll back with a message or Undo on failure.",
+      "checks": [
+        "premium-craft"
+      ]
+    },
+    {
+      "id": "undo-toast",
+      "label": {
+        "fr": "Annuler après coup",
+        "en": "Undo toast"
+      },
+      "what": "After an action, a toast offers to undo it for a few seconds.",
+      "fits": {
+        "surfaces": [
+          "operate"
+        ]
+      },
+      "use_when": "Deletes and moves that can be reversed.",
+      "avoid_when": "Irreversible actions (confirm instead).",
+      "build": "Soft delete, toast of 5 to 10 s with Undo, focusable; Sonner (MIT).",
+      "checks": [
+        "UX-03",
+        "CRF-05"
+      ]
+    },
+    {
+      "id": "confirm-dialog",
+      "label": {
+        "fr": "Confirmation avant suppression",
+        "en": "Confirm before destroying"
+      },
+      "what": "A dialog asks to confirm an action that cannot be undone, naming what will be lost.",
+      "fits": {
+        "surfaces": [
+          "operate"
+        ]
+      },
+      "use_when": "Irreversible deletes, payments, sending.",
+      "avoid_when": "Reversible actions (offer Undo instead).",
+      "build": "The button says the action (\"Delete 3 invoices\"), not \"OK\"; typing the name for very destructive actions.",
+      "checks": [
+        "UX-03"
+      ]
+    },
+    {
+      "id": "streaming-response",
+      "label": {
+        "fr": "Réponse en streaming",
+        "en": "Streaming response"
+      },
+      "what": "A long answer appears as it is produced, with a way to stop it.",
+      "fits": {
+        "surfaces": [
+          "operate"
+        ]
+      },
+      "use_when": "AI answers, reports, imports.",
+      "avoid_when": "Short answers.",
+      "build": "Server-sent events or a ReadableStream; a Stop button; the final text announced once.",
+      "checks": [
+        "UX build rule"
+      ]
+    },
+    {
+      "id": "autosave",
+      "label": {
+        "fr": "Enregistrement automatique",
+        "en": "Autosave"
+      },
+      "what": "Work is saved as the user types, with a discreet saved state.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Editors, long forms, settings.",
+      "avoid_when": "Actions that must be confirmed (payments, sending).",
+      "build": "Debounced saves, \"Saved\" state with time, conflict handling, warning before leaving with unsaved changes.",
+      "checks": [
+        "DUX-04"
+      ]
+    },
+    {
+      "id": "onboarding-checklist",
+      "label": {
+        "fr": "Liste de démarrage",
+        "en": "Onboarding checklist"
+      },
+      "what": "A short list of first steps that leads a new account to the activation event.",
+      "fits": {
+        "surfaces": [
+          "operate"
+        ],
+        "types": [
+          "saas-app",
+          "onboarding-login"
+        ]
+      },
+      "use_when": "SaaS with a few setup steps.",
+      "avoid_when": "Products usable at once.",
+      "build": "3 to 5 steps, each linked to where it is done, dismissible, progress saved.",
+      "checks": [
+        "ACT-01"
+      ]
+    },
+    {
+      "id": "empty-state-teaching",
+      "label": {
+        "fr": "État vide qui guide",
+        "en": "Teaching empty state"
+      },
+      "what": "An empty list explains what will appear there and offers the first action.",
+      "fits": {
+        "surfaces": [
+          "operate"
+        ]
+      },
+      "use_when": "Every list and dashboard that can be empty.",
+      "avoid_when": "Nothing.",
+      "build": "One sentence, one primary button, sample data on request.",
+      "checks": [
+        "UX-01"
+      ]
+    },
+    {
+      "id": "language-switcher",
+      "label": {
+        "fr": "Choix de la langue",
+        "en": "Language switcher"
+      },
+      "what": "Lets visitors pick the language, with each language named in itself.",
+      "fits": {
+        "surfaces": [
+          "persuade",
+          "read"
+        ]
+      },
+      "use_when": "Sites in several languages.",
+      "avoid_when": "Flags for languages.",
+      "build": "Names in their own language (Deutsch, Français); hreflang; the choice remembered; no automatic redirect without a way back.",
+      "checks": [
+        "SEO-07"
+      ]
+    },
+    {
+      "id": "notification-center",
+      "label": {
+        "fr": "Centre de notifications",
+        "en": "Notification centre"
+      },
+      "what": "A list of what happened since the last visit, with unread marks.",
+      "fits": {
+        "surfaces": [
+          "operate"
+        ]
+      },
+      "use_when": "Collaborative apps.",
+      "avoid_when": "Single-user tools with few events.",
+      "build": "Bell with a count, mark as read, links to the object, email digest settings."
+    },
+    {
+      "id": "keyboard-shortcuts-sheet",
+      "label": {
+        "fr": "Aide des raccourcis",
+        "en": "Shortcuts sheet"
+      },
+      "what": "? opens a list of the keyboard shortcuts.",
+      "fits": {
+        "surfaces": [
+          "operate",
+          "desktop-app"
+        ]
+      },
+      "use_when": "Apps used every day.",
+      "avoid_when": "Public sites.",
+      "build": "A dialog grouped by screen, with the platform's symbols.",
+      "checks": [
+        "CRF-08"
+      ]
+    },
+    {
+      "id": "social-share",
+      "label": {
+        "fr": "Boutons de partage",
+        "en": "Share buttons"
+      },
+      "what": "Lets readers share a page.",
+      "fits": {
+        "surfaces": [
+          "read",
+          "persuade"
+        ]
+      },
+      "use_when": "Articles, events, products.",
+      "avoid_when": "App screens.",
+      "build": "navigator.share on phones, plain links elsewhere (no third-party scripts that track); a good share image.",
+      "checks": [
+        "SEO-03"
+      ]
+    }
+  ]
+}

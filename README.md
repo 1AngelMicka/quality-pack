@@ -216,6 +216,7 @@ Chaque commande `/sw:…` lance l'outil de Shipwright pour toi : rien d'autre à
 | `/sw:tokens` | Vérifier les design tokens : format DTCG, références, contraste dans chaque thème, couleurs hors sRGB |
 | `/sw:tiles` | Afficher les style tiles côte à côte, sur ordinateur et téléphone, pour choisir une direction |
 | `/sw:bank [type]` | Banque de références : par type de site, ce que les visiteurs attendent, des sites reconnus comme excellents avec la raison, ce qu'il faut éviter |
+| `/sw:patterns [famille \| motif]` | Banque de motifs : tout ce que Claude peut te proposer pour une interface (navigation, animations, effets visuels, fonctionnalités, sections de page, lois d'UX, galeries d'inspiration, bibliothèques gratuites), avec où chaque motif convient, ce qu'il coûte et comment le faire. `/sw:patterns navigation`, `/sw:patterns search verre` |
 | `/sw:profile <url> --save` · `/sw:gap <url>` | Mesurer le profil visuel de références, puis l'écart d'un écran avec elles ou avec la banque (`--type`) |
 | `/sw:variants <nom> <url> <url>…` | Plusieurs versions d'un écran : captures sous des lettres mélangées, mesures, paires pour un jury à l'aveugle ; `--tally` les classe |
 
