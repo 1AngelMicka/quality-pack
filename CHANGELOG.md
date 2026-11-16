@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.10.1 — 2026-11-16
 
 - **Skip link:** a "skip to content" link comes first when a menu precedes the content (accessibility build rule, A11Y-02). `sw craft` checks it as `skip_link` (should) when three controls or more sit before `<main>`.
 - **Performance:** independent requests are sent at the same time (PRF-06), static files come from a CDN with versioned names, Core Web Vitals are measured on real visitors once live (PRF-01, web-vitals or CrUX), and a server cache such as Redis only for a slow, frequent read found in the slow-query log.
