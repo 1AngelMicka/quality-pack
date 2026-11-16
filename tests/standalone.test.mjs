@@ -108,3 +108,18 @@ test("install: the marketplace, the main plugin and the modules found in the pro
   const none = JSON.parse(run([], { SW_CLAUDE_BIN: "no-such-claude-command" }).stdout);
   assert.match(none.error, /sw\.mjs skills/);
 });
+
+test("commands: each /sw: command made from tools/commands.yaml runs a command the CLI knows", () => {
+  const cli = readFileSync(SW, "utf8");
+  const dir = join(ROOT, "plugins/core/skills");
+  const made = readdirSync(dir).filter((d) => existsSync(join(dir, d, "SKILL.md")) && readFileSync(join(dir, d, "SKILL.md"), "utf8").includes("from tools/commands.yaml"));
+  assert.ok(made.length >= 25, "the command skills are generated");
+  for (const name of made) {
+    const text = readFileSync(join(dir, name, "SKILL.md"), "utf8");
+    assert.match(text, /disable-model-invocation: true/, name);
+    assert.ok(text.includes(`sw.mjs" ${name} $ARGUMENTS`), name);
+    assert.ok(cli.includes(`case "${name}"`), `sw.mjs has no command ${name}`);
+  }
+  for (const active of ["auth", "access", "webhooks", "dast", "billing"]) assert.match(readFileSync(join(dir, active, "SKILL.md"), "utf8"), /Local or staging only/);
+  assert.match(readFileSync(join(dir, "billing", "SKILL.md"), "utf8"), /Never ask for the key/);
+});

@@ -99,7 +99,7 @@
       <li><strong>Redémarre Claude Code</strong> (ou tape <code>/reload-plugins</code>), ouvre ton projet et lance :
 <pre><code>/sw:kickoff</code></pre></li>
       <li><strong>Tâches clés et vérifications navigateur</strong>, une fois pour toutes (Claude te le propose au premier audit) :
-<pre><code>node &lt;dossier du plugin&gt;/scripts/sw.mjs browser-setup</code></pre>
+<pre><code>/sw:browser-setup</code></pre>
       Playwright, axe-core et Chromium vont dans le cache du pack, pas dans ton projet. Sans eux, l’audit fonctionne ; ces critères sont marqués « non vérifiés ».</li>
       <li><strong>Facultatif : <a href="#compagnons">Graphify</a></strong> pour économiser des tokens sur les projets moyens et gros. <code>/sw:kickoff</code> te le propose quand c’est utile.</li>
     </ol>
@@ -223,7 +223,7 @@ CLAUDE.md               une courte section « Shipwright »</code></pre>
         <tr><td>Les commandes <code>/sw:…</code> n’apparaissent pas</td><td>Redémarre Claude Code ou tape <code>/reload-plugins</code>, puis regarde <code>/plugin</code> → Installed et l’onglet Errors.</td></tr>
         <tr><td><code>node: command not found</code></td><td>Installe Node.js 18+ et vérifie que <code>node</code> est dans le PATH.</td></tr>
         <tr><td>L’ajout de la marketplace échoue</td><td>Vérifie <code>git</code>. Sans clé SSH GitHub : <code>CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1</code>, puis réessaie.</td></tr>
-        <tr><td>Vérifications navigateur « non vérifiées »</td><td>Lance <code>sw.mjs browser-setup</code>, lance l’appli en local ou renseigne une URL de préproduction.</td></tr>
+        <tr><td>Vérifications navigateur « non vérifiées »</td><td>Lance <code>/sw:browser-setup</code>, lance l’appli en local ou renseigne une URL de préproduction.</td></tr>
         <tr><td>Écriture bloquée comme secret</td><td>Mets la valeur dans une variable d’environnement. Si ce n’est pas un secret : commentaire <code>qp-allow-secret</code> sur la ligne.</td></tr>
         <tr><td>L’audit incrémental refait tout</td><td>Normal au premier audit, après une mise à jour du pack, après 30 jours, ou hors d’un dépôt Git.</td></tr>
       </tbody>

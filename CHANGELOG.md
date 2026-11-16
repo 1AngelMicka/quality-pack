@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- **Every tool command is now a slash command.** `/sw:look <url>`, `/sw:auth`, `/sw:supply`, `/sw:perf <url>` and 26 more replace `node sw.mjs …`: Claude runs the tool, takes the address from `project.json` › `urls` when none is given, and explains the result. Generated from `tools/commands.yaml`. The commands that send attacks or real actions (`auth`, `access`, `webhooks`, `dast`, `billing`) refuse a production address.
+- **`/sw:design`** chains the seven design skills in order (direction if missing, organisation of each key screen, scroll animations, finish, spacing, review), with `/sw:design check` to measure only, `/sw:design <screen>` for one screen and `/sw:design variants` to add the blind jury.
+- The READMEs group the commands by goal (design, security, speed and search, payments, key tasks and apps, tools) and say that the audited app can be written in any language.
+
 ## 0.9.1 — 2026-11-15
 
 - **Performance:** new build rules and two criteria. PRF-08: search and filters wait for the end of typing, cancel the previous request and never send the same request twice. PRF-09: slow queries are logged and read with EXPLAIN ANALYZE, and the main routes read only the columns they need. PRF-04 also asks for unused dependencies to be removed (knip).

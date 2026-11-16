@@ -122,7 +122,7 @@ Details are in the [agent guide](docs/AGENT_GUIDE.md).
 **4. For the key tasks and the browser checks**, once:
 
 ```bash
-node <plugin folder>/scripts/sw.mjs browser-setup
+/sw:browser-setup
 ```
 
 Playwright, axe-core and Chromium go into the pack's cache, not into your project (Claude offers it at the first audit). If your project already has Playwright, that one is used. Without them the audit still runs; those checks are marked "not checked".
@@ -180,30 +180,79 @@ Do the same for each module (`qp-nextjs` becomes `sw-nextjs`, and so on). Nothin
 | `/sw:fix 10` · `/sw:fix SEC-02` · `/sw:fix ERG-R01` | Fix the first 10 issues, a specific one, or a finding of the ergonomics review |
 | `/sw:fix experience` | Fix first what weighs on the Experience score |
 | `/sw:handoff` | Write `.quality/handoff.md` before stopping a long task |
-| `/sw:design-review [task or URL]` | Advice on a screen: measured effort, heuristic review, two or three costed reorganisations |
-| `node sw.mjs look <url>` | Measure the rendered page: weighted generic-look signals, font sizes, line length, small targets |
-| `node sw.mjs deslop <url>` | Measure spacing and alignment on the rendered page, element by element, at 375, 768, 1440 and 1920 px (installed Chrome or Edge, nothing to add) |
-| `node sw.mjs craft <url>` | Measure the finish of the rendered page: typography details, focus and hover, transitions, images, icons, site icon, share image, 404 page |
-| `node sw.mjs stress <url>` | Finishing passes: the screen with a slow network, a failing server, texts three times longer, at 320 px, in the dark scheme, with the keyboard only, with scripts off |
-| `node sw.mjs bank [type]` | Reference bank: per type of site, what visitors expect, sites recognised as excellent with the reason, what to avoid |
-| `node sw.mjs profile <url> --save` · `gap <url>` | Measure the visual profile of references, then the gap between a screen and them, or the bank (`--type`) |
-| `node sw.mjs variants <name> <url> <url>…` | Several versions of one screen: screenshots under shuffled letters, measures, pairs for a blind jury; `--tally` ranks them |
-| `node sw.mjs access` | Play access control: each declared resource is requested by its owner, then by the accounts that must not reach it. Exit code 2 on a leak |
-| `node sw.mjs auth` | Probe the login (local or staging only): same answer for a known and an unknown account, wrong passwords in a row slowed or refused |
-| `node sw.mjs dast [url]` | Passive scan of the running app with OWASP ZAP in Docker: headers, cookies, information leaks, vulnerable libraries |
-| `node sw.mjs supply` | Read the repository's supply chain: lockfile, release cooldown, install scripts, pinned CI actions, .env files |
-| `node sw.mjs seo [url]` | Search readiness: sitemap (present, declared, no broken address), title and meta description of each page, target keywords carried by their page, Search Console |
-| `node sw.mjs perf <url>` | Measure loading on a throttled phone: largest paint, layout shift, blocking time, weight of the page and of scripts |
-| `node sw.mjs facts <url>` | List the figures, quotes, customer names and badges shown, and check each is traced to `.quality/facts.json` |
-| `node sw.mjs webhooks` | Play the webhooks (local or staging): an unsigned or wrongly signed event must be refused |
-| `node sw.mjs billing` | Play the subscription life cycle in Stripe's test mode with a test clock: trial, first payment, declined renewal, cancellation; the app is asked at each stage |
-| `node sw.mjs mobile audit` | Android: read the screen shown on the emulator or device (touch targets, unnamed controls), with screenshots at 200 % text and in dark theme |
-| `node sw.mjs desktop check` · `flows --attach <port>` | Desktop app: read isolation, permissions, signing and updates from the project; play the key tasks in the real window |
-| `node sw.mjs threats` | Check the threat model (`.quality/threats.json`): entry points covered, a response and a test for each abuse case |
-| `node sw.mjs mobile flows` · `mobile check` | Installed app: play the key tasks with Maestro on an emulator or device; read from the project what blocks a release |
-| `node sw.mjs tokens` | Check design tokens: DTCG format, references, contrast in every theme, colours outside sRGB |
-| `node sw.mjs record <id>` | Record a key task by doing it in a browser instead of writing it |
-| `node sw.mjs report` | Rewrite `.quality/report.html`: scores over time, screenshots of every step, review findings |
+
+Each `/sw:…` command runs Shipwright's tool for you: nothing else to type, and your app can be written in any language (Python, PHP, Ruby, Go, Java or JavaScript). You can also just ask in your own words ("measure the speed of my home page"): Claude picks the command.
+
+### Design
+
+| Command | For |
+| --- | --- |
+| `/sw:design` | All the design work, in order: direction and tokens if missing, how each key screen is organised on phone and desktop, scroll animations if any, finish and identity, measured spacing, then a review with the key tasks replayed |
+| `/sw:design check` | Measure the design of every key screen without changing anything, with the three most useful changes |
+| `/sw:design <screen or URL>` · `/sw:design variants` | One screen only; or add variants and the blind jury on the screens that carry the product |
+| `/sw:design-direction` | From sites you like to a visual direction and checked design tokens |
+| `/sw:design-screens` | Organise a screen before coding it, separately for phone and desktop |
+| `/sw:design-variants` | Three versions of a key screen, a blind jury, then your choice |
+| `/sw:premium-craft` | The finish: states, typography, shadows, dark theme, identity, copy |
+| `/sw:deslop-ui` | Spacing and alignment measured on the real rendering, fixed at the root |
+| `/sw:scroll-animation` | Motion tied to scrolling, with reduced motion |
+| `/sw:design-review` | Advice on a screen: measured effort, heuristic review, two or three costed reorganisations |
+| `/sw:look <url>` | Measure the rendered page: weighted generic-look signals, font sizes, line length, small targets |
+| `/sw:deslop <url>` | Measure spacing and alignment on the rendered page, element by element, at 375, 768, 1440 and 1920 px (installed Chrome or Edge, nothing to add) |
+| `/sw:craft <url>` | Measure the finish of the rendered page: typography details, focus and hover, transitions, images, icons, site icon, share image, 404 page |
+| `/sw:stress <url>` | Finishing passes: the screen with a slow network, a failing server, texts three times longer, at 320 px, in the dark scheme, with the keyboard only, with scripts off |
+| `/sw:tokens` | Check design tokens: DTCG format, references, contrast in every theme, colours outside sRGB |
+| `/sw:tiles` | Show the style tiles side by side, on desktop and phone, to choose a direction |
+| `/sw:bank [type]` | Reference bank: per type of site, what visitors expect, sites recognised as excellent with the reason, what to avoid |
+| `/sw:profile <url> --save` · `/sw:gap <url>` | Measure the visual profile of references, then the gap between a screen and them, or the bank (`--type`) |
+| `/sw:variants <name> <url> <url>…` | Several versions of one screen: screenshots under shuffled letters, measures, pairs for a blind jury; `--tally` ranks them |
+
+### Security
+
+| Command | For |
+| --- | --- |
+| `/sw:access` | Play access control: each declared resource is requested by its owner, then by the accounts that must not reach it. Exit code 2 on a leak |
+| `/sw:auth` | Probe the login (local or staging only): same answer for a known and an unknown account, wrong passwords in a row slowed or refused |
+| `/sw:dast [url]` | Passive scan of the running app with OWASP ZAP in Docker: headers, cookies, information leaks, vulnerable libraries |
+| `/sw:supply` | Read the repository's supply chain: lockfile, release cooldown, install scripts, pinned CI actions, .env files |
+| `/sw:threats` | Check the threat model (`.quality/threats.json`): entry points covered, a response and a test for each abuse case |
+| `/sw:webhooks` | Play the webhooks (local or staging): an unsigned or wrongly signed event must be refused |
+
+### Speed, search and content
+
+| Command | For |
+| --- | --- |
+| `/sw:perf <url>` | Measure loading on a throttled phone: largest paint, layout shift, blocking time, weight of the page and of scripts |
+| `/sw:seo [url]` | Search readiness: sitemap (present, declared, no broken address), title and meta description of each page, target keywords carried by their page, Search Console |
+| `/sw:web <url>` | HTTP checks of a page: security headers, compression, cache, metadata, robots, sitemap |
+| `/sw:facts <url>` | List the figures, quotes, customer names and badges shown, and check each is traced to `.quality/facts.json` |
+| `/sw:scan` | Find placeholder text, hollow wording and debugging leftovers in the code |
+
+### Payments
+
+| Command | For |
+| --- | --- |
+| `/sw:billing` | Play the subscription life cycle in Stripe's test mode with a test clock: trial, first payment, declined renewal, cancellation; the app is asked at each stage |
+
+### Key tasks, mobile and desktop
+
+| Command | For |
+| --- | --- |
+| `/sw:flows` | Play the key tasks on phone and desktop: screenshot, accessibility and effort at every step |
+| `/sw:record <id>` | Record a key task by doing it in a browser instead of writing it |
+| `/sw:mobile audit` | Android: read the screen shown on the emulator or device (touch targets, unnamed controls), with screenshots at 200 % text and in dark theme |
+| `/sw:mobile flows` · `/sw:mobile check` | Installed app: play the key tasks with Maestro on an emulator or device; read from the project what blocks a release |
+| `/sw:desktop check` · `/sw:flows --attach <port>` | Desktop app: read isolation, permissions, signing and updates from the project; play the key tasks in the real window |
+
+### Tools
+
+| Command | For |
+| --- | --- |
+| `/sw:doctor` | Check that Shipwright is installed and active for this project, with its versions |
+| `/sw:browser-setup` | Install Playwright, axe-core and Chromium once, in the pack's cache (not your project) |
+| `/sw:status` | Summary of the latest audit: scores, blockers, date |
+| `/sw:report` | Rewrite `.quality/report.html`: scores over time, screenshots of every step, review findings |
+| `/sw:graph` | Graphify status for this project, recommended or not for its size |
 
 ## What it checks
 
@@ -234,7 +283,7 @@ Every rule and check is listed in [docs/en/REFERENTIAL.md](docs/en/REFERENTIAL.m
 
 ## Design
 
-Seven skills load when Claude designs or changes an interface:
+Seven skills load by themselves when Claude designs or changes an interface. Each one can also be started by hand (`/sw:design-screens`, `/sw:premium-craft`…), and `/sw:design` chains them all in the right order:
 
 | Skill | What it does | What it checks |
 | --- | --- | --- |
@@ -286,7 +335,7 @@ The audit report shows the tokens saved by compact outputs. For a session's tota
 
 ### By project size and time horizon
 
-Size is counted in source files: `node sw.mjs graph` shows it, and `/sw:kickoff` uses it for its recommendations.
+Size is counted in source files: `/sw:graph` shows it, and `/sw:kickoff` uses it for its recommendations.
 
 | Project size | Short term: one session | Medium term: a few weeks of development | Long term: the life of the project |
 | --- | --- | --- | --- |
@@ -337,11 +386,11 @@ Commit `.quality/` to keep the score history. Screenshots and logs are heavy: ad
 | `/sw:...` commands do not appear | Restart Claude Code or run `/reload-plugins`. Check `/plugin` → **Installed** and the **Errors** tab. |
 | `node: command not found` | Install Node.js 18+ and make sure `node` is on your PATH. |
 | Adding the marketplace fails | Check `git` is installed. Without a GitHub SSH key, set `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` and retry. |
-| Browser checks are "not checked" | Run `sw.mjs browser-setup` (step 4), and make sure the app runs locally or set a staging URL in `.quality/project.json`. |
-| A key task stops at a step | `flows.json` gives the step and the error. Fix the selector in `.quality/project.json` › `flows` (`sw.mjs flows --check` validates it), or fix the bug if it is real. |
+| Browser checks are "not checked" | Run `/sw:browser-setup` (step 4), and make sure the app runs locally or set a staging URL in `.quality/project.json`. |
+| A key task stops at a step | `flows.json` gives the step and the error. Fix the selector in `.quality/project.json` › `flows` (`/sw:flows --check` validates it), or fix the bug if it is real. |
 | A write is blocked as a secret | Move the value to an environment variable. If it really is not a secret, add `sw-allow-secret` in a comment on that line. |
 | The incremental audit redoes everything | Intended on the first audit, after a pack update, when the last full audit is older than 30 days, or outside a Git repository. |
-| Graphify is not used | Check `graphify --version`, then run `node <plugin path>/scripts/sw.mjs graph` in your project. |
+| Graphify is not used | Check `graphify --version`, then `/sw:graph` in your project. |
 
 ## Privacy and security
 
