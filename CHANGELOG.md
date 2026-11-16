@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.12.0 — 2026-11-16
 
 - **Stand out without copying.** `design-direction` gets a method to find one signature moment from the client's trade (what it does, handles, produces, how customers judge it), kept only if it passes the swap, touch and still tests (DIR-11), and a recipe to take the best of several references axis by axis (type, colour logic, layout rhythm, imagery, motion, organisation, voice): no reference gives more than two axes, one axis comes from the trade, and each reference differs on at least three (DIR-12). New `DESIGN.md` › "Signature" section and an axes table in the reference matrix.
 - **Signature on phones.** RSP-03 now covers the signature moment and featured hover effects: they need a touch or scroll version.
