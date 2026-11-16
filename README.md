@@ -8,6 +8,8 @@
 
 Des plugins pour [Claude Code](https://claude.com/claude-code) qui accompagnent un projet **de l'idée au lancement** : site vitrine, application web, SaaS, application de bureau ou mobile. Shipwright donne à Claude l'ordre de travail, les règles de chaque métier, et surtout de quoi **prouver** chaque étape : les tâches sont jouées, la sécurité est essayée, le rendu est mesuré.
 
+> **Pour t'y retrouver :** une fois le plugin [installé](#installation), tape **`/sw:help`** dans Claude Code. Tu as toutes les commandes, classées par usage, avec à quoi elles servent. `/sw:help` suivi d'un nom de commande l'explique en détail (par exemple `/sw:help design`). Tu peux aussi demander avec tes mots : Claude choisit la commande.
+
 **Ce qu'il fait**
 
 - **Donne le chemin.** Le skill `from-zero` découpe un projet en étapes, chacune avec une condition de passage que l'on peut montrer : cadrage, socle (comptes, cloisonnement, menaces), première tâche de bout en bout, direction visuelle, écrans, paiement, finitions, lancement.
