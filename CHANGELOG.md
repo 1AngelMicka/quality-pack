@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.11.0 — 2026-11-16
 
 - **Pattern bank (`/sw:patterns`):** 154 entries the pack can propose, not only check: navigation (sticky, hiding or shrinking header, drawer, mega menu, bottom tab bar and six ways to animate its selected tab, rail, sidebar, command palette, floating contact button…), motion (the micro-settings of controls, rubber band, arc, success pulse, page transitions, scroll effects, marquee, magnetic button…), visual effects (glass, liquid glass, shader and particle backgrounds, grain, paper cut, 3D object, bento grid…), features, page sections, UX laws, 24 inspiration galleries and 20 component libraries with their verified licence and price. Each pattern says where it fits, when to avoid it and how to build it with free tools; filter with `--type` and `--surface`, or `search`.
 - The design skills (`design`, `design-direction`, `design-screens`, `design-variants`, `premium-craft`, `scroll-animation`) now offer these patterns as options. A pattern the generic-look check flags is allowed once the user chose it, and is written in the new `DESIGN.md` › "Chosen patterns" section.
