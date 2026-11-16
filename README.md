@@ -8,6 +8,8 @@
 
 Des plugins pour [Claude Code](https://claude.com/claude-code) qui accompagnent un projet **de l'idée au lancement** : site vitrine, application web, SaaS, application de bureau ou mobile. Shipwright donne à Claude l'ordre de travail, les règles de chaque métier, et surtout de quoi **prouver** chaque étape : les tâches sont jouées, la sécurité est essayée, le rendu est mesuré.
 
+> **Pour t'y retrouver :** une fois le plugin [installé](#installation), tape **`/sw:help`** dans Claude Code. Tu as toutes les commandes, classées par usage, avec à quoi elles servent. `/sw:help` suivi d'un nom de commande l'explique en détail (par exemple `/sw:help design`). Tu peux aussi demander avec tes mots : Claude choisit la commande.
+
 **Ce qu'il fait**
 
 - **Donne le chemin.** Le skill `from-zero` découpe un projet en étapes, chacune avec une condition de passage que l'on peut montrer : cadrage, socle (comptes, cloisonnement, menaces), première tâche de bout en bout, direction visuelle, écrans, paiement, finitions, lancement.
@@ -122,7 +124,7 @@ Le détail est dans le [guide pour agents](docs/AGENT_GUIDE.md).
 **4. Pour les tâches clés et les vérifications navigateur**, une fois pour toutes (Claude te le propose au premier audit) :
 
 ```bash
-node <dossier du plugin>/scripts/sw.mjs browser-setup
+/sw:browser-setup
 ```
 
 Playwright, axe-core et Chromium s'installent dans le cache du pack, pas dans ton projet. Si ton projet a déjà Playwright, il est utilisé. Sans eux, l'audit fonctionne quand même ; ces vérifications sont marquées « non vérifiées ».
@@ -142,7 +144,16 @@ Tes collègues reçoivent le pack en ouvrant le projet dans Claude Code et en fa
 
 ### Mettre à jour
 
-Tape `/plugin marketplace update shipwright` dans Claude Code. Pour les mises à jour automatiques : `/plugin` → **Marketplaces** → **shipwright** → **Enable auto-update**.
+Dans un terminal :
+
+```bash
+claude plugin marketplace update shipwright
+claude plugin update sw@shipwright
+```
+
+Fais de même pour chaque module installé (`claude plugin update sw-nextjs@shipwright`…), puis tape `/reload-plugins` dans Claude Code ou rouvre une session. La première commande ne fait que récupérer la nouvelle version : sans la deuxième, le plugin installé reste l'ancien. `/sw:doctor` affiche la version active.
+
+Pour les mises à jour automatiques : `/plugin` → **Marketplaces** → **shipwright** → **Enable auto-update**.
 
 ### Désinstaller
 
@@ -170,6 +181,7 @@ Fais de même pour chaque module (`qp-nextjs` devient `sw-nextjs`, etc.). Rien n
 
 | Commande | Pour |
 | --- | --- |
+| `/sw:help` · `/sw:help <commande>` | Afficher toutes les commandes avec leur usage, ou en expliquer une en détail |
 | `/sw:kickoff` | Configurer ou mettre à jour le profil qualité du projet |
 | `/sw:audit` | Audit incrémental : seul ce qui a changé depuis le dernier audit est revérifié (complet au premier audit, après une mise à jour du pack, ou si le dernier audit complet a plus de 30 jours) |
 | `/sw:audit quick` | Vérifications automatiques seulement, sans auditeurs : le moins cher, idéal avant une mise en ligne |
@@ -180,30 +192,79 @@ Fais de même pour chaque module (`qp-nextjs` devient `sw-nextjs`, etc.). Rien n
 | `/sw:fix 10` · `/sw:fix SEC-02` · `/sw:fix ERG-R01` | Corriger les 10 premiers problèmes, un problème précis ou un constat de la revue d'ergonomie |
 | `/sw:fix experience` | Corriger d'abord ce qui pèse sur la note Expérience |
 | `/sw:handoff` | Écrire `.quality/handoff.md` avant de couper une longue tâche |
-| `/sw:design-review [tâche ou URL]` | Avis sur un écran : effort mesuré, revue heuristique, deux ou trois réorganisations chiffrées |
-| `node sw.mjs look <url>` | Mesurer le rendu : signaux de rendu générique pondérés, tailles de police, longueur des lignes, petites cibles |
-| `node sw.mjs deslop <url>` | Mesurer l'espacement et l'alignement du rendu, élément par élément, à 375, 768, 1440 et 1920 px (Chrome ou Edge installé, rien à ajouter) |
-| `node sw.mjs craft <url>` | Mesurer les finitions du rendu : détails typographiques, focus et survol, transitions, images, icônes, icône du site, image de partage, page 404 |
-| `node sw.mjs stress <url>` | Passes de finition : l'écran avec un réseau lent, un serveur en panne, des textes trois fois plus longs, à 320 px, en thème sombre, au clavier seul, sans scripts |
-| `node sw.mjs bank [type]` | Banque de références : par type de site, ce que les visiteurs attendent, des sites reconnus comme excellents avec la raison, ce qu'il faut éviter |
-| `node sw.mjs profile <url> --save` · `gap <url>` | Mesurer le profil visuel de références, puis l'écart d'un écran avec elles ou avec la banque (`--type`) |
-| `node sw.mjs variants <nom> <url> <url>…` | Plusieurs versions d'un écran : captures sous des lettres mélangées, mesures, paires pour un jury à l'aveugle ; `--tally` les classe |
-| `node sw.mjs access` | Jouer le contrôle d'accès : chaque ressource déclarée est demandée par son propriétaire, puis par les comptes qui ne doivent pas l'atteindre. Code de sortie 2 en cas de fuite |
-| `node sw.mjs auth` | Tester la connexion (local ou préproduction seulement) : même réponse pour un compte connu et inconnu, mots de passe faux en série ralentis ou refusés |
-| `node sw.mjs dast [url]` | Scan passif de l'application avec OWASP ZAP dans Docker : en-têtes, cookies, fuites d'information, bibliothèques vulnérables |
-| `node sw.mjs supply` | Lire la chaîne d'approvisionnement du dépôt : fichier de verrouillage, délai avant installation, scripts d'installation, actions de CI épinglées, fichiers .env |
-| `node sw.mjs seo [url]` | Référencement : sitemap (présent, déclaré, sans adresse cassée), balises title et meta description de chaque page, mots-clés visés portés par leur page, Search Console |
-| `node sw.mjs perf <url>` | Mesurer le chargement sur un téléphone ralenti : plus grand affichage, saut de mise en page, temps de blocage, poids de la page et des scripts |
-| `node sw.mjs facts <url>` | Relever les chiffres, citations, noms de clients et badges affichés, et vérifier que chacun est relié à `.quality/facts.json` |
-| `node sw.mjs webhooks` | Jouer les webhooks (local ou préproduction) : un événement non signé ou mal signé doit être refusé |
-| `node sw.mjs billing` | Jouer le cycle d'abonnement en mode test Stripe avec une horloge de test : essai, premier paiement, renouvellement refusé, résiliation ; l'application est interrogée à chaque étape |
-| `node sw.mjs mobile audit` | Android : lire l'écran affiché sur l'émulateur ou l'appareil (cibles tactiles, contrôles sans nom), avec captures en texte à 200 % et en thème sombre |
-| `node sw.mjs desktop check` · `flows --attach <port>` | Application de bureau : lire dans le projet l'isolation, les permissions, la signature et les mises à jour ; jouer les tâches clés dans la vraie fenêtre |
-| `node sw.mjs threats` | Vérifier le modèle de menaces (`.quality/threats.json`) : points d'entrée couverts, réponse et test pour chaque cas d'abus |
-| `node sw.mjs mobile flows` · `mobile check` | App installée : jouer les tâches clés avec Maestro sur émulateur ou appareil ; lire dans le projet ce qui bloque une publication |
-| `node sw.mjs tokens` | Vérifier les design tokens : format DTCG, références, contraste dans chaque thème, couleurs hors sRGB |
-| `node sw.mjs record <id>` | Enregistrer une tâche clé en la faisant dans un navigateur, au lieu de l'écrire |
-| `node sw.mjs report` | Regénérer `.quality/report.html` : notes dans le temps, captures de chaque étape, constats de la revue |
+
+Chaque commande `/sw:…` lance l'outil de Shipwright pour toi : rien d'autre à taper, et ton app peut être écrite dans n'importe quel langage (Python, PHP, Ruby, Go, Java ou JavaScript). Tu peux aussi le demander avec tes mots (« mesure la vitesse de ma page d'accueil ») : Claude choisit la commande.
+
+### Design
+
+| Commande | Pour |
+| --- | --- |
+| `/sw:design` | Tout le design, dans l'ordre : direction et tokens s'ils manquent, organisation de chaque écran clé sur téléphone et ordinateur, animations de scroll s'il y en a, finitions et identité, espacement mesuré, puis revue avec les tâches clés rejouées |
+| `/sw:design check` | Mesurer le design de chaque écran clé sans rien changer, avec les trois changements les plus utiles |
+| `/sw:design <écran ou URL>` · `/sw:design variants` | Un seul écran ; ou ajouter les variantes et le jury à l'aveugle sur les écrans qui portent le produit |
+| `/sw:design-direction` | Des sites que tu aimes à une direction visuelle et des design tokens vérifiés |
+| `/sw:design-screens` | Organiser un écran avant de le coder, séparément pour téléphone et ordinateur |
+| `/sw:design-variants` | Trois versions d'un écran clé, un jury à l'aveugle, puis ton choix |
+| `/sw:premium-craft` | Les finitions : états, typographie, ombres, thème sombre, identité, textes |
+| `/sw:deslop-ui` | Espacement et alignement mesurés sur le vrai rendu, corrigés à la racine |
+| `/sw:scroll-animation` | Les animations liées au défilement, avec mouvement réduit |
+| `/sw:design-review` | Avis sur un écran : effort mesuré, revue heuristique, deux ou trois réorganisations chiffrées |
+| `/sw:look <url>` | Mesurer le rendu : signaux de rendu générique pondérés, tailles de police, longueur des lignes, petites cibles |
+| `/sw:deslop <url>` | Mesurer l'espacement et l'alignement du rendu, élément par élément, à 375, 768, 1440 et 1920 px (Chrome ou Edge installé, rien à ajouter) |
+| `/sw:craft <url>` | Mesurer les finitions du rendu : détails typographiques, focus et survol, transitions, images, icônes, icône du site, image de partage, page 404 |
+| `/sw:stress <url>` | Passes de finition : l'écran avec un réseau lent, un serveur en panne, des textes trois fois plus longs, à 320 px, en thème sombre, au clavier seul, sans scripts |
+| `/sw:tokens` | Vérifier les design tokens : format DTCG, références, contraste dans chaque thème, couleurs hors sRGB |
+| `/sw:tiles` | Afficher les style tiles côte à côte, sur ordinateur et téléphone, pour choisir une direction |
+| `/sw:bank [type]` | Banque de références : par type de site, ce que les visiteurs attendent, des sites reconnus comme excellents avec la raison, ce qu'il faut éviter |
+| `/sw:profile <url> --save` · `/sw:gap <url>` | Mesurer le profil visuel de références, puis l'écart d'un écran avec elles ou avec la banque (`--type`) |
+| `/sw:variants <nom> <url> <url>…` | Plusieurs versions d'un écran : captures sous des lettres mélangées, mesures, paires pour un jury à l'aveugle ; `--tally` les classe |
+
+### Sécurité
+
+| Commande | Pour |
+| --- | --- |
+| `/sw:access` | Jouer le contrôle d'accès : chaque ressource déclarée est demandée par son propriétaire, puis par les comptes qui ne doivent pas l'atteindre. Code de sortie 2 en cas de fuite |
+| `/sw:auth` | Tester la connexion (local ou préproduction seulement) : même réponse pour un compte connu et inconnu, mots de passe faux en série ralentis ou refusés |
+| `/sw:dast [url]` | Scan passif de l'application avec OWASP ZAP dans Docker : en-têtes, cookies, fuites d'information, bibliothèques vulnérables |
+| `/sw:supply` | Lire la chaîne d'approvisionnement du dépôt : fichier de verrouillage, délai avant installation, scripts d'installation, actions de CI épinglées, fichiers .env |
+| `/sw:threats` | Vérifier le modèle de menaces (`.quality/threats.json`) : points d'entrée couverts, réponse et test pour chaque cas d'abus |
+| `/sw:webhooks` | Jouer les webhooks (local ou préproduction) : un événement non signé ou mal signé doit être refusé |
+
+### Vitesse, référencement et contenu
+
+| Commande | Pour |
+| --- | --- |
+| `/sw:perf <url>` | Mesurer le chargement sur un téléphone ralenti : plus grand affichage, saut de mise en page, temps de blocage, poids de la page et des scripts |
+| `/sw:seo [url]` | Référencement : sitemap (présent, déclaré, sans adresse cassée), balises title et meta description de chaque page, mots-clés visés portés par leur page, Search Console |
+| `/sw:web <url>` | Contrôles HTTP d'une page : en-têtes de sécurité, compression, cache, métadonnées, robots, sitemap |
+| `/sw:facts <url>` | Relever les chiffres, citations, noms de clients et badges affichés, et vérifier que chacun est relié à `.quality/facts.json` |
+| `/sw:scan` | Chercher dans le code les textes provisoires, formules creuses et restes de débogage |
+
+### Paiements
+
+| Commande | Pour |
+| --- | --- |
+| `/sw:billing` | Jouer le cycle d'abonnement en mode test Stripe avec une horloge de test : essai, premier paiement, renouvellement refusé, résiliation ; l'application est interrogée à chaque étape |
+
+### Tâches clés, mobile et bureau
+
+| Commande | Pour |
+| --- | --- |
+| `/sw:flows` | Jouer les tâches clés sur téléphone et ordinateur : capture, accessibilité et effort à chaque étape |
+| `/sw:record <id>` | Enregistrer une tâche clé en la faisant dans un navigateur, au lieu de l'écrire |
+| `/sw:mobile audit` | Android : lire l'écran affiché sur l'émulateur ou l'appareil (cibles tactiles, contrôles sans nom), avec captures en texte à 200 % et en thème sombre |
+| `/sw:mobile flows` · `/sw:mobile check` | App installée : jouer les tâches clés avec Maestro sur émulateur ou appareil ; lire dans le projet ce qui bloque une publication |
+| `/sw:desktop check` · `/sw:flows --attach <port>` | Application de bureau : lire dans le projet l'isolation, les permissions, la signature et les mises à jour ; jouer les tâches clés dans la vraie fenêtre |
+
+### Outils
+
+| Commande | Pour |
+| --- | --- |
+| `/sw:doctor` | Vérifier que Shipwright est bien installé et actif pour ce projet, avec ses versions |
+| `/sw:browser-setup` | Installer une fois Playwright, axe-core et Chromium dans le cache du pack (pas dans ton projet) |
+| `/sw:status` | Résumé du dernier audit : notes, points bloquants, date |
+| `/sw:report` | Regénérer `.quality/report.html` : notes dans le temps, captures de chaque étape, constats de la revue |
+| `/sw:graph` | État de Graphify pour ce projet, recommandé ou non selon sa taille |
 
 ## Ce qu'il vérifie
 
@@ -234,7 +295,7 @@ Toutes les règles et vérifications sont détaillées dans [docs/fr/REFERENTIEL
 
 ## Design
 
-Sept skills se chargent quand Claude dessine ou retouche une interface :
+Sept skills se chargent tout seuls quand Claude dessine ou retouche une interface. Chacun se lance aussi à la main (`/sw:design-screens`, `/sw:premium-craft`…), et `/sw:design` les enchaîne tous dans le bon ordre :
 
 | Skill | Ce qu'il fait | Ce qu'il vérifie |
 | --- | --- | --- |
@@ -286,7 +347,7 @@ Le rapport d'audit indique les tokens évités grâce aux sorties compactes. Pou
 
 ### Selon la taille du projet et l'horizon
 
-Taille mesurée en fichiers de code : `node sw.mjs graph` l'affiche, et `/sw:kickoff` s'en sert pour ses recommandations.
+Taille mesurée en fichiers de code : `/sw:graph` l'affiche, et `/sw:kickoff` s'en sert pour ses recommandations.
 
 | Taille du projet | Court terme : une session | Moyen terme : quelques semaines de développement | Long terme : la vie du projet |
 | --- | --- | --- | --- |
@@ -337,11 +398,11 @@ Commite `.quality/` pour garder l'historique des notes. Les captures d'écran et
 | Les commandes `/sw:...` n'apparaissent pas | Redémarre Claude Code ou tape `/reload-plugins`. Regarde `/plugin` → **Installed** et l'onglet **Errors**. |
 | `node: command not found` | Installe Node.js 18+ et vérifie que `node` est dans ton PATH. |
 | L'ajout de la marketplace échoue | Vérifie que `git` est installé. Sans clé SSH GitHub, définis `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` et réessaie. |
-| Les vérifications navigateur sont « non vérifiées » | Lance `sw.mjs browser-setup` (étape 4), et vérifie que l'appli tourne en local ou renseigne une URL de préproduction dans `.quality/project.json`. |
-| Une tâche clé s'arrête à une étape | `flows.json` donne l'étape et l'erreur. Corrige le sélecteur dans `.quality/project.json` › `flows` (`sw.mjs flows --check` le valide), ou corrige le bug s'il est réel. |
+| Les vérifications navigateur sont « non vérifiées » | Lance `/sw:browser-setup` (étape 4), et vérifie que l'appli tourne en local ou renseigne une URL de préproduction dans `.quality/project.json`. |
+| Une tâche clé s'arrête à une étape | `flows.json` donne l'étape et l'erreur. Corrige le sélecteur dans `.quality/project.json` › `flows` (`/sw:flows --check` le valide), ou corrige le bug s'il est réel. |
 | Une écriture est bloquée comme secret | Mets la valeur dans une variable d'environnement. Si ce n'est vraiment pas un secret, ajoute `sw-allow-secret` en commentaire sur la ligne. |
 | L'audit incrémental refait tout | C'est voulu au premier audit, après une mise à jour du pack, si le dernier audit complet a plus de 30 jours, ou hors d'un dépôt Git. |
-| Graphify n'est pas utilisé | Vérifie `graphify --version`, puis `node <chemin du plugin>/scripts/sw.mjs graph` dans ton projet. |
+| Graphify n'est pas utilisé | Vérifie `graphify --version`, puis `/sw:graph` dans ton projet. |
 
 ## Confidentialité et sécurité
 

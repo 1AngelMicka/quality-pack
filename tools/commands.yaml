@@ -1,0 +1,171 @@
+# One slash command per CLI command: tools/build.py writes plugins/core/skills/<name>/SKILL.md from this list,
+# so that the user types /sw:look <url> instead of node sw.mjs look <url>.
+#   hint: argument hint shown after the command
+#   does: what it does (English, for the skill)
+#   url: true when the command needs the address of a page; the default comes from project.json › urls
+#   active: true when it sends requests that change or attack something: local or staging only
+#   after: what to do with the result
+# /sw:help lists every command and skill under these groups, in this order. tools/build.py fails when a skill of
+# plugins/core/skills (other than build-*) is missing here, so the help never falls out of date.
+groups:
+  - title: "Start and follow-up"
+    items: [from-zero, kickoff, audit, fix, handoff, status, report, doctor, browser-setup, graph, help]
+  - title: "Design"
+    items: [design, design-direction, design-screens, design-variants, design-review, premium-craft, deslop-ui, scroll-animation, look, deslop, craft, stress, tokens, tiles, bank, profile, gap, variants]
+  - title: "Security"
+    items: [security-testing, access, auth, dast, supply, threats, webhooks]
+  - title: "Speed, search and content"
+    items: [seo-launch, perf, seo, web, facts, scan]
+  - title: "SaaS and payments"
+    items: [saas-foundations, billing]
+  - title: "Key tasks and real people"
+    items: [flows, record, user-testing]
+  - title: "Mobile and desktop apps"
+    items: [mobile-app, mobile, desktop-app, desktop]
+  - title: "Working method"
+    items: [workflow]
+commands:
+  doctor:
+    hint: ""
+    does: "Checks that Shipwright is really there for this project: marketplace known, sw@shipwright installed and enabled, modules, hooks, versions. Read only."
+    after: "If something is missing, give the user the exact commands to type in a terminal; do not run claude plugin commands yourself unless they ask."
+  browser-setup:
+    hint: ""
+    does: "Installs Playwright, axe-core and Chromium once, in the pack's cache (not in the project). Needed by the commands that open pages."
+    after: "Say whether it worked and which commands can now run."
+  look:
+    hint: "<url> [url...] [--mode persuade|operate|read] [--as account]"
+    does: "Measures how a page looks: weighted generic \"AI-made\" signals, point of view, font sizes and families, radii, line length, small targets, reduced motion."
+    url: true
+    after: "Tier \"low\" means few generic signs, not \"good\". For changes, follow the premium-craft or design-direction skill."
+  deslop:
+    hint: "<url> [--widths 375,768,1440] [--dark] [--as account]"
+    does: "Measures spacing, alignment and execution of the rendered page, element by element, at several widths, with screenshots."
+    url: true
+    after: "Open the screenshots before concluding. Fix with the deslop-ui skill, \"high\" findings first."
+  craft:
+    hint: "<url> [url...] [--mode persuade|operate|read] [--as account]"
+    does: "Measures the finish of the rendered page: typography details, focus and hover states, controls the click reaches, transitions, images, icons, site icon, share image, 404 page."
+    url: true
+    after: "Fix with the premium-craft skill: every failed \"must\", then each \"should\" fixed or justified in DESIGN.md."
+  stress:
+    hint: "<url> [--only slow,failing,long,narrow,dark,keyboard,no_script] [--as account]"
+    does: "Finishing passes: the screen with a slow network, a failing server, texts three times longer, 320 px wide, dark theme, keyboard only, scripts off."
+    url: true
+    after: "Open the screenshots of each pass and list what breaks, worst first."
+  tiles:
+    hint: "[folder]"
+    does: "Shows the style tiles (default .quality/design/tiles) side by side on a desktop and a phone, with the fonts each tile declares but does not load."
+    after: "Show the sheet to the user so they can choose a direction (design-direction skill)."
+  tokens:
+    hint: "[file.tokens.json...]"
+    does: "Checks the design tokens: DTCG format, references, units, contrast in each theme, colours outside sRGB."
+    after: "Fix the tokens at their source, never the generated CSS."
+  profile:
+    hint: "<url> [url...] [--save]"
+    does: "Measures the visual profile of pages in numbers (type scale, typefaces, first screen, colours, density). --save keeps them as the project's references."
+    url: true
+    after: "With --save, say that /sw:gap can now compare a screen with these references."
+  gap:
+    hint: "<url> [--type <site-type>] [--device mobile]"
+    does: "Compares a screen with the project's references, or with the reference bank of a site type."
+    url: true
+    after: "Each gap is reduced or justified; the largest first."
+  bank:
+    hint: "[site type]"
+    does: "Reference bank: for a site type, what visitors expect, sites known to be excellent with the reason, what to avoid. Without a type, lists the types."
+    after: "Summarise for the user what applies to their project."
+  variants:
+    hint: "<name> <url> <url> [url...] | <name> --tally"
+    does: "Several versions of one screen: screenshots under shuffled letters, measures, pairs for a blind jury; --tally ranks them from the votes."
+    after: "For the whole method (building the versions, the jury, the user's choice), follow the design-variants skill."
+  flows:
+    hint: "[task id...] [--base URL] [--attach port]"
+    does: "Plays the key tasks declared in project.json on a phone and a desktop, step by step: screenshot, accessibility and effort at every step."
+    after: "Report each task: completed or not, steps, over budget, accessibility problems; open the screenshots of failing steps."
+  record:
+    hint: "<task id> [--start /path] [--device desktop|mobile]"
+    does: "Records a key task while the user does it in a browser, and saves it as a flow in project.json."
+    after: "Tell the user that /sw:flows will now replay it."
+  access:
+    hint: "[--base URL] [--check]"
+    does: "Plays access control for real: each declared resource is requested by its owner, then by the accounts that must not reach it. Exit code 2 when something leaks."
+    url: true
+    active: true
+    after: "A leak is a blocker: show the resource, the account that reached it and the answer."
+  auth:
+    hint: "[--base URL]"
+    does: "Tests the login: the right password first, same answer for known and unknown accounts, wrong passwords in a row slowed or refused. Also sign-up and password reset when declared."
+    url: true
+    active: true
+    after: "If the right password did not get in, say so first: the other results are then not proof."
+  dast:
+    hint: "[url] [--minutes N]"
+    does: "Passive security scan of the running app with OWASP ZAP in Docker: headers, cookies, information leaks, vulnerable libraries."
+    url: true
+    active: true
+    after: "Sort the alerts by risk and say which are real for this app."
+  supply:
+    hint: ""
+    does: "Reads the supply chain of the repository: lockfile, delay before installing new versions, install scripts, pinned CI actions, .env files, commands that tool configuration runs by itself."
+    after: "Show each command listed under auto_run to the user; once they confirm it is expected, copy it into project.json › auto_run_known."
+  threats:
+    hint: "[--check | --gate launch]"
+    does: "Checks the threat model (.quality/threats.json): every entry point covered, a response and a test for each abuse case."
+    after: "List the open cases and the entry points without a case."
+  webhooks:
+    hint: "[--base URL]"
+    does: "Plays the webhooks: an unsigned or wrongly signed event must be refused."
+    url: true
+    active: true
+    after: "An accepted bad event is a blocker."
+  billing:
+    hint: "[--wait seconds]"
+    does: "Plays the subscription life cycle in Stripe's test mode with a test clock: trial, first payment, declined renewal, cancellation; the app is asked what it believes at each stage."
+    active: true
+    note: "Needs a Stripe TEST key that the user sets themselves in the STRIPE_SECRET_KEY environment variable. Never ask for the key in the conversation and never write it to a file. If it is missing or is not a test key, stop and tell the user."
+    after: "For each stage, what Stripe says and what the app believes; any difference is a defect."
+  seo:
+    hint: "[url] [--limit N]"
+    does: "Search readiness of the public pages: sitemap, title and meta description of each page, one h1, target keywords carried by their page, Search Console."
+    url: true
+    after: "To fix, follow the seo-launch skill."
+  perf:
+    hint: "<url> [url...]"
+    does: "Measures loading on a slowed-down phone: largest paint, layout shift, blocking time, weight of the page and of its scripts."
+    url: true
+    after: "Name the heaviest resources and the first fix."
+  web:
+    hint: "<url>"
+    does: "HTTP checks of a page: security headers, compression, cache, SEO metadata, robots, sitemap."
+    url: true
+    after: "List what failed, most serious first."
+  facts:
+    hint: "<url> [url...]"
+    does: "Lists the figures, quotes, customer names and badges shown on public pages, and checks each one is traced in .quality/facts.json."
+    url: true
+    after: "Each claim not traced is either proven in facts.json or removed from the page."
+  scan:
+    hint: ""
+    does: "Static scans of the source: placeholders, hollow wording, debugging leftovers."
+    after: "Group the findings by file."
+  mobile:
+    hint: "flows [task id...] | audit | check"
+    does: "Installed mobile app. flows: plays the key tasks with Maestro on an emulator or device. audit: reads the screen shown on Android (touch targets, controls without a name). check: reads in the project what blocks a store release."
+    after: "If Maestro or adb is missing, tell the user how to install it; do not download it yourself."
+  desktop:
+    hint: "check"
+    does: "Desktop app (Tauri, Electron): reads in the project what blocks or weakens a release: content security policy, permissions, isolation, updater, signing. Key tasks in the real window: /sw:flows --attach <port>."
+    after: "List the blockers first."
+  graph:
+    hint: "[refresh]"
+    does: "Graphify status for this project (installed, fresh, recommended for its size), or a refresh of the code graph."
+    after: "If it is recommended and missing, say how to install it; install nothing without the user's consent."
+  report:
+    hint: "[--run R]"
+    does: "Rewrites .quality/report.html: scores over time, screenshots of each step of the key tasks, review findings."
+    after: "Give the user the path of the report."
+  status:
+    hint: ""
+    does: "Summary of the latest audit: scores, blockers, date."
+    after: "Say in two lines where the project stands and what to do next (/sw:fix or /sw:audit)."
